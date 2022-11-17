@@ -4,8 +4,7 @@
 <p align="center"> 
   Visitor count<br>
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
-  <div style="border:5px solid black"
-   <img src="./spv.gif" />
-  </div>
+  <img src="./spv.gif" style="border:5px solid black"/>
+
   </p>
 
