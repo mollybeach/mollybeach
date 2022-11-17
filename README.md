@@ -1,4 +1,4 @@
-![GitHub Logo](./ezgif.com-gif-maker.mp4)
+![GitHub Logo](./sp.gif)
 <br/>
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
