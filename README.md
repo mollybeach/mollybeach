@@ -1,4 +1,4 @@
-![GitHub Logo](./sp.gif)
+![GitHub Logo](./spv.gif)
 <br/>
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
