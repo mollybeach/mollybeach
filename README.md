@@ -7,21 +7,11 @@ Commits
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./spv.gif"/>
   <img src="./assets/cowpic.png" width="75" height="75"/>
-  <img src="./assets/owl.gif"/>
-  <img src="./assets/gene.gif"/>
+  <img src="./assets/owl.gif" width="75" height="75"/>
+  <img src="./assets/gene.gif" width="75" height="75"/>
 
   </p>
   
-  <table style="border: 1px none">
-  <tr style="border-style: none">
-    hi
-     <img src="./assets/owl.gif"/>
-     <img src="./assets/owl.gif"/>
-  </tr>
-  <tr style="border-style: none">
-    <td style="border-style: none">400</td>
-    <td style="border-style: none">500</td>
-    <td style="border-style: none">600</td>
-  </tr>
+
 </table>
 
