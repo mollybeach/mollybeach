@@ -14,14 +14,14 @@ Commits
   
   <table style="border-style: none">
   <tr style="border-style: none">
-    <td>100</td>
-    <td>200</td>
-    <td>300</td>
+    <td style="border-style: none">100</td>
+    <td style="border-style: none">200</td>
+    <td style="border-style: none">300</td>
   </tr>
-  <tr>
-    <td>400</td>
-    <td>500</td>
-    <td>600</td>
+  <tr style="border-style: none">
+    <td style="border-style: none">400</td>
+    <td style="border-style: none">500</td>
+    <td style="border-style: none">600</td>
   </tr>
 </table>
 
