@@ -1,4 +1,4 @@
-![GitHub Logo](./quickshade-unscreen.gif)
+![GitHub Logo](./ezgif.com-gif-maker.mp4)
 <br/>
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
