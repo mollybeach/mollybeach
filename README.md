@@ -1,5 +1,5 @@
 [![GitHub Streak](https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&hide_border_true&border_radius=30&date_format=%5BY.%5Dn.j&width=100px)](https://git.io/streak-stats)
-![GitHub Logo](./assets/cowpic.png)
+![GitHub Logo](./cowpic.png)
 <!-- Social icons section -->
 <p align="center">
   <a href="https://www.youtube.com/c/DevProTips"><img width="32px" alt="Youtube" title="Youtube" src="https://i.imgur.com/qiXu7b2.png"/></a>
