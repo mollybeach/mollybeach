@@ -11,6 +11,9 @@ Commits
   <img src="./assets/gene.gif" width="35" height="75"/>
   <img src="./assets/mandelbrot.gif" width="55" height="55"/>
   <img src="./assets/binaryTree.gif" width="55" height="55"/>
+  <img src="./assets/eevee.gif" width="55" height="55"/>
+  <img src="./assets/flower.gif" width="55" height="55"/>
+  <img src="./assets/chikorita.gif" width="55" height="55"/>
 
   </p>
   
