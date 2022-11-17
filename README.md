@@ -6,9 +6,9 @@ Commits
   Visitor count<br>
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./spv.gif"/>
-  <img src="./cowpic.png" width="75" height="75"/>
-  <img src="spv-unscreen.gif"/>
-  <img src="17-PM-unscreen.gif"/>
+  <img src="./assets/cowpic.png" width="75" height="75"/>
+  <img src="./assets/owl.gif"/>
+  <img src="./assets/gene.gif"/>
 
   </p>
   
