@@ -12,8 +12,8 @@ Commits
 
   </p>
   
-  <table>
-  <tr>
+  <table style="border-style: none">
+  <tr style="border-style: none">
     <td>100</td>
     <td>200</td>
     <td>300</td>
