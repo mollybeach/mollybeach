@@ -15,7 +15,6 @@
 </p>
 
 <br/>
-[![GitHub Streak](https://streak-stats.demolab.com?user=mollybeach&theme=tokyonight&border_radius=50&border_radius=50&date_format=%5BY.%5Dn.j)](https://git.io/streak-stats)
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
   Visitor count<br>
