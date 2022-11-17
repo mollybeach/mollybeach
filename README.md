@@ -9,6 +9,7 @@ Commits
   <img src="./assets/cowpic.png" width="75" height="75"/>
   <img src="./assets/owl.gif" width="75" height="75"/>
   <img src="./assets/gene.gif" width="55" height="75"/>
+  <img src="./assets/mandelbrot.gif" width="55" height="55"/>
 
   </p>
   
