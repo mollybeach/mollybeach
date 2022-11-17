@@ -1,1 +1,4 @@
-![](https://komarev.com/ghpvc/?username=mollybeach&color=dc143c)
+<p align="center"> 
+  Visitor count<br>
+  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
+  </p>
