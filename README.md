@@ -4,5 +4,6 @@
 <p align="center"> 
   Visitor count<br>
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
-  ![GitHub Logo](./spv.gif)
+   <img src="./spv.gif" />
   </p>
+  ![GitHub Logo](./spv.gif)
