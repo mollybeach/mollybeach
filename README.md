@@ -15,6 +15,8 @@ Commits
   <table style="border: 1px none">
   <tr style="border-style: none">
     hi
+     <img src="./assets/owl.gif"/>
+     <img src="./assets/owl.gif"/>
   </tr>
   <tr style="border-style: none">
     <td style="border-style: none">400</td>
