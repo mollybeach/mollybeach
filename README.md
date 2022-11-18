@@ -10,10 +10,10 @@
   <img  align="right" src="./assets/eevee.gif" width="75px" height="75px"/>
    <img  align="right"  src="./assets/eevee.gif" width="75px" height="75px"/>
    <img align="left" src="./assets/visitorCount.svg" width="90px" height="30px"/> 
-<p align="center"> 
-  Visitor count<br>
+
+
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
-  </p>
+
   
   <img align="left" src="./assets/eevee.gif" width="75px" height="75px"/>
   <img align="left" src="./assets/flower.gif" width="75px" height="75px"/>
