@@ -1,14 +1,15 @@
-
-
-<table  border-style=" dashed double none">
-    <tr>
-        <td width="80%" align="left">
-            <img align="left" src="./assets/commits.svg" width="90px" height="20px" />
-        </td>
-        <td>
-            <img align="right" src="./assets/grimLeaper.gif" width="75px" height="75px"/>
-            <img align="right" src="./assets/binaryTree.gif" width="75px" height="75px"/>
-            <img align="right" src="./assets/butterfree.gif" width="75px" height="75px"/>
-        </td>
-    </tr>
-</table>
+<div>
+    <div display = "inline-block">
+        <img  src="./assets/commits.svg" width="90px" height="20px" />
+        <img src="./assets/grimLeaper.gif" width="75px" height="75px"/>
+        <img src="./assets/binaryTree.gif" width="75px" height="75px"/>
+        <img src="./assets/butterfree.gif" width="75px" height="75px"/>
+    </div>
+    <div>
+    <div display = "inline-block">
+        <img src="./assets/commits.svg" width="90px" height="20px" />
+        <img src="./assets/grimLeaper.gif" width="75px" height="75px"/>
+        <img src="./assets/binaryTree.gif" width="75px" height="75px"/>
+        <img src="./assets/butterfree.gif" width="75px" height="75px"/>
+    </div>
+</div>
