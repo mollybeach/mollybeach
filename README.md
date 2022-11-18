@@ -1,12 +1,5 @@
 
 
-<div>
-<div display="flex" align-content="flex-start" background="red">
-  hi
-</div>
-
-
-<div  >
 <div align="left">
   <div> <img src="./assets/commits.svg" width="150" height="20"/> </div>
   <div> <a href=#><img src="contributions.svg" width="440" height="96"></a>  </div>
@@ -31,12 +24,9 @@
     <div > d</div>
     <div > e</div>
     <div > f</div>
-</div>
-
-</div>
+   </div>
   </div>
 
-<div>
 
 
 
