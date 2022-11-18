@@ -13,7 +13,7 @@
     <div > b</div>
     <div > c</div>
 </div>
-  <div display="flex" align="right" flex-direction="column" align-content="flex-end">
+  <div display="flex" align="left" flex-direction="column" align-content="flex-end">
   <div > d</div>
     <div > e</div>
     <div > f</div>
