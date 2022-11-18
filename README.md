@@ -1,13 +1,13 @@
 
 <div>
     <div display="inline-block">
-         <img align="left"      width="1%"  height="75x" src="./assets/spacer.png"/>
-        <img align="left"     width="15.0%"  height="75px" src="./assets/commits.svg"/>
-        <img align="left"      width="35%"  height="75x" src="./assets/spacer.png"/>
-        <img align="right"  width="75px"   height="75px" src="./assets/grimLeaper.gif"/>
-        <img align="right"     width="75px"   height="75px" src="./assets/rattata.gif"/>
-        <img align="right"        width="75px"   height="75px" src="./assets/poke.gif"/>
-        <img align="right"  width="75px"   height="75px" src="./assets/butterfree.gif"/>
+        <img align="left"   width="1%"    height="75x"  src="./assets/spacer.png"/>
+        <img align="left"   width="15.0%" height="75px" src="./assets/commits.svg"/>
+        <img align="left"   width="35%"   height="75x"  src="./assets/spacer.png"/>
+        <img align="right"  width="75px"  height="75px" src="./assets/grimLeaper.gif"/>
+        <img align="right"  width="75px"  height="75px" src="./assets/rattata.gif"/>
+        <img align="right"  width="75px"  height="75px" src="./assets/poke.gif"/>
+        <img align="right"  width="75px"  height="75px" src="./assets/butterfree.gif"/>
     </div>
     <div display ="inline-block">
         <img align="left"      width="7%"  height="75x" src="./assets/spacer.png"/>
