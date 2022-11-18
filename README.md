@@ -1,6 +1,7 @@
 
 <div>
     <div display="inline-block">
+         <img align="left" src="./assets/spacer.png"     width="5%"  height="75x"/>
         <img align="left" src="./assets/commits.svg"    width="10.0%"  height="75px"/>
         <img align="left" src="./assets/spacer.png"     width="40%"  height="75x"/>
         <img align="right" src="./assets/grimLeaper.gif" width="75px"   height="75px"/>
@@ -17,6 +18,7 @@
         <img align="right" src="./assets/mandelbrot.gif"  width="75px"  height="75px"/>
     </div>
     <div display="inline-block">
+         <img align="left" src="./assets/spacer.png"     width="5%"  height="75x"/>
         <img align="left" src="./assets/visitors.svg" width="10%" height="75px"/> 
         <img align="left" src="./assets/spacer.png"         width="40%"  height="75px"/>
         <img align="right"  src="./assets/flowerGarden.gif" width="75px"   height="75px"/>
