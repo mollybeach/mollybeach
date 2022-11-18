@@ -15,7 +15,7 @@
   <img src="./assets/growlithe.gif" width="75" height="75"/>
  </div>
 <a href=#><img src="contributions.svg" width="440" height="96"></a>
-<p border="pink 5px solid" align="center"> 
+<p  color="red" align="center">  hi
  <img src="./assets/fidgetToy.gif" width="75" height="75"/>
    <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
   <img src="./assets/visitorCount.svg" width="150" height="20"/>
