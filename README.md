@@ -16,9 +16,10 @@
     </div>
     <div display="inline-block">
         <img src="./assets/visitorCount.svg" width="100px" height="40px"/> 
-        <img src="./assets/400.png"         width="300px"  height="15px"/>
+        <img src="./assets/400.png"         width="400px"  height="15px"/>
         <img src="./assets/flowerGarden.gif"  width="75px" height="75px"/>
         <img src="./assets/gene.gif"        width="75px"   height="75px"/>
+        <img src="./assets/heart.gif"   width="75px"   height="75px"/>
         <img src="./assets/growlithe.gif"   width="75px"   height="75px"/>
     </div>
         <div display="inline-block">
