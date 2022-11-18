@@ -1,9 +1,9 @@
 <div display="inline-block">
-<div  align="left"display="block" width="50%">
-    <img align="left"   width="100%"    height="75px" src="./assets/spacer.png"/>
+<span>
+    <img align="left"   width="100%"    height="150px" src="./assets/spacer.png"/>
     hi
-    </div>
-<div align="right" display="block" width="50%">
+ </span>
+<span>
     <div display="inline-block">
         <img align="right"  width="12.5%"   height="75px" src="./assets/grimLeaper.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/rattata.gif"/>
@@ -29,5 +29,5 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
     </div>
-</div>
+</span>
     </div>
