@@ -1,7 +1,7 @@
 <div>
     <div display = "inline-block">
         <img src = "./assets/commits.svg" width="90px" height="20px" />
-        <img src = "./assets/400.png" width="400px" height="15px"/>
+        <img src = "./assets/400.png" width="450px" height="15px"/>
         <img src = "./assets/grimLeaper.gif" width="75px" height="75px"/>
         <img src = "./assets/binaryTree.gif" width="75px" height="75px"/>
         <img src = "./assets/butterfree.gif" width="75px" height="75px"/>
