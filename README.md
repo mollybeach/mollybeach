@@ -10,13 +10,13 @@
         <img align="right"  width="75px"   height="75px" src="./assets/butterfree.gif"/>
     </div>
     <div display ="inline-block">
-        <img align="left" src="./assets/spacer.png"     width="7%"  height="75x"/>
-        <img align="left" src= "./assets/contributions.svg" width="40%" height="75px" />
-        <img align="left" src="./assets/spacer.png"      width="3%" height="75px"/>
-        <img align="right" src="./assets/purugly.gif"     width="75px"  height="75px"/>
-        <img align="right" src="./assets/fidgetToy.gif"   width="75px"  height="75px"/>
-        <img align="right" src="./assets/heart.gif"       width="75px"  height="75px"/>
-        <img align="right" src="./assets/mandelbrot.gif"  width="75px"  height="75px"/>
+        <img align="left"      width="7%"  height="75x" src="./assets/spacer.png"/>
+        <img align="left"  width="40%" height="75px" src= "./assets/contributions.svg"/>
+        <img align="left"       width="3%" height="75px" src="./assets/spacer.png"/>
+        <img align="right"      width="75px"  height="75px" src="./assets/purugly.gif"/>
+        <img align="right"    width="75px"  height="75px" src="./assets/fidgetToy.gif"/>
+        <img align="right"        width="75px"  height="75px" src="./assets/heart.gif"/>
+        <img align="right"   width="75px"  height="75px" src="./assets/mandelbrot.gif"/>
     </div>
     <div display="inline-block">
         <img align="left"  src="./assets/spacer.png"     width="7%"  height="75x"/>
