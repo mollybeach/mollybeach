@@ -29,12 +29,12 @@
         <img align="right"  width="75px"    height="75px" src="./assets/growlithe.gif"/>
     </div>
         <div display="inline-block">
-        <img align="left"  src="./assets/spacer.png"     width="10%"  height="75x"/>
-        <img align="left"  src="https://profile-counter.glitch.me/mollybeach/count.svg" width="20%" height="75x"/>
-        <img align="left"  src="./assets/spacer.png"     width="20%"    height="75px"/>
-        <img align="right" src="./assets/horseSea.gif"  width="75px"   height="75px"/>
-        <img align="right" src="./assets/virus.gif"     width="75px"   height="75px"/>
-        <img align="right" src="./assets/owl.gif"       width="75px"   height="75px"/>
-        <img align="right" src="./assets/zap.gif"       width="75px"   height="75px"/>
+        <img align="left"       width="10%"  height="75x" src="./assets/spacer.png"/>
+        <img align="left"   width="20%" height="75x" src="https://profile-counter.glitch.me/mollybeach/count.svg"/>
+        <img align="left"       width="20%"    height="75px" src="./assets/spacer.png"/>
+        <img align="right"   width="75px"   height="75px" src="./assets/horseSea.gif"/>
+        <img align="right"      width="75px"   height="75px" src="./assets/virus.gif"/>
+        <img align="right" width="75px"   height="75px"  src="./assets/owl.gif"/>
+        <img align="right"        width="75px"   height="75px" src="./assets/zap.gif"/>
     </div>
 </div>
