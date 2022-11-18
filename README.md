@@ -26,7 +26,6 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
-
     </div>
         <div display="inline-block">
         <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
