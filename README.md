@@ -1,7 +1,8 @@
 
-<br/>
-<img src="./assets/commits.svg" width="150" height="20"/>
+
+
 <div>
+<img src="./assets/commits.svg" width="150" height="20"/>
   <img src="./assets/grimLeaper.gif" width="75" height="75"/>
   <img src="./assets/binaryTree.gif" width="75" height="75"/>
   <img src="./assets/butterfree.gif" width="75" height="75"/>
@@ -9,12 +10,13 @@
   <img src="./assets/eevee.gif" width="75" height="75"/>
   <img src="./assets/flower.gif" width="75" height="75"/>
   <img src="./assets/flowerGarden.gif" width="75" height="75"/>
-  <img src="./assets/fidgetToy.gif" width="75" height="75"/>
+ 
   <img src="./assets/gene.gif" width="35" height="75"/>
   <img src="./assets/growlithe.gif" width="75" height="75"/>
  </div>
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
+ <img src="./assets/fidgetToy.gif" width="75" height="75"/>
    <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
   <img src="./assets/visitorCount.svg" width="150" height="20"/>
  
