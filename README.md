@@ -13,7 +13,7 @@
                <img  align="right"  src="./assets/eevee.gif" width="75px" height="75px"/> </div>
   
  <div align="left" >  <img src="./assets/visitorCount.svg" width="90px" height="30px"/> </div>
-<div align="left" ">  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" /></div>
+<div align="left" >  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" /></div>
 
 
  
