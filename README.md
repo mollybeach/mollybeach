@@ -9,7 +9,7 @@
   <img align="right" src="./assets/chikorita.gif" width="75px" height="75px"/>
   <img  align="right" src="./assets/eevee.gif" width="75px" height="75px"/>
    <img  align="right"  src="./assets/eevee.gif" width="75px" height="75px"/>
-   <img align="left" src="./assets/visitorCount.svg" width="90px" height="40px"/> 
+   <img align="left" src="./assets/visitorCount.svg" width="100px" height="40px"/> 
 
 
   <img   align="left" src="https://profile-counter.glitch.me/mollybeach/count.svg" />
