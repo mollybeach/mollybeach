@@ -1,6 +1,6 @@
 <div>
     <div display = "inline-block">
-        <img src = "./assets/commits.svg" width="50px" height="75px" />
+        <img src = "./assets/commits.svg" width="100px" height="75px" />
         <img src = "./assets/400.png" width="450px" height="15px"/>
         <img src = "./assets/grimLeaper.gif" width="75px" height="75px"/>
         <img src = "./assets/binaryTree.gif" width="75px" height="75px"/>
