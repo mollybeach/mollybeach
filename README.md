@@ -1,10 +1,7 @@
 
 <br/>
 Commits
-<a href=#><img src="contributions.svg"></a>
-<p align="center"> 
-  Visitor count<br>
-  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
+<div>
   <img src="./assets/cowpic.png" width="75" height="75"/>
   <img src="./assets/binaryTree.gif" width="75" height="75"/>
   <img src="./assets/butterfree.gif" width="75" height="75"/>
@@ -16,6 +13,13 @@ Commits
   <img src="./assets/gene.gif" width="35" height="75"/>
   <img src="./assets/growlithe.gif" width="75" height="75"/>
   <img src="./assets/grimLeaper.gif" width="75" height="75"/>
+ </div>
+<a href=#><img src="contributions.svg"></a>
+<p align="center"> 
+  Visitor count<br>
+  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
+</p>
+<div>
   <img src="./assets/heart.gif" width="75" height="75"/>
   <img src="./assets/horseSea.gif" width="75" height="75"/>
   <img src="./assets/mandelbrot.gif" width="75" height="75"/>
@@ -27,7 +31,7 @@ Commits
   <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
   <img src="./assets/virus.gif" width="75" height="75"/>
   <img src="./assets/zap.gif" width="75" height="75"/>
- </p>
+</div>
   
 
 </table>
