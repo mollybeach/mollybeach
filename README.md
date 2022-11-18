@@ -1,6 +1,6 @@
 
 
-<table  border="1px"
+<table  border=01px"
     <tr>
         <td width="80%" align="left">
             <img align="left" src="./assets/commits.svg" width="90px" height="20px" />
