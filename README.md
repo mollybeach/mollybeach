@@ -9,7 +9,7 @@
         <img src="./assets/butterfree.gif" width="75px"   height="75px"/>
     </div>
     <div display ="inline-block">
-        <img src= "contributions.svg"       width="240px" height="75px" />
+        <img src= "./assets/contributions.svg"       width="240px" height="75px" />
         <img src="./assets/spacer.png"      width="275px" height="15px"/>
         <img src="./assets/purugly.gif"     width="75px"  height="75px"/>
         <img src="./assets/fidgetToy.gif"   width="75px"  height="75px"/>
