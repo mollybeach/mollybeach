@@ -44,14 +44,4 @@
   
 </div>
 
-    <ul>
-        <li> <img src="./assets/mandelbrot.gif" width="75" height="75"/> </li>
-        <li> <img src="./assets/milkers.gif" width="75" height="75"/> </li>
-        <li> <img src="./assets/flower.gif" width="75" height="75"/> </li>
-        <li> <img src="./assets/purugly.gif" width="75" height="75"/> </li>
-        <li> <img src="./assets/binaryTree.gif" width="75" height="75"/> </li>
-        <li> <img src="./assets/butterfree.gif" width="75" height="75"/> </li>
-        <li> <img src="./assets/flowerGarden.gif" width="75" height="75"/> </li>
-
-    </ul>
 
