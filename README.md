@@ -23,7 +23,7 @@
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./assets/cowpic.png" width="75" height="75"/>
 </p>
-<div width="50%"  align="right">
+<div width="50%"  display="flex" align="right">
   <img src="./assets/heart.gif" width="75" height="75"/>
   <img src="./assets/horseSea.gif" width="75" height="75"/>
   <img src="./assets/mandelbrot.gif" width="75" height="75"/>
