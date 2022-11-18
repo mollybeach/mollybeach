@@ -1,10 +1,11 @@
 
 
-
+ <div> 
  <img align="left" src="./assets/commits.svg" width="90px" height="20px" /> 
      <img  align="right" src="./assets/grimLeaper.gif" width="75px" height="75px"/> 
        <img  align="right"  src="./assets/binaryTree.gif" width="75px" height="75px"/>
           <img  align="right" src="./assets/butterfree.gif" width="75px" height="75px"/>
+  </div>
 
  <div> <a href=#><img src="contributions.svg" width="240px" height="96px"  align="left"></a>
       <img  align="right" src="./assets/chikorita.gif" width="75px" height="75px"/>
