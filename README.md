@@ -6,14 +6,14 @@
 </div>
 
 
-<div display="flex" >
+<div  >
 
-<div lign="end">
+<div align="left">
   <div > a</div>
     <div > b</div>
     <div > c</div>
 </div>
-  <div display="flex" align-content="flex-right">
+  <div align="left">
   <div > d</div>
     <div > e</div>
     <div > f</div>
