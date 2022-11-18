@@ -4,8 +4,8 @@
         <img src="./assets/commits.svg"    width="100px"  height="75px"/>
         <img src="./assets/400.png"        width="450px"  height="15px"/>
         <img src="./assets/grimLeaper.gif" width="75px"   height="75px"/>
-        <img src="./assets/poke.gif"       width="75px"   height="75px"/>
         <img src="./assets/rattata.gif"    width="75px"   height="75px"/>
+        <img src="./assets/poke.gif"       width="75px"   height="75px"/>
         <img src="./assets/butterfree.gif" width="75px"   height="75px"/>
     </div>
     <div display ="inline-block">
@@ -13,7 +13,7 @@
         <img src="./assets/400.png"         width="300px"  height="15px"/>
         <img src="./assets/purugly.gif"     width="75px"   height="75px"/>
         <img src="./assets/fidgetToy.gif"   width="75px"  height="75px"/>
-        <img src="./assets/poke.gif"        width="75px"   height="75px"/>
+        <img src="./assets/virus.gif"        width="75px"   height="75px"/>
         <img src="./assets/milkers.gif"     width="75px"   height="75px"/>
     </div>
     <div display="inline-block">
