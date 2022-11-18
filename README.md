@@ -1,7 +1,7 @@
 
 
 
-<div>
+<div width="50%"
 <img src="./assets/commits.svg" width="150" height="20"/>
   <img src="./assets/grimLeaper.gif" width="75" height="75"/>
   <img src="./assets/binaryTree.gif" width="75" height="75"/>
@@ -23,7 +23,7 @@
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./assets/cowpic.png" width="75" height="75"/>
 </p>
-<div>
+<div width="50%">
   <img src="./assets/heart.gif" width="75" height="75"/>
   <img src="./assets/horseSea.gif" width="75" height="75"/>
   <img src="./assets/mandelbrot.gif" width="75" height="75"/>
