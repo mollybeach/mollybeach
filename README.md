@@ -4,11 +4,11 @@
  <img align="left" src="./assets/commits.svg" width="90px" height="20px" /> 
      <img  align="right" src="./assets/grimLeaper.gif" width="75px" height="75px"/> 
        <img  align="right"  src="./assets/binaryTree.gif" width="75px" height="75px"/>
-          <img  align="right src="./assets/butterfree.gif" width="75px" height="75px"/>
+          <img  align="right" src="./assets/butterfree.gif" width="75px" height="75px"/>
 
   <div align="left" width="50%"> <a href=#><img src="contributions.svg" width="440px" height="96px"></a>  </div>
       <img  align="right" src="./assets/chikorita.gif" width="75px" height="75px"/>
-             <img  align="right"src="./assets/eevee.gif" width="75px" height="75px"/>
+             <img  align="right" src="./assets/eevee.gif" width="75px" height="75px"/>
                <img  align="right"  src="./assets/eevee.gif" width="75px" height="75px"/>
   
  <div align="left" width="50%">  <img src="./assets/visitorCount.svg" width="90px" height="30px"/> </div>
