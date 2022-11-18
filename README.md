@@ -29,8 +29,8 @@
         <img align="right" src="./assets/growlithe.gif" width="75px"    height="75px"/>
     </div>
         <div display="inline-block">
-        <img align="left" src="./assets/spacer.png"     width="8%"  height="75x"/>
-        <img align="left" src="https://profile-counter.glitch.me/mollybeach/count.svg" width="40%"/>
+        <img align="left" src="./assets/spacer.png"     width="10%"  height="75x"/>
+        <img align="left" src="https://profile-counter.glitch.me/mollybeach/count.svg" width="35%"/>
         <img align="left" src="./assets/spacer.png"     width="2%"    height="75px"/>
         <img align="right" src="./assets/horseSea.gif"  width="75px"   height="75px"/>
         <img align="right" src="./assets/virus.gif"     width="75px"   height="75px"/>
