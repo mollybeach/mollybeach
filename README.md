@@ -1,5 +1,6 @@
 <div display="inline-block">
 <div  align="left"display="block" width="50%">
+    hi
     </div>
 <div align="right" display="block" width="50%">
     <div display="inline-block">
