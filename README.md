@@ -9,8 +9,8 @@
         <img src="./assets/butterfree.gif" width="75px"   height="75px"/>
     </div>
     <div display ="inline-block">
-        <img src= "./assets/contributions.svg" width="25%" height="75px" />
-        <img src="./assets/spacer.png"      width="25%" height="15px"/>
+        <img src= "./assets/contributions.svg" width="40%" height="75px" />
+        <img src="./assets/spacer.png"      width="10%" height="15px"/>
         <img align="right" src="./assets/purugly.gif"     width="75px"  height="75px"/>
         <img align="right" src="./assets/fidgetToy.gif"   width="75px"  height="75px"/>
         <img align="right" src="./assets/heart.gif"       width="75px"  height="75px"/>
