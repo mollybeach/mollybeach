@@ -1,7 +1,7 @@
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-        <td width="50%" align="left">
+        <td width="80%" align="left">
             <img align="left" src="./assets/commits.svg" width="90px" height="20px" />
         </td>
         <td>
