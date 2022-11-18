@@ -16,7 +16,7 @@
     </div>
     <div display="inline-block">
         <img src="./assets/visitorCount.svg" width="100px" height="40px"/> 
-        <img src="./assets/400.png"         width="450px"  height="15px"/>
+        <img src="./assets/400.png"         width="300px"  height="15px"/>
         <img src="./assets/flowerGarden.gif"  width="75px" height="75px"/>
         <img src="./assets/gene.gif"        width="75px"   height="75px"/>
         <img src="./assets/growlithe.gif"   width="75px"   height="75px"/>
