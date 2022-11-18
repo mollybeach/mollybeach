@@ -12,7 +12,7 @@
    <img align="left" src="./assets/visitorCount.svg" width="90px" height="30px"/> 
 
 
-  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
+  <img   align="left" src="https://profile-counter.glitch.me/mollybeach/count.svg" />
 
   
   <img align="left" src="./assets/eevee.gif" width="75px" height="75px"/>
