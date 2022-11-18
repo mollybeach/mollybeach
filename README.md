@@ -33,7 +33,6 @@
         <img align="left"   width="10%"    height="75px" src="./assets/spacer.png"/>
         <img align="left"   width="40%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/virus.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
     </div>
