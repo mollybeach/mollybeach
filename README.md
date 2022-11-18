@@ -1,9 +1,9 @@
 
 <div>
     <div display="inline-block">
-         <img align="left" src="./assets/spacer.png"     width="5"  height="75x"/>
+         <img align="left" src="./assets/spacer.png"     width="1"  height="75x"/>
         <img align="left" src="./assets/commits.svg"    width="15.0%"  height="75px"/>
-        <img align="left" src="./assets/spacer.png"     width="30%"  height="75x"/>
+        <img align="left" src="./assets/spacer.png"     width="34%"  height="75x"/>
         <img align="right" src="./assets/grimLeaper.gif" width="75px"   height="75px"/>
         <img align="right" src="./assets/rattata.gif"    width="75px"   height="75px"/>
         <img align="right" src="./assets/poke.gif"       width="75px"   height="75px"/>
