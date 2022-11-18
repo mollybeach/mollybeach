@@ -9,13 +9,7 @@ td, th {
 }
 </style>
 
-
-| Time         | Length        | Speed              | Mass         |
-| ------------ | ------------- | ------------------ | ------------ |
-| -Millisecond | Millimetre    | Kilometre per hour | Milligram    |
-| Second       | Centimetre    | Foot per second    | Gram         |
-| Minute       | Inch          | Miles per hour     | Ounce        |
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<table >
     <tr>
         <td width="80%" align="left">
             <img align="left" src="./assets/commits.svg" width="90px" height="20px" />
