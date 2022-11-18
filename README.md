@@ -1,8 +1,8 @@
 
 <div>
     <div display="inline-block">
-        <img src="./assets/commits.svg"    width="12.5%"  height="75px"/>
-        <img src="./assets/spacer.png"     width="50%"  height="15px"/>
+        <img align="left" src="./assets/commits.svg"    width="12.5%"  height="75px"/>
+        <img align="left" src="./assets/spacer.png"     width="50%"  height="15px"/>
         <img align="right" src="./assets/grimLeaper.gif" width="75px"   height="75px"/>
         <img align="right" src="./assets/rattata.gif"    width="75px"   height="75px"/>
         <img align="right" src="./assets/poke.gif"       width="75px"   height="75px"/>
