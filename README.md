@@ -13,9 +13,11 @@ Commits
   <img src="./assets/eevee.gif" width="55" height="55"/>
   <img src="./assets/flower.gif" width="55" height="55"/>
   <img src="./assets/chikorita.gif" width="55" height="55"/>
-  <img src="./assets/eevee.gif" width="55" height="55"/>
-  <img src="./assets/flower.gif" width="55" height="55"/>
-  <img src="./assets/chikorita.gif" width="55" height="55"/>
+  <img src="./assets/rattata.gif" width="55" height="55"/>
+  <img src="./assets/growlithe.gif" width="55" height="55"/>
+  <img src="./assets/heart.gif" width="55" height="55"/>
+  <img src="./assets/horseSea.gif" width="55" height="55"/>
+  <img src="./assets/butterfree.gif" width="55" height="55"/>
 
   </p>
   
