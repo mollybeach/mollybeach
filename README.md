@@ -6,7 +6,7 @@
        <img  align="right"  src="./assets/binaryTree.gif" width="75px" height="75px"/>
           <img  align="right" src="./assets/butterfree.gif" width="75px" height="75px"/>
 
-  <div align="left" width="50%"> <a href=#><img src="contributions.svg" width="440px" height="96px"></a>  </div>
+ <a href=#><img src="contributions.svg" width="440px" height="96px"  align="left"></a>
       <img  align="right" src="./assets/chikorita.gif" width="75px" height="75px"/>
              <img  align="right" src="./assets/eevee.gif" width="75px" height="75px"/>
                <img  align="right"  src="./assets/eevee.gif" width="75px" height="75px"/>
