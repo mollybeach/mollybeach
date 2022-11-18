@@ -1,7 +1,7 @@
 
 
 
-<div display="flex">
+<div display="flex" align-content="flex-start">
 <img src="./assets/commits.svg" width="150" height="20"/>
   <img src="./assets/grimLeaper.gif" width="75" height="75"/>
   <img src="./assets/binaryTree.gif" width="75" height="75"/>
