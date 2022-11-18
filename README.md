@@ -2,6 +2,7 @@
 <div>
     <div display="inline-block">
         <img align="left"   width="1%"    height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="15%"   height="100%" src="./assets/commits.svg"/>
         <img align="left"   width="34%"   height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12%"   height="75px" src="./assets/grimLeaper.gif"/>
         <img align="right"  width="12%"   height="75px" src="./assets/rattata.gif"/>
@@ -18,7 +19,7 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
     </div>
     <div display="inline-block">
-        <img align="left"   width="5%"    height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="5%"     height="75px" src="./assets/spacer.png"/>
         <img align="left"   width="15%"    height="100%" src="./assets/visitors.svg"/> 
         <img align="left"   width="10%"    height="100%" src="./assets/count.svg"/> 
         <img align="left"   width="15%"    height="75px" src="./assets/spacer.png"/>
