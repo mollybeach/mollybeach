@@ -9,7 +9,7 @@
 <div  >
 
 <div align="right">
-  <div > a</div>
+  <div ><img src="./assets/commits.svg" width="150" height="20"/> <img src="./assets/grimLeaper.gif" width="75" height="75"/> <img src="./assets/binaryTree.gif" width="75" height="75"/></div>
     <div > b</div>
     <div > c</div>
 </div>
