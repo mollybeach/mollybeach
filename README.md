@@ -24,13 +24,14 @@
     <div display="inline-block">
         <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
-        <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
+
     </div>
         <div display="inline-block">
         <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
+        <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
     </div>
 </div>
