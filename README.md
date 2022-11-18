@@ -13,7 +13,8 @@
 by
  
  </span>
-<span>hi
+<span> 
+        hi
         
         <img align="right"  width="12.5%"   height="75px" src="./assets/grimLeaper.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/rattata.gif"/>
