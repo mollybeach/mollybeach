@@ -6,9 +6,9 @@
 </div>
 
 
-<div display="flex"  flex-direction="row" align-content="flex-end">
+<div display="flex" >
 
-<div display="flex"  align-content="flex-end">
+<div lign="end">
   <div > a</div>
     <div > b</div>
     <div > c</div>
