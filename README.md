@@ -16,7 +16,6 @@ Commits
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
    <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
-   <img src="./assets/moon.png" width="75" height="75"/>
   <img src="./assets/visitorCount.svg" width="150" height="20"/>
  
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
