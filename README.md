@@ -10,7 +10,7 @@
     <div display ="inline-block">
         <img src= "contributions.svg"       width="240px" height="75px" />
         <img src="./assets/400.png"         width="300px"  height="15px"/>
-        <img src="./assets/grimLeaper.gif"  width="75px"   height="75px"/>
+        <img src="./assets/fidgetToy.gif"     width="75px"  height="75px"/>
         <img src="./assets/binaryTree.gif"  width="75px"   height="75px"/>
         <img src="./assets/butterfree.gif"  width="75px"   height="75px"/>
     </div>
@@ -26,7 +26,6 @@
         <img src="./assets/400.png"         width="450px"  height="15px"/>
         <img src="./assets/eevee.gif"         width="75px"  height="75px"/>
         <img src="./assets/flower.gif"        width="75px"  height="75px"/>
-        <img src="./assets/fidgetToy.gif"     width="75px"  height="75px"/>
         <img src="./assets/rgbToVec3Colors.gif" width="75px" height="75px"/>
     </div>
 </div>
