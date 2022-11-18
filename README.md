@@ -23,7 +23,7 @@
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./assets/cowpic.png" width="75" height="75"/>
 </p>
-<div width="50%">
+<div width="50%"  align="right">
   <img src="./assets/heart.gif" width="75" height="75"/>
   <img src="./assets/horseSea.gif" width="75" height="75"/>
   <img src="./assets/mandelbrot.gif" width="75" height="75"/>
@@ -36,11 +36,4 @@
   <img src="./assets/virus.gif" width="75" height="75"/>
   <img src="./assets/zap.gif" width="75" height="75"/>
 </div>
-  
-
-Transport | Favored by | Advantages
---- | --- | ---
-Swallow | Coconuts | Otherwise unladen
-Bicycle | Miss Gulch | Weatherproof
-X-34 landspeeder | Whiny farmboys | Cheap since the X-38 came out
 
