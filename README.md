@@ -3,8 +3,8 @@
 <div align="left" width="50%">
   <div> <img src="./assets/commits.svg" width="90" height="20"/> </div>
   <div> <a href=#><img src="contributions.svg" width="440" height="96"></a>  </div>
-  <div>  <img src="./assets/visitorCount.svg" width="90" height="30"/></div>
-  <div>  <img src="https://profile-counter.glitch.me/mollybeach/count.svg" /> </div>
+  <div>  <img src="./assets/visitorCount.svg" width="90" height="30"/> <img src="https://profile-counter.glitch.me/mollybeach/count.svg" /></div>
+
   </div>
  
   
