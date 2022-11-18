@@ -8,12 +8,12 @@
 
 <div  >
 
-<div align="left">
+<div align="right">
   <div > a</div>
     <div > b</div>
     <div > c</div>
 </div>
-  <div align="left">
+  <div align="right">
   <div > d</div>
     <div > e</div>
     <div > f</div>
