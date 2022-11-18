@@ -10,6 +10,7 @@
     <div display ="inline-block">
         <img src= "contributions.svg"       width="240px" height="75px" />
         <img src="./assets/400.png"         width="300px"  height="15px"/>
+        <img src="./assets/purugly.gif"     width="75px"   height="75px"/>
         <img src="./assets/fidgetToy.gif"   width="75px"  height="75px"/>
         <img src="./assets/poke.gif"        width="75px"   height="75px"/>
         <img src="./assets/milkers.gif"     width="75px"   height="75px"/>
