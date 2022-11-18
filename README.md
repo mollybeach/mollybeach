@@ -15,6 +15,7 @@ Commits
  </div>
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
+   <img src="./assets/visitorCount.svg"/>
   Visitor count<br>
   <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
