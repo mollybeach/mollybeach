@@ -26,7 +26,7 @@
         <img src="./assets/growlithe.gif"   width="75px"   height="75px"/>
     </div>
         <div display="inline-block">
-        <img src="./assets/400.png"        width="500px"  height="15px"/>
+        <img src="./assets/400.png"        width="520px"  height="15px"/>
         <img src="./assets/horseSea.gif"    width="75px"   height="75px"/>
         <img src="./assets/virus.gif"        width="75px"   height="75px"/>
         <img src="./assets/owl.gif"         width="75px"   height="75px"/>
