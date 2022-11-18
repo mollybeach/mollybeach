@@ -25,7 +25,7 @@
         <img align="left"   width="15%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
         <img align="right"  width="16.5%"   height="75px" src="./assets/gene.gif"/>
-        <img align="right"  width="33%"     height="75px" src="./assets/milkers.gif"/>
+        <img align="right"  width="8.5%"     height="75px" src="./assets/milkers.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
     </div>
         <div display="inline-block">
