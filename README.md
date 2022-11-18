@@ -29,7 +29,7 @@
 
 
 
-<div width="50%"  display="flex" align="right" align-content="flex-end">
+<div display="flex" align="right" flex-direction="column" align-content="flex-end">
   <img src="./assets/heart.gif" width="75" height="75"/>
   <img src="./assets/horseSea.gif" width="75" height="75"/>
   <img src="./assets/mandelbrot.gif" width="75" height="75"/>
@@ -38,7 +38,6 @@
   <img src="./assets/purugly.gif" width="75" height="75"/>
   <img src="./assets/owl.gif" width="85" height="75"/>
   <img src="./assets/rattata.gif" width="75" height="75"/>
- 
   <img src="./assets/virus.gif" width="75" height="75"/>
   <img src="./assets/zap.gif" width="75" height="75"/>
 </div>
