@@ -14,7 +14,9 @@
   <img src="./assets/gene.gif" width="35" height="75"/>
   <img src="./assets/growlithe.gif" width="75" height="75"/>
  </div>
-<p   align="left">  
+ 
+ <div  display="flex" flex-direction="column" align="left">
+
   <a href=#><img src="contributions.svg" width="440" height="96"></a>
  <img src="./assets/fidgetToy.gif" width="75" height="75"/>
    <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
@@ -22,8 +24,12 @@
  
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./assets/cowpic.png" width="75" height="75"/>
-</p>
-<div width="50%"  display="flex" align="right">
+</div>
+
+
+
+
+<div width="50%"  display="flex" align="right" align-content="flex-end">
   <img src="./assets/heart.gif" width="75" height="75"/>
   <img src="./assets/horseSea.gif" width="75" height="75"/>
   <img src="./assets/mandelbrot.gif" width="75" height="75"/>
