@@ -21,10 +21,10 @@
         <img src="./assets/butterfree.gif"  width="75px"   height="75px"/>
     </div>
         <div display="inline-block">
-        <img src="https://profile-counter.glitch.me/mollybeach/count.svg" width="100px"  height="75px"/>
+        <img src="https://profile-counter.glitch.me/mollybeach/count.svg" width="100px"  height="25px"/>
         <img src="./assets/400.png"         width="450px"  height="15px"/>
         <img src="./assets/grimLeaper.gif"  width="75px"   height="75px"/>
         <img src="./assets/binaryTree.gif"  width="75px"   height="75px"/>
-        <img src="./assets/butterfree.gif"  width="75px"   height="75px"/>
+        <img src="./assets/rgbToVec3Colors.gif" width="75px" height="75px"/>
     </div>
 </div>
