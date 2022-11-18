@@ -18,7 +18,7 @@
     </div>
     <div display="inline-block">
         <img align="left" src="./assets/visitors.svg" width="12.5%" height="100px"/> 
-        <img src="./assets/spacer.png"                     width="50%"  height="15px"/>
+        <img align="left" src="./assets/spacer.png"                     width="50%"  height="15px"/>
         <img align="right"  src="./assets/flowerGarden.gif" width="75px"   height="75px"/>
         <img align="right" src="./assets/gene.gif"        width="40px"    height="75px"/>
         <img align="right" src="./assets/milkers.gif"     width="110px"   height="75px"/>
