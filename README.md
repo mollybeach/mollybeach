@@ -1,7 +1,7 @@
 
 
 
- <img align="left" src="./assets/commits.svg" width="90px" height="20px"margin="500px" /> 
+ <img align="left" src="./assets/commits.svg" width="90px" height="20px" /> 
      <img src="./assets/grimLeaper.gif" width="75px" height="75px"/> 
    <div align="right" width="50%">
 
