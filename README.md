@@ -11,7 +11,7 @@
     </div>
     <div display ="inline-block">
         <img align="left"   width="7%"    height="75px" src="./assets/spacer.png"/>
-        <img align="left"   width="40%"   height="75px" src= "./assets/contributions.svg"/>
+        <img align="center"   width="40%"   height="75px" src= "./assets/contributions.svg"/>
         <img align="left"   width="3%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="75px"  height="75px" src="./assets/purugly.gif"/>
         <img align="right"  width="75px"  height="75px" src="./assets/fidgetToy.gif"/>
