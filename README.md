@@ -1,15 +1,6 @@
-<style>
-td, th {
-   border: none!important;
-}
-</style>
-<style>
-td, th {
-   border: none!important;
-}
-</style>
 
-<table >
+
+<table  border="9px"
     <tr>
         <td width="80%" align="left">
             <img align="left" src="./assets/commits.svg" width="90px" height="20px" />
