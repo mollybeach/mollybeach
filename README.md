@@ -20,16 +20,16 @@
         <img src="./assets/visitorCount.svg" width="12.5%" height="100px"/> 
         <img src="https://profile-counter.glitch.me/mollybeach/count.svg" width="27.5%"/>
         <img src="./assets/spacer.png"       width="10%"  height="15px"/>
-        <img src="./assets/flowerGarden.gif" width="75px"   height="75px"/>
-        <img src="./assets/gene.gif"        width="35px"    height="75px"/>
-        <img src="./assets/milkers.gif"     width="105px"   height="75px"/>
-        <img src="./assets/growlithe.gif"   width="75px"    height="75px"/>
+        <img align="right"  src="./assets/flowerGarden.gif" width="75px"   height="75px"/>
+        <img align="right" src="./assets/gene.gif"        width="35px"    height="75px"/>
+        <img align="right" src="./assets/milkers.gif"     width="105px"   height="75px"/>
+        <img align="right" src="./assets/growlithe.gif"   width="75px"    height="75px"/>
     </div>
         <div display="inline-block">
         <img src="./assets/spacer.png"      width="50%"  height="15px"/>
-        <img src="./assets/horseSea.gif"    width="75px"   height="75px"/>
-        <img src="./assets/virus.gif"       width="75px"   height="75px"/>
-        <img src="./assets/owl.gif"         width="75px"   height="75px"/>
-        <img src="./assets/zap.gif"         width="75px"   height="75px"/>
+        <img align="right" src="./assets/horseSea.gif"    width="75px"   height="75px"/>
+        <img align="right" src="./assets/virus.gif"       width="75px"   height="75px"/>
+        <img align="right" src="./assets/owl.gif"         width="75px"   height="75px"/>
+        <img align="right" src="./assets/zap.gif"         width="75px"   height="75px"/>
     </div>
 </div>
