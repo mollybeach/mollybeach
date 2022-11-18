@@ -1,7 +1,7 @@
 
 
 
-<div width="50%"
+<div width="50%">
 <img src="./assets/commits.svg" width="150" height="20"/>
   <img src="./assets/grimLeaper.gif" width="75" height="75"/>
   <img src="./assets/binaryTree.gif" width="75" height="75"/>
@@ -14,7 +14,6 @@
   <img src="./assets/gene.gif" width="35" height="75"/>
   <img src="./assets/growlithe.gif" width="75" height="75"/>
  </div>
-
 <p   align="left">  
   <a href=#><img src="contributions.svg" width="440" height="96"></a>
  <img src="./assets/fidgetToy.gif" width="75" height="75"/>
