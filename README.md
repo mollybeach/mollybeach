@@ -30,7 +30,7 @@
     </div>
         <div display="inline-block">
         <img align="left"   width="10%"   height="75px" src="./assets/spacer.png"/>
-        <img align="center"   width="20%"   height="75px" src="https://profile-counter.glitch.me/mollybeach/count.svg"/>
+        <img align="center" width="20%"   height="50px" src="https://profile-counter.glitch.me/mollybeach/count.svg"/>
         <img align="left"   width="20%"   height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="75px"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="75px"  height="75px" src="./assets/virus.gif"/>
