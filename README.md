@@ -35,6 +35,7 @@
  
   <img src="./assets/virus.gif" width="75" height="75"/>
   <img src="./assets/zap.gif" width="75" height="75"/>
+    <img src="./assets/all.gif" />
 </div>
   
 
