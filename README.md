@@ -1,7 +1,7 @@
 
 <div>
     <div display="inline-block">
-        <img align="left"   width="1%"    height="75x"  src="./assets/spacer.png"/>
+        <img align="left"   width="1%"    height="75px"  src="./assets/spacer.png"/>
         <img align="left"   width="15%"   height="75px" src="./assets/commits.svg"/>
         <img align="left"   width="34%"   height="75x"  src="./assets/spacer.png"/>
         <img align="right"  width="12%"  height="75px" src="./assets/grimLeaper.gif"/>
