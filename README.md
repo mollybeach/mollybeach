@@ -2,7 +2,7 @@
 <div>
     <div display="inline-block">
         <img src="./assets/commits.svg"    width="12.5%"  height="75px"/>
-        <img src="./assets/spacer.png"     width="60%"  height="15px"/>
+        <img src="./assets/spacer.png"     width="55%"  height="15px"/>
         <img src="./assets/grimLeaper.gif" width="75px"   height="75px"/>
         <img src="./assets/rattata.gif"    width="75px"   height="75px"/>
         <img src="./assets/poke.gif"       width="75px"   height="75px"/>
