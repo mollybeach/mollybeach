@@ -16,6 +16,7 @@ Commits
 <a href=#><img src="contributions.svg"></a>
 <p align="center"> 
   Visitor count<br>
+  <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
   <img src="https://profile-counter.glitch.me/mollybeach/count.svg" />
   <img src="./assets/cowpic.png" width="75" height="75"/>
 </p>
@@ -28,7 +29,7 @@ Commits
   <img src="./assets/purugly.gif" width="75" height="75"/>
   <img src="./assets/owl.gif" width="85" height="75"/>
   <img src="./assets/rattata.gif" width="75" height="75"/>
-  <img src="./assets/rgbToVec3Colors.gif" width="75" height="75"/>
+ 
   <img src="./assets/virus.gif" width="75" height="75"/>
   <img src="./assets/zap.gif" width="75" height="75"/>
 </div>
