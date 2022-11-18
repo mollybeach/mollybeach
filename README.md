@@ -20,7 +20,6 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
-
     </div>
     <div display="inline-block">
         <img align="left"   width="37.5%"  height="75px" src="./assets/spacer.png"/>
