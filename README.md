@@ -1,6 +1,6 @@
 
 <br/>
-Commits
+<img src="./assets/commits.svg" width="150" height="20"/>
 <div>
   <img src="./assets/grimLeaper.gif" width="75" height="75"/>
   <img src="./assets/binaryTree.gif" width="75" height="75"/>
