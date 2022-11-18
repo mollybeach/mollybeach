@@ -1,7 +1,7 @@
 
 <ul>
   <li>
-  <palign="left">
+  <p align="left">
         <img  src="./assets/commits.svg" width="90px" height="20px" /> 
     </span>
     </p>
