@@ -19,9 +19,9 @@
         <img align="right"  width="75px"  height="75px" src="./assets/mandelbrot.gif"/>
     </div>
     <div display="inline-block">
-        <img align="left"   width="5%"   height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="10%"   height="75px" src="./assets/spacer.png"/>
         <img align="left"   width="15%"   height="75px" src="./assets/visitors.svg"/> 
-        <img align="left"   width="15%"   height="75px" src="./assets/count.svg"/> 
+        <img align="left"   width="10%"   height="75px" src="./assets/count.svg"/> 
         <img align="left"   width="7%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="75px"  height="75px" src="./assets/flowerGarden.gif"/>
         <img align="right"  width="40px"  height="75px" src="./assets/gene.gif"/>
