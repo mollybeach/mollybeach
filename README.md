@@ -29,7 +29,6 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
     </div>
-    <br>
     <div>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
