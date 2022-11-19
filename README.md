@@ -12,14 +12,12 @@
         <img align="right"  width="12.5%"   height="75px" src="./assets/grimLeaper.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/rattata.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/poke.gif"/>
-    <div>
         <img align=""       width="15%"    height="100%" src="./assets/visitors.svg"/> 
         <img align=""       width="10%"    height="100%" src="./assets/count.svg"/> 
         <img align=""       width="20%"    height="100%" src="https://profile-counter.glitch.me/mollybeach/count.svg"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
-    </div>
     <div>
         <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px" </img>
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
