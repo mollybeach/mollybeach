@@ -30,7 +30,7 @@
     </div>
     <div>
     <!-- Social icons section -->
-        <p align="center" height="75px">
+        <p align="left" height="75px">
           <a href="https://www.youtube.com/c/DevProTips"><img width="6.25%" height="25px" alt="Youtube" title="Youtube" src="https://i.imgur.com/qiXu7b2.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a href="https://twitter.com/mollybeach"><img width="6.25%" height="25px" alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
@@ -45,7 +45,6 @@
         </p>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
-        <img align="left"   width="25%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
