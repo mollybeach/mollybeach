@@ -23,13 +23,7 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
     </div>
     <div>
-        <img align="left"   width="1%"    height="75px" src="./assets/spacer.png"/>
-        <span align="left"  width="100px"  height="75px">
-        <a   align="left"   width="20px"   height="20px" href="https://www.youtube.com/c/mollybeach">
-       <img  align="left"   width="20px"   height="20px" src="https://i.imgur.com/qiXu7b2.png" /></a> &#8287;&#8287;&#8287;&#8287;&#8287;
-        <a   align="left"   width="20px"   height="20px" href="https://twitter.com/allcowsgotoheaven">
-        <img align="left"   width="20px"   height="20px" src="https://i.imgur.com/OXZM1L6.png"/></a></span>
-        <img align="left"   width="37.5%"    height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
@@ -37,7 +31,12 @@
     <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
-        <img align="left"   width="37.5%"  height="75px" src="./assets/spacer.png"/>
+                <span align="left"  width="100px"  height="75px">
+        <a   align="left"   width="20px"   height="20px" href="https://www.youtube.com/c/mollybeach">
+       <img  align="left"   width="20px"   height="20px" src="https://i.imgur.com/qiXu7b2.png" /></a> &#8287;&#8287;&#8287;&#8287;&#8287;
+        <a   align="left"   width="20px"   height="20px" href="https://twitter.com/allcowsgotoheaven">
+        <img align="left"   width="20px"   height="20px" src="https://i.imgur.com/OXZM1L6.png"/></a></span>
+        <img align="left"   width="12.5%"  height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
