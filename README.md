@@ -12,12 +12,7 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
         <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px" </img>
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
-                <img align="left"  width="20px"   height="20px"
+                        <img align="left"  width="20px"   height="20px"
             src="https://raw.githubusercontent.com/github/explore/5c058a388828bb5fde0bcafd4bc867b5bb3f26f3/topics/graphql/graphql.png">  
         <img align="left" width="20px"   height="20px"
              src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png">    
@@ -31,6 +26,11 @@
              src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png">
         <img align="left" width="20px"   height="20px"
              src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png">
+        <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/bordercollie.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/goat.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
