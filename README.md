@@ -30,7 +30,10 @@
     </div>
     <div>
     <!-- Social icons section -->
-        <p align="left" height="75px">
+
+        <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
+        <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
+                <p align="left" height="75px">
           <a href="https://www.youtube.com/c/DevProTips"><img width="6.25%"  alt="Youtube" title="Youtube" src="https://i.imgur.com/qiXu7b2.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a href="https://twitter.com/mollybeach"><img width="6.25%"  alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
@@ -43,8 +46,6 @@
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a href="http://eyl327.mywebcommunity.org/promos/"><img width="6.25%" alt="Free Stuff" title="Free gifts for you" src="https://i.imgur.com/0uVwkoZ.png"/></a>
         </p>
-        <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
-        <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
