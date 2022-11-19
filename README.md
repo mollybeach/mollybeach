@@ -31,18 +31,18 @@
     <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
-                <p align="left" height="75px">
-          <a href="https://www.youtube.com/c/DevProTips"><img width="6.25%" height="10px" alt="Youtube" title="Youtube" src="https://i.imgur.com/qiXu7b2.png"/></a>
+                <p align="left" height="75px" width="20%">
+          <a href="https://www.youtube.com/c/DevProTips"><img width="6.25%" height="20px" alt="Youtube" title="Youtube" src="https://i.imgur.com/qiXu7b2.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a href="https://twitter.com/mollybeach"><img width="6.25%" height="10px"  alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
+          <a href="https://twitter.com/mollybeach"><img width="6.25%" height="20px"  alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a href="https://discord.gg/fPrdqh3Zfu" alt="Discord" title="Dev Pro Tips Discord Server"><img width="6.25%"  height="10px"  src="https://i.imgur.com/OViZO8J.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a href="https://dev.to/mollybeach"><img width="6.25%" height="10px"   alt="Dev.to" title="mollybeach Dev.to" src="https://i.imgur.com/mVm29vK.png"></a>
+          <a href="https://dev.to/mollybeach"><img width="6.25%" height= 20px"   alt="Dev.to" title="mollybeach Dev.to" src="https://i.imgur.com/mVm29vK.png"></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a href="https://ko-fi.com/jlawrence"><img width="6.25%""height="10px"    alt="Ko-fi" title="Buy me a coffee" src="https://i.imgur.com/PpLeD3K.png"/></a>
+          <a href="https://ko-fi.com/jlawrence"><img width="6.25%""height="20px"    alt="Ko-fi" title="Buy me a coffee" src="https://i.imgur.com/PpLeD3K.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a href="http://eyl327.mywebcommunity.org/promos/"><img height="10px"  width="6.25%" alt="Free Stuff" title="Free gifts for you" src="https://i.imgur.com/0uVwkoZ.png"/></a>
+          <a href="http://eyl327.mywebcommunity.org/promos/"><img height="20px"  width="6.25%" alt="Free Stuff" title="Free gifts for you" src="https://i.imgur.com/0uVwkoZ.png"/></a>
         </p>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
