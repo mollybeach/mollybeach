@@ -23,7 +23,8 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
     </div>
     <div>
-        <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="12.5"   height="75px" src="./assets/tree.png"/>
+        <img align="left"   width="37.5%"  height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
