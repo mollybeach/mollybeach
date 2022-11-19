@@ -7,13 +7,11 @@
         <img align="center" height="20px"                                                                         src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png">
         <img align="center" height="20px"
              src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png">
-    <div>
         <img align="left"   width="10%"     height="75px" src="./assets/cowpic.png"/>
         <img align="center" width="35%"     height="75px" src= "./assets/contributions.svg"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/grimLeaper.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/rattata.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/poke.gif"/>
-    </div>
     <div>
         <img align=""       width="15%"    height="100%" src="./assets/visitors.svg"/> 
         <img align=""       width="10%"    height="100%" src="./assets/count.svg"/> 
