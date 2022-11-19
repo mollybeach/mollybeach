@@ -31,7 +31,7 @@
     <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
-          <p align="left" height="75px" width="100px">
+          <p align="center" height="75px" width="100px">
           <a width="20px"height="20px" href="https://www.youtube.com/c/DevProTips"><img width="20px"height="20px" alt="Youtube" title="Youtube" src="https://i.imgur.com/qiXu7b2.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="20px"height="20px"" href="https://twitter.com/mollybeach"><img width="20px"height="20px"  alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
