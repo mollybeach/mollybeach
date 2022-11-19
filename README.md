@@ -1,7 +1,7 @@
 
 <div> <img align=""       width="15%"     height="100%" src="./assets/commits.svg"/>
     <div>
-        <img align=""   width="12.5%"  height="75px" src="./assets/cowpic.png"/>
+        <img align=""   width="10%"  height="75px" src="./assets/cowpic.png"/>
         <img align=""       width="35%"     height="75px" src= "./assets/contributions.svg"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/grimLeaper.gif"/>
         <img align="right"  width="12.5%"   height="75px" src="./assets/rattata.gif"/>
