@@ -35,8 +35,6 @@
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="20px"height="20px"" href="https://twitter.com/allcowsgotoheaven"><img width="20px"height="20px"  alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a width="20px"height="20px" href="https://discord.gg/fPrdqh3Zfu" alt="Discord" title="Dev Pro Tips Discord Server"><img width="20px"height="20px" src="https://i.imgur.com/OViZO8J.png"/></a>
-          &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="20px"height="20px" href="https://dev.to/mollybeach"><img width="20px"height="20px" alt="Dev.to" title="mollybeach Dev.to" src="https://i.imgur.com/mVm29vK.png"></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
         </span>
