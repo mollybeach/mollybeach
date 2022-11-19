@@ -42,7 +42,7 @@
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="10px"height="10px" href="https://ko-fi.com/jlawrence"><img width="10px"height="10px"    alt="Ko-fi" title="Buy me a coffee" src="https://i.imgur.com/PpLeD3K.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a width="10px"height="10px" href="http://eyl327.mywebcommunity.org/promos/"><img height="20px"  width="6.25%" alt="Free Stuff" title="Free gifts for you" src="https://i.imgur.com/0uVwkoZ.png"/></a>
+          <a width="10px"height="10px" href="http://eyl327.mywebcommunity.org/promos/"><img width="10px"height="10px" alt="Free Stuff" title="Free gifts for you" src="https://i.imgur.com/0uVwkoZ.png"/></a>
         </p>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
