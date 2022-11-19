@@ -24,7 +24,7 @@
     </div>
     <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/goat.png"/>
-        <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="25%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
