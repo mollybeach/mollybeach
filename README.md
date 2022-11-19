@@ -2,10 +2,10 @@
 <div>
     <div height="75px">
         <img align=""       width="15%"     height="100%" src="./assets/commits.svg"/>
-        <img align=""       width="35%"     height="75px" src= "./assets/contributions.svg"/>
-        <img align="right"  width="12.5%"   height="75px" src="./assets/grimLeaper.gif"/>
-        <img align="right"  width="12.5%"   height="75px" src="./assets/rattata.gif"/>
-        <img align="right"  width="12.5%"   height="75px" src="./assets/poke.gif"/>
+        <img align=""       width="35%"     height="100%" src= "./assets/contributions.svg"/>
+        <img align="right"  width="12.5%"   height="100%" src="./assets/grimLeaper.gif"/>
+        <img align="right"  width="12.5%"   height="100%" src="./assets/rattata.gif"/>
+        <img align="right"  width="12.5%"   height="100%" src="./assets/poke.gif"/>
     </div>
     <div height="75px"> 
         <img align=""       width="15%"    height="100%" src="./assets/visitors.svg"/> 
