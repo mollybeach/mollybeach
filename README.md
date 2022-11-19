@@ -18,18 +18,13 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
-    <div>
         <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px" </img>
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
-    </div>
-    <div>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
-    </div>
-    <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/bordercollie.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/goat.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
@@ -38,4 +33,3 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/poppy.png"/>
-    </div>
