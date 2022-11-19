@@ -30,7 +30,8 @@
     </div>
     <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
-        <img align="left"   width="37.5%"  height="75px" src="./assets/spacer.png"/>
+        <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
+        <img align="left"   width="25%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
