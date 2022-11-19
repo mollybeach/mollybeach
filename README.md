@@ -29,8 +29,6 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
     </div>
     <div>
-    <!-- Social icons section -->
-
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
                 <p align="left" height="75px">
