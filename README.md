@@ -31,7 +31,7 @@
     <div>
         <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
-                <span align="left"  width="100px"  height="75px">
+       <span align="left"   width="100px"  height="75px">
         <a   align="left"   width="20px"   height="20px" href="https://www.youtube.com/c/mollybeach">
        <img  align="left"   width="20px"   height="20px" src="https://i.imgur.com/qiXu7b2.png" /></a> &#8287;&#8287;&#8287;&#8287;&#8287;
         <a   align="left"   width="20px"   height="20px" href="https://twitter.com/allcowsgotoheaven">
