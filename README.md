@@ -16,6 +16,7 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
     </div>
+    <img src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px)](https://git.io/streak-stats" </img>
     <div>
         <img align="left"   width="50%"    height="75px" src="./assets/spacer.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
@@ -34,5 +35,5 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
     </div>
-        <img src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px)](https://git.io/streak-stats" </img>
+        
 </div>
