@@ -1,5 +1,6 @@
-[![GitHub Streak](https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px)](https://git.io/streak-stats)
-<div> <img align=""       width="15%"     height="100%" src="./assets/commits.svg"/>
+
+<div> 
+    <img align=""       width="15%"     height="100%" src="./assets/commits.svg"/>
     <div>
         <img align=""   width="10%"  height="75px" src="./assets/cowpic.png"/>
         <img align=""       width="35%"     height="75px" src= "./assets/contributions.svg"/>
@@ -33,4 +34,5 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
     </div>
-
+        <img src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px)](https://git.io/streak-stats" </img>
+</div>
