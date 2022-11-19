@@ -31,7 +31,7 @@
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="20px"height="20px" href="https://dev.to/mollybeach"><img width="20px"height="20px" alt="Dev.to" title="mollybeach Dev.to" src="https://i.imgur.com/mVm29vK.png"></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a width="20px"height="20px" href="https://ko-fi.com/jlawrence"><img width="20px"height="20px"   alt="Ko-fi" title="Buy me a coffee" src="https://i.imgur.com/PpLeD3K.png"/></a>
+          <a width="20px"height="20px" href="https://ko-fi.com/mollybeach"><img width="20px"height="20px"   alt="Ko-fi" title="Buy me a coffee" src="https://i.imgur.com/PpLeD3K.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="20px"height="20px" href="http://eyl327.mywebcommunity.org/promos/"><img width="20px"height="20px" alt="Free Stuff" title="Free gifts for you" src="https://i.imgur.com/0uVwkoZ.png"/></a>
         <img align="left"   width="30%"  height="75px" src="./assets/spacer.png"/>
