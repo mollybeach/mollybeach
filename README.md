@@ -35,8 +35,6 @@
           &#8287;&#8287;&#8287;&#8287;&#8287;
           <a width="20px"height="20px"" href="https://twitter.com/allcowsgotoheaven"><img width="20px"height="20px"  alt="Twitter" title="Twitter" src="https://i.imgur.com/OXZM1L6.png"/></a>
           &#8287;&#8287;&#8287;&#8287;&#8287;
-          <a width="20px"height="20px" href="https://dev.to/mollybeach"><img width="20px"height="20px" alt="Dev.to" title="mollybeach Dev.to" src="https://i.imgur.com/mVm29vK.png"></a>
-          &#8287;&#8287;&#8287;&#8287;&#8287;
         </span>
         <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
