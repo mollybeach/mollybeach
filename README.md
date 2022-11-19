@@ -33,4 +33,5 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
     </div>
+    [![GitHub Streak](https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&hide_border_true&border_radius=30&date_format=%5BY.%5Dn.j&width=100px)](https://git.io/streak-stats)
 </div>
