@@ -1,4 +1,4 @@
-<img         align=""       width="15%"    height="100%" src="./assets/commits.svg"/>
+ <kbd><img         align=""       width="15%"    height="100%" src="./assets/commits.svg"/>
         <img align="left"   width="10%"    height="75px" src="./assets/cowpic.png"/>
         <img align="left"   width="35%"    height="75px" src= "./assets/contributions.svg"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/grimLeaper.gif"/>
@@ -13,7 +13,7 @@
         <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px" </img>
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
-        <kbd><img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/></kbd>
+       <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
@@ -39,4 +39,4 @@
         <img align="left"   width="20px"   height="20px"                                                                        
              src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png">
         <img align="left"   width="20px"   height="20px"
-             src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png">
+             src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></kbd>
