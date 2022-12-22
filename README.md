@@ -19,7 +19,7 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
-        <table><tr><td align="top" width="50%">
+        <table><tr><td align="left" width="50%">
                 <img     src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j" </img>
         </tr></table> 
 <table><tr><td valign="top" width="50%">
