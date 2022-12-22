@@ -40,3 +40,7 @@
            src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png"></img>
         <img align="left"   width="20px"   height="20px"
            src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></img>
+<label for="name">Name (4 to 8 characters):</label>
+
+<input type="text" id="name" name="name" required
+       minlength="4" maxlength="8" size="10">
