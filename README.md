@@ -40,13 +40,8 @@
         <img align="left"   width="20px"   height="20px"
            src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></img>
         
-
-<h2 align="center"> 💼 Languages and Tools</h2>
-
-
-
-
-
+<table><tr><td valign="top" width="50%">
+        <h2 align="center"> 💼 Languages and Tools</h2>
 <br />
 <img src="https://img.shields.io/badge/-javascript-F7DF1E?&style=for-the-badge&logo=javascript&logoColor=black" />
 <img src="https://img.shields.io/badge/-ReactJS-grey?&style=for-the-badge&logo=react&logoColor=61DAFB" />
