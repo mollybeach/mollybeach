@@ -10,7 +10,6 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
-        <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px" </img>
         <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
        <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
