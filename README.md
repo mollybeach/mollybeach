@@ -68,3 +68,32 @@
 
 <br />
 
+        
+<table><tr><td valign="top" width="50%">
+        <h2 align="center"> 💼 Languages and Tools</h2>
+<br />
+  <img align="left"   width="10%"    height="75px" src="./assets/cowpic.png"/>
+        <img align="left"   width="35%"    height="75px" src= "./assets/contributions.svg"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/grimLeaper.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/rattata.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/poke.gif"/>
+       <img align="left"    width="15%"    height="100%" src="./assets/visitors.svg"/> 
+        <img align="left"   width="10%"    height="100%" src="./assets/count.svg"/> 
+        <img align="left"   width="20%"    height="100%" src="https://profile-counter.glitch.me/mollybeach/count.svg"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
+        <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
+<!--
+<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" />
+<img src="https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white" />
+<img src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" />
+-->
+  
+</td><td align="top" width="50%">
+  
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mollybeach&layout=compact&theme=radical" width="500" />
+  
+</tr></tr></table> 
+
+<br />
+
