@@ -21,8 +21,8 @@
         <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
         <img align="left"   width="5%"     height="75px"    src="./assets/spacer.png"/>
-        <table><tr><td valign="top" width="50%">
-                <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j" </img>
+        <table><tr><td align="top" width="50%">
+                <img    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j" </img>
         </tr></table> 
 <table><tr><td valign="top" width="50%">
         <h2 align="center"> 💼 Languages and Tools</h2>
