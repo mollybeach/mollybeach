@@ -22,9 +22,9 @@
         <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
         <img align="left"   width="5%"     height="75px"    src="./assets/spacer.png"/>
         <table><tr><td valign="top" width="50%">
-<table><tr><td valign="top" width="50%">
                 <img align="left"   width="50%"    height="125px" src="https://streak-stats.demolab.com/?user=mollybeach&theme=tokyonight&border_radius=30&date_format=%5BY.%5Dn.j&width=100px" </img>
         </tr></table> 
+<table><tr><td valign="top" width="50%">
         <h2 align="center"> 💼 Languages and Tools</h2>
 <br />
 <img src="https://img.shields.io/badge/-javascript-F7DF1E?&style=for-the-badge&logo=javascript&logoColor=black" />
