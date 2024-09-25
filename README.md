@@ -61,7 +61,7 @@
   
 </td><td align="top" width="50%">
   
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mollybeach&layout=compact&theme=radical" width="500" />
+
   
 </tr></tr></table> 
 
