@@ -22,12 +22,53 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
+    company: "BLOCKMEDIA",
+    logo: `${process.env.PUBLIC_URL}/images/blockmedia.png`,
+    roles: [
+      {
+        title: "SENIOR SOFTWARE ENGINEER, GO RUST",
+        date: "MAY 2025 - PRESENT",
+        location: "REMOTE",
+        details: [
+          "Developed protocol-level architecture for a custom Layer 1 blockchain integrating federated AI model coordination into consensus",
+          "Designed transaction flows for secure model submission, validation, and on-chain reward attribution custom data types cryptographic verification",
+          "Designed and optimized backend APIs with Express.js, Firebase Firestore, and GraphQL for scalable and secure data handling",
+          "Contributed to cross-language infrastructure in Go and Rust, enhancing modular consensus logic and decentralized computation pathways",
+          "Built testing pipelines and simulations for validator behavior, model convergence, and performance scoring in a distributed training environment",
+          "Collaborated with engineers across AI, cryptography, and distributed systems to ensure protocol integrity and validator incentives"
+        ],
+        projects: [],
+        skills: ["Go", "Rust", "PyTorch", "Solidity", "Docker", "Hardhat", "Federated Learning", "Cryptography", "EVM Forks", "Protocol Design", "AI"]
+      }
+    ]
+  },
+  {
+    company: "BRKT",
+    logo: `${process.env.PUBLIC_URL}/images/brkt.png`,
+    roles: [
+      {
+        title: "SOFTWARE ENGINEER, WEB3",
+        date: "JAN 2025 - APRIL 2025",
+        location: "REMOTE",
+        details: [
+          "Developed a blockchain-powered competitive gaming and prediction market platform with smart contract-based betting and prize distribution",
+          "Built a responsive Web3 UI using Next.js, React, TypeScript, and integrated wallet connectivity with MetaMask and EVM-compatible wallets",
+          "Designed and optimized backend APIs with Express.js, Firebase Firestore, and GraphQL for scalable and secure data handling",
+          "Architected Solidity trustless betting mechanisms, ensuring fairness and automation of payouts",
+          "Integrated Ethers.js Aptos SDK for seamless smart contract interactions, enabling secure betting prize distribution"
+        ],
+        projects: [],
+        skills: ["Next.js", "React", "TypeScript", "Solidity", "Ethereum", "Aptos", "Ethers.js", "Express.js", "Firebase Firestore", "GraphQL", "Web3 Integration"]
+      }
+    ]
+  },
+  {
     company: "PARADES",
     logo: `${process.env.PUBLIC_URL}/images/paradessquare.png`,
     roles: [
       {
         title: "SOFTWARE ENGINEER",
-        date: "JAN 2024 - PRESENT",
+        date: "JAN 2024 - DEC 2024",
         location: "REMOTE",
         details: [
           "Lead development of scalable services across mobile and backend platforms",
