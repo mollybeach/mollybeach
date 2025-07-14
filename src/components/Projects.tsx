@@ -53,7 +53,7 @@ const projects: Project[] = [
   {
     title: "LiveStakes",
     date: "July 2025-Present",
-    description: "LiveStakes is an ETHGlobal Cannes Finalist real-time prediction market and livestream dashboard for hackathons. View live project demos, place on-chain predictions, and earn crypto rewards for accurate forecasts. All interactions are powered by smart contracts and decentralized video infrastructure.",
+    description: "LiveStakes is an ETHGlobal Cannes Finalist 🏆 real-time prediction market and livestream dashboard for hackathons. View live project demos, place on-chain predictions, and earn crypto rewards for accurate forecasts. All interactions are powered by smart contracts and decentralized video infrastructure.",
     technologies: ["Next.js 14", "React 18", "Cadence", "Flow", "Hedera Agent Kit", "WebRTC", "PostgreSQL", "Prisma", "Privy", "Turborepo"],
     microlink: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1752513739/livestakes_preview_axlszl.png",
     link: "https://www.livestakes.fun/",
