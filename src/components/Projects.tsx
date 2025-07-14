@@ -40,11 +40,80 @@ interface Project {
     uiLibraries?: string[];
     tools?: string[];
     devTools?: string[];
+    auth?: string[];
+    ui?: string[];
+    analytics?: string[];
   };
 }
 
 
 const projects: Project[] = [
+  {
+    title: "Hookt",
+    date: "Jan 2025-Present",
+    description: "Hookt is a Web3-powered 'Tinder for Predictions' — a swipe-based competitive betting platform where users create and join competitions, place bets on real-world events, and track their winnings transparently via blockchain.",
+    technologies: ["Next.js 14", "React 18", "TypeScript", "Ethers.js", "Aptos SDK", "Firebase", "Tailwind CSS", "Biconomy", "Magic.link", "Viem"],
+    microlink: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1752513183/hookt_preview_ijtxrs.jpg",
+    link: "https://hookt.app/",
+    previewType: "image",
+    overview: "A swipe-based competitive betting platform with blockchain transparency",
+    keyFeatures: [
+      {
+        title: "Swipe to Predict",
+        description: "Users swipe on outcomes like stock movements, sports results, elections, and more — just like using a dating app.",
+      },
+      {
+        title: "Create or Join Competitions",
+        description: "Start your own prediction pools or compete in ongoing events with transparent blockchain recording.",
+      },
+      {
+        title: "Blockchain-Powered Transparency",
+        description: "Bets and winnings are recorded on Ethereum and Aptos blockchains for complete transparency.",
+      },
+      {
+        title: "Earn Rewards",
+        description: "Users win crypto, crowns, and leaderboard prizes based on their prediction performance.",
+      },
+      {
+        title: "Gas-Optimized Betting",
+        description: "Gas fees are minimized and handled through platform features like Biconomy Paymaster.",
+      },
+      {
+        title: "Multi-Chain Support",
+        description: "Supports both Ethereum and Aptos blockchains for diverse betting options.",
+      },
+      {
+        title: "Real-time Analytics",
+        description: "Track performance with Amplitude analytics and detailed betting statistics.",
+      },
+    ],
+    installation: {
+      steps: [
+        {
+          command: "npm install",
+          description: "Install project dependencies",
+        },
+        {
+          command: "npm run dev",
+          description: "Start the development server on localhost:3002",
+        },
+      ],
+    },
+    screenshots: [
+      { url: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1752513183/hookt_preview_ijtxrs.jpg", alt: "Hookt App Preview" }
+    ],
+    status: "In Development",
+    techStack: {
+      frontend: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
+      backend: ["Firebase", "Express.js", "ts-node"],
+      blockchain: ["Ethers.js", "Viem", "Aptos SDK", "Biconomy"],
+      auth: ["Magic.link", "MetaMask", "WalletConnect"],
+      ui: ["Framer Motion", "GSAP", "Radix UI", "NextUI"],
+      analytics: ["Amplitude"],
+      deployment: ["Vercel"],
+      tools: ["Firebase Admin SDK", "Firestore", "NoSQL"]
+    }
+  },
   {
     title: "TwinAI",
     date: "Jan 2025-Present",
