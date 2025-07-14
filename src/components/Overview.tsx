@@ -33,7 +33,7 @@ const Overview: React.FC = () => {
       <div className="flex items-center gap-6 mb-6">
         <div className="flex-1">
           <h1 className="text-3xl font-bold text-gray-900">Molly Beach</h1>
-          <p className="text-lg text-gray-600 mb-4">Software Engineer</p>
+          <p className="text-lg text-gray-600 mb-4">Senior Full-Stack Engineer – Blockchain, AI & Web3 Systems</p>
           
           {/* Social Links */}
           <div className="flex gap-3">
@@ -85,20 +85,36 @@ const Overview: React.FC = () => {
       {/* Overview content */}
       <div className="space-y-4">
         <p className="text-gray-700 leading-relaxed">
-        Hello! My name is Molly, and I'm a full-stack software engineer from Seattle, specializing in TypeScript, React, Python, SwiftUI, Scala, Java, and blockchain technologies. My expertise spans both frontend and backend development, as well as blockchain integration, allowing me to build scalable, high-performance applications and distributed systems.
+          I'm a Senior Full-Stack Engineer focused on building decentralized systems at the intersection of blockchain, AI, and secure compute. With experience spanning smart contract engineering, distributed infrastructure, federated model coordination, and full-stack product delivery, I specialize in solving hard problems across Web3, AI/ML, and consensus-layer architecture.
+        </p>
+        
+        <p className="text-gray-700 leading-relaxed">
+          I help design custom Layer 1 blockchain protocols that integrate federated learning directly into consensus. My work spans Rust and Go backend development, cryptographic model validation flows, custom transaction types, and AI-aligned incentive mechanisms for validators. I also contribute to protocol simulation pipelines, ensuring fairness, determinism, and scalability across decentralized training networks.
+        </p>
+        
+        <p className="text-gray-700 leading-relaxed">
+          Beyond infrastructure, I'm passionate about the creative side of emerging tech including generative 3D graphics, shader programming, and immersive environments. I've built interactive metaverse experiences and AI-enhanced visualization tools using Three.js, GLSL, and Unity, blending frontend art with backend engineering to push visual and experiential boundaries in decentralized apps.
         </p>
         
         <div className="flex flex-wrap gap-2">
-        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Javascript</span>
-        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">React</span>
-        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">TypeScript</span>
-        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Python</span>
-        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Solidity</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Solidity</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Go</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Rust</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">React</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">TypeScript</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">JavaScript</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Python</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Swift</span>
           <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Blockchain</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">AWS</span>
           <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Web3</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">PostgreSQL</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">AI/ML</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Three.js</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">GLSL</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Hardhat</span>
           <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Next.js</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">AWS</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Azure</span>
+          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">GCP</span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
