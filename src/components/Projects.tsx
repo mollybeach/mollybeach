@@ -43,11 +43,79 @@ interface Project {
     auth?: string[];
     ui?: string[];
     analytics?: string[];
+    ai?: string[];
+    database?: string[];
   };
 }
 
 
 const projects: Project[] = [
+  {
+    title: "LiveStakes",
+    date: "July 2025-Present",
+    description: "LiveStakes is an ETHGlobal Cannes Finalist real-time prediction market and livestream dashboard for hackathons. View live project demos, place on-chain predictions, and earn crypto rewards for accurate forecasts. All interactions are powered by smart contracts and decentralized video infrastructure.",
+    technologies: ["Next.js 14", "React 18", "Cadence", "Flow", "Hedera Agent Kit", "WebRTC", "PostgreSQL", "Prisma", "Privy", "Turborepo"],
+    microlink: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1752513739/livestakes_preview_axlszl.png",
+    link: "https://www.livestakes.fun/",
+    previewType: "image",
+    overview: "Real-time prediction markets for hackathon projects with AI-powered betting",
+    keyFeatures: [
+      {
+        title: "Live Project Streaming",
+        description: "Teams broadcast live demos through WebRTC while viewers watch every ETHGlobal hackathon project in real time.",
+      },
+      {
+        title: "AI-Powered Betting Markets",
+        description: "Hedera Agent Kit analyzes livestream environment and voice data to automatically create betting markets and predict winners.",
+      },
+      {
+        title: "On-Chain Predictions",
+        description: "Place predictions on which projects will win prizes with dynamic CPMM pricing on Flow blockchain.",
+      },
+      {
+        title: "Real-time Odds Adjustment",
+        description: "Odds adjust based on AI insights and viewer sentiment, with re-allocation positions before AI makes final decisions.",
+      },
+      {
+        title: "Instant Payouts",
+        description: "When AI makes final decisions, Flow blockchain contracts settle and payout bettors instantly.",
+      },
+      {
+        title: "Voice & Environment Analysis",
+        description: "AI processes voice and environment data for automated winner prediction and market creation.",
+      },
+      {
+        title: "Real-time Statistics",
+        description: "Track bet volume, price movement, and AI confidence scores via PostgreSQL database.",
+      },
+    ],
+    installation: {
+      steps: [
+        {
+          command: "make setup",
+          description: "Install dependencies and start database",
+        },
+        {
+          command: "make dev",
+          description: "Start all services in development mode",
+        },
+      ],
+    },
+    screenshots: [
+      { url: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1752513739/livestakes_preview_axlszl.png", alt: "LiveStakes App Preview" }
+    ],
+    status: "In Development",
+    techStack: {
+      frontend: ["Next.js 14", "React 18", "TailwindCSS", "shadcn/ui", "Flow Client Library"],
+      backend: ["Express.js", "Node 18", "Socket.io", "WebRTC"],
+      blockchain: ["Cadence", "Flow", "Flow CLI", "Flow Emulator"],
+      ai: ["Hedera Agent Kit", "Voice Analysis", "Environment Processing"],
+      database: ["PostgreSQL", "Prisma ORM"],
+      auth: ["Privy", "GitHub OAuth"],
+      deployment: ["Turborepo", "GitHub Actions", "Vercel", "Flow Testnet"],
+      tools: ["Makefile", "Docker", "Terraform"]
+    }
+  },
   {
     title: "Hookt",
     date: "Jan 2025-Present",
