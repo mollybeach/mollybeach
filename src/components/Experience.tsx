@@ -26,7 +26,7 @@ const experiences: ExperienceItem[] = [
     logo: `${process.env.PUBLIC_URL}/images/blockmedia.png`,
     roles: [
       {
-        title: "SENIOR SOFTWARE ENGINEER, GO RUST",
+        title: "PRINCIPAL SOFTWARE ENGINEER, GO RUST",
         date: "MAY 2025 - PRESENT",
         location: "REMOTE",
         details: [

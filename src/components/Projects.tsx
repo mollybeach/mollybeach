@@ -51,6 +51,146 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "HedgePod",
+    date: "Nov 2025-Present",
+    description: "🦔🫛 HedgePod is a World mini app that solves crypto's biggest UX problem: chain fragmentation. Autonomous cross-chain DeFi that makes 23M World App users their own hedge fund. Deposit once. AI agents automatically rebalance across 8+ chains for optimal yield. Gasless. Chain-abstracted. Human-readable. Built for non-crypto users.",
+    technologies: ["Next.js 14", "TypeScript", "Solidity 0.8.24", "Hardhat 3", "LayerZero", "Uniswap v4", "World MiniKit", "Privy", "1inch", "Pyth", "Chainlink CCIP"],
+    microlink: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1763814257/hedgepod_preview_ccjg8q.png",
+    link: "https://hedgepod.vercel.app/",
+    previewType: "image",
+    overview: "Autonomous cross-chain DeFi yield optimizer for World App's 23M users",
+    keyFeatures: [
+      {
+        title: "One-Click Deposits",
+        description: "Users deposit USDC/ETH/USDT once on any chain and receive AutoYield Tokens that represent their position.",
+      },
+      {
+        title: "AI-Powered Rebalancing",
+        description: "Autonomous AI agents monitor yields across 8+ chains in real-time and move funds via LayerZero for optimal positioning.",
+      },
+      {
+        title: "Gasless Experience",
+        description: "All transactions are gasless using Privy gas sponsorship, making DeFi accessible to non-crypto users.",
+      },
+      {
+        title: "Cross-Chain Optimization",
+        description: "Agents execute swaps through 1inch when profitable and use dynamic Uniswap v4 hooks that adjust to volatility.",
+      },
+      {
+        title: "Chain Abstraction",
+        description: "Users never need to know about chains, RPCs, or bridges. Everything is abstracted away through World MiniKit.",
+      },
+      {
+        title: "Human-Readable Interface",
+        description: "ENS resolution shows jane.eth instead of 0x addresses. Portfolio dashboard via Octav widget provides clear insights.",
+      },
+      {
+        title: "Multi-Chain Deployment",
+        description: "Deployed on World Chain, Base, Celo, Zircuit, and Polygon with LayerZero OFT standard for seamless cross-chain transfers.",
+      },
+    ],
+    installation: {
+      steps: [
+        {
+          command: "npm install",
+          description: "Install project dependencies",
+        },
+        {
+          command: "npx hardhat compile",
+          description: "Compile smart contracts",
+        },
+        {
+          command: "npm run deploy:all",
+          description: "Deploy contracts to all chains",
+        },
+        {
+          command: "cd frontend && npm run dev",
+          description: "Start frontend development server",
+        },
+      ],
+    },
+    screenshots: [
+      { url: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1763813760/hedgepod-logo_khb4xo.png", alt: "HedgePod App Preview" }
+    ],
+    status: "In Development",
+    techStack: {
+      frontend: ["Next.js 14", "TypeScript", "TailwindCSS", "World MiniKit", "Privy SDK", "wagmi", "Octav"],
+      backend: ["Node.js", "TypeScript", "Coinbase CDP SDK", "Pyth Hermes API", "1inch API"],
+      blockchain: ["Solidity 0.8.24", "Hardhat 3", "OpenZeppelin", "LayerZero OFT", "Uniswap v4", "Chainlink CCIP"],
+      deployment: ["Vercel", "Railway", "Alchemy", "World Chain", "Base", "Celo", "Zircuit", "Polygon"],
+      tools: ["ENS", "x402 Authorization", "Server Wallets"]
+    }
+  },
+  {
+    title: "Praxos",
+    date: "Nov 2025-Present",
+    description: "🥇 1st Place Winner 🏆 Rayls Hackathon Buenos Aires 🇦🇷 🏆 🔐📈 Praxos is a vault-generation engine that transforms regulated financial products (RWAs) issued by institutions on Rayls private nodes into AI-assembled ERC-4626 vaults. Each institution (Bank A, Bank B, Bank C) operates a private Rayls node and issues ERC-3643-compliant RWA tokens. The Praxos AI Engine analyzes these tokenized assets, performs risk analysis and allocation optimization, then creates diversified yield-bearing vaults with personalized suggestions for users.",
+    technologies: ["Next.js", "React", "TypeScript", "Solidity", "Hardhat", "Python", "ERC-4626", "ERC-3643", "Rayls", "TailwindCSS", "Wagmi", "RainbowKit"],
+    microlink: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1763814185/praxos_preview_m6tlcq.png",
+    link: "https://praxos.vercel.app/",
+    previewType: "image",
+    overview: "Complete RWA tokenization and AI-powered vault generation system",
+    keyFeatures: [
+      {
+        title: "RWA Tokenization",
+        description: "Financial institutions tokenize products (bonds, real-estate funds, startup funds) into ERC-3643 compliant tokens on private Rayls nodes.",
+      },
+      {
+        title: "AI Risk Analysis",
+        description: "Praxos AI Engine analyzes tokenized RWAs, performs risk analysis and allocation optimization to create optimal vault strategies.",
+      },
+      {
+        title: "ERC-4626 Vaults",
+        description: "Diversified yield-bearing vaults composed of multiple ERC-3643 RWAs with compliant architecture, identity management, and price oracles.",
+      },
+      {
+        title: "Personalized AI Agent",
+        description: "Praxos AI Agent provides personalized vault suggestions based on user timeframe, risk tolerance, and investment amount.",
+      },
+      {
+        title: "Compliant Architecture",
+        description: "Full compliance support with ONCHAINID identity management, dividend distribution, and compliant swap mechanisms.",
+      },
+      {
+        title: "Multi-Chain Integration",
+        description: "Built for Rayls ecosystem with support for private nodes and public chain deployment on Rayls Devnet.",
+      },
+      {
+        title: "Real-time Dashboard",
+        description: "Modern Next.js frontend with wallet integration, deposit/withdraw functionality, and real-time blockchain data.",
+      },
+    ],
+    installation: {
+      steps: [
+        {
+          command: "make install",
+          description: "Install Hardhat and dependencies",
+        },
+        {
+          command: "make deploy",
+          description: "Deploy contracts to Rayls Devnet",
+        },
+        {
+          command: "cd praxos-app && npm install && npm run dev",
+          description: "Start frontend development server",
+        },
+      ],
+    },
+    screenshots: [
+      { url: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1763813808/praxos-icon_sovzsd.svg", alt: "Praxos App Preview" }
+    ],
+    status: "In Development",
+    techStack: {
+      frontend: ["Next.js", "React", "TypeScript", "TailwindCSS", "RainbowKit", "Wagmi", "shadcn/ui"],
+      backend: ["Node.js", "Python", "Express.js", "Flask"],
+      blockchain: ["Solidity", "Hardhat", "ERC-4626", "ERC-3643", "Rayls", "Ethers.js"],
+      ai: ["Risk Simulation Engine", "AI Allocation Engine", "AI Agent Suggestion Engine"],
+      database: ["PostgreSQL", "Prisma"],
+      deployment: ["Vercel", "Rayls Devnet", "Hardhat", "GitHub Actions"],
+      tools: ["Makefile", "Python venv", "Ripgrep", "Moralis"]
+    }
+  },
+  {
     title: "LiveStakes",
     date: "July 2025-Present",
     description: "LiveStakes is an ETHGlobal Cannes Finalist 🏆 real-time prediction market and livestream dashboard for hackathons. View live project demos, place on-chain predictions, and earn crypto rewards for accurate forecasts. All interactions are powered by smart contracts and decentralized video infrastructure.",
