@@ -35,7 +35,7 @@ const Sidebar: React.FC = () => {
       {/* Profile Section */}
       <div className="text-center mb-8">
         <img
-          src={"https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1731722275/portfolio/beach_molly_avi_yyzr0j.png"}
+          src={`${process.env.PUBLIC_URL}/avi_square.png`}
           alt="Molly Beach"
           className="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-gray-200 shadow-lg object-cover"
         />
