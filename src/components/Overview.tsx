@@ -1,5 +1,6 @@
 // src/components/Overview.tsx
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import { 
   PhoneIcon,
@@ -28,7 +29,23 @@ const Overview: React.FC = () => {
   ];
   
   return (
-    <div className="p-6 bg-white rounded-lg shadow">
+    <>
+      <Helmet>
+        <title>Molly Beach - Full-Stack Software Engineer | Portfolio</title>
+        <meta name="description" content="Molly Beach - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems. Building decentralized applications with cutting-edge technology." />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:url" content="https://mollybeach.app/" />
+        <meta property="og:title" content="Molly Beach - Full-Stack Software Engineer" />
+        <meta property="og:description" content="Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems. Building decentralized applications with cutting-edge technology." />
+        
+        {/* Twitter */}
+        <meta property="twitter:url" content="https://mollybeach.app/" />
+        <meta property="twitter:title" content="Molly Beach - Full-Stack Software Engineer" />
+        <meta property="twitter:description" content="Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems. Building decentralized applications with cutting-edge technology." />
+      </Helmet>
+      
+      <div className="p-6 bg-white rounded-lg shadow">
       {/* Header with name and avatar */}
       <div className="flex items-center gap-6 mb-6">
         <div className="flex-1">
@@ -133,6 +150,7 @@ const Overview: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

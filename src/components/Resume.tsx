@@ -1,12 +1,33 @@
 // path: src/components/Resume.tsx
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ArrowDownTrayIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 
 const Resume: React.FC = () => {
   const resumePath = `${process.env.PUBLIC_URL}/Beach_Molly_Resume.pdf`;
 
   return (
-    <section className="max-w-5xl mx-auto">
+    <>
+      <Helmet>
+        <title>Resume - Molly Beach | Full-Stack Software Engineer</title>
+        <meta name="description" content="Download Molly Beach's resume - Senior Full-Stack Engineer with expertise in blockchain, AI, Web3, DeFi, and cross-chain applications." />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mollybeach.app/resume" />
+        <meta property="og:title" content="Resume - Molly Beach | Full-Stack Software Engineer" />
+        <meta property="og:description" content="Download my resume - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems." />
+        <meta property="og:image" content="https://mollybeach.app/social-preview-website.png" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://mollybeach.app/resume" />
+        <meta property="twitter:title" content="Resume - Molly Beach | Full-Stack Software Engineer" />
+        <meta property="twitter:description" content="Download my resume - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems." />
+        <meta property="twitter:image" content="https://mollybeach.app/social-preview-website.png" />
+      </Helmet>
+      
+      <section className="max-w-5xl mx-auto">
       <div className="space-y-6">
         {/* Header */}
         <div className="text-center mb-8">
@@ -66,6 +87,7 @@ const Resume: React.FC = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

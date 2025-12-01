@@ -23,6 +23,7 @@
         "ajv-keywords": "^5.1.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "react-helmet-async": "^2.0.5",
         "react-router-dom": "^6.28.0",
         "react-scripts": "5.0.1",
         "typescript": "^4.9.5",
@@ -52,5 +53,5 @@
         "postcss": "^8.4.49",
         "tailwindcss": "^3.4.14"
     },
-    "homepage": "https://mollybeach.github.io/portfolio"
+    "homepage": "https://mollybeach.app"
 }
