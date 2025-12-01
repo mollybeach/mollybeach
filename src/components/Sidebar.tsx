@@ -8,7 +8,8 @@ import {
   FolderIcon,
   AcademicCapIcon,
   PhoneIcon,
-  EnvelopeIcon
+  EnvelopeIcon,
+  DocumentTextIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -26,6 +27,7 @@ const Sidebar: React.FC = () => {
     { name: 'Education', path: '/education', icon: AcademicCapIcon },
     { name: 'Skills', path: '/skills', icon: WrenchIcon },
     { name: 'Certifications', path: '/certifications', icon: AcademicCapIcon },
+    { name: 'Resume', path: '/resume', icon: DocumentTextIcon },
   ];
 
   return (
