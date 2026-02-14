@@ -9,7 +9,8 @@ import {
   AcademicCapIcon,
   PhoneIcon,
   EnvelopeIcon,
-  DocumentTextIcon
+  DocumentTextIcon,
+  TrophyIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -26,6 +27,7 @@ const Sidebar: React.FC = () => {
     { name: 'Experience', path: '/experience', icon: BriefcaseIcon },
     { name: 'Education', path: '/education', icon: AcademicCapIcon },
     { name: 'Skills', path: '/skills', icon: WrenchIcon },
+    { name: 'Awards', path: '/awards', icon: TrophyIcon },
     { name: 'Certifications', path: '/certifications', icon: AcademicCapIcon },
     { name: 'Resume', path: '/resume', icon: DocumentTextIcon },
   ];
