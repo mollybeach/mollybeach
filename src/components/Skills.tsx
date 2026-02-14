@@ -2,42 +2,63 @@
 import React from 'react';
 
 const skills = {
-  languages: [
-    'TypeScript', 'JavaScript', 'Solidity', 'Python', 'Swift', 'Scala', 
-    'Java', 'Rust', 'Ruby', 'C++', 'R', 'GoLang', 'GLSL'
+  'Programming Languages': [
+    'TypeScript', 'JavaScript', 'Solidity', 'Python', 'Swift', 'Rust', 
+    'Java', 'Golang', 'Scala', 'C++', 'R', 'JSON', 'Ruby', 'HTML', 'CSS', 'SCSS'
   ],
-  frontend: [
-    'React', 'ReactJS', 'Vue', 'HTML5', 'CSS', 'SCSS', 'Canvas API', 
-    'Three.js', 'Tailwind', 'Astro', 'UI/UX Design'
+  'Frontend Development': [
+    'React', 'Node.js', 'Vue', 'Next.js', 'Angular', 'D3.js', 'Tailwind', 
+    'Bootstrap', 'Material UI', 'Redux', 'Zustand'
   ],
-  backend: [
-    'Node.js', 'Django', 'GraphQL', 'Express.js', 'Flask', 'REST APIs', 
-    'RESTful APIs', 'Microservices', 'Swagger', 'Arrow API'
+  'Backend Development & API Integration': [
+    'Node.js', 'Express.js', 'Django', 'Flask API', 'GraphQL', 'REST APIs', 
+    'Web Sockets'
   ],
-  databases: [
-    'PostgreSQL', 'MySQL', 'MS SQL Server', 'SQL', 'MongoDB', 'Redis'
+  'Authentication': [
+    'OAuth', 'JWT', 'Firebase Auth'
   ],
-  cloud: [
-    'AWS', 'Azure', 'Firebase', 'GCP', 'Netlify', 'Heroku', 'Amazon S3',
-    'Azure Active Directory', 'Power Automate', 'Serverless'
+  'Databases & Data Management': [
+    'PostgreSQL', 'SQL', 'MySQL', 'MS SQL Server', 'Firestore', 'MongoDB', 
+    'Redis', 'Docker'
   ],
-  blockchain: [
-    'Hardhat', 'Truffle', 'Ganache', 'Remix', 'Web3', 'ThirdWeb', 'EthersJS',
-    'Moralis', 'ERC-4337', 'Account Abstraction', 'IPFS', 'Ethereum',
-    'Hyperledger Fabric', 'Firefly', 'Besu', 'Indy', 'GoQuorum', 'Polygon',
-    'Edge', 'Kaleido', 'Web3.py'
+  'Data Science & Analytics': [
+    'Pandas', 'Numpy', 'TensorFlow', 'Matplotlib'
   ],
-  tools: [
-    'Docker', 'Git', 'GitLab', 'Linear', 'JSON', 'Blender', 'Unity',
-    'Discord API', 'Celery'
+  'Cloud, DevOps & Infrastructure': [
+    'AWS', 'Microsoft Azure', 'Vercel', 'Netlify', 'Heroku', 'Cloudflare', 
+    'GCP', 'Docker', 'Kubernetes'
   ],
-  testing: [
-    'Jest', 'Mocha', 'Pytest'
+  'CI/CD': [
+    'Terraform', 'Github Actions', 'Jenkins', 'Gitlab CI/CD'
   ],
-  methodologies: [
-    'Agile Development', 'Cross-functional Collaboration',
-    'Performance Optimization', 'Functional Programming',
-    'iOS Development', 'Metaverse'
+  'Serverless Computing': [
+    'Firebase Functions', 'AWS Lambda'
+  ],
+  'Blockchain & Web3': [
+    'Solidity', 'Ethereum', 'Aptos', 'Near', 'Arbitrum', 'Solana', 
+    'Hardhat', 'Truffle', 'Remix', 'Ganache', 'Foundry', 'IPFS', 
+    'Moralis', 'Chainlink', 'Arweave'
+  ],
+  'Smart Contract Security': [
+    'Zero-knowledge Proofs', 'Account Abstraction'
+  ],
+  'Testing & QA': [
+    'Jest', 'Mocha', 'Chai', 'Playwright', 'Pytest', 'Hardhat', 'Foundry', 'Truffle'
+  ],
+  'Game Development & Creative Coding': [
+    'GLSL', 'Three.js', 'Shaderpark', 'Unity', 'Unreal Engine', 'Canvas API'
+  ],
+  'System Design & Scalability': [
+    'Distributed Systems', 'Microservices', 'Event Driven Architecture', 
+    'Caching & Load Balancing', 'Redis', 'Memcached', 'Nginx', 'Cloudflare'
+  ],
+  'Program Management & Agile': [
+    'Jira', 'Scrum', 'Kanban', 'Linear'
+  ],
+  'Message Queues & Event Driven Architecture': [
+    'Apache Kafka', 'RabbitMQ', 'ZeroMQ', 'Redis Streams', 'NATS', 
+    'Event Sourcing', 'CQRS', 'Webhooks', 'Pub/Sub Architecture', 
+    'Google Pub/Sub', 'AWS SNS/SQS'
   ]
 };
 
