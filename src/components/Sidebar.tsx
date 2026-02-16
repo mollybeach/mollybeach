@@ -10,7 +10,8 @@ import {
   PhoneIcon,
   EnvelopeIcon,
   DocumentTextIcon,
-  TrophyIcon
+  TrophyIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -20,7 +21,12 @@ interface NavItem {
   icon: React.ElementType;
 }
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (open: boolean) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const navItems: NavItem[] = [
     { name: 'Overview', path: '/', icon: HomeIcon },
     { name: 'Projects', path: '/projects', icon: FolderIcon },
@@ -32,8 +38,40 @@ const Sidebar: React.FC = () => {
     { name: 'Resume', path: '/resume', icon: DocumentTextIcon },
   ];
 
+  const handleNavClick = () => {
+    // Close mobile menu when a nav item is clicked
+    if (window.innerWidth < 1024) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
-    <div className="w-64 bg-white shadow-lg rounded-lg p-6 sticky top-6">
+    <>
+      {/* Backdrop overlay for mobile */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <div className={`
+        fixed lg:sticky top-0 lg:top-6 left-0 h-screen lg:h-auto
+        w-64 bg-white shadow-lg rounded-lg p-6 z-50
+        transform transition-transform duration-300 ease-in-out
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        overflow-y-auto
+      `}>
+      {/* Close button for mobile */}
+      <button
+        onClick={() => setIsMobileMenuOpen(false)}
+        className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        aria-label="Close menu"
+      >
+        <XMarkIcon className="h-6 w-6 text-gray-600" />
+      </button>
+
       {/* Profile Section */}
       <div className="text-center mb-8">
         <img
@@ -91,6 +129,7 @@ const Sidebar: React.FC = () => {
           <NavLink
             key={item.name}
             to={item.path}
+            onClick={handleNavClick}
             className={({ isActive }) =>
               `block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive 
@@ -105,6 +144,7 @@ const Sidebar: React.FC = () => {
         ))}
       </nav>
     </div>
+    </>
   );
 };
 
