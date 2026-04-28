@@ -81,7 +81,7 @@ const Overview: React.FC = () => {
           </div>
         </div>
         <img 
-          src={"https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1731722275/portfolio/beach_molly_avi_yyzr0j.png"}
+          src={"https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1777385857/portfolio/BEACH_MOLLY_PASSPORT_PHOTO_wibxaf.png"}
           alt="Molly Beach"
           className="w-24 h-24 rounded-full object-cover border-2 border-gray-200 shadow-lg"
         />

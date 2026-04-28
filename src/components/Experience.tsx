@@ -22,12 +22,52 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
+    company: "DTCC DIGITAL ASSETS",
+    logo: `${process.env.PUBLIC_URL}/images/dtcc.svg`,
+    roles: [
+      {
+        title: "ASSOCIATE DIRECTOR OF BLOCKCHAIN ENGINEERING | RUST, STELLAR, SOLANA",
+        date: "APRIL 2026 - PRESENT",
+        location: "REMOTE",
+        details: [
+          "Lead Rust smart contract engineering for institutional digital assets at DTCC Digital Assets—defining the stack (Anchor on Solana, Soroban on Stellar), stakeholder alignment, and greenfield delivery from first POC through hardened production paths",
+          "Own hands-on design and development of Rust programs alongside people leadership: hiring and mentoring Rust engineers, pairing with Solidity, frontend, and subgraph engineers in full scrum teams",
+          "Stand up end-to-end capability—CI/CD (e.g. GitHub Actions), unit and integration testing including variant coverage, React plus wallet-adapter UX, and The Graph–style indexing so tokenization and DApp flows stay observable",
+          "Partner across clearinghouse-scale infrastructure to support Stellar-first and Solana-in-parallel roadmaps, interoperability with existing EVM contracts, and monitoring/alerting so deployed contracts stay healthy on any chain",
+          "Advance DTCC’s digital-asset strategy—tokenized inventory, institutional pilots, and secure settlement-adjacent workloads where correctness, auditability, and regulatory-grade operations matter",
+          "Operate in a remote, global engineering organization (digital assets practice scaling from startup-style teams inside an established market infrastructure parent); intensity aligns with production milestones and release cycles"
+        ],
+        projects: [],
+        skills: [
+          "Rust",
+          "Anchor",
+          "Solana",
+          "Stellar",
+          "Soroban",
+          "Solidity",
+          "EVM",
+          "React",
+          "TypeScript",
+          "The Graph",
+          "Subgraphs",
+          "GitHub Actions",
+          "CI/CD",
+          "Hardhat",
+          "Foundry",
+          "Monitoring",
+          "Smart Contracts",
+          "Financial Infrastructure"
+        ]
+      }
+    ]
+  },
+  {
     company: "BLOCKMEDIA",
     logo: `${process.env.PUBLIC_URL}/images/blockmedia.png`,
     roles: [
       {
         title: "PRINCIPAL FULL-STACK SOFTWARE ENGINEER | GO, RUST, PYTHON",
-        date: "MAY 2025 - PRESENT",
+        date: "MAY 2025 - MARCH 2026",
         location: "REMOTE",
         details: [
           "Developed protocol-level architecture for a custom Layer 1 blockchain integrating federated AI model coordination into consensus",
