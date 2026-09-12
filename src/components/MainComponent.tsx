@@ -1,6 +1,6 @@
 // path: src/components/MainComponent.tsx
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Overview from './Overview';
 import Experience from './Experience';
@@ -10,6 +10,7 @@ import Education from './Education';
 import Certifications from './Certifications';
 import Resume from './Resume';
 import Awards from './Awards';
+import PalaisHome from '../palais/PalaisHome';
 
 interface MainComponentProps {
   isMobileMenuOpen: boolean;
@@ -17,6 +18,10 @@ interface MainComponentProps {
 }
 
 const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) => {
+  // The home page is the Palais room, which fills the whole pane edge to edge,
+  // so it is rendered outside the padded wrapper the other pages sit in.
+  const isHome = useLocation().pathname === '/';
+
   return (
     <main className="flex-1 overflow-auto bg-white relative">
       {/* Mobile hamburger button */}
@@ -28,10 +33,13 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
         <Bars3Icon className="h-6 w-6 text-gray-700" />
       </button>
 
-      {/* Main content with padding */}
+      {isHome ? (
+        <PalaisHome />
+      ) : (
+      /* Main content with padding */
       <div className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
       <Routes>
-        <Route path="/" element={<Overview />} />
+        <Route path="/overview" element={<Overview />} />
         <Route path="/portfolio" element={<Overview />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/skills" element={<Skills />} />
@@ -42,6 +50,7 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
         <Route path="/resume" element={<Resume />} />
       </Routes>
       </div>
+      )}
     </main>
   );
 };

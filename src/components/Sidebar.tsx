@@ -19,6 +19,8 @@ interface NavItem {
   name: string;
   path: string;
   icon: React.ElementType;
+  /** match the path exactly, so Home is not also highlighted on every other page */
+  end?: boolean;
 }
 
 interface SidebarProps {
@@ -28,7 +30,8 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const navItems: NavItem[] = [
-    { name: 'Overview', path: '/', icon: HomeIcon },
+    { name: 'Home', path: '/', icon: HomeIcon, end: true },
+    { name: 'Overview', path: '/overview', icon: DocumentTextIcon },
     { name: 'Projects', path: '/projects', icon: FolderIcon },
     { name: 'Experience', path: '/experience', icon: BriefcaseIcon },
     { name: 'Education', path: '/education', icon: AcademicCapIcon },
@@ -129,6 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
           <NavLink
             key={item.name}
             to={item.path}
+            end={item.end}
             onClick={handleNavClick}
             className={({ isActive }) =>
               `block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
