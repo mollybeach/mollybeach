@@ -41,8 +41,11 @@ interface Grab {
   startY: number;
 }
 
+/* read off the computed style, which is in pixels whatever units the
+   arrangement set it in */
 const offset = (el: HTMLElement) => {
-  const [x = "0", y = "0"] = (el.style.translate || "0px 0px").split(" ");
+  const t = getComputedStyle(el).translate;
+  const [x = "0", y = "0"] = t === "none" ? [] : t.split(" ");
   return { baseX: parseFloat(x) || 0, baseY: parseFloat(y) || 0 };
 };
 
@@ -103,7 +106,7 @@ function anchorOf(el: HTMLElement) {
   return { x: r.left + r.width / 2, y: fromTop ? r.top : r.bottom };
 }
 
-const scaleOf = (el: HTMLElement) => Number(el.dataset.scale) || 1;
+const scaleOf = (el: HTMLElement) => parseFloat(getComputedStyle(el).scale) || 1;
 
 interface Sized {
   el: HTMLElement;

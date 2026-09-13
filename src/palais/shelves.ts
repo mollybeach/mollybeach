@@ -112,8 +112,11 @@ export const SHELVES: Shelf[] = [
   { key: "trinkets", name: "Trinkets", emoji: "💎", items: [] },
 ];
 
-/** the blossoms start out of the room; the rest start in it */
-export const HIDDEN_AT_FIRST: string[] = SHELVES.find((s) => s.key === "blossoms")!.items;
+/** what starts out of the room: the blossoms, the teacups, the pillows and
+    the dog, as Molly left it; everything else starts in it */
+export const HIDDEN_AT_FIRST: string[] = ["blossoms", "teacups", "pillows", "dogs"].flatMap(
+  (key) => SHELVES.find((s) => s.key === key)!.items,
+);
 
 /** each shelf's items that are actually in this room, trinkets catching the rest */
 export function stock(inRoom: string[]): { shelf: Shelf; items: string[] }[] {

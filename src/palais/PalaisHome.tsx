@@ -10,6 +10,7 @@ import { Flyers } from "./Flyers";
 import { PortraitTerrace, usePortrait } from "./PortraitTerrace";
 import { Weather } from "./Weather";
 import { Draggable } from "./Draggable";
+import { ArrangedRoom, arranged } from "./arrangement";
 import "./palais.css";
 
 /* Narrow screens keep the furniture and drop the small things — a 390px-wide
@@ -120,7 +121,7 @@ export default function PalaisHome() {
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />
           <StickerToggle seasons>
-          {portrait ? <PortraitTerrace /> : <>
+          {portrait ? <PortraitTerrace /> : <ArrangedRoom.Provider value={true}>
           {/* ---- blossom, broken by the top corners --------------------- */}
           <Prop id="wisteria-branch-lavender" w="clamp(17rem,35cqw,33rem)" left="-7%" top="-11%" tilt={-3} motion="rustle" dur={17} z={90} plane="fore" />
           <Prop id="wisteria-branch-purple" w="clamp(12rem,26cqw,24rem)" right="-6%" top="-9%" tilt={5} motion="rustle" dur={21} z={90} plane="fore" flip className={sm} />
@@ -239,7 +240,7 @@ export default function PalaisHome() {
             className={md}
             data-set="chair"
             data-prop="chair-vanity"
-            style={{ position: "absolute", zIndex: 64, left: "95.5%", bottom: at(0.99).ground, width: w(0.6, 0.99) }}
+            style={{ position: "absolute", zIndex: 64, left: "95.5%", bottom: at(0.99).ground, width: w(0.6, 0.99), ...arranged("chair-vanity") }}
           >
             <Conjure set="chair">
               <Plinth id="chair-vanity" w="100%" />
@@ -273,7 +274,7 @@ export default function PalaisHome() {
           {/* these two live on things rather than on the tiles */}
           <Prop set="settee" id="cat-blueberry-party" w={w(0.5, 0.84)} left="20%" ground={`calc(${SETTEE_SEAT} + 0.6cqw)`} tilt={-2} motion="bob" dur={12} rise={3} z={53} className={sm} />
           <Prop id="cat-blueberry-monstera" w={w(0.72, 0.96)} right="2.5%" ground={`calc(${at(0.96).ground} + 1.4cqw)`} tilt={1} motion="bob" dur={15} rise={3} z={68} />
-          </>}
+          </ArrangedRoom.Provider>}
 
           {/* the visitors: a hummingbird, a dragonfly, now and then */}
           <Flyers />

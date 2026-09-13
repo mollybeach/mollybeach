@@ -2,6 +2,8 @@ import type { Styled } from "./styled";
 import { propSpec, propSrc, type Plane, type PropId } from "./props";
 import type { SetName } from "./conjureSchedule";
 import { RIGS } from "./rigs";
+import { useContext } from "react";
+import { ArrangedRoom, arranged } from "./arrangement";
 import type { Season } from "./seasons";
 import { Conjure } from "./Conjure";
 
@@ -126,6 +128,8 @@ export function Prop({
     bottom: ground ?? bottom,
     zIndex: z,
     opacity,
+    // where Molly dragged it to, in the desktop room
+    ...(useContext(ArrangedRoom) ? arranged(id) : undefined),
   };
   const sharing = slot !== undefined;
   if (ghost || sharing) {
