@@ -6,8 +6,11 @@ import { currentSeason, skipSeason, upcomingSeason, type Season } from "./season
  * Small brass switches pinned to the top-right corner of the room.
  *
  * "Hide the room" shows or hides every sticker, leaving the photograph and its
- * falling pollen behind — hiding with `display:none` also stops the
- * animations, which keeps the empty room perfectly still.
+ * falling pollen behind. It hides them by making them transparent rather than
+ * removing them from the page: removed and put back, every animation would
+ * start over, and the room would replay its whole entrance — slow enough that
+ * the button would seem not to work. This way everything carries on unseen and
+ * is simply there again, mid-motion, the moment it's shown.
  *
  * The other two hide one named group each (the `group` prop on <Prop>): the
  * blossoming things — lilac, jacaranda and both roses — and the trellises. They
@@ -104,12 +107,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       {/* the sticker layer: empty on arrival, then everything materialises */}
       <div
         className="palais-arrive"
-        style={{ ...arrivalVars(), display: room ? undefined : "none" }}
+        style={arrivalVars()}
         data-hide-blossoms={blossoms ? undefined : ""}
         data-hide-trellises={trellises ? undefined : ""}
         data-season={seasons ? season : undefined}
       >
-        {children}
+        {/* the arrival animates the layer's own opacity, which would override
+            an opacity set on it here, so hiding happens one level in */}
+        <div className="palais-layer" data-hidden={room ? undefined : ""} aria-hidden={room ? undefined : true}>
+          {children}
+        </div>
       </div>
     </>
   );

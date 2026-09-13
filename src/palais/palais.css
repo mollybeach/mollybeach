@@ -448,10 +448,18 @@
 /* The room's switches (StickerToggle) set these on the scene. Hiding by group
    with a rule, rather than wrapping the props, leaves every prop where it
    stands in the paint order. */
+/* Hidden with visibility, not display: taking a prop off the page and putting
+   it back restarts its animations, so it would reappear by fading in slowly
+   instead of just being there. */
 .palais [data-hide-blossoms] [data-group="blossoms"],
 .palais [data-hide-trellises] [data-group="trellises"] {
-  display: none !important;
+  visibility: hidden !important;
 }
+
+/* the whole sticker layer, for "Hide the room" (see StickerToggle) */
+.palais .palais-layer { position: absolute; inset: 0; }
+.palais .palais-layer[data-hidden] { opacity: 0; pointer-events: none; }
+.palais .palais-layer[data-hidden] * { pointer-events: none !important; }
 
 /* the very back plane: hazed into the daylight */
 .palais .prop--haze img {
