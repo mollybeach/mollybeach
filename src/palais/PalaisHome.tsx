@@ -125,7 +125,6 @@ export default function PalaisHome() {
 
           {/* ---- on the marble, up the far left and right --------------- */}
           <Prop id="panel-four-seasons" w={w(1, 0)} left="1.5%" top="17%" tilt={0} motion="swing" dur={19} arc={0.4} z={11} className={lg} />
-          <Prop id="fresco-panel" w={w(0.85, 0)} right="1.5%" top="16%" tilt={0} motion="swing" dur={18} arc={0.4} z={11} className={lg} />
           <Prop id="cherub-gilded" w={w(0.75, 0)} left="2%" top="27%" tilt={-2} motion="bob" dur={11} z={13} className={md} />
           <Prop id="relief-gold-frame" w={w(0.85, 0)} right="2%" top="26%" tilt={2} motion="swing" dur={20} arc={0.6} z={13} className={lg} />
           <Prop id="mirror-glass-floral" w={w(1.4, 0)} left="1%" top="34%" tilt={-1} motion="swing" dur={15} arc={0.9} z={12} className={sm} />
