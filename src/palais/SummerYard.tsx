@@ -2,7 +2,7 @@ import { Prop } from "./Prop";
 
 /**
  * The garden's animals: the goats grazing on the lawn in front of the pool,
- * all year, and the dogs in the pool — except in winter, when it's frozen.
+ * and the dogs in the pool.
  *
  * They're placed on the photograph itself rather than on the stage: the frame
  * below is the exact box the photograph covers (the same crop and zoom as in
@@ -27,8 +27,6 @@ const afloat = (x: number, width: number, waterline: number) => {
   return { ...rest, bottom: ground };
 };
 
-const OUT_OF_WINTER = "spring summer autumn";
-
 export function SummerYard() {
   return (
     <div className="palais-photo-frame" style={{ zIndex: 20 }}>
@@ -36,8 +34,8 @@ export function SummerYard() {
       <Prop id="goat-bambi" {...at(545, 150, 836)} motion="none" />
       <Prop id="goats-pumpkin-ferdinand" {...at(708, 90, 840)} motion="none" />
       {/* in the pool */}
-      <Prop id="dog-maggie-frisbee" only={OUT_OF_WINTER} {...afloat(830, 95, 786)} motion="bob" dur={6} rise={2} />
-      <Prop id="dog-charlie-kiddie-pool" only={OUT_OF_WINTER} {...afloat(975, 155, 792)} motion="bob" dur={8} rise={1} />
+      <Prop id="dog-maggie-frisbee" {...afloat(830, 95, 786)} motion="bob" dur={6} rise={2} />
+      <Prop id="dog-charlie-kiddie-pool" {...afloat(975, 155, 792)} motion="bob" dur={8} rise={1} />
     </div>
   );
 }

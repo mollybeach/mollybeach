@@ -163,7 +163,11 @@
   100%               { opacity: 0; }
 }
 
-/* the box the wide photograph covers: the same cover crop (centred across,
+/* the desktop room's stickers, scaled onto the photograph (sceneFit.ts) */
+.palais .palais-scene { position: absolute; inset: 0; transform-origin: 0 0; }
+
+/* the box the old wide photograph covered (the stickers' coordinates are
+   still measured against it, see sceneFit.ts): the same cover crop (centred across,
    42% down) and the same 1.045 zoom about the middle of the stage, so things
    placed in it sit on the painted terrace (see SummerYard) */
 .palais .palais-photo-frame {
@@ -377,43 +381,6 @@
     drop-shadow(4px 8px 12px rgba(64, 56, 40, 0.16))
     saturate(0.82) brightness(1.06) blur(0.4px);
 }
-
-/* The furniture and the trellises — everything that belongs to a conjuring set,
-   and so everything set down on the furniture too — are a spring thing: they
-   fade out as summer arrives and come back as winter turns to spring, over
-   the same 5s as the photographs.
-   The fade goes on the element inside the conjuring wrapper, because the
-   wrapper and the prop's own placement box both run opacity animations of
-   their own, which would override it. */
-.palais [data-season] [data-set] { transition: visibility 0s linear 0s; }
-.palais [data-season] [data-set] .conjure > * { transition: opacity 5s ease-in-out; }
-.palais [data-season]:not([data-season="spring"]) [data-set] {
-  visibility: hidden;
-  transition: visibility 0s linear 5s;
-}
-.palais [data-season]:not([data-season="spring"]) [data-set] .conjure > * { opacity: 0; }
-.palais [data-season]:not([data-season="spring"]) [data-set] .conjure-light { display: none; }
-
-/* the same for anything marked for particular seasons (`only` on a prop: one
-   season, or several separated by spaces) — the hydrangea in spring, the
-   autumn table, the dogs out of the pool in winter. It has no conjuring
-   wrapper, so its moving element is its first child. CSS can't compare two
-   attributes, so there is a rule per season. */
-.palais [data-season] [data-only] { transition: visibility 0s linear 0s; }
-.palais [data-season] [data-only] > * { transition: opacity 5s ease-in-out; }
-.palais [data-season="spring"] [data-only]:not([data-only~="spring"]),
-.palais [data-season="summer"] [data-only]:not([data-only~="summer"]),
-.palais [data-season="autumn"] [data-only]:not([data-only~="autumn"]),
-.palais [data-season="winter"] [data-only]:not([data-only~="winter"]) {
-  visibility: hidden;
-  transition: visibility 0s linear 5s;
-}
-.palais [data-season="spring"] [data-only]:not([data-only~="spring"]) > *,
-.palais [data-season="summer"] [data-only]:not([data-only~="summer"]) > *,
-.palais [data-season="autumn"] [data-only]:not([data-only~="autumn"]) > *,
-.palais [data-season="winter"] [data-only]:not([data-only~="winter"]) > * { opacity: 0; }
-/* where the year doesn't turn, only spring's things are in the room */
-.palais .palais-arrive:not([data-season]) [data-only]:not([data-only~="spring"]) { display: none; }
 
 /* A sticker with moving parts is several layers; the plane's filter goes on
    the stack as a whole, so the layers don't each cast a shadow on the others. */

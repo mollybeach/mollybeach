@@ -10,6 +10,7 @@ import { Flyers } from "./Flyers";
 import { PortraitTerrace, usePortrait } from "./PortraitTerrace";
 import { Weather } from "./Weather";
 import { Draggable } from "./Draggable";
+import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
 import { ArrangedRoom, arranged } from "./arrangement";
 import "./palais.css";
@@ -122,7 +123,7 @@ export default function PalaisHome() {
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />
           <StickerToggle seasons>
-          {portrait ? <PortraitTerrace /> : <ArrangedRoom.Provider value={true}>
+          {portrait ? <PortraitTerrace /> : <ArrangedRoom.Provider value={true}><Scene>
           <SummerYard />
           {/* ---- blossom, broken by the top corners --------------------- */}
           <Prop id="wisteria-branch-lavender" w="clamp(17rem,35cqw,33rem)" left="-7%" top="-11%" tilt={-3} motion="rustle" dur={17} z={90} plane="fore" />
@@ -153,7 +154,7 @@ export default function PalaisHome() {
           {/* ---- planting along the balustrade. These may overlap each
                other and stand behind things; that is what a border does. --- */}
           <Prop id="jacaranda" group="blossoms" w={w(3.4, 0.15)} right="-5%" ground={at(0.15).ground} tilt={1} motion="rustle" dur={21} z={14} plane="far" />
-          <Prop id="hydrangea-bush" group="blossoms" only="spring" w={w(2, 0.18)} left="-4%" ground={at(0.18).ground} tilt={-1.5} motion="rustle" dur={15} z={14} plane="far" />
+          <Prop id="hydrangea-bush" group="blossoms" w={w(2, 0.18)} left="-4%" ground={at(0.18).ground} tilt={-1.5} motion="rustle" dur={15} z={14} plane="far" />
           <Prop id="lilac-bush" group="blossoms" w={w(2.1, 0.22)} right="32%" ground={at(0.22).ground} tilt={-1} motion="rustle" dur={19} z={16} plane="far" className={sm} />
           <Prop id="rose-bush" group="blossoms" w={w(1.6, 0.26)} left="33%" ground={at(0.26).ground} tilt={1.5} motion="rustle" dur={17} z={16} plane="far" className={sm} />
           <Prop id="arch-roses" group="blossoms" w={w(2.3, 0.24)} right="12%" ground={at(0.24).ground} tilt={-1} motion="rustle" dur={23} z={18} plane="far" className={sm} />
@@ -217,12 +218,11 @@ export default function PalaisHome() {
               It carries its own motion, so it gets no bob, and `bottom` rather
               than `ground` — a contact shadow sized to the whole clip would sit
               still while she leaps; the drop shadow follows her outline instead. */}
-          {/* autumn only: Brea and Molly with their cats at the harvest table, on the
-              tiles the furniture leaves empty once spring is over. Drawn a
+          {/* Brea and Molly with their cats at the harvest table. Drawn a
               little larger than life (2.4m across), like the furniture, and
               stood just far enough back that the cats along the front don't
               hide their feet. */}
-          <Prop id="fall-table-brea-molly" only="autumn" w={w(2.4, 0.6)} left="31%" ground={at(0.6).ground} motion="none" z={40} />
+          <Prop id="fall-table-brea-molly" w={w(2.4, 0.6)} left="31%" ground={at(0.6).ground} motion="none" z={40} />
           <Prop id="dog-frisbee" w={w(1.9, 0.9)} left="56%" bottom={at(0.9).ground} motion="none" z={60} className={sm} />
           <Prop set="vanity" id="vanity" w={w(VANITY_M, VANITY_D)} right="12%" ground={at(VANITY_D).ground} tilt={-0.5} motion="bob" dur={19} rise={2} z={44} />
           <Prop set="vanity" id="candle-pillar" w={w(0.18, VANITY_D)} right="21.6%" ground={VANITY_TOP} tilt={1} motion="bob" dur={12} z={47} className={md} />
@@ -276,7 +276,7 @@ export default function PalaisHome() {
           {/* these two live on things rather than on the tiles */}
           <Prop set="settee" id="cat-blueberry-party" w={w(0.5, 0.84)} left="20%" ground={`calc(${SETTEE_SEAT} + 0.6cqw)`} tilt={-2} motion="bob" dur={12} rise={3} z={53} className={sm} />
           <Prop id="cat-blueberry-monstera" w={w(0.72, 0.96)} right="2.5%" ground={`calc(${at(0.96).ground} + 1.4cqw)`} tilt={1} motion="bob" dur={15} rise={3} z={68} />
-          </ArrangedRoom.Provider>}
+          </Scene></ArrangedRoom.Provider>}
 
           {/* the visitors: a hummingbird, a dragonfly, now and then */}
           <Flyers />

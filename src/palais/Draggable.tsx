@@ -38,6 +38,7 @@ interface Grab {
   carried: Carried[];
   pointer: number;
   startX: number;
+  zoom: number;
   startY: number;
 }
 
@@ -108,6 +109,14 @@ function anchorOf(el: HTMLElement) {
 
 const scaleOf = (el: HTMLElement) => parseFloat(getComputedStyle(el).scale) || 1;
 
+/** how much the scene around a sticker is zoomed on screen (the desktop room
+    is scaled to fit its photograph), so pointer moves in screen pixels can be
+    turned into the sticker's own */
+const zoomOf = (el: HTMLElement) => {
+  const w = el.offsetWidth * scaleOf(el);
+  return w ? el.getBoundingClientRect().width / w || 1 : 1;
+};
+
 interface Sized {
   el: HTMLElement;
   baseX: number;
@@ -121,6 +130,7 @@ interface Resize {
   members: Sized[];
   pointer: number;
   anchor: { x: number; y: number };
+  zoom: number;
   startDist: number;
 }
 
@@ -244,6 +254,7 @@ export function Draggable() {
         pointer: e.pointerId,
         startX: e.clientX,
         startY: e.clientY,
+        zoom: zoomOf(hit.el),
       };
       hit.el.dataset.dragging = "";
       show(hit);
@@ -262,8 +273,8 @@ export function Draggable() {
           const s = Math.min(4, Math.max(0.25, m.scale * f0));
           const f = s / m.scale;
           // things set down on the furniture stay where they were on it
-          const x = m.baseX + (m.anchor.x - resize.anchor.x) * (f - 1);
-          const y = m.baseY + (m.anchor.y - resize.anchor.y) * (f - 1);
+          const x = m.baseX + ((m.anchor.x - resize.anchor.x) * (f - 1)) / resize.zoom;
+          const y = m.baseY + ((m.anchor.y - resize.anchor.y) * (f - 1)) / resize.zoom;
           m.el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
           m.el.style.scale = s.toFixed(3);
           m.el.dataset.scale = String(s);
@@ -271,8 +282,8 @@ export function Draggable() {
         return;
       }
       if (!grab || e.pointerId !== grab.pointer) return;
-      const dx = e.clientX - grab.startX;
-      const dy = e.clientY - grab.startY;
+      const dx = (e.clientX - grab.startX) / grab.zoom;
+      const dy = (e.clientY - grab.startY) / grab.zoom;
       for (const c of grab.carried) {
         c.el.style.translate = `${(c.baseX + dx).toFixed(1)}px ${(c.baseY + dy).toFixed(1)}px`;
       }
@@ -304,6 +315,7 @@ export function Draggable() {
         el,
         pointer: e.pointerId,
         anchor,
+        zoom: zoomOf(el),
         startDist: Math.max(8, Math.hypot(e.clientX - anchor.x, e.clientY - anchor.y)),
         members: group.map((g) => ({ el: g, ...offset(g), scale: scaleOf(g), anchor: anchorOf(g) })),
       };
