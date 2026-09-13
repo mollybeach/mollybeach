@@ -1,0 +1,682 @@
+{
+  "stage": {
+    "w": 1634,
+    "h": 1034
+  },
+  "layout": "desktop",
+  "season": "winter",
+  "props": {
+    "goat-bambi": {
+      "shown": true,
+      "x": 639.6,
+      "y": 362.7,
+      "s": 1.336,
+      "z": 1019
+    },
+    "goats-pumpkin-ferdinand": {
+      "shown": true,
+      "x": 421.9,
+      "y": 93.7,
+      "s": 1.174,
+      "z": 1013
+    },
+    "dog-maggie-frisbee": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 20
+    },
+    "dog-charlie-kiddie-pool": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 20
+    },
+    "wisteria-branch-lavender": {
+      "shown": false,
+      "x": -97.5,
+      "y": 41.7,
+      "s": 1,
+      "z": 803
+    },
+    "wisteria-branch-purple": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 161
+    },
+    "wisteria-vine": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 86
+    },
+    "wisteria-garland": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 86
+    },
+    "panel-four-seasons": {
+      "shown": true,
+      "x": 478.7,
+      "y": 88.1,
+      "s": 1.104,
+      "z": 965
+    },
+    "cherub-gilded": {
+      "shown": true,
+      "x": 693.4,
+      "y": -113.1,
+      "s": 0.91,
+      "z": 780
+    },
+    "relief-gold-frame": {
+      "shown": true,
+      "x": 291.2,
+      "y": 94.7,
+      "s": 1.499,
+      "z": 1037
+    },
+    "mirror-glass-floral": {
+      "shown": true,
+      "x": -17.7,
+      "y": 52.6,
+      "s": 0.712,
+      "z": 936
+    },
+    "mirror-glass-blue": {
+      "shown": false,
+      "x": -1275.5,
+      "y": 331.2,
+      "s": 1.215,
+      "z": 944
+    },
+    "medallion-lady": {
+      "shown": true,
+      "x": 1505.9,
+      "y": 198.9,
+      "s": 2.311,
+      "z": 1036
+    },
+    "cameo-jasperware": {
+      "shown": true,
+      "x": -325.3,
+      "y": -168.2,
+      "s": 1,
+      "z": 764
+    },
+    "plaque-lyre": {
+      "shown": true,
+      "x": 414.9,
+      "y": -312.4,
+      "s": 1,
+      "z": 734
+    },
+    "plaque-ivory": {
+      "shown": true,
+      "x": -169,
+      "y": -94.3,
+      "s": 1.922,
+      "z": 904
+    },
+    "plaque-rose-wood": {
+      "shown": true,
+      "x": -94.5,
+      "y": -15.7,
+      "s": 1.696,
+      "z": 902
+    },
+    "plaque-wood-dark": {
+      "shown": true,
+      "x": 73.9,
+      "y": 204,
+      "s": 2.951,
+      "z": 939
+    },
+    "pendant-opal": {
+      "shown": true,
+      "x": -77.6,
+      "y": -29.3,
+      "s": 1,
+      "z": 910
+    },
+    "pendant-cameo": {
+      "shown": true,
+      "x": -45.9,
+      "y": -109.7,
+      "s": 1.356,
+      "z": 909
+    },
+    "pendant-opal-antique": {
+      "shown": true,
+      "x": 12.9,
+      "y": -29.3,
+      "s": 1,
+      "z": 911
+    },
+    "jacaranda": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 14
+    },
+    "hydrangea-bush": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 14
+    },
+    "lilac-bush": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 16
+    },
+    "rose-bush": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 16
+    },
+    "arch-roses": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 18
+    },
+    "trellis-wisteria": {
+      "shown": false,
+      "x": 70.7,
+      "y": 2.7,
+      "s": 0.614,
+      "z": 271
+    },
+    "trellis-ivy": {
+      "shown": false,
+      "x": 480.9,
+      "y": 84.9,
+      "s": 0.63,
+      "z": 839
+    },
+    "bed-iron": {
+      "shown": false,
+      "x": -295.6,
+      "y": 469.9,
+      "s": 1.196,
+      "z": 847
+    },
+    "teacup-turquoise": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 25
+    },
+    "teacup-blush": {
+      "shown": true,
+      "x": -358.8,
+      "y": 332.6,
+      "s": 1.947,
+      "z": 1043
+    },
+    "teacup-rosebud": {
+      "shown": true,
+      "x": -485.9,
+      "y": 347.5,
+      "s": 1.911,
+      "z": 1042
+    },
+    "teacup-rosebud-mini": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 25
+    },
+    "dresser": {
+      "shown": true,
+      "x": -337.2,
+      "y": 35.6,
+      "s": 0.685,
+      "z": 821
+    },
+    "mirror-glass-tulip": {
+      "shown": false,
+      "x": 1058.7,
+      "y": 56.8,
+      "s": 1,
+      "z": 937
+    },
+    "planter-greek-head": {
+      "shown": true,
+      "x": -288.7,
+      "y": 164.3,
+      "s": 1.319,
+      "z": 843
+    },
+    "perfume-daisy": {
+      "shown": true,
+      "x": 826.1,
+      "y": 356.1,
+      "s": 1.283,
+      "z": 1000
+    },
+    "plate-blue-gold": {
+      "shown": true,
+      "x": 855.5,
+      "y": 364.2,
+      "s": 1.456,
+      "z": 997
+    },
+    "purse-porcelain": {
+      "shown": true,
+      "x": 826.1,
+      "y": 358.4,
+      "s": 1,
+      "z": 999
+    },
+    "urn-glass": {
+      "shown": true,
+      "x": 559.8,
+      "y": 360,
+      "s": 2.855,
+      "z": 1017
+    },
+    "teacup-sage": {
+      "shown": true,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 30
+    },
+    "lamp-porcelain": {
+      "shown": true,
+      "x": -841.5,
+      "y": 261.8,
+      "s": 1.484,
+      "z": 1026
+    },
+    "perfume-cloud": {
+      "shown": false,
+      "x": 557.4,
+      "y": 229.9,
+      "s": 1.269,
+      "z": 710
+    },
+    "tissue-holder": {
+      "shown": true,
+      "x": 804.1,
+      "y": 378.4,
+      "s": 1.815,
+      "z": 998
+    },
+    "mirror-hand": {
+      "shown": true,
+      "x": 264.6,
+      "y": 355.5,
+      "s": 1,
+      "z": 806
+    },
+    "flask-horseshoe": {
+      "shown": true,
+      "x": 596.2,
+      "y": 349.1,
+      "s": 1.514,
+      "z": 1010
+    },
+    "teacup-multicolor": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 31
+    },
+    "fiddle-leaf-fig": {
+      "shown": true,
+      "x": 1250.4,
+      "y": 329.1,
+      "s": 1.165,
+      "z": 877
+    },
+    "candles-bottles": {
+      "shown": true,
+      "x": 1228.8,
+      "y": -46.7,
+      "s": 1.612,
+      "z": 996
+    },
+    "loveseat": {
+      "shown": false,
+      "x": 45.2,
+      "y": 328.5,
+      "s": 1.199,
+      "z": 886
+    },
+    "pillow-floral": {
+      "shown": true,
+      "x": 556.1,
+      "y": 383.9,
+      "s": 1,
+      "z": 1012
+    },
+    "pillow-lace": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 52
+    },
+    "armchair-sage": {
+      "shown": true,
+      "x": -723.1,
+      "y": 321.6,
+      "s": 1.598,
+      "z": 901
+    },
+    "pillow-bolster": {
+      "shown": true,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 56
+    },
+    "cabinet-jewelry": {
+      "shown": true,
+      "x": -1110.7,
+      "y": 314.2,
+      "s": 1.188,
+      "z": 900
+    },
+    "book-tiffany": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 32
+    },
+    "teacups-collection": {
+      "shown": true,
+      "x": -759.2,
+      "y": -576.3,
+      "s": 2.692,
+      "z": 1025
+    },
+    "teacup-rose": {
+      "shown": false,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 32
+    },
+    "tea-caddy": {
+      "shown": true,
+      "x": -667.1,
+      "y": -31.7,
+      "s": 1.944,
+      "z": 792
+    },
+    "teacup-blue-gilt": {
+      "shown": true,
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "z": 33
+    },
+    "dracaena": {
+      "shown": true,
+      "x": -852.2,
+      "y": 56.5,
+      "s": 0.658,
+      "z": 896
+    },
+    "fall-table-brea-molly": {
+      "shown": true,
+      "x": 100.2,
+      "y": 297.8,
+      "s": 1.588,
+      "z": 934
+    },
+    "dog-frisbee": {
+      "shown": true,
+      "x": -392.7,
+      "y": 400.9,
+      "s": 1.496,
+      "z": 1022
+    },
+    "vanity": {
+      "shown": true,
+      "x": 164.7,
+      "y": 106.6,
+      "s": 1.042,
+      "z": 875
+    },
+    "candle-pillar": {
+      "shown": true,
+      "x": -927.1,
+      "y": -220.3,
+      "s": 1.409,
+      "z": 726
+    },
+    "perfume-flora": {
+      "shown": false,
+      "x": 191.9,
+      "y": -42.2,
+      "s": 1.345,
+      "z": 712
+    },
+    "music-box-egg": {
+      "shown": true,
+      "x": 312.6,
+      "y": 122.9,
+      "s": 2.499,
+      "z": 1008
+    },
+    "candle-cherub": {
+      "shown": false,
+      "x": -726.3,
+      "y": -114.1,
+      "s": 1.647,
+      "z": 721
+    },
+    "candle-rose-portrait": {
+      "shown": true,
+      "x": -1113.4,
+      "y": -15.8,
+      "s": 2.024,
+      "z": 1027
+    },
+    "egg-cobalt": {
+      "shown": true,
+      "x": -1236.2,
+      "y": 2.2,
+      "s": 1.704,
+      "z": 1028
+    },
+    "mirror-tabletop": {
+      "shown": false,
+      "x": -1214.6,
+      "y": -92.1,
+      "s": 1,
+      "z": 791
+    },
+    "perfume-collection": {
+      "shown": true,
+      "x": 17.5,
+      "y": 107.6,
+      "s": 1,
+      "z": 1018
+    },
+    "perfume-butterfly": {
+      "shown": false,
+      "x": -7.5,
+      "y": -56.6,
+      "s": 1,
+      "z": 682
+    },
+    "brushes": {
+      "shown": false,
+      "x": -25.6,
+      "y": -69.1,
+      "s": 1.304,
+      "z": 599
+    },
+    "trinket-box": {
+      "shown": true,
+      "x": 204.4,
+      "y": 103.5,
+      "s": 1.363,
+      "z": 1003
+    },
+    "chair-vanity": {
+      "shown": true,
+      "x": -184.5,
+      "y": 132,
+      "s": 1.68,
+      "z": 915
+    },
+    "monstera-crystal": {
+      "shown": true,
+      "x": 56.6,
+      "y": 120.7,
+      "s": 1.503,
+      "z": 832
+    },
+    "cats-birthday": {
+      "shown": true,
+      "x": -140.4,
+      "y": 142,
+      "s": 2.128,
+      "z": 933
+    },
+    "cat-blueberry-running": {
+      "shown": false,
+      "x": 162.7,
+      "y": -86.7,
+      "s": 1,
+      "z": 922
+    },
+    "honeysuckle-tricycle": {
+      "shown": true,
+      "x": -113.4,
+      "y": 195.6,
+      "s": 2.278,
+      "z": 921
+    },
+    "cats-toilet": {
+      "shown": true,
+      "x": 1198.5,
+      "y": 256.1,
+      "s": 2.336,
+      "z": 918
+    },
+    "honeysuckle-clock": {
+      "shown": true,
+      "x": -422.5,
+      "y": -321.6,
+      "s": 1,
+      "z": 943
+    },
+    "cat-strawberry-roses": {
+      "shown": true,
+      "x": 492.2,
+      "y": -145.8,
+      "s": 1.651,
+      "z": 995
+    },
+    "honeysuckle-sewing": {
+      "shown": false,
+      "x": -226.1,
+      "y": -192.8,
+      "s": 1,
+      "z": 499
+    },
+    "cats-roses": {
+      "shown": false,
+      "x": -1544.9,
+      "y": -10.2,
+      "s": 1.652,
+      "z": 959
+    },
+    "cat-strawberry": {
+      "shown": true,
+      "x": 11,
+      "y": -58.1,
+      "s": 1,
+      "z": 935
+    },
+    "honeysuckle-bow-alt": {
+      "shown": false,
+      "x": -232.8,
+      "y": 42.6,
+      "s": 1,
+      "z": 796
+    },
+    "kitten-strawberry": {
+      "shown": false,
+      "x": -608.8,
+      "y": 44.3,
+      "s": 1,
+      "z": 798
+    },
+    "cat-blueberry-sitting": {
+      "shown": false,
+      "x": -301.9,
+      "y": 19.4,
+      "s": 1,
+      "z": 819
+    },
+    "honeysuckle-bow": {
+      "shown": true,
+      "x": 633.1,
+      "y": -379.7,
+      "s": 0.996,
+      "z": 1011
+    },
+    "cat-honeysuckle": {
+      "shown": false,
+      "x": -43.4,
+      "y": -5.3,
+      "s": 1,
+      "z": 777
+    },
+    "kittens-christmas": {
+      "shown": false,
+      "x": -1063,
+      "y": -876.2,
+      "s": 0.702,
+      "z": 779
+    },
+    "cat-strawberry-window": {
+      "shown": false,
+      "x": -1350.3,
+      "y": -490.6,
+      "s": 1,
+      "z": 625
+    },
+    "cat-blueberry-party": {
+      "shown": true,
+      "x": -420.9,
+      "y": -81.1,
+      "s": 1.434,
+      "z": 952
+    },
+    "cat-blueberry-monstera": {
+      "shown": true,
+      "x": 100,
+      "y": -341,
+      "s": 1.382,
+      "z": 942
+    }
+  }
+}

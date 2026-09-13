@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { propSrc, propSpec, type PropId } from "./props";
 import { stock } from "./shelves";
+import { capture, type SeasonLayout } from "./arrangement";
+import { LayoutsShelf } from "./LayoutsShelf";
+import type { Season } from "./seasons";
+import type { Collection } from "./useCollection";
 
 /**
  * The room's catalogue, like the wardrobe screen in a dress-up game: every
@@ -9,6 +13,9 @@ import { stock } from "./shelves";
  *
  * It reads what's in the room off the page when it opens, so the phone layout
  * and the desktop layout each list exactly their own stickers.
+ *
+ * Its second page, Saved looks (LayoutsShelf.tsx), keeps whole arrangements
+ * of the room. Only the desktop room is arranged, so the phone doesn't get it.
  */
 
 const nice = (id: string) => {
@@ -39,16 +46,26 @@ export function Catalogue({
   onClose,
   hidden,
   setHidden,
+  collection,
+  season,
+  wearing,
+  onWear,
 }: {
   open: boolean;
   onClose: () => void;
   hidden: Set<string>;
   setHidden: (next: Set<string>) => void;
+  collection: Collection;
+  season: Season;
+  wearing: SeasonLayout | undefined;
+  onWear: (layout: SeasonLayout) => void;
 }) {
   const panel = useRef<HTMLDivElement>(null);
   const [inRoom, setInRoom] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
+  const [page, setPage] = useState<"stickers" | "looks">("stickers");
+  const [phone, setPhone] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -57,6 +74,9 @@ export function Catalogue({
       .map((el) => el.dataset.prop!)
       .filter((id, i, all) => all.indexOf(id) === i);
     setInRoom(ids);
+    const onPhone = Boolean(stage?.querySelector(".palais-layer .palais-frame"));
+    setPhone(onPhone);
+    if (onPhone) setPage("stickers");
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -85,25 +105,8 @@ export function Catalogue({
   const copyLayout = async () => {
     const stage = panel.current?.closest<HTMLElement>(".palais-stage");
     if (!stage) return;
-    const r = stage.getBoundingClientRect();
-    const props: Record<string, { shown: boolean; x: number; y: number; s: number; z: number }> = {};
-    stage.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
-      const cs = getComputedStyle(el);
-      const [x = "0", y = "0"] = cs.translate === "none" ? [] : cs.translate.split(" ");
-      props[el.dataset.prop!] = {
-        shown: !hidden.has(el.dataset.prop!),
-        x: Math.round((parseFloat(x) || 0) * 10) / 10,
-        y: Math.round((parseFloat(y) || 0) * 10) / 10,
-        s: Math.round((parseFloat(cs.scale) || 1) * 1000) / 1000,
-        z: Number(cs.zIndex) || 0,
-      };
-    });
-    const layout = {
-      stage: { w: Math.round(r.width), h: Math.round(r.height) },
-      layout: stage.querySelector(".palais-layer .palais-frame") ? "phone" : "desktop",
-      season: stage.querySelector<HTMLElement>(".palais-arrive")?.dataset.season ?? "spring",
-      props,
-    };
+    const { stage: size, layout: device, season: at, props } = capture(stage, hidden);
+    const layout = { stage: size, layout: device, season: at, props };
     const text = JSON.stringify(layout, null, 2);
     try {
       await navigator.clipboard.writeText(text);
@@ -143,6 +146,29 @@ export function Catalogue({
           <button type="button" className="cat-close" onClick={onClose} aria-label="Close the catalogue">
             ×
           </button>
+          {!phone && (
+            <div className="cat-pages" role="tablist" aria-label="Catalogue pages">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={page === "stickers"}
+                className={`cat-page${page === "stickers" ? " is-on" : ""}`}
+                onClick={() => setPage("stickers")}
+              >
+                ♡ Stickers
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={page === "looks"}
+                className={`cat-page${page === "looks" ? " is-on" : ""}`}
+                onClick={() => setPage("looks")}
+              >
+                ✦ Saved looks
+              </button>
+            </div>
+          )}
+          {page === "stickers" && (
           <nav className="cat-tabs" aria-label="Shelves">
             {shelves.map(({ shelf }) => (
               <button
@@ -155,9 +181,21 @@ export function Catalogue({
               </button>
             ))}
           </nav>
+          )}
         </header>
 
         <div className="cat-scroll">
+          {page === "looks" ? (
+            <LayoutsShelf
+              collection={collection}
+              season={season}
+              wearing={wearing}
+              onWear={onWear}
+              hidden={hidden}
+              stageOf={() => panel.current?.closest<HTMLElement>(".palais-stage") ?? null}
+            />
+          ) : (
+          <>
           {shelves.map(({ shelf, items }) => {
             const on = items.filter((id) => !hidden.has(id)).length;
             const all = on === items.length;
@@ -202,15 +240,21 @@ export function Catalogue({
               </section>
             );
           })}
+          </>
+          )}
         </div>
 
         <footer className="cat-foot">
-          <button type="button" className="cat-btn" onClick={() => setMany(inRoom, true)}>
-            Show everything
-          </button>
-          <button type="button" className="cat-btn cat-btn--ghost" onClick={() => setMany(inRoom, false)}>
-            Hide everything
-          </button>
+          {page === "stickers" && (
+            <>
+              <button type="button" className="cat-btn" onClick={() => setMany(inRoom, true)}>
+                Show everything
+              </button>
+              <button type="button" className="cat-btn cat-btn--ghost" onClick={() => setMany(inRoom, false)}>
+                Hide everything
+              </button>
+            </>
+          )}
           <button
             type="button"
             className="cat-btn cat-btn--copy"

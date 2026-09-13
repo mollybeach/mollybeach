@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import type { Styled } from "./styled";
-import { ArrangedRoom, SeasonNow, arranged } from "./arrangement";
+import { ArrangedRoom, LayoutNow, arranged } from "./arrangement";
 import { propSpec, propSrc, type PropId } from "./props";
 
 /**
@@ -35,8 +35,8 @@ export function Pendant({
 }) {
   const spec = propSpec(id);
   const inRoom = useContext(ArrangedRoom);
-  const season = useContext(SeasonNow);
-  const moved = inRoom ? arranged(id, season) : undefined;
+  const layout = useContext(LayoutNow);
+  const moved = inRoom ? arranged(id, layout) : undefined;
 
   const style: Styled = {
     position: "absolute",

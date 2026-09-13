@@ -1,7 +1,10 @@
 import { createContext } from "react";
 import type { Styled } from "./styled";
 import type { Season } from "./seasons";
+import springLayout from "./layouts/spring.json";
+import summerLayout from "./layouts/summer.json";
 import autumnLayout from "./layouts/autumn.json";
+import winterLayout from "./layouts/winter.json";
 
 /**
  * The room as Molly arranged it by hand.
@@ -110,12 +113,13 @@ export const ARRANGEMENT: Record<string, Move> = {
 
 /* ---- a layout per season -------------------------------------------------
 
-   Molly arranges a season on the live page and copies it from the catalogue
-   ("Copy layout"). Paste the JSON into layouts/<season>.json and add it to
-   SEASON_LAYOUTS. A season with no layout of its own uses the arrangement
-   above. A layout says, for every sticker, whether it's shown, where it's been
-   moved to (in pixels on the stage it was made on, which it records), its
-   size and its stacking order. */
+   Molly arranges a season on the live page and saves it to the collection
+   from the catalogue (layoutsDb.ts), or copies it ("Copy layout") to paste
+   into layouts/<season>.json here. A season's default in the collection wins;
+   then the file here; a season with neither uses the arrangement above. A
+   layout says, for every sticker, whether it's shown, where it's been moved to
+   (in pixels on the stage it was made on, which it records), its size and its
+   stacking order. */
 
 export interface SeasonLayout {
   stage: { w: number; h: number };
@@ -123,14 +127,19 @@ export interface SeasonLayout {
   props: Record<string, { shown: boolean; x: number; y: number; s: number; z: number }>;
 }
 
-export const SEASON_LAYOUTS: Partial<Record<Season, SeasonLayout>> = {
+/** the layouts that ship with the code */
+export const BUNDLED_LAYOUTS: Partial<Record<Season, SeasonLayout>> = {
+  // spring, summer and winter start as copies of autumn, to be rearranged
+  spring: springLayout as SeasonLayout,
+  summer: summerLayout as SeasonLayout,
   autumn: autumnLayout as SeasonLayout,
+  winter: winterLayout as SeasonLayout,
 };
 
 /** true inside the desktop room, where the arrangement applies */
 export const ArrangedRoom = createContext(false);
-/** the season the room is dressed for right now */
-export const SeasonNow = createContext<Season>("spring");
+/** the layout the room is dressed in right now; none means the one above */
+export const LayoutNow = createContext<SeasonLayout | undefined>(undefined);
 
 function move(x: number, y: number, s: number | undefined, z: number, w: number, h: number): Styled {
   const style: Styled = { zIndex: z };
@@ -142,9 +151,9 @@ function move(x: number, y: number, s: number | undefined, z: number, w: number,
   return style;
 }
 
-/** the style that puts one sticker where Molly put it for this season */
-export function arranged(id: string, season: Season = "spring"): Styled | undefined {
-  const layout = SEASON_LAYOUTS[season];
+/** the style that puts one sticker where this layout (or the arrangement
+    above) puts it */
+export function arranged(id: string, layout?: SeasonLayout): Styled | undefined {
   if (layout) {
     const m = layout.props[id];
     return m ? move(m.x, m.y, m.s, m.z, layout.stage.w, layout.stage.h) : undefined;
@@ -153,11 +162,50 @@ export function arranged(id: string, season: Season = "spring"): Styled | undefi
   return m ? move(m.x, m.y, m.s, m.z, STAGE_W, STAGE_H) : undefined;
 }
 
-/** which stickers start out of the room in this season, if it has a layout */
-export function hiddenIn(season: Season): string[] | undefined {
-  const layout = SEASON_LAYOUTS[season];
-  if (!layout) return undefined;
+/** which stickers a layout leaves out of the room */
+export function hiddenOf(layout: SeasonLayout): string[] {
   return Object.entries(layout.props)
     .filter(([, m]) => !m.shown)
     .map(([id]) => id);
+}
+
+/**
+ * Put every sticker exactly where the layout says, undoing any dragging.
+ *
+ * React only writes a style when its own value changes, so a sticker that was
+ * dragged, in a layout that doesn't move it, would stay where it was dragged.
+ * This writes them all.
+ */
+export function settle(scope: ParentNode, layout?: SeasonLayout) {
+  scope.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
+    const style = arranged(el.dataset.prop!, layout);
+    el.style.translate = style?.translate ? String(style.translate) : "";
+    el.style.scale = style?.scale ? String(style.scale) : "";
+    if (style?.scale && !el.style.transformOrigin) el.style.transformOrigin = "50% 100%";
+    if (style?.zIndex !== undefined) el.style.zIndex = String(style.zIndex);
+    else if (el.dataset.z0 !== undefined) el.style.zIndex = el.dataset.z0; // as it was before any dragging
+  });
+}
+
+/** the room as it is right now, in the same form as a saved layout */
+export function capture(stage: HTMLElement, hidden: Set<string>): SeasonLayout & { layout: "desktop" | "phone" } {
+  const r = stage.getBoundingClientRect();
+  const props: SeasonLayout["props"] = {};
+  stage.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
+    const cs = getComputedStyle(el);
+    const [x = "0", y = "0"] = cs.translate === "none" ? [] : cs.translate.split(" ");
+    props[el.dataset.prop!] = {
+      shown: !hidden.has(el.dataset.prop!),
+      x: Math.round((parseFloat(x) || 0) * 10) / 10,
+      y: Math.round((parseFloat(y) || 0) * 10) / 10,
+      s: Math.round((parseFloat(cs.scale) || 1) * 1000) / 1000,
+      z: Number(cs.zIndex) || 0,
+    };
+  });
+  return {
+    stage: { w: Math.round(r.width), h: Math.round(r.height) },
+    layout: stage.querySelector(".palais-layer .palais-frame") ? "phone" : "desktop",
+    season: stage.querySelector<HTMLElement>(".palais-arrive")?.dataset.season ?? "spring",
+    props,
+  };
 }

@@ -1,5 +1,5 @@
 import { useContext, type CSSProperties, type ReactNode } from "react";
-import { ArrangedRoom, SeasonNow, arranged } from "./arrangement";
+import { ArrangedRoom, LayoutNow, arranged } from "./arrangement";
 
 /** a plain positioned box that follows the season's arrangement, for the one
     sticker that isn't a <Prop> (the vanity chair) */
@@ -17,9 +17,9 @@ export function ArrangedBox({
   set?: string;
 }) {
   const inRoom = useContext(ArrangedRoom);
-  const season = useContext(SeasonNow);
+  const layout = useContext(LayoutNow);
   return (
-    <div className={className} data-set={set} data-prop={id} style={{ ...style, ...(inRoom ? arranged(id, season) : undefined) }}>
+    <div className={className} data-set={set} data-prop={id} style={{ ...style, ...(inRoom ? arranged(id, layout) : undefined) }}>
       {children}
     </div>
   );

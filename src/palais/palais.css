@@ -777,6 +777,129 @@
 .palais .cat-btn--done { background: linear-gradient(180deg, #ff7cbc, #ff4fa3); color: #fff; }
 .palais .cat-btn--done:hover { background: linear-gradient(180deg, #ff8ec6, #ff5fae); }
 
+/* the catalogue's two pages, and its collection of saved looks */
+.palais .cat-pages { display: flex; justify-content: center; gap: 0.4rem; margin: 0.1rem 0 0.55rem; }
+.palais .cat-page {
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font: 800 0.88rem/1.2 var(--cat-round);
+  cursor: pointer;
+}
+.palais .cat-page.is-on { background: #fff; color: var(--cat-hot); border-color: #fff; }
+
+.palais .cat-looks { display: flex; flex-direction: column; gap: 0.8rem; padding: 0.9rem 0 0.4rem; }
+.palais .cat-seasons { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.palais .cat-season {
+  position: relative;
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  border: 2px solid var(--cat-line);
+  background: #fff;
+  color: var(--cat-deep);
+  font: 700 0.85rem/1.2 var(--cat-round);
+  cursor: pointer;
+}
+.palais .cat-season.is-on { border-color: var(--cat-hot); background: var(--cat-soft); color: var(--cat-hot); }
+.palais .cat-now {
+  position: absolute;
+  top: -0.55rem;
+  right: -0.3rem;
+  padding: 0 0.35rem;
+  border-radius: 9999px;
+  background: #8fcf9a;
+  color: #fff;
+  font-size: 0.6rem;
+  line-height: 1.1rem;
+}
+
+.palais .cat-note,
+.palais .cat-error { margin: 0; padding: 0.7rem 0.9rem; border-radius: 14px; font-size: 0.85rem; line-height: 1.45; }
+.palais .cat-note { background: #fff; border: 2px dashed var(--cat-line); color: #9a4a72; list-style: none; }
+.palais .cat-note code { font-size: 0.78rem; background: var(--cat-soft); padding: 0 0.25rem; border-radius: 4px; }
+.palais .cat-error { background: #fff0f0; border: 2px solid #f5a3a3; color: #a32929; }
+
+.palais .cat-look-list { display: flex; flex-direction: column; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+.palais .cat-look {
+  padding: 0.7rem 0.85rem;
+  border-radius: 18px;
+  border: 2px solid var(--cat-line);
+  background: #fff;
+  box-shadow: 0 3px 0 rgba(214, 36, 122, 0.1);
+}
+.palais .cat-look.is-default { border-color: #f5c35b; background: linear-gradient(180deg, #fffdf4, #fff); }
+.palais .cat-look.is-wearing { box-shadow: 0 0 0 3px #ffb3d6, 0 3px 0 rgba(214, 36, 122, 0.1); }
+.palais .cat-look-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.palais .cat-look-name { font: 800 1rem/1.25 var(--cat-round); color: var(--cat-deep); }
+.palais .cat-badge {
+  padding: 0.1rem 0.5rem;
+  border-radius: 9999px;
+  background: #ffe7a8;
+  color: #8a6a1c;
+  font: 700 0.7rem/1.3 var(--cat-round);
+}
+.palais .cat-badge--wearing { background: var(--cat-soft); color: var(--cat-hot); }
+.palais .cat-look-meta { margin: 0.2rem 0 0.5rem; font-size: 0.75rem; color: #b5708f; }
+.palais .cat-look-actions { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.palais .cat-mini {
+  padding: 0.25rem 0.7rem;
+  border-radius: 9999px;
+  border: 2px solid var(--cat-line);
+  background: #fff;
+  color: var(--cat-deep);
+  font: 700 0.75rem/1.2 var(--cat-round);
+  cursor: pointer;
+}
+.palais .cat-mini:hover { background: var(--cat-soft); }
+.palais .cat-mini--hot { border-color: var(--cat-hot); color: var(--cat-hot); }
+.palais .cat-mini--ghost { color: #b5708f; }
+.palais .cat-mini:disabled,
+.palais .cat-btn:disabled { opacity: 0.5; cursor: progress; }
+
+.palais .cat-input {
+  min-width: 0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 12px;
+  border: 2px solid var(--cat-line);
+  background: #fff;
+  color: #6d1f47;
+  font: 600 0.85rem/1.2 var(--cat-round);
+}
+.palais .cat-input:focus { outline: none; border-color: var(--cat-hot); }
+.palais .cat-rename { display: flex; gap: 0.35rem; flex: 1 1 12rem; }
+.palais .cat-rename .cat-input { flex: 1; }
+
+.palais .cat-save {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 18px;
+  border: 2px dashed var(--cat-hot);
+  background: #fff8fc;
+}
+.palais .cat-save h3 { margin: 0; font: 800 0.95rem/1.2 var(--cat-round); color: var(--cat-deep); }
+.palais .cat-save-row { display: flex; gap: 0.4rem; }
+.palais .cat-save-row .cat-input:first-child { flex: 1; }
+.palais .cat-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #9a4a72; }
+.palais .cat-check input { accent-color: var(--cat-hot); }
+.palais .cat-save .cat-btn { align-self: flex-start; }
+
+.palais .cat-signin { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.palais .cat-signin .cat-input { flex: 1 1 10rem; }
+.palais .cat-signin-line { margin: 0; text-align: center; font-size: 0.78rem; color: #b5708f; }
+.palais .cat-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cat-hot);
+  font: 700 0.78rem/1.2 var(--cat-round);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* on a phone: clear of the menu button, and three to a row */
 @container palais (max-width: 639px) {
   .palais .cat-backdrop { padding: 4.4rem 0.6rem 0.6rem; place-items: stretch; }
