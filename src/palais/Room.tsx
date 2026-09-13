@@ -11,10 +11,13 @@ import { useEffect, useRef } from "react";
  * photograph, `cover` crops top and bottom, and the floor is the part that
  * matters because everything stands on it.
  *
+ * On a tall screen it is the portrait photograph instead, held in a
+ * `.palais-frame` so the phone layout can be placed against it exactly.
+ *
  * The slight pointer-driven drift is the only motion, and it is what stops a
  * still photograph from reading as wallpaper.
  */
-export function Room() {
+export function Room({ portrait = false }: { portrait?: boolean }) {
   const img = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -43,16 +46,24 @@ export function Room() {
       window.removeEventListener("pointermove", onMove);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [portrait]);
+
+  const photo = portrait ? (
+    <div className="palais-frame">
+      <img ref={img} src={`${process.env.PUBLIC_URL}/palais/room-portrait.webp`} alt="" style={{ transform: "scale(1.045)" }} />
+    </div>
+  ) : (
+    <img
+      ref={img}
+      src={`${process.env.PUBLIC_URL}/palais/room.webp`}
+      alt=""
+      style={{ objectPosition: "50% 42%", transform: "scale(1.045)" }}
+    />
+  );
 
   return (
     <div aria-hidden className="palais-room">
-      <img
-        ref={img}
-        src={`${process.env.PUBLIC_URL}/palais/room.webp`}
-        alt=""
-        style={{ objectPosition: "50% 42%", transform: "scale(1.045)" }}
-      />
+      {photo}
       {/* a little more shadow on the right-hand side of the room */}
       <div
         style={{

@@ -6,6 +6,8 @@ import { Footer } from "./Footer";
 import { Pendant } from "./Pendant";
 import { Conjure } from "./Conjure";
 import { StickerToggle } from "./StickerToggle";
+import { Flyers } from "./Flyers";
+import { PortraitTerrace, usePortrait } from "./PortraitTerrace";
 import "./palais.css";
 
 /* Narrow screens keep the furniture and drop the small things — a 390px-wide
@@ -85,6 +87,7 @@ const BED_M = 2.1;
 const quilt = (frac: number) => surface(BED_M, BED_D, 1.25, frac);
 
 export default function PalaisHome() {
+  const portrait = usePortrait();
   return (
     <>
       <div className="palais">
@@ -110,9 +113,10 @@ export default function PalaisHome() {
             each prop is covered by whatever paints over it.
             ============================================================== */}
         <section className="palais-stage">
-          <Room />
-          <Pollen count={110} className="palais-pollen--front" />
+          <Room portrait={portrait} />
+          <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />
           <StickerToggle>
+          {portrait ? <PortraitTerrace /> : <>
           {/* ---- blossom, broken by the top corners --------------------- */}
           <Prop id="wisteria-branch-lavender" w="clamp(17rem,35cqw,33rem)" left="-7%" top="-11%" tilt={-3} motion="rustle" dur={17} z={90} plane="fore" />
           <Prop id="wisteria-branch-purple" w="clamp(12rem,26cqw,24rem)" right="-6%" top="-9%" tilt={5} motion="rustle" dur={21} z={90} plane="fore" flip className={sm} />
@@ -149,8 +153,8 @@ export default function PalaisHome() {
           <Prop id="arch-roses" group="blossoms" w={w(2.3, 0.24)} right="12%" ground={at(0.24).ground} tilt={-1} motion="rustle" dur={23} z={18} plane="far" className={sm} />
 
           {/* ---- the two trellises: tall, and a long way apart ---------- */}
-          <Prop id="trellis-wisteria" group="trellises" w={w(2.8, 0.3)} left="9%" ground={at(0.3).ground} tilt={-1} motion="rustle" dur={19} z={20} plane="mid" className={sm} />
-          <Prop id="trellis-ivy" group="trellises" w={w(2.8, 0.34)} right="36%" ground={at(0.34).ground} tilt={1} motion="rustle" dur={23} z={20} plane="mid" className={sm} />
+          <Prop set="trellisL" id="trellis-wisteria" group="trellises" w={w(2.8, 0.3)} left="9%" ground={at(0.3).ground} tilt={-1} motion="rustle" dur={19} z={20} plane="mid" className={sm} />
+          <Prop set="trellisR" id="trellis-ivy" group="trellises" w={w(2.8, 0.34)} right="36%" ground={at(0.34).ground} tilt={1} motion="rustle" dur={23} z={20} plane="mid" className={sm} />
 
           {/* ---- mid floor --------------------------------------------- */}
           <Prop set="bed" id="bed-iron" w={w(BED_M, BED_D)} left="0%" ground={at(BED_D).ground} tilt={-0.5} motion="bob" dur={22} rise={2} z={24} plane="mid" className={md} />
@@ -260,6 +264,10 @@ export default function PalaisHome() {
           {/* these two live on things rather than on the tiles */}
           <Prop set="settee" id="cat-blueberry-party" w={w(0.5, 0.84)} left="20%" ground={`calc(${SETTEE_SEAT} + 0.6cqw)`} tilt={-2} motion="bob" dur={12} rise={3} z={53} className={sm} />
           <Prop id="cat-blueberry-monstera" w={w(0.72, 0.96)} right="2.5%" ground={`calc(${at(0.96).ground} + 1.4cqw)`} tilt={1} motion="bob" dur={15} rise={3} z={68} />
+          </>}
+
+          {/* the visitors: a hummingbird, a dragonfly, now and then */}
+          <Flyers />
           </StickerToggle>
         </section>
 

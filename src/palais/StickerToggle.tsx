@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { arrivalVars } from "./conjureSchedule";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -50,8 +51,10 @@ export function StickerToggle({ children }: { children: ReactNode }) {
         </button>
       </div>
 
+      {/* the sticker layer: empty on arrival, then everything materialises */}
       <div
-        style={{ display: room ? "contents" : "none" }}
+        className="palais-arrive"
+        style={{ ...arrivalVars(), display: room ? undefined : "none" }}
         data-hide-blossoms={blossoms ? undefined : ""}
         data-hide-trellises={trellises ? undefined : ""}
       >

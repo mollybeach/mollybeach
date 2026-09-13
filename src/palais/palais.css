@@ -110,6 +110,22 @@
   object-fit: cover;
 }
 
+/* The portrait photograph, and the phone layout placed on it, share this box:
+   the photograph's exact shape, scaled to cover the stage, so a percentage
+   inside it is always the same spot in the picture. Sides crop evenly; when
+   the screen is wider than the photograph, most of the crop comes off the
+   ceiling, because the floor is where everything stands. */
+.palais .palais-frame {
+  position: absolute;
+  left: 50%;
+  bottom: calc((100cqh - max(100cqh, 100cqw * 1672 / 941)) * 0.25);
+  width: max(100cqw, 100cqh * 941 / 1672);
+  height: max(100cqh, 100cqw * 1672 / 941);
+  transform: translateX(-50%);
+  container: palais-frame / size;
+}
+.palais .palais-room .palais-frame img { width: 100%; height: 100%; object-fit: fill; }
+
 .palais-pollen {
   position: absolute;
   inset: 0;
@@ -401,40 +417,61 @@
 .palais .pivot-top { transform-origin: 50% 4%; }
 
 /* ==========================================================================
-   CONJURING — the furniture takes turns vanishing (see src/lib/conjure.ts)
+   ARRIVAL — nothing but the terrace at first, then everything materialises
+   (timing in conjureSchedule.ts)
 
-   Each set has a ten-second window at the start of its own 70-second cycle,
-   and sits perfectly still for the other sixty:
+   The layer is a positioned box above the pollen, so the props keep their
+   order among themselves exactly as before.
+   ========================================================================== */
 
-     0s  – 1s   a shimmer: it brightens, as if catching the light
-     1s  – 3s   it dissolves upward into that light
-     3s  – 5s   gone; only the flare and the dust remain
-     5s  – 8s   it rises back up from below, a little over-bright
-     8s  – 9s   and settles
+@keyframes palais-arrive {
+  0%   { opacity: 0; filter: blur(14px) brightness(1.7) saturate(0.5); transform: translate3d(0, 1.2%, 0) scale(1.01); }
+  55%  { opacity: 1; filter: blur(3px) brightness(1.25) saturate(1.1); }
+  100% { opacity: 1; filter: none; transform: none; }
+}
+
+.palais .palais-arrive {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  animation: palais-arrive var(--arrive-dur, 3s) cubic-bezier(0.2, 0.6, 0.2, 1) var(--arrive-delay, 4.5s) both;
+}
+
+/* ==========================================================================
+   CONJURING — the furniture and trellises take turns vanishing
+   (timing in conjureSchedule.ts; these percentages are for its 36s cycle)
+
+   Each set's turn, at the start of its cycle:
+
+     0s   – 0.6s  a shimmer: it brightens, as if catching the light
+     0.6s – 2s    it dissolves upward into that light
+     2s   – 3.2s  gone; only the flare and the dust remain
+     3.2s – 5.4s  it rises back up from below, a little over-bright
+     5.4s – 6.4s  and settles
    ========================================================================== */
 
 @keyframes palais-conjure {
-  0%, 12.9%, 100% {
+  0%, 17.778%, 100% {
     opacity: 1;
     filter: blur(0) brightness(1) saturate(1);
     transform: translate3d(0, 0, 0) scale(1);
   }
-  1.4% {
+  1.667% {
     opacity: 0.95;
     filter: blur(0.4px) brightness(1.28) saturate(1.2);
     transform: translate3d(0, -3px, 0) scale(1.006);
   }
-  4.3% {
+  5.556% {
     opacity: 0;
     filter: blur(16px) brightness(2.1) saturate(0.35);
     transform: translate3d(0, -22px, 0) scale(1.045);
   }
-  7.1% {
+  8.889% {
     opacity: 0;
     filter: blur(16px) brightness(2.1) saturate(0.35);
     transform: translate3d(0, 16px, 0) scale(0.97);
   }
-  11.4% {
+  15% {
     opacity: 1;
     filter: blur(0) brightness(1.4) saturate(1.25);
     transform: translate3d(0, 0, 0) scale(1.012);
@@ -444,28 +481,28 @@
 /* the flare: blooms as the piece leaves, dims while it is away, blooms again
    as it comes back */
 @keyframes palais-conjure-flare {
-  0%, 1.4%, 12.9%, 100% { opacity: 0; transform: scale(0.7); }
-  3.6%                  { opacity: 0.95; transform: scale(1.08); }
-  6%                    { opacity: 0.35; transform: scale(1.18); }
-  9%                    { opacity: 0.9; transform: scale(1.04); }
-  11.8%                 { opacity: 0; transform: scale(0.9); }
+  0%, 1.667%, 17.778%, 100% { opacity: 0; transform: scale(0.7); }
+  4.167% { opacity: 0.95; transform: scale(1.08); }
+  7.222% { opacity: 0.35; transform: scale(1.18); }
+  12.778% { opacity: 0.9; transform: scale(1.04); }
+  16.667% { opacity: 0; transform: scale(0.9); }
 }
 
 /* the dust: rises out of the piece on the way out, and falls into it on the
    way back */
 @keyframes palais-conjure-dust {
-  0%, 1.4%, 12.9%, 100% { opacity: 0; transform: translate3d(0, 10%, 0); }
-  3.8%                  { opacity: 1; transform: translate3d(0, -14%, 0); }
-  5.6%                  { opacity: 0.2; transform: translate3d(0, -30%, 0); }
-  6%                    { opacity: 0; transform: translate3d(0, -40%, 0); }
-  6.1%                  { opacity: 0; transform: translate3d(0, -38%, 0); }
-  9.2%                  { opacity: 1; transform: translate3d(0, -8%, 0); }
-  11.8%                 { opacity: 0; transform: translate3d(0, 6%, 0); }
+  0%, 1.667%, 17.778%, 100% { opacity: 0; transform: translate3d(0, 10%, 0); }
+  4.444% { opacity: 1; transform: translate3d(0, -14%, 0); }
+  6.667% { opacity: 0.2; transform: translate3d(0, -30%, 0); }
+  7.5% { opacity: 0; transform: translate3d(0, -40%, 0); }
+  7.639% { opacity: 0; transform: translate3d(0, -38%, 0); }
+  13.056% { opacity: 1; transform: translate3d(0, -8%, 0); }
+  16.667% { opacity: 0; transform: translate3d(0, 6%, 0); }
 }
 
 .palais .conjure {
   transform-origin: 50% 100%;
-  animation: palais-conjure var(--conjure-dur, 70s) cubic-bezier(0.45, 0, 0.25, 1) var(--conjure-delay, 0s) infinite;
+  animation: palais-conjure var(--conjure-dur, 36s) cubic-bezier(0.45, 0, 0.25, 1) var(--conjure-delay, 0s) infinite;
 }
 
 .palais .conjure-light {
@@ -482,7 +519,7 @@
     rgba(233, 206, 134, 0.18) 60%,
     rgba(233, 206, 134, 0) 76%
   );
-  animation: palais-conjure-flare var(--conjure-dur, 70s) ease-in-out var(--conjure-delay, 0s) infinite;
+  animation: palais-conjure-flare var(--conjure-dur, 36s) ease-in-out var(--conjure-delay, 0s) infinite;
 }
 
 .palais .conjure-light::before {
@@ -502,7 +539,47 @@
     radial-gradient(circle at 66% 22%, #f4e6bd 0 1.5px, rgba(255, 236, 170, 0) 3.2px),
     radial-gradient(circle at 38% 58%, #d9ccf2 0 1.4px, rgba(217, 204, 242, 0) 3px);
   filter: drop-shadow(0 0 3px rgba(255, 236, 170, 0.9));
-  animation: palais-conjure-dust var(--conjure-dur, 70s) ease-out var(--conjure-delay, 0s) infinite;
+  animation: palais-conjure-dust var(--conjure-dur, 36s) ease-out var(--conjure-delay, 0s) infinite;
+}
+
+/* ============================================================================
+   VISITORS — a hummingbird and a dragonfly, now and then (see Flyers.tsx)
+   ========================================================================== */
+
+.palais .palais-flyers { position: absolute; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; }
+.palais .palais-flyer { position: absolute; left: 0; top: 0; will-change: transform; }
+.palais .palais-flyer-body { will-change: transform; }
+.palais .palais-flyer--hummingbird .palais-flyer-body {
+  width: clamp(52px, 5.4cqw, 90px);
+  filter: drop-shadow(0 7px 5px rgba(40, 30, 20, 0.26));
+}
+.palais .palais-flyer--dragonfly .palais-flyer-body {
+  width: clamp(64px, 6.6cqw, 112px);
+  filter: drop-shadow(0 12px 6px rgba(40, 30, 20, 0.2));
+}
+.palais .palais-critter-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* the wing, caught at three points of a stroke too fast to follow */
+.palais .palais-hb-wing {
+  transform-box: view-box;
+  transform-origin: 86px 54px;
+  animation: palais-hb-wing 90ms steps(1) infinite;
+}
+@keyframes palais-hb-wing {
+  0%   { transform: rotate(0deg); opacity: 0.9; }
+  33%  { transform: rotate(-45deg); opacity: 0.45; }
+  66%  { transform: rotate(-88deg); opacity: 0.75; }
+}
+
+/* glass wings don't flap so much as shiver */
+.palais .palais-df-wings {
+  transform-box: view-box;
+  transform-origin: 100px 70px;
+  animation: palais-df-wings 55ms linear infinite alternate;
+}
+@keyframes palais-df-wings {
+  from { transform: scaleY(1); opacity: 1; }
+  to   { transform: scaleY(0.84); opacity: 0.82; }
 }
 
 
@@ -519,6 +596,9 @@
 
   /* props that fade on a timer must be left visible, not left at opacity 0 */
   .palais .anim-ghost { animation: none !important; opacity: 1 !important; }
+
+  /* nobody should have to wait through an entrance they asked not to see */
+  .palais .palais-arrive { animation: none !important; opacity: 1 !important; filter: none !important; }
 
   /* and the furniture stays put */
   .palais .conjure { animation: none !important; opacity: 1 !important; filter: none !important; }
