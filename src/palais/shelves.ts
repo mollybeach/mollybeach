@@ -89,7 +89,8 @@ export const SHELVES: Shelf[] = [
     items: ["pendant-opal", "pendant-cameo", "pendant-opal-antique"],
   },
   { key: "people", name: "People", emoji: "👯‍♀️", items: ["fall-table-brea-molly"] },
-  { key: "dogs", name: "Dogs", emoji: "🐶", items: ["dog-frisbee"] },
+  { key: "dogs", name: "Dogs", emoji: "🐶", items: ["dog-maggie-frisbee", "dog-charlie-kiddie-pool", "dog-frisbee"] },
+  { key: "goats", name: "Goats", emoji: "🐐", items: ["goat-bambi", "goats-pumpkin-ferdinand"] },
   { key: "pillows", name: "Pillows", emoji: "🎀", items: ["pillow-floral", "pillow-lace", "pillow-bolster"] },
   {
     key: "teacups",
@@ -113,10 +114,11 @@ export const SHELVES: Shelf[] = [
 ];
 
 /** what starts out of the room: the blossoms, the teacups, the pillows and
-    the dog, as Molly left it; everything else starts in it */
-export const HIDDEN_AT_FIRST: string[] = ["blossoms", "teacups", "pillows", "dogs"].flatMap(
-  (key) => SHELVES.find((s) => s.key === key)!.items,
-);
+    the frisbee dog, as Molly left it; everything else starts in it */
+export const HIDDEN_AT_FIRST: string[] = [
+  ...["blossoms", "teacups", "pillows"].flatMap((key) => SHELVES.find((s) => s.key === key)!.items),
+  "dog-frisbee",
+];
 
 /** each shelf's items that are actually in this room, trinkets catching the rest */
 export function stock(inRoom: string[]): { shelf: Shelf; items: string[] }[] {

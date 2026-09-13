@@ -141,6 +141,10 @@ export const PROPS = catalogue({
   /** animated: cut out of a video of her catching a frisbee */
   "dog-frisbee": { label: "catching the frisbee", plane: "mid", animated: true },
   "fall-table-brea-molly": { label: "Brea and Molly with their cats, at the autumn table", plane: "mid" },
+  "goat-bambi": { label: "Bambi, grazing in her red collar", plane: "mid" },
+  "goats-pumpkin-ferdinand": { label: "Pumpkin and Ferdinand", plane: "mid" },
+  "dog-maggie-frisbee": { label: "Maggie, swimming with her frisbee", plane: "mid" },
+  "dog-charlie-kiddie-pool": { label: "Charlie in the kiddie pool, with floaties", plane: "mid" },
   "honeysuckle-sewing-floral": { label: "Honeysuckle, and the floral", plane: "near" },
 
   /* ---- more tea --------------------------------------------------------- */

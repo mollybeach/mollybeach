@@ -163,6 +163,25 @@
   100%               { opacity: 0; }
 }
 
+/* the box the wide photograph covers: the same cover crop (centred across,
+   42% down) and the same 1.045 zoom about the middle of the stage, so things
+   placed in it sit on the painted terrace (see SummerYard) */
+.palais .palais-photo-frame {
+  --fw: max(100cqw, 100cqh * 1672 / 941);
+  --fh: max(100cqh, 100cqw * 941 / 1672);
+  --fl: calc((100cqw - var(--fw)) * 0.5);
+  --ft: calc((100cqh - var(--fh)) * 0.42);
+  position: absolute;
+  left: var(--fl);
+  top: var(--ft);
+  width: var(--fw);
+  height: var(--fh);
+  transform: scale(1.045);
+  transform-origin: calc(50cqw - var(--fl)) calc(50cqh - var(--ft));
+  pointer-events: none;
+}
+.palais .palais-photo-frame [data-prop] { pointer-events: auto; }
+
 .palais .palais-room .palais-frame img { width: 100%; height: 100%; object-fit: fill; }
 
 .palais-pollen {

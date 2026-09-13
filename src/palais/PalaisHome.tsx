@@ -10,6 +10,7 @@ import { Flyers } from "./Flyers";
 import { PortraitTerrace, usePortrait } from "./PortraitTerrace";
 import { Weather } from "./Weather";
 import { Draggable } from "./Draggable";
+import { SummerYard } from "./SummerYard";
 import { ArrangedRoom, arranged } from "./arrangement";
 import "./palais.css";
 
@@ -122,6 +123,7 @@ export default function PalaisHome() {
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />
           <StickerToggle seasons>
           {portrait ? <PortraitTerrace /> : <ArrangedRoom.Provider value={true}>
+          <SummerYard />
           {/* ---- blossom, broken by the top corners --------------------- */}
           <Prop id="wisteria-branch-lavender" w="clamp(17rem,35cqw,33rem)" left="-7%" top="-11%" tilt={-3} motion="rustle" dur={17} z={90} plane="fore" />
           <Prop id="wisteria-branch-purple" w="clamp(12rem,26cqw,24rem)" right="-6%" top="-9%" tilt={5} motion="rustle" dur={21} z={90} plane="fore" flip className={sm} />
