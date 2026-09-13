@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import type { Styled } from "./styled";
+import { ArrangedRoom, SeasonNow, arranged } from "./arrangement";
 import { propSpec, propSrc, type PropId } from "./props";
 
 /**
@@ -32,6 +34,9 @@ export function Pendant({
   className?: string;
 }) {
   const spec = propSpec(id);
+  const inRoom = useContext(ArrangedRoom);
+  const season = useContext(SeasonNow);
+  const moved = inRoom ? arranged(id, season) : undefined;
 
   const style: Styled = {
     position: "absolute",
@@ -44,12 +49,15 @@ export function Pendant({
     "--arc": `${arc}deg`,
     "--dur": `${dur}s`,
     animationDelay: `${delay}s`,
+    ...moved,
+    // it still hangs, and grows, from the ceiling
+    ...(moved?.scale ? { transformOrigin: "50% 0%" } : undefined),
   };
 
   return (
     <div style={style} data-prop={id} className={`anim-swing ${className}`}>
       <div className="prop prop--lit">
-                <img src={propSrc(id)} alt={spec.label} decoding="async" />
+        <img src={propSrc(id)} alt={spec.label} decoding="async" />
       </div>
     </div>
   );

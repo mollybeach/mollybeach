@@ -56,18 +56,27 @@ export function Room({ portrait = false }: { portrait?: boolean }) {
     };
   }, [portrait]);
 
-  const seasons = (
+  const stack = (set: "tall" | "wide") =>
+    SEASONS.map((season) => (
+      <img
+        key={`${set}-${season}`}
+        src={`${process.env.PUBLIC_URL}/palais/room-${portrait ? "portrait-" : set === "wide" ? "wide-" : ""}${season}.webp`}
+        alt=""
+        decoding="async"
+        className={`palais-season palais-season--${season}`}
+        style={portrait ? undefined : { objectPosition: "50% 42%" }}
+      />
+    ));
+  const seasons = portrait ? (
     <div ref={img} className="palais-seasons" style={{ transform: "scale(1.045)" }}>
-      {SEASONS.map((season) => (
-        <img
-          key={season}
-          src={`${process.env.PUBLIC_URL}/palais/room-${portrait ? "portrait-" : ""}${season}.webp`}
-          alt=""
-          decoding="async"
-          className={`palais-season palais-season--${season}`}
-          style={portrait ? undefined : { objectPosition: "50% 42%" }}
-        />
-      ))}
+      {stack("tall")}
+    </div>
+  ) : (
+    // both sets are always there and always turning together, so switching
+    // between them as the window changes shape never puts the year out of step
+    <div ref={img} className="palais-seasons" style={{ transform: "scale(1.045)" }}>
+      <div className="palais-seasons-set palais-seasons-set--tall">{stack("tall")}</div>
+      <div className="palais-seasons-set palais-seasons-set--wide">{stack("wide")}</div>
     </div>
   );
   const photo = portrait ? <div className="palais-frame">{seasons}</div> : seasons;

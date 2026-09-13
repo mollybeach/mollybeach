@@ -12,7 +12,8 @@ import { Weather } from "./Weather";
 import { Draggable } from "./Draggable";
 import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
-import { ArrangedRoom, arranged } from "./arrangement";
+import { ArrangedRoom } from "./arrangement";
+import { ArrangedBox } from "./ArrangedBox";
 import "./palais.css";
 
 /* Narrow screens keep the furniture and drop the small things — a 390px-wide
@@ -238,16 +239,16 @@ export default function PalaisHome() {
           <Prop set="vanity" id="trinket-box" w={w(0.22, VANITY_D)} right="26.6%" ground={VANITY_TOP} tilt={-2} motion="bob" dur={11} z={46} className={lg} />
 
           {/* her chair, pulled up to the coiffeuse, in front of it */}
-          <div
+          <ArrangedBox
+            id="chair-vanity"
+            set="chair"
             className={md}
-            data-set="chair"
-            data-prop="chair-vanity"
-            style={{ position: "absolute", zIndex: 64, left: "95.5%", bottom: at(0.99).ground, width: w(0.6, 0.99), ...arranged("chair-vanity") }}
+            style={{ position: "absolute", zIndex: 64, left: "95.5%", bottom: at(0.99).ground, width: w(0.6, 0.99) }}
           >
             <Conjure set="chair">
               <Plinth id="chair-vanity" w="100%" />
             </Conjure>
-          </div>
+          </ArrangedBox>
 
           {/* bigger, at the near right corner */}
           <Prop id="monstera-crystal" w={w(1.8, 0.95)} right="-6%" ground={at(0.95).ground} tilt={1} motion="rustle" dur={16} z={66} />

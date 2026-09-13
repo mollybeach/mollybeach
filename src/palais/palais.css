@@ -136,6 +136,15 @@
    most two photographs are ever blending; winter alone fades away, back to
    spring. */
 .palais .palais-seasons { position: absolute; inset: 0; }
+/* which set of photographs shows: the wide set once the room is wider than
+   1.54 : 1 (WIDE_FROM in sceneFit.ts). Hidden by opacity, not display, so the
+   hidden set's animations keep time with the one in view. */
+.palais .palais-seasons-set { position: absolute; inset: 0; }
+.palais .palais-seasons-set--wide { opacity: 0; }
+@container palais (min-aspect-ratio: 154 / 100) {
+  .palais .palais-seasons-set--wide { opacity: 1; }
+  .palais .palais-seasons-set--tall { opacity: 0; }
+}
 .palais .palais-season {
   position: absolute;
   inset: 0;
@@ -439,6 +448,12 @@
    with a rule, rather than wrapping the props, leaves every prop where it
    stands in the paint order. */
 
+
+/* as the season turns and the room rearranges itself for it, the stickers
+   glide to their new places rather than jumping */
+.palais [data-rearranging] [data-prop] {
+  transition: translate 1.6s ease-in-out, scale 1.6s ease-in-out;
+}
 
 /* everything in the room can be picked up and moved (see Draggable) */
 .palais [data-prop] img { cursor: grab; }

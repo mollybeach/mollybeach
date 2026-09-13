@@ -3,7 +3,7 @@ import { propSpec, propSrc, type Plane, type PropId } from "./props";
 import type { SetName } from "./conjureSchedule";
 import { RIGS } from "./rigs";
 import { useContext } from "react";
-import { ArrangedRoom, arranged } from "./arrangement";
+import { ArrangedRoom, SeasonNow, arranged } from "./arrangement";
 import { Conjure } from "./Conjure";
 
 type Motion = "bob" | "swing" | "rustle" | "drift" | "turn" | "none";
@@ -115,6 +115,8 @@ export function Prop({
   /* stickers with moving parts (rigs.tsx) */
   const rig = RIGS[id];
 
+  const inRoom = useContext(ArrangedRoom);
+  const season = useContext(SeasonNow);
   const outer: Styled = {
     position: "absolute",
     width: w,
@@ -125,7 +127,7 @@ export function Prop({
     zIndex: z,
     opacity,
     // where Molly dragged it to, in the desktop room
-    ...(useContext(ArrangedRoom) ? arranged(id) : undefined),
+    ...(inRoom ? arranged(id, season) : undefined),
   };
   const sharing = slot !== undefined;
   if (ghost || sharing) {

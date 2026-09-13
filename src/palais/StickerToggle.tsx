@@ -3,6 +3,7 @@ import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
 import { HIDDEN_AT_FIRST } from "./shelves";
+import { SeasonNow, hiddenIn } from "./arrangement";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -36,6 +37,19 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const switches = useRef<HTMLDivElement>(null);
   const [upcoming, setUpcoming] = useState<Season>("summer");
   const [season, setSeason] = useState<Season>("spring");
+  // each season brings its own arrangement: what's in the room, and where
+  const [rearranging, setRearranging] = useState(false);
+  const firstSeason = useRef(true);
+  useEffect(() => {
+    if (firstSeason.current) {
+      firstSeason.current = false;
+      return;
+    }
+    setHidden(new Set(hiddenIn(season) ?? HIDDEN_AT_FIRST));
+    setRearranging(true);
+    const t = setTimeout(() => setRearranging(false), 1800);
+    return () => clearTimeout(t);
+  }, [season]);
   // pauses the year, and the furniture taking turns to vanish (Conjure)
   const [paused, setPaused] = useState(false);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
@@ -124,11 +138,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         style={arrivalVars()}
         data-conjure-paused={paused ? "" : undefined}
         data-season={seasons ? season : undefined}
+        data-rearranging={rearranging ? "" : undefined}
       >
         {/* the arrival animates the layer's own opacity, which would override
             an opacity set on it here, so hiding happens one level in */}
         <div className="palais-layer" data-hidden={room ? undefined : ""} aria-hidden={room ? undefined : true}>
-          {children}
+          <SeasonNow.Provider value={season}>{children}</SeasonNow.Provider>
         </div>
       </div>
 

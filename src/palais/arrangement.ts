@@ -1,5 +1,7 @@
 import { createContext } from "react";
 import type { Styled } from "./styled";
+import type { Season } from "./seasons";
+import autumnLayout from "./layouts/autumn.json";
 
 /**
  * The room as Molly arranged it by hand.
@@ -106,20 +108,56 @@ export const ARRANGEMENT: Record<string, Move> = {
   "cat-blueberry-monstera": { x: -220.3, y: -766.3, z: 738 },
 };
 
+/* ---- a layout per season -------------------------------------------------
+
+   Molly arranges a season on the live page and copies it from the catalogue
+   ("Copy layout"). Paste the JSON into layouts/<season>.json and add it to
+   SEASON_LAYOUTS. A season with no layout of its own uses the arrangement
+   above. A layout says, for every sticker, whether it's shown, where it's been
+   moved to (in pixels on the stage it was made on, which it records), its
+   size and its stacking order. */
+
+export interface SeasonLayout {
+  stage: { w: number; h: number };
+  season?: string;
+  props: Record<string, { shown: boolean; x: number; y: number; s: number; z: number }>;
+}
+
+export const SEASON_LAYOUTS: Partial<Record<Season, SeasonLayout>> = {
+  autumn: autumnLayout as SeasonLayout,
+};
+
 /** true inside the desktop room, where the arrangement applies */
 export const ArrangedRoom = createContext(false);
+/** the season the room is dressed for right now */
+export const SeasonNow = createContext<Season>("spring");
 
-/** the style that puts one sticker where Molly put it, if she moved it */
-export function arranged(id: string): Styled | undefined {
-  const m = ARRANGEMENT[id];
-  if (!m) return undefined;
-  const style: Styled = { zIndex: m.z };
-  if (m.x || m.y) {
-    style.translate = `${((m.x / STAGE_W) * 100).toFixed(3)}cqw ${((m.y / STAGE_H) * 100).toFixed(3)}cqh`;
-  }
-  if (m.s !== undefined) {
-    style.scale = String(m.s); // a string: React would add "px" to a bare number
+function move(x: number, y: number, s: number | undefined, z: number, w: number, h: number): Styled {
+  const style: Styled = { zIndex: z };
+  if (x || y) style.translate = `${((x / w) * 100).toFixed(3)}cqw ${((y / h) * 100).toFixed(3)}cqh`;
+  if (s !== undefined && s !== 1) {
+    style.scale = String(s); // a string: React would add "px" to a bare number
     style.transformOrigin = "50% 100%";
   }
   return style;
+}
+
+/** the style that puts one sticker where Molly put it for this season */
+export function arranged(id: string, season: Season = "spring"): Styled | undefined {
+  const layout = SEASON_LAYOUTS[season];
+  if (layout) {
+    const m = layout.props[id];
+    return m ? move(m.x, m.y, m.s, m.z, layout.stage.w, layout.stage.h) : undefined;
+  }
+  const m = ARRANGEMENT[id];
+  return m ? move(m.x, m.y, m.s, m.z, STAGE_W, STAGE_H) : undefined;
+}
+
+/** which stickers start out of the room in this season, if it has a layout */
+export function hiddenIn(season: Season): string[] | undefined {
+  const layout = SEASON_LAYOUTS[season];
+  if (!layout) return undefined;
+  return Object.entries(layout.props)
+    .filter(([, m]) => !m.shown)
+    .map(([id]) => id);
 }
