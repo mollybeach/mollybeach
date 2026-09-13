@@ -355,6 +355,69 @@
     saturate(0.82) brightness(1.06) blur(0.4px);
 }
 
+/* The trellises are a spring thing: they fade out as summer arrives and come
+   back as winter turns to spring, over the same 5s as the photographs. */
+.palais [data-season] [data-group="trellises"] {
+  transition: opacity 5s ease-in-out, visibility 0s linear 0s;
+}
+.palais [data-season]:not([data-season="spring"]) [data-group="trellises"] {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 5s ease-in-out, visibility 0s linear 5s;
+}
+
+/* A sticker with moving parts is several layers; the plane's filter goes on
+   the stack as a whole, so the layers don't each cast a shadow on the others. */
+.palais .prop-rig { position: relative; }
+.palais .prop-rig > img:not(.prop-rig-layer) { position: relative; }
+.palais .prop-rig .prop-rig-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.palais .prop .prop-rig img { filter: none !important; }
+.palais .prop--near .prop-rig {
+  filter: drop-shadow(0 0 5px var(--rim)) drop-shadow(12px 24px 18px rgba(52, 36, 18, 0.46));
+}
+.palais .prop--mid .prop-rig {
+  filter: drop-shadow(0 0 4px var(--rim)) drop-shadow(7px 15px 14px rgba(52, 36, 18, 0.38));
+}
+
+/* bicycle wheels: the spokes turn */
+.palais .palais-spin {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: palais-spin 3s linear infinite;
+}
+@keyframes palais-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* the sewing machine: the needle bar rises and plunges, and the cloth is
+   drawn along a little while the needle is out of it, and drapes */
+.palais .palais-rig-needle { animation: palais-needle 0.72s ease-in-out infinite; }
+@keyframes palais-needle {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -3.5%; }
+}
+.palais .palais-rig-fabric {
+  transform-origin: 45% 62%;
+  animation:
+    palais-feed 0.72s ease-in-out infinite,
+    palais-drape 5.5s ease-in-out infinite;
+}
+@keyframes palais-feed {
+  0%, 30%  { translate: 0 0; }
+  62%      { translate: -0.9% 0.15%; }
+  100%     { translate: 0 0; }
+}
+@keyframes palais-drape {
+  0%, 100% { rotate: 0deg; }
+  50%      { rotate: -0.6deg; }
+}
+
 /* The room's switches (StickerToggle) set these on the scene. Hiding by group
    with a rule, rather than wrapping the props, leaves every prop where it
    stands in the paint order. */

@@ -1,6 +1,7 @@
 import type { Styled } from "./styled";
 import { propSpec, propSrc, type Plane, type PropId } from "./props";
 import type { SetName } from "./conjureSchedule";
+import { RIGS } from "./rigs";
 import { Conjure } from "./Conjure";
 
 type Motion = "bob" | "swing" | "rustle" | "drift" | "turn" | "none";
@@ -109,6 +110,8 @@ export function Prop({
   const spec = propSpec(id);
   const p: Plane = plane ?? spec.plane ?? "mid";
   const sh = SHADOW[p];
+  /* stickers with moving parts (rigs.tsx) */
+  const rig = RIGS[id];
 
   const outer: Styled = {
     position: "absolute",
@@ -163,7 +166,15 @@ export function Prop({
           )}
 
           <div className={filterClass} style={{ transform: flip ? "scaleX(-1)" : undefined }}>
-                        <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" />
+            {rig ? (
+              <div className="prop-rig">
+                {rig.under}
+                <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" />
+                {rig.over}
+              </div>
+            ) : (
+              <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" />
+            )}
           </div>
         </div>
       </Conjure>

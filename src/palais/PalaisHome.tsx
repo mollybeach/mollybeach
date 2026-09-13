@@ -258,7 +258,6 @@ export default function PalaisHome() {
           <Prop id="kitten-strawberry" w={w(0.5, 0.955)} left="28.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={13} rise={2} z={70} ghost ghostDur={35} delay={-8} className={lg} />
           <Prop id="cat-blueberry-sitting" w={w(0.5, 0.955)} left="38.8%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={13} rise={2} z={70} ghost ghostDur={31} delay={-5} className={md} />
           <Prop id="honeysuckle-bow" w={w(0.5, 0.955)} left="49.6%" ground={at(0.955).ground} tilt={1} motion="bob" dur={15} rise={2} z={70} ghost ghostDur={42} delay={-18} className={lg} />
-          <Prop id="honeysuckle-sewing-floral" w={w(0.5, 0.955)} left="60.4%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={14} rise={2} z={70} ghost ghostDur={47} delay={-38} className={lg} />
           <Prop id="cat-honeysuckle" w={w(0.5, 0.955)} left="71.2%" ground={at(0.955).ground} tilt={-2} motion="bob" dur={14} rise={2} z={70} ghost ghostDur={41} delay={-14} className={lg} />
           <Prop id="kittens-christmas" w={w(0.58, 0.99)} left="87.4%" ground={at(0.99).ground} tilt={1} motion="bob" dur={14} rise={2} z={70} ghost ghostDur={43} delay={-30} className={md} />
           <Prop id="cat-strawberry-window" w={w(0.5, 0.955)} left="82.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={16} rise={2} z={72} ghost ghostDur={49} delay={-28} className={lg} />

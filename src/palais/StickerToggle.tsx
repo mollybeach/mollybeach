@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { arrivalVars } from "./conjureSchedule";
-import { skipSeason, upcomingSeason, type Season } from "./seasons";
+import { currentSeason, skipSeason, upcomingSeason, type Season } from "./seasons";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -28,17 +28,21 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
 
   const switches = useRef<HTMLDivElement>(null);
   const [upcoming, setUpcoming] = useState<Season>("summer");
+  const [season, setSeason] = useState<Season>("spring");
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
 
-  // keep the label in step with the year as it turns on its own
+  // keep the label, and the season the room is dressed for, in step with the
+  // year as it turns on its own
   useEffect(() => {
     if (!seasons) return;
     const tick = () => {
       const scope = switches.current?.closest(".palais-stage");
-      if (scope) setUpcoming(upcomingSeason(scope));
+      if (!scope) return;
+      setUpcoming(upcomingSeason(scope));
+      setSeason(currentSeason(scope));
     };
     tick();
-    const id = setInterval(tick, 1000);
+    const id = setInterval(tick, 250);
     return () => clearInterval(id);
   }, [seasons]);
 
@@ -53,6 +57,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
               if (!scope) return;
               skipSeason(scope);
               setUpcoming(upcomingSeason(scope));
+              setSeason(currentSeason(scope));
             }}
             aria-label={`Skip to ${upcoming}`}
             className="palais-pill palais-pill--action"
@@ -102,6 +107,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         style={{ ...arrivalVars(), display: room ? undefined : "none" }}
         data-hide-blossoms={blossoms ? undefined : ""}
         data-hide-trellises={trellises ? undefined : ""}
+        data-season={seasons ? season : undefined}
       >
         {children}
       </div>
