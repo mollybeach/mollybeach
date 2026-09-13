@@ -48,6 +48,8 @@ export interface PropProps {
   set?: SetName;
   /** a named set of props that one of the room's switches can hide together */
   group?: "blossoms" | "trellises";
+  /** only in the room in spring (it fades out as the seasons turn) */
+  springOnly?: boolean;
   opacity?: number;
   /** flip horizontally — useful for mirroring a branch into the other corner */
   flip?: boolean;
@@ -102,6 +104,7 @@ export function Prop({
   slot,
   phase = 0,
   group,
+  springOnly = false,
   set,
   opacity,
   flip = false,
@@ -146,7 +149,7 @@ export function Prop({
     (spec.lit ? "prop--lit" : spec.glass ? "prop--glass" : `prop--${p}`);
 
   return (
-    <div style={outer} data-slot={slot} data-group={group} className={className || undefined}>
+    <div style={outer} data-slot={slot} data-group={group} data-set={set} data-spring-only={springOnly ? "" : undefined} className={className || undefined}>
       <Conjure set={set}>
         <div
           className={`${ghost || sharing ? "" : MOTION[motion]} ${motion === "swing" ? "pivot-top" : ""}`}

@@ -355,16 +355,31 @@
     saturate(0.82) brightness(1.06) blur(0.4px);
 }
 
-/* The trellises are a spring thing: they fade out as summer arrives and come
-   back as winter turns to spring, over the same 5s as the photographs. */
-.palais [data-season] [data-group="trellises"] {
-  transition: opacity 5s ease-in-out, visibility 0s linear 0s;
-}
-.palais [data-season]:not([data-season="spring"]) [data-group="trellises"] {
-  opacity: 0;
+/* The furniture and the trellises — everything that belongs to a conjuring set,
+   and so everything set down on the furniture too — are a spring thing: they
+   fade out as summer arrives and come back as winter turns to spring, over
+   the same 5s as the photographs.
+   The fade goes on the element inside the conjuring wrapper, because the
+   wrapper and the prop's own placement box both run opacity animations of
+   their own, which would override it. */
+.palais [data-season] [data-set] { transition: visibility 0s linear 0s; }
+.palais [data-season] [data-set] .conjure > * { transition: opacity 5s ease-in-out; }
+.palais [data-season]:not([data-season="spring"]) [data-set] {
   visibility: hidden;
-  transition: opacity 5s ease-in-out, visibility 0s linear 5s;
+  transition: visibility 0s linear 5s;
 }
+.palais [data-season]:not([data-season="spring"]) [data-set] .conjure > * { opacity: 0; }
+.palais [data-season]:not([data-season="spring"]) [data-set] .conjure-light { display: none; }
+
+/* the same for anything else marked spring-only (the hydrangea), which has no
+   conjuring wrapper: its moving element is the first child */
+.palais [data-season] [data-spring-only] { transition: visibility 0s linear 0s; }
+.palais [data-season] [data-spring-only] > * { transition: opacity 5s ease-in-out; }
+.palais [data-season]:not([data-season="spring"]) [data-spring-only] {
+  visibility: hidden;
+  transition: visibility 0s linear 5s;
+}
+.palais [data-season]:not([data-season="spring"]) [data-spring-only] > * { opacity: 0; }
 
 /* A sticker with moving parts is several layers; the plane's filter goes on
    the stack as a whole, so the layers don't each cast a shadow on the others. */

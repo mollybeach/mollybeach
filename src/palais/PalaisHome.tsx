@@ -149,7 +149,7 @@ export default function PalaisHome() {
           {/* ---- planting along the balustrade. These may overlap each
                other and stand behind things; that is what a border does. --- */}
           <Prop id="jacaranda" group="blossoms" w={w(3.4, 0.15)} right="-5%" ground={at(0.15).ground} tilt={1} motion="rustle" dur={21} z={14} plane="far" />
-          <Prop id="hydrangea-bush" w={w(2, 0.18)} left="-4%" ground={at(0.18).ground} tilt={-1.5} motion="rustle" dur={15} z={14} plane="far" />
+          <Prop id="hydrangea-bush" springOnly w={w(2, 0.18)} left="-4%" ground={at(0.18).ground} tilt={-1.5} motion="rustle" dur={15} z={14} plane="far" />
           <Prop id="lilac-bush" group="blossoms" w={w(2.1, 0.22)} right="32%" ground={at(0.22).ground} tilt={-1} motion="rustle" dur={19} z={16} plane="far" className={sm} />
           <Prop id="rose-bush" group="blossoms" w={w(1.6, 0.26)} left="33%" ground={at(0.26).ground} tilt={1.5} motion="rustle" dur={17} z={16} plane="far" className={sm} />
           <Prop id="arch-roses" group="blossoms" w={w(2.3, 0.24)} right="12%" ground={at(0.24).ground} tilt={-1} motion="rustle" dur={23} z={18} plane="far" className={sm} />
@@ -231,6 +231,7 @@ export default function PalaisHome() {
           {/* her chair, pulled up to the coiffeuse, in front of it */}
           <div
             className={md}
+            data-set="chair"
             style={{ position: "absolute", zIndex: 64, left: "95.5%", bottom: at(0.99).ground, width: w(0.6, 0.99) }}
           >
             <Conjure set="chair">
