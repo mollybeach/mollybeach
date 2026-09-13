@@ -72,9 +72,11 @@ const SETTEE_SEAT = surface(1.8, SETTEE_D, 0.79, 0.42);
    surface. (An aspect of 1.249 here once sank everything into the carved
    panel at the front.) */
 const DRESSER_TOP = surface(1.9, 0.6, 1.362, 0.985);
-/* the jewellery cabinet stands against the foot of the centre trellis */
-const CABINET_D = 0.4;
-const CABINET_TOP = surface(1, CABINET_D, 1.249, 0.78);
+/* The jewellery cabinet stands at the dresser's depth, so their feet share a
+   line on the floor. Its top is measured off the cutout: the image is 1.329
+   times as tall as it is wide, and the top surface is at 93% of its height. */
+const CABINET_D = 0.6;
+const CABINET_TOP = surface(1, CABINET_D, 1.329, 0.93);
 
 /* The bed is seen three-quarters on, so its quilt is higher at the head
    (left) than at the foot (right). Each spot on it is measured separately. */
@@ -165,7 +167,7 @@ export default function PalaisHome() {
           {/* the tulip mirror, hung above the dresser, clear of everything on it */}
           <Prop id="mirror-glass-tulip" w={w(0.72, 0.6)} left="37.4%" ground={`calc(${DRESSER_TOP} + 8.5cqw)`} tilt={-1.5} motion="swing" dur={18} arc={0.7} z={29} className={md} />
           <Prop set="dresser" id="lamp-porcelain" w={w(0.44, 0.6)} left="31.4%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={30} slot="dresser-1" phase={0} ghostDur={46} className={md} />
-          <Prop set="dresser" id="hydrangea-bouquet" w={w(0.44, 0.6)} left="31.4%" ground={DRESSER_TOP} tilt={2} motion="rustle" dur={13} z={30} slot="dresser-1" phase={1} ghostDur={46} className={md} />
+          <Prop set="dresser" id="planter-greek-head" w={w(0.72, 0.6)} left="30.9%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} slot="dresser-1" phase={1} ghostDur={46} className={md} />
           <Prop set="dresser" id="perfume-daisy" w={w(0.22, 0.6)} left="35.8%" ground={DRESSER_TOP} tilt={-3} motion="bob" dur={8} z={30} slot="dresser-2" phase={0} ghostDur={36} className={lg} />
           <Prop set="dresser" id="perfume-cloud" w={w(0.22, 0.6)} left="35.8%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={10} z={30} slot="dresser-2" phase={1} ghostDur={36} className={lg} />
           <Prop set="dresser" id="plate-blue-gold" w={w(0.26, 0.6)} left="38.2%" ground={DRESSER_TOP} tilt={0} motion="drift" dur={22} z={30} slot="dresser-3" phase={0} ghostDur={40} className={lg} />
@@ -191,18 +193,22 @@ export default function PalaisHome() {
 
           {/* in front of the wingback and off to its side, standing on the
               tiles — not tucked in behind it */}
-          <Prop set="cabinet" id="cabinet-jewelry" w={w(1, CABINET_D)} left="48.3%" ground={at(CABINET_D).ground} tilt={-0.8} motion="bob" dur={18} rise={2} z={22} />
-          <Prop set="cabinet" id="book-tiffany" w={w(0.24, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={6} motion="bob" dur={11} z={23} slot="cabinet-1" phase={0} ghostDur={42} className={md} />
-          <Prop set="cabinet" id="tea-caddy" w={w(0.22, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={10} z={23} slot="cabinet-1" phase={1} ghostDur={42} className={md} />
-          <Prop set="cabinet" id="teacups-collection" w={w(0.4, CABINET_D)} left="50.8%" ground={CABINET_TOP} tilt={-1.5} motion="bob" dur={12} z={23} className={md} />
-          <Prop set="cabinet" id="teacup-rose" w={w(0.26, CABINET_D)} left="54.4%" ground={CABINET_TOP} tilt={4} motion="bob" dur={8} z={23} slot="cabinet-3" phase={0} ghostDur={32} className={md} />
-          <Prop set="cabinet" id="teacup-blue-gilt" w={w(0.26, CABINET_D)} left="54.4%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={9} z={23} slot="cabinet-3" phase={1} ghostDur={32} className={md} />
-          <Prop id="planter-greek-head" w={w(0.9, 0.92)} left="60.5%" ground={at(0.92).ground} tilt={-1} motion="rustle" dur={13} z={62} className={sm} />
+          <Prop set="cabinet" id="cabinet-jewelry" w={w(1, CABINET_D)} left="48.3%" ground={at(CABINET_D).ground} tilt={-0.8} motion="bob" dur={18} rise={2} z={31} />
+          <Prop set="cabinet" id="book-tiffany" w={w(0.24, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={6} motion="bob" dur={11} z={32} slot="cabinet-1" phase={0} ghostDur={42} className={md} />
+          <Prop set="cabinet" id="tea-caddy" w={w(0.22, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={10} z={32} slot="cabinet-1" phase={1} ghostDur={42} className={md} />
+          <Prop set="cabinet" id="teacups-collection" w={w(0.4, CABINET_D)} left="51.1%" ground={CABINET_TOP} tilt={-1.5} motion="bob" dur={12} z={32} className={md} />
+          <Prop set="cabinet" id="teacup-rose" w={w(0.26, CABINET_D)} left="55.0%" ground={CABINET_TOP} tilt={4} motion="bob" dur={8} z={32} slot="cabinet-3" phase={0} ghostDur={32} className={md} />
+          <Prop set="cabinet" id="teacup-blue-gilt" w={w(0.26, CABINET_D)} left="55.0%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={9} z={32} slot="cabinet-3" phase={1} ghostDur={32} className={md} />
 
           {/* ---- the coiffeuse, and everything set down on it ---------- */}
           {/* the dracaena: tall, in the right-hand corner, standing behind the
               coiffeuse so its leaves rise over the top of the mirror */}
           <Prop id="dracaena" w={w(2.6, 0.65)} right="8%" ground={at(0.65).ground} tilt={-1} motion="rustle" dur={14} z={34} className={md} />
+          {/* The dog, catching the frisbee: an animated WebP cut out of a video.
+              It carries its own motion, so it gets no bob, and `bottom` rather
+              than `ground` — a contact shadow sized to the whole clip would sit
+              still while she leaps; the drop shadow follows her outline instead. */}
+          <Prop id="dog-frisbee" w={w(1.9, 0.9)} left="56%" bottom={at(0.9).ground} motion="none" z={60} className={sm} />
           <Prop set="vanity" id="vanity" w={w(VANITY_M, VANITY_D)} right="12%" ground={at(VANITY_D).ground} tilt={-0.5} motion="bob" dur={19} rise={2} z={44} />
           <Prop set="vanity" id="candle-pillar" w={w(0.18, VANITY_D)} right="21.6%" ground={VANITY_TOP} tilt={1} motion="bob" dur={12} z={47} slot="vanity-candle" phase={0} ghostDur={30} className={md} />
           <Prop set="vanity" id="candle-cherub" w={w(0.2, VANITY_D)} right="21.6%" ground={VANITY_TOP} tilt={2} motion="bob" dur={9} z={47} slot="vanity-candle" phase={1} ghostDur={30} className={md} />

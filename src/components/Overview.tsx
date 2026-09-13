@@ -102,15 +102,11 @@ const Overview: React.FC = () => {
       {/* Overview content */}
       <div className="space-y-4">
         <p className="text-gray-700 leading-relaxed">
-          I'm a Senior Full-Stack Engineer focused on building decentralized systems at the intersection of blockchain, AI, and secure compute. With experience spanning smart contract engineering, distributed infrastructure, federated model coordination, and full-stack product delivery, I specialize in solving hard problems across Web3, AI/ML, and consensus-layer architecture.
+          Molly Beach is a senior full-stack engineer at the intersection of blockchain, AI, and distributed systems. She works in Rust, Go, and Solidity, and ships full stacks with React and TypeScript. Her experience runs from DTCC Digital Assets (Stellar/Soroban, Solana/Anchor, leadership) and Blockmedia (custom L1 with federated learning in consensus) through BRKT, Parades, Accenture, and Treasure, spanning prediction markets, mobile and Scala backends, enterprise chains, and NFT / governance systems. She holds a B.S. from the University of Washington in molecular, cellular, and developmental biology with a minor in computer science.
         </p>
         
         <p className="text-gray-700 leading-relaxed">
-          I help design custom Layer 1 blockchain protocols that integrate federated learning directly into consensus. My work spans Rust and Go backend development, cryptographic model validation flows, custom transaction types, and AI-aligned incentive mechanisms for validators. I also contribute to protocol simulation pipelines, ensuring fairness, determinism, and scalability across decentralized training networks.
-        </p>
-        
-        <p className="text-gray-700 leading-relaxed">
-          Beyond infrastructure, I'm passionate about the creative side of emerging tech including generative 3D graphics, shader programming, and immersive environments. I've built interactive metaverse experiences and AI-enhanced visualization tools using Three.js, GLSL, and Unity, blending frontend art with backend engineering to push visual and experiential boundaries in decentralized apps.
+          Recent hackathon results include Praxos (1st place, Rayls Hackathon Buenos Aires), LiveStakes (finalist, ETHGlobal Cannes), and HedgePod (World Pool prize, ETHGlobal Buenos Aires). Those builds mix modern Solidity, cross-chain tooling, and AI-driven UX on Next.js. She invests in the creative side of the stack too (shader work, GLSL, Three.js, and Unity), so protocol-heavy work still ships with interfaces people want to use. That pairing of rigor and craft is what she carries from hackathon demos into longer product roadmaps.
         </p>
         
         <div className="flex flex-wrap gap-2">

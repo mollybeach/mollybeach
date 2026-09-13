@@ -135,6 +135,8 @@ export const PROPS = catalogue({
   "honeysuckle-bow-alt": { label: "Honeysuckle in a red bow", plane: "near" },
   "honeysuckle-clock": { label: "Honeysuckle and the mantel clock", plane: "near" },
   "honeysuckle-sewing": { label: "Honeysuckle at the sewing machine", plane: "near" },
+  /** animated: cut out of a video of her catching a frisbee */
+  "dog-frisbee": { label: "catching the frisbee", plane: "mid" },
   "honeysuckle-sewing-floral": { label: "Honeysuckle, and the floral", plane: "near" },
 
   /* ---- more tea --------------------------------------------------------- */
