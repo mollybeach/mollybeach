@@ -1,5 +1,10 @@
 import { useEffect, useRef } from "react";
 
+/* The terrace through the year, in order. Spring is the room as it loads; the
+   rest fade in over it one after another, then winter fades back to spring.
+   The timing lives in palais.css (palais-season-*), which assumes four. */
+const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
+
 /**
  * The room: the photographed palace terrace, held behind everything.
  *
@@ -11,6 +16,9 @@ import { useEffect, useRef } from "react";
  * photograph, `cover` crops top and bottom, and the floor is the part that
  * matters because everything stands on it.
  *
+ * On a wide screen the terrace turns through the seasons: four photographs
+ * of the same view, stacked, crossfading on a slow timer.
+ *
  * On a tall screen it is the portrait photograph instead, held in a
  * `.palais-frame` so the phone layout can be placed against it exactly.
  *
@@ -18,7 +26,7 @@ import { useEffect, useRef } from "react";
  * still photograph from reading as wallpaper.
  */
 export function Room({ portrait = false }: { portrait?: boolean }) {
-  const img = useRef<HTMLImageElement>(null);
+  const img = useRef<HTMLDivElement & HTMLImageElement>(null);
 
   useEffect(() => {
     const el = img.current;
@@ -53,12 +61,18 @@ export function Room({ portrait = false }: { portrait?: boolean }) {
       <img ref={img} src={`${process.env.PUBLIC_URL}/palais/room-portrait.webp`} alt="" style={{ transform: "scale(1.045)" }} />
     </div>
   ) : (
-    <img
-      ref={img}
-      src={`${process.env.PUBLIC_URL}/palais/room.webp`}
-      alt=""
-      style={{ objectPosition: "50% 42%", transform: "scale(1.045)" }}
-    />
+    <div ref={img} className="palais-seasons" style={{ transform: "scale(1.045)" }}>
+      {SEASONS.map((season) => (
+        <img
+          key={season}
+          src={`${process.env.PUBLIC_URL}/palais/room-${season}.webp`}
+          alt=""
+          decoding="async"
+          className={`palais-season palais-season--${season}`}
+          style={{ objectPosition: "50% 42%" }}
+        />
+      ))}
+    </div>
   );
 
   return (

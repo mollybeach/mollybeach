@@ -1,5 +1,6 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { arrivalVars } from "./conjureSchedule";
+import { skipSeason, upcomingSeason, type Season } from "./seasons";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -15,16 +16,51 @@ import { arrivalVars } from "./conjureSchedule";
  *
  * On a phone the sentences don't fit beside the menu button, so each switch
  * becomes a one-word chip with a lamp in it: lit while that thing is showing.
+ *
+ * Where the terrace turns through the seasons, one more button hurries the
+ * year along to the next one. It names the season it will bring.
  */
-export function StickerToggle({ children }: { children: ReactNode }) {
+export function StickerToggle({ children, seasons = false }: { children: ReactNode; seasons?: boolean }) {
   const [room, setRoom] = useState(true);
   // the blossoms start hidden; the button brings them in
   const [blossoms, setBlossoms] = useState(false);
   const [trellises, setTrellises] = useState(true);
 
+  const switches = useRef<HTMLDivElement>(null);
+  const [upcoming, setUpcoming] = useState<Season>("summer");
+  const stage = () => switches.current?.closest(".palais-stage") ?? null;
+
+  // keep the label in step with the year as it turns on its own
+  useEffect(() => {
+    if (!seasons) return;
+    const tick = () => {
+      const scope = switches.current?.closest(".palais-stage");
+      if (scope) setUpcoming(upcomingSeason(scope));
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [seasons]);
+
   return (
     <>
-      <div className="palais-switches">
+      <div className="palais-switches" ref={switches}>
+        {seasons && (
+          <button
+            type="button"
+            onClick={() => {
+              const scope = stage();
+              if (!scope) return;
+              skipSeason(scope);
+              setUpcoming(upcomingSeason(scope));
+            }}
+            aria-label={`Skip to ${upcoming}`}
+            className="palais-pill palais-pill--action"
+          >
+            <span className="palais-pill-long">Skip to {upcoming}</span>
+            <span className="palais-pill-short">Season</span>
+          </button>
+        )}
         <button
           type="button"
           onClick={() => setTrellises((v) => !v)}

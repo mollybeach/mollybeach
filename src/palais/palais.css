@@ -124,6 +124,45 @@
   transform: translateX(-50%);
   container: palais-frame / size;
 }
+/* the weather: behind the stickers (which sit at z-index 2), and in front */
+.palais .palais-weather { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.palais .palais-weather--back { z-index: 1; }
+.palais .palais-weather--front { z-index: 3; }
+
+/* ---- the seasons --------------------------------------------------------
+   A 160s year: each season holds for 40s, and the next fades in over it for
+   5s (5/160 = 3.125% of the cycle). Spring sits underneath and never moves.
+   Once a season has fully covered the one before, that one drops out, so at
+   most two photographs are ever blending; winter alone fades away, back to
+   spring. */
+.palais .palais-seasons { position: absolute; inset: 0; }
+.palais .palais-season {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: 160s ease-in-out 0s infinite both;
+}
+.palais .palais-season--spring { opacity: 1; animation: none; }
+.palais .palais-season--summer { animation-name: palais-season-summer; }
+.palais .palais-season--autumn { animation-name: palais-season-autumn; }
+.palais .palais-season--winter { animation-name: palais-season-winter; }
+
+@keyframes palais-season-summer {
+  0%, 25%            { opacity: 0; }
+  28.125%, 53.125%   { opacity: 1; }
+  53.2%, 100%        { opacity: 0; }
+}
+@keyframes palais-season-autumn {
+  0%, 50%            { opacity: 0; }
+  53.125%, 78.125%   { opacity: 1; }
+  78.2%, 100%        { opacity: 0; }
+}
+@keyframes palais-season-winter {
+  0%, 75%            { opacity: 0; }
+  78.125%, 96.875%   { opacity: 1; }
+  100%               { opacity: 0; }
+}
+
 .palais .palais-room .palais-frame img { width: 100%; height: 100%; object-fit: fill; }
 
 .palais-pollen {
@@ -237,6 +276,7 @@
     background: transparent;
     transition: background-color 200ms, box-shadow 200ms;
   }
+  .palais-pill--action::before { display: none; }
   .palais-pill[aria-pressed="true"]::before {
     background: #d4a93c;
     box-shadow: 0 0 5px rgba(232, 190, 80, 0.9);
@@ -636,6 +676,9 @@
 
   /* props that fade on a timer must be left visible, not left at opacity 0 */
   .palais .anim-ghost { animation: none !important; opacity: 1 !important; }
+
+  /* the year stands still in spring */
+  .palais .palais-season:not(.palais-season--spring) { animation: none !important; opacity: 0 !important; }
 
   /* nobody should have to wait through an entrance they asked not to see */
   .palais .palais-arrive { animation: none !important; opacity: 1 !important; filter: none !important; }
