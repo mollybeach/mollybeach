@@ -112,6 +112,10 @@ export function PortraitTerrace() {
       <Prop set="dresser" id="planter-greek-head" w={w(0.4, DRESSER_Y)} right="22%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} slot="dresser-1" phase={1} ghostDur={46} />
       <Prop set="dresser" id="lamp-porcelain" w={w(0.26, DRESSER_Y)} right="24%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={30} slot="dresser-1" phase={0} ghostDur={46} />
 
+      {/* ---- autumn only: Brea and Molly at the harvest table, where the
+           dresser and wingback stand in spring ------------------------------ */}
+      <Prop id="fall-table-brea-molly" only="autumn" w={w(1.3, 0.72)} right="10%" ground={at(0.72).ground} motion="none" z={38} />
+
       {/* ---- the dog, in the open middle of the tiles ----------------------- */}
       <Prop id="dog-frisbee" w={w(1, DOG_Y)} left="30%" bottom={at(DOG_Y).ground} motion="none" z={40} />
 

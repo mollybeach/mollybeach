@@ -254,9 +254,11 @@
   .palais-switches {
     top: 1.25rem;
     right: 0.75rem;
-    flex-wrap: nowrap;
     gap: 0.375rem;
+    /* clear of the menu button; the season chip drops to a second row */
+    max-width: calc(100% - 4.75rem);
   }
+  .palais-pill--action { order: 1; }
   .palais-pill {
     display: inline-flex;
     align-items: center;

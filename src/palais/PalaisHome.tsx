@@ -116,9 +116,9 @@ export default function PalaisHome() {
         <section className="palais-stage">
           <Room portrait={portrait} />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
-          {!portrait && <Weather layer="back" />}
+          <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />
-          <StickerToggle seasons={!portrait}>
+          <StickerToggle seasons>
           {portrait ? <PortraitTerrace /> : <>
           {/* ---- blossom, broken by the top corners --------------------- */}
           <Prop id="wisteria-branch-lavender" w="clamp(17rem,35cqw,33rem)" left="-7%" top="-11%" tilt={-3} motion="rustle" dur={17} z={90} plane="fore" />
@@ -277,7 +277,7 @@ export default function PalaisHome() {
           {/* the visitors: a hummingbird, a dragonfly, now and then */}
           <Flyers />
           </StickerToggle>
-          {!portrait && <Weather layer="front" />}
+          <Weather layer="front" />
         </section>
 
         <Footer />

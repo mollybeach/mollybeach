@@ -16,11 +16,11 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
  * photograph, `cover` crops top and bottom, and the floor is the part that
  * matters because everything stands on it.
  *
- * On a wide screen the terrace turns through the seasons: four photographs
- * of the same view, stacked, crossfading on a slow timer.
+ * The terrace turns through the seasons: four photographs of the same view,
+ * stacked, crossfading on a slow timer.
  *
- * On a tall screen it is the portrait photograph instead, held in a
- * `.palais-frame` so the phone layout can be placed against it exactly.
+ * On a tall screen they are the portrait photographs instead, held in a
+ * `.palais-frame` so the phone layout can be placed against them exactly.
  *
  * The slight pointer-driven drift is the only motion, and it is what stops a
  * still photograph from reading as wallpaper.
@@ -56,24 +56,21 @@ export function Room({ portrait = false }: { portrait?: boolean }) {
     };
   }, [portrait]);
 
-  const photo = portrait ? (
-    <div className="palais-frame">
-      <img ref={img} src={`${process.env.PUBLIC_URL}/palais/room-portrait.webp`} alt="" style={{ transform: "scale(1.045)" }} />
-    </div>
-  ) : (
+  const seasons = (
     <div ref={img} className="palais-seasons" style={{ transform: "scale(1.045)" }}>
       {SEASONS.map((season) => (
         <img
           key={season}
-          src={`${process.env.PUBLIC_URL}/palais/room-${season}.webp`}
+          src={`${process.env.PUBLIC_URL}/palais/room-${portrait ? "portrait-" : ""}${season}.webp`}
           alt=""
           decoding="async"
           className={`palais-season palais-season--${season}`}
-          style={{ objectPosition: "50% 42%" }}
+          style={portrait ? undefined : { objectPosition: "50% 42%" }}
         />
       ))}
     </div>
   );
+  const photo = portrait ? <div className="palais-frame">{seasons}</div> : seasons;
 
   return (
     <div aria-hidden className="palais-room">
