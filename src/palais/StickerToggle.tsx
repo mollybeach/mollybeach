@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
-import { HIDDEN_AT_FIRST, SHELVES } from "./shelves";
+import { HIDDEN_AT_FIRST } from "./shelves";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -15,10 +15,9 @@ import { HIDDEN_AT_FIRST, SHELVES } from "./shelves";
  * is simply there again, mid-motion, the moment it's shown.
  *
  * "Catalogue" opens the catalogue of every sticker (Catalogue.tsx), where each
- * one, or a whole shelf of them, can be put in the room or taken out. The
- * trellis and blossom switches are shortcuts to two of its shelves. What's
+ * one, or a whole shelf of them, can be put in the room or taken out. What's
  * taken out is one list of ids, answered by a rule written into the page, so
- * no prop has to know about it.
+ * no prop has to know about it. (The blossoms start taken out.)
  *
  * On a phone the sentences don't fit beside the menu button, so each switch
  * becomes a one-word chip with a lamp in it: lit while that thing is showing.
@@ -33,18 +32,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const [catalogue, setCatalogue] = useState(false);
   const closeCatalogue = useCallback(() => setCatalogue(false), []);
 
-  const shelf = (key: string) => SHELVES.find((s) => s.key === key)!.items as string[];
-  const allIn = (ids: string[]) => ids.every((id) => !hidden.has(id));
-  const putShelf = (ids: string[], show: boolean) => {
-    const next = new Set(hidden);
-    for (const id of ids) {
-      if (show) next.delete(id);
-      else next.add(id);
-    }
-    setHidden(next);
-  };
-  const trellises = allIn(shelf("trellises"));
-  const blossoms = allIn(shelf("blossoms"));
 
   const switches = useRef<HTMLDivElement>(null);
   const [upcoming, setUpcoming] = useState<Season>("summer");
@@ -109,29 +96,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">{paused ? "Play" : "Pause"}</span>
           </button>
         )}
-        <button
-          type="button"
-          onClick={() => putShelf(shelf("trellises"), !trellises)}
-          aria-pressed={trellises}
-          disabled={!room}
-          aria-label={trellises ? "Hide the trellises" : "Show the trellises"}
-          className="palais-pill"
-        >
-          <span className="palais-pill-long">{trellises ? "Hide the trellises" : "Show the trellises"}</span>
-          <span className="palais-pill-short">Trellises</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => putShelf(shelf("blossoms"), !blossoms)}
-          aria-pressed={blossoms}
-          title="The lilac, the jacaranda, the hydrangea, and both roses"
-          disabled={!room}
-          aria-label={blossoms ? "Hide the blossoms" : "Show the blossoms"}
-          className="palais-pill"
-        >
-          <span className="palais-pill-long">{blossoms ? "Hide the blossoms" : "Show the blossoms"}</span>
-          <span className="palais-pill-short">Blossoms</span>
-        </button>
         <button
           type="button"
           onClick={() => setCatalogue(true)}

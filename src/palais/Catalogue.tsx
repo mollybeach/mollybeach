@@ -48,6 +48,7 @@ export function Catalogue({
   const panel = useRef<HTMLDivElement>(null);
   const [inRoom, setInRoom] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
+  const [copied, setCopied] = useState<"" | "ok" | "fail">("");
 
   useEffect(() => {
     if (!open) return;
@@ -73,6 +74,50 @@ export function Catalogue({
       else next.add(id);
     }
     setHidden(next);
+  };
+
+  /**
+   * The room as it is right now, as JSON: what's in it, and for each sticker
+   * how far it's been moved from where the layout puts it, its size and its
+   * stacking order — the same numbers arrangement.ts keeps, so a copy of this
+   * can become the new default.
+   */
+  const copyLayout = async () => {
+    const stage = panel.current?.closest<HTMLElement>(".palais-stage");
+    if (!stage) return;
+    const r = stage.getBoundingClientRect();
+    const props: Record<string, { shown: boolean; x: number; y: number; s: number; z: number }> = {};
+    stage.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
+      const cs = getComputedStyle(el);
+      const [x = "0", y = "0"] = cs.translate === "none" ? [] : cs.translate.split(" ");
+      props[el.dataset.prop!] = {
+        shown: !hidden.has(el.dataset.prop!),
+        x: Math.round((parseFloat(x) || 0) * 10) / 10,
+        y: Math.round((parseFloat(y) || 0) * 10) / 10,
+        s: Math.round((parseFloat(cs.scale) || 1) * 1000) / 1000,
+        z: Number(cs.zIndex) || 0,
+      };
+    });
+    const layout = {
+      stage: { w: Math.round(r.width), h: Math.round(r.height) },
+      layout: stage.querySelector(".palais-layer .palais-frame") ? "phone" : "desktop",
+      season: stage.querySelector<HTMLElement>(".palais-arrive")?.dataset.season ?? "spring",
+      props,
+    };
+    const text = JSON.stringify(layout, null, 2);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied("ok");
+    } catch {
+      // older browsers, or no permission: the textarea trick
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      setCopied(document.execCommand("copy") ? "ok" : "fail");
+      ta.remove();
+    }
+    setTimeout(() => setCopied(""), 2200);
   };
 
   const jump = (key: string) => {
@@ -165,6 +210,14 @@ export function Catalogue({
           </button>
           <button type="button" className="cat-btn cat-btn--ghost" onClick={() => setMany(inRoom, false)}>
             Hide everything
+          </button>
+          <button
+            type="button"
+            className="cat-btn cat-btn--copy"
+            onClick={copyLayout}
+            title="Copy what's in the room and where everything is, to send to Claude"
+          >
+            {copied === "ok" ? "Copied ♡" : copied === "fail" ? "Couldn't copy" : "Copy layout"}
           </button>
           <button type="button" className="cat-btn cat-btn--done" onClick={onClose}>
             Done ♡

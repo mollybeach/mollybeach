@@ -51,8 +51,9 @@ export interface PropProps {
   set?: SetName;
   /** a named set of props that one of the room's switches can hide together */
   group?: "blossoms" | "trellises";
-  /** only in the room in this season (it fades in and out as the seasons turn) */
-  only?: Season;
+  /** only in the room in these seasons, space-separated (it fades in and out
+      as the seasons turn) */
+  only?: Season | `${Season} ${string}`;
   opacity?: number;
   /** flip horizontally — useful for mirroring a branch into the other corner */
   flip?: boolean;

@@ -394,25 +394,26 @@
 .palais [data-season]:not([data-season="spring"]) [data-set] .conjure > * { opacity: 0; }
 .palais [data-season]:not([data-season="spring"]) [data-set] .conjure-light { display: none; }
 
-/* the same for anything marked for one season (`only` on a prop) — the
-   hydrangea in spring, the autumn table — which has no conjuring wrapper, so
-   its moving element is its first child. CSS can't compare two attributes, so
-   there is a rule per season. */
+/* the same for anything marked for particular seasons (`only` on a prop: one
+   season, or several separated by spaces) — the hydrangea in spring, the
+   autumn table, the dogs out of the pool in winter. It has no conjuring
+   wrapper, so its moving element is its first child. CSS can't compare two
+   attributes, so there is a rule per season. */
 .palais [data-season] [data-only] { transition: visibility 0s linear 0s; }
 .palais [data-season] [data-only] > * { transition: opacity 5s ease-in-out; }
-.palais [data-season]:not([data-season="spring"]) [data-only="spring"],
-.palais [data-season]:not([data-season="summer"]) [data-only="summer"],
-.palais [data-season]:not([data-season="autumn"]) [data-only="autumn"],
-.palais [data-season]:not([data-season="winter"]) [data-only="winter"] {
+.palais [data-season="spring"] [data-only]:not([data-only~="spring"]),
+.palais [data-season="summer"] [data-only]:not([data-only~="summer"]),
+.palais [data-season="autumn"] [data-only]:not([data-only~="autumn"]),
+.palais [data-season="winter"] [data-only]:not([data-only~="winter"]) {
   visibility: hidden;
   transition: visibility 0s linear 5s;
 }
-.palais [data-season]:not([data-season="spring"]) [data-only="spring"] > *,
-.palais [data-season]:not([data-season="summer"]) [data-only="summer"] > *,
-.palais [data-season]:not([data-season="autumn"]) [data-only="autumn"] > *,
-.palais [data-season]:not([data-season="winter"]) [data-only="winter"] > * { opacity: 0; }
-/* where the year doesn't turn (phones), only spring's things are in the room */
-.palais .palais-arrive:not([data-season]) [data-only]:not([data-only="spring"]) { display: none; }
+.palais [data-season="spring"] [data-only]:not([data-only~="spring"]) > *,
+.palais [data-season="summer"] [data-only]:not([data-only~="summer"]) > *,
+.palais [data-season="autumn"] [data-only]:not([data-only~="autumn"]) > *,
+.palais [data-season="winter"] [data-only]:not([data-only~="winter"]) > * { opacity: 0; }
+/* where the year doesn't turn, only spring's things are in the room */
+.palais .palais-arrive:not([data-season]) [data-only]:not([data-only~="spring"]) { display: none; }
 
 /* A sticker with moving parts is several layers; the plane's filter goes on
    the stack as a whole, so the layers don't each cast a shadow on the others. */
@@ -788,6 +789,8 @@
 }
 .palais .cat-btn:hover { background: var(--cat-soft); }
 .palais .cat-btn--ghost { border-color: var(--cat-line); color: #b5537f; }
+.palais .cat-btn--copy { border-color: #c9a44c; color: #8a6a1c; background: #fffaf0; }
+.palais .cat-btn--copy:hover { background: #fff1d6; }
 .palais .cat-btn--done { background: linear-gradient(180deg, #ff7cbc, #ff4fa3); color: #fff; }
 .palais .cat-btn--done:hover { background: linear-gradient(180deg, #ff8ec6, #ff5fae); }
 
