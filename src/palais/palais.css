@@ -186,9 +186,13 @@
   transition: background-color 200ms, color 200ms;
 }
 
-.palais-pill:hover {
-  background: var(--gold-pale);
-  color: var(--ink);
+/* only where there is a real pointer: on a phone a tapped chip would
+   otherwise stay gold, and look switched on */
+@media (hover: hover) {
+  .palais-pill:hover {
+    background: var(--gold-pale);
+    color: var(--ink);
+  }
 }
 
 .palais-pill:disabled {
@@ -200,6 +204,42 @@
   .palais-pill {
     padding: 0.375rem 1rem;
     font-size: 0.9375rem;
+  }
+}
+
+.palais-pill-short { display: none; }
+
+/* On a phone: one row of one-word chips, level with the menu button. The
+   lamp is lit while that thing is in the room. */
+@container palais (max-width: 639px) {
+  .palais-switches {
+    top: 1.25rem;
+    right: 0.75rem;
+    flex-wrap: nowrap;
+    gap: 0.375rem;
+  }
+  .palais-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+  .palais-pill-long { display: none; }
+  .palais-pill-short { display: inline; }
+  .palais-pill::before {
+    content: "";
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(160, 124, 44, 0.8);
+    background: transparent;
+    transition: background-color 200ms, box-shadow 200ms;
+  }
+  .palais-pill[aria-pressed="true"]::before {
+    background: #d4a93c;
+    box-shadow: 0 0 5px rgba(232, 190, 80, 0.9);
   }
 }
 
