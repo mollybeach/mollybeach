@@ -45,9 +45,23 @@ export function upcomingSeason(scope: ParentNode): Season {
 }
 
 let settle: ReturnType<typeof setTimeout> | undefined;
+let skipping = false;
 
-/** fade quickly into the next season, then let the year run on from there */
-export function skipSeason(scope: ParentNode) {
+/**
+ * Stop the year where it is, or let it carry on. A skip in progress is left
+ * to finish its fade (it pauses itself at the end if the year is paused).
+ */
+export function holdSeasons(scope: ParentNode, paused: boolean) {
+  if (skipping) return;
+  for (const a of seasonAnimations(scope)) {
+    if (paused && a.playState === "running") a.pause();
+    if (!paused && a.playState === "paused") a.play();
+  }
+}
+
+/** fade quickly into the next season, then let the year run on from there —
+    or, if the year is paused, stay in the new season */
+export function skipSeason(scope: ParentNode, paused = false) {
   const anims = seasonAnimations(scope);
   if (!anims.length) return;
 
@@ -60,9 +74,19 @@ export function skipSeason(scope: ParentNode) {
   for (const a of anims) {
     a.currentTime = target;
     a.playbackRate = FAST;
+    a.play();
   }
+  skipping = true;
   clearTimeout(settle);
   settle = setTimeout(() => {
-    for (const a of seasonAnimations(scope)) a.playbackRate = 1;
-  }, FADE / FAST);
+    skipping = false;
+    for (const a of seasonAnimations(scope)) {
+      a.playbackRate = 1;
+      if (paused) {
+        // land exactly at the end of the fade, so nothing is left half-blended
+        a.currentTime = target + FADE;
+        a.pause();
+      }
+    }
+  }, FADE / FAST + 30);
 }

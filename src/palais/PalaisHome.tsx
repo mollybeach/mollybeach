@@ -9,6 +9,7 @@ import { StickerToggle } from "./StickerToggle";
 import { Flyers } from "./Flyers";
 import { PortraitTerrace, usePortrait } from "./PortraitTerrace";
 import { Weather } from "./Weather";
+import { Draggable } from "./Draggable";
 import "./palais.css";
 
 /* Narrow screens keep the furniture and drop the small things — a 390px-wide
@@ -238,6 +239,7 @@ export default function PalaisHome() {
           <div
             className={md}
             data-set="chair"
+            data-prop="chair-vanity"
             style={{ position: "absolute", zIndex: 64, left: "95.5%", bottom: at(0.99).ground, width: w(0.6, 0.99) }}
           >
             <Conjure set="chair">
@@ -278,6 +280,7 @@ export default function PalaisHome() {
           <Flyers />
           </StickerToggle>
           <Weather layer="front" />
+          <Draggable />
         </section>
 
         <Footer />

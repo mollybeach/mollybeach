@@ -150,7 +150,7 @@ export function Prop({
     (spec.lit ? "prop--lit" : spec.glass ? "prop--glass" : `prop--${p}`);
 
   return (
-    <div style={outer} data-slot={slot} data-group={group} data-set={set} data-only={only} className={className || undefined}>
+    <div style={outer} data-prop={id} data-slot={slot} data-group={group} data-set={set} data-only={only} className={className || undefined}>
       <Conjure set={set}>
         <div
           className={`${ghost || sharing ? "" : MOTION[motion]} ${motion === "swing" ? "pivot-top" : ""}`}
@@ -173,11 +173,11 @@ export function Prop({
             {rig ? (
               <div className="prop-rig">
                 {rig.under}
-                <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" />
+                <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" data-hit={spec.animated ? "box" : undefined} />
                 {rig.over}
               </div>
             ) : (
-              <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" />
+              <img src={propSrc(id)} alt={spec.label} loading="lazy" decoding="async" data-hit={spec.animated ? "box" : undefined} />
             )}
           </div>
         </div>

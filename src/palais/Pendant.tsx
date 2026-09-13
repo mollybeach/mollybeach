@@ -47,7 +47,7 @@ export function Pendant({
   };
 
   return (
-    <div style={style} className={`anim-swing ${className}`}>
+    <div style={style} data-prop={id} className={`anim-swing ${className}`}>
       <div className="prop prop--lit">
                 <img src={propSrc(id)} alt={spec.label} decoding="async" />
       </div>

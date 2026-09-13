@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { arrivalVars } from "./conjureSchedule";
-import { currentSeason, skipSeason, upcomingSeason, type Season } from "./seasons";
+import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -32,6 +32,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const switches = useRef<HTMLDivElement>(null);
   const [upcoming, setUpcoming] = useState<Season>("summer");
   const [season, setSeason] = useState<Season>("spring");
+  const [paused, setPaused] = useState(false);
+  // the furniture taking turns to vanish (Conjure) — on unless switched off
+  const [conjuring, setConjuring] = useState(true);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
 
   // keep the label, and the season the room is dressed for, in step with the
@@ -41,13 +44,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     const tick = () => {
       const scope = switches.current?.closest(".palais-stage");
       if (!scope) return;
+      // also catches photographs that were swapped (turning a phone round
+      // changes which set is showing) and would otherwise start playing
+      holdSeasons(scope, paused);
       setUpcoming(upcomingSeason(scope));
       setSeason(currentSeason(scope));
     };
     tick();
     const id = setInterval(tick, 250);
     return () => clearInterval(id);
-  }, [seasons]);
+  }, [seasons, paused]);
 
   return (
     <>
@@ -58,7 +64,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             onClick={() => {
               const scope = stage();
               if (!scope) return;
-              skipSeason(scope);
+              skipSeason(scope, paused);
               setUpcoming(upcomingSeason(scope));
               setSeason(currentSeason(scope));
             }}
@@ -69,6 +75,36 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">Season</span>
           </button>
         )}
+        {seasons && (
+          <button
+            type="button"
+            onClick={() => {
+              const next = !paused;
+              setPaused(next);
+              const scope = stage();
+              if (scope) holdSeasons(scope, next);
+            }}
+            aria-pressed={paused}
+            aria-label={paused ? "Play the seasons" : "Pause the seasons"}
+            title={paused ? "Let the year carry on" : `Stay in ${season}`}
+            className="palais-pill palais-pill--action"
+          >
+            <span className="palais-pill-long">{paused ? "Play seasons" : "Pause seasons"}</span>
+            <span className="palais-pill-short">{paused ? "Play" : "Pause"}</span>
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => setConjuring((v) => !v)}
+          aria-pressed={conjuring}
+          disabled={!room}
+          aria-label={conjuring ? "Pause the furniture fading" : "Play the furniture fading"}
+          title={conjuring ? "Keep all the furniture in the room" : "Let the furniture take turns vanishing again"}
+          className="palais-pill"
+        >
+          <span className="palais-pill-long">{conjuring ? "Pause fading" : "Play fading"}</span>
+          <span className="palais-pill-short">Fading</span>
+        </button>
         <button
           type="button"
           onClick={() => setTrellises((v) => !v)}
@@ -110,6 +146,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         style={arrivalVars()}
         data-hide-blossoms={blossoms ? undefined : ""}
         data-hide-trellises={trellises ? undefined : ""}
+        data-conjure-paused={conjuring ? undefined : ""}
         data-season={seasons ? season : undefined}
       >
         {/* the arrival animates the layer's own opacity, which would override

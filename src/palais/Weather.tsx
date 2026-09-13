@@ -41,7 +41,7 @@ interface Particle {
 }
 
 const LAYERS: Record<Layer, { snow: number; leaves: number; fluff: number; scale: [number, number]; blur: number }> = {
-  back: { snow: 260, leaves: 55, fluff: 110, scale: [0.6, 1.3], blur: 0 },
+  back: { snow: 260, leaves: 55, fluff: 140, scale: [0.6, 1.3], blur: 0 },
   front: { snow: 40, leaves: 10, fluff: 16, scale: [1.8, 3], blur: 1.5 },
 };
 
@@ -190,10 +190,11 @@ export function Weather({ layer }: { layer: Layer }) {
       const s = rand(cfg.scale[0], cfg.scale[1]);
       const snow = kind === "snow";
       if (kind === "fluff") {
-        const size = rand(12, 24) * s;
+        // real tufts are a centimetre or two: from here, a soft speck with a faint halo of hairs
+        const size = rand(4.5, 8) * s;
         // it rides the breeze in from the left or right as often as it falls from above
         const side = Math.random() < 0.5;
-        const vx = rand(8, 26) * s * (Math.random() < 0.6 ? 1 : -1);
+        const vx = rand(6, 20) * s * (Math.random() < 0.6 ? 1 : -1);
         return {
           kind,
           x: anywhere ? rand(-0.05, 1.05) * W : side ? (vx > 0 ? -size * 2 : W + size * 2) : rand(0, 1) * W,
@@ -201,7 +202,7 @@ export function Weather({ layer }: { layer: Layer }) {
           size,
           vy: rand(3, 11) * s,
           vx,
-          sway: rand(14, 34) * s,
+          sway: rand(10, 26) * s,
           swayRate: rand(0.15, 0.45),
           phase: rand(0, Math.PI * 2),
           spin: rand(-0.4, 0.4),

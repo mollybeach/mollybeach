@@ -24,6 +24,9 @@ export interface PropSpec {
   lit?: boolean;
   /** catches the window rather than the candles — glass, mirrors */
   glass?: boolean;
+  /** an animated image: its first frame is no guide to where it is, so it's
+      picked up by its whole box */
+  animated?: boolean;
 }
 
 /** keeps each key's literal type while checking every entry is a PropSpec */
@@ -136,7 +139,7 @@ export const PROPS = catalogue({
   "honeysuckle-clock": { label: "Honeysuckle and the mantel clock", plane: "near" },
   "honeysuckle-sewing": { label: "Honeysuckle at the sewing machine", plane: "near" },
   /** animated: cut out of a video of her catching a frisbee */
-  "dog-frisbee": { label: "catching the frisbee", plane: "mid" },
+  "dog-frisbee": { label: "catching the frisbee", plane: "mid", animated: true },
   "fall-table-brea-molly": { label: "Brea and Molly with their cats, at the autumn table", plane: "mid" },
   "honeysuckle-sewing-floral": { label: "Honeysuckle, and the floral", plane: "near" },
 

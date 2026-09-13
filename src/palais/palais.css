@@ -456,6 +456,57 @@
   visibility: hidden !important;
 }
 
+/* everything in the room can be picked up and moved (see Draggable) */
+.palais [data-prop] img { cursor: grab; }
+.palais [data-prop][data-dragging],
+.palais [data-prop][data-dragging] img { cursor: grabbing; }
+.palais [data-prop] { touch-action: none; }
+
+/* the size handle that appears on the corner of whatever you point at */
+.palais .palais-resize {
+  position: absolute;
+  z-index: 99;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: -0.875rem 0 0 -0.875rem;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(201, 164, 76, 0.8);
+  background: rgba(247, 242, 232, 0.95);
+  color: #6b5320;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: nwse-resize;
+  touch-action: none;
+}
+.palais .palais-resize[hidden] { display: none; }
+.palais .palais-resize svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(90deg);
+}
+@media (hover: hover) {
+  .palais .palais-resize:hover { background: var(--gold-pale); }
+}
+
+/* "Pause fading": the furniture stops taking turns to vanish and simply stays.
+   Rather than freezing each piece wherever it was in its disappearance (half
+   gone, mid-sparkle), the timers are taken away, so everything is solidly
+   there; switching back on starts the turns again from the beginning. */
+.palais [data-conjure-paused] .conjure {
+  animation: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+.palais [data-conjure-paused] .conjure-light { display: none !important; }
+
 /* the whole sticker layer, for "Hide the room" (see StickerToggle) */
 .palais .palais-layer { position: absolute; inset: 0; }
 .palais .palais-layer[data-hidden] { opacity: 0; pointer-events: none; }
