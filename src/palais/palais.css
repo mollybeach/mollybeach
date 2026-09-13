@@ -175,13 +175,14 @@
   --fh: max(100cqh, 100cqw * 941 / 1672);
   --fl: calc((100cqw - var(--fw)) * 0.5);
   --ft: calc((100cqh - var(--fh)) * 0.42);
+  /* the 1.045 zoom about the stage's centre, worked into the box itself: a
+     transform (or a z-index) here would make the box its own layer, and the
+     animals in it couldn't be brought in front of anything outside it */
   position: absolute;
-  left: var(--fl);
-  top: var(--ft);
-  width: var(--fw);
-  height: var(--fh);
-  transform: scale(1.045);
-  transform-origin: calc(50cqw - var(--fl)) calc(50cqh - var(--ft));
+  left: calc(50cqw + (var(--fl) - 50cqw) * 1.045);
+  top: calc(50cqh + (var(--ft) - 50cqh) * 1.045);
+  width: calc(var(--fw) * 1.045);
+  height: calc(var(--fh) * 1.045);
   pointer-events: none;
 }
 .palais .palais-photo-frame [data-prop] { pointer-events: auto; }

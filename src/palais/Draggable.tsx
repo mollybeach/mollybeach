@@ -145,7 +145,6 @@ export function Draggable() {
 
     let grab: Grab | null = null;
     let resize: Resize | null = null;
-    let front = 150;
     /** the sticker the size handle belongs to */
     let target: { el: HTMLElement; img: HTMLImageElement } | null = null;
     let hideTimer: ReturnType<typeof setTimeout> | undefined;
@@ -176,6 +175,12 @@ export function Draggable() {
     };
 
     const raise = (group: HTMLElement[]) => {
+      // above everything else in the room right now — the arrangement can put
+      // things at any height, so count from the highest there is
+      let front = 0;
+      stage.querySelectorAll<HTMLElement>("[data-prop]").forEach((el) => {
+        front = Math.max(front, Number(getComputedStyle(el).zIndex) || 0);
+      });
       // to the front, keeping their order among themselves
       group.sort((a, b) => layoutZ(a) - layoutZ(b));
       for (const g of group) g.style.zIndex = String(++front);

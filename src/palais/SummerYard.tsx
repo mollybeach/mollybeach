@@ -29,7 +29,7 @@ const afloat = (x: number, width: number, waterline: number) => {
 
 export function SummerYard() {
   return (
-    <div className="palais-photo-frame" style={{ zIndex: 20 }}>
+    <div className="palais-photo-frame">
       {/* grazing on the lawn in front of the pool */}
       <Prop id="goat-bambi" {...at(545, 150, 836)} motion="none" />
       <Prop id="goats-pumpkin-ferdinand" {...at(708, 90, 840)} motion="none" />
