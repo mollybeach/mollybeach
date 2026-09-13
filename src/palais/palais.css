@@ -371,15 +371,25 @@
 .palais [data-season]:not([data-season="spring"]) [data-set] .conjure > * { opacity: 0; }
 .palais [data-season]:not([data-season="spring"]) [data-set] .conjure-light { display: none; }
 
-/* the same for anything else marked spring-only (the hydrangea), which has no
-   conjuring wrapper: its moving element is the first child */
-.palais [data-season] [data-spring-only] { transition: visibility 0s linear 0s; }
-.palais [data-season] [data-spring-only] > * { transition: opacity 5s ease-in-out; }
-.palais [data-season]:not([data-season="spring"]) [data-spring-only] {
+/* the same for anything marked for one season (`only` on a prop) — the
+   hydrangea in spring, the autumn table — which has no conjuring wrapper, so
+   its moving element is its first child. CSS can't compare two attributes, so
+   there is a rule per season. */
+.palais [data-season] [data-only] { transition: visibility 0s linear 0s; }
+.palais [data-season] [data-only] > * { transition: opacity 5s ease-in-out; }
+.palais [data-season]:not([data-season="spring"]) [data-only="spring"],
+.palais [data-season]:not([data-season="summer"]) [data-only="summer"],
+.palais [data-season]:not([data-season="autumn"]) [data-only="autumn"],
+.palais [data-season]:not([data-season="winter"]) [data-only="winter"] {
   visibility: hidden;
   transition: visibility 0s linear 5s;
 }
-.palais [data-season]:not([data-season="spring"]) [data-spring-only] > * { opacity: 0; }
+.palais [data-season]:not([data-season="spring"]) [data-only="spring"] > *,
+.palais [data-season]:not([data-season="summer"]) [data-only="summer"] > *,
+.palais [data-season]:not([data-season="autumn"]) [data-only="autumn"] > *,
+.palais [data-season]:not([data-season="winter"]) [data-only="winter"] > * { opacity: 0; }
+/* where the year doesn't turn (phones), only spring's things are in the room */
+.palais .palais-arrive:not([data-season]) [data-only]:not([data-only="spring"]) { display: none; }
 
 /* A sticker with moving parts is several layers; the plane's filter goes on
    the stack as a whole, so the layers don't each cast a shadow on the others. */

@@ -2,6 +2,7 @@ import type { Styled } from "./styled";
 import { propSpec, propSrc, type Plane, type PropId } from "./props";
 import type { SetName } from "./conjureSchedule";
 import { RIGS } from "./rigs";
+import type { Season } from "./seasons";
 import { Conjure } from "./Conjure";
 
 type Motion = "bob" | "swing" | "rustle" | "drift" | "turn" | "none";
@@ -48,8 +49,8 @@ export interface PropProps {
   set?: SetName;
   /** a named set of props that one of the room's switches can hide together */
   group?: "blossoms" | "trellises";
-  /** only in the room in spring (it fades out as the seasons turn) */
-  springOnly?: boolean;
+  /** only in the room in this season (it fades in and out as the seasons turn) */
+  only?: Season;
   opacity?: number;
   /** flip horizontally — useful for mirroring a branch into the other corner */
   flip?: boolean;
@@ -104,7 +105,7 @@ export function Prop({
   slot,
   phase = 0,
   group,
-  springOnly = false,
+  only,
   set,
   opacity,
   flip = false,
@@ -149,7 +150,7 @@ export function Prop({
     (spec.lit ? "prop--lit" : spec.glass ? "prop--glass" : `prop--${p}`);
 
   return (
-    <div style={outer} data-slot={slot} data-group={group} data-set={set} data-spring-only={springOnly ? "" : undefined} className={className || undefined}>
+    <div style={outer} data-slot={slot} data-group={group} data-set={set} data-only={only} className={className || undefined}>
       <Conjure set={set}>
         <div
           className={`${ghost || sharing ? "" : MOTION[motion]} ${motion === "swing" ? "pivot-top" : ""}`}
