@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
+import { Catalogue } from "./Catalogue";
+import { HIDDEN_AT_FIRST, SHELVES } from "./shelves";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -12,10 +14,11 @@ import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } f
  * the button would seem not to work. This way everything carries on unseen and
  * is simply there again, mid-motion, the moment it's shown.
  *
- * The other two hide one named group each (the `group` prop on <Prop>): the
- * blossoming things — lilac, jacaranda and both roses — and the trellises. They
- * set a data attribute that one rule in palais.css answers, so no prop has to
- * move in the markup to belong to a group.
+ * "Catalogue" opens the catalogue of every sticker (Catalogue.tsx), where each
+ * one, or a whole shelf of them, can be put in the room or taken out. The
+ * trellis and blossom switches are shortcuts to two of its shelves. What's
+ * taken out is one list of ids, answered by a rule written into the page, so
+ * no prop has to know about it.
  *
  * On a phone the sentences don't fit beside the menu button, so each switch
  * becomes a one-word chip with a lamp in it: lit while that thing is showing.
@@ -25,16 +28,29 @@ import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } f
  */
 export function StickerToggle({ children, seasons = false }: { children: ReactNode; seasons?: boolean }) {
   const [room, setRoom] = useState(true);
-  // the blossoms start hidden; the button brings them in
-  const [blossoms, setBlossoms] = useState(false);
-  const [trellises, setTrellises] = useState(true);
+  // what's been taken out of the room; the blossoms start out of it
+  const [hidden, setHidden] = useState<Set<string>>(() => new Set(HIDDEN_AT_FIRST));
+  const [catalogue, setCatalogue] = useState(false);
+  const closeCatalogue = useCallback(() => setCatalogue(false), []);
+
+  const shelf = (key: string) => SHELVES.find((s) => s.key === key)!.items as string[];
+  const allIn = (ids: string[]) => ids.every((id) => !hidden.has(id));
+  const putShelf = (ids: string[], show: boolean) => {
+    const next = new Set(hidden);
+    for (const id of ids) {
+      if (show) next.delete(id);
+      else next.add(id);
+    }
+    setHidden(next);
+  };
+  const trellises = allIn(shelf("trellises"));
+  const blossoms = allIn(shelf("blossoms"));
 
   const switches = useRef<HTMLDivElement>(null);
   const [upcoming, setUpcoming] = useState<Season>("summer");
   const [season, setSeason] = useState<Season>("spring");
+  // pauses the year, and the furniture taking turns to vanish (Conjure)
   const [paused, setPaused] = useState(false);
-  // the furniture taking turns to vanish (Conjure) — on unless switched off
-  const [conjuring, setConjuring] = useState(true);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
 
   // keep the label, and the season the room is dressed for, in step with the
@@ -86,7 +102,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             }}
             aria-pressed={paused}
             aria-label={paused ? "Play the seasons" : "Pause the seasons"}
-            title={paused ? "Let the year carry on" : `Stay in ${season}`}
+            title={paused ? "Let the year carry on, and the furniture vanish in turns" : `Stay in ${season}, with all the furniture in place`}
             className="palais-pill palais-pill--action"
           >
             <span className="palais-pill-long">{paused ? "Play seasons" : "Pause seasons"}</span>
@@ -95,19 +111,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         )}
         <button
           type="button"
-          onClick={() => setConjuring((v) => !v)}
-          aria-pressed={conjuring}
-          disabled={!room}
-          aria-label={conjuring ? "Pause the furniture fading" : "Play the furniture fading"}
-          title={conjuring ? "Keep all the furniture in the room" : "Let the furniture take turns vanishing again"}
-          className="palais-pill"
-        >
-          <span className="palais-pill-long">{conjuring ? "Pause fading" : "Play fading"}</span>
-          <span className="palais-pill-short">Fading</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setTrellises((v) => !v)}
+          onClick={() => putShelf(shelf("trellises"), !trellises)}
           aria-pressed={trellises}
           disabled={!room}
           aria-label={trellises ? "Hide the trellises" : "Show the trellises"}
@@ -118,15 +122,25 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
-          onClick={() => setBlossoms((v) => !v)}
+          onClick={() => putShelf(shelf("blossoms"), !blossoms)}
           aria-pressed={blossoms}
-          title="The lilac, the jacaranda, and both roses"
+          title="The lilac, the jacaranda, the hydrangea, and both roses"
           disabled={!room}
           aria-label={blossoms ? "Hide the blossoms" : "Show the blossoms"}
           className="palais-pill"
         >
           <span className="palais-pill-long">{blossoms ? "Hide the blossoms" : "Show the blossoms"}</span>
           <span className="palais-pill-short">Blossoms</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setCatalogue(true)}
+          aria-haspopup="dialog"
+          aria-label="Open the catalogue"
+          className="palais-pill palais-pill--catalogue"
+        >
+          <span className="palais-pill-long">♡ Catalogue</span>
+          <span className="palais-pill-short">♡ Catalogue</span>
         </button>
         <button
           type="button"
@@ -144,9 +158,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       <div
         className="palais-arrive"
         style={arrivalVars()}
-        data-hide-blossoms={blossoms ? undefined : ""}
-        data-hide-trellises={trellises ? undefined : ""}
-        data-conjure-paused={conjuring ? undefined : ""}
+        data-conjure-paused={paused ? "" : undefined}
         data-season={seasons ? season : undefined}
       >
         {/* the arrival animates the layer's own opacity, which would override
@@ -155,6 +167,18 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           {children}
         </div>
       </div>
+
+      {/* what the catalogue has taken out of the room. Hidden rather than
+          removed, for the same reason as "Hide the room". */}
+      {hidden.size > 0 && (
+        <style>
+          {`${Array.from(hidden)
+            .map((id) => `.palais .palais-layer [data-prop="${id}"]`)
+            .join(",\n")} { visibility: hidden !important; }`}
+        </style>
+      )}
+
+      <Catalogue open={catalogue} onClose={closeCatalogue} hidden={hidden} setHidden={setHidden} />
     </>
   );
 }

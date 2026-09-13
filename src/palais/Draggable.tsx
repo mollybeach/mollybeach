@@ -17,16 +17,12 @@ import { useEffect, useRef } from "react";
  * - The move is applied with the `translate` property, which adds to a
  *   sticker's own `transform` animations (bobbing, swinging, fading) instead
  *   of replacing them, so it keeps moving the way it did.
- * - Picking up a piece of furniture brings along everything set down on it —
- *   the dresser carries its lamp and perfumes, the settee its cushions and
- *   the cat. (Those are the props sharing its conjuring `set`; the furniture
- *   is the one of them furthest back.) The small things can still be picked
- *   up on their own.
+ * - Everything moves on its own, furniture included (see `groupOf`).
  * - Whatever was picked up last comes to the front of the room.
  * - Pointing at a sticker (or tapping it, on a phone) shows a small handle on
  *   its corner. Dragging the handle away from the sticker makes it bigger,
  *   towards it smaller. It grows from its feet, so it stays standing where it
- *   was; furniture grows with everything on it.
+ *   was.
  *
  * Positions aren't saved: a reload puts the room back the way it was.
  */
@@ -155,14 +151,15 @@ export function Draggable() {
       return null;
     };
 
-    /** a piece of furniture and everything set down on it; anything else alone */
+    /**
+     * What moves together. For now that's always just the thing picked up:
+     * furniture used to carry everything set down on it, which got in the way
+     * of arranging the room piece by piece. To bring it back, return the
+     * props sharing `el.dataset.set` when `el` is the furthest back of them.
+     */
     const groupOf = (el: HTMLElement) => {
       layoutZ(el); // note where it sat before anything raises it
-      const set = el.dataset.set;
-      if (!set) return [el];
-      const members = Array.from(stage.querySelectorAll<HTMLElement>(`[data-prop][data-set="${set}"]`));
-      const back = Math.min(...members.map(layoutZ));
-      return layoutZ(el) === back ? members : [el];
+      return [el];
     };
 
     const raise = (group: HTMLElement[]) => {
@@ -175,7 +172,11 @@ export function Draggable() {
     const place = () => {
       follow = 0;
       if (!target) return;
-      if (!target.el.isConnected || seenOpacity(target.img, target.el) < 0.3) {
+      if (
+        !target.el.isConnected ||
+        getComputedStyle(target.img).visibility === "hidden" ||
+        seenOpacity(target.img, target.el) < 0.3
+      ) {
         hide(0);
         return;
       }
@@ -209,6 +210,10 @@ export function Draggable() {
       const { clientX, clientY, target: over } = e;
       hoverFrame = requestAnimationFrame(() => {
         hoverFrame = 0;
+        if (over instanceof Element && over.closest(".cat-backdrop")) {
+          if (target) hide(0);
+          return;
+        }
         if (over instanceof Element && knob.contains(over)) {
           clearTimeout(hideTimer);
           return;
@@ -222,7 +227,7 @@ export function Draggable() {
     /* ---- moving -------------------------------------------------------------- */
     const down = (e: PointerEvent) => {
       if (e.button !== 0 || grab || resize) return;
-      if ((e.target as Element).closest("button, a, input")) return;
+      if ((e.target as Element).closest("button, a, input, label, .cat-backdrop")) return;
       const hit = pick(e.clientX, e.clientY);
       if (!hit) {
         if (e.pointerType !== "mouse") hide(0);

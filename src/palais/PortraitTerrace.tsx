@@ -109,8 +109,8 @@ export function PortraitTerrace() {
 
       {/* ---- the dresser, against the right-hand pillar -------------------- */}
       <Prop set="dresser" id="dresser" w={w(DRESSER_M, DRESSER_Y)} right="8%" ground={at(DRESSER_Y).ground} tilt={0.4} motion="bob" dur={20} rise={2} z={28} plane="mid" />
-      <Prop set="dresser" id="planter-greek-head" w={w(0.4, DRESSER_Y)} right="22%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} slot="dresser-1" phase={1} ghostDur={46} />
-      <Prop set="dresser" id="lamp-porcelain" w={w(0.26, DRESSER_Y)} right="24%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={30} slot="dresser-1" phase={0} ghostDur={46} />
+      <Prop set="dresser" id="planter-greek-head" w={w(0.4, DRESSER_Y)} right="22%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} />
+      <Prop set="dresser" id="lamp-porcelain" w={w(0.26, DRESSER_Y)} right="31%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={30} />
 
       {/* ---- autumn only: Brea and Molly at the harvest table, where the
            dresser and wingback stand in spring ------------------------------ */}
@@ -130,8 +130,8 @@ export function PortraitTerrace() {
       {/* ---- the cats, along the front edge -------------------------------- */}
       <Prop id="cats-birthday" w={w(0.3, CATS_Y)} left="10%" ground={at(CATS_Y).ground} tilt={1} motion="bob" dur={13} rise={3} z={74} />
       <Prop id="cat-blueberry-running" w={w(0.3, CATS_Y)} left="40%" ground={at(CATS_Y).ground} tilt={2} motion="bob" dur={7} rise={6} z={74} />
-      <Prop id="honeysuckle-tricycle" w={w(0.28, CATS_Y)} right="10%" ground={at(CATS_Y).ground} tilt={-1} motion="bob" dur={12} rise={3} z={74} slot="front-right" phase={0} ghostDur={40} />
-      <Prop id="cats-roses" w={w(0.28, CATS_Y)} right="10%" ground={at(CATS_Y).ground} tilt={-1} motion="bob" dur={14} rise={3} z={74} slot="front-right" phase={1} ghostDur={40} />
+      <Prop id="honeysuckle-tricycle" w={w(0.28, CATS_Y)} right="10%" ground={at(CATS_Y).ground} tilt={-1} motion="bob" dur={12} rise={3} z={74} />
+      <Prop id="cats-roses" w={w(0.28, CATS_Y)} left="62%" ground={at(CATS_Y).ground} tilt={-1} motion="bob" dur={14} rise={3} z={74} />
     </div>
   );
 }

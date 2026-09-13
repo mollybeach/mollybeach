@@ -133,12 +133,12 @@ export default function PalaisHome() {
           <Prop id="relief-gold-frame" w={w(0.85, 0)} right="2%" top="26%" tilt={2} motion="swing" dur={20} arc={0.6} z={13} className={lg} />
           <Prop id="mirror-glass-floral" w={w(1.4, 0)} left="1%" top="34%" tilt={-1} motion="swing" dur={15} arc={0.9} z={12} className={sm} />
           <Prop id="mirror-glass-blue" w={w(1, 0)} left="71%" top="29%" tilt={1.5} motion="swing" dur={17} arc={0.8} z={12} className={md} />
-          <Prop id="medallion-lady" w={w(0.5, 0)} left="9%" top="21%" tilt={-3} motion="bob" dur={12} z={13} ghost ghostDur={34} delay={-9} className={lg} />
-          <Prop id="cameo-jasperware" w={w(0.48, 0)} right="9%" top="20%" tilt={3} motion="bob" dur={13} z={13} ghost ghostDur={37} delay={-21} className={lg} />
-          <Prop id="plaque-lyre" w={w(0.48, 0)} left="9%" top="30%" tilt={-2} motion="bob" dur={14} z={13} ghost ghostDur={40} delay={-31} className={lg} />
-          <Prop id="plaque-ivory" w={w(0.46, 0)} right="9%" top="29%" tilt={2} motion="bob" dur={12} z={13} ghost ghostDur={43} delay={-6} className={lg} />
-          <Prop id="plaque-rose-wood" w={w(0.46, 0)} left="22%" top="20%" tilt={-3} motion="bob" dur={15} z={13} ghost ghostDur={46} delay={-18} className={lg} />
-          <Prop id="plaque-wood-dark" w={w(0.46, 0)} right="22%" top="19%" tilt={3} motion="bob" dur={13} z={13} ghost ghostDur={49} delay={-37} className={lg} />
+          <Prop id="medallion-lady" w={w(0.5, 0)} left="9%" top="21%" tilt={-3} motion="bob" dur={12} z={13} className={lg} />
+          <Prop id="cameo-jasperware" w={w(0.48, 0)} right="9%" top="20%" tilt={3} motion="bob" dur={13} z={13} className={lg} />
+          <Prop id="plaque-lyre" w={w(0.48, 0)} left="9%" top="30%" tilt={-2} motion="bob" dur={14} z={13} className={lg} />
+          <Prop id="plaque-ivory" w={w(0.46, 0)} right="9%" top="29%" tilt={2} motion="bob" dur={12} z={13} className={lg} />
+          <Prop id="plaque-rose-wood" w={w(0.46, 0)} left="22%" top="20%" tilt={-3} motion="bob" dur={15} z={13} className={lg} />
+          <Prop id="plaque-wood-dark" w={w(0.46, 0)} right="22%" top="19%" tilt={3} motion="bob" dur={13} z={13} className={lg} />
 
           {/* ---- hanging from the top of the page ----------------------
                Each fixture is fully in view and swings from the ceiling. They
@@ -150,7 +150,7 @@ export default function PalaisHome() {
           {/* ---- planting along the balustrade. These may overlap each
                other and stand behind things; that is what a border does. --- */}
           <Prop id="jacaranda" group="blossoms" w={w(3.4, 0.15)} right="-5%" ground={at(0.15).ground} tilt={1} motion="rustle" dur={21} z={14} plane="far" />
-          <Prop id="hydrangea-bush" only="spring" w={w(2, 0.18)} left="-4%" ground={at(0.18).ground} tilt={-1.5} motion="rustle" dur={15} z={14} plane="far" />
+          <Prop id="hydrangea-bush" group="blossoms" only="spring" w={w(2, 0.18)} left="-4%" ground={at(0.18).ground} tilt={-1.5} motion="rustle" dur={15} z={14} plane="far" />
           <Prop id="lilac-bush" group="blossoms" w={w(2.1, 0.22)} right="32%" ground={at(0.22).ground} tilt={-1} motion="rustle" dur={19} z={16} plane="far" className={sm} />
           <Prop id="rose-bush" group="blossoms" w={w(1.6, 0.26)} left="33%" ground={at(0.26).ground} tilt={1.5} motion="rustle" dur={17} z={16} plane="far" className={sm} />
           <Prop id="arch-roses" group="blossoms" w={w(2.3, 0.24)} right="12%" ground={at(0.24).ground} tilt={-1} motion="rustle" dur={23} z={18} plane="far" className={sm} />
@@ -169,22 +169,21 @@ export default function PalaisHome() {
           {/* the dresser is bigger and stands behind the wingback, which is
               the one pair meant to overlap */}
           <Prop set="dresser" id="dresser" w={w(1.9, 0.6)} left="31%" ground={at(0.6).ground} tilt={0.4} motion="bob" dur={20} rise={2} z={28} plane="mid" className={sm} />
-          {/* Six spots along the top. Where two things share a spot they take
-              turns: one fades out as the other fades in. */}
+          {/* Along the top, each thing in a spot of its own. */}
           {/* the tulip mirror, hung above the dresser, clear of everything on it */}
           <Prop id="mirror-glass-tulip" w={w(0.72, 0.6)} left="37.4%" ground={`calc(${DRESSER_TOP} + 8.5cqw)`} tilt={-1.5} motion="swing" dur={18} arc={0.7} z={29} className={md} />
-          <Prop set="dresser" id="lamp-porcelain" w={w(0.44, 0.6)} left="31.4%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={30} slot="dresser-1" phase={0} ghostDur={46} className={md} />
-          <Prop set="dresser" id="planter-greek-head" w={w(0.72, 0.6)} left="30.9%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} slot="dresser-1" phase={1} ghostDur={46} className={md} />
-          <Prop set="dresser" id="perfume-daisy" w={w(0.22, 0.6)} left="35.8%" ground={DRESSER_TOP} tilt={-3} motion="bob" dur={8} z={30} slot="dresser-2" phase={0} ghostDur={36} className={lg} />
-          <Prop set="dresser" id="perfume-cloud" w={w(0.22, 0.6)} left="35.8%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={10} z={30} slot="dresser-2" phase={1} ghostDur={36} className={lg} />
-          <Prop set="dresser" id="plate-blue-gold" w={w(0.26, 0.6)} left="38.2%" ground={DRESSER_TOP} tilt={0} motion="drift" dur={22} z={30} slot="dresser-3" phase={0} ghostDur={40} className={lg} />
-          <Prop set="dresser" id="tissue-holder" w={w(0.24, 0.6)} left="38.2%" ground={DRESSER_TOP} tilt={-2} motion="bob" dur={11} z={30} slot="dresser-3" phase={1} ghostDur={40} className={lg} />
-          <Prop set="dresser" id="purse-porcelain" w={w(0.26, 0.6)} left="41%" ground={DRESSER_TOP} tilt={-4} motion="bob" dur={10} z={30} slot="dresser-4" phase={0} ghostDur={44} className={lg} />
-          <Prop set="dresser" id="mirror-hand" w={w(0.24, 0.6)} left="41%" ground={DRESSER_TOP} tilt={6} motion="bob" dur={9} z={30} slot="dresser-4" phase={1} ghostDur={44} className={lg} />
-          <Prop set="dresser" id="urn-glass" w={w(0.26, 0.6)} left="43.8%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={14} z={30} slot="dresser-5" phase={0} ghostDur={38} className={lg} />
-          <Prop set="dresser" id="flask-horseshoe" w={w(0.22, 0.6)} left="43.8%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={12} z={30} slot="dresser-5" phase={1} ghostDur={38} className={lg} />
-          <Prop set="dresser" id="teacup-sage" w={w(0.22, 0.6)} left="46.4%" ground={DRESSER_TOP} tilt={-4} motion="bob" dur={9} z={30} slot="dresser-6" phase={0} ghostDur={34} className={lg} />
-          <Prop set="dresser" id="teacup-multicolor" w={w(0.22, 0.6)} left="46.4%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={10} z={30} slot="dresser-6" phase={1} ghostDur={34} className={lg} />
+          <Prop set="dresser" id="planter-greek-head" w={w(0.72, 0.6)} left="30.9%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} className={md} />
+          <Prop set="dresser" id="perfume-daisy" w={w(0.22, 0.6)} left="35.8%" ground={DRESSER_TOP} tilt={-3} motion="bob" dur={8} z={30} className={lg} />
+          <Prop set="dresser" id="plate-blue-gold" w={w(0.26, 0.6)} left="38.2%" ground={DRESSER_TOP} tilt={0} motion="drift" dur={22} z={30} className={lg} />
+          <Prop set="dresser" id="purse-porcelain" w={w(0.26, 0.6)} left="41%" ground={DRESSER_TOP} tilt={-4} motion="bob" dur={10} z={30} className={lg} />
+          <Prop set="dresser" id="urn-glass" w={w(0.26, 0.6)} left="43.8%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={14} z={30} className={lg} />
+          <Prop set="dresser" id="teacup-sage" w={w(0.22, 0.6)} left="46.4%" ground={DRESSER_TOP} tilt={-4} motion="bob" dur={9} z={30} className={lg} />
+          <Prop set="dresser" id="lamp-porcelain" w={w(0.44, 0.6)} left="35.6%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={29} className={md} />
+          <Prop set="dresser" id="perfume-cloud" w={w(0.22, 0.6)} left="37.1%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={10} z={31} className={lg} />
+          <Prop set="dresser" id="tissue-holder" w={w(0.24, 0.6)} left="39.6%" ground={DRESSER_TOP} tilt={-2} motion="bob" dur={11} z={31} className={lg} />
+          <Prop set="dresser" id="mirror-hand" w={w(0.24, 0.6)} left="42.4%" ground={DRESSER_TOP} tilt={6} motion="bob" dur={9} z={31} className={lg} />
+          <Prop set="dresser" id="flask-horseshoe" w={w(0.22, 0.6)} left="45.1%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={12} z={31} className={lg} />
+          <Prop set="dresser" id="teacup-multicolor" w={w(0.22, 0.6)} left="47.6%" ground={DRESSER_TOP} tilt={3} motion="bob" dur={10} z={31} className={lg} />
           {/* and everything small lives on top of it */}
 
           {/* ---- near floor -------------------------------------------- */}
@@ -201,11 +200,11 @@ export default function PalaisHome() {
           {/* in front of the wingback and off to its side, standing on the
               tiles — not tucked in behind it */}
           <Prop set="cabinet" id="cabinet-jewelry" w={w(1, CABINET_D)} left="48.3%" ground={at(CABINET_D).ground} tilt={-0.8} motion="bob" dur={18} rise={2} z={31} />
-          <Prop set="cabinet" id="book-tiffany" w={w(0.24, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={6} motion="bob" dur={11} z={32} slot="cabinet-1" phase={0} ghostDur={42} className={md} />
-          <Prop set="cabinet" id="tea-caddy" w={w(0.22, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={10} z={32} slot="cabinet-1" phase={1} ghostDur={42} className={md} />
+          <Prop set="cabinet" id="book-tiffany" w={w(0.24, CABINET_D)} left="48.5%" ground={CABINET_TOP} tilt={6} motion="bob" dur={11} z={32} className={md} />
           <Prop set="cabinet" id="teacups-collection" w={w(0.4, CABINET_D)} left="51.1%" ground={CABINET_TOP} tilt={-1.5} motion="bob" dur={12} z={32} className={md} />
-          <Prop set="cabinet" id="teacup-rose" w={w(0.26, CABINET_D)} left="55.0%" ground={CABINET_TOP} tilt={4} motion="bob" dur={8} z={32} slot="cabinet-3" phase={0} ghostDur={32} className={md} />
-          <Prop set="cabinet" id="teacup-blue-gilt" w={w(0.26, CABINET_D)} left="55.0%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={9} z={32} slot="cabinet-3" phase={1} ghostDur={32} className={md} />
+          <Prop set="cabinet" id="teacup-rose" w={w(0.26, CABINET_D)} left="55.0%" ground={CABINET_TOP} tilt={4} motion="bob" dur={8} z={32} className={md} />
+          <Prop set="cabinet" id="tea-caddy" w={w(0.22, CABINET_D)} left="53.3%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={10} z={33} className={md} />
+          <Prop set="cabinet" id="teacup-blue-gilt" w={w(0.26, CABINET_D)} left="56.4%" ground={CABINET_TOP} tilt={-3} motion="bob" dur={9} z={33} className={md} />
 
           {/* ---- the coiffeuse, and everything set down on it ---------- */}
           {/* the dracaena: tall, in the right-hand corner, standing behind the
@@ -223,12 +222,12 @@ export default function PalaisHome() {
           <Prop id="fall-table-brea-molly" only="autumn" w={w(2.4, 0.6)} left="31%" ground={at(0.6).ground} motion="none" z={40} />
           <Prop id="dog-frisbee" w={w(1.9, 0.9)} left="56%" bottom={at(0.9).ground} motion="none" z={60} className={sm} />
           <Prop set="vanity" id="vanity" w={w(VANITY_M, VANITY_D)} right="12%" ground={at(VANITY_D).ground} tilt={-0.5} motion="bob" dur={19} rise={2} z={44} />
-          <Prop set="vanity" id="candle-pillar" w={w(0.18, VANITY_D)} right="21.6%" ground={VANITY_TOP} tilt={1} motion="bob" dur={12} z={47} slot="vanity-candle" phase={0} ghostDur={30} className={md} />
-          <Prop set="vanity" id="candle-cherub" w={w(0.2, VANITY_D)} right="21.6%" ground={VANITY_TOP} tilt={2} motion="bob" dur={9} z={47} slot="vanity-candle" phase={1} ghostDur={30} className={md} />
-          <Prop set="vanity" id="perfume-flora" w={w(0.18, VANITY_D)} right="29%" ground={VANITY_TOP} tilt={2} motion="bob" dur={9} z={46} slot="vanity-flora" phase={0} ghostDur={36} className={lg} />
-          <Prop set="vanity" id="candle-rose-portrait" w={w(0.2, VANITY_D)} right="29%" ground={VANITY_TOP} tilt={-2} motion="bob" dur={11} z={46} slot="vanity-flora" phase={1} ghostDur={36} className={lg} />
-          <Prop set="vanity" id="music-box-egg" w={w(0.19, VANITY_D)} right="30.4%" ground={VANITY_TOP} tilt={4} motion="bob" dur={10} z={47} slot="vanity-egg" phase={0} ghostDur={40} className={lg} />
-          <Prop set="vanity" id="egg-cobalt" w={w(0.19, VANITY_D)} right="30.4%" ground={VANITY_TOP} tilt={-3} motion="bob" dur={11} z={47} slot="vanity-egg" phase={1} ghostDur={40} className={lg} />
+          <Prop set="vanity" id="candle-pillar" w={w(0.18, VANITY_D)} right="21.6%" ground={VANITY_TOP} tilt={1} motion="bob" dur={12} z={47} className={md} />
+          <Prop set="vanity" id="perfume-flora" w={w(0.18, VANITY_D)} right="29%" ground={VANITY_TOP} tilt={2} motion="bob" dur={9} z={46} className={lg} />
+          <Prop set="vanity" id="music-box-egg" w={w(0.19, VANITY_D)} right="30.4%" ground={VANITY_TOP} tilt={4} motion="bob" dur={10} z={47} className={lg} />
+          <Prop set="vanity" id="candle-cherub" w={w(0.2, VANITY_D)} right="20.1%" ground={VANITY_TOP} tilt={2} motion="bob" dur={9} z={48} className={md} />
+          <Prop set="vanity" id="candle-rose-portrait" w={w(0.2, VANITY_D)} right="27.6%" ground={VANITY_TOP} tilt={-2} motion="bob" dur={11} z={48} className={lg} />
+          <Prop set="vanity" id="egg-cobalt" w={w(0.19, VANITY_D)} right="31.9%" ground={VANITY_TOP} tilt={-3} motion="bob" dur={11} z={48} className={lg} />
           <Prop set="vanity" id="mirror-tabletop" w={w(0.36, VANITY_D)} right="23.4%" ground={VANITY_TOP} tilt={1} motion="bob" dur={11} z={46} className={sm} />
           <Prop set="vanity" id="perfume-collection" w={w(0.5, VANITY_D)} right="18.2%" ground={VANITY_TOP} tilt={-1} motion="bob" dur={13} z={46} className={sm} />
           <Prop set="vanity" id="perfume-butterfly" w={w(0.2, VANITY_D)} right="16%" ground={VANITY_TOP} tilt={3} motion="bob" dur={9} z={47} className={md} />
@@ -262,14 +261,14 @@ export default function PalaisHome() {
           <Prop id="cats-roses" w={w(0.58, 0.99)} left="76.6%" ground={at(0.99).ground} tilt={-1} motion="bob" dur={14} rise={3} z={74} className={sm} />
 
           {/* a second rank, just behind and offset into the gaps */}
-          <Prop id="cat-strawberry" w={w(0.5, 0.955)} left="6.4%" ground={at(0.955).ground} tilt={2} motion="bob" dur={12} rise={2} z={70} ghost ghostDur={36} delay={-20} className={md} />
-          <Prop id="honeysuckle-bow-alt" w={w(0.5, 0.955)} left="17.2%" ground={at(0.955).ground} tilt={-2} motion="bob" dur={13} rise={2} z={70} ghost ghostDur={45} delay={-33} className={lg} />
-          <Prop id="kitten-strawberry" w={w(0.5, 0.955)} left="28.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={13} rise={2} z={70} ghost ghostDur={35} delay={-8} className={lg} />
-          <Prop id="cat-blueberry-sitting" w={w(0.5, 0.955)} left="38.8%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={13} rise={2} z={70} ghost ghostDur={31} delay={-5} className={md} />
-          <Prop id="honeysuckle-bow" w={w(0.5, 0.955)} left="49.6%" ground={at(0.955).ground} tilt={1} motion="bob" dur={15} rise={2} z={70} ghost ghostDur={42} delay={-18} className={lg} />
-          <Prop id="cat-honeysuckle" w={w(0.5, 0.955)} left="71.2%" ground={at(0.955).ground} tilt={-2} motion="bob" dur={14} rise={2} z={70} ghost ghostDur={41} delay={-14} className={lg} />
-          <Prop id="kittens-christmas" w={w(0.58, 0.99)} left="87.4%" ground={at(0.99).ground} tilt={1} motion="bob" dur={14} rise={2} z={70} ghost ghostDur={43} delay={-30} className={md} />
-          <Prop id="cat-strawberry-window" w={w(0.5, 0.955)} left="82.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={16} rise={2} z={72} ghost ghostDur={49} delay={-28} className={lg} />
+          <Prop id="cat-strawberry" w={w(0.5, 0.955)} left="6.4%" ground={at(0.955).ground} tilt={2} motion="bob" dur={12} rise={2} z={70} className={md} />
+          <Prop id="honeysuckle-bow-alt" w={w(0.5, 0.955)} left="17.2%" ground={at(0.955).ground} tilt={-2} motion="bob" dur={13} rise={2} z={70} className={lg} />
+          <Prop id="kitten-strawberry" w={w(0.5, 0.955)} left="28.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={13} rise={2} z={70} className={lg} />
+          <Prop id="cat-blueberry-sitting" w={w(0.5, 0.955)} left="38.8%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={13} rise={2} z={70} className={md} />
+          <Prop id="honeysuckle-bow" w={w(0.5, 0.955)} left="49.6%" ground={at(0.955).ground} tilt={1} motion="bob" dur={15} rise={2} z={70} className={lg} />
+          <Prop id="cat-honeysuckle" w={w(0.5, 0.955)} left="71.2%" ground={at(0.955).ground} tilt={-2} motion="bob" dur={14} rise={2} z={70} className={lg} />
+          <Prop id="kittens-christmas" w={w(0.58, 0.99)} left="87.4%" ground={at(0.99).ground} tilt={1} motion="bob" dur={14} rise={2} z={70} className={md} />
+          <Prop id="cat-strawberry-window" w={w(0.5, 0.955)} left="82.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={16} rise={2} z={72} className={lg} />
 
           {/* these two live on things rather than on the tiles */}
           <Prop set="settee" id="cat-blueberry-party" w={w(0.5, 0.84)} left="20%" ground={`calc(${SETTEE_SEAT} + 0.6cqw)`} tilt={-2} motion="bob" dur={12} rise={3} z={53} className={sm} />
