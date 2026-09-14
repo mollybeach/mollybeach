@@ -4,10 +4,11 @@
  * Every piece is something Molly bought, cut out of the shop's photo. Each
  * kind has its place in the box: rings on the ring rolls in the top tray,
  * necklaces hanging from the hooks inside the doors, bracelets in the first
- * two drawers, and earrings in the drawers below them.
+ * two drawers, earrings in the drawers below them, and hair pieces tucked into
+ * the gathered pockets at the bottom of each door.
  */
 
-export type JewelryKind = "ring" | "necklace" | "bracelet" | "earrings";
+export type JewelryKind = "ring" | "necklace" | "bracelet" | "earrings" | "hair";
 
 export interface Jewel {
   label: string;
@@ -45,6 +46,11 @@ export const JEWELRY = box({
   "amz-bridal-leaf-earrings": { label: "Crystal leaf bridal earrings", store: "Amazon", bought: "2023-03", kind: "earrings" },
   "amz-leaf-climber-earrings": { label: "Gold leaf ear climbers", store: "Amazon · Humble Chic", bought: "2023-04", kind: "earrings" },
   "amz-cartilage-studs": { label: "Cartilage studs set", store: "Amazon · FUNRUN", bought: "2023-04", kind: "earrings" },
+  "tulip-ribbon-bow-hair-clips": { label: "Tulip ribbon bow hair clips", store: "Closet", bought: "", kind: "hair" },
+  "love-fails-silk-hair-scarf": { label: "“Love Fails” silk hair scarf", store: "Closet", bought: "", kind: "hair" },
+  "sage-bow-hair-clip-strand": { label: "Sage bow hair clips", store: "Closet", bought: "", kind: "hair" },
+  "pink-bow-hair-clip-strand": { label: "Pink bow hair clips", store: "Closet", bought: "", kind: "hair" },
+  "black-bow-hair-clip-strand": { label: "Black bow hair clips", store: "Closet", bought: "", kind: "hair" },
 });
 
 export type JewelId = keyof typeof JEWELRY;
@@ -57,6 +63,7 @@ export const JEWELRY_SHELVES: { key: JewelryKind; name: string; emoji: string }[
   { key: "necklace", name: "Necklaces", emoji: "📿" },
   { key: "bracelet", name: "Bracelets", emoji: "⌚" },
   { key: "earrings", name: "Earrings", emoji: "✨" },
+  { key: "hair", name: "Hair pieces", emoji: "🎀" },
 ];
 
 /* ---- the box: where each kind goes, measured off the open-box picture
@@ -94,6 +101,9 @@ const DRAWER_2 = [at(330, 498, 40, 50), at(372, 498, 40, 50), at(495, 484, 150, 
 /* the bottom drawer: three deep compartments, room for two pieces in each */
 const DRAWER_3 = [345, 425, 505, 580, 655, 735].map((x) => at(x, 605, 70, 58));
 
+/* the gathered pockets at the foot of each door: hair pieces stand tucked into them */
+const POCKETS = [at(125, 470, 70, 190), at(190, 465, 70, 200), at(250, 470, 62, 180), at(845, 480, 70, 190), at(920, 480, 70, 190)];
+
 /** which spots each kind fills, in order: rings in the tray, necklaces on the
     hooks, bracelets in the first drawer, earrings in the drawers below */
 const PLACES: Record<JewelryKind, Slot[]> = {
@@ -101,11 +111,12 @@ const PLACES: Record<JewelryKind, Slot[]> = {
   necklace: HOOKS,
   bracelet: [DRAWER_1[0], DRAWER_1[1], DRAWER_1[2]],
   earrings: [...DRAWER_2, ...DRAWER_3, DRAWER_1[3], DRAWER_1[4], DRAWER_1[5]],
+  hair: POCKETS,
 };
 
 /** where each piece in the box sits; anything with no spot left shares one */
 export function layOutBox(ids: string[]): { id: string; slot: Slot }[] {
-  const used: Record<JewelryKind, number> = { ring: 0, necklace: 0, bracelet: 0, earrings: 0 };
+  const used: Record<JewelryKind, number> = { ring: 0, necklace: 0, bracelet: 0, earrings: 0, hair: 0 };
   return ids.flatMap((id) => {
     const j = (JEWELRY as Record<string, Jewel>)[id];
     if (!j) return [];

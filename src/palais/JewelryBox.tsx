@@ -9,7 +9,8 @@ const jewel = (id: string) => (JEWELRY as Record<string, Jewel>)[id];
  * The jewellery box, opened: a modal over the Wardrobe Wing, with the closet
  * blurred behind it. It has two pages, turned with the arrows. The box shows
  * every piece in its place: rings on the ring rolls, necklaces on the door
- * hooks, bracelets and earrings in the drawers. The Jewellery Catalogue lists
+ * hooks, bracelets and earrings in the drawers, hair pieces in the door
+ * pockets. The Jewellery Catalogue lists
  * them all, with a heart to put each one in the box or take it out.
  */
 export function JewelryBox({ stage, onClose }: { stage: HTMLElement; onClose: () => void }) {
