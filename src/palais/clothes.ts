@@ -205,6 +205,8 @@ export const CLOTHES = wardrobe({
   "black-patent-chain-platform-loafers": { label: "Black patent chain platform loafers", store: "Closet", bought: "", kind: "shoes" },
   "black-patent-triple-strap-platform-mary-janes": { label: "Black patent triple-strap platform Mary Janes", store: "Closet", bought: "", kind: "shoes" },
   "pink-sherpa-pom-pom-bucket-bag": { label: "Pink sherpa pom-pom bucket bag", store: "Closet", bought: "", kind: "bag" },
+  "white-feather-angel-wings-halo-set": { label: "White feather angel wings & halo", store: "Closet", bought: "", kind: "accessory" },
+  "black-feather-angel-wings-halo-set": { label: "Black feather angel wings & halo", store: "Closet", bought: "", kind: "accessory" },
 });
 
 export type GarmentId = keyof typeof CLOTHES;
@@ -328,7 +330,7 @@ const WIDE: Line[] = [
   { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan"], from: [336, 245], to: [432, 281], w: [78, 70], hang: true, z: 46 },
   // the bars added to the outer bays, left empty to be filled from the Racks page
   { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: ["yellow-floral-dress", "brown-bow-dress", "maroon-corduroy-overall-dress", "lavender-flower-dress", "strawberry-print-pink-string-bikini", "black-pink-trim-string-bikini"], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
-  { id: "outer-right-top", name: "Outer right bay · top bar", ids: ["etsy-purple-veil", "etsy-bernadette-veil", "black-ruffle-pleated-skirt", "black-belted-pleated-shorts"], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
+  { id: "outer-right-top", name: "Outer right bay · top bar", ids: ["etsy-purple-veil", "etsy-bernadette-veil", "black-ruffle-pleated-skirt", "black-belted-pleated-shorts", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set"], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
   { id: "outer-right-second", name: "Outer right bay · second bar", ids: ["temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
   { id: "outer-right-bottom", name: "Outer right bay · bottom bar", ids: ["burberry-canvas-tote", "prada-blue-bag", "gucci-gg-shoulder-bag"], from: [1852, 772], to: [1662, 738], w: [92, 84], hang: true, z: 32 },
 ];
@@ -356,7 +358,7 @@ const TALL: Line[] = [
   { id: "right-shelf", name: "Right bay · shelf", ids: ["dh-grey-hobo", "dh-cleo-bag", "black-long-ribbon-bow", "white-cat-eye-sunglasses"], from: [786, 832], to: [744, 828], w: [44, 40], z: 66 },
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [788, 632], to: [744, 650], w: [58, 54], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan", "etsy-purple-veil", "etsy-bernadette-veil", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set"], from: [160, 474], to: [208, 500], w: [46, 42], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan", "etsy-purple-veil", "etsy-bernadette-veil", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set"], from: [160, 474], to: [208, 500], w: [46, 42], hang: true, z: 46 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */
