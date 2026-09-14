@@ -7,6 +7,8 @@ import { VisitorsShelf } from "./VisitorsShelf";
 import type { Season } from "./seasons";
 import type { Collection } from "./useCollection";
 import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
+import { RacksShelf } from "./RacksShelf";
+import { racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
 
 /** the one account that sees the visitor book */
 const OWNER = "mollyjbeach@gmail.com";
@@ -23,7 +25,8 @@ const OWNER = "mollyjbeach@gmail.com";
  * of the room. Only the desktop room is arranged, so the phone doesn't get it.
  *
  * In the Wardrobe Wing it's the wardrobe instead: the clothes (clothes.ts),
- * on a shelf per kind of thing, and no pages.
+ * on a shelf per kind of thing, and a second page, Racks (RacksShelf.tsx),
+ * for arranging them on the closet's rails.
  */
 
 const nice = (id: string) => {
@@ -83,8 +86,11 @@ export function Catalogue({
   const [inRoom, setInRoom] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
-  const [page, setPage] = useState<"stickers" | "looks" | "visitors">("stickers");
+  const [page, setPage] = useState<"stickers" | "looks" | "visitors" | "racks">("stickers");
   const [phone, setPhone] = useState(false);
+  // which of the closet's photographs is showing, for the Racks page
+  const [which, setWhich] = useState<Which>("wide");
+  const rackOrder = useRackOrder(which);
 
   useEffect(() => {
     if (!open) return;
@@ -96,6 +102,7 @@ export function Catalogue({
     const onPhone = Boolean(stage?.querySelector(".palais-layer .palais-frame"));
     setPhone(onPhone);
     if (onPhone || wardrobe) setPage("stickers");
+    setWhich(stage?.querySelector(".palais-closet-frame--tall") ? "tall" : "wide");
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -124,9 +131,14 @@ export function Catalogue({
   const copyLayout = async () => {
     const stage = panel.current?.closest<HTMLElement>(".palais-stage");
     if (!stage) return;
-    const { stage: size, layout: device, season: at, props } = capture(stage, hidden, wardrobe ? "closet" : "room");
-    const layout = { stage: size, layout: device, season: at, props };
-    const text = JSON.stringify(layout, null, 2);
+    let text: string;
+    if (page === "racks") {
+      // the order of the clothes on every rail, to become the default in clothes.ts
+      text = JSON.stringify({ closet: which, racks: rackOrder }, null, 2);
+    } else {
+      const { stage: size, layout: device, season: at, props } = capture(stage, hidden, wardrobe ? "closet" : "room");
+      text = JSON.stringify({ stage: size, layout: device, season: at, props }, null, 2);
+    }
     try {
       await navigator.clipboard.writeText(text);
       setCopied("ok");
@@ -171,6 +183,28 @@ export function Catalogue({
           <button type="button" className="cat-close" onClick={onClose} aria-label="Close the catalogue">
             ×
           </button>
+          {wardrobe && (
+            <div className="cat-pages" role="tablist" aria-label="Wardrobe pages">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={page === "stickers"}
+                className={`cat-page${page === "stickers" ? " is-on" : ""}`}
+                onClick={() => setPage("stickers")}
+              >
+                ♡ Clothes
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={page === "racks"}
+                className={`cat-page${page === "racks" ? " is-on" : ""}`}
+                onClick={() => setPage("racks")}
+              >
+                🪝 Racks
+              </button>
+            </div>
+          )}
           {!phone && !wardrobe && (
             <div className="cat-pages" role="tablist" aria-label="Catalogue pages">
               <button
@@ -222,7 +256,9 @@ export function Catalogue({
         </header>
 
         <div className="cat-scroll">
-          {page === "visitors" ? (
+          {page === "racks" ? (
+            <RacksShelf which={which} hidden={hidden} />
+          ) : page === "visitors" ? (
             <VisitorsShelf />
           ) : page === "looks" ? (
             <LayoutsShelf
@@ -287,6 +323,17 @@ export function Catalogue({
         </div>
 
         <footer className="cat-foot">
+          {page === "racks" && (
+            <button
+              type="button"
+              className="cat-btn cat-btn--ghost"
+              onClick={() => resetRacks(which)}
+              disabled={!racksChanged(which)}
+              title="Put every piece back where it started"
+            >
+              Put it all back
+            </button>
+          )}
           {page === "stickers" && (
             <>
               <button type="button" className="cat-btn" onClick={() => setMany(inRoom, true)}>
@@ -301,9 +348,9 @@ export function Catalogue({
             type="button"
             className="cat-btn cat-btn--copy"
             onClick={copyLayout}
-            title="Copy what's in the room and where everything is, to send to Claude"
+            title={page === "racks" ? "Copy the order of the clothes on every rail, to send to Claude" : "Copy what's in the room and where everything is, to send to Claude"}
           >
-            {copied === "ok" ? "Copied ♡" : copied === "fail" ? "Couldn't copy" : "Copy layout"}
+            {copied === "ok" ? "Copied ♡" : copied === "fail" ? "Couldn't copy" : page === "racks" ? "Copy arrangement" : "Copy layout"}
           </button>
           <button type="button" className="cat-btn cat-btn--done" onClick={onClose}>
             Done ♡

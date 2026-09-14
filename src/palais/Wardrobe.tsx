@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Styled } from "./styled";
 import { usePortrait } from "./PortraitTerrace";
 import { usePlace } from "./place";
-import { CLOSET_BARS, CLOSET_PHOTOS, CLOSET_RACKS, CLOSET_SPOTS, closetSrc, garment, type Bar, type Rack, type Spot } from "./clothes";
+import { CLOSET_BARS, CLOSET_PHOTOS, CLOSET_RACKS, closetSrc, garment, lay, type Bar, type Rack, type Spot } from "./clothes";
+import { useRackOrder } from "./closetRacks";
 
 /** a little brass hanger, hooked over the rail */
 function Hanger() {
@@ -91,9 +92,11 @@ export function Wardrobe() {
   useEffect(() => {
     if (place === "closet") setVisited(true);
   }, [place]);
-  if (!visited) return null;
   const which = tall ? "tall" : "wide";
-  const spots = CLOSET_SPOTS[which];
+  // rearranged from the catalogue's Racks page (closetRacks.ts)
+  const order = useRackOrder(which);
+  const spots = useMemo(() => lay(which, order), [which, order]);
+  if (!visited) return null;
   return (
     <div className="palais-closet" aria-hidden={place !== "closet"}>
       <div key={which} className={`palais-closet-frame palais-closet-frame--${which}`}>
