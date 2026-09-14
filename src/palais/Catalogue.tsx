@@ -3,6 +3,7 @@ import { propSrc, propSpec, type PropId } from "./props";
 import { stock } from "./shelves";
 import { capture, type SeasonLayout } from "./arrangement";
 import { LayoutsShelf } from "./LayoutsShelf";
+import { VisitorsShelf } from "./VisitorsShelf";
 import type { Season } from "./seasons";
 import type { Collection } from "./useCollection";
 
@@ -64,7 +65,7 @@ export function Catalogue({
   const [inRoom, setInRoom] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
-  const [page, setPage] = useState<"stickers" | "looks">("stickers");
+  const [page, setPage] = useState<"stickers" | "looks" | "visitors">("stickers");
   const [phone, setPhone] = useState(false);
 
   useEffect(() => {
@@ -166,6 +167,17 @@ export function Catalogue({
               >
                 ✦ Saved looks
               </button>
+              {collection.editor?.canSave && (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={page === "visitors"}
+                  className={`cat-page${page === "visitors" ? " is-on" : ""}`}
+                  onClick={() => setPage("visitors")}
+                >
+                  ☆ Visitors
+                </button>
+              )}
             </div>
           )}
           {page === "stickers" && (
@@ -185,7 +197,9 @@ export function Catalogue({
         </header>
 
         <div className="cat-scroll">
-          {page === "looks" ? (
+          {page === "visitors" ? (
+            <VisitorsShelf />
+          ) : page === "looks" ? (
             <LayoutsShelf
               collection={collection}
               season={season}

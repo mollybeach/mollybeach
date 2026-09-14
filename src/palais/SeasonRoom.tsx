@@ -13,6 +13,10 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   lakehouse: { file: "lakehouse", focus: "50% 55%" },
   // the blue lagoon under the northern lights
   lagoon: { file: "lagoon", focus: "50% 55%" },
+  // the mossy rainforest conservatory: one photograph for now, all year
+  rainwood: { file: "rainwood", focus: "50% 55%", seasons: false },
+  // the festival stage on the canyon rim at sunset: one photograph for now
+  gorge: { file: "amphitheatre", focus: "50% 55%", seasons: false },
 };
 
 /**

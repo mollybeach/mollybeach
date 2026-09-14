@@ -136,7 +136,9 @@
 .palais .palais-room--away { opacity: 0; transition: opacity 700ms ease; background: transparent; }
 .palais [data-place="closet"] .palais-room--closet,
 .palais [data-place="lakehouse"] .palais-room--lakehouse,
-.palais [data-place="lagoon"] .palais-room--lagoon { opacity: 1; }
+.palais [data-place="lagoon"] .palais-room--lagoon,
+.palais [data-place="rainwood"] .palais-room--rainwood,
+.palais [data-place="gorge"] .palais-room--gorge { opacity: 1; }
 .palais .palais-stage:not([data-place="palace"]) .palais-arrive,
 .palais .palais-stage:not([data-place="palace"]) .palais-weather,
 .palais .palais-stage:not([data-place="palace"]) .palais-pollen { visibility: hidden; }
@@ -1142,6 +1144,32 @@
   font: 700 0.78rem/1.2 var(--cat-round);
   text-decoration: underline;
   cursor: pointer;
+}
+
+/* the visitor book (VisitorsShelf.tsx) */
+.palais .vis-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.palais .vis-tile {
+  display: flex; flex-direction: column; gap: 0.2rem;
+  padding: 0.8rem 0.9rem; border-radius: 18px;
+  background: linear-gradient(180deg, #ff9cc8, #ff6fae); color: #fff;
+  box-shadow: 0 3px 0 rgba(214, 36, 122, 0.3);
+}
+.palais .vis-tile--soft { background: #fff; color: var(--cat-deep); border: 2px solid var(--cat-line); box-shadow: none; }
+.palais .vis-num { font: 900 1.8rem/1 var(--cat-round); font-variant-numeric: tabular-nums; }
+.palais .vis-label { font: 700 0.72rem/1.25 var(--cat-round); opacity: 0.9; }
+.palais .vis-card { padding: 0.75rem 0.9rem; border-radius: 18px; border: 2px solid var(--cat-line); background: #fff; }
+.palais .vis-card h3 { margin: 0 0 0.5rem; font: 800 0.9rem/1.2 var(--cat-round); color: var(--cat-deep); }
+.palais .vis-bars { display: flex; align-items: flex-end; gap: 3px; height: 5.5rem; }
+.palais .vis-bar { flex: 1; min-width: 3px; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #ff7cbc, #ffb3d6); }
+.palais .vis-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+.palais .vis-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.3rem; max-height: 14rem; overflow-y: auto; }
+.palais .vis-list li { display: flex; justify-content: space-between; gap: 0.5rem; align-items: baseline; font: 700 0.82rem/1.3 var(--cat-round); color: #6d4c45; }
+.palais .vis-list b { color: var(--cat-hot); font-variant-numeric: tabular-nums; }
+.palais .vis-list small { display: block; font-weight: 600; color: #b5708f; font-size: 0.7rem; }
+.palais .vis-list time { flex: none; font-size: 0.72rem; color: #b5708f; }
+.palais .vis-list--recent { max-height: 18rem; }
+@container palais (max-width: 639px) {
+  .palais .vis-tiles, .palais .vis-cols { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* on a phone: clear of the menu button, and three to a row */

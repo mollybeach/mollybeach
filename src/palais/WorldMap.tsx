@@ -162,11 +162,12 @@ const STOPS: Stop[] = [
     name: "The Amphitheatre",
     tag: "the festival",
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
-    finds: ["Dancing on the grass steps till sunset", "A giant sun-shade pergola over the crowd", "Yachts with bunk beds moored below the cliffs"],
+    finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
     color: "#ffc978",
     at: [665, 470],
     patch: [92, 64],
     seed: 83,
+    room: "gorge",
     icon: () => (
       <path
         d="M-4,8 a5,4 0 1 1 -2,-4 V-12 l14,-4 V4 a5,4 0 1 1 -2,-4 V-10 l-10,3"
@@ -238,12 +239,13 @@ const STOPS: Stop[] = [
     id: "rainwood",
     name: "The Rainwood",
     tag: "moss & mist",
-    blurb: "Mossy trees older than anyone can remember, with clouds caught in the branches.",
-    finds: ["A clear bubble tent under the trees", "A hot-tub cabin on a quiet canal", "Mist that never lifts"],
+    blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
+    finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
     color: "#9fd88f",
     at: [278, 238],
     patch: [86, 70],
     seed: 41,
+    room: "rainwood",
     icon: (c) => (
       <>
         <path d="M0,-16 L11,2 H-11 Z M0,-8 L13,10 H-13 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />

@@ -16,6 +16,8 @@ import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
 import { PlaceNow, usePlaceState } from "./place";
+import { recordVisit } from "./visits";
+import { useEffect } from "react";
 import "./palais.css";
 
 /* Narrow screens keep the furniture and drop the small things — a 390px-wide
@@ -98,6 +100,10 @@ export default function PalaisHome() {
   const portrait = usePortrait();
   // which room you're in: the terrace or one of the rooms off it (place.ts)
   const places = usePlaceState();
+  // count this visit, once per session (visits.ts)
+  useEffect(() => {
+    void recordVisit();
+  }, []);
   return (
     <PlaceNow.Provider value={places}>
     <>
@@ -128,6 +134,8 @@ export default function PalaisHome() {
           <SeasonRoom place="closet" />
           <SeasonRoom place="lakehouse" />
           <SeasonRoom place="lagoon" />
+          <SeasonRoom place="rainwood" />
+          <SeasonRoom place="gorge" />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />

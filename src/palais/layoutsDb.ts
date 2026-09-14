@@ -33,7 +33,7 @@ export interface SavedLayout extends SeasonLayout {
 }
 
 let client: Promise<SupabaseClient> | undefined;
-function db(): Promise<SupabaseClient> {
+export function db(): Promise<SupabaseClient> {
   if (!dbConfigured) return Promise.reject(new Error("Supabase isn't set up"));
   client ??= import("@supabase/supabase-js").then(({ createClient }) =>
     createClient(URL!, KEY!, { auth: { persistSession: true, storageKey: "palais-auth" } }),
