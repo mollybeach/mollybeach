@@ -22,8 +22,8 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   gorge: { file: "amphitheatre", focus: "50% 55%", seasons: false },
   // the thermal bath over the old city of domes, canals and the volcano
   domes: { file: "domes", focus: "50% 55%", portrait: true },
-  // the balcony over the jacaranda street at dusk: one photograph for now
-  jacaranda: { file: "jacaranda", focus: "50% 55%", seasons: false, portrait: true },
+  // the balcony over the jacaranda street at dusk
+  jacaranda: { file: "jacaranda", focus: "50% 55%", portrait: true },
   // the glass pavilion half under the sea, looking into the reef: one photograph for now
   reef: { file: "reef", focus: "50% 55%", seasons: false, portrait: true },
   // the lacquered pavilion over the lantern-lit temple island at dusk
