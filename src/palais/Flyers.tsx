@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Dragonfly, Hummingbird } from "./Critters";
+import { Bee, Butterfly, Dragonfly, Hummingbird } from "./Critters";
+import { usePlace } from "./place";
 import { ARRIVAL, INTRO_EMPTY } from "./conjureSchedule";
 
 /**
- * Now and then a hummingbird or a dragonfly crosses the terrace.
+ * Now and then a hummingbird or a dragonfly crosses the terrace. In the
+ * Rainwood the air is busier: butterflies (a blue morpho, a monarch, a
+ * glasswing) and a bumblebee as well, all of them coming back often.
  *
  * They fly the way the real ones do, which is nothing like a tween:
  *
@@ -12,6 +15,9 @@ import { ARRIVAL, INTRO_EMPTY } from "./conjureSchedule";
  *   Its body tips forward when it goes and rights itself when it hovers.
  * - The dragonfly moves in straight dashes that stop dead, holds, pivots to a
  *   new heading almost instantly, and dashes again.
+ * - A butterfly wanders in lazy loops, bobbing with every wingbeat, and now
+ *   and then settles for a moment with its wings slowly opening and closing.
+ * - The bee zigzags fast and busily, stopping to hover at each flower.
  *
  * Each flight is planned as a list of legs when it starts, in fractions of the
  * stage, and played by requestAnimationFrame writing transforms straight to
@@ -19,9 +25,12 @@ import { ARRIVAL, INTRO_EMPTY } from "./conjureSchedule";
  * leave off the edge of the stage, which hides them by overflow.
  */
 
-type Kind = "hummingbird" | "dragonfly";
+type Kind = "hummingbird" | "dragonfly" | "butterfly" | "monarch" | "glasswing" | "bee";
 type Pt = { x: number; y: number };
-type Leg = { to: Pt; dur: number; move: "dart" | "hover" | "dash"; arc?: number };
+type Leg = { to: Pt; dur: number; move: "dart" | "hover" | "dash" | "flutter"; arc?: number };
+
+const BUTTERFLIES: Kind[] = ["butterfly", "monarch", "glasswing"];
+const isButterfly = (k: Kind) => BUTTERFLIES.includes(k);
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 const randInt = (a: number, b: number) => Math.floor(rand(a, b + 1));
@@ -88,6 +97,45 @@ function dragonflyRoute(): { start: Pt; legs: Leg[] } {
   return { start, legs };
 }
 
+function butterflyRoute(): { start: Pt; legs: Leg[] } {
+  const fromLeft = Math.random() < 0.5;
+  const start = { x: fromLeft ? -0.08 : 1.08, y: rand(0.2, 0.75) };
+  const legs: Leg[] = [];
+  let at = start;
+  const flutterTo = (to: Pt) => {
+    const dist = Math.hypot(to.x - at.x, to.y - at.y);
+    legs.push({ to, move: "flutter", dur: clamp(1 + dist * 4.5, 1.2, 4.5), arc: rand(-0.14, 0.14) });
+    at = to;
+  };
+  for (let i = randInt(4, 8); i > 0; i--) {
+    flutterTo({ x: clamp(at.x + rand(-0.3, 0.3) + (fromLeft ? 0.08 : -0.08), 0.06, 0.94), y: clamp(at.y + rand(-0.2, 0.2), 0.12, 0.85) });
+    // sometimes it settles for a moment
+    if (Math.random() < 0.3) legs.push({ to: at, move: "hover", dur: rand(1.2, 3.5) });
+  }
+  flutterTo({ x: Math.random() < 0.5 ? -0.12 : 1.12, y: rand(0.1, 0.7) });
+  return { start, legs };
+}
+
+function beeRoute(): { start: Pt; legs: Leg[] } {
+  const fromLeft = Math.random() < 0.5;
+  const start = { x: fromLeft ? -0.05 : 1.05, y: rand(0.3, 0.8) };
+  const legs: Leg[] = [];
+  let at = start;
+  const zipTo = (to: Pt) => {
+    const dist = Math.hypot(to.x - at.x, to.y - at.y);
+    legs.push({ to, move: "dart", dur: clamp(0.25 + dist * 1.4, 0.25, 1.2), arc: rand(-0.08, 0.08) });
+    at = to;
+  };
+  for (let i = randInt(5, 10); i > 0; i--) {
+    zipTo({ x: clamp(at.x + rand(-0.25, 0.25), 0.05, 0.95), y: clamp(at.y + rand(-0.15, 0.15), 0.25, 0.9) });
+    legs.push({ to: at, move: "hover", dur: rand(0.3, 1.4) });
+  }
+  zipTo({ x: Math.random() < 0.5 ? -0.1 : 1.1, y: rand(0.2, 0.7) });
+  return { start, legs };
+}
+
+const easeFlutter = (t: number) => 0.5 - Math.cos(Math.PI * t) / 2;
+
 const easeDart = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const easeDash = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -107,7 +155,8 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
     const stage = el?.parentElement;
     if (!el || !inner || !stage) return;
 
-    const { start, legs } = kind === "hummingbird" ? hummingbirdRoute() : dragonflyRoute();
+    const { start, legs } =
+      kind === "hummingbird" ? hummingbirdRoute() : kind === "dragonfly" ? dragonflyRoute() : kind === "bee" ? beeRoute() : butterflyRoute();
     const seed = rand(0, 100);
     let leg = 0;
     let legT = 0;
@@ -117,7 +166,7 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
     let prev: Pt | null = null;
     let facing = start.x < 0.5 ? 1 : -1;
     let pitch = 0;
-    let heading = kind === "dragonfly" ? (Math.atan2(legs[0].to.y - start.y, legs[0].to.x - start.x) * 180) / Math.PI : 0;
+    let heading = kind !== "hummingbird" ? (Math.atan2(legs[0].to.y - start.y, legs[0].to.x - start.x) * 180) / Math.PI : 0;
     let frame = 0;
 
     const tick = (now: number) => {
@@ -147,7 +196,7 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
         x = from.x * W;
         y = from.y * H;
       } else {
-        const e = L.move === "dart" ? easeDart(t) : easeDash(t);
+        const e = L.move === "dart" ? easeDart(t) : L.move === "flutter" ? easeFlutter(t) : easeDash(t);
         const dx = (L.to.x - from.x) * W;
         const dy = (L.to.y - from.y) * H;
         x = from.x * W + dx * e;
@@ -167,6 +216,15 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
       if (kind === "hummingbird") {
         x += (Math.sin(c * 6.3) * 0.05 + Math.sin(c * 2.1) * 0.07) * size;
         y += (Math.sin(c * 8.7) * 0.04 + Math.sin(c * 1.6) * 0.09) * size;
+      } else if (isButterfly(kind)) {
+        // each wingbeat lifts it a little, and it wanders off its line
+        if (L.move !== "hover") {
+          y += Math.sin(c * 24) * 0.12 * size + Math.sin(c * 1.7) * 0.25 * size;
+          x += Math.sin(c * 1.1) * 0.25 * size;
+        }
+      } else if (kind === "bee") {
+        x += Math.sin(c * 17) * 0.12 * size;
+        y += Math.sin(c * 21) * 0.12 * size;
       } else {
         x += Math.sin(c * 1.3) * 0.03 * size;
         y += Math.sin(c * 1.9) * 0.04 * size;
@@ -179,7 +237,7 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
 
       // a little bigger nearer the floor, as if nearer to us
       const depth = 0.78 + 0.42 * clamp(y / (H || 1), 0, 1);
-      const k = 1 - Math.exp(-dt * (kind === "hummingbird" ? 7 : 16));
+      const k = 1 - Math.exp(-dt * (kind === "hummingbird" ? 7 : isButterfly(kind) ? 4 : kind === "bee" ? 10 : 16));
 
       if (kind === "hummingbird") {
         if (Math.abs(vx) > size * 1.2) facing = vx > 0 ? 1 : -1;
@@ -188,7 +246,8 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
         pitch = turnToward(pitch, going * (14 + climb * 0.6), k);
         inner.style.transform = `translate(-50%, -50%) scale(${(depth * facing).toFixed(3)}, ${depth.toFixed(3)}) rotate(${pitch.toFixed(2)}deg)`;
       } else {
-        if (L.move === "dash" && speed > size * 1.5) heading = turnToward(heading, (Math.atan2(vy, vx) * 180) / Math.PI, k);
+        if (L.move !== "hover" && speed > size * (kind === "dragonfly" ? 1.5 : 0.4))
+          heading = turnToward(heading, (Math.atan2(vy, vx) * 180) / Math.PI, k);
         inner.style.transform = `translate(-50%, -50%) rotate(${heading.toFixed(2)}deg) scale(${depth.toFixed(3)})`;
       }
       el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
@@ -205,7 +264,15 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
   return (
     <div ref={outer} className={`palais-flyer palais-flyer--${kind}`} style={{ transform: "translate3d(-200px, -200px, 0)" }}>
       <div ref={body} className="palais-flyer-body">
-        {kind === "hummingbird" ? <Hummingbird /> : <Dragonfly />}
+        {kind === "hummingbird" ? (
+          <Hummingbird />
+        ) : kind === "dragonfly" ? (
+          <Dragonfly />
+        ) : kind === "bee" ? (
+          <Bee />
+        ) : (
+          <Butterfly tone={kind === "butterfly" ? "morpho" : kind} />
+        )}
       </div>
     </div>
   );
@@ -213,15 +280,33 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
 
 /* seconds: when each first shows up after the room has arrived, and the wait
    between visits after that */
-const TIMING: Record<Kind, { first: [number, number]; gap: [number, number] }> = {
-  hummingbird: { first: [3, 7], gap: [14, 32] },
-  dragonfly: { first: [11, 18], gap: [10, 26] },
+const TIMING: Record<Kind, { first: [number, number]; gap: [number, number]; rainwood: [number, number]; rainwoodOnly?: true }> = {
+  hummingbird: { first: [3, 7], gap: [14, 32], rainwood: [3, 9] },
+  dragonfly: { first: [11, 18], gap: [10, 26], rainwood: [2, 7] },
+  butterfly: { first: [1, 4], gap: [0, 0], rainwood: [1, 5], rainwoodOnly: true },
+  monarch: { first: [2, 6], gap: [0, 0], rainwood: [2, 6], rainwoodOnly: true },
+  glasswing: { first: [3, 8], gap: [0, 0], rainwood: [2, 7], rainwoodOnly: true },
+  bee: { first: [2, 5], gap: [0, 0], rainwood: [1, 4], rainwoodOnly: true },
 };
+const KINDS = Object.keys(TIMING) as Kind[];
 
 export function Flyers() {
-  const [flying, setFlying] = useState<Record<Kind, number>>({ hummingbird: 0, dragonfly: 0 });
+  const [flying, setFlying] = useState<Record<Kind, number>>({ hummingbird: 0, dragonfly: 0, butterfly: 0, monarch: 0, glasswing: 0, bee: 0 });
   const timers = useRef<Partial<Record<Kind, ReturnType<typeof setTimeout>>>>({});
   const [still, setStill] = useState(false);
+  // the Rainwood is busier (see TIMING); read through a ref so timers see where you are now
+  const { place } = usePlace();
+  const here = useRef(place);
+  here.current = place;
+
+  const launch = (kind: Kind) => {
+    // a Rainwood creature waits, checking back, until you're in the Rainwood
+    if (TIMING[kind].rainwoodOnly && here.current !== "rainwood") {
+      timers.current[kind] = setTimeout(() => launch(kind), 2500);
+      return;
+    }
+    setFlying((f) => ({ ...f, [kind]: Math.abs(f[kind]) + 1 }));
+  };
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -229,17 +314,20 @@ export function Flyers() {
       return;
     }
     const all = timers.current;
-    (Object.keys(TIMING) as Kind[]).forEach((kind) => {
+    KINDS.forEach((kind) => {
       const [a, b] = TIMING[kind].first;
-      all[kind] = setTimeout(() => setFlying((f) => ({ ...f, [kind]: f[kind] + 1 })), (INTRO_EMPTY + ARRIVAL + rand(a, b)) * 1000);
+      const wait = TIMING[kind].rainwoodOnly ? rand(a, b) : INTRO_EMPTY + ARRIVAL + rand(a, b);
+      all[kind] = setTimeout(() => launch(kind), wait * 1000);
     });
-    return () => (Object.keys(all) as Kind[]).forEach((kind) => clearTimeout(all[kind]));
+    return () => KINDS.forEach((kind) => clearTimeout(all[kind]));
+    // launch only reads refs and state setters
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const land = (kind: Kind) => {
     setFlying((f) => ({ ...f, [kind]: -Math.abs(f[kind]) }));
-    const [a, b] = TIMING[kind].gap;
-    timers.current[kind] = setTimeout(() => setFlying((f) => ({ ...f, [kind]: Math.abs(f[kind]) + 1 })), rand(a, b) * 1000);
+    const [a, b] = here.current === "rainwood" ? TIMING[kind].rainwood : TIMING[kind].gap;
+    timers.current[kind] = setTimeout(() => launch(kind), rand(a, b) * 1000);
   };
 
   if (still) return null;
@@ -247,7 +335,7 @@ export function Flyers() {
   // a positive count is a flight in the air; its number keys a fresh route
   return (
     <div className="palais-flyers" aria-hidden>
-      {(Object.keys(flying) as Kind[]).map((kind) =>
+      {KINDS.map((kind) =>
         flying[kind] > 0 ? <Flight key={`${kind}-${flying[kind]}`} kind={kind} onDone={() => land(kind)} /> : null,
       )}
     </div>

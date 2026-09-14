@@ -175,3 +175,84 @@ export function Dragonfly() {
     </svg>
   );
 }
+
+/**
+ * A butterfly, seen from above, heading right. Its wings are drawn once and
+ * mirrored; the flap is the two halves folding up towards the body and open
+ * again (palais-bf-wing in palais.css), a few beats a second.
+ */
+export function Butterfly({ tone = "morpho" }: { tone?: "morpho" | "monarch" | "glasswing" }) {
+  const id = `bf-${tone}`;
+  const colours = {
+    morpho: { a: "#7fe3ff", b: "#1f7fe0", c: "#0a2c63", edge: "#08152e" },
+    monarch: { a: "#ffd27a", b: "#f28a1c", c: "#b44a0c", edge: "#1a0f08" },
+    glasswing: { a: "rgba(240,248,255,0.35)", b: "rgba(210,235,245,0.28)", c: "rgba(120,80,60,0.6)", edge: "#3a2616" },
+  }[tone];
+  const wing = (
+    <>
+      {/* forewing */}
+      <path d="M52,48 C56,30 70,12 88,8 C96,7 99,14 95,22 C90,33 76,44 58,50 Z" fill={`url(#${id}-fore)`} stroke={colours.edge} strokeWidth="1.6" />
+      {/* hindwing */}
+      <path d="M50,50 C40,40 28,30 18,32 C10,34 10,44 18,49 C28,55 40,54 50,52 Z" fill={`url(#${id}-hind)`} stroke={colours.edge} strokeWidth="1.6" />
+      {tone === "monarch" && (
+        <path d="M60,46 C68,38 78,28 88,16 M58,44 C64,34 72,22 84,12 M46,50 C38,44 30,38 20,38" stroke={colours.edge} strokeWidth="1.2" fill="none" />
+      )}
+      {tone !== "glasswing" && (
+        <>
+          <circle cx="90" cy="14" r="1.6" fill="#fff" opacity="0.85" />
+          <circle cx="84" cy="11" r="1.2" fill="#fff" opacity="0.8" />
+        </>
+      )}
+    </>
+  );
+  return (
+    <svg viewBox="0 0 110 100" className="palais-critter-svg" aria-hidden>
+      <defs>
+        <linearGradient id={`${id}-fore`} x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stopColor={colours.c} />
+          <stop offset="45%" stopColor={colours.b} />
+          <stop offset="100%" stopColor={colours.a} />
+        </linearGradient>
+        <linearGradient id={`${id}-hind`} x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={colours.c} />
+          <stop offset="55%" stopColor={colours.b} />
+          <stop offset="100%" stopColor={colours.a} />
+        </linearGradient>
+      </defs>
+      <g className="palais-bf-wing palais-bf-wing--top">{wing}</g>
+      <g className="palais-bf-wing palais-bf-wing--bottom">
+        <g transform="translate(0 100) scale(1 -1)">{wing}</g>
+      </g>
+      {/* body and antennae */}
+      <ellipse cx="54" cy="50" rx="20" ry="3.2" fill="#1c140e" />
+      <circle cx="75" cy="50" r="3.6" fill="#1c140e" />
+      <path d="M77,48.5 Q88,42 95,38 M77,51.5 Q88,58 95,62" stroke="#1c140e" strokeWidth="1" fill="none" />
+      <circle cx="95" cy="38" r="1.4" fill="#1c140e" />
+      <circle cx="95" cy="62" r="1.4" fill="#1c140e" />
+    </svg>
+  );
+}
+
+/** a bumblebee, seen from above, heading right, its wings a shimmer */
+export function Bee() {
+  return (
+    <svg viewBox="0 0 80 60" className="palais-critter-svg" aria-hidden>
+      <defs>
+        <radialGradient id="beeFuzz" cx="0.45" cy="0.4" r="0.7">
+          <stop offset="0%" stopColor="#ffe27a" />
+          <stop offset="70%" stopColor="#f2b21c" />
+          <stop offset="100%" stopColor="#8a5a08" />
+        </radialGradient>
+      </defs>
+      <g className="palais-bee-wings">
+        <ellipse cx="38" cy="18" rx="10" ry="15" fill="rgba(235,245,255,0.55)" stroke="rgba(90,110,120,0.5)" strokeWidth="0.8" transform="rotate(-20 38 18)" />
+        <ellipse cx="38" cy="42" rx="10" ry="15" fill="rgba(235,245,255,0.55)" stroke="rgba(90,110,120,0.5)" strokeWidth="0.8" transform="rotate(20 38 42)" />
+      </g>
+      <ellipse cx="34" cy="30" rx="18" ry="11" fill="url(#beeFuzz)" />
+      <path d="M24,20 Q22,30 24,40 M32,19 Q30,30 32,41 M40,20 Q38,30 40,40" stroke="#2a1a08" strokeWidth="3.4" fill="none" strokeLinecap="round" />
+      <path d="M17,30 L11,30" stroke="#2a1a08" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="53" cy="30" r="7" fill="#2a1a08" />
+      <path d="M58,26 Q64,20 68,19 M58,34 Q64,40 68,41" stroke="#2a1a08" strokeWidth="1.1" fill="none" />
+    </svg>
+  );
+}

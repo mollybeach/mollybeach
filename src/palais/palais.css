@@ -136,8 +136,8 @@
 
 /* ---- the rooms (place.ts) ----------------------------------------------
    Every room is always on the page. The others sit over the terrace and
-   fade in when you walk into one; the terrace's stickers, weather and
-   visitors are hidden (not removed) while you're away. */
+   fade in when you walk into one; the terrace's stickers are hidden (not
+   removed) while you're away. */
 .palais .palais-room--away { opacity: 0; transition: opacity 700ms ease; background: transparent; }
 .palais [data-place="closet"] .palais-room--closet,
 .palais [data-place="lakehouse"] .palais-room--lakehouse,
@@ -151,8 +151,11 @@
 .palais [data-place="shore"] .palais-room--shore,
 .palais [data-place="caves"] .palais-room--caves { opacity: 1; }
 .palais .palais-stage:not([data-place="palace"]) .palais-arrive,
-.palais .palais-stage:not([data-place="palace"]) .palais-weather,
 .palais .palais-stage:not([data-place="palace"]) .palais-pollen { visibility: hidden; }
+/* the seasons' weather (snow, leaves, cottonwood) and the hummingbirds and
+   dragonflies follow you into every room; the flyers live inside the
+   terrace's sticker layer, so they're shown again on their own */
+.palais .palais-stage:not([data-place="palace"]) .palais-flyers { visibility: visible; }
 @container palais (max-width: 639px) {
   .palais .palais-pill--home { order: 1; }
   .palais .palais-pill--home::before { display: none; }
@@ -1556,6 +1559,16 @@
   filter: drop-shadow(0 12px 6px rgba(40, 30, 20, 0.2));
 }
 .palais .palais-critter-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.palais .palais-flyer--butterfly .palais-flyer-body { width: clamp(44px, 4.2cqw, 74px); filter: drop-shadow(0 10px 6px rgba(20, 30, 20, 0.22)); }
+.palais .palais-flyer--monarch .palais-flyer-body { width: clamp(42px, 4cqw, 70px); filter: drop-shadow(0 10px 6px rgba(20, 30, 20, 0.22)); }
+.palais .palais-flyer--glasswing .palais-flyer-body { width: clamp(38px, 3.6cqw, 62px); filter: drop-shadow(0 8px 5px rgba(20, 30, 20, 0.18)); }
+.palais .palais-flyer--bee .palais-flyer-body { width: clamp(22px, 2.1cqw, 36px); filter: drop-shadow(0 6px 4px rgba(20, 20, 10, 0.25)); }
+/* a butterfly's wings fold up over its back and open again */
+.palais .palais-bf-wing { transform-box: view-box; transform-origin: 54px 50px; animation: palais-bf-flap 260ms ease-in-out infinite alternate; }
+@keyframes palais-bf-flap { from { transform: scaleY(1); } to { transform: scaleY(0.18); } }
+/* a bee's wings are a blur */
+.palais .palais-bee-wings { transform-box: view-box; transform-origin: 38px 30px; animation: palais-bee-buzz 40ms linear infinite alternate; }
+@keyframes palais-bee-buzz { from { transform: scaleY(1); opacity: 0.9; } to { transform: scaleY(0.55); opacity: 0.5; } }
 
 /* the wing, caught at three points of a stroke too fast to follow */
 .palais .palais-hb-wing {
