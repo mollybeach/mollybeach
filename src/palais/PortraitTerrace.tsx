@@ -33,18 +33,24 @@ export function usePortrait() {
    the same spot in the picture on every phone. `cqw` is a percentage of the
    photograph's width.
 
-   Measured off the photograph (941 × 1672): the grout lines meet at a
-   horizon 51.4% of the way down, and the bar stools — about 0.72m tall —
-   stand 195px high where their feet are, 72% of the way down. That puts the
-   camera 1.29m above the tiles, and from there the size of a metre at any
-   spot on the floor follows from how far below the horizon it is.
+   Measured off the photograph (941 × 1672): the far tree line and the
+   mountain's foot sit at a horizon 50% of the way down, and the bar stools —
+   about 0.72m tall — stand 160px high where their feet are, 71% of the way
+   down. That puts the camera 1.6m above the tiles, and from there the size of
+   a metre at any spot on the floor follows from how far below the horizon it
+   is.
+
+   The middle of the photograph is the arch onto the pool, from about 30% to
+   74% across and down to 67% (where the tiles begin), so nothing tall stands
+   in front of it: the furniture keeps to the bar on the left and the
+   bathroom door on the right.
 
    A phone is narrower than the photograph, so about 9% is cropped off each
    side: nothing that matters is placed outside 10–90% across.
    ========================================================================== */
 
-const HORIZON = 0.514;
-const EYE = 1.29; // metres
+const HORIZON = 0.5;
+const EYE = 1.6; // metres
 const TALL = 1672 / 941;
 
 /** `y` is how far down the photograph the prop's feet are, 0–1 */
@@ -64,18 +70,18 @@ function surface(metres: number, y: number, aspect: number, frac: number) {
   return `calc(${at(y).ground} + ${(metres * at(y).m * aspect * frac).toFixed(2)}cqw)`;
 }
 
-/* the rows, from the balustrade forward */
-const BED_Y = 0.675;
-const CABINET_Y = 0.69;
-const DRESSER_Y = 0.73;
-const DOG_Y = 0.775;
-const VANITY_Y = 0.86;
-const ARMCHAIR_Y = 0.85;
+/* the rows, from the arch forward */
+const CABINET_Y = 0.715;
+const BED_Y = 0.79;
+const DRESSER_Y = 0.82;
+const DOG_Y = 0.77;
+const VANITY_Y = 0.885;
+const ARMCHAIR_Y = 0.875;
 const CATS_Y = 0.965;
 
 const BED_M = 1.35;
-const CABINET_M = 0.75;
-const DRESSER_M = 1;
+const CABINET_M = 0.7;
+const DRESSER_M = 0.9;
 const VANITY_M = 0.75;
 const ARMCHAIR_M = 0.72;
 
@@ -94,38 +100,40 @@ export function PortraitTerrace() {
       {/* one fixture, hung clear of the photograph's own glass pendants */}
       <Pendant id="pendant-opal" x="55%" w="16cqw" tilt={0} arc={1.3} dur={13} />
 
-      {/* ---- beyond the balustrade ----------------------------------------- */}
-      <Prop id="rose-bush" group="blossoms" w={w(1.2, 0.635)} left="31%" ground={at(0.635).ground} tilt={1.5} motion="rustle" dur={17} z={14} plane="far" />
-      <Prop id="lilac-bush" group="blossoms" w={w(1.5, 0.64)} right="14%" ground={at(0.64).ground} tilt={-1} motion="rustle" dur={19} z={14} plane="far" />
+      {/* ---- out on the lawn, either side of the pool ----------------------- */}
+      <Prop id="rose-bush" group="blossoms" w={w(1, 0.668)} left="32%" ground={at(0.668).ground} tilt={1.5} motion="rustle" dur={17} z={14} plane="far" />
+      <Prop id="lilac-bush" group="blossoms" w={w(1.1, 0.668)} right="27%" ground={at(0.668).ground} tilt={-1} motion="rustle" dur={19} z={14} plane="far" />
 
-      {/* ---- the far row: the trellises, the bed, the cabinet --------------- */}
-      <Prop set="trellisL" id="trellis-wisteria" group="trellises" w={w(1.6, 0.655)} left="12%" ground={at(0.655).ground} tilt={-1} motion="rustle" dur={19} z={18} plane="mid" />
-      <Prop set="trellisR" id="trellis-ivy" group="trellises" w={w(1.6, 0.66)} right="14%" ground={at(0.66).ground} tilt={1} motion="rustle" dur={23} z={18} plane="mid" />
+      {/* ---- the trellises, flanking the arch onto the pool ------------------ */}
+      <Prop set="trellisL" id="trellis-wisteria" group="trellises" w={w(1.1, 0.68)} left="22%" ground={at(0.68).ground} tilt={-1} motion="rustle" dur={19} z={18} plane="mid" />
+      <Prop set="trellisR" id="trellis-ivy" group="trellises" w={w(1.1, 0.682)} right="22%" ground={at(0.682).ground} tilt={1} motion="rustle" dur={23} z={18} plane="mid" />
 
-      <Prop set="bed" id="bed-iron" w={w(BED_M, BED_Y)} left="12%" ground={at(BED_Y).ground} tilt={-0.5} motion="bob" dur={22} rise={2} z={22} plane="mid" />
+      {/* ---- the jewellery cabinet, in the bathroom doorway ----------------- */}
+      <Prop set="cabinet" id="cabinet-jewelry" w={w(CABINET_M, CABINET_Y)} right="11%" ground={at(CABINET_Y).ground} tilt={-0.8} motion="bob" dur={18} rise={2} z={24} plane="mid" />
+      <Prop set="cabinet" id="teacups-collection" w={w(0.26, CABINET_Y)} right="15%" ground={CABINET_TOP} tilt={-1.5} motion="bob" dur={12} z={25} />
 
-      <Prop set="cabinet" id="cabinet-jewelry" w={w(CABINET_M, CABINET_Y)} left="46%" ground={at(CABINET_Y).ground} tilt={-0.8} motion="bob" dur={18} rise={2} z={24} plane="mid" />
-      <Prop set="cabinet" id="teacups-collection" w={w(0.28, CABINET_Y)} left="50%" ground={CABINET_TOP} tilt={-1.5} motion="bob" dur={12} z={25} />
+      {/* ---- the bed, in front of the bar stools ---------------------------- */}
+      <Prop set="bed" id="bed-iron" w={w(BED_M, BED_Y)} left="2%" ground={at(BED_Y).ground} tilt={-0.5} motion="bob" dur={22} rise={2} z={30} plane="mid" />
 
-      {/* ---- the dresser, against the right-hand pillar -------------------- */}
-      <Prop set="dresser" id="dresser" w={w(DRESSER_M, DRESSER_Y)} right="8%" ground={at(DRESSER_Y).ground} tilt={0.4} motion="bob" dur={20} rise={2} z={28} plane="mid" />
-      <Prop set="dresser" id="planter-greek-head" w={w(0.4, DRESSER_Y)} right="22%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={30} />
-      <Prop set="dresser" id="lamp-porcelain" w={w(0.26, DRESSER_Y)} right="31%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={30} />
+      {/* ---- the dresser, against the bathroom wall ------------------------- */}
+      <Prop set="dresser" id="dresser" w={w(DRESSER_M, DRESSER_Y)} right="3%" ground={at(DRESSER_Y).ground} tilt={0.4} motion="bob" dur={20} rise={2} z={32} plane="mid" />
+      <Prop set="dresser" id="planter-greek-head" w={w(0.36, DRESSER_Y)} right="14%" ground={DRESSER_TOP} tilt={-1} motion="rustle" dur={13} z={34} />
+      <Prop set="dresser" id="lamp-porcelain" w={w(0.24, DRESSER_Y)} right="25%" ground={DRESSER_TOP} tilt={1} motion="bob" dur={15} z={34} />
 
       {/* ---- Brea and Molly at the harvest table, where the
            dresser and wingback stand in spring ------------------------------ */}
-      <Prop id="fall-table-brea-molly" w={w(1.3, 0.72)} right="10%" ground={at(0.72).ground} motion="none" z={38} />
+      <Prop id="fall-table-brea-molly" w={w(1.2, 0.82)} right="4%" ground={at(0.82).ground} motion="none" z={38} />
 
-      {/* ---- the dog, in the open middle of the tiles ----------------------- */}
-      <Prop id="dog-frisbee" w={w(1, DOG_Y)} left="30%" bottom={at(DOG_Y).ground} motion="none" z={40} />
+      {/* ---- the dog, in the open middle of the tiles, clear of the pool ----- */}
+      <Prop id="dog-frisbee" w={w(0.8, DOG_Y)} left="40%" bottom={at(DOG_Y).ground} motion="none" z={40} />
 
-      {/* ---- the coiffeuse, in front of the bar stools and the foot of the bed */}
-      <Prop set="vanity" id="vanity" w={w(VANITY_M, VANITY_Y)} left="8%" ground={at(VANITY_Y).ground} tilt={-0.5} motion="bob" dur={19} rise={2} z={50} />
-      <Prop set="vanity" id="perfume-collection" w={w(0.28, VANITY_Y)} left="16%" ground={VANITY_TOP} tilt={-1} motion="bob" dur={13} z={52} />
+      {/* ---- the coiffeuse, in front of the bed ----------------------------- */}
+      <Prop set="vanity" id="vanity" w={w(VANITY_M, VANITY_Y)} left="6%" ground={at(VANITY_Y).ground} tilt={-0.5} motion="bob" dur={19} rise={2} z={50} />
+      <Prop set="vanity" id="perfume-collection" w={w(0.26, VANITY_Y)} left="14%" ground={VANITY_TOP} tilt={-1} motion="bob" dur={13} z={52} />
 
-      {/* ---- the wingback, in front of the dresser, as on the big screen ---- */}
-      <Prop set="armchair" id="armchair-sage" w={w(ARMCHAIR_M, ARMCHAIR_Y)} right="9%" ground={at(ARMCHAIR_Y).ground} tilt={-1.2} motion="bob" dur={18} rise={2} z={54} />
-      <Prop set="armchair" id="cat-blueberry-party" w={w(0.26, ARMCHAIR_Y)} right="20%" ground={ARMCHAIR_SEAT} tilt={-2} motion="bob" dur={12} rise={3} z={56} />
+      {/* ---- the wingback, out on the open tiles, clear of the dresser ------ */}
+      <Prop set="armchair" id="armchair-sage" w={w(ARMCHAIR_M, ARMCHAIR_Y)} right="34%" ground={at(ARMCHAIR_Y).ground} tilt={-1.2} motion="bob" dur={18} rise={2} z={54} />
+      <Prop set="armchair" id="cat-blueberry-party" w={w(0.24, ARMCHAIR_Y)} right="45%" ground={ARMCHAIR_SEAT} tilt={-2} motion="bob" dur={12} rise={3} z={56} />
 
       {/* ---- the cats, along the front edge -------------------------------- */}
       <Prop id="cats-birthday" w={w(0.3, CATS_Y)} left="10%" ground={at(CATS_Y).ground} tilt={1} motion="bob" dur={13} rise={3} z={74} />

@@ -178,6 +178,8 @@ export function hiddenOf(layout: SeasonLayout): string[] {
  */
 export function settle(scope: ParentNode, layout?: SeasonLayout) {
   scope.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
+    // the phone layout has its own positions (PortraitTerrace.tsx), not these
+    if (el.closest(".palais-frame")) return;
     const style = arranged(el.dataset.prop!, layout);
     el.style.translate = style?.translate ? String(style.translate) : "";
     el.style.scale = style?.scale ? String(style.scale) : "";
