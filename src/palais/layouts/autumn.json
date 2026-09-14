@@ -8,17 +8,17 @@
   "props": {
     "goat-bambi": {
       "shown": true,
-      "x": 639.6,
-      "y": 362.7,
-      "s": 1.336,
-      "z": 1019
+      "x": 563.8,
+      "y": 11.7,
+      "s": 0.71,
+      "z": 400
     },
     "goats-pumpkin-ferdinand": {
       "shown": true,
-      "x": 421.9,
-      "y": 93.7,
-      "s": 1.174,
-      "z": 1013
+      "x": 509.5,
+      "y": 10.0,
+      "s": 0.7,
+      "z": 400
     },
     "dog-maggie-frisbee": {
       "shown": false,
