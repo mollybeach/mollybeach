@@ -1,12 +1,14 @@
 import type { Place } from "./place";
+import { usePortrait } from "./PortraitTerrace";
 
 /* every room turns through the same four seasons as the terrace */
 const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
 
 /** what each room's photographs are called, which part of them to keep in
-    view when the screen crops them, and whether there's one per season or
-    just one for the whole year */
-const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false }> = {
+    view when the screen crops them, whether there's one per season or just
+    one for the whole year, and whether there's a tall photograph for phones
+    (`<file>-portrait.webp`) */
+const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true }> = {
   // pink walls, lemon-papered shelves, Snoqualmie Falls through the window
   closet: { file: "closet", focus: "50% 60%" },
   // the house on the lake: marble fireplace, the red bridge, the dock, Rainier
@@ -20,7 +22,7 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // the thermal bath over the old city of domes, canals and the volcano: one photograph for now
   domes: { file: "domes", focus: "50% 55%", seasons: false },
   // the balcony over the jacaranda street at dusk: one photograph for now
-  jacaranda: { file: "jacaranda", focus: "50% 55%", seasons: false },
+  jacaranda: { file: "jacaranda", focus: "50% 55%", seasons: false, portrait: true },
   // the glass pavilion half under the sea, looking into the reef: one photograph for now
   reef: { file: "reef", focus: "50% 55%", seasons: false },
   // the lacquered pavilion over the lantern-lit temple island at dusk: one photograph for now
@@ -28,7 +30,7 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // the white loggia over every beach at once, at sunset: one photograph for now
   shore: { file: "shore", focus: "50% 55%", seasons: false },
   // the glowworm grotto opening onto hobbit hills, a mountain and hot springs: one photograph for now
-  caves: { file: "caves", focus: "50% 55%", seasons: false },
+  caves: { file: "caves", focus: "50% 55%", seasons: false, portrait: true },
 };
 
 /**
@@ -41,15 +43,17 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
  */
 export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
   const room = ROOMS[place];
+  // on a phone held upright, the tall photograph if the room has one
+  const tall = usePortrait() && room.portrait;
   return (
     <div aria-hidden className={`palais-room palais-room--away palais-room--${place}`}>
       <div className="palais-seasons">
         {room.seasons === false ? (
           <img
-            src={`${process.env.PUBLIC_URL}/palais/${room.file}.webp`}
+            src={`${process.env.PUBLIC_URL}/palais/${room.file}${tall ? "-portrait" : ""}.webp`}
             alt=""
             decoding="async"
-            style={{ position: "absolute", inset: 0, objectPosition: room.focus }}
+            style={{ position: "absolute", inset: 0, objectPosition: tall ? "50% 100%" : room.focus }}
           />
         ) : (
           SEASONS.map((season) => (

@@ -110,6 +110,31 @@ export function VisitorsShelf() {
             </section>
           )}
 
+          <section className="vis-card">
+            <h3>🔗 Where they came from</h3>
+            {stats.sources?.length ? (
+              <ul className="vis-list vis-list--sources">
+                {stats.sources.map((s) => (
+                  <li key={s.source}>
+                    <span>
+                      {s.source}
+                      <small>
+                        {s.visits} visit{s.visits === 1 ? "" : "s"} · {Math.round((s.visits / Math.max(1, stats.period.visits)) * 100)}%
+                      </small>
+                    </span>
+                    <b>{s.unique}</b>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="cat-note">No visits with a source yet.</p>
+            )}
+            <p className="vis-hint">
+              iMessage, WhatsApp and the Discord app don't pass this along. To see them, share a tagged link like{" "}
+              <code>mollybeach.app/?from=discord</code>.
+            </p>
+          </section>
+
           <div className="vis-cols">
             <section className="vis-card">
               <h3>📱 Devices</h3>
@@ -199,7 +224,7 @@ export function VisitorsShelf() {
                       {flag(v.code)} {[v.city, v.country].filter(Boolean).join(", ") || "Somewhere"}
                       <small>
                         {deviceIcon(v.device)} {[deviceName(v.device), v.os, v.browser].filter(Boolean).join(" · ")}
-                        {v.referrer ? ` · from ${v.referrer}` : ""}
+                        {v.source ? ` · via ${v.source}` : v.referrer ? ` · from ${v.referrer}` : ""}
                         {v.page && v.page !== "/" ? ` · ${v.page}` : ""}
                         {v.visitor ? ` · visitor ${v.visitor}` : ""}
                       </small>

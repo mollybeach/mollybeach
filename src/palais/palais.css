@@ -1231,6 +1231,8 @@
 .palais .vis-list small { display: block; font-weight: 600; color: #b5708f; font-size: 0.7rem; }
 .palais .vis-list time { flex: none; font-size: 0.72rem; color: #b5708f; }
 .palais .vis-list--recent { max-height: 18rem; }
+.palais .vis-hint { margin: 0.5rem 0 0; font: 600 0.72rem/1.4 var(--cat-round); color: #b5708f; }
+.palais .vis-hint code { font-size: 0.7rem; background: var(--cat-soft); padding: 0 0.25rem; border-radius: 4px; color: var(--cat-deep); }
 @container palais (max-width: 639px) {
   .palais .vis-tiles, .palais .vis-cols { grid-template-columns: minmax(0, 1fr); }
 }
