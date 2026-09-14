@@ -38,10 +38,52 @@ async function lookUp(): Promise<Geo> {
   }
 }
 
-const device = () => {
-  const w = Math.min(window.screen.width, window.screen.height);
-  return /Mobi|Android|iPhone/i.test(navigator.userAgent) || w < 600 ? "phone" : w < 1024 ? "tablet" : "desktop";
-};
+/** phone, tablet or desktop, and the system and browser, read from the
+    browser's own description of itself rather than the screen size */
+export function describeDevice(ua = navigator.userAgent, touchPoints = navigator.maxTouchPoints ?? 0) {
+  // iPads ask for desktop pages and call themselves Macs, but Macs have no touchscreen
+  const iPad = /iPad/.test(ua) || (/Macintosh/.test(ua) && touchPoints > 1);
+  const tablet = iPad || (/Android/.test(ua) && !/Mobile/.test(ua)) || /Tablet|Silk|Kindle/i.test(ua);
+  const phone = !tablet && /iPhone|iPod|Android.*Mobile|Mobile|Mobi/i.test(ua);
+
+  const os = iPad
+    ? "iPad"
+    : /iPhone|iPod/.test(ua)
+      ? "iPhone"
+      : /Android/.test(ua)
+        ? "Android"
+        : /CrOS/.test(ua)
+          ? "ChromeOS"
+          : /Windows/.test(ua)
+            ? "Windows"
+            : /Macintosh|Mac OS X/.test(ua)
+              ? "Mac"
+              : /Linux/.test(ua)
+                ? "Linux"
+                : "Other";
+
+  const browser = /Instagram/.test(ua)
+    ? "Instagram"
+    : /FBAN|FBAV/.test(ua)
+      ? "Facebook"
+      : /LinkedInApp/.test(ua)
+        ? "LinkedIn"
+        : /Edg\//.test(ua)
+          ? "Edge"
+          : /OPR\/|Opera/.test(ua)
+            ? "Opera"
+            : /SamsungBrowser/.test(ua)
+              ? "Samsung"
+              : /Firefox|FxiOS/.test(ua)
+                ? "Firefox"
+                : /Chrome|CriOS|Chromium/.test(ua)
+                  ? "Chrome"
+                  : /Safari/.test(ua)
+                    ? "Safari"
+                    : "Other";
+
+  return { device: tablet ? "tablet" : phone ? "phone" : "desktop", os, browser };
+}
 
 const referrerHost = () => {
   try {
@@ -71,6 +113,7 @@ export async function recordVisit() {
   }
 
   const geo = await lookUp();
+  const { device, os, browser } = describeDevice();
   try {
     const sb = await db();
     await sb.rpc("palais_record_visit", {
@@ -84,7 +127,9 @@ export async function recordVisit() {
       p_lat: num(geo.latitude),
       p_lon: num(geo.longitude),
       p_timezone: geo.timezone ?? null,
-      p_device: device(),
+      p_device: device,
+      p_os: os,
+      p_browser: browser,
     });
   } catch {
     /* counting visitors must never break the page */
@@ -97,9 +142,11 @@ export interface VisitStats {
   period: { visits: number; unique: number };
   today: { visits: number; unique: number };
   by_day: { day: string; visits: number; unique: number }[];
+  devices: { device: string; visits: number; unique: number }[];
+  systems: { os: string; browser: string; visits: number; unique: number }[];
   countries: { country: string; code: string | null; visits: number; unique: number }[];
   cities: { city: string; region: string | null; country: string | null; code: string | null; lat: number | null; lon: number | null; visits: number; unique: number }[];
-  recent: { at: string; city: string | null; region: string | null; country: string | null; code: string | null; page: string | null; referrer: string | null; device: string | null; visitor: string | null }[];
+  recent: { at: string; city: string | null; region: string | null; country: string | null; code: string | null; page: string | null; referrer: string | null; device: string | null; os: string | null; browser: string | null; visitor: string | null }[];
 }
 
 export async function visitStats(days = 30): Promise<VisitStats> {

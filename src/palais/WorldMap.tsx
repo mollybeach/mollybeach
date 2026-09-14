@@ -142,12 +142,13 @@ const STOPS: Stop[] = [
     id: "jacaranda",
     name: "The Jacaranda Quarter",
     tag: "night streets",
-    blurb: "Purple trees over little iron balconies, and a brass band playing until morning.",
-    finds: ["Purple petals on every step", "A street party that never ends", "Pastel houses by the water"],
+    blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
+    finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
     at: [830, 420],
     patch: [52, 58],
     seed: 103,
+    room: "jacaranda",
     nameAbove: true,
     icon: (c) => (
       <>

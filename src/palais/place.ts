@@ -4,15 +4,15 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * Which room of the Palais you're standing in.
  *
  * The palace terrace is home. The closet (the Wardrobe Wing on the world map)
- * the Lakehouse, the Steaming Lagoon, the Rainwood, the Amphitheatre and the City of Domes are rooms you can walk into. Every room stays on the page
+ * the Lakehouse, the Steaming Lagoon, the Rainwood, the Amphitheatre, the City of Domes and the Jacaranda Quarter are rooms you can walk into. Every room stays on the page
  * the whole time, and only the one you're in shows, so the seasons keep turning together
  * and a room you come back to is exactly as you left it.
  *
- * The room is kept in the address (#closet, #lakehouse, #lagoon, #rainwood, #gorge, #domes), so a refresh or a shared link
+ * The room is kept in the address (#closet, #lakehouse, #lagoon, #rainwood, #gorge, #domes, #jacaranda), so a refresh or a shared link
  * opens the same room.
  */
 
-export const PLACES = ["palace", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes"] as const;
+export const PLACES = ["palace", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda"] as const;
 export type Place = (typeof PLACES)[number];
 
 const fromHash = (): Place => {

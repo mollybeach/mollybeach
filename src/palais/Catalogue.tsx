@@ -7,6 +7,9 @@ import { VisitorsShelf } from "./VisitorsShelf";
 import type { Season } from "./seasons";
 import type { Collection } from "./useCollection";
 
+/** the one account that sees the visitor book */
+const OWNER = "mollyjbeach@gmail.com";
+
 /**
  * The room's catalogue, like the wardrobe screen in a dress-up game: every
  * sticker on a shelf, with a tick to put it in the room or take it out, and a
@@ -167,7 +170,8 @@ export function Catalogue({
               >
                 ✦ Saved looks
               </button>
-              {collection.editor?.canSave && (
+              {/* the visitor book is Molly's alone (the database also only answers editors) */}
+              {collection.editor?.canSave && collection.editor.email.toLowerCase() === OWNER && (
                 <button
                   type="button"
                   role="tab"

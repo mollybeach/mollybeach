@@ -20,6 +20,10 @@ const flag = (code: string | null) =>
     ? String.fromCodePoint(...code.toUpperCase().split("").map((c) => 0x1f1e6 + c.charCodeAt(0) - 65))
     : "🌐";
 
+const DEVICE_ICON: Record<string, string> = { phone: "📱", tablet: "📲", desktop: "💻" };
+const deviceIcon = (d: string | null) => DEVICE_ICON[d ?? ""] ?? "❔";
+const deviceName = (d: string | null) => (d ? d.charAt(0).toUpperCase() + d.slice(1) : "Unknown");
+
 const ago = (iso: string) => {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
   if (s < 60) return "just now";
@@ -108,6 +112,47 @@ export function VisitorsShelf() {
 
           <div className="vis-cols">
             <section className="vis-card">
+              <h3>📱 Devices</h3>
+              {stats.devices?.length ? (
+                <ul className="vis-list">
+                  {stats.devices.map((d) => (
+                    <li key={d.device}>
+                      <span>
+                        {deviceIcon(d.device)} {deviceName(d.device)}
+                        <small>
+                          {d.visits} visit{d.visits === 1 ? "" : "s"} ·{" "}
+                          {Math.round((d.visits / Math.max(1, stats.period.visits)) * 100)}%
+                        </small>
+                      </span>
+                      <b>{d.unique}</b>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="cat-note">No visits yet.</p>
+              )}
+            </section>
+            <section className="vis-card">
+              <h3>🧭 System &amp; browser</h3>
+              {stats.systems?.length ? (
+                <ul className="vis-list">
+                  {stats.systems.map((s) => (
+                    <li key={`${s.os}-${s.browser}`}>
+                      <span>
+                        {s.os} · {s.browser}
+                      </span>
+                      <b>{s.unique}</b>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="cat-note">No visits yet.</p>
+              )}
+            </section>
+          </div>
+
+          <div className="vis-cols">
+            <section className="vis-card">
               <h3>🌍 Countries</h3>
               {stats.countries.length ? (
                 <ul className="vis-list">
@@ -153,7 +198,7 @@ export function VisitorsShelf() {
                     <span>
                       {flag(v.code)} {[v.city, v.country].filter(Boolean).join(", ") || "Somewhere"}
                       <small>
-                        {v.device ?? ""}
+                        {deviceIcon(v.device)} {[deviceName(v.device), v.os, v.browser].filter(Boolean).join(" · ")}
                         {v.referrer ? ` · from ${v.referrer}` : ""}
                         {v.page && v.page !== "/" ? ` · ${v.page}` : ""}
                         {v.visitor ? ` · visitor ${v.visitor}` : ""}
