@@ -1,5 +1,6 @@
 import { Room } from "./Room";
 import { Prop } from "./Prop";
+import { propSpec } from "./props";
 import { Pollen } from "./Pollen";
 import { Plinth } from "./Plinth";
 import { Footer } from "./Footer";
@@ -309,7 +310,7 @@ export default function PalaisHome() {
             <Prop
               key={id}
               id={id}
-              w={w(/radiator|shelf_rack/.test(id) ? 0.9 : /umbrella|postcards|moon-kiss|towels|mirror_wall|suncatcher/.test(id) ? 0.55 : 0.32, 0.93)}
+              w={w(propSpec(id).metres ?? (/umbrella|postcards|moon-kiss|towels|mirror_wall|suncatcher/.test(id) ? 0.55 : 0.32), 0.93)}
               left={`${(3 + ((n * 31) % 90)).toFixed(1)}%`}
               ground={at(0.93 - (n % 3) * 0.03).ground}
               tilt={0}

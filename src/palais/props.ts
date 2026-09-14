@@ -27,6 +27,8 @@ export interface PropSpec {
   /** an animated image: its first frame is no guide to where it is, so it's
       picked up by its whole box */
   animated?: boolean;
+  /** how wide it really is, in metres, so it comes out of the catalogue to scale */
+  metres?: number;
 }
 
 /** keeps each key's literal type while checking every entry is a PropSpec */
@@ -206,8 +208,8 @@ export const PROPS = catalogue({
   /* ---- from the garden set: files named main-noun-first, ending _sticker -- */
   suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker: { label: "a stained-glass suncatcher, in flower", glass: true, plane: "mid" },
   bottle_glass_jar_embossed_aqua_vintage_sticker: { label: "an aqua glass bottle, embossed", glass: true, plane: "near" },
-  radiator_heater_cast_iron_ribbed_white_vintage_sticker: { label: "an old cast-iron radiator", plane: "mid" },
-  shelf_rack_garden_three_tier_scrollwork_glass_white_sticker: { label: "a white scrollwork garden shelf", plane: "mid" },
+  radiator_heater_cast_iron_ribbed_white_vintage_sticker: { label: "an old cast-iron radiator", plane: "mid", metres: 0.9 },
+  shelf_rack_garden_three_tier_scrollwork_glass_white_sticker: { label: "a white scrollwork garden shelf", plane: "mid", metres: 0.9 },
   mirror_wall_arch_ornate_gold_vintage_sticker: { label: "an arched gilt mirror", glass: true, plane: "mid" },
   can_watering_garden_metal_blush_pink_sticker: { label: "a blush-pink watering can", plane: "near" },
   mister_plant_spray_bottle_embossed_glass_ombre_turquoise_pink_antique_sticker: { label: "an embossed ombré glass plant mister", glass: true, plane: "near" },
@@ -239,6 +241,62 @@ export const PROPS = catalogue({
   cup_vanity_pressed_glass_amber_perfume_tubes_sticker: { label: "an amber glass vanity cup of perfume tubes", glass: true, plane: "near" },
   tray_trinket_porcelain_gilt_medallion_cobalt_blue_sticker: { label: "a blue porcelain trinket tray", plane: "near" },
   box_incense_burner_wood_lattice_moon_stars_upright_sticker: { label: "a wooden incense box, stood on end", plane: "near" },
+  coffee_maker_drip_smeg_retro_pink_sticker: { label: "a pink Smeg drip coffee maker", plane: "near", metres: 0.3 },
+  espresso_machine_smeg_retro_cream_sticker: { label: "a cream Smeg espresso machine", plane: "near", metres: 0.32 },
+  microwave_insignia_retro_mint_teal_sticker: { label: "a mint Insignia microwave", plane: "near", metres: 0.5 },
+  cabinet_china_peach_pink_jadeite_pink_depression_glass_sticker: { label: "a peach china cabinet of jadeite and pink glass", glass: true, plane: "mid", metres: 1.1 },
+  dresser_five_drawer_light_oak_scalloped_gold_pulls_sticker: { label: "a light oak five-drawer dresser", plane: "mid", metres: 0.85 },
+  shelf_wall_geometric_diamond_gold_frame_three_tier_white_sticker: { label: "a gold diamond wall shelf", plane: "mid", metres: 0.75 },
+  shelf_wall_long_trailing_pothos_watering_can_column_fairy_lights_sticker: { label: "a long shelf of trailing pothos and fairy lights", lit: true, plane: "mid", metres: 1.9 },
+  shelf_wall_long_pothos_teacups_string_of_pearls_fairy_lights_sticker: { label: "a long shelf of pothos, teacups and fairy lights", lit: true, plane: "mid", metres: 1.9 },
+  shelf_corner_ivy_green_bottle_teacup_fairy_lights_sticker: { label: "a corner shelf of ivy and fairy lights", lit: true, plane: "mid", metres: 0.9 },
+  shelf_corner_pothos_basket_red_bottle_fairy_lights_sticker: { label: "a corner shelf of pothos and a red bottle", lit: true, plane: "mid", metres: 0.9 },
+  garland_ivy_vine_fairy_lights_sticker: { label: "an ivy garland with fairy lights", lit: true, plane: "fore", metres: 1.3 },
+  artwork_framed_line_drawing_woman_braids_black_white_sticker: { label: "a framed line drawing of a woman with braids", plane: "mid", metres: 0.55 },
+  box_trinket_octagonal_cobalt_blue_gold_roses_sticker: { label: "a cobalt box with gold roses", plane: "near" },
+  candlestick_glass_olive_green_lit_ivory_candle_left_sticker: { label: "a lit candle in a green glass candlestick", lit: true, glass: true, plane: "near" },
+  candlestick_glass_olive_green_lit_ivory_candle_right_sticker: { label: "another lit candle in a green glass candlestick", lit: true, glass: true, plane: "near" },
+  book_the_game_changing_attorney_michael_mogill_sticker: { label: "The Game Changing Attorney, by Michael Mogill", plane: "near" },
+  book_hot_girl_crochet_rose_svane_sticker: { label: "Hot Girl Crochet, by Rose Svane", plane: "near" },
+  book_world_travel_anthony_bourdain_sticker: { label: "World Travel, by Anthony Bourdain", plane: "near" },
+  book_hundred_years_war_on_palestine_rashid_khalidi_sticker: { label: "The Hundred Years' War on Palestine, by Rashid Khalidi", plane: "near" },
+  book_grc_engineering_for_aws_aj_yawn_sticker: { label: "GRC Engineering for AWS, by AJ Yawn", plane: "near" },
+  tin_tarot_golden_art_nouveau_sticker: { label: "a Golden Art Nouveau tarot tin", plane: "near" },
+  wall_pocket_porcelain_violets_gold_trim_sticker: { label: "a porcelain wall pocket with violets", plane: "near" },
+  stool_strawberry_red_glazed_sticker: { label: "a red strawberry stool", plane: "near", metres: 0.42 },
+  sofa_sectional_chaise_blush_pink_pillows_sticker: { label: "a blush pink sectional sofa", plane: "near", metres: 2.6 },
+  rug_floral_tufted_grey_multicolour_flowers_sticker: { label: "a grey rug of tufted flowers", plane: "near", metres: 2.2 },
+  vanity_oak_scalloped_round_mirror_sticker: { label: "an oak vanity with a round mirror", glass: true, plane: "near", metres: 1.1 },
+  cabinet_apothecary_cream_many_drawers_novelty_knobs_sticker: { label: "a cream apothecary chest of little drawers", plane: "mid", metres: 1.1 },
+  bed_french_cream_cherry_print_pink_bedding_sticker: { label: "a cream French bed with cherries", plane: "near", metres: 1.7 },
+  artwork_framed_print_woman_blue_leaves_sticker: { label: "a framed print of a woman in blue leaves", plane: "mid", metres: 0.6 },
+  artwork_framed_print_red_poppies_pink_sticker: { label: "a framed print of red poppies", plane: "mid", metres: 0.6 },
+  shelf_wall_picture_ledge_oak_vinyl_records_hers_mitski_top_sticker: { label: "an oak ledge of records: Hers, Bury Me at Makeout Creek", plane: "mid", metres: 1.4 },
+  shelf_wall_picture_ledge_oak_vinyl_records_puberty_be_the_cowboy_bottom_sticker: { label: "an oak ledge of records: Puberty 2, Be the Cowboy", plane: "mid", metres: 1.4 },
+  /* ---- antique glass Christmas ornaments -------------------------------- */
+  ornament_reflector_rounded_magenta_sticker: { label: "a magenta reflector ornament", glass: true, plane: "near" },
+  ornament_teardrop_frosted_glitter_orange_sticker: { label: "an orange frosted teardrop ornament", glass: true, plane: "near" },
+  ornament_ball_hand_painted_red_flower_silver_sticker: { label: "a silver ball painted with a red flower", glass: true, plane: "near" },
+  ornament_grape_cluster_purple_sticker: { label: "a purple grape cluster ornament", glass: true, plane: "near" },
+  ornament_ball_pink_ribbon_bow_turquoise_sticker: { label: "a turquoise ball with a pink bow", glass: true, plane: "near" },
+  ornament_pinecone_quilted_pink_sticker: { label: "a pink quilted pinecone ornament", glass: true, plane: "near" },
+  ornament_ball_painted_leaf_red_sticker: { label: "a red ball painted with a white sprig", glass: true, plane: "near" },
+  ornament_grape_cluster_cobalt_blue_sticker: { label: "a cobalt grape cluster ornament", glass: true, plane: "near" },
+  ornament_reflector_saucer_silver_sticker: { label: "a silver saucer reflector ornament", glass: true, plane: "near" },
+  ornament_finial_onion_glitter_stripes_green_silver_large_sticker: { label: "a green and silver glitter-striped drop", glass: true, plane: "near" },
+  ornament_ball_reflector_magenta_large_sticker: { label: "a big magenta reflector ball", glass: true, plane: "near" },
+  ornament_pickle_glass_lime_green_sticker: { label: "a glass Christmas pickle", glass: true, plane: "near" },
+  ornament_santa_claus_glass_pink_sticker: { label: "a pink glass Santa", glass: true, plane: "near" },
+  ornament_ball_painted_stripes_red_green_silver_sticker: { label: "a silver ball with red and green stripes", glass: true, plane: "near" },
+  ornament_ball_turquoise_small_sticker: { label: "a little turquoise ball", glass: true, plane: "near" },
+  ornament_santa_claus_red_pink_ribbon_sticker: { label: "a red Santa on a pink ribbon", glass: true, plane: "near" },
+  ornament_ball_shiny_purple_sticker: { label: "a shiny purple ball", glass: true, plane: "near" },
+  ornament_berry_cluster_red_sticker: { label: "a red berry cluster ornament", glass: true, plane: "near" },
+  ornament_ball_worn_silver_blue_spots_sticker: { label: "a worn silver ball with blue spots", glass: true, plane: "near" },
+  ornament_finial_onion_glitter_stripes_green_silver_small_sticker: { label: "a smaller green and silver glitter-striped drop", glass: true, plane: "near" },
+  ornament_strawberry_frosted_coral_red_sticker: { label: "a frosted coral strawberry ornament", glass: true, plane: "near" },
+  ornament_ball_reflector_magenta_small_sticker: { label: "a little magenta reflector ball", glass: true, plane: "near" },
+  ornament_strawberry_small_red_sticker: { label: "a little red strawberry ornament", glass: true, plane: "near" },
 });
 
 export type PropId = keyof typeof PROPS;

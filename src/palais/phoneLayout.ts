@@ -2,7 +2,7 @@ import phoneLayout from "./layouts/phone.json";
 import autumnLayout from "./layouts/autumn.json";
 import { SHELVES } from "./shelves";
 import type { SeasonLayout } from "./arrangement";
-import type { PropId } from "./props";
+import { propSpec, type PropId } from "./props";
 import type { Season } from "./seasons";
 import { LOOSE } from "./decor";
 
@@ -67,6 +67,8 @@ const KIND: Record<string, { w: number; ground?: number; top?: number }> = {
   pillows: { w: 12, ground: 14 },
   teacups: { w: 7, ground: 16 },
   trinkets: { w: 8, ground: 12 },
+  ornaments: { w: 6, ground: 14 },
+  kitchen: { w: 14, ground: 16 },
   decor: { w: 11, ground: 10 },
 };
 
@@ -77,10 +79,13 @@ export const PHONE_EXTRAS: Extra[] = (() => {
     const k = KIND[kind] ?? KIND.trinkets;
     const n = (count[kind] = (count[kind] ?? 0) + 1) - 1;
     // spread each kind across the room, a little staggered
-    const left = 8 + ((n * 17) % (86 - k.w));
+    // a piece that knows its real width comes out to scale: about 28% of the photo a metre
+    const metres = propSpec(id).metres;
+    const width = metres ? Math.min(85, Math.max(6, Math.round(metres * 28))) : k.w;
+    const left = 8 + ((n * 17) % Math.max(4, 86 - width));
     return {
       id,
-      w: k.w,
+      w: width,
       left,
       ...(k.top !== undefined ? { top: k.top + (n % 3) * 4 } : { ground: (k.ground ?? 12) + (n % 3) * 3 }),
     };
