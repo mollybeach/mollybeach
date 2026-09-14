@@ -87,13 +87,15 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   now.current = { place, portrait };
 
   /** put a look on the room for this device (and, with both, for the other too) */
+  const worn = useRef(wearing);
+  worn.current = wearing;
   const wear = useCallback((look: { desktop?: SeasonLayout; phone?: SeasonLayout }, animate = true) => {
     const { place: at, portrait: tall } = now.current;
-    setWearing((w) => {
-      const next = { desktop: look.desktop ?? w.desktop, phone: look.phone ?? w.phone, rev: w.rev + 1 };
-      setHidden(new Set(hiddenFor(tall ? next.phone : next.desktop, at)));
-      return next;
-    });
+    const w = worn.current;
+    const next = { desktop: look.desktop ?? w.desktop, phone: look.phone ?? w.phone, rev: w.rev + 1 };
+    worn.current = next;
+    setWearing(next);
+    setHidden(new Set(hiddenFor(tall ? next.phone : next.desktop, at)));
     clearTimeout(glide.current);
     setRearranging(animate);
     if (animate) glide.current = setTimeout(() => setRearranging(false), 1800);
@@ -104,6 +106,14 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     [wear],
   );
   useEffect(() => () => clearTimeout(glide.current), []);
+  /** put stickers into the room as it is (after anything tried on just before) */
+  const putIn = useCallback((ids: string[]) => {
+    setHidden((h) => {
+      const next = new Set(h);
+      ids.forEach((id) => next.delete(id));
+      return next;
+    });
+  }, []);
 
   const latestDefaults = useRef({ desktop: desktopDefault.layout, phone: phoneDefault.layout });
   latestDefaults.current = { desktop: desktopDefault.layout, phone: phoneDefault.layout };
@@ -280,6 +290,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         season={season}
         wearing={portrait ? wearing.phone : wearing.desktop}
         onWear={tryOn}
+        onPutIn={putIn}
       />
     </>
   );

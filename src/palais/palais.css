@@ -1965,3 +1965,61 @@
 .palais .season-hint { font: 600 0.72rem/1.3 var(--cat-round); color: #b5708f; }
 .palais .cat-pages { flex-wrap: wrap; }
 .palais .season-shelf .cat-now { position: static; transform: none; margin-left: 0.1rem; }
+.palais .season-plus {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-left: 0.4rem;
+  flex: none;
+  border-radius: 9999px;
+  border: 2px solid var(--cat-hot);
+  background: #fff;
+  color: var(--cat-hot);
+  font: 800 1.15rem/1 var(--cat-round);
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(214, 36, 122, 0.25);
+  transition: transform 160ms, background 160ms;
+}
+.palais .season-plus:hover { background: var(--cat-soft); }
+.palais .season-plus.is-open { transform: rotate(45deg); background: var(--cat-hot); color: #fff; }
+.palais .season-plus:disabled { opacity: 0.4; cursor: default; }
+.palais .season-add {
+  margin: 0 0 0.6rem;
+  padding: 0.55rem;
+  max-height: min(22rem, 55vh);
+  overflow-y: auto;
+  border-radius: 16px;
+  background: #fff;
+  border: 2px solid var(--cat-hot);
+  box-shadow: 0 8px 22px rgba(214, 36, 122, 0.18);
+  overscroll-behavior: contain;
+}
+.palais .season-add-head { position: sticky; top: -0.55rem; z-index: 1; display: flex; gap: 0.4rem; margin: -0.55rem -0.55rem 0.3rem; padding: 0.55rem; background: #fff; }
+.palais .season-add-search { flex: 1; min-width: 0; }
+.palais .season-add-name { margin: 0.35rem 0 0.2rem; font: 800 0.72rem/1.2 var(--cat-round); color: var(--cat-deep); }
+.palais .season-grid--add { margin: 0; border-style: solid; border-color: #ffe0ef; }
+.palais .season-grid--add button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+.palais .season-grid--add button:hover { background: var(--cat-soft); }
+.palais .season-grid--add img { width: 84%; height: 84%; object-fit: contain; }
+.palais .season-add-plus {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 9999px;
+  background: var(--cat-hot);
+  color: #fff;
+  font: 800 0.7rem/0.95rem var(--cat-round);
+  text-align: center;
+}

@@ -10,6 +10,7 @@ import { RacksShelf } from "./RacksShelf";
 import { SeasonsShelf, SEASON_EMOJI, titleCase } from "./SeasonsShelf";
 import { publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
 import { saveSeasonDefault, type Device } from "./layoutsDb";
+import { defaultLook } from "./roomLayouts";
 import { PLACE_NAMES, type Place } from "./place";
 import { differs } from "./roomLayouts";
 import { messageOf, type Collection } from "./useCollection";
@@ -88,6 +89,7 @@ export function Catalogue({
   season,
   wearing,
   onWear,
+  onPutIn,
 }: {
   open: boolean;
   onClose: () => void;
@@ -104,6 +106,8 @@ export function Catalogue({
   /** the layout the room has on, for this device */
   wearing: SeasonLayout | undefined;
   onWear: (layout: SeasonLayout) => void;
+  /** put stickers into the room as it is now */
+  onPutIn: (ids: string[]) => void;
 }) {
   const wardrobe = place === "closet";
   const panel = useRef<HTMLDivElement>(null);
@@ -355,6 +359,30 @@ export function Catalogue({
               owner={owner}
               busy={saving === "busy"}
               onWear={onWear}
+              stickers={stickers}
+              hidden={hidden}
+              onPutIn={onPutIn}
+              onAddTo={(s, d, ids) =>
+                withSaving(async () => {
+                  // the other device's layout isn't on screen: add to it in the collection
+                  const look = defaultLook(collection.saved, place, s, d);
+                  const props = { ...look.layout.props };
+                  for (const id of ids) {
+                    const before = props[id] as (typeof props)[string] | undefined;
+                    props[id] = before ? { ...before, shown: true } : { x: 0, y: 0, s: 1, z: 60, shown: true };
+                  }
+                  await saveSeasonDefault(collection.saved, {
+                    place,
+                    season: s,
+                    device: d,
+                    name: `${PLACE_NAMES[place]} · ${titleCase(s)} · ${d === "phone" ? "phone" : "computer"}`,
+                    stage: look.layout.stage,
+                    props,
+                  });
+                  await collection.refresh();
+                  return true;
+                }, false)
+              }
               onSaveTo={(s) => {
                 if (s === season || window.confirm(`Save the room as it is now as its ${s} layout on a ${where}?`)) {
                   void withSaving(async () => {
