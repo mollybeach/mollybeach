@@ -174,6 +174,8 @@
    most two photographs are ever blending; winter alone fades away, back to
    spring. */
 .palais .palais-seasons { position: absolute; inset: 0; }
+/* the moving clouds and water, drawn over the photographs (LivingPhoto.tsx) */
+.palais .palais-living { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 /* which set of photographs shows: the wide set once the room is wider than
    1.54 : 1 (WIDE_FROM in sceneFit.ts). Hidden by opacity, not display, so the
    hidden set's animations keep time with the one in view. */

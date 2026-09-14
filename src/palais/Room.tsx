@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { LivingPhoto } from "./LivingPhoto";
 
 /* The terrace through the year, in order. Spring is the room as it loads; the
    rest fade in over it one after another, then winter fades back to spring.
@@ -70,13 +71,21 @@ export function Room({ portrait = false }: { portrait?: boolean }) {
   const seasons = portrait ? (
     <div ref={img} className="palais-seasons" style={{ transform: "scale(1.045)" }}>
       {stack("tall")}
+      <LivingPhoto room="palace" />
     </div>
   ) : (
     // both sets are always there and always turning together, so switching
     // between them as the window changes shape never puts the year out of step
     <div ref={img} className="palais-seasons" style={{ transform: "scale(1.045)" }}>
-      <div className="palais-seasons-set palais-seasons-set--tall">{stack("tall")}</div>
-      <div className="palais-seasons-set palais-seasons-set--wide">{stack("wide")}</div>
+      {/* the clouds and water in each set move (LivingPhoto.tsx) */}
+      <div className="palais-seasons-set palais-seasons-set--tall">
+        {stack("tall")}
+        <LivingPhoto room="palace" />
+      </div>
+      <div className="palais-seasons-set palais-seasons-set--wide">
+        {stack("wide")}
+        <LivingPhoto room="palace" />
+      </div>
     </div>
   );
   const photo = portrait ? <div className="palais-frame">{seasons}</div> : seasons;
