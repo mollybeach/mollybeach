@@ -96,7 +96,7 @@ const quilt = (frac: number) => surface(BED_M, BED_D, 1.25, frac);
 
 export default function PalaisHome() {
   const portrait = usePortrait();
-  // which room you're in: the terrace, the closet or the lakehouse (place.ts)
+  // which room you're in: the terrace or one of the rooms off it (place.ts)
   const places = usePlaceState();
   return (
     <PlaceNow.Provider value={places}>
@@ -127,6 +127,7 @@ export default function PalaisHome() {
           <Room portrait={portrait} />
           <SeasonRoom place="closet" />
           <SeasonRoom place="lakehouse" />
+          <SeasonRoom place="lagoon" />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />

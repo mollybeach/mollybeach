@@ -255,12 +255,13 @@ const STOPS: Stop[] = [
     id: "lagoon",
     name: "The Steaming Lagoon",
     tag: "fire under snow",
-    blurb: "Milky blue water steaming in the snow, with a volcano glowing on the horizon all winter.",
-    finds: ["A warm blue lagoon in a snowfield", "A crater lake ringed in red rock", "Ski runs down to a cosy lodge"],
+    blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
+    finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
     at: [470, 168],
     patch: [104, 56],
     seed: 37,
+    room: "lagoon",
     icon: () => (
       <>
         <path d="M-16,12 L-3,-10 L10,12 Z" fill="#fff" stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />

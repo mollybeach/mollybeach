@@ -135,7 +135,8 @@
    visitors are hidden (not removed) while you're away. */
 .palais .palais-room--away { opacity: 0; transition: opacity 700ms ease; background: transparent; }
 .palais [data-place="closet"] .palais-room--closet,
-.palais [data-place="lakehouse"] .palais-room--lakehouse { opacity: 1; }
+.palais [data-place="lakehouse"] .palais-room--lakehouse,
+.palais [data-place="lagoon"] .palais-room--lagoon { opacity: 1; }
 .palais .palais-stage:not([data-place="palace"]) .palais-arrive,
 .palais .palais-stage:not([data-place="palace"]) .palais-weather,
 .palais .palais-stage:not([data-place="palace"]) .palais-pollen { visibility: hidden; }
