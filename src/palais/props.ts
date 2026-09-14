@@ -222,6 +222,23 @@ export const PROPS = catalogue({
   bottle_perfume_crystal_stopper_enamel_floral_purple_vintage_sticker: { label: "a purple enamel perfume bottle, crystal stopper", plane: "near" },
   brush_makeup_rose_enamel_leaves_gold_sticker: { label: "a gold rose makeup brush", plane: "near" },
   planter_hanging_macrame_woven_basket_string_of_pearls_sticker: { label: "string of pearls in a macramé hanger", plane: "near" },
+  box_trinket_round_portrait_cream_gold_vintage_sticker: { label: "a round cream-and-gilt trinket box with a portrait", plane: "near" },
+  lamp_aladdin_genie_pink_enamel_gold_jeweled_sticker: { label: "a pink enamel Aladdin lamp", plane: "near" },
+  candle_cherub_angel_seated_pastel_blue_sticker: { label: "a blue cherub candle", plane: "near" },
+  box_incense_burner_wood_lattice_moon_stars_brass_sticker: { label: "a wooden incense box with moons and stars", plane: "near" },
+  bottle_dropper_apothecary_glass_emerald_green_sticker: { label: "a green glass dropper bottle", glass: true, plane: "near" },
+  jar_trinket_cut_glass_lidded_blush_pink_sticker: { label: "a pink cut-glass trinket jar", glass: true, plane: "near" },
+  box_trinket_jasperware_cameo_powder_blue_sticker: { label: "a blue jasperware cameo box", plane: "near" },
+  plant_snake_sansevieria_white_pot_sticker: { label: "a snake plant in a white pot", plane: "near" },
+  candle_cherub_angel_seated_mint_green_sticker: { label: "a mint cherub candle", plane: "near" },
+  bottle_glass_embossed_medallion_dusty_rose_pink_sticker: { label: "a pink embossed glass bottle", glass: true, plane: "near" },
+  candlestick_ornate_drip_candle_mint_green_sticker: { label: "a mint candlestick, dripping wax", plane: "near" },
+  planter_pot_embossed_floral_medallion_off_white_sticker: { label: "a white embossed planter", plane: "near" },
+  planter_pot_hand_painted_purple_flowers_saucer_sticker: { label: "a hand-painted flower pot and saucer", plane: "near" },
+  candlestick_glass_bubble_stem_green_taper_ivory_sticker: { label: "a green glass candlestick with an ivory taper", glass: true, plane: "near" },
+  cup_vanity_pressed_glass_amber_perfume_tubes_sticker: { label: "an amber glass vanity cup of perfume tubes", glass: true, plane: "near" },
+  tray_trinket_porcelain_gilt_medallion_cobalt_blue_sticker: { label: "a blue porcelain trinket tray", plane: "near" },
+  box_incense_burner_wood_lattice_moon_stars_upright_sticker: { label: "a wooden incense box, stood on end", plane: "near" },
 });
 
 export type PropId = keyof typeof PROPS;

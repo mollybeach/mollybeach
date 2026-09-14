@@ -47,6 +47,9 @@ export const SHELVES: Shelf[] = [
       "bottle_vase_lowell_embossed_pothos_cutting_green_glass_antique_sticker",
       "bottle_vase_pothos_cutting_embossed_green_glass_sticker",
       "planter_hanging_macrame_woven_basket_string_of_pearls_sticker",
+      "plant_snake_sansevieria_white_pot_sticker",
+      "planter_pot_embossed_floral_medallion_off_white_sticker",
+      "planter_pot_hand_painted_purple_flowers_saucer_sticker",
     ],
   },
   {

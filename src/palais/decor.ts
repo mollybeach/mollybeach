@@ -67,6 +67,23 @@ export const MORE_TRINKETS: PropId[] = [
   "bottle_perfume_crystal_stopper_enamel_floral_purple_vintage_sticker",
   "brush_makeup_rose_enamel_leaves_gold_sticker",
   "planter_hanging_macrame_woven_basket_string_of_pearls_sticker",
+  "box_trinket_round_portrait_cream_gold_vintage_sticker",
+  "lamp_aladdin_genie_pink_enamel_gold_jeweled_sticker",
+  "candle_cherub_angel_seated_pastel_blue_sticker",
+  "box_incense_burner_wood_lattice_moon_stars_brass_sticker",
+  "bottle_dropper_apothecary_glass_emerald_green_sticker",
+  "jar_trinket_cut_glass_lidded_blush_pink_sticker",
+  "box_trinket_jasperware_cameo_powder_blue_sticker",
+  "plant_snake_sansevieria_white_pot_sticker",
+  "candle_cherub_angel_seated_mint_green_sticker",
+  "bottle_glass_embossed_medallion_dusty_rose_pink_sticker",
+  "candlestick_ornate_drip_candle_mint_green_sticker",
+  "planter_pot_embossed_floral_medallion_off_white_sticker",
+  "planter_pot_hand_painted_purple_flowers_saucer_sticker",
+  "candlestick_glass_bubble_stem_green_taper_ivory_sticker",
+  "cup_vanity_pressed_glass_amber_perfume_tubes_sticker",
+  "tray_trinket_porcelain_gilt_medallion_cobalt_blue_sticker",
+  "box_incense_burner_wood_lattice_moon_stars_upright_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */
