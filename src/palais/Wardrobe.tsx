@@ -10,7 +10,7 @@ import { propSrc } from "./props";
 /* the jewellery cabinet, standing for good in the bottom box of the narrow
    left bay: its feet, middle and width, in each photograph's pixels */
 const CABINET = {
-  wide: { x: 378, feet: 868, w: 118 },
+  wide: { x: 470, feet: 1000, w: 128 },
   tall: { x: 184, feet: 1150, w: 76 },
 };
 
