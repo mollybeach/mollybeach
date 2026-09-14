@@ -298,6 +298,39 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     setHere(at >= 0 ? at : 0);
   }, [open, place]);
   const closeBtn = useRef<HTMLButtonElement>(null);
+  const mapSvg = useRef<SVGSVGElement>(null);
+  // the place a click would pick, while the pointer is over the map
+  const [hover, setHover] = useState<number | null>(null);
+
+  /** the place nearest to a point on the screen */
+  const nearest = (clientX: number, clientY: number) => {
+    const svg = mapSvg.current;
+    const m = svg?.getScreenCTM();
+    if (!svg || !m) return null;
+    const pt = new DOMPoint(clientX, clientY).matrixTransform(m.inverse());
+    let best = 0;
+    let bestD = Infinity;
+    STOPS.forEach((st, i) => {
+      const d = Math.hypot(st.at[0] - pt.x, st.at[1] - pt.y);
+      if (d < bestD) {
+        bestD = d;
+        best = i;
+      }
+    });
+    return best;
+  };
+
+  /** click anywhere: Honeysuckle hops to the nearest place; click the place
+      she's already at to go there */
+  const pick = (i: number) => {
+    const st = STOPS[i];
+    if (i === here && st.room && st.room !== place) {
+      go(st.room);
+      onClose();
+      return;
+    }
+    setHere(i);
+  };
 
   const art = useMemo(() => {
     const I = ISLAND;
@@ -429,7 +462,19 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         </button>
 
         <div className="wm-stage">
-          <svg className="wm-map" viewBox="25 25 960 640" role="img" aria-label={`World map. Honeysuckle is at ${stop.name}.`}>
+          <svg
+            ref={mapSvg}
+            className="wm-map"
+            viewBox="25 25 960 640"
+            role="img"
+            aria-label={`World map. Honeysuckle is at ${stop.name}. Click a place to hop there, and click it again to visit.`}
+            onClick={(e) => {
+              const i = nearest(e.clientX, e.clientY);
+              if (i !== null) pick(i);
+            }}
+            onPointerMove={(e) => setHover(nearest(e.clientX, e.clientY))}
+            onPointerLeave={() => setHover(null)}
+          >
             <defs>
               <radialGradient id="wm-sea" cx="0.5" cy="0.5" r="0.75">
                 <stop offset="0" stopColor="#56c3e6" />
@@ -548,17 +593,16 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               return (
                 <g
                   key={s.id}
-                  className={`wm-stop${on ? " is-on" : ""}`}
+                  className={`wm-stop${on ? " is-on" : ""}${hover === i && !on ? " is-hover" : ""}`}
                   transform={`translate(${s.at[0]} ${s.at[1]})`}
                   role="button"
                   tabIndex={0}
                   aria-label={s.name}
                   aria-pressed={on}
-                  onClick={() => setHere(i)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      setHere(i);
+                      pick(i);
                     }
                   }}
                 >

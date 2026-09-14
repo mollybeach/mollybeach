@@ -687,7 +687,12 @@
 
 .palais .wm-stop { cursor: pointer; outline: none; }
 .palais .wm-cameo { transition: transform 260ms cubic-bezier(0.2, 1.4, 0.4, 1); }
-.palais .wm-stop:hover .wm-cameo { transform: scale(1.08); }
+/* the whole map is clickable: whichever place is nearest the pointer lights up */
+.palais .wm-map { cursor: pointer; }
+.palais .wm-stop:hover .wm-cameo,
+.palais .wm-stop.is-hover .wm-cameo { transform: scale(1.1); }
+.palais .wm-stop.is-hover rect { stroke: var(--wm-rose); stroke-width: 3; }
+.palais .wm-stop.is-on { cursor: alias; }
 .palais .wm-stop.is-on .wm-cameo { transform: scale(1.18); }
 .palais .wm-stop:focus-visible rect { stroke: var(--wm-rose-deep); stroke-width: 3; }
 .palais .wm-halo { animation: wm-breathe 2.4s ease-in-out infinite; }
