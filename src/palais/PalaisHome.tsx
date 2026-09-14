@@ -133,6 +133,9 @@ export default function PalaisHome() {
             ============================================================== */}
         <section className="palais-stage" data-place={places.place}>
           <Room portrait={portrait} />
+          <SeasonRoom place="kitchen" />
+          <SeasonRoom place="bathroom" />
+          <SeasonRoom place="garden" />
           <SeasonRoom place="closet" />
           <SeasonRoom place="lakehouse" />
           <SeasonRoom place="lagoon" />

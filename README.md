@@ -31,6 +31,9 @@ A cute, video-game-style level select. Honeysuckle hops along a dotted path betw
 | Room | |
 |---|---|
 | 🏛 The Palais | home, the terrace |
+| 🍰 The Kitchen | the whole kitchen behind the terrace's marble bar |
+| 🛁 The Bathroom | the blush bathroom through the terrace's right arch |
+| 🌿 The Glasshouse | an iron-and-glass garden conservatory |
 | 🏠 The Lakehouse | a glass lake house with a red bridge and a boathouse, in four seasons |
 | 👗 The Wardrobe Wing | a pink closet with lemon wallpaper and a waterfall, in four seasons |
 | ♨️ The Steaming Lagoon | a blue lagoon under the northern lights, in four seasons |

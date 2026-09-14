@@ -46,13 +46,25 @@ const STOPS: Stop[] = [
     room: "palace",
   },
   {
+    id: "kitchen",
+    name: "The Kitchen",
+    tag: "just off the terrace",
+    blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
+    finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
+    color: "#f7b7a3",
+    at: [408, 414],
+    patch: [52, 38],
+    seed: 23,
+    room: "kitchen",
+  },
+  {
     id: "lakehouse",
     name: "The Lakehouse",
     tag: "where it began",
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
     finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
     color: "#8fcbe8",
-    at: [430, 330],
+    at: [400, 276],
     patch: [80, 58],
     seed: 11,
     room: "lakehouse",
@@ -64,7 +76,7 @@ const STOPS: Stop[] = [
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
     color: "#ffb3d6",
-    at: [600, 268],
+    at: [548, 222],
     patch: [46, 38],
     seed: 23,
     room: "closet",
@@ -76,7 +88,7 @@ const STOPS: Stop[] = [
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
     finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
     color: "#ffb99b",
-    at: [760, 250],
+    at: [737, 199],
     patch: [98, 66],
     seed: 97,
     room: "domes",
@@ -101,10 +113,22 @@ const STOPS: Stop[] = [
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
-    at: [835, 400],
+    at: [841, 373],
     patch: [52, 58],
     seed: 103,
     room: "jacaranda",
+  },
+  {
+    id: "bathroom",
+    name: "The Bathroom",
+    tag: "through the right arch",
+    blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
+    finds: ["A clawfoot tub", "Glass-block windows", "Pink towels and jars of bath salts"],
+    color: "#f3c6d8",
+    at: [687, 337],
+    patch: [48, 36],
+    seed: 29,
+    room: "bathroom",
   },
   {
     id: "gorge",
@@ -113,7 +137,7 @@ const STOPS: Stop[] = [
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
     finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
     color: "#ffc978",
-    at: [700, 520],
+    at: [681, 520],
     patch: [92, 64],
     seed: 83,
     room: "gorge",
@@ -125,7 +149,7 @@ const STOPS: Stop[] = [
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
     color: "#a9b8ff",
-    at: [470, 540],
+    at: [462, 552],
     patch: [92, 60],
     seed: 71,
     room: "caves",
@@ -150,10 +174,22 @@ const STOPS: Stop[] = [
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
     color: "#7fdccf",
-    at: [230, 420],
+    at: [220, 442],
     patch: [80, 100],
     seed: 53,
     room: "shore",
+  },
+  {
+    id: "garden",
+    name: "The Glasshouse",
+    tag: "a garden conservatory",
+    blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
+    finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
+    color: "#b5dca8",
+    at: [242, 304],
+    patch: [56, 42],
+    seed: 31,
+    room: "garden",
   },
   {
     id: "rainwood",
@@ -162,7 +198,7 @@ const STOPS: Stop[] = [
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
     finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
     color: "#9fd88f",
-    at: [255, 235],
+    at: [242, 166],
     patch: [86, 70],
     seed: 41,
     room: "rainwood",
@@ -174,7 +210,7 @@ const STOPS: Stop[] = [
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
-    at: [470, 150],
+    at: [408, 99],
     patch: [104, 56],
     seed: 37,
     room: "lagoon",
@@ -231,7 +267,7 @@ function trail(a: [number, number], b: [number, number], i: number) {
   return `M${a[0]},${a[1]} Q${(mx + (nx / len) * bend).toFixed(1)},${(my + (ny / len) * bend).toFixed(1)} ${b[0]},${b[1]}`;
 }
 
-const ISLAND = { cx: 500, cy: 352, rx: 378, ry: 250, seed: 5, amp: 0.1 };
+const ISLAND = { cx: 500, cy: 352, rx: 416, ry: 275, seed: 5, amp: 0.1 };
 const islandEdge = wobble(ISLAND.seed, ISLAND.amp);
 /** 0 at the middle of the island, 1 at its coast */
 const inland = (x: number, y: number) => {
@@ -358,8 +394,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     const rand = rng(4242);
     const trees: { x: number; y: number; r: number; kind: 0 | 1; tone: number }[] = [];
     for (let n = 0; n < 5000 && trees.length < 230; n++) {
-      const x = 130 + rand() * 740;
-      const y = 110 + rand() * 500;
+      const x = 95 + rand() * 810;
+      const y = 85 + rand() * 545;
       const d = inland(x, y);
       if (d > 0.9 || !clear(x, y, 6)) continue;
       if (trees.some((t) => Math.hypot(t.x - x, t.y - y) < 13)) continue;
@@ -370,8 +406,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     const flowers: { x: number; y: number; c: string }[] = [];
     const PETALS = ["#f4a6c6", "#c9a3ec", "#ffffff", "#f7c2d6", "#b48be0"];
     for (let n = 0; n < 4000 && flowers.length < 260; n++) {
-      const x = 130 + rand() * 740;
-      const y = 110 + rand() * 500;
+      const x = 95 + rand() * 810;
+      const y = 85 + rand() * 545;
       if (inland(x, y) > 0.88 || !clear(x, y, 2)) continue;
       flowers.push({ x, y, c: PETALS[Math.floor(rand() * PETALS.length)] });
     }

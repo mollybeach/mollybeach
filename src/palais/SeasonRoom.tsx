@@ -11,6 +11,12 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
     (`<file>-portrait.webp`), or a tall one per season
     (`<file>-portrait-<season>.webp`) */
 const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons" }> = {
+  // the kitchen off the terrace, whose marble bar the terrace only shows the end of
+  kitchen: { file: "kitchen", focus: "50% 55%" },
+  // the bathroom through the arch on the terrace's right: clawfoot tub, rose wallpaper
+  bathroom: { file: "bathroom", focus: "50% 60%" },
+  // a conservatory: glass and iron over the garden, full of blossom
+  garden: { file: "garden", focus: "50% 55%" },
   // pink walls, lemon-papered shelves, Snoqualmie Falls through the window
   closet: { file: "closet", focus: "50% 60%", portrait: true },
   // the house on the lake: marble fireplace, the red bridge, the dock, Rainier

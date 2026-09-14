@@ -139,6 +139,9 @@
    fade in when you walk into one; the terrace's stickers are hidden (not
    removed) while you're away. */
 .palais .palais-room--away { opacity: 0; transition: opacity 700ms ease; background: transparent; }
+.palais [data-place="kitchen"] .palais-room--kitchen,
+.palais [data-place="bathroom"] .palais-room--bathroom,
+.palais [data-place="garden"] .palais-room--garden,
 .palais [data-place="closet"] .palais-room--closet,
 .palais [data-place="lakehouse"] .palais-room--lakehouse,
 .palais [data-place="lagoon"] .palais-room--lagoon,

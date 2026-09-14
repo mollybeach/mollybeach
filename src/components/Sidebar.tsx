@@ -1,17 +1,21 @@
 // path: src/components/Sidebar.tsx
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { 
-  HomeIcon, 
+import React, { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import {
+  HomeIcon,
+  UserCircleIcon,
   BriefcaseIcon,
-  WrenchIcon,
+  WrenchScrewdriverIcon,
   FolderIcon,
   AcademicCapIcon,
+  CheckBadgeIcon,
   PhoneIcon,
   EnvelopeIcon,
   DocumentTextIcon,
   TrophyIcon,
-  XMarkIcon
+  XMarkIcon,
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
 } from '@heroicons/react/24/outline';
 
 
@@ -31,15 +35,40 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const navItems: NavItem[] = [
     { name: 'Home', path: '/', icon: HomeIcon, end: true },
-    { name: 'Overview', path: '/overview', icon: DocumentTextIcon },
+    { name: 'Overview', path: '/overview', icon: UserCircleIcon },
     { name: 'Projects', path: '/projects', icon: FolderIcon },
     { name: 'Experience', path: '/experience', icon: BriefcaseIcon },
     { name: 'Education', path: '/education', icon: AcademicCapIcon },
-    { name: 'Skills', path: '/skills', icon: WrenchIcon },
+    { name: 'Skills', path: '/skills', icon: WrenchScrewdriverIcon },
     { name: 'Awards', path: '/awards', icon: TrophyIcon },
-    { name: 'Certifications', path: '/certifications', icon: AcademicCapIcon },
+    { name: 'Certifications', path: '/certifications', icon: CheckBadgeIcon },
     { name: 'Resume', path: '/resume', icon: DocumentTextIcon },
   ];
+
+  /* On a wide screen the sidebar folds down to the avatar and a column of
+     icons. It opens by itself on the home page, the Palais terrace, and folds
+     itself away on every other page and in every other room on the map; the
+     arrow at its foot opens or folds it by hand. (On a phone it's a drawer,
+     and always shown in full.) */
+  const { pathname } = useLocation();
+  const [room, setRoom] = useState(() => window.location.hash.replace('#', ''));
+  useEffect(() => {
+    const fromHash = () => setRoom(window.location.hash.replace('#', ''));
+    const fromMap = (e: Event) => setRoom(String((e as CustomEvent).detail ?? ''));
+    window.addEventListener('hashchange', fromHash);
+    window.addEventListener('palais:place', fromMap);
+    return () => {
+      window.removeEventListener('hashchange', fromHash);
+      window.removeEventListener('palais:place', fromMap);
+    };
+  }, []);
+  const atHome = pathname === '/' && (room === '' || room === 'palace');
+  const [collapsed, setCollapsed] = useState(!atHome);
+  useEffect(() => {
+    setCollapsed(!atHome);
+  }, [atHome, pathname]);
+  // only the wide-screen layout folds
+  const folded = (full: string, small: string) => `${full} ${collapsed ? small : ''}`;
 
   const handleNavClick = () => {
     // Close mobile menu when a nav item is clicked
@@ -68,8 +97,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
         }}
         className={`
         fixed lg:sticky top-0 lg:top-6 left-0 h-screen lg:h-auto
-        w-64 shadow-lg rounded-lg p-4 z-50 space-y-4
-        transform transition-transform duration-300 ease-in-out
+        w-64 ${collapsed ? 'lg:w-[5.5rem] lg:p-2.5' : ''} shadow-lg rounded-lg p-4 z-50 space-y-4 shrink-0
+        transform transition-all duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         overflow-y-auto
       `}>
@@ -83,12 +112,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       </button>
 
       {/* Profile Section: on a card so it reads over the flowers */}
-      <div className="text-center rounded-2xl bg-white/90 backdrop-blur-sm px-4 pt-5 pb-1 shadow-md ring-1 ring-[#c9a44c]/60">
+      <div className={folded('text-center rounded-2xl bg-white/90 backdrop-blur-sm px-4 pt-5 pb-1 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:px-1.5 lg:pt-1.5 lg:pb-1.5')}>
         <img
           src={`${process.env.PUBLIC_URL}/avi_square.png`}
           alt="Molly Beach"
-          className="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-gray-200 shadow-lg object-cover"
+          title={collapsed ? 'Molly Beach' : undefined}
+          className={folded('w-32 h-32 rounded-full mx-auto mb-4 border-2 border-gray-200 shadow-lg object-cover transition-all duration-300', 'lg:w-14 lg:h-14 lg:mb-0')}
         />
+        <div className={collapsed ? 'lg:hidden' : ''}>
         <h2 className="text-xl font-bold text-gray-900 mb-2">Molly Beach</h2>
         <p className="text-gray-600 mb-4">Software Engineer</p>
         
@@ -131,29 +162,45 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
             mollyjbeach@gmail.com
           </p>
         </div>
+        </div>
       </div>
 
       {/* Navigation Links */}
-      <nav className="space-y-1 rounded-2xl bg-white/90 backdrop-blur-sm p-2 shadow-md ring-1 ring-[#c9a44c]/60">
+      <nav className={folded('space-y-1 rounded-2xl bg-white/90 backdrop-blur-sm p-2 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:p-1.5')}>
         {navItems.map((item) => (
           <NavLink
             key={item.name}
             to={item.path}
             end={item.end}
             onClick={handleNavClick}
+            title={collapsed ? item.name : undefined}
+            aria-label={item.name}
             className={({ isActive }) =>
-              `block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive 
+              `flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                collapsed ? 'lg:justify-center lg:px-0 lg:py-2.5' : ''
+              } ${
+                isActive
                   ? 'bg-[#D63384] text-white shadow-sm'
                   : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm'
               }`
             }
           >
-            {/*} <item.icon className="h-5 w-5" />*/}
-            {item.name}
+            <item.icon className={`h-5 w-5 shrink-0 hidden ${collapsed ? 'lg:block' : ''}`} aria-hidden />
+            <span className={collapsed ? 'lg:hidden' : ''}>{item.name}</span>
           </NavLink>
         ))}
       </nav>
+
+      {/* fold or open the sidebar (wide screens) */}
+      <button
+        type="button"
+        onClick={() => setCollapsed((c) => !c)}
+        className="hidden lg:flex w-full items-center justify-center gap-2 rounded-2xl bg-white/90 backdrop-blur-sm py-2 text-sm font-medium text-gray-600 shadow-md ring-1 ring-[#c9a44c]/60 hover:text-[#D63384] transition-colors"
+        aria-label={collapsed ? 'Open the sidebar' : 'Fold the sidebar away'}
+        title={collapsed ? 'Open the sidebar' : 'Fold the sidebar away'}
+      >
+        {collapsed ? <ChevronDoubleRightIcon className="h-5 w-5" /> : <ChevronDoubleLeftIcon className="h-5 w-5" />}
+      </button>
     </div>
     </>
   );

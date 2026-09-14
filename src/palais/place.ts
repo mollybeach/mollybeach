@@ -12,7 +12,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * opens the same room.
  */
 
-export const PLACES = ["palace", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves"] as const;
+export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves"] as const;
 export type Place = (typeof PLACES)[number];
 
 const fromHash = (): Place => {
@@ -33,6 +33,8 @@ export function usePlaceState() {
     setPlace(next);
     const url = next === "palace" ? window.location.pathname + window.location.search : `#${next}`;
     window.history.replaceState(window.history.state, "", url);
+    // replaceState fires no event, so tell the rest of the page (the sidebar folds away in the rooms)
+    window.dispatchEvent(new CustomEvent("palais:place", { detail: next }));
   }, []);
 
   return { place, go };
@@ -48,6 +50,9 @@ export const usePlace = () => useContext(PlaceNow);
 /** what the world map calls each room */
 export const PLACE_NAMES: Record<Place, string> = {
   palace: "The Palais",
+  kitchen: "The Kitchen",
+  bathroom: "The Bathroom",
+  garden: "The Glasshouse",
   closet: "The Wardrobe Wing",
   lakehouse: "The Lakehouse",
   lagoon: "The Steaming Lagoon",
