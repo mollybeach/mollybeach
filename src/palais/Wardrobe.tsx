@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Styled } from "./styled";
 import { usePortrait } from "./PortraitTerrace";
 import { usePlace } from "./place";
-import { CLOSET_PHOTOS, CLOSET_RACKS, CLOSET_SPOTS, closetSrc, garment, type Rack, type Spot } from "./clothes";
+import { CLOSET_BARS, CLOSET_PHOTOS, CLOSET_RACKS, CLOSET_SPOTS, closetSrc, garment, type Bar, type Rack, type Spot } from "./clothes";
 
 /** a little brass hanger, hooked over the rail */
 function Hanger() {
@@ -33,6 +33,20 @@ function RollingRack({ rack, photo }: { rack: Rack; photo: { w: number; h: numbe
       <i className="closet-rack-bar" />
     </div>
   );
+}
+
+/** a brass bar fixed across a bay, like the closet's own */
+function HangingBar({ bar, photo }: { bar: Bar; photo: { w: number; h: number } }) {
+  const dx = bar.to[0] - bar.from[0];
+  const dy = bar.to[1] - bar.from[1];
+  const style: Styled = {
+    left: `${((bar.from[0] / photo.w) * 100).toFixed(3)}%`,
+    top: `${((bar.from[1] / photo.h) * 100).toFixed(3)}%`,
+    width: `${((Math.hypot(dx, dy) / photo.w) * 100).toFixed(3)}%`,
+    transform: `rotate(${((Math.atan2(dy, dx) * 180) / Math.PI).toFixed(2)}deg)`,
+    zIndex: bar.z,
+  };
+  return <i className="closet-bar" style={style} aria-hidden />;
 }
 
 function Piece({ spot, i }: { spot: Spot; i: number }) {
@@ -83,6 +97,9 @@ export function Wardrobe() {
   return (
     <div className="palais-closet" aria-hidden={place !== "closet"}>
       <div key={which} className={`palais-closet-frame palais-closet-frame--${which}`}>
+        {CLOSET_BARS[which].map((bar) => (
+          <HangingBar key={bar.from.join()} bar={bar} photo={CLOSET_PHOTOS[which]} />
+        ))}
         {CLOSET_RACKS[which].map((rack) => (
           <RollingRack key={rack.x0} rack={rack} photo={CLOSET_PHOTOS[which]} />
         ))}

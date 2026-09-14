@@ -242,6 +242,32 @@
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(40, 24, 16, 0.32), transparent);
 }
+/* the bar fitted under the inner right bay's lower one: a brass rod with a
+   round bracket at the wall end, like the two above it */
+.palais .closet-bar {
+  position: absolute;
+  display: block;
+  height: 0.62cqw;
+  margin-top: -0.31cqw;
+  transform-origin: 0 50%;
+  border-radius: 99px;
+  background: linear-gradient(180deg, #5e4020, #c9a15a 30%, #f3dca0 48%, #a67c3c 68%, #4f3518);
+  box-shadow: 0 0.15cqw 0.25cqw rgba(50, 30, 12, 0.35);
+  pointer-events: none;
+}
+.palais .closet-bar::before {
+  content: "";
+  position: absolute;
+  left: -0.35cqw;
+  top: 50%;
+  width: 1.15cqw;
+  height: 1.15cqw;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: radial-gradient(circle at 40% 35%, #8a6a3a, #3b2a18 70%);
+}
+.palais .palais-closet-frame--tall .closet-bar { height: 0.9cqw; margin-top: -0.45cqw; }
+.palais .palais-closet-frame--tall .closet-bar::before { width: 1.7cqw; height: 1.7cqw; left: -0.5cqw; }
 .palais .closet-hanger {
   position: absolute;
   top: -1%;
