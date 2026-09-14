@@ -8,7 +8,8 @@ import { usePlace, type Place } from "./place";
  * One island, made of everywhere Molly has been, blended together and never
  * named after the real places. Each region is a stop on a dotted path, and
  * Honeysuckle hops along it to whichever stop is picked. The path starts at
- * the Lakehouse and loops once round the island, so the arrow keys walk it.
+ * home, the Palais, then the Lakehouse, and loops once round the island, so
+ * the arrow keys walk it.
  */
 
 interface Stop {
@@ -36,15 +37,38 @@ const INK = "#7a5a52";
 
 const STOPS: Stop[] = [
   {
+    id: "palace",
+    name: "The Palais",
+    tag: "home",
+    blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
+    finds: ["A painted ceiling full of cherubs", "Honeysuckle riding her tricycle", "A pool out back for the dogs in summer"],
+    color: "#ffd88a",
+    at: [575, 410],
+    patch: [58, 42],
+    seed: 7,
+    room: "palace",
+    icon: () => (
+      <>
+        <rect x={-13} y={-2} width={26} height={14} rx={1.5} fill="#fff" stroke={INK} strokeWidth={2.5} />
+        <path d="M-15,-2 h30 l-3,-5 h-24 Z" fill="#ffd88a" stroke={INK} strokeWidth={2.2} strokeLinejoin="round" />
+        <path d="M-6,-7 a6,6 0 0 1 12,0 Z" fill="#ffb3cf" stroke={INK} strokeWidth={2.2} strokeLinejoin="round" />
+        <path d="M0,-13 v-4" stroke={INK} strokeWidth={2.2} strokeLinecap="round" />
+        <path d="M-3,12 v-6 a3,3 0 0 1 6,0 v6" fill="#8fcbe8" stroke={INK} strokeWidth={2} />
+        <path d="M-10,4 h3 M7,4 h3" stroke={INK} strokeWidth={2} strokeLinecap="round" />
+      </>
+    ),
+  },
+  {
     id: "lakehouse",
     name: "The Lakehouse",
     tag: "where it began",
-    blurb: "A glass house at the edge of a still lake. The Shimmer started here and spread out to everything else.",
-    finds: ["A lawn that runs straight into the lake", "A gothic reading hall under falling blossom", "Rowing crews racing at dawn"],
+    blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
+    finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
     color: "#8fcbe8",
     at: [470, 338],
     patch: [80, 58],
     seed: 11,
+    room: "lakehouse",
     icon: (c) => (
       <>
         <rect x={-11} y={-4} width={22} height={16} rx={2} fill="#fff" stroke={INK} strokeWidth={2.5} />

@@ -14,7 +14,7 @@ import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
-import { ClosetRoom } from "./ClosetRoom";
+import { SeasonRoom } from "./SeasonRoom";
 import { PlaceNow, usePlaceState } from "./place";
 import "./palais.css";
 
@@ -96,7 +96,7 @@ const quilt = (frac: number) => surface(BED_M, BED_D, 1.25, frac);
 
 export default function PalaisHome() {
   const portrait = usePortrait();
-  // which room you're in: the terrace, or the closet (place.ts)
+  // which room you're in: the terrace, the closet or the lakehouse (place.ts)
   const places = usePlaceState();
   return (
     <PlaceNow.Provider value={places}>
@@ -125,7 +125,8 @@ export default function PalaisHome() {
             ============================================================== */}
         <section className="palais-stage" data-place={places.place}>
           <Room portrait={portrait} />
-          <ClosetRoom />
+          <SeasonRoom place="closet" />
+          <SeasonRoom place="lakehouse" />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />

@@ -130,14 +130,15 @@
 .palais .palais-weather--front { z-index: 3; }
 
 /* ---- the rooms (place.ts) ----------------------------------------------
-   Both rooms are always on the page. The closet sits over the terrace and
-   fades in when you walk into it; the terrace's stickers, weather and
+   Every room is always on the page. The others sit over the terrace and
+   fade in when you walk into one; the terrace's stickers, weather and
    visitors are hidden (not removed) while you're away. */
-.palais .palais-room--closet { opacity: 0; transition: opacity 700ms ease; background: #e8c8c8; }
-.palais [data-place="closet"] .palais-room--closet { opacity: 1; }
-.palais [data-place="closet"] .palais-arrive,
-.palais [data-place="closet"] .palais-weather,
-.palais [data-place="closet"] .palais-pollen { visibility: hidden; }
+.palais .palais-room--away { opacity: 0; transition: opacity 700ms ease; background: transparent; }
+.palais [data-place="closet"] .palais-room--closet,
+.palais [data-place="lakehouse"] .palais-room--lakehouse { opacity: 1; }
+.palais .palais-stage:not([data-place="palace"]) .palais-arrive,
+.palais .palais-stage:not([data-place="palace"]) .palais-weather,
+.palais .palais-stage:not([data-place="palace"]) .palais-pollen { visibility: hidden; }
 @container palais (max-width: 639px) {
   .palais .palais-pill--home { order: 1; }
   .palais .palais-pill--home::before { display: none; }

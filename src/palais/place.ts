@@ -4,15 +4,15 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * Which room of the Palais you're standing in.
  *
  * The palace terrace is home. The closet (the Wardrobe Wing on the world map)
- * is the first room you can walk into. Both rooms stay on the page the whole
- * time, and only the one you're in shows, so the seasons keep turning together
+ * and the Lakehouse are rooms you can walk into. Every room stays on the page
+ * the whole time, and only the one you're in shows, so the seasons keep turning together
  * and a room you come back to is exactly as you left it.
  *
- * The room is kept in the address as #closet, so a refresh or a shared link
+ * The room is kept in the address (#closet, #lakehouse), so a refresh or a shared link
  * opens the same room.
  */
 
-export const PLACES = ["palace", "closet"] as const;
+export const PLACES = ["palace", "closet", "lakehouse"] as const;
 export type Place = (typeof PLACES)[number];
 
 const fromHash = (): Place => {
