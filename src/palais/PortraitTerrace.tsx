@@ -104,6 +104,15 @@ export function PortraitTerrace() {
       <Prop id="rose-bush" group="blossoms" w={w(1, 0.668)} left="32%" ground={at(0.668).ground} tilt={1.5} motion="rustle" dur={17} z={14} plane="far" />
       <Prop id="lilac-bush" group="blossoms" w={w(1.1, 0.668)} right="27%" ground={at(0.668).ground} tilt={-1} motion="rustle" dur={19} z={14} plane="far" />
 
+      {/* ---- the dogs in the pool (spring and summer, set by the season
+           layouts) and the goats on the lawn in front of it (not in winter).
+           These places fit the spring photograph; summer's and autumn's are
+           framed a little differently, so palais.css moves them there. ------- */}
+      <Prop id="dog-maggie-frisbee" w="9cqw" left="40%" bottom={at(0.638).ground} motion="none" z={12} />
+      <Prop id="dog-charlie-kiddie-pool" w="14cqw" left="53%" bottom={at(0.641).ground} motion="none" z={12} />
+      <Prop id="goat-bambi" w="8.5cqw" left="30%" ground={at(0.668).ground} motion="none" z={16} />
+      <Prop id="goats-pumpkin-ferdinand" w="5.6cqw" left="58%" ground={at(0.66).ground} motion="none" z={16} />
+
       {/* ---- the trellises, flanking the arch onto the pool ------------------ */}
       <Prop set="trellisL" id="trellis-wisteria" group="trellises" w={w(1.1, 0.68)} left="22%" ground={at(0.68).ground} tilt={-1} motion="rustle" dur={19} z={18} plane="mid" />
       <Prop set="trellisR" id="trellis-ivy" group="trellises" w={w(1.1, 0.682)} right="22%" ground={at(0.682).ground} tilt={1} motion="rustle" dur={23} z={18} plane="mid" />

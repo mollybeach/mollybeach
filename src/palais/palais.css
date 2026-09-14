@@ -1284,6 +1284,17 @@
 /* the whole sticker layer, for "Hide the room" (see StickerToggle) */
 .palais .palais-layer { position: absolute; inset: 0; }
 .palais .palais-layer[data-hidden] { opacity: 0; pointer-events: none; }
+/* the phone's summer and autumn photographs show the pool higher up and
+   further back than spring's, so the dogs and goats move with it */
+.palais [data-season="summer"] .palais-frame [data-prop="dog-maggie-frisbee"] { left: 41% !important; bottom: 41.6% !important; width: 7.5cqw !important; }
+.palais [data-season="summer"] .palais-frame [data-prop="dog-charlie-kiddie-pool"] { left: 52% !important; bottom: 41.3% !important; width: 11.5cqw !important; }
+.palais [data-season="summer"] .palais-frame [data-prop="goat-bambi"] { left: 36% !important; bottom: 38% !important; width: 7cqw !important; }
+.palais [data-season="summer"] .palais-frame [data-prop="goats-pumpkin-ferdinand"] { left: 60% !important; bottom: 38% !important; width: 4.8cqw !important; }
+.palais [data-season="autumn"] .palais-frame [data-prop="goat-bambi"] { left: 38% !important; bottom: 36.8% !important; width: 7cqw !important; }
+.palais [data-season="autumn"] .palais-frame [data-prop="goats-pumpkin-ferdinand"] { left: 50% !important; bottom: 36.8% !important; width: 4.8cqw !important; }
+/* on the phone, the goats spend winter indoors */
+.palais [data-season="winter"] .palais-frame [data-prop="goat-bambi"],
+.palais [data-season="winter"] .palais-frame [data-prop="goats-pumpkin-ferdinand"] { visibility: hidden !important; }
 .palais .palais-layer[data-hidden] * { pointer-events: none !important; }
 
 /* the very back plane: hazed into the daylight */

@@ -163,19 +163,23 @@ function loadTexture(gl: WebGLRenderingContext, unit: number, src: string, onRea
 }
 
 export function LivingPhoto({ room }: { room: Place }) {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const anchor = useRef<HTMLSpanElement>(null);
   const { place } = usePlace();
   const active = place === room;
 
   useEffect(() => {
-    const cv = canvas.current;
-    const box = cv?.parentElement;
-    if (!cv || !box || !active) return;
+    const box = anchor.current?.parentElement;
+    if (!box || !active) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const imgs = Array.from(box.querySelectorAll<HTMLImageElement>(":scope > img")).slice(0, 4);
     if (!imgs.length || imgs.every((im) => STILL.test(im.getAttribute("src") ?? ""))) return;
 
+    // a brand-new canvas every time: a canvas whose context has been given back
+    // can never draw again (and would show as a blank sheet over the photograph)
+    const cv = document.createElement("canvas");
+    cv.className = "palais-living";
+    cv.setAttribute("aria-hidden", "true");
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, alpha: true, antialias: false });
     if (!gl) return;
 
@@ -184,6 +188,7 @@ export function LivingPhoto({ room }: { room: Place }) {
     gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    anchor.current!.after(cv);
     gl.useProgram(prog);
 
     const buf = gl.createBuffer();
@@ -255,9 +260,10 @@ export function LivingPhoto({ room }: { room: Place }) {
       cancelAnimationFrame(frame);
       // give the GPU context back: rooms you've left don't hold one
       gl.getExtension("WEBGL_lose_context")?.loseContext();
+      cv.remove();
     };
   }, [active]);
 
-  // a fresh canvas each time the room is entered, since the old context was dropped
-  return active ? <canvas ref={canvas} aria-hidden className="palais-living" /> : null;
+  // the canvas is made and removed by the effect; this just marks where it goes
+  return <span ref={anchor} hidden />;
 }
