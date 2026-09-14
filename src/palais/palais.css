@@ -507,6 +507,211 @@
 .palais [data-conjure-paused] .conjure-light { display: none !important; }
 
 /* ============================================================================
+   THE WORLD MAP — Area M, video-game level select (WorldMap.tsx)
+   ========================================================================== */
+
+.palais .palais-pill--map {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(180deg, #8fe0ff, #4fb8f0);
+  border: 2px solid #2f8ccc;
+  color: #10466e;
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", "Quicksand", system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow: 0 3px 0 #2f8ccc, 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+.palais .palais-pill--map:active { transform: translateY(2px); box-shadow: 0 1px 0 #2f8ccc; }
+@media (hover: hover) {
+  .palais .palais-pill--map:hover { background: linear-gradient(180deg, #a8e8ff, #62c3f5); color: #0b3a5c; }
+}
+.palais .palais-map-icon { width: 1.15rem; height: 1.15rem; flex: none; color: #10466e; }
+@container palais (max-width: 639px) {
+  .palais .palais-pill--map { order: 1; }
+  .palais .palais-pill--map::before { display: none; }
+}
+
+.palais .wm-backdrop {
+  --wm-ink: #7a5a52;
+  --wm-round: ui-rounded, "SF Pro Rounded", "Nunito", "Quicksand", system-ui, sans-serif;
+  position: absolute;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: 2.2rem 1rem 1rem;
+  background: rgba(40, 70, 110, 0.35);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: cat-fade 180ms ease-out;
+}
+.palais .wm-panel {
+  position: relative;
+  width: min(1080px, 100%);
+  max-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17.5rem;
+  gap: 0.9rem;
+  padding: 2rem 1rem 1rem;
+  border-radius: 30px;
+  border: 5px solid var(--wm-ink);
+  background:
+    radial-gradient(circle at 14px 14px, rgba(255, 255, 255, 0.55) 2.5px, transparent 3px) 0 0 / 28px 28px,
+    #fff4d9;
+  box-shadow: 0 0 0 6px #fff, 0 12px 0 6px rgba(122, 90, 82, 0.35), 0 30px 60px rgba(20, 40, 80, 0.35);
+  font-family: var(--wm-round);
+  color: #5b3f39;
+  animation: wm-pop 380ms cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+@keyframes wm-pop { from { opacity: 0; transform: scale(0.85) translateY(20px); } }
+
+.palais .wm-banner {
+  position: absolute;
+  top: -1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: stretch;
+  z-index: 2;
+  filter: drop-shadow(0 4px 0 rgba(122, 90, 82, 0.35));
+}
+.palais .wm-banner h2 {
+  margin: 0;
+  padding: 0.35rem 1.6rem 0.45rem;
+  background: linear-gradient(180deg, #ff9cc8, #ff6fae);
+  border: 4px solid var(--wm-ink);
+  border-radius: 14px;
+  color: #fff;
+  font: 900 clamp(1.3rem, 3vw, 1.9rem)/1 var(--wm-round);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-shadow: 0 2px 0 #c43c7e;
+}
+.palais .wm-banner-tail {
+  width: 1.6rem;
+  margin: 0.7rem -0.5rem 0;
+  background: #ff5fa0;
+  border: 4px solid var(--wm-ink);
+}
+.palais .wm-banner-tail--l { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 35% 50%); border-right: 0; }
+.palais .wm-banner-tail--r { clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%); border-left: 0; }
+
+.palais .wm-close {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  z-index: 3;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  border: 4px solid var(--wm-ink);
+  background: #fff;
+  color: var(--wm-ink);
+  font: 900 1.6rem/1 var(--wm-round);
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(122, 90, 82, 0.4);
+}
+.palais .wm-close:hover { background: #ffe3f1; transform: rotate(8deg); }
+.palais .wm-close:focus-visible,
+.palais .wm-btn:focus-visible { outline: 3px solid #4fb8f0; outline-offset: 2px; }
+
+.palais .wm-stage {
+  min-height: 0;
+  border-radius: 20px;
+  border: 4px solid var(--wm-ink);
+  overflow: hidden;
+  background: #aee6ef;
+}
+.palais .wm-map { display: block; width: 100%; height: auto; max-height: calc(100cqh - 9rem); }
+
+.palais .wm-shimmer { animation: wm-march 18s linear infinite; }
+@keyframes wm-march { to { stroke-dashoffset: -400; } }
+.palais .wm-sparkle { transform-box: fill-box; transform-origin: center; animation: wm-twinkle 3s ease-in-out infinite; }
+@keyframes wm-twinkle { 50% { opacity: 0.2; transform: scale(0.5); } }
+
+.palais .wm-stop { cursor: pointer; outline: none; }
+.palais .wm-stop-bob { transition: transform 200ms cubic-bezier(0.2, 1.6, 0.4, 1); }
+.palais .wm-stop:hover .wm-stop-bob { transform: scale(1.1); }
+.palais .wm-stop.is-on .wm-stop-bob { transform: scale(1.18); }
+.palais .wm-stop:focus-visible circle:first-of-type { stroke: #4fb8f0; }
+.palais .wm-stop-name {
+  font: 800 15px var(--wm-round);
+  fill: #5b3f39;
+  pointer-events: none;
+}
+
+.palais .wm-player {
+  transition: transform 650ms cubic-bezier(0.45, 0, 0.3, 1.3);
+  pointer-events: none;
+}
+.palais .wm-player-hop { animation: wm-hop 650ms ease-out, wm-bob 1.6s 650ms ease-in-out infinite; }
+@keyframes wm-hop { 40% { transform: translateY(-26px); } 70% { transform: translateY(3px); } }
+@keyframes wm-bob { 50% { transform: translateY(-5px); } }
+
+.palais .wm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 20px;
+  border: 4px solid var(--wm-ink);
+  background: #fff;
+  box-shadow: 0 5px 0 rgba(122, 90, 82, 0.3);
+  min-height: 0;
+  overflow-y: auto;
+}
+.palais .wm-card-head { display: flex; gap: 0.6rem; align-items: center; }
+.palais .wm-dot { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 3px solid var(--wm-ink); }
+.palais .wm-card h3 { margin: 0; font: 900 1.25rem/1.15 var(--wm-round); color: #5b3f39; text-wrap: balance; }
+.palais .wm-tag { margin: 0.15rem 0 0; font: 700 0.72rem/1.2 var(--wm-round); color: #b0877c; text-transform: uppercase; letter-spacing: 0.06em; }
+.palais .wm-blurb { margin: 0; font: 600 0.95rem/1.45 var(--wm-round); color: #6d4c45; }
+.palais .wm-finds { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.4rem; }
+.palais .wm-finds li {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  padding: 0.4rem 0.6rem;
+  border-radius: 12px;
+  background: #fff4d9;
+  font: 700 0.85rem/1.3 var(--wm-round);
+  color: #6d4c45;
+}
+.palais .wm-finds li::before { content: "★"; color: #ffb52e; }
+.palais .wm-nav { display: flex; gap: 0.5rem; margin-top: auto; }
+.palais .wm-btn {
+  flex: 1;
+  padding: 0.55rem 0.4rem;
+  border-radius: 14px;
+  border: 3px solid var(--wm-ink);
+  background: #fff;
+  color: #5b3f39;
+  font: 900 0.85rem/1 var(--wm-round);
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(122, 90, 82, 0.4);
+}
+.palais .wm-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(122, 90, 82, 0.4); }
+.palais .wm-btn--go { background: linear-gradient(180deg, #a6f0a0, #6fd67a); }
+.palais .wm-btn:disabled { opacity: 0.4; cursor: default; transform: none; box-shadow: none; }
+
+@container palais (max-width: 820px) {
+  .palais .wm-backdrop { padding: 4.6rem 0.6rem 0.6rem; place-items: stretch; }
+  .palais .wm-panel { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); padding: 1.8rem 0.6rem 0.6rem; border-radius: 22px; }
+  .palais .wm-map { max-height: none; }
+  .palais .wm-close { top: -0.9rem; right: -0.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .palais .wm-shimmer,
+  .palais .wm-sparkle,
+  .palais .wm-player-hop,
+  .palais .wm-panel { animation: none; }
+  .palais .wm-player { transition: none; }
+}
+
+/* ============================================================================
    THE CATALOGUE — every sticker on a shelf, dress-up-game style (Catalogue.tsx)
    ========================================================================== */
 

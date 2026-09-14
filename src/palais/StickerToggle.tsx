@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, typ
 import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
+import { WorldMap } from "./WorldMap";
 import { HIDDEN_AT_FIRST } from "./shelves";
 import { BUNDLED_LAYOUTS, LayoutNow, hiddenOf, settle, type SeasonLayout } from "./arrangement";
 import { useCollection } from "./useCollection";
@@ -35,6 +36,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   );
   const [catalogue, setCatalogue] = useState(false);
   const closeCatalogue = useCallback(() => setCatalogue(false), []);
+  // the world map (WorldMap.tsx)
+  const [map, setMap] = useState(false);
+  const closeMap = useCallback(() => setMap(false), []);
 
 
   const switches = useRef<HTMLDivElement>(null);
@@ -160,6 +164,21 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
+          onClick={() => setMap(true)}
+          aria-haspopup="dialog"
+          aria-label="Open the world map"
+          className="palais-pill palais-pill--map"
+        >
+          <svg className="palais-map-icon" viewBox="0 0 24 24" aria-hidden>
+            <path d="M3 6.5 8.5 4l7 2.5L21 4v13.5L15.5 20l-7-2.5L3 20Z" fill="#fff6d6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+            <path d="M8.5 4v13.5M15.5 6.5V20" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M11 11.5l2 2m0-2-2 2" stroke="#ff4f8b" strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+          <span className="palais-pill-long">Map</span>
+          <span className="palais-pill-short">Map</span>
+        </button>
+        <button
+          type="button"
           onClick={() => setRoom((v) => !v)}
           aria-pressed={room}
           aria-label={room ? "Hide the room" : "Show the room"}
@@ -194,6 +213,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             .join(",\n")} { visibility: hidden !important; }`}
         </style>
       )}
+
+      <WorldMap open={map} onClose={closeMap} />
 
       <Catalogue
         open={catalogue}
