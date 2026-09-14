@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { propSrc } from "./props";
+import { usePlace, type Place } from "./place";
 
 /**
  * Area M: the world map, like the level select in a video game.
@@ -27,6 +28,8 @@ interface Stop {
   islet?: boolean;
   /** put the name above the stop instead of below */
   nameAbove?: boolean;
+  /** the room of the Palais you can walk into from here, if there is one yet */
+  room?: Place;
 }
 
 const INK = "#7a5a52";
@@ -61,6 +64,7 @@ const STOPS: Stop[] = [
     patch: [46, 38],
     seed: 23,
     nameAbove: true,
+    room: "closet",
     icon: (c) => (
       <path
         d="M-5,-15 h10 l2,6 l7,19 q-14,5 -28,0 l7,-19 Z"
@@ -291,7 +295,14 @@ function trail(a: [number, number], b: [number, number], i: number) {
 const ISLAND = { cx: 500, cy: 352, rx: 378, ry: 250, seed: 5 };
 
 export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { place, go } = usePlace();
   const [here, setHere] = useState(0);
+  // open the map with Honeysuckle standing wherever you are
+  useEffect(() => {
+    if (!open) return;
+    const at = STOPS.findIndex((s) => s.room === place);
+    setHere(at >= 0 ? at : 0);
+  }, [open, place]);
   const closeBtn = useRef<HTMLButtonElement>(null);
 
   const shapes = useMemo(() => {
@@ -478,6 +489,24 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               <li key={f}>{f}</li>
             ))}
           </ul>
+          {stop.room ? (
+            stop.room === place ? (
+              <p className="wm-here">✿ You're here</p>
+            ) : (
+              <button
+                type="button"
+                className="wm-btn wm-btn--visit"
+                onClick={() => {
+                  go(stop.room!);
+                  onClose();
+                }}
+              >
+                Visit {stop.name} ✦
+              </button>
+            )
+          ) : (
+            <p className="wm-soon">🔒 Coming soon</p>
+          )}
           <div className="wm-nav">
             <button type="button" className="wm-btn" onClick={() => setHere((h) => Math.max(0, h - 1))} disabled={here === 0}>
               ◀ Back

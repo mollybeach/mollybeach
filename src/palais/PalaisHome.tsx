@@ -14,6 +14,8 @@ import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
+import { ClosetRoom } from "./ClosetRoom";
+import { PlaceNow, usePlaceState } from "./place";
 import "./palais.css";
 
 /* Narrow screens keep the furniture and drop the small things — a 390px-wide
@@ -94,7 +96,10 @@ const quilt = (frac: number) => surface(BED_M, BED_D, 1.25, frac);
 
 export default function PalaisHome() {
   const portrait = usePortrait();
+  // which room you're in: the terrace, or the closet (place.ts)
+  const places = usePlaceState();
   return (
+    <PlaceNow.Provider value={places}>
     <>
       <div className="palais">
         
@@ -118,8 +123,9 @@ export default function PalaisHome() {
             overlap.py checks the first rule for real, by measuring how much of
             each prop is covered by whatever paints over it.
             ============================================================== */}
-        <section className="palais-stage">
+        <section className="palais-stage" data-place={places.place}>
           <Room portrait={portrait} />
+          <ClosetRoom />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />
@@ -289,5 +295,6 @@ export default function PalaisHome() {
         <Footer />
       </div>
     </>
+    </PlaceNow.Provider>
   );
 }

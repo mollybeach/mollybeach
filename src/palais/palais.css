@@ -129,6 +129,26 @@
 .palais .palais-weather--back { z-index: 1; }
 .palais .palais-weather--front { z-index: 3; }
 
+/* ---- the rooms (place.ts) ----------------------------------------------
+   Both rooms are always on the page. The closet sits over the terrace and
+   fades in when you walk into it; the terrace's stickers, weather and
+   visitors are hidden (not removed) while you're away. */
+.palais .palais-room--closet { opacity: 0; transition: opacity 700ms ease; background: #e8c8c8; }
+.palais [data-place="closet"] .palais-room--closet { opacity: 1; }
+.palais [data-place="closet"] .palais-arrive,
+.palais [data-place="closet"] .palais-weather,
+.palais [data-place="closet"] .palais-pollen { visibility: hidden; }
+@container palais (max-width: 639px) {
+  .palais .palais-pill--home { order: 1; }
+  .palais .palais-pill--home::before { display: none; }
+}
+.palais .palais-pill--home {
+  background: linear-gradient(180deg, #fff7d6, #ffe39a);
+  border-color: #d9a93a;
+  color: #6b4a12;
+  font-weight: 600;
+}
+
 /* ---- the seasons --------------------------------------------------------
    A 160s year: each season holds for 40s, and the next fades in over it for
    5s (5/160 = 3.125% of the cycle). Spring sits underneath and never moves.
@@ -680,6 +700,23 @@
   color: #6d4c45;
 }
 .palais .wm-finds li::before { content: "★"; color: #ffb52e; }
+.palais .wm-btn.wm-btn--visit {
+  flex: none;
+  margin-top: auto;
+  padding: 0.7rem 0.6rem;
+  background: linear-gradient(180deg, #ffb3d6, #ff7cbc);
+  color: #fff;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 0 #c43c7e;
+  animation: wm-glow 1.8s ease-in-out infinite;
+}
+@keyframes wm-glow { 50% { box-shadow: 0 4px 0 rgba(122, 90, 82, 0.4), 0 0 18px rgba(255, 124, 188, 0.7); } }
+.palais .wm-here,
+.palais .wm-soon { margin: auto 0 0; text-align: center; font: 800 0.85rem/1.2 var(--wm-round); color: #b0877c; }
+.palais .wm-here { color: #d6247a; }
+.palais .wm-btn--visit + .wm-nav,
+.palais .wm-here + .wm-nav,
+.palais .wm-soon + .wm-nav { margin-top: 0; }
 .palais .wm-nav { display: flex; gap: 0.5rem; margin-top: auto; }
 .palais .wm-btn {
   flex: 1;

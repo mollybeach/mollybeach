@@ -6,6 +6,7 @@ import { WorldMap } from "./WorldMap";
 import { HIDDEN_AT_FIRST } from "./shelves";
 import { BUNDLED_LAYOUTS, LayoutNow, hiddenOf, settle, type SeasonLayout } from "./arrangement";
 import { useCollection } from "./useCollection";
+import { usePlace } from "./place";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -39,6 +40,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   // the world map (WorldMap.tsx)
   const [map, setMap] = useState(false);
   const closeMap = useCallback(() => setMap(false), []);
+  const { place, go } = usePlace();
+  const inPalace = place === "palace";
 
 
   const switches = useRef<HTMLDivElement>(null);
@@ -117,6 +120,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   return (
     <>
       <div className="palais-switches" ref={switches}>
+        {!inPalace && (
+          <button type="button" onClick={() => go("palace")} className="palais-pill palais-pill--home" aria-label="Back to the palace">
+            <span className="palais-pill-long">← Back to the palace</span>
+            <span className="palais-pill-short">← Palace</span>
+          </button>
+        )}
         {seasons && (
           <button
             type="button"
@@ -152,6 +161,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">{paused ? "Play" : "Pause"}</span>
           </button>
         )}
+        {inPalace && (
         <button
           type="button"
           onClick={() => setCatalogue(true)}
@@ -162,6 +172,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">♡ Catalogue</span>
           <span className="palais-pill-short">♡ Catalogue</span>
         </button>
+        )}
         <button
           type="button"
           onClick={() => setMap(true)}
@@ -177,6 +188,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">Map</span>
           <span className="palais-pill-short">Map</span>
         </button>
+        {inPalace && (
         <button
           type="button"
           onClick={() => setRoom((v) => !v)}
@@ -187,6 +199,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">{room ? "Hide the room" : "Show the room"}</span>
           <span className="palais-pill-short">Room</span>
         </button>
+        )}
       </div>
 
       {/* the sticker layer: empty on arrival, then everything materialises */}

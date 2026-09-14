@@ -21,14 +21,14 @@
       "z": 1013
     },
     "dog-maggie-frisbee": {
-      "shown": false,
+      "shown": true,
       "x": 0,
       "y": 0,
       "s": 1,
       "z": 20
     },
     "dog-charlie-kiddie-pool": {
-      "shown": false,
+      "shown": true,
       "x": 0,
       "y": 0,
       "s": 1,
@@ -441,7 +441,7 @@
       "z": 896
     },
     "fall-table-brea-molly": {
-      "shown": true,
+      "shown": false,
       "x": 100.2,
       "y": 297.8,
       "s": 1.588,
@@ -553,7 +553,7 @@
       "z": 832
     },
     "cats-birthday": {
-      "shown": true,
+      "shown": false,
       "x": -140.4,
       "y": 142,
       "s": 2.128,
@@ -665,7 +665,7 @@
       "z": 625
     },
     "cat-blueberry-party": {
-      "shown": true,
+      "shown": false,
       "x": -420.9,
       "y": -81.1,
       "s": 1.434,
