@@ -38,7 +38,6 @@ export const CLOTHES = wardrobe({
   "amz-roller-skates": { label: "Light-up roller skates", store: "Amazon", bought: "2023-06", kind: "shoes" },
   "amz-ruffle-socks": { label: "Ruffle ankle socks", store: "Amazon", bought: "2026-01", kind: "accessory" },
   "amz-ski-gloves": { label: "Touchscreen ski gloves", store: "Amazon", bought: "2023-12", kind: "accessory" },
-  "amz-superga-hitops": { label: "Superga 2750 hi-tops", store: "Amazon", bought: "2022-10", kind: "shoes" },
   "amz-tstrap-maryjanes": { label: "T-strap platform Mary Janes", store: "Amazon", bought: "2021-10", kind: "shoes" },
   "amz-tulle-dress-blue": { label: "Dusty blue tulle flower dress", store: "Amazon", bought: "2023-05", kind: "dress" },
   "amz-tulle-dress-green": { label: "Sage tulle flower dress", store: "Amazon", bought: "2023-05", kind: "dress" },
@@ -247,7 +246,7 @@ const WIDE: Line[] = [
   { id: "rack-left", name: "Left rolling rack", ids: ["ref-shai-dress", "amz-tulle-dress-blue", "dh-knit-skirt-set", "amz-tulle-dress-green", "cider-ruffle-velvet-dress", "amz-fairies-dress", "temu-ditsy-splitdress", "temu-flower-camidress", "temu-satin-robe", "cider-velvet-corset-dress"], from: [622, 612], to: [868, 612], w: [118, 118], hang: true, z: 46 },
   { id: "rack-right", name: "Right rolling rack", ids: ["dh-tweed-set-ivory", "dh-tweed-set-black", "dh-puffer-jacket", "dh-goose-jacket-pink", "amz-floral-sweatshirt", "shein-halfzip", "temu-tie-cardigan", "temu-heart-bikini", "dh-fur-coat", "dh-cc-bikini", "tt-striped-vest-set", "tt-striped-collar-set"], from: [1066, 612], to: [1314, 612], w: [112, 104], hang: true, z: 46 },
   // every pair of shoes, lined up on the tiles in front
-  { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "amz-superga-hitops", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks"], from: [560, 1030], to: [1380, 1030], w: [84, 84], z: 60 },
+  { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks"], from: [560, 1030], to: [1380, 1030], w: [84, 84], z: 60 },
   // the outer left bay, which only a wide screen shows all of: more dresses below, knits above
   { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["yellow-charlotte-dress", "romi-alya-dress", "cider-lemon-dress", "cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "styluxe-slip-dress"], from: [52, 292], to: [236, 348], w: [128, 110], hang: true, z: 80 },
   { id: "outer-left-top", name: "Outer left bay · top rail", ids: ["cider-velvet-playsuit", "cider-pastel-dress", "ar-esquire-trench", "nord-icon-blazer", "tt-plaid-blazer-set"], from: [48, 98], to: [236, 198], w: [112, 96], hang: true, z: 60 },
@@ -264,8 +263,8 @@ const WIDE: Line[] = [
   { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan"], from: [336, 245], to: [432, 281], w: [78, 70], hang: true, z: 46 },
   // the bars added to the outer bays, left empty to be filled from the Racks page
   { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: [], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
-  { id: "outer-right-top", name: "Outer right bay · top bar", ids: [], from: [1852, 68], to: [1662, 122], w: [84, 76], hang: true, z: 30 },
-  { id: "outer-right-second", name: "Outer right bay · second bar", ids: [], from: [1852, 146], to: [1662, 250], w: [90, 82], hang: true, z: 30 },
+  { id: "outer-right-top", name: "Outer right bay · top bar", ids: [], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
+  { id: "outer-right-second", name: "Outer right bay · second bar", ids: [], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
   { id: "outer-right-bottom", name: "Outer right bay · bottom bar", ids: [], from: [1852, 772], to: [1662, 738], w: [92, 84], hang: true, z: 32 },
 ];
 
@@ -284,7 +283,7 @@ const TALL: Line[] = [
   { id: "rack-front", name: "Front rolling rack", ids: ["amz-floral-sweatshirt", "shein-halfzip", "temu-tie-cardigan", "temu-heart-bikini", "temu-beach-swimsuit", "dh-goose-jacket-pink", "dh-puffer-jacket", "dh-fur-coat", "dh-cc-bikini", "tt-striped-vest-set", "tt-striped-collar-set"], from: [232, 1215], to: [708, 1215], w: [92, 92], hang: true, z: 40 },
   // on the tiles in front
   { id: "floor-front", name: "On the floor · front", ids: ["temu-mantilla", "temu-butterfly-scarf", "temu-strawberry-bandana", "amz-lana-necklace", "temu-pearl-necklace", "temu-lace-gloves", "temu-floral-gloves", "amz-ski-gloves", "amz-ruffle-socks", "dh-leather-belt", "cider-crochet-scarf", "tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "tt-satin-bow-ties"], from: [140, 1520], to: [800, 1520], w: [58, 58], z: 50 },
-  { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "amz-superga-hitops", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks"], from: [120, 1650], to: [820, 1650], w: [72, 72], z: 60 },
+  { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks"], from: [120, 1650], to: [820, 1650], w: [72, 72], z: 60 },
   // the outer left bay (a phone crops some of it) and the shelf in the inner right bay
   { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "yellow-charlotte-dress", "styluxe-slip-dress"], from: [84, 506], to: [140, 552], w: [80, 70], hang: true, z: 80 },
   { id: "outer-left-top", name: "Outer left bay · top rail", ids: ["cider-velvet-playsuit", "cider-pastel-dress", "ar-esquire-trench", "nord-icon-blazer", "tt-plaid-blazer-set"], from: [80, 342], to: [138, 404], w: [70, 60], hang: true, z: 60 },
@@ -327,8 +326,8 @@ export const CLOSET_BARS: Record<"wide" | "tall", Bar[]> = {
     // the outer left bay's bottom box, above the drawer
     { from: [34, 754], to: [298, 706], z: 91 },
     // the outer right bay: its very top box, the box under that, and the bottom box above the drawer
-    { from: [1876, 60], to: [1640, 128], z: 31 },
-    { from: [1876, 132], to: [1640, 260], z: 31 },
+    { from: [1846, 70], to: [1648, 134], z: 31 },
+    { from: [1846, 150], to: [1648, 258], z: 31 },
     { from: [1876, 776], to: [1640, 734], z: 33 },
   ],
   tall: [

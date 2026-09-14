@@ -47,6 +47,22 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
   const [dragging, setDragging] = useState<string | null>(null);
   const [target, setTarget] = useState<{ line: string; index: number } | null>(null);
   const ghost = useRef<HTMLDivElement>(null);
+  // folded-away sections, remembered in this browser, so a far-off rail is a short drag away
+  const [folded, setFolded] = useState<Set<string>>(() => {
+    try {
+      return new Set(JSON.parse(localStorage.getItem("palais-racks-folded") || "[]"));
+    } catch {
+      return new Set();
+    }
+  });
+  const fold = (next: Set<string>) => {
+    setFolded(next);
+    try {
+      localStorage.setItem("palais-racks-folded", JSON.stringify(Array.from(next)));
+    } catch {
+      /* not remembered */
+    }
+  };
   const press = useRef<{ id: string; x: number; y: number; moved: boolean } | null>(null);
   const latest = useRef(target);
   latest.current = target;
@@ -136,20 +152,52 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
     <div className="rack-page">
       <p className="rack-intro">
         Drag the clothes to arrange the closet, or tap one and then tap where it goes. On each rail the first piece is at the
-        front.
+        front. Fold sections away to bring far-off rails closer; drop onto a folded one to put it at the back.
       </p>
+      <div className="rack-folds">
+        <button type="button" className="cat-btn cat-btn--ghost" onClick={() => fold(new Set(lines.map((l) => l.id)))}>
+          Fold all
+        </button>
+        <button type="button" className="cat-btn cat-btn--ghost" onClick={() => fold(new Set())}>
+          Unfold all
+        </button>
+      </div>
       {lines.map((line) => {
         const ids = order[line.id] ?? [];
         const [, emoji, direction] = lookOf(line.id, line.name);
         return (
-          <section key={line.id} className="cat-shelf rack-shelf">
-            <div className="cat-shelf-head">
+          <section key={line.id} className={`cat-shelf rack-shelf${folded.has(line.id) ? " is-folded" : ""}`}>
+            <div
+              className={`cat-shelf-head rack-head${target?.line === line.id && folded.has(line.id) ? " is-drop" : ""}`}
+              data-rack-line={line.id}
+              data-rack-count={ids.length}
+            >
+              <button
+                type="button"
+                className="rack-fold"
+                aria-expanded={!folded.has(line.id)}
+                aria-label={`${folded.has(line.id) ? "Unfold" : "Fold"} ${line.name}`}
+                onClick={() => {
+                  const next = new Set(folded);
+                  if (next.has(line.id)) next.delete(line.id);
+                  else next.add(line.id);
+                  fold(next);
+                }}
+              >
+                ▾
+              </button>
               <h3>
                 <span aria-hidden>{emoji}</span> {line.name}
               </h3>
+              {picked && folded.has(line.id) && (
+                <button type="button" className="rack-put" onClick={() => place(line.id, ids.length)}>
+                  Put here
+                </button>
+              )}
               <span className="rack-direction">{direction}</span>
               <span className="cat-shelf-count">{ids.length}</span>
             </div>
+            {!folded.has(line.id) && (
             <ul
               className={`rack-row${target?.line === line.id && target.index === ids.length ? " is-drop-end" : ""}`}
               data-rack-line={line.id}
@@ -227,6 +275,7 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
                 </button>
               </li>
             </ul>
+            )}
           </section>
         );
       })}
