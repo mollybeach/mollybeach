@@ -28,8 +28,8 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   reef: { file: "reef", focus: "50% 55%", seasons: false, portrait: true },
   // the lacquered pavilion over the lantern-lit temple island at dusk
   lanterns: { file: "lanterns", focus: "50% 55%" },
-  // the white loggia over every beach at once, at sunset: one photograph for now
-  shore: { file: "shore", focus: "50% 55%", seasons: false, portrait: true },
+  // the white loggia over every beach at once
+  shore: { file: "shore", focus: "50% 55%", portrait: true },
   // the glowworm grotto opening onto hobbit hills, a mountain and hot springs
   caves: { file: "caves", focus: "50% 55%", portrait: true },
 };

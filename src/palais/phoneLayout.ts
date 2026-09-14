@@ -13,9 +13,9 @@ import type { Season } from "./seasons";
  * too (PHONE_EXTRAS), out of the room to begin with: turn one on in the
  * catalogue and it appears on the floor or the wall, ready to be dragged.
  *
- * Molly arranged the phone room once (layouts/phone.json) and it serves every
- * season, with the season's own animals: the dogs in the pool in spring and
- * summer, Brea and Molly's table in autumn.
+ * Molly arranged the phone room (layouts/phone.json) and it serves every
+ * season, with the season's own animals: the dogs in the pool only in spring
+ * and summer, Brea and Molly's table in autumn.
  *
  * Phone layouts are measured on the photograph's frame (`.palais-frame`), not
  * the whole screen, so they hold on every phone: "Copy layout" records the
@@ -37,7 +37,14 @@ const ids = (key: string) => (SHELVES.find((s) => s.key === key)?.items ?? []) a
 
 /* everything the desktop room has, which is everything in the catalogue */
 const ALL = Object.keys(autumnLayout.props) as PropId[];
-const PLACED = new Set(Object.keys(phoneLayout.props));
+/* the stickers PortraitTerrace.tsx sets out itself; the rest are PHONE_EXTRAS */
+const PLACED = new Set<string>([
+  "armchair-sage", "bed-iron", "cabinet-jewelry", "cat-blueberry-party", "cat-blueberry-running", "cats-birthday",
+  "cats-roses", "dog-charlie-kiddie-pool", "dog-frisbee", "dog-maggie-frisbee", "dresser", "fall-table-brea-molly",
+  "goat-bambi", "goats-pumpkin-ferdinand", "honeysuckle-tricycle", "lamp-porcelain", "lilac-bush", "pendant-opal",
+  "perfume-collection", "planter-greek-head", "rose-bush", "teacups-collection", "trellis-ivy", "trellis-wisteria",
+  "vanity", "wisteria-branch-lavender", "wisteria-branch-purple",
+]);
 const PENDANTS = new Set(ids("lights"));
 
 function shelfOf(id: PropId) {
@@ -82,7 +89,8 @@ export const PHONE_EXTRAS: Extra[] = (() => {
 export const PHONE_EXTRA_PENDANTS = ids("lights").filter((id) => !PLACED.has(id));
 
 /* the phone's frame when the layout was made: the photograph (941 × 1672),
-   scaled to cover a 440 × 956 screen */
+   scaled to cover the recorded stage (older copies recorded the screen; newer
+   ones record the frame itself, which this leaves as it is) */
 const FRAME = (() => {
   const { w, h } = phoneLayout.stage;
   const photo = 1672 / 941;
@@ -93,9 +101,10 @@ type Props = SeasonLayout["props"];
 
 function base(): Props {
   const props: Props = {};
-  for (const [id, m] of Object.entries(phoneLayout.props)) props[id] = { ...m };
+  // anything Molly's layout doesn't mention starts out of the room
   for (const e of PHONE_EXTRAS) props[e.id] = { shown: false, x: 0, y: 0, s: 1, z: 60 };
   for (const id of PHONE_EXTRA_PENDANTS) props[id] = { shown: false, x: 0, y: 0, s: 1, z: 95 };
+  for (const [id, m] of Object.entries(phoneLayout.props)) props[id] = { ...m };
   return props;
 }
 
@@ -108,6 +117,6 @@ function season(changes: Record<string, boolean>): SeasonLayout {
 export const PHONE_LAYOUTS: Record<Season, SeasonLayout> = {
   spring: season({ "dog-maggie-frisbee": true, "dog-charlie-kiddie-pool": true }),
   summer: season({ "dog-maggie-frisbee": true, "dog-charlie-kiddie-pool": true }),
-  autumn: season({ "fall-table-brea-molly": true }),
-  winter: season({}),
+  autumn: season({ "dog-maggie-frisbee": false, "dog-charlie-kiddie-pool": false, "fall-table-brea-molly": true }),
+  winter: season({ "dog-maggie-frisbee": false, "dog-charlie-kiddie-pool": false }),
 };
