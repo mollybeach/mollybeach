@@ -185,12 +185,13 @@ const STOPS: Stop[] = [
     id: "caves",
     name: "The Hollow of Small Stars",
     tag: "under the hills",
-    blurb: "A quiet boat ride down an underground river, under a ceiling full of glowing stars.",
-    finds: ["Glowworms like a galaxy overhead", "Geysers puffing through the forest", "Round doors in soft green hills"],
+    blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
+    finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
     color: "#a9b8ff",
     at: [448, 500],
     patch: [92, 60],
     seed: 71,
+    room: "caves",
     icon: () => (
       <path
         d="M0,-15 L4,-4 L15,-4 L6,3 L9,14 L0,7 L-9,14 L-6,3 L-15,-4 L-4,-4 Z"

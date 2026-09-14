@@ -143,7 +143,8 @@
 .palais [data-place="jacaranda"] .palais-room--jacaranda,
 .palais [data-place="reef"] .palais-room--reef,
 .palais [data-place="lanterns"] .palais-room--lanterns,
-.palais [data-place="shore"] .palais-room--shore { opacity: 1; }
+.palais [data-place="shore"] .palais-room--shore,
+.palais [data-place="caves"] .palais-room--caves { opacity: 1; }
 .palais .palais-stage:not([data-place="palace"]) .palais-arrive,
 .palais .palais-stage:not([data-place="palace"]) .palais-weather,
 .palais .palais-stage:not([data-place="palace"]) .palais-pollen { visibility: hidden; }
