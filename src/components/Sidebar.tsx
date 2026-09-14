@@ -58,10 +58,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
         />
       )}
       
-      {/* Sidebar */}
-      <div className={`
+      {/* Sidebar, papered in the same teal lily pattern as the Palais footer */}
+      <div
+        style={{
+          backgroundColor: '#69b3b5',
+          backgroundImage: `url("${process.env.PUBLIC_URL}/images/sidebar-floral.webp")`,
+          backgroundSize: '320px auto',
+          backgroundRepeat: 'repeat',
+        }}
+        className={`
         fixed lg:sticky top-0 lg:top-6 left-0 h-screen lg:h-auto
-        w-64 bg-white shadow-lg rounded-lg p-6 z-50
+        w-64 shadow-lg rounded-lg p-4 z-50 space-y-4
         transform transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         overflow-y-auto
@@ -69,14 +76,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       {/* Close button for mobile */}
       <button
         onClick={() => setIsMobileMenuOpen(false)}
-        className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        className="lg:hidden absolute top-2 right-2 z-10 p-1.5 rounded-full bg-white/90 shadow hover:bg-white transition-colors"
         aria-label="Close menu"
       >
         <XMarkIcon className="h-6 w-6 text-gray-600" />
       </button>
 
-      {/* Profile Section */}
-      <div className="text-center mb-8">
+      {/* Profile Section: on a card so it reads over the flowers */}
+      <div className="text-center rounded-2xl bg-white/90 backdrop-blur-sm px-4 pt-5 pb-1 shadow-md ring-1 ring-[#c9a44c]/60">
         <img
           src={`${process.env.PUBLIC_URL}/avi_square.png`}
           alt="Molly Beach"
@@ -127,7 +134,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       </div>
 
       {/* Navigation Links */}
-      <nav className="space-y-2">
+      <nav className="space-y-1 rounded-2xl bg-white/90 backdrop-blur-sm p-2 shadow-md ring-1 ring-[#c9a44c]/60">
         {navItems.map((item) => (
           <NavLink
             key={item.name}

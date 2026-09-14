@@ -138,7 +138,11 @@ export function Catalogue({
   return (
     <div className="cat-backdrop" onPointerDown={(e) => e.target === e.currentTarget && onClose()}>
       <div ref={panel} className="cat-panel" role="dialog" aria-modal="true" aria-labelledby="cat-title">
-        <header className="cat-head">
+        <header
+          className="cat-head"
+          // the same teal lily pattern as the footer (Footer.tsx)
+          style={{ backgroundImage: `url("${process.env.PUBLIC_URL}/palais/catalogue-floral.webp")` }}
+        >
           <span aria-hidden className="cat-sparkle cat-sparkle--a">✦</span>
           <span aria-hidden className="cat-sparkle cat-sparkle--b">✧</span>
           <h2 id="cat-title">

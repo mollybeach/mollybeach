@@ -17,14 +17,14 @@ const Resume: React.FC = () => {
         <meta property="og:url" content="https://mollybeach.app/resume" />
         <meta property="og:title" content="Resume - Molly Beach | Full-Stack Software Engineer" />
         <meta property="og:description" content="Download my resume - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems." />
-        <meta property="og:image" content="https://mollybeach.app/social-preview-palais.jpg" />
+        <meta property="og:image" content="https://mollybeach.app/social-preview-palais-v2.jpg" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://mollybeach.app/resume" />
         <meta property="twitter:title" content="Resume - Molly Beach | Full-Stack Software Engineer" />
         <meta property="twitter:description" content="Download my resume - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems." />
-        <meta property="twitter:image" content="https://mollybeach.app/social-preview-palais.jpg" />
+        <meta property="twitter:image" content="https://mollybeach.app/social-preview-palais-v2.jpg" />
       </Helmet>
       
       <section className="max-w-5xl mx-auto">
