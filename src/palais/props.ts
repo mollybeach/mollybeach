@@ -215,6 +215,13 @@ export const PROPS = catalogue({
   flute_glass_champagne_tall_cobalt_blue_sticker: { label: "a cobalt blue champagne flute", glass: true, plane: "near" },
   goblet_glass_wine_aqua_turquoise_sticker: { label: "an aqua wine glass", glass: true, plane: "near" },
   bottle_glass_gin_sealed_green_vintage_sticker: { label: "a green glass gin bottle with a red seal", glass: true, plane: "near" },
+  bottle_candle_holder_dripping_wax_cobalt_blue_sticker: { label: "a candle in a cobalt bottle, dripping wax", lit: true, plane: "near" },
+  bottle_vase_lowell_embossed_pothos_cutting_green_glass_antique_sticker: { label: "a pothos cutting in an old Lowell bottle", plane: "near" },
+  bottle_candle_holder_embossed_dripping_wax_red_pink_sticker: { label: "a candle in a red embossed bottle, dripping wax", lit: true, plane: "near" },
+  bottle_vase_pothos_cutting_embossed_green_glass_sticker: { label: "a pothos cutting in a green glass bottle", plane: "near" },
+  bottle_perfume_crystal_stopper_enamel_floral_purple_vintage_sticker: { label: "a purple enamel perfume bottle, crystal stopper", plane: "near" },
+  brush_makeup_rose_enamel_leaves_gold_sticker: { label: "a gold rose makeup brush", plane: "near" },
+  planter_hanging_macrame_woven_basket_string_of_pearls_sticker: { label: "string of pearls in a macramé hanger", plane: "near" },
 });
 
 export type PropId = keyof typeof PROPS;

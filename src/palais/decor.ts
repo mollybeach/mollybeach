@@ -60,6 +60,13 @@ export const MORE_TRINKETS: PropId[] = [
   "flute_glass_champagne_tall_cobalt_blue_sticker",
   "goblet_glass_wine_aqua_turquoise_sticker",
   "bottle_glass_gin_sealed_green_vintage_sticker",
+  "bottle_candle_holder_dripping_wax_cobalt_blue_sticker",
+  "bottle_vase_lowell_embossed_pothos_cutting_green_glass_antique_sticker",
+  "bottle_candle_holder_embossed_dripping_wax_red_pink_sticker",
+  "bottle_vase_pothos_cutting_embossed_green_glass_sticker",
+  "bottle_perfume_crystal_stopper_enamel_floral_purple_vintage_sticker",
+  "brush_makeup_rose_enamel_leaves_gold_sticker",
+  "planter_hanging_macrame_woven_basket_string_of_pearls_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */

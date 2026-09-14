@@ -38,7 +38,16 @@ export const SHELVES: Shelf[] = [
     key: "plants",
     name: "House plants",
     emoji: "🪴",
-    items: ["monstera-crystal", "dracaena", "fiddle-leaf-fig", "planter-greek-head", "decor-ivy-bottle"],
+    items: [
+      "monstera-crystal",
+      "dracaena",
+      "fiddle-leaf-fig",
+      "planter-greek-head",
+      "decor-ivy-bottle",
+      "bottle_vase_lowell_embossed_pothos_cutting_green_glass_antique_sticker",
+      "bottle_vase_pothos_cutting_embossed_green_glass_sticker",
+      "planter_hanging_macrame_woven_basket_string_of_pearls_sticker",
+    ],
   },
   {
     key: "blossoms",
