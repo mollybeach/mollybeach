@@ -607,6 +607,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         </div>
 
         <div className="wm-card" aria-live="polite">
+          {/* the words scroll if they must; the buttons below always stay in view */}
+          <div className="wm-card-body">
           <figure className="wm-peek">
             <img key={stop.id} src={picture(stop)} alt={`A look inside ${stop.name}`} decoding="async" />
           </figure>
@@ -625,6 +627,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           <div className="wm-flourish" aria-hidden>
             ✦
           </div>
+          </div>
+          <div className="wm-actions">
           {stop.room ? (
             stop.room === place ? (
               <p className="wm-here">✿ You're here ✿</p>
@@ -655,6 +659,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             >
               Next stop ▶
             </button>
+          </div>
           </div>
         </div>
       </div>

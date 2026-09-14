@@ -33,7 +33,9 @@ const ZOOM = 1.045;
  */
 export const PHOTOS = {
   tall: { w: 1448, h: 1086, k: 0.866, x: 0, y: 0 },
-  wide: { w: 1672, h: 941, k: 0.866 * 0.83, x: 235.7, y: 69.1 },
+  // the wide photographs with the pink cabinet (Sep 2026): fitted to the last
+  // set by the pool, the arch and the floor line, so the arrangement holds
+  wide: { w: 1672, h: 941, k: 0.866 * 0.83 * 0.9947, x: 171.1, y: 74.4 },
 };
 
 /** the wide photographs take over once the room is wider than this (halfway
