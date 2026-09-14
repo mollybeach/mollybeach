@@ -6,6 +6,7 @@ import { LayoutsShelf } from "./LayoutsShelf";
 import { VisitorsShelf } from "./VisitorsShelf";
 import type { Season } from "./seasons";
 import type { Collection } from "./useCollection";
+import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 
 /** the one account that sees the visitor book */
 const OWNER = "mollyjbeach@gmail.com";
@@ -20,6 +21,9 @@ const OWNER = "mollyjbeach@gmail.com";
  *
  * Its second page, Saved looks (LayoutsShelf.tsx), keeps whole arrangements
  * of the room. Only the desktop room is arranged, so the phone doesn't get it.
+ *
+ * In the Wardrobe Wing it's the wardrobe instead: the clothes (clothes.ts),
+ * on a shelf per kind of thing, and no pages.
  */
 
 const nice = (id: string) => {
@@ -45,9 +49,18 @@ function ShelfTick({ all, some, onChange, label }: { all: boolean; some: boolean
   );
 }
 
+/** the closet's clothes, sorted onto a shelf per kind of thing */
+function wardrobeStock(inCloset: string[]) {
+  return WARDROBE_SHELVES.map((shelf) => ({
+    shelf,
+    items: inCloset.filter((id) => garment(id)?.kind === shelf.key),
+  })).filter((s) => s.items.length > 0);
+}
+
 export function Catalogue({
   open,
   onClose,
+  wardrobe = false,
   hidden,
   setHidden,
   collection,
@@ -57,6 +70,8 @@ export function Catalogue({
 }: {
   open: boolean;
   onClose: () => void;
+  /** the Wardrobe Wing's clothes rather than the terrace's stickers */
+  wardrobe?: boolean;
   hidden: Set<string>;
   setHidden: (next: Set<string>) => void;
   collection: Collection;
@@ -74,21 +89,21 @@ export function Catalogue({
   useEffect(() => {
     if (!open) return;
     const stage = panel.current?.closest(".palais-stage");
-    const ids = Array.from(stage?.querySelectorAll<HTMLElement>(".palais-layer [data-prop]") ?? [])
+    const ids = Array.from(stage?.querySelectorAll<HTMLElement>(wardrobe ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]") ?? [])
       .map((el) => el.dataset.prop!)
       .filter((id, i, all) => all.indexOf(id) === i);
     setInRoom(ids);
     const onPhone = Boolean(stage?.querySelector(".palais-layer .palais-frame"));
     setPhone(onPhone);
-    if (onPhone) setPage("stickers");
+    if (onPhone || wardrobe) setPage("stickers");
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, onClose, wardrobe]);
 
   if (!open) return <div ref={panel} hidden />;
 
-  const shelves = stock(inRoom);
+  const shelves = wardrobe ? wardrobeStock(inRoom) : stock(inRoom);
   const shown = inRoom.filter((id) => !hidden.has(id)).length;
 
   const setMany = (ids: string[], show: boolean) => {
@@ -109,7 +124,7 @@ export function Catalogue({
   const copyLayout = async () => {
     const stage = panel.current?.closest<HTMLElement>(".palais-stage");
     if (!stage) return;
-    const { stage: size, layout: device, season: at, props } = capture(stage, hidden);
+    const { stage: size, layout: device, season: at, props } = capture(stage, hidden, wardrobe ? "closet" : "room");
     const layout = { stage: size, layout: device, season: at, props };
     const text = JSON.stringify(layout, null, 2);
     try {
@@ -146,15 +161,17 @@ export function Catalogue({
           <span aria-hidden className="cat-sparkle cat-sparkle--a">✦</span>
           <span aria-hidden className="cat-sparkle cat-sparkle--b">✧</span>
           <h2 id="cat-title">
-            <span aria-hidden>♡ </span>Palais Catalogue<span aria-hidden> ♡</span>
+            <span aria-hidden>♡ </span>
+            {wardrobe ? "Wardrobe Catalogue" : "Palais Catalogue"}
+            <span aria-hidden> ♡</span>
           </h2>
           <p className="cat-count">
-            {shown} of {inRoom.length} in the room
+            {shown} of {inRoom.length} in the {wardrobe ? "closet" : "room"}
           </p>
           <button type="button" className="cat-close" onClick={onClose} aria-label="Close the catalogue">
             ×
           </button>
-          {!phone && (
+          {!phone && !wardrobe && (
             <div className="cat-pages" role="tablist" aria-label="Catalogue pages">
               <button
                 type="button"
@@ -240,6 +257,8 @@ export function Catalogue({
                 <ul className="cat-grid">
                   {items.map((id) => {
                     const inIt = !hidden.has(id);
+                    const g = wardrobe ? garment(id) : undefined;
+                    const name = g ? g.label : nice(id);
                     return (
                       <li key={id}>
                         <label className={`cat-card${inIt ? " is-on" : ""}`}>
@@ -247,13 +266,14 @@ export function Catalogue({
                             type="checkbox"
                             checked={inIt}
                             onChange={() => setMany([id], !inIt)}
-                            aria-label={nice(id)}
+                            aria-label={name}
                           />
                           <span aria-hidden className="cat-heart cat-heart--card" />
                           <span className="cat-thumb">
-                            <img src={propSrc(id as PropId)} alt="" loading="lazy" decoding="async" />
+                            <img src={wardrobe ? closetSrc(id) : propSrc(id as PropId)} alt="" loading="lazy" decoding="async" />
                           </span>
-                          <span className="cat-name">{nice(id)}</span>
+                          <span className="cat-name">{name}</span>
+                          {g && <span className="cat-store">{g.store}</span>}
                         </label>
                       </li>
                     );

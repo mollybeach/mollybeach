@@ -15,6 +15,7 @@ import { SummerYard } from "./SummerYard";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
+import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
 import { recordVisit } from "./visits";
 import { useEffect } from "react";
@@ -142,6 +143,8 @@ export default function PalaisHome() {
           <SeasonRoom place="lanterns" />
           <SeasonRoom place="shore" />
           <SeasonRoom place="caves" />
+          {/* the clothes in the Wardrobe Wing */}
+          <Wardrobe />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />

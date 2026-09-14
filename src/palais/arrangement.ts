@@ -194,13 +194,19 @@ export function settle(scope: ParentNode, layout?: SeasonLayout, phoneLayout?: S
   });
 }
 
-/** the room as it is right now, in the same form as a saved layout */
-export function capture(stage: HTMLElement, hidden: Set<string>): SeasonLayout & { layout: "desktop" | "phone" } {
+/** the room as it is right now, in the same form as a saved layout. The
+    closet's clothes (Wardrobe.tsx) are measured on their photograph's frame. */
+export function capture(
+  stage: HTMLElement,
+  hidden: Set<string>,
+  scope: "room" | "closet" = "room",
+): SeasonLayout & { layout: "desktop" | "phone" | "closet-wide" | "closet-tall" } {
+  const closet = scope === "closet";
   // a phone layout is measured on the photograph's frame, so it holds on any phone
-  const frame = stage.querySelector<HTMLElement>(".palais-layer .palais-frame");
+  const frame = stage.querySelector<HTMLElement>(closet ? ".palais-closet-frame" : ".palais-layer .palais-frame");
   const r = (frame ?? stage).getBoundingClientRect();
   const props: SeasonLayout["props"] = {};
-  stage.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
+  stage.querySelectorAll<HTMLElement>(closet ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]").forEach((el) => {
     const cs = getComputedStyle(el);
     const [x = "0", y = "0"] = cs.translate === "none" ? [] : cs.translate.split(" ");
     props[el.dataset.prop!] = {
@@ -213,7 +219,13 @@ export function capture(stage: HTMLElement, hidden: Set<string>): SeasonLayout &
   });
   return {
     stage: { w: Math.round(r.width), h: Math.round(r.height) },
-    layout: stage.querySelector(".palais-layer .palais-frame") ? "phone" : "desktop",
+    layout: closet
+      ? frame?.classList.contains("palais-closet-frame--tall")
+        ? "closet-tall"
+        : "closet-wide"
+      : stage.querySelector(".palais-layer .palais-frame")
+        ? "phone"
+        : "desktop",
     season: stage.querySelector<HTMLElement>(".palais-arrive")?.dataset.season ?? "spring",
     props,
   };

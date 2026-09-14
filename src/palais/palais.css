@@ -156,6 +156,106 @@
    dragonflies follow you into every room; the flyers live inside the
    terrace's sticker layer, so they're shown again on their own */
 .palais .palais-stage:not([data-place="palace"]) .palais-flyers { visibility: visible; }
+
+/* ---- the Wardrobe Wing's clothes (Wardrobe.tsx) --------------------------
+   Placed over the closet photograph in a box exactly its shape, cropped the
+   way the photograph is (the wide ones cover the stage from 50% 60%, the tall
+   one from the bottom), so a percentage is always the same spot on a rail. */
+.palais .palais-closet {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 700ms ease, visibility 0s linear 700ms;
+}
+.palais [data-place="closet"] .palais-closet { opacity: 1; visibility: visible; transition: opacity 700ms ease; }
+.palais .palais-closet-frame { position: absolute; }
+.palais .palais-closet-frame--wide {
+  width: max(100cqw, 100cqh * 1930 / 1086);
+  height: max(100cqh, 100cqw * 1086 / 1930);
+  left: calc((100cqw - max(100cqw, 100cqh * 1930 / 1086)) * 0.5);
+  top: calc((100cqh - max(100cqh, 100cqw * 1086 / 1930)) * 0.6);
+}
+.palais .palais-closet-frame--tall {
+  width: max(100cqw, 100cqh * 941 / 1672);
+  height: max(100cqh, 100cqw * 1672 / 941);
+  left: calc((100cqw - max(100cqw, 100cqh * 941 / 1672)) * 0.5);
+  bottom: 0;
+}
+/* a hung piece leaves room above it for its hanger */
+.palais .closet-piece--hung .closet-sway { position: relative; padding-top: 15%; }
+.palais .closet-piece img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 0.18cqw 0.28cqw rgba(74, 42, 30, 0.3));
+}
+.palais .closet-piece--set img { filter: drop-shadow(0 0.12cqw 0.16cqw rgba(60, 34, 24, 0.38)); }
+/* the rolling rails: brass tube, drawn in the frame's own units so it's as
+   thick on a phone as on a wide screen */
+.palais .palais-closet-frame { container: closet / size; }
+.palais .closet-rack { position: absolute; pointer-events: none; }
+.palais .closet-rack i { position: absolute; display: block; }
+.palais .closet-rack-bar,
+.palais .closet-rack-post,
+.palais .closet-rack-foot {
+  background: linear-gradient(90deg, #7a5724, #e9c77a 38%, #fff0c2 50%, #c99a45 64%, #7a5724);
+  border-radius: 99px;
+  box-shadow: 0 0.1cqw 0.2cqw rgba(60, 36, 12, 0.35);
+}
+.palais .closet-rack-bar {
+  top: -0.3cqw;
+  left: -1.4%;
+  right: -1.4%;
+  height: 0.62cqw;
+  background: linear-gradient(180deg, #7a5724, #e9c77a 35%, #fff0c2 50%, #c99a45 65%, #7a5724);
+}
+.palais .closet-rack-bar::before,
+.palais .closet-rack-bar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.1cqw;
+  height: 1.1cqw;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, #fff4cf, #d7a955 55%, #7a5724);
+}
+.palais .closet-rack-bar::before { left: 0; }
+.palais .closet-rack-bar::after { left: 100%; }
+.palais .closet-rack-post { top: 0; bottom: 0.3cqw; width: 0.42cqw; }
+.palais .closet-rack-post--l { left: 0; }
+.palais .closet-rack-post--r { right: 0; }
+.palais .closet-rack-foot { bottom: 0; height: 0.36cqw; width: 11%; }
+.palais .closet-rack-foot--l { left: -5%; }
+.palais .closet-rack-foot--r { right: -5%; }
+.palais .closet-rack-shadow {
+  bottom: -0.9cqw;
+  left: -8%;
+  right: -8%;
+  height: 1.8cqw;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(40, 24, 16, 0.32), transparent);
+}
+.palais .closet-hanger {
+  position: absolute;
+  top: -1%;
+  left: 50%;
+  width: 58%;
+  transform: translateX(-50%);
+  overflow: visible;
+  fill: none;
+  stroke: #b58a3c;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 0 rgba(255, 236, 180, 0.7));
+}
 @container palais (max-width: 639px) {
   .palais .palais-pill--home { order: 1; }
   .palais .palais-pill--home::before { display: none; }
@@ -1083,6 +1183,14 @@
   color: #7a2a55;
 }
 .palais .cat-card:not(.is-on) .cat-name { color: #c28aa7; }
+/* in the wardrobe, where it was bought */
+.palais .cat-store {
+  margin-top: 0.1rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #b0789a;
+}
 
 .palais .cat-foot {
   display: flex;

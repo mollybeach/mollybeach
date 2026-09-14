@@ -51,6 +51,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const closeMap = useCallback(() => setMap(false), []);
   const { place, go } = usePlace();
   const inPalace = place === "palace";
+  const inCloset = place === "closet";
+  // what's been taken out of the closet (Wardrobe.tsx); everything starts in it
+  const [closetHidden, setClosetHidden] = useState<Set<string>>(() => new Set());
 
 
   const switches = useRef<HTMLDivElement>(null);
@@ -173,16 +176,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">{paused ? "Play" : "Pause"}</span>
           </button>
         )}
-        {inPalace && (
+        {(inPalace || inCloset) && (
         <button
           type="button"
           onClick={() => setCatalogue(true)}
           aria-haspopup="dialog"
-          aria-label="Open the catalogue"
+          aria-label={inCloset ? "Open the wardrobe catalogue" : "Open the catalogue"}
           className="palais-pill palais-pill--catalogue"
         >
-          <span className="palais-pill-long">♡ Catalogue</span>
-          <span className="palais-pill-short">♡ Catalogue</span>
+          <span className="palais-pill-long">{inCloset ? "♡ Wardrobe" : "♡ Catalogue"}</span>
+          <span className="palais-pill-short">{inCloset ? "♡ Wardrobe" : "♡ Catalogue"}</span>
         </button>
         )}
         <button
@@ -241,13 +244,22 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </style>
       )}
 
+      {closetHidden.size > 0 && (
+        <style>
+          {`${Array.from(closetHidden)
+            .map((id) => `.palais .palais-closet [data-prop="${id}"]`)
+            .join(",\n")} { visibility: hidden !important; }`}
+        </style>
+      )}
+
       <WorldMap open={map} onClose={closeMap} />
 
       <Catalogue
         open={catalogue}
         onClose={closeCatalogue}
-        hidden={hidden}
-        setHidden={setHidden}
+        wardrobe={inCloset}
+        hidden={inCloset ? closetHidden : hidden}
+        setHidden={inCloset ? setClosetHidden : setHidden}
         collection={collection}
         season={season}
         wearing={wearing.layout}
