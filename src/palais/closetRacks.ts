@@ -19,6 +19,16 @@ import { db, dbConfigured } from "./layoutsDb";
 export type Which = "wide" | "tall";
 /** rail id → garment ids, first = front (the near end of the rail) */
 export type RackOrder = Record<string, string[]>;
+/** where a piece has been dragged from its spot, as percentages of the closet
+    photograph's width and height; its size; and its stacking order, if it was
+    brought forward */
+export interface PieceMove {
+  x: number;
+  y: number;
+  s: number;
+  z?: number;
+}
+export type ClosetMoves = Record<string, PieceMove>;
 
 const TABLE = "palais_closet_racks";
 
@@ -49,6 +59,8 @@ const same = (a: RackOrder, b: RackOrder) => JSON.stringify(a) === JSON.stringif
 let published: Record<Which, RackOrder> = { wide: fromCode("wide"), tall: fromCode("tall") };
 /** what the closet is showing right now */
 let state = published;
+/** where the clothes have been dragged, by default (the database) */
+let publishedMoves: Record<Which, ClosetMoves> = { wide: {}, tall: {} };
 const listeners = new Set<() => void>();
 const notify = () => listeners.forEach((l) => l());
 
@@ -66,12 +78,20 @@ export function loadPublished() {
   loading ??= (async () => {
     try {
       const sb = await db();
-      const { data, error } = await sb.from(TABLE).select("closet, racks");
+      // the moves column comes with a later migration: without it, just the rails
+      let res = await sb.from(TABLE).select("closet, racks, moves");
+      if (res.error) res = await sb.from(TABLE).select("closet, racks");
+      const { data, error } = res;
       if (error || !data) return;
       const next = { ...published };
-      for (const row of data as { closet: Which; racks: RackOrder }[]) {
-        if (row.closet === "wide" || row.closet === "tall") next[row.closet] = mend(row.closet, row.racks);
+      const nextMoves = { ...publishedMoves };
+      for (const row of data as { closet: Which; racks: RackOrder; moves?: ClosetMoves }[]) {
+        if (row.closet === "wide" || row.closet === "tall") {
+          next[row.closet] = mend(row.closet, row.racks);
+          nextMoves[row.closet] = row.moves ?? {};
+        }
       }
+      publishedMoves = nextMoves;
       // anything not yet rearranged picks up the default
       state = {
         wide: same(state.wide, published.wide) ? next.wide : state.wide,
@@ -96,6 +116,37 @@ const subscribe = (l: () => void) => {
 
 export function useRackOrder(which: Which): RackOrder {
   return useSyncExternalStore(subscribe, () => state[which]);
+}
+
+/** where the clothes have been dragged to, by default */
+export function useClosetMoves(which: Which): ClosetMoves {
+  return useSyncExternalStore(subscribe, () => publishedMoves[which]);
+}
+
+/** where every piece in the closet on screen has been dragged to and how big
+    it's been made, measured on the photograph's frame */
+export function closetMovesNow(stage: HTMLElement): ClosetMoves {
+  const frame = stage.querySelector<HTMLElement>(".palais-closet-frame");
+  if (!frame) return {};
+  const r = frame.getBoundingClientRect();
+  const out: ClosetMoves = {};
+  frame.querySelectorAll<HTMLElement>("[data-prop]").forEach((el) => {
+    const cs = getComputedStyle(el);
+    const [tx = "0", ty = "0"] = cs.translate === "none" ? [] : cs.translate.split(" ");
+    const x = r.width ? Math.round(((parseFloat(tx) || 0) / r.width) * 100000) / 1000 : 0;
+    const y = r.height ? Math.round(((parseFloat(ty) || 0) / r.height) * 100000) / 1000 : 0;
+    const s = Math.round((parseFloat(cs.scale) || 1) * 1000) / 1000;
+    // brought forward by dragging: Draggable notes where it sat first
+    const raised = el.dataset.z0 !== undefined && cs.zIndex !== el.dataset.z0;
+    if (!x && !y && s === 1 && !raised) return;
+    out[el.dataset.prop!] = { x, y, s, ...(raised ? { z: Number(cs.zIndex) || 0 } : {}) };
+  });
+  return out;
+}
+
+/** whether the clothes have been dragged about since the default */
+export function movesChanged(which: Which, now: ClosetMoves) {
+  return JSON.stringify(now) !== JSON.stringify(publishedMoves[which]);
 }
 
 /** move a piece to `index` on rail `toLine` (it may be the rail it's on) */
@@ -133,11 +184,17 @@ export function racksChanged(which: Which) {
 
 /** save the closet as it is now as the default everyone sees (editors only;
     the database refuses anyone else) */
-export async function publishRacks(which: Which) {
+export async function publishRacks(which: Which, moves?: ClosetMoves) {
   const racks = state[which];
   const sb = await db();
-  const { error } = await sb.from(TABLE).upsert({ closet: which, racks }, { onConflict: "closet" });
-  if (error) throw new Error(error.message);
+  const { error } = await sb.from(TABLE).upsert({ closet: which, racks, ...(moves ? { moves } : {}) }, { onConflict: "closet" });
+  if (error) {
+    if (moves && /moves/.test(error.message)) {
+      throw new Error("the closet table has no room for moved clothes yet: run supabase/migrations/20260914150000_palais_closet_moves.sql");
+    }
+    throw new Error(error.message);
+  }
   published = { ...published, [which]: racks };
+  if (moves) publishedMoves = { ...publishedMoves, [which]: moves };
   notify();
 }

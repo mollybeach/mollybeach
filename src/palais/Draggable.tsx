@@ -134,6 +134,22 @@ interface Resize {
   startDist: number;
 }
 
+/** make every copy of a sticker in `scope` bigger or smaller by `factor`,
+    growing from its feet (or, for a hanging light, from its ceiling), the way
+    the size handle does; returns its new size */
+export function resizeSticker(scope: ParentNode, selector: string, id: string, factor: number) {
+  let size = 1;
+  scope.querySelectorAll<HTMLElement>(selector).forEach((el) => {
+    if (el.dataset.prop !== id) return;
+    if (!el.style.transformOrigin) el.style.transformOrigin = "50% 100%";
+    const s = Math.min(4, Math.max(0.25, scaleOf(el) * factor));
+    el.style.scale = s.toFixed(3);
+    el.dataset.scale = String(s);
+    size = s;
+  });
+  return size;
+}
+
 export function Draggable() {
   const probe = useRef<HTMLSpanElement>(null);
   const handle = useRef<HTMLButtonElement>(null);

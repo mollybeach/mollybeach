@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { CLOSET_LINES, closetSrc, garment } from "./clothes";
+import { CLOTHES, CLOSET_LINES, closetSrc, garment } from "./clothes";
 import { movePiece, useRackOrder, type Which } from "./closetRacks";
 
 /* what each kind of place gets as a picture, and which way its order runs */
 const LOOK: [RegExp, string, string][] = [
+  [/hooks-side/, "🪝", "top → bottom"],
+  [/hooks/, "🪝", "left → right"],
   [/rack/, "🧺", "front → back"],
   [/rail|bar|mirror/, "🪝", "front → back"],
   [/shoes|floor/, "👠", "left → right"],
@@ -20,11 +22,42 @@ const ORDER = [
   "outer-left-top", "outer-left-low", "outer-left-bottom",
   "left-top", "left-rail", "left-shelf", "left-bottom",
   "cubby-rail", "cubby-top", "cubby-row-1", "cubby-row-2", "cubby-row-3",
-  "seat", "mirror", "mirror-shelves",
+  "seat", "window-hooks-top", "window-hooks-side", "mirror", "mirror-shelves",
   "right-top", "right-middle", "right-low", "right-shelf", "right-bottom",
   "outer-right-top", "outer-right-second", "outer-right-upper", "outer-right-lower", "outer-right-bottom",
   "floor-front", "shoes",
 ];
+/** a drop-down of everything in the closet that isn't on these hooks, as little pictures, to hang one here with a tap */
+function HookPicker({ here, onPick, onClose }: { here: Set<string>; onPick: (id: string) => void; onClose: () => void }) {
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+  const ids = Object.keys(CLOTHES).filter((id) => !here.has(id) && (!q || id.includes(q) || (garment(id)?.label ?? "").toLowerCase().includes(q)));
+  return (
+    <div className="season-add rack-hook-add" role="dialog" aria-label="Hang something on the hooks">
+      <div className="season-add-head">
+        <input className="cat-input season-add-search" type="search" placeholder="Search the closet…" value={query} onChange={(e) => setQuery(e.target.value)} autoFocus />
+        <button type="button" className="cat-mini" onClick={onClose}>
+          Done
+        </button>
+      </div>
+      {ids.length ? (
+        <ul className="season-grid season-grid--add">
+          {ids.map((id) => (
+            <li key={id}>
+              <button type="button" title={`Hang ${garment(id)?.label ?? id} here`} aria-label={`Hang ${garment(id)?.label ?? id} here`} onClick={() => onPick(id)}>
+                <img src={closetSrc(id)} alt="" loading="lazy" decoding="async" />
+                <span aria-hidden className="season-add-plus">+</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="season-empty">Nothing by that name.</p>
+      )}
+    </div>
+  );
+}
+
 const rank = (id: string) => {
   const i = ORDER.indexOf(id);
   return i < 0 ? ORDER.length : i;
@@ -46,6 +79,8 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
   const [picked, setPicked] = useState<string | null>(null);
   const [dragging, setDragging] = useState<string | null>(null);
   const [target, setTarget] = useState<{ line: string; index: number } | null>(null);
+  // the hooks section whose + drop-down is open
+  const [adding, setAdding] = useState<string | null>(null);
   const ghost = useRef<HTMLDivElement>(null);
   // folded-away sections, remembered in this browser, so a far-off rail is a short drag away
   const [folded, setFolded] = useState<Set<string>>(() => {
@@ -68,6 +103,8 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
   latest.current = target;
 
   const lines = [...CLOSET_LINES[which]].sort((a, b) => rank(a.id) - rank(b.id));
+  /** where a piece goes when it's taken off the hooks: where the closet keeps it, or else the window seat */
+  const homeOf = (id: string) => lines.find((l) => !l.hooks && (l.ids as string[]).includes(id))?.id ?? "seat";
 
   const place = (line: string, index: number, id = picked) => {
     if (!id) return;
@@ -152,7 +189,8 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
     <div className="rack-page">
       <p className="rack-intro">
         Drag the clothes to arrange the closet, or tap one and then tap where it goes. On each rail the first piece is at the
-        front. Fold sections away to bring far-off rails closer; drop onto a folded one to put it at the back.
+        front. Fold sections away to bring far-off rails closer; drop onto a folded one to put it at the back. The hooks round
+        the window have a + to hang anything there, and a − on each piece to take it down.
       </p>
       <div className="rack-folds">
         <button type="button" className="cat-btn cat-btn--ghost" onClick={() => fold(new Set(lines.map((l) => l.id)))}>
@@ -165,6 +203,7 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
       {lines.map((line) => {
         const ids = order[line.id] ?? [];
         const [, emoji, direction] = lookOf(line.id, line.name);
+        const hooked = !!line.hooks;
         return (
           <section key={line.id} className={`cat-shelf rack-shelf${folded.has(line.id) ? " is-folded" : ""}`}>
             <div
@@ -195,8 +234,25 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
                 </button>
               )}
               <span className="rack-direction">{direction}</span>
-              <span className="cat-shelf-count">{ids.length}</span>
+              <span className="cat-shelf-count">
+                {ids.length}
+                {hooked ? ` / ${line.hooks} hooks` : ""}
+              </span>
+              {hooked && (
+                <button
+                  type="button"
+                  className={`season-plus${adding === line.id ? " is-open" : ""}`}
+                  aria-expanded={adding === line.id}
+                  aria-label={`Hang something on the ${line.name.toLowerCase()}`}
+                  onClick={() => setAdding(adding === line.id ? null : line.id)}
+                >
+                  +
+                </button>
+              )}
             </div>
+            {hooked && adding === line.id && (
+              <HookPicker here={new Set(ids)} onClose={() => setAdding(null)} onPick={(id) => movePiece(which, id, line.id, ids.length)} />
+            )}
             {!folded.has(line.id) && (
             <ul
               className={`rack-row${target?.line === line.id && target.index === ids.length ? " is-drop-end" : ""}`}
@@ -256,6 +312,21 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
                       >
                         ›
                       </button>
+                      {hooked && (
+                        <button
+                          type="button"
+                          className="rack-off"
+                          aria-label={`Take ${g?.label ?? id} off the hooks`}
+                          title="Take it off the hooks"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const home = homeOf(id);
+                            movePiece(which, id, home, order[home]?.length ?? 0);
+                          }}
+                        >
+                          −
+                        </button>
+                      )}
                     </span>
                   </li>
                 );

@@ -8,7 +8,8 @@ import type { Season } from "./seasons";
 import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 import { RacksShelf } from "./RacksShelf";
 import { SeasonsShelf, SEASON_EMOJI, titleCase } from "./SeasonsShelf";
-import { publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
+import { closetMovesNow, movesChanged, publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
+import { resizeSticker } from "./Draggable";
 import { saveSeasonDefault, type Device } from "./layoutsDb";
 import { defaultLook } from "./roomLayouts";
 import { PLACE_NAMES, type Place } from "./place";
@@ -156,6 +157,12 @@ export function Catalogue({
     setOut(next);
   };
 
+  /** make a piece in the room (or the closet) bigger or smaller, like its size handle */
+  const nudge = (id: string, factor: number) => {
+    const stage = stageOf();
+    if (stage) resizeSticker(stage, clothesPage ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]", id, factor);
+  };
+
   /** the stickers in the room as they are right now, in the form a layout keeps */
   const roomNow = () => {
     const stage = stageOf();
@@ -207,9 +214,14 @@ export function Catalogue({
     }
     void withSaving(async () => {
       let saved = false;
-      if (wardrobe && racksChanged(which)) {
-        await publishRacks(which);
-        saved = true;
+      if (wardrobe) {
+        // the rails, and where the clothes have been dragged and how big they've been made
+        const stage = stageOf();
+        const moves = stage ? closetMovesNow(stage) : undefined;
+        if (racksChanged(which) || (moves && movesChanged(which, moves))) {
+          await publishRacks(which, moves);
+          saved = true;
+        }
       }
       if (differs(roomNow(), wearing ?? { stage: { w: 1, h: 1 }, props: {} }, place)) {
         await saveTo(season);
@@ -432,15 +444,29 @@ export function Catalogue({
                       const name = g ? g.label : nice(id);
                       return (
                         <li key={id}>
-                          <label className={`cat-card${inIt ? " is-on" : ""}`}>
-                            <input type="checkbox" checked={inIt} onChange={() => setMany([id], !inIt)} aria-label={name} />
-                            <span aria-hidden className="cat-heart cat-heart--card" />
+                          <div className={`cat-card${inIt ? " is-on" : ""}`}>
+                            <button
+                              type="button"
+                              className={`cat-heart cat-heart--card${inIt ? " is-on" : ""}`}
+                              aria-pressed={inIt}
+                              aria-label={`${inIt ? "Take out" : "Put in"} ${name}`}
+                              title={inIt ? "Take it out" : "Put it in"}
+                              onClick={() => setMany([id], !inIt)}
+                            />
+                            <span className="cat-size" role="group" aria-label={`Size of ${name}`}>
+                              <button type="button" disabled={!inIt} aria-label={`Make ${name} smaller`} title="Smaller" onClick={() => nudge(id, 1 / 1.12)}>
+                                −
+                              </button>
+                              <button type="button" disabled={!inIt} aria-label={`Make ${name} bigger`} title="Bigger" onClick={() => nudge(id, 1.12)}>
+                                +
+                              </button>
+                            </span>
                             <span className="cat-thumb">
                               <img src={clothesPage ? closetSrc(id) : propSrc(id as PropId)} alt="" loading="lazy" decoding="async" />
                             </span>
                             <span className="cat-name">{name}</span>
                             {g && <span className="cat-store">{g.store}</span>}
-                          </label>
+                          </div>
                         </li>
                       );
                     })}

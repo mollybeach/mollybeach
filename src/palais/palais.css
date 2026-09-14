@@ -269,6 +269,51 @@
 }
 .palais .palais-closet-frame--tall .closet-bar { height: 0.9cqw; margin-top: -0.45cqw; }
 .palais .palais-closet-frame--tall .closet-bar::before { width: 1.7cqw; height: 1.7cqw; left: -0.5cqw; }
+.palais .rack-head .season-plus { margin-left: 0.4rem; }
+.palais .rack-hook-add { margin: 0 0 0.6rem; }
+.palais .rack-nudge .rack-off { color: #b3325a; font-weight: 700; }
+/* the moulding round the window's recess, and the brass hooks on it */
+.palais .closet-moulding,
+.palais .closet-moulding-corner {
+  position: absolute;
+  display: block;
+  z-index: 30;
+  pointer-events: none;
+  box-shadow: 0 0.22cqw 0.34cqw rgba(96, 52, 44, 0.26);
+}
+.palais .closet-moulding--h {
+  background: linear-gradient(180deg, #fffaf1 0%, #f0e1cb 30%, #fffbf4 48%, #e2cfb3 70%, #b99f7f 100%);
+}
+.palais .closet-moulding--v {
+  background: linear-gradient(90deg, #fffaf1 0%, #f0e1cb 30%, #fffbf4 48%, #e2cfb3 70%, #b99f7f 100%);
+}
+.palais .closet-moulding::after {
+  content: "";
+  position: absolute;
+  opacity: 0.8;
+}
+.palais .closet-moulding--h::after { left: 0; right: 0; top: 40%; border-top: 0.07cqw solid #c9a45e; }
+.palais .closet-moulding--v::after { top: 0; bottom: 0; left: 40%; border-left: 0.07cqw solid #c9a45e; }
+.palais .closet-moulding-corner {
+  z-index: 31;
+  border-radius: 0.12cqw;
+  background:
+    radial-gradient(circle, #f4dc9f 0 16%, #b98f4c 17% 24%, #f7ecd9 25% 40%, transparent 41%),
+    linear-gradient(135deg, #fffaf1, #e4d2b6 60%, #bba283);
+}
+.palais .closet-hook {
+  position: absolute;
+  width: 0.9cqw;
+  height: auto;
+  overflow: visible;
+  transform: translate(-50%, -18%);
+  pointer-events: none;
+  filter: drop-shadow(0.05cqw 0.12cqw 0.1cqw rgba(70, 40, 20, 0.45));
+}
+.palais .closet-hook-plate { fill: #c79f55; stroke: #7b5a2a; stroke-width: 0.8; }
+.palais .closet-hook-screw { fill: #6b4c22; }
+.palais .closet-hook-arm { fill: none; stroke: #b88d44; stroke-width: 2.6; stroke-linecap: round; }
+.palais .closet-piece--hooked .closet-sway { padding-top: 0; }
 .palais .closet-hanger {
   position: absolute;
   top: -1%;
@@ -1185,6 +1230,39 @@
 }
 .palais .cat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(214, 36, 122, 0.18); }
 .palais .cat-heart--card { position: absolute; top: 0.3rem; right: 0.3rem; z-index: 1; width: 1.6rem; height: 1.6rem; font-size: 0.95rem; }
+/* on a card the heart is its own button: it alone puts the piece in or takes it out */
+.palais .cat-card { cursor: default; }
+.palais button.cat-heart--card { padding: 0; cursor: pointer; font-family: inherit; }
+.palais .cat-heart--card.is-on { border-color: var(--cat-hot); }
+.palais .cat-heart--card.is-on::before { content: "♥"; color: var(--cat-hot); }
+.palais .cat-heart--card:focus-visible { outline: 3px solid #ff9fd0; outline-offset: 2px; }
+.palais .cat-card:hover .cat-heart--card { transform: none; }
+.palais .cat-heart--card:hover { transform: scale(1.12); }
+/* and beside it, − and + to make the piece smaller or bigger in the room */
+.palais .cat-size {
+  position: absolute;
+  top: 0.4rem;
+  right: 2.15rem;
+  z-index: 1;
+  display: flex;
+  gap: 0.2rem;
+}
+.palais .cat-size button {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--cat-line);
+  background: #fff;
+  color: var(--cat-hot);
+  font: 700 0.85rem/1 inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(214, 36, 122, 0.14);
+}
+.palais .cat-size button:hover:not(:disabled) { border-color: var(--cat-hot); transform: scale(1.1); }
+.palais .cat-size button:disabled { opacity: 0.35; cursor: default; }
 .palais .cat-thumb {
   display: grid;
   place-items: center;
@@ -1412,6 +1490,8 @@
   .palais .cat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.45rem; }
   .palais .cat-card { padding: 0.3rem; border-radius: 14px; }
   .palais .cat-heart--card { width: 1.35rem; height: 1.35rem; font-size: 0.8rem; top: 0.2rem; right: 0.2rem; }
+  .palais .cat-size { top: 0.25rem; right: 1.75rem; gap: 0.15rem; }
+  .palais .cat-size button { width: 1.15rem; height: 1.15rem; font-size: 0.75rem; }
   .palais .cat-name { font-size: 0.66rem; }
   .palais .cat-foot { padding: 0.55rem 0.6rem 0.7rem; gap: 0.35rem; }
   .palais .cat-btn { padding: 0.4rem 0.75rem; font-size: 0.78rem; }
