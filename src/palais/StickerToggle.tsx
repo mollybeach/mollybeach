@@ -3,9 +3,8 @@ import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
 import { WorldMap } from "./WorldMap";
-import { HIDDEN_AT_FIRST } from "./shelves";
-import { BUNDLED_LAYOUTS, LayoutNow, PhoneLayoutNow, hiddenOf, settle, type SeasonLayout } from "./arrangement";
-import { PHONE_LAYOUTS } from "./phoneLayout";
+import { LayoutNow, PhoneLayoutNow, settle, type SeasonLayout } from "./arrangement";
+import { defaultLook, hiddenFor } from "./roomLayouts";
 import { usePortrait } from "./PortraitTerrace";
 import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
@@ -30,84 +29,102 @@ import { usePlace } from "./place";
  *
  * Where the terrace turns through the seasons, one more button hurries the
  * year along to the next one. It names the season it will bring.
+ *
+ * The stickers go with you into every room on the map. Each room wears its
+ * own layout for the season and device (roomLayouts.ts), so a room starts
+ * empty until it's dressed from the catalogue and saved.
  */
 export function StickerToggle({ children, seasons = false }: { children: ReactNode; seasons?: boolean }) {
   const [room, setRoom] = useState(true);
   // on a phone the room has its own layouts (phoneLayout.ts)
   const portrait = usePortrait();
-  const phone = useRef(portrait);
-  phone.current = portrait;
-  // what's been taken out of the room; the blossoms start out of it
-  const [hidden, setHidden] = useState<Set<string>>(
+  const device = portrait ? "phone" : "desktop";
+  const { place, go } = usePlace();
+  const inPalace = place === "palace";
+  const inCloset = place === "closet";
+  const collection = useCollection();
+  const switches = useRef<HTMLDivElement>(null);
+  const [upcoming, setUpcoming] = useState<Season>("summer");
+  const [season, setSeason] = useState<Season>("spring");
+
+  /* Each room, season and device brings its own look: what's in the room, and
+     where. The room's default in the saved collection wins, then the palace's
+     layouts in the code; any other room starts empty. A look can also be
+     tried on from the catalogue; it's worn until the season or room changes
+     or the default changes. */
+  const desktopDefault = defaultLook(collection.saved, place, season, "desktop");
+  const phoneDefault = defaultLook(collection.saved, place, season, "phone");
+  // changes when a different look becomes a default, or a default is saved
+  // over — not when one is only renamed
+  const defaultKey = useMemo(
     () =>
-      new Set(
-        portrait ? hiddenOf(PHONE_LAYOUTS.spring) : BUNDLED_LAYOUTS.spring ? hiddenOf(BUNDLED_LAYOUTS.spring) : HIDDEN_AT_FIRST,
-      ),
+      [desktopDefault, phoneDefault]
+        .map((d) => (d.saved ? `${d.saved.id}:${JSON.stringify(d.saved.props)}` : d.source))
+        .join("|") + `|${place}|${season}`,
+    [desktopDefault, phoneDefault, place, season],
+  );
+
+  // what's been taken out of the room
+  const [hidden, setHidden] = useState<Set<string>>(
+    () => new Set(hiddenFor((portrait ? phoneDefault : desktopDefault).layout, place)),
   );
   const [catalogue, setCatalogue] = useState(false);
   const closeCatalogue = useCallback(() => setCatalogue(false), []);
   // the world map (WorldMap.tsx)
   const [map, setMap] = useState(false);
   const closeMap = useCallback(() => setMap(false), []);
-  const { place, go } = usePlace();
-  const inPalace = place === "palace";
-  const inCloset = place === "closet";
   // what's been taken out of the closet (Wardrobe.tsx); everything starts in it
   const [closetHidden, setClosetHidden] = useState<Set<string>>(() => new Set());
 
-
-  const switches = useRef<HTMLDivElement>(null);
-  const [upcoming, setUpcoming] = useState<Season>("summer");
-  const [season, setSeason] = useState<Season>("spring");
-
-  /* Each season brings its own look: what's in the room, and where. The
-     season's default in the saved collection wins, then the one in the code.
-     A look can also be tried on from the catalogue; it's worn until the
-     season turns or the season's default changes. */
-  const collection = useCollection();
-  const savedDefault = collection.saved.find((l) => l.season === season && l.is_default);
-  const seasonDefault: SeasonLayout | undefined = savedDefault ?? BUNDLED_LAYOUTS[season];
-  // changes when a different look becomes the default, or the default is
-  // saved over — not when it's only renamed
-  const defaultKey = useMemo(
-    () => (savedDefault ? `${savedDefault.id}:${JSON.stringify(savedDefault.props)}` : `code-${season}`),
-    [savedDefault, season],
-  );
-
-  const [wearing, setWearing] = useState<{ layout: SeasonLayout | undefined; rev: number }>(() => ({
-    layout: BUNDLED_LAYOUTS.spring,
+  const [wearing, setWearing] = useState<{ desktop: SeasonLayout; phone: SeasonLayout; rev: number }>(() => ({
+    desktop: desktopDefault.layout,
+    phone: phoneDefault.layout,
     rev: 0,
   }));
   const [rearranging, setRearranging] = useState(false);
   const glide = useRef<ReturnType<typeof setTimeout>>();
-  const phoneLayout = PHONE_LAYOUTS[season];
-  const latestPhone = useRef(phoneLayout);
-  latestPhone.current = phoneLayout;
-  const wear = useCallback((layout: SeasonLayout | undefined) => {
-    setWearing((w) => ({ layout, rev: w.rev + 1 }));
-    setHidden(new Set(phone.current ? hiddenOf(latestPhone.current) : layout ? hiddenOf(layout) : HIDDEN_AT_FIRST));
-    setRearranging(true);
+  const now = useRef({ place, portrait });
+  now.current = { place, portrait };
+
+  /** put a look on the room for this device (and, with both, for the other too) */
+  const wear = useCallback((look: { desktop?: SeasonLayout; phone?: SeasonLayout }, animate = true) => {
+    const { place: at, portrait: tall } = now.current;
+    setWearing((w) => {
+      const next = { desktop: look.desktop ?? w.desktop, phone: look.phone ?? w.phone, rev: w.rev + 1 };
+      setHidden(new Set(hiddenFor(tall ? next.phone : next.desktop, at)));
+      return next;
+    });
     clearTimeout(glide.current);
-    glide.current = setTimeout(() => setRearranging(false), 1800);
+    setRearranging(animate);
+    if (animate) glide.current = setTimeout(() => setRearranging(false), 1800);
   }, []);
+  /** try a look on from the catalogue, on whichever device this is */
+  const tryOn = useCallback(
+    (layout: SeasonLayout) => wear(now.current.portrait ? { phone: layout } : { desktop: layout }),
+    [wear],
+  );
   useEffect(() => () => clearTimeout(glide.current), []);
 
-  const latestDefault = useRef(seasonDefault);
-  latestDefault.current = seasonDefault;
+  const latestDefaults = useRef({ desktop: desktopDefault.layout, phone: phoneDefault.layout });
+  latestDefaults.current = { desktop: desktopDefault.layout, phone: phoneDefault.layout };
   const firstLook = useRef(true);
+  const lastPlace = useRef(place);
   useEffect(() => {
     if (firstLook.current) {
       firstLook.current = false;
       return;
     }
-    wear(latestDefault.current);
-  }, [season, defaultKey, wear, portrait]);
+    // walking into another room swaps its things in at once; a turning season glides
+    const moved = lastPlace.current !== place;
+    lastPlace.current = place;
+    wear(latestDefaults.current, !moved);
+  }, [defaultKey, wear, portrait, place]);
 
   // undo any dragging once the new look is on (see settle)
   useLayoutEffect(() => {
     if (wearing.rev === 0) return;
     const scope = switches.current?.closest(".palais-stage");
-    if (scope) settle(scope, wearing.layout, latestPhone.current);
+    if (scope) settle(scope, wearing.desktop, wearing.phone);
   }, [wearing]);
 
   // pauses the year, and the furniture taking turns to vanish (Conjure)
@@ -176,7 +193,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">{paused ? "Play" : "Pause"}</span>
           </button>
         )}
-        {(inPalace || inCloset) && (
         <button
           type="button"
           onClick={() => setCatalogue(true)}
@@ -187,7 +203,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">{inCloset ? "♡ Wardrobe" : "♡ Catalogue"}</span>
           <span className="palais-pill-short">{inCloset ? "♡ Wardrobe" : "♡ Catalogue"}</span>
         </button>
-        )}
         <button
           type="button"
           onClick={() => setMap(true)}
@@ -203,7 +218,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">Map</span>
           <span className="palais-pill-short">Map</span>
         </button>
-        {inPalace && (
         <button
           type="button"
           onClick={() => setRoom((v) => !v)}
@@ -214,7 +228,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">{room ? "Hide the room" : "Show the room"}</span>
           <span className="palais-pill-short">Room</span>
         </button>
-        )}
       </div>
 
       {/* the sticker layer: empty on arrival, then everything materialises */}
@@ -228,8 +241,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         {/* the arrival animates the layer's own opacity, which would override
             an opacity set on it here, so hiding happens one level in */}
         <div className="palais-layer" data-hidden={room ? undefined : ""} aria-hidden={room ? undefined : true}>
-          <LayoutNow.Provider value={wearing.layout}>
-            <PhoneLayoutNow.Provider value={phoneLayout}>{children}</PhoneLayoutNow.Provider>
+          <LayoutNow.Provider value={wearing.desktop}>
+            <PhoneLayoutNow.Provider value={wearing.phone}>{children}</PhoneLayoutNow.Provider>
           </LayoutNow.Provider>
         </div>
       </div>
@@ -257,13 +270,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       <Catalogue
         open={catalogue}
         onClose={closeCatalogue}
-        wardrobe={inCloset}
-        hidden={inCloset ? closetHidden : hidden}
-        setHidden={inCloset ? setClosetHidden : setHidden}
+        place={place}
+        device={device}
+        hidden={hidden}
+        setHidden={setHidden}
+        closetHidden={closetHidden}
+        setClosetHidden={setClosetHidden}
         collection={collection}
         season={season}
-        wearing={wearing.layout}
-        onWear={wear}
+        wearing={portrait ? wearing.phone : wearing.desktop}
+        onWear={tryOn}
       />
     </>
   );

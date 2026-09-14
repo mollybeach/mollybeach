@@ -33,3 +33,11 @@ The Wardrobe Wing's default arrangement of clothes lives in
 SQL editor. After that, sign in on the Wardrobe catalogue's Racks page,
 rearrange the clothes, and click **Done**. That arrangement becomes the one
 everyone sees.
+
+## Layouts for every room
+
+Each room on the map has its own layout for each season, on a computer and on
+a phone (8 per room). Run `migrations/20260914130000_palais_layouts_places.sql`
+once, which adds a `place` column. Signed in, clicking **Done** in the
+catalogue saves the room as its layout for the current season on that device.
+The catalogue's Seasons page shows all eight.

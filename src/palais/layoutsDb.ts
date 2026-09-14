@@ -1,6 +1,7 @@
 import type { Session, SupabaseClient } from "@supabase/supabase-js";
 import type { Season } from "./seasons";
 import type { SeasonLayout } from "./arrangement";
+import type { Place } from "./place";
 
 /**
  * The collection of saved layouts, kept in Supabase (table palais_layouts,
@@ -25,6 +26,8 @@ export type Device = "desktop" | "phone";
 export interface SavedLayout extends SeasonLayout {
   id: string;
   name: string;
+  /** which room on the map it's for */
+  place: Place;
   season: Season;
   device: Device;
   is_default: boolean;
@@ -42,20 +45,28 @@ export function db(): Promise<SupabaseClient> {
 }
 
 const TABLE = "palais_layouts";
-const COLUMNS = "id, name, season, device, stage, props, is_default, created_at, updated_at";
+const COLUMNS = "id, name, place, season, device, stage, props, is_default, created_at, updated_at";
 
 function must<T>({ data, error }: { data: T; error: { message: string } | null }): T {
   if (error) throw new Error(error.message);
   return data;
 }
 
-export async function listLayouts(device: Device = "desktop"): Promise<SavedLayout[]> {
+/** every saved look, for every room and device, newest first */
+export async function listLayouts(): Promise<SavedLayout[]> {
   const sb = await db();
-  return must(await sb.from(TABLE).select(COLUMNS).eq("device", device).order("created_at", { ascending: false })) as SavedLayout[];
+  const { data, error } = await sb.from(TABLE).select(COLUMNS).order("created_at", { ascending: false });
+  if (error && /place/.test(error.message)) {
+    // the rooms migration (…_palais_layouts_places.sql) hasn't been run: everything is the palace's
+    const old = must(await sb.from(TABLE).select(COLUMNS.replace("place, ", "")).order("created_at", { ascending: false }));
+    return (old as unknown as SavedLayout[]).map((l) => ({ ...l, place: "palace" }));
+  }
+  return must({ data, error }) as SavedLayout[];
 }
 
 export async function saveLayout(layout: {
   name: string;
+  place: Place;
   season: Season;
   device: Device;
   stage: SeasonLayout["stage"];
@@ -81,6 +92,25 @@ export async function deleteLayout(id: string): Promise<void> {
 export async function makeDefault(id: string): Promise<void> {
   const sb = await db();
   must(await sb.rpc("palais_make_default", { layout_id: id }));
+}
+
+/**
+ * Save the room as it is now as its default for a season and device: over the
+ * current default if there is one, otherwise as a new look that becomes it.
+ */
+export async function saveSeasonDefault(
+  saved: SavedLayout[],
+  look: { place: Place; season: Season; device: Device; name: string; stage: SeasonLayout["stage"]; props: SeasonLayout["props"] },
+): Promise<void> {
+  const current = saved.find(
+    (l) => l.place === look.place && l.season === look.season && l.device === look.device && l.is_default,
+  );
+  if (current) {
+    await updateLayout(current.id, { stage: look.stage, props: look.props });
+    return;
+  }
+  const made = await saveLayout(look);
+  await makeDefault(made.id);
 }
 
 /* ---- signing in ---- */

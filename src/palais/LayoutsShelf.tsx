@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { BUNDLED_LAYOUTS, capture, type SeasonLayout } from "./arrangement";
-import { deleteLayout, makeDefault, saveLayout, signIn, signOut, updateLayout, type SavedLayout } from "./layoutsDb";
+import { deleteLayout, makeDefault, saveLayout, signIn, signOut, updateLayout, type Device, type SavedLayout } from "./layoutsDb";
+import type { Place } from "./place";
 import { SEASON_NAMES, type Season } from "./seasons";
 import { messageOf, type Collection } from "./useCollection";
 
@@ -22,6 +23,8 @@ const shownCount = (l: SeasonLayout) => Object.values(l.props).filter((m) => m.s
 
 export function LayoutsShelf({
   collection,
+  place,
+  device,
   season,
   wearing,
   onWear,
@@ -29,6 +32,9 @@ export function LayoutsShelf({
   stageOf,
 }: {
   collection: Collection;
+  /** the room, and the device, whose looks these are */
+  place: Place;
+  device: Device;
   /** the season the room is in */
   season: Season;
   /** the layout the room has on */
@@ -63,9 +69,9 @@ export function LayoutsShelf({
   };
 
   const looks = saved
-    .filter((l) => l.season === viewing)
+    .filter((l) => (l.place ?? "palace") === place && l.device === device && l.season === viewing)
     .sort((a, b) => Number(b.is_default) - Number(a.is_default));
-  const bundled = BUNDLED_LAYOUTS[viewing];
+  const bundled = place === "palace" && device === "desktop" ? BUNDLED_LAYOUTS[viewing] : undefined;
   const hasDefault = looks.some((l) => l.is_default);
 
   if (!configured) {
@@ -142,8 +148,9 @@ export function LayoutsShelf({
                     run(async () => {
                       const copy = await saveLayout({
                         name: `${title(viewing)} (from the code)`,
+                        place,
                         season: viewing,
-                        device: "desktop",
+                        device,
                         stage: bundled.stage,
                         props: bundled.props,
                       });
@@ -172,7 +179,7 @@ export function LayoutsShelf({
           busy={busy}
           onSave={(name, s, asDefault) =>
             run(async () => {
-              const look = await saveLayout({ name, season: s, device: "desktop", ...room() });
+              const look = await saveLayout({ name, place, season: s, device, ...room() });
               if (asDefault) await makeDefault(look.id);
             })
           }

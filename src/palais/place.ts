@@ -44,3 +44,19 @@ export const PlaceNow = createContext<{ place: Place; go: (next: Place) => void 
 });
 
 export const usePlace = () => useContext(PlaceNow);
+
+/** what the world map calls each room */
+export const PLACE_NAMES: Record<Place, string> = {
+  palace: "The Palais",
+  closet: "The Wardrobe Wing",
+  lakehouse: "The Lakehouse",
+  lagoon: "The Steaming Lagoon",
+  rainwood: "The Rainwood",
+  gorge: "The Amphitheatre",
+  domes: "The City of Domes",
+  jacaranda: "The Jacaranda Quarter",
+  reef: "The Glass Reef",
+  lanterns: "The Lantern Isles",
+  shore: "The Shore of All Shores",
+  caves: "The Hollow of Small Stars",
+};

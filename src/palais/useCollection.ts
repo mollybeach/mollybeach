@@ -3,7 +3,7 @@ import { currentEditor, dbConfigured, listLayouts, onEditorChange, type Editor, 
 
 export interface Collection {
   configured: boolean;
-  /** every saved desktop layout, newest first */
+  /** every saved layout, for every room and device, newest first */
   saved: SavedLayout[];
   /** who's signed in, if anyone */
   editor: Editor | null;
@@ -23,7 +23,7 @@ export function useCollection(): Collection {
   const refresh = useCallback(async () => {
     if (!dbConfigured) return;
     try {
-      setSaved(await listLayouts("desktop"));
+      setSaved(await listLayouts());
       setError("");
     } catch (e) {
       setError(messageOf(e));
