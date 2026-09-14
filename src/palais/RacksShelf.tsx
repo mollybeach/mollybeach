@@ -17,12 +17,12 @@ const lookOf = (id: string, name: string) => LOOK.find(([re]) => re.test(id) || 
    it reads roughly the way the room does */
 const ORDER = [
   "rack-left", "rack-right", "rack-back", "rack-front",
-  "outer-left-top", "outer-left-low",
+  "outer-left-top", "outer-left-low", "outer-left-bottom",
   "left-top", "left-rail", "left-shelf", "left-bottom",
   "cubby-rail", "cubby-top", "cubby-row-1", "cubby-row-2", "cubby-row-3",
   "seat", "mirror", "mirror-shelves",
   "right-top", "right-middle", "right-low", "right-shelf", "right-bottom",
-  "outer-right-upper", "outer-right-lower",
+  "outer-right-top", "outer-right-second", "outer-right-upper", "outer-right-lower", "outer-right-bottom",
   "floor-front", "shoes",
 ];
 const rank = (id: string) => {

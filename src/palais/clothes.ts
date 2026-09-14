@@ -262,6 +262,11 @@ const WIDE: Line[] = [
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami"], from: [1598, 404], to: [1474, 438], w: [100, 92], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts"], from: [338, 714], to: [432, 694], w: [84, 76], hang: true, z: 48 },
   { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan"], from: [336, 245], to: [432, 281], w: [78, 70], hang: true, z: 46 },
+  // the bars added to the outer bays, left empty to be filled from the Racks page
+  { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: [], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
+  { id: "outer-right-top", name: "Outer right bay · top bar", ids: [], from: [1852, 68], to: [1662, 122], w: [84, 76], hang: true, z: 30 },
+  { id: "outer-right-second", name: "Outer right bay · second bar", ids: [], from: [1852, 146], to: [1662, 250], w: [90, 82], hang: true, z: 30 },
+  { id: "outer-right-bottom", name: "Outer right bay · bottom bar", ids: [], from: [1852, 772], to: [1662, 738], w: [92, 84], hang: true, z: 32 },
 ];
 
 /* The tall photograph for phones (941 × 1672). A phone crops its sides, so
@@ -307,8 +312,9 @@ export interface Bar {
 }
 
 /* Bars fitted where the closet had room for more: a third in the inner right
-   bay just above its floor, a second under that bay's top rail, and one each
-   in the empty top and bottom boxes of the narrow left bay. */
+   bay just above its floor, a second under that bay's top rail, one each in
+   the empty top and bottom boxes of the narrow left bay, one in the outer left
+   bay's bottom box, and three in the outer right bay's boxes. */
 export const CLOSET_BARS: Record<"wide" | "tall", Bar[]> = {
   wide: [
     { from: [1452, 768], to: [1606, 787], z: 73 },
@@ -318,6 +324,12 @@ export const CLOSET_BARS: Record<"wide" | "tall", Bar[]> = {
     { from: [322, 716], to: [446, 690], z: 49 },
     // in the narrow left bay's top box, just under its ceiling
     { from: [322, 240], to: [444, 286], z: 47 },
+    // the outer left bay's bottom box, above the drawer
+    { from: [34, 754], to: [298, 706], z: 91 },
+    // the outer right bay: its very top box, the box under that, and the bottom box above the drawer
+    { from: [1876, 60], to: [1640, 128], z: 31 },
+    { from: [1876, 132], to: [1640, 260], z: 31 },
+    { from: [1876, 776], to: [1640, 734], z: 33 },
   ],
   tall: [
     { from: [737, 975], to: [793, 990], z: 73 },
