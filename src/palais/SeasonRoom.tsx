@@ -10,25 +10,25 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
     (`<file>-portrait.webp`) */
 const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true }> = {
   // pink walls, lemon-papered shelves, Snoqualmie Falls through the window
-  closet: { file: "closet", focus: "50% 60%" },
+  closet: { file: "closet", focus: "50% 60%", portrait: true },
   // the house on the lake: marble fireplace, the red bridge, the dock, Rainier
-  lakehouse: { file: "lakehouse", focus: "50% 55%" },
+  lakehouse: { file: "lakehouse", focus: "50% 55%", portrait: true },
   // the blue lagoon under the northern lights
-  lagoon: { file: "lagoon", focus: "50% 55%" },
+  lagoon: { file: "lagoon", focus: "50% 55%", portrait: true },
   // the mossy rainforest conservatory: one photograph for now, all year
   rainwood: { file: "rainwood", focus: "50% 55%", seasons: false },
   // the festival stage on the canyon rim at sunset: one photograph for now
   gorge: { file: "amphitheatre", focus: "50% 55%", seasons: false },
   // the thermal bath over the old city of domes, canals and the volcano: one photograph for now
-  domes: { file: "domes", focus: "50% 55%", seasons: false },
+  domes: { file: "domes", focus: "50% 55%", seasons: false, portrait: true },
   // the balcony over the jacaranda street at dusk: one photograph for now
   jacaranda: { file: "jacaranda", focus: "50% 55%", seasons: false, portrait: true },
   // the glass pavilion half under the sea, looking into the reef: one photograph for now
-  reef: { file: "reef", focus: "50% 55%", seasons: false },
+  reef: { file: "reef", focus: "50% 55%", seasons: false, portrait: true },
   // the lacquered pavilion over the lantern-lit temple island at dusk: one photograph for now
   lanterns: { file: "lanterns", focus: "50% 55%", seasons: false },
   // the white loggia over every beach at once, at sunset: one photograph for now
-  shore: { file: "shore", focus: "50% 55%", seasons: false },
+  shore: { file: "shore", focus: "50% 55%", seasons: false, portrait: true },
   // the glowworm grotto opening onto hobbit hills, a mountain and hot springs: one photograph for now
   caves: { file: "caves", focus: "50% 55%", seasons: false, portrait: true },
 };
@@ -48,7 +48,9 @@ export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
   return (
     <div aria-hidden className={`palais-room palais-room--away palais-room--${place}`}>
       <div className="palais-seasons">
-        {room.seasons === false ? (
+        {/* a tall photograph is one picture for the whole year, even in a room
+            whose wide photographs change with the seasons */}
+        {room.seasons === false || tall ? (
           <img
             src={`${process.env.PUBLIC_URL}/palais/${room.file}${tall ? "-portrait" : ""}.webp`}
             alt=""
