@@ -228,7 +228,7 @@ export function Draggable() {
       const { clientX, clientY, target: over } = e;
       hoverFrame = requestAnimationFrame(() => {
         hoverFrame = 0;
-        if (over instanceof Element && over.closest(".cat-backdrop, .wm-backdrop")) {
+        if (over instanceof Element && over.closest(".cat-backdrop, .wm-backdrop, .jb-backdrop")) {
           if (target) hide(0);
           return;
         }
@@ -245,7 +245,7 @@ export function Draggable() {
     /* ---- moving -------------------------------------------------------------- */
     const down = (e: PointerEvent) => {
       if (e.button !== 0 || grab || resize) return;
-      if ((e.target as Element).closest("button, a, input, label, .cat-backdrop, .wm-backdrop")) return;
+      if ((e.target as Element).closest("button, a, input, label, .cat-backdrop, .wm-backdrop, .jb-backdrop")) return;
       const hit = pick(e.clientX, e.clientY);
       if (!hit) {
         if (e.pointerType !== "mouse") hide(0);

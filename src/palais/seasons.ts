@@ -6,18 +6,18 @@
  * moment the next season starts fading in, and play that fade five times
  * faster. Afterwards the timeline carries on at its normal pace from there.
  *
- * These numbers must match the keyframes: a 160s cycle in which summer,
- * autumn and winter start fading in at 40s, 80s and 120s, and winter starts
- * fading back to spring at 155s.
+ * These numbers must match the keyframes: an 80s cycle in which summer,
+ * autumn and winter start fading in at 20s, 40s and 60s, and winter starts
+ * fading back to spring at 77.5s.
  */
 
 export const SEASON_NAMES = ["spring", "summer", "autumn", "winter"] as const;
 export type Season = (typeof SEASON_NAMES)[number];
 
-const CYCLE = 160_000;
-const FADE = 5_000;
+const CYCLE = 80_000;
+const FADE = 2_500;
 /** when each season begins to arrive, in ms into the cycle */
-const ARRIVES: Record<Season, number> = { summer: 40_000, autumn: 80_000, winter: 120_000, spring: 155_000 };
+const ARRIVES: Record<Season, number> = { summer: 20_000, autumn: 40_000, winter: 60_000, spring: 77_500 };
 const FAST = 5;
 
 function seasonAnimations(scope: ParentNode) {

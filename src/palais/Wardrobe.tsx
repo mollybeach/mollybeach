@@ -1,9 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Styled } from "./styled";
 import { usePortrait } from "./PortraitTerrace";
 import { usePlace } from "./place";
 import { CLOSET_BARS, CLOSET_PHOTOS, CLOSET_RACKS, closetSrc, garment, lay, type Bar, type Rack, type Spot } from "./clothes";
 import { useRackOrder } from "./closetRacks";
+import { JewelryBox } from "./JewelryBox";
+import { propSrc } from "./props";
+
+/* the jewellery cabinet, standing for good in the bottom box of the narrow
+   left bay: its feet, middle and width, in each photograph's pixels */
+const CABINET = {
+  wide: { x: 378, feet: 868, w: 118 },
+  tall: { x: 184, feet: 1150, w: 76 },
+};
 
 /** a little brass hanger, hooked over the rail */
 function Hanger() {
@@ -96,9 +105,18 @@ export function Wardrobe() {
   // rearranged from the catalogue's Racks page (closetRacks.ts)
   const order = useRackOrder(which);
   const spots = useMemo(() => lay(which, order), [which, order]);
+  const [jewels, setJewels] = useState(false);
+  const closet = useRef<HTMLDivElement>(null);
+  // leaving the closet closes the jewellery box
+  useEffect(() => {
+    if (place !== "closet") setJewels(false);
+  }, [place]);
   if (!visited) return null;
+  const photo = CLOSET_PHOTOS[which];
+  const cab = CABINET[which];
+  const stage = closet.current?.closest<HTMLElement>(".palais-stage");
   return (
-    <div className="palais-closet" aria-hidden={place !== "closet"}>
+    <div ref={closet} className="palais-closet" aria-hidden={place !== "closet"}>
       <div key={which} className={`palais-closet-frame palais-closet-frame--${which}`}>
         {CLOSET_BARS[which].map((bar) => (
           <HangingBar key={bar.from.join()} bar={bar} photo={CLOSET_PHOTOS[which]} />
@@ -109,7 +127,23 @@ export function Wardrobe() {
         {spots.map((spot, i) => (
           <Piece key={spot.id} spot={spot} i={i} />
         ))}
+        {/* the jewellery cabinet: not a sticker to move, but a door into the jewellery box */}
+        <button
+          type="button"
+          className="closet-jewelry"
+          style={{
+            left: `${(((cab.x - cab.w / 2) / photo.w) * 100).toFixed(3)}%`,
+            bottom: `${((1 - cab.feet / photo.h) * 100).toFixed(3)}%`,
+            width: `${((cab.w / photo.w) * 100).toFixed(3)}%`,
+          }}
+          onClick={() => setJewels(true)}
+          aria-label="Open the jewelry box"
+          title="Open the jewelry box"
+        >
+          <img src={propSrc("cabinet-jewelry")} alt="" draggable={false} />
+        </button>
       </div>
+      {jewels && stage && <JewelryBox stage={stage} onClose={() => setJewels(false)} />}
     </div>
   );
 }

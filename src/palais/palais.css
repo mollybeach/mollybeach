@@ -295,8 +295,8 @@
 }
 
 /* ---- the seasons --------------------------------------------------------
-   A 160s year: each season holds for 40s, and the next fades in over it for
-   5s (5/160 = 3.125% of the cycle). Spring sits underneath and never moves.
+   An 80s year: each season holds for 20s, and the next fades in over it for
+   2.5s (2.5/80 = 3.125% of the cycle). Spring sits underneath and never moves.
    Once a season has fully covered the one before, that one drops out, so at
    most two photographs are ever blending; winter alone fades away, back to
    spring. */
@@ -316,7 +316,7 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: 160s ease-in-out 0s infinite both;
+  animation: 80s ease-in-out 0s infinite both;
 }
 .palais .palais-season--spring { opacity: 1; animation: none; }
 .palais .palais-season--summer { animation-name: palais-season-summer; }
@@ -2026,3 +2026,165 @@
   font: 800 0.7rem/0.95rem var(--cat-round);
   text-align: center;
 }
+
+/* ---- the jewellery cabinet in the closet, and the jewellery box (JewelryBox.tsx) ---- */
+.palais .closet-jewelry {
+  position: absolute;
+  /* stands in front of the skirts hanging above it, so it's always there to click */
+  z-index: 95;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  transition: transform 200ms ease, filter 200ms ease;
+  filter: drop-shadow(0 0.2cqw 0.3cqw rgba(60, 30, 20, 0.35));
+}
+.palais .closet-jewelry img { display: block; width: 100%; height: auto; max-width: none; }
+.palais .closet-jewelry:hover,
+.palais .closet-jewelry:focus-visible {
+  transform: translateY(-2%) scale(1.04);
+  filter: drop-shadow(0 0 0.6cqw rgba(255, 214, 120, 0.9)) drop-shadow(0 0.2cqw 0.3cqw rgba(60, 30, 20, 0.35));
+  outline: none;
+}
+.palais .jb-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 250;
+  display: grid;
+  place-items: center;
+  padding: 3cqh 3cqw;
+  background: rgba(60, 40, 45, 0.18);
+  backdrop-filter: blur(10px) saturate(1.05);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
+  animation: jb-in 260ms ease both;
+}
+@keyframes jb-in { from { opacity: 0; } }
+.palais .jb-frame {
+  position: relative;
+  width: min(92cqw, 150cqh);
+  max-height: 92cqh;
+  padding: 2.4% 5% 4.5%;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 250, 244, 0.28), rgba(255, 244, 236, 0.18));
+  border: 2px solid #d8b35a;
+  box-shadow: inset 0 0 0 5px rgba(255, 246, 225, 0.55), inset 0 0 0 6px #e7c878, 0 20px 50px rgba(60, 30, 30, 0.25);
+  animation: jb-pop 320ms cubic-bezier(0.2, 0.8, 0.3, 1.1) both;
+}
+@keyframes jb-pop { from { transform: scale(0.94); opacity: 0; } }
+.palais .jb-rose { position: absolute; font-size: clamp(1.1rem, 2.4cqw, 2rem); filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2)); pointer-events: none; }
+.palais .jb-rose--tl { left: -0.6rem; top: -0.8rem; }
+.palais .jb-rose--tr { right: 2.2rem; top: -0.8rem; }
+.palais .jb-rose--bl { left: -0.6rem; bottom: -0.7rem; }
+.palais .jb-rose--br { right: -0.6rem; bottom: -0.7rem; }
+.palais .jb-close,
+.palais .jb-arrow {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  border: 2px solid #d8b35a;
+  background: #fffaf2;
+  color: #4a2a22;
+  font: 600 1.4rem/1 Georgia, "Times New Roman", serif;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(60, 30, 30, 0.2);
+}
+.palais .jb-close { right: -0.9rem; top: -0.9rem; width: 2.4rem; height: 2.4rem; }
+.palais .jb-arrow { top: 50%; width: 2.6rem; height: 2.6rem; transform: translateY(-50%); font-size: 1.7rem; }
+.palais .jb-arrow--left { left: -1.3rem; }
+.palais .jb-arrow--right { right: -1.3rem; }
+.palais .jb-close:hover, .palais .jb-arrow:hover { background: #fff1d9; }
+.palais .jb-box { position: relative; width: 100%; }
+.palais .jb-box-img { display: block; width: 100%; height: auto; max-width: none; filter: drop-shadow(0 14px 18px rgba(50, 20, 20, 0.35)); user-select: none; }
+.palais .jb-piece {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 1px 1.5px rgba(40, 10, 10, 0.45));
+  transition: transform 160ms ease, filter 160ms ease;
+}
+.palais .jb-piece img { display: block; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: 50% 50%; pointer-events: none; }
+.palais .jb-piece.is-hung { transform-origin: 50% 0; }
+.palais .jb-piece.is-hung img { object-position: 50% 0; }
+.palais .jb-piece:hover,
+.palais .jb-piece:focus-visible { z-index: 2; outline: none; transform: scale(1.6); filter: drop-shadow(0 0 4px rgba(255, 235, 170, 0.95)); }
+.palais .jb-piece.is-hung:hover,
+.palais .jb-piece.is-hung:focus-visible { transform: scale(1.15); }
+.palais .jb-caption {
+  position: absolute;
+  left: 50%;
+  top: 0.5%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.2rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(255, 250, 242, 0.92);
+  color: #5a2f28;
+  font: italic 600 clamp(0.72rem, 1.4cqw, 0.95rem)/1.3 Georgia, "Times New Roman", serif;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.palais .jb-plaque {
+  position: absolute;
+  left: 50%;
+  bottom: -1.2rem;
+  transform: translateX(-50%);
+  padding: 0.35rem 1.6rem;
+  border-radius: 12px;
+  border: 2px solid #d8b35a;
+  background: #fffaf2;
+  color: #3d2320;
+  font: 500 clamp(1rem, 2.2cqw, 1.6rem)/1.2 "Cormorant Garamond", Georgia, serif;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(60, 30, 30, 0.2);
+}
+.palais .jb-catalogue {
+  max-height: 78cqh;
+  overflow-y: auto;
+  padding: 0.6rem;
+  border-radius: 16px;
+  background: rgba(255, 250, 245, 0.93);
+  overscroll-behavior: contain;
+}
+.palais .jb-shelf h3 { margin: 0.4rem 0 0.4rem; font: 600 1.15rem/1.2 "Cormorant Garamond", Georgia, serif; color: #6b2a3a; }
+.palais .jb-count { font-size: 0.8rem; color: #b07a86; }
+.palais .jb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 0.55rem; margin: 0 0 0.6rem; padding: 0; list-style: none; }
+.palais .jb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.4rem;
+  border-radius: 14px;
+  background: #fff;
+  border: 2px dashed #e8c9cf;
+  cursor: pointer;
+}
+.palais .jb-card.is-on { border-style: solid; border-color: #d8b35a; }
+.palais .jb-card input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.palais .jb-heart { position: absolute; top: 0.25rem; right: 0.35rem; color: #c0435f; font-size: 1rem; }
+.palais .jb-thumb { display: grid; place-items: center; aspect-ratio: 1; border-radius: 10px; background: radial-gradient(circle, #fff, #f7e6e0); }
+.palais .jb-thumb img { width: 84%; height: 84%; object-fit: contain; }
+.palais .jb-card:not(.is-on) .jb-thumb img { filter: grayscale(0.8); opacity: 0.45; }
+.palais .jb-name { margin-top: 0.3rem; font: 600 0.7rem/1.2 Georgia, serif; color: #5a2f28; text-align: center; }
+.palais .jb-store { font-size: 0.6rem; color: #a07a70; text-align: center; }
+@container palais (max-width: 639px) {
+  .palais .jb-frame { width: 96cqw; padding: 5% 3% 9%; }
+  .palais .jb-arrow { width: 2.1rem; height: 2.1rem; }
+  .palais .jb-arrow--left { left: -0.4rem; }
+  .palais .jb-arrow--right { right: -0.4rem; }
+  .palais .jb-close { right: -0.3rem; top: -0.9rem; }
+}
+/* the sticker layers cover the whole stage; only the stickers themselves
+   should catch the pointer, so things under them (the jewellery cabinet in
+   the closet) can still be clicked */
+.palais .palais-arrive,
+.palais .palais-arrive .palais-layer,
+.palais .palais-arrive .palais-scene,
+.palais .palais-arrive .palais-frame { pointer-events: none; }
+.palais .palais-arrive .palais-layer:not([data-hidden]) [data-prop] { pointer-events: auto; }
+.palais .palais-layer [data-prop][style*="visibility: hidden"] { pointer-events: none; }

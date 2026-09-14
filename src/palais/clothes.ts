@@ -32,7 +32,6 @@ export const CLOTHES = wardrobe({
   "amz-coutgo-heels": { label: "Patent T-strap platform heels", store: "Amazon", bought: "2023-02", kind: "shoes" },
   "amz-fairies-dress": { label: "“F is for Fairies” dress", store: "Amazon · Dolls Kill", bought: "2025-07", kind: "dress" },
   "amz-floral-sweatshirt": { label: "Sunflower embroidered sweatshirt", store: "Amazon · Romwe", bought: "2021-05", kind: "top" },
-  "amz-lana-necklace": { label: "Lana rosary locket necklace", store: "Amazon", bought: "2025-12", kind: "accessory" },
   "amz-lolita-maryjanes": { label: "Platform Mary Janes", store: "Amazon", bought: "2022-10", kind: "shoes" },
   "amz-maryjanes-kalstage": { label: "White double-strap Mary Janes", store: "Amazon", bought: "2023-05", kind: "shoes" },
   "amz-roller-skates": { label: "Light-up roller skates", store: "Amazon", bought: "2023-06", kind: "shoes" },
@@ -79,7 +78,6 @@ export const CLOTHES = wardrobe({
   "temu-laceup-dress": { label: "Lace-up backless dress", store: "Temu", bought: "2024-06", kind: "dress" },
   "temu-mantilla": { label: "Lace mantilla veil", store: "Temu", bought: "2023-05", kind: "accessory" },
   "temu-offshoulder-dress": { label: "Black & white ruffle mini dress", store: "Temu", bought: "2025-05", kind: "dress" },
-  "temu-pearl-necklace": { label: "Pearl heart necklace", store: "Temu", bought: "2023-05", kind: "accessory" },
   "temu-pearl-tank": { label: "Powder blue corset top", store: "Temu", bought: "2025-04", kind: "top" },
   "temu-rose-beanie": { label: "Rose knit hood beanie", store: "Temu", bought: "2025-02", kind: "hat" },
   "temu-saddle-bag": { label: "Houndstooth saddle bag", store: "Temu", bought: "2023-05", kind: "bag" },
@@ -248,7 +246,7 @@ const WIDE: Line[] = [
   // the little rail over the cubbies, and the cubbies
   { id: "cubby-rail", name: "Cubbies · little rail", ids: ["tt-nidadie-set", "cider-lace-cami-dress", "temu-squareneck-dress", "temu-satin-nightdress", "temu-beach-swimsuit", "cider-satin-cami-dress", "tt-plaid-halter-dress"], from: [480, 327], to: [520, 349], w: [76, 68], hang: true, z: 40 },
   { id: "cubby-top", name: "Cubbies · on top", ids: ["temu-fur-buckethat", "temu-rose-beanie", "shein-bear-ear-bonnet", "shein-black-fur-beanie"], from: [492, 486], to: [540, 480], w: [58, 54], z: 38 },
-  { id: "cubby-row-1", name: "Cubbies · middle row", ids: ["amz-lana-necklace", "temu-pearl-necklace", "temu-lace-gloves"], from: [487, 577], to: [543, 572], w: [26, 24], z: 36 },
+  { id: "cubby-row-1", name: "Cubbies · middle row", ids: ["temu-lace-gloves"], from: [487, 577], to: [543, 572], w: [26, 24], z: 36 },
   { id: "cubby-row-2", name: "Cubbies · lower row", ids: ["temu-floral-gloves", "shein-ballet-bows"], from: [487, 676], to: [516, 672], w: [27, 26], z: 36 },
   // the very narrow column of shelves by the mirror
   { id: "mirror-shelves", name: "Little shelves by the mirror", ids: ["temu-mantilla", "temu-fur-headband", "temu-butterfly-scarf", "temu-strawberry-bandana"], from: [1398, 360], to: [1398, 770], w: [52, 52], z: 36 },
@@ -297,7 +295,7 @@ const TALL: Line[] = [
   { id: "rack-back", name: "Back rolling rack", ids: ["amz-tulle-dress-blue", "amz-tulle-dress-green", "amz-fairies-dress", "temu-ditsy-splitdress", "temu-flower-camidress", "temu-satin-robe", "ref-shai-dress", "dh-tweed-set-ivory", "dh-tweed-set-black", "dh-knit-skirt-set", "cider-velvet-corset-dress", "cider-ruffle-velvet-dress", "romi-miranda-dress", "cider-jacquard-bandeau-dress", "cider-wine-bandeau-dress", "shein-green-organza-dress"], from: [320, 1010], to: [620, 1010], w: [80, 80], hang: true, z: 30 },
   { id: "rack-front", name: "Front rolling rack", ids: ["amz-floral-sweatshirt", "shein-halfzip", "temu-tie-cardigan", "temu-heart-bikini", "temu-beach-swimsuit", "dh-goose-jacket-pink", "dh-puffer-jacket", "dh-fur-coat", "dh-cc-bikini", "tt-striped-vest-set", "tt-striped-collar-set"], from: [232, 1215], to: [708, 1215], w: [92, 92], hang: true, z: 40 },
   // on the tiles in front
-  { id: "floor-front", name: "On the floor · front", ids: ["temu-mantilla", "temu-butterfly-scarf", "temu-strawberry-bandana", "amz-lana-necklace", "temu-pearl-necklace", "temu-lace-gloves", "temu-floral-gloves", "amz-ski-gloves", "amz-ruffle-socks", "dh-leather-belt", "cider-crochet-scarf", "tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "tt-satin-bow-ties"], from: [140, 1520], to: [800, 1520], w: [58, 58], z: 50 },
+  { id: "floor-front", name: "On the floor · front", ids: ["temu-mantilla", "temu-butterfly-scarf", "temu-strawberry-bandana", "temu-lace-gloves", "temu-floral-gloves", "amz-ski-gloves", "amz-ruffle-socks", "dh-leather-belt", "cider-crochet-scarf", "tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "tt-satin-bow-ties"], from: [140, 1520], to: [800, 1520], w: [58, 58], z: 50 },
   { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks", "shein-fur-snow-boots"], from: [120, 1650], to: [820, 1650], w: [72, 72], z: 60 },
   // the outer left bay (a phone crops some of it) and the shelf in the inner right bay
   { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "yellow-charlotte-dress", "styluxe-slip-dress"], from: [84, 506], to: [140, 552], w: [80, 70], hang: true, z: 80 },
