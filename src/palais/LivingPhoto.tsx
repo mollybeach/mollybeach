@@ -17,6 +17,9 @@ import { usePlace, type Place } from "./place";
  *   further along twice, half a cycle apart, and the two are crossfaded, so the
  *   drift never runs out or jumps. A slow warp on top makes them billow.
  * - The water ripples: small wavy offsets and a faint shimmer.
+ * - A waterfall (blue in the mask, painted by hand: Snoqualmie Falls in the
+ *   closet window) pours: the same flow trick, fast and straight down, with
+ *   streaks of foam running through it.
  *
  * It reads each photograph's opacity every frame and mixes them the same way
  * the page does, so it stays in step while the seasons crossfade. It only runs
@@ -70,8 +73,8 @@ void main() {
 
   vec4 m = mask(uv);
   // only move what's clearly sky or water, so edges (towers, mullions, leaves) hold still
-  float sky = smoothstep(0.45, 0.9, m.r), water = smoothstep(0.45, 0.9, m.g);
-  float a = max(sky, water);
+  float sky = smoothstep(0.45, 0.9, m.r), water = smoothstep(0.45, 0.9, m.g), fall = smoothstep(0.2, 0.7, m.b);
+  float a = max(max(sky, water), fall);
   if (a < 0.02) discard;
 
   vec3 col = photo(uv);
@@ -104,6 +107,22 @@ void main() {
     col = mix(col, cw, water);
   }
 
+  if (fall > 0.02) {
+    // the water pouring down: sampled from a little higher, two phases crossfaded
+    float T = 0.9;
+    float p0 = fract(t / T), p1 = fract(t / T + 0.5);
+    float blend = abs(p0 - 0.5) * 2.0;
+    vec2 flow = vec2(0.0, 0.02);
+    vec2 u0 = uv - flow * p0, u1 = uv - flow * p1;
+    vec3 c0 = mask(u0).b > 0.4 ? photo(u0) : col;
+    vec3 c1 = mask(u1).b > 0.4 ? photo(u1) : col;
+    vec3 cf = mix(c0, c1, blend);
+    // foam streaks racing down
+    float streak = noise(vec2(uv.x * 900.0, uv.y * 60.0 - t * 9.0));
+    cf += (streak - 0.45) * 0.22;
+    col = mix(col, cf, fall);
+  }
+
   gl_FragColor = vec4(col * a, a);
 }
 `;
@@ -111,7 +130,7 @@ void main() {
 const maskFor = (src: string) => src.replace(/\/palais\/([^/]+)\.webp$/, "/palais/masks/$1.webp");
 
 /** photographs with nothing to animate (no sky or water in the picture) */
-const STILL = /\/palais\/(closet-[a-z]+|rainwood)\.webp$/;
+const STILL = /\/palais\/rainwood\.webp$/;
 
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const sh = gl.createShader(type)!;
