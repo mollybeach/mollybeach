@@ -3,7 +3,7 @@ import { propSpec, propSrc, type Plane, type PropId } from "./props";
 import type { SetName } from "./conjureSchedule";
 import { RIGS } from "./rigs";
 import { useContext } from "react";
-import { ArrangedRoom, LayoutNow, arranged } from "./arrangement";
+import { ArrangedRoom, InPhoneRoom, LayoutNow, PhoneLayoutNow, arranged } from "./arrangement";
 import { Conjure } from "./Conjure";
 
 type Motion = "bob" | "swing" | "rustle" | "drift" | "turn" | "none";
@@ -117,6 +117,8 @@ export function Prop({
 
   const inRoom = useContext(ArrangedRoom);
   const layout = useContext(LayoutNow);
+  const inPhone = useContext(InPhoneRoom);
+  const phoneLayout = useContext(PhoneLayoutNow);
   const outer: Styled = {
     position: "absolute",
     width: w,
@@ -127,7 +129,7 @@ export function Prop({
     zIndex: z,
     opacity,
     // where Molly dragged it to, in the desktop room
-    ...(inRoom ? arranged(id, layout) : undefined),
+    ...(inRoom ? arranged(id, layout) : inPhone ? arranged(id, phoneLayout) : undefined),
   };
   const sharing = slot !== undefined;
   if (ghost || sharing) {

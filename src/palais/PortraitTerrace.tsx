@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Prop } from "./Prop";
 import { Pendant } from "./Pendant";
+import { InPhoneRoom } from "./arrangement";
+import { PHONE_EXTRAS, PHONE_EXTRA_PENDANTS } from "./phoneLayout";
 
 /**
  * The terrace on a phone: its own photograph, and its own arrangement.
@@ -92,6 +94,7 @@ const ARMCHAIR_SEAT = surface(ARMCHAIR_M, ARMCHAIR_Y, 1.28, 0.36);
 
 export function PortraitTerrace() {
   return (
+    <InPhoneRoom.Provider value={true}>
     <div className="palais-frame">
       {/* ---- wisteria in the top corners, over the fresco ---------------- */}
       <Prop id="wisteria-branch-lavender" w="72cqw" left="-14%" top="-5%" tilt={-3} motion="rustle" dur={17} z={90} plane="fore" />
@@ -149,6 +152,20 @@ export function PortraitTerrace() {
       <Prop id="cat-blueberry-running" w={w(0.3, CATS_Y)} left="40%" ground={at(CATS_Y).ground} tilt={2} motion="bob" dur={7} rise={6} z={74} />
       <Prop id="honeysuckle-tricycle" w={w(0.28, CATS_Y)} right="10%" ground={at(CATS_Y).ground} tilt={-1} motion="bob" dur={12} rise={3} z={74} />
       <Prop id="cats-roses" w={w(0.28, CATS_Y)} left="62%" ground={at(CATS_Y).ground} tilt={-1} motion="bob" dur={14} rise={3} z={74} />
+
+      {/* ---- the rest of the catalogue: out of the room to begin with, ready
+           to be turned on and dragged into place (phoneLayout.ts) ------------ */}
+      {PHONE_EXTRAS.map((e) =>
+        e.top !== undefined ? (
+          <Prop key={e.id} id={e.id} w={`${e.w}cqw`} left={`${e.left}%`} top={`${e.top}%`} motion="none" z={60} />
+        ) : (
+          <Prop key={e.id} id={e.id} w={`${e.w}cqw`} left={`${e.left}%`} ground={`${e.ground}%`} motion="none" z={60} />
+        ),
+      )}
+      {PHONE_EXTRA_PENDANTS.map((id, n) => (
+        <Pendant key={id} id={id} x={`${20 + n * 45}%`} w="14cqw" tilt={0} arc={1.3} dur={12 + n} />
+      ))}
     </div>
+    </InPhoneRoom.Provider>
   );
 }

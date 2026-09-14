@@ -140,6 +140,10 @@ export const BUNDLED_LAYOUTS: Partial<Record<Season, SeasonLayout>> = {
 export const ArrangedRoom = createContext(false);
 /** the layout the room is dressed in right now; none means the one above */
 export const LayoutNow = createContext<SeasonLayout | undefined>(undefined);
+/** true inside the phone room (PortraitTerrace.tsx), which has its own layouts */
+export const InPhoneRoom = createContext(false);
+/** the phone room's layout right now (phoneLayout.ts) */
+export const PhoneLayoutNow = createContext<SeasonLayout | undefined>(undefined);
 
 function move(x: number, y: number, s: number | undefined, z: number, w: number, h: number): Styled {
   const style: Styled = { zIndex: z };
@@ -176,11 +180,12 @@ export function hiddenOf(layout: SeasonLayout): string[] {
  * dragged, in a layout that doesn't move it, would stay where it was dragged.
  * This writes them all.
  */
-export function settle(scope: ParentNode, layout?: SeasonLayout) {
+export function settle(scope: ParentNode, layout?: SeasonLayout, phoneLayout?: SeasonLayout) {
   scope.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
-    // the phone layout has its own positions (PortraitTerrace.tsx), not these
-    if (el.closest(".palais-frame")) return;
-    const style = arranged(el.dataset.prop!, layout);
+    // the phone room has its own layouts (phoneLayout.ts)
+    const phone = !!el.closest(".palais-frame");
+    if (phone && !phoneLayout) return;
+    const style = arranged(el.dataset.prop!, phone ? phoneLayout : layout);
     el.style.translate = style?.translate ? String(style.translate) : "";
     el.style.scale = style?.scale ? String(style.scale) : "";
     if (style?.scale && !el.style.transformOrigin) el.style.transformOrigin = "50% 100%";
@@ -191,7 +196,9 @@ export function settle(scope: ParentNode, layout?: SeasonLayout) {
 
 /** the room as it is right now, in the same form as a saved layout */
 export function capture(stage: HTMLElement, hidden: Set<string>): SeasonLayout & { layout: "desktop" | "phone" } {
-  const r = stage.getBoundingClientRect();
+  // a phone layout is measured on the photograph's frame, so it holds on any phone
+  const frame = stage.querySelector<HTMLElement>(".palais-layer .palais-frame");
+  const r = (frame ?? stage).getBoundingClientRect();
   const props: SeasonLayout["props"] = {};
   stage.querySelectorAll<HTMLElement>(".palais-layer [data-prop]").forEach((el) => {
     const cs = getComputedStyle(el);

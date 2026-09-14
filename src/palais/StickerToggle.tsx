@@ -4,7 +4,9 @@ import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } f
 import { Catalogue } from "./Catalogue";
 import { WorldMap } from "./WorldMap";
 import { HIDDEN_AT_FIRST } from "./shelves";
-import { BUNDLED_LAYOUTS, LayoutNow, hiddenOf, settle, type SeasonLayout } from "./arrangement";
+import { BUNDLED_LAYOUTS, LayoutNow, PhoneLayoutNow, hiddenOf, settle, type SeasonLayout } from "./arrangement";
+import { PHONE_LAYOUTS } from "./phoneLayout";
+import { usePortrait } from "./PortraitTerrace";
 import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
 
@@ -31,9 +33,16 @@ import { usePlace } from "./place";
  */
 export function StickerToggle({ children, seasons = false }: { children: ReactNode; seasons?: boolean }) {
   const [room, setRoom] = useState(true);
+  // on a phone the room has its own layouts (phoneLayout.ts)
+  const portrait = usePortrait();
+  const phone = useRef(portrait);
+  phone.current = portrait;
   // what's been taken out of the room; the blossoms start out of it
   const [hidden, setHidden] = useState<Set<string>>(
-    () => new Set(BUNDLED_LAYOUTS.spring ? hiddenOf(BUNDLED_LAYOUTS.spring) : HIDDEN_AT_FIRST),
+    () =>
+      new Set(
+        portrait ? hiddenOf(PHONE_LAYOUTS.spring) : BUNDLED_LAYOUTS.spring ? hiddenOf(BUNDLED_LAYOUTS.spring) : HIDDEN_AT_FIRST,
+      ),
   );
   const [catalogue, setCatalogue] = useState(false);
   const closeCatalogue = useCallback(() => setCatalogue(false), []);
@@ -68,9 +77,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   }));
   const [rearranging, setRearranging] = useState(false);
   const glide = useRef<ReturnType<typeof setTimeout>>();
+  const phoneLayout = PHONE_LAYOUTS[season];
+  const latestPhone = useRef(phoneLayout);
+  latestPhone.current = phoneLayout;
   const wear = useCallback((layout: SeasonLayout | undefined) => {
     setWearing((w) => ({ layout, rev: w.rev + 1 }));
-    setHidden(new Set(layout ? hiddenOf(layout) : HIDDEN_AT_FIRST));
+    setHidden(new Set(phone.current ? hiddenOf(latestPhone.current) : layout ? hiddenOf(layout) : HIDDEN_AT_FIRST));
     setRearranging(true);
     clearTimeout(glide.current);
     glide.current = setTimeout(() => setRearranging(false), 1800);
@@ -86,13 +98,13 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       return;
     }
     wear(latestDefault.current);
-  }, [season, defaultKey, wear]);
+  }, [season, defaultKey, wear, portrait]);
 
   // undo any dragging once the new look is on (see settle)
   useLayoutEffect(() => {
     if (wearing.rev === 0) return;
     const scope = switches.current?.closest(".palais-stage");
-    if (scope) settle(scope, wearing.layout);
+    if (scope) settle(scope, wearing.layout, latestPhone.current);
   }, [wearing]);
 
   // pauses the year, and the furniture taking turns to vanish (Conjure)
@@ -213,7 +225,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         {/* the arrival animates the layer's own opacity, which would override
             an opacity set on it here, so hiding happens one level in */}
         <div className="palais-layer" data-hidden={room ? undefined : ""} aria-hidden={room ? undefined : true}>
-          <LayoutNow.Provider value={wearing.layout}>{children}</LayoutNow.Provider>
+          <LayoutNow.Provider value={wearing.layout}>
+            <PhoneLayoutNow.Provider value={phoneLayout}>{children}</PhoneLayoutNow.Provider>
+          </LayoutNow.Provider>
         </div>
       </div>
 
