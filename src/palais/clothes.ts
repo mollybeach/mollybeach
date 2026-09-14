@@ -235,8 +235,8 @@ const WIDE: Line[] = [
   // the very narrow column of shelves by the mirror
   { ids: ["temu-mantilla", "temu-fur-headband", "temu-butterfly-scarf", "temu-strawberry-bandana"], from: [1398, 360], to: [1398, 770], w: [52, 52], z: 36 },
   // the inner right bay: tops above, skirts below
-  { ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "shein-dazy-set", "shein-ribbed-top", "temu-bow-cami", "temu-pearl-tank", "ref-melanie-top", "ref-juliet-top"], from: [1598, 200], to: [1472, 280], w: [104, 92], hang: true, z: 70 },
-  { ids: ["shein-fairisle-skirt", "shein-plaid-bowskirt", "shein-plaid-tieskirt", "shein-pleated-khaki", "shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ref-sutton-shorts", "ref-ren-skirt", "rf-karmen-trousers"], from: [1598, 638], to: [1472, 622], w: [100, 90], hang: true, z: 72 },
+  { ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "shein-dazy-set", "shein-ribbed-top"], from: [1598, 200], to: [1472, 280], w: [104, 92], hang: true, z: 70 },
+  { ids: ["shein-fairisle-skirt", "shein-plaid-bowskirt", "shein-plaid-tieskirt", "shein-pleated-khaki", "ref-sutton-shorts", "ref-ren-skirt", "rf-karmen-trousers"], from: [1598, 638], to: [1472, 622], w: [100, 90], hang: true, z: 72 },
   // the middle of the window seat, between the two rails
   { ids: ["temu-saddle-bag", "shein-fluffy-shawl", "temu-bow-handbag"], from: [918, 690], to: [1020, 690], w: [74, 74], z: 20 },
   // the two rolling rails
@@ -248,12 +248,15 @@ const WIDE: Line[] = [
   { ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "yellow-charlotte-dress", "styluxe-slip-dress"], from: [52, 292], to: [236, 348], w: [128, 110], hang: true, z: 80 },
   { ids: ["cider-velvet-playsuit", "cider-pastel-dress", "ar-esquire-trench", "nord-icon-blazer", "ar-bloor-sweater", "ar-passage-cardigan", "tt-plaid-blazer-set"], from: [48, 98], to: [236, 198], w: [112, 96], hang: true, z: 60 },
   // the third bar, added under the two in the inner right bay: short knits
-  { ids: ["cider-rib-cardigan", "cider-pearl-cardigan", "cider-geometric-knit", "cider-velvet-crop-blouse", "cider-mesh-crop-top", "ar-jewel-skort", "cider-ruffle-skort", "ed-keinan-shorts"], from: [1598, 786], to: [1472, 770], w: [96, 88], hang: true, z: 74 },
+  { ids: ["cider-rib-cardigan", "cider-pearl-cardigan", "cider-geometric-knit", "cider-velvet-crop-blouse", "cider-mesh-crop-top", "ar-jewel-skort", "cider-ruffle-skort"], from: [1598, 786], to: [1472, 770], w: [96, 88], hang: true, z: 74 },
   // bags on the outer right bay's shelves
   { ids: ["dh-check-tote", "dh-hobo-bag", "dh-canvas-tote"], from: [1840, 546], to: [1675, 548], w: [94, 86], z: 30 },
   { ids: ["dh-brown-tote", "dh-grey-hobo", "dh-cleo-bag"], from: [1845, 752], to: [1680, 716], w: [98, 90], z: 32 },
   // the bottom row of cubbies: sunglasses
   { ids: ["tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses"], from: [487, 772], to: [543, 766], w: [27, 26], z: 36 },
+  // the second bar in the inner right bay, and the bar in the bottom of the narrow left bay
+  { ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami"], from: [1598, 404], to: [1474, 438], w: [100, 92], hang: true, z: 68 },
+  { ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts"], from: [338, 714], to: [432, 694], w: [84, 76], hang: true, z: 48 },
 ];
 
 /* The tall photograph for phones (941 × 1672). A phone crops its sides, so
@@ -261,8 +264,8 @@ const WIDE: Line[] = [
    bottom half here, so the rolling rails stand one behind the other. */
 const TALL: Line[] = [
   { ids: ["temu-ditsy-minidress", "temu-floral-tubedress", "temu-green-bow-dress", "temu-flower-dress-pink", "temu-knit-slipdress", "temu-laceup-dress", "temu-squareneck-dress", "temu-satin-nightdress", "cider-houndstooth-dress", "cider-fur-trim-dress", "cider-fluffy-mesh-dress", "cider-satin-cami-dress", "cider-lace-cami-dress", "tt-nidadie-set", "tt-plaid-halter-dress"], from: [156, 580], to: [200, 605], w: [60, 54], hang: true, z: 50 },
-  { ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "shein-dazy-set", "shein-ribbed-top", "temu-bow-cami", "temu-pearl-tank", "ref-melanie-top", "ref-juliet-top"], from: [800, 450], to: [742, 492], w: [64, 56], hang: true, z: 70 },
-  { ids: ["shein-fairisle-skirt", "shein-plaid-bowskirt", "shein-plaid-tieskirt", "shein-pleated-khaki", "shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ref-sutton-shorts", "ref-ren-skirt", "rf-karmen-trousers"], from: [800, 876], to: [742, 864], w: [62, 56], hang: true, z: 72 },
+  { ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "shein-dazy-set", "shein-ribbed-top"], from: [800, 450], to: [742, 492], w: [64, 56], hang: true, z: 70 },
+  { ids: ["shein-fairisle-skirt", "shein-plaid-bowskirt", "shein-plaid-tieskirt", "shein-pleated-khaki", "ref-sutton-shorts", "ref-ren-skirt", "rf-karmen-trousers"], from: [800, 876], to: [742, 864], w: [62, 56], hang: true, z: 72 },
   // the window seat
   { ids: ["temu-saddle-bag", "temu-fur-buckethat", "temu-rose-beanie", "shein-fluffy-shawl", "temu-fur-headband", "temu-bow-handbag", "dh-check-tote", "dh-hobo-bag", "dh-canvas-tote", "dh-brown-tote"], from: [318, 948], to: [578, 948], w: [50, 50], z: 20 },
   { ids: ["shein-ballet-bows"], from: [655, 560], to: [655, 560], w: [40, 40], hang: true, z: 20 },
@@ -275,8 +278,10 @@ const TALL: Line[] = [
   // the outer left bay (a phone crops some of it) and the shelf in the inner right bay
   { ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "yellow-charlotte-dress", "styluxe-slip-dress"], from: [84, 506], to: [140, 552], w: [80, 70], hang: true, z: 80 },
   { ids: ["cider-velvet-playsuit", "cider-pastel-dress", "ar-esquire-trench", "nord-icon-blazer", "ar-bloor-sweater", "ar-passage-cardigan", "tt-plaid-blazer-set"], from: [80, 342], to: [138, 404], w: [70, 60], hang: true, z: 60 },
-  { ids: ["cider-rib-cardigan", "cider-pearl-cardigan", "cider-geometric-knit", "cider-velvet-crop-blouse", "cider-mesh-crop-top", "ar-jewel-skort", "cider-ruffle-skort", "ed-keinan-shorts"], from: [790, 990], to: [744, 978], w: [56, 52], hang: true, z: 74 },
+  { ids: ["cider-rib-cardigan", "cider-pearl-cardigan", "cider-geometric-knit", "cider-velvet-crop-blouse", "cider-mesh-crop-top", "ar-jewel-skort", "cider-ruffle-skort"], from: [790, 990], to: [744, 978], w: [56, 52], hang: true, z: 74 },
   { ids: ["dh-grey-hobo", "dh-cleo-bag"], from: [786, 832], to: [744, 828], w: [44, 40], z: 66 },
+  { ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami"], from: [788, 632], to: [744, 650], w: [58, 54], hang: true, z: 68 },
+  { ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */
@@ -295,11 +300,22 @@ export interface Bar {
   z: number;
 }
 
-/* The inner right bay had room under its lower bar for a third, just above
-   its floor, so one's been fitted there. */
+/* Bars fitted where the closet had room for more: a third in the inner right
+   bay just above its floor, a second under that bay's top rail, and one in
+   the empty bottom of the narrow left bay. */
 export const CLOSET_BARS: Record<"wide" | "tall", Bar[]> = {
-  wide: [{ from: [1452, 768], to: [1606, 787], z: 73 }],
-  tall: [{ from: [737, 975], to: [793, 990], z: 73 }],
+  wide: [
+    { from: [1452, 768], to: [1606, 787], z: 73 },
+    // under the inner right bay's top rail, above its shelf
+    { from: [1460, 442], to: [1606, 401], z: 69 },
+    // in the empty bottom of the narrow left bay, under its shelf
+    { from: [322, 716], to: [446, 690], z: 49 },
+  ],
+  tall: [
+    { from: [737, 975], to: [793, 990], z: 73 },
+    { from: [737, 652], to: [793, 630], z: 69 },
+    { from: [151, 924], to: [224, 902], z: 49 },
+  ],
 };
 
 export const CLOSET_RACKS: Record<"wide" | "tall", Rack[]> = {
