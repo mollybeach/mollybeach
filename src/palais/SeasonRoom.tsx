@@ -8,8 +8,9 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
 /** what each room's photographs are called, which part of them to keep in
     view when the screen crops them, whether there's one per season or just
     one for the whole year, and whether there's a tall photograph for phones
-    (`<file>-portrait.webp`) */
-const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true }> = {
+    (`<file>-portrait.webp`), or a tall one per season
+    (`<file>-portrait-<season>.webp`) */
+const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons" }> = {
   // pink walls, lemon-papered shelves, Snoqualmie Falls through the window
   closet: { file: "closet", focus: "50% 60%", portrait: true },
   // the house on the lake: marble fireplace, the red bridge, the dock, Rainier
@@ -27,7 +28,7 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // the glass pavilion half under the sea, looking into the reef: one photograph for now
   reef: { file: "reef", focus: "50% 55%", seasons: false, portrait: true },
   // the lacquered pavilion over the lantern-lit temple island at dusk
-  lanterns: { file: "lanterns", focus: "50% 55%" },
+  lanterns: { file: "lanterns", focus: "50% 55%", portrait: "seasons" },
   // the white loggia over every beach at once
   shore: { file: "shore", focus: "50% 55%", portrait: true },
   // the glowworm grotto opening onto hobbit hills, a mountain and hot springs
@@ -44,14 +45,15 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
  */
 export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
   const room = ROOMS[place];
-  // on a phone held upright, the tall photograph if the room has one
-  const tall = usePortrait() && room.portrait;
+  // on a phone held upright, the tall photograph(s) if the room has them
+  const tall = usePortrait() && !!room.portrait;
+  const tallSeasons = tall && room.portrait === "seasons";
   return (
     <div aria-hidden className={`palais-room palais-room--away palais-room--${place}`}>
       <div className="palais-seasons">
-        {/* a tall photograph is one picture for the whole year, even in a room
-            whose wide photographs change with the seasons */}
-        {room.seasons === false || tall ? (
+        {/* a single tall photograph is one picture for the whole year, even in
+            a room whose wide photographs change with the seasons */}
+        {room.seasons === false || (tall && !tallSeasons) ? (
           <img
             src={`${process.env.PUBLIC_URL}/palais/${room.file}${tall ? "-portrait" : ""}.webp`}
             alt=""
@@ -62,11 +64,11 @@ export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
           SEASONS.map((season) => (
           <img
             key={season}
-            src={`${process.env.PUBLIC_URL}/palais/${room.file}-${season}.webp`}
+            src={`${process.env.PUBLIC_URL}/palais/${room.file}${tallSeasons ? "-portrait" : ""}-${season}.webp`}
             alt=""
             decoding="async"
             className={`palais-season palais-season--${season}`}
-            style={{ objectPosition: room.focus }}
+            style={{ objectPosition: tallSeasons ? "50% 100%" : room.focus }}
           />
           ))
         )}
