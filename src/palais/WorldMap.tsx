@@ -1,13 +1,15 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { propSrc } from "./props";
 import { usePlace, type Place } from "./place";
 
 /**
- * Area M: the world map, like the level select in a video game.
+ * Area M: the world map, like the level select in a storybook game: an
+ * illustrated island in a cream and gilt frame, dressed with blossom.
  *
  * One island, made of everywhere Molly has been, blended together and never
- * named after the real places. Each region is a stop on a dotted path, and
- * Honeysuckle hops along it to whichever stop is picked. The path starts at
+ * named after the real places. Each stop is a round gilt frame showing a
+ * little picture of the room itself, on a dotted path, and Honeysuckle hops
+ * along it to whichever stop is picked. The path starts at
  * home, the Palais, then the Lakehouse, and loops once round the island, so
  * the arrow keys walk it.
  */
@@ -24,16 +26,11 @@ interface Stop {
   /** size of the region's patch of land */
   patch: [number, number];
   seed: number;
-  icon: (color: string) => ReactNode;
   /** out at sea, on its own island */
   islet?: boolean;
-  /** put the name above the stop instead of below */
-  nameAbove?: boolean;
   /** the room of the Palais you can walk into from here, if there is one yet */
   room?: Place;
 }
-
-const INK = "#7a5a52";
 
 const STOPS: Stop[] = [
   {
@@ -43,20 +40,10 @@ const STOPS: Stop[] = [
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding her tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
-    at: [575, 410],
+    at: [560, 420],
     patch: [58, 42],
     seed: 7,
     room: "palace",
-    icon: () => (
-      <>
-        <rect x={-13} y={-2} width={26} height={14} rx={1.5} fill="#fff" stroke={INK} strokeWidth={2.5} />
-        <path d="M-15,-2 h30 l-3,-5 h-24 Z" fill="#ffd88a" stroke={INK} strokeWidth={2.2} strokeLinejoin="round" />
-        <path d="M-6,-7 a6,6 0 0 1 12,0 Z" fill="#ffb3cf" stroke={INK} strokeWidth={2.2} strokeLinejoin="round" />
-        <path d="M0,-13 v-4" stroke={INK} strokeWidth={2.2} strokeLinecap="round" />
-        <path d="M-3,12 v-6 a3,3 0 0 1 6,0 v6" fill="#8fcbe8" stroke={INK} strokeWidth={2} />
-        <path d="M-10,4 h3 M7,4 h3" stroke={INK} strokeWidth={2} strokeLinecap="round" />
-      </>
-    ),
   },
   {
     id: "lakehouse",
@@ -65,17 +52,10 @@ const STOPS: Stop[] = [
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
     finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
     color: "#8fcbe8",
-    at: [470, 338],
+    at: [430, 330],
     patch: [80, 58],
     seed: 11,
     room: "lakehouse",
-    icon: (c) => (
-      <>
-        <rect x={-11} y={-4} width={22} height={16} rx={2} fill="#fff" stroke={INK} strokeWidth={2.5} />
-        <path d="M-15,-3 L0,-16 L15,-3 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
-        <rect x={-3} y={3} width={6} height={9} rx={1.5} fill="#ffb3cf" stroke={INK} strokeWidth={2} />
-      </>
-    ),
   },
   {
     id: "closet",
@@ -84,20 +64,10 @@ const STOPS: Stop[] = [
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
     color: "#ffb3d6",
-    at: [590, 296],
+    at: [600, 268],
     patch: [46, 38],
     seed: 23,
-    nameAbove: true,
     room: "closet",
-    icon: (c) => (
-      <path
-        d="M-5,-15 h10 l2,6 l7,19 q-14,5 -28,0 l7,-19 Z"
-        fill={c}
-        stroke={INK}
-        strokeWidth={2.5}
-        strokeLinejoin="round"
-      />
-    ),
   },
   {
     id: "domes",
@@ -106,17 +76,10 @@ const STOPS: Stop[] = [
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
     finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
     color: "#ffb99b",
-    at: [720, 280],
+    at: [760, 250],
     patch: [98, 66],
     seed: 97,
     room: "domes",
-    icon: (c) => (
-      <>
-        <path d="M-13,8 a13,13 0 0 1 26,0 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
-        <rect x={-13} y={8} width={26} height={7} fill="#fff" stroke={INK} strokeWidth={2.5} />
-        <path d="M0,-5 V-15 l7,3 l-7,3" fill="#ff8bb8" stroke={INK} strokeWidth={2} strokeLinejoin="round" />
-      </>
-    ),
   },
   {
     id: "lanterns",
@@ -125,19 +88,11 @@ const STOPS: Stop[] = [
     blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
     finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
     color: "#ffab9e",
-    at: [888, 158],
+    at: [885, 142],
     patch: [56, 40],
     seed: 131,
     room: "lanterns",
     islet: true,
-    nameAbove: true,
-    icon: () => (
-      <>
-        <rect x={-10} y={-11} width={20} height={22} rx={8} fill="#ff8b7a" stroke={INK} strokeWidth={2.5} />
-        <path d="M-10,-3 h20 M-10,4 h20" stroke={INK} strokeWidth={1.8} />
-        <path d="M-5,-15 h10 M-5,15 h10" stroke={INK} strokeWidth={2.5} strokeLinecap="round" />
-      </>
-    ),
   },
   {
     id: "jacaranda",
@@ -146,19 +101,10 @@ const STOPS: Stop[] = [
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
-    at: [830, 420],
+    at: [835, 400],
     patch: [52, 58],
     seed: 103,
     room: "jacaranda",
-    nameAbove: true,
-    icon: (c) => (
-      <>
-        {[0, 72, 144, 216, 288].map((a) => (
-          <ellipse key={a} cx={0} cy={-8} rx={5.5} ry={8} fill={c} stroke={INK} strokeWidth={2} transform={`rotate(${a})`} />
-        ))}
-        <circle r={4.5} fill="#ffe27a" stroke={INK} strokeWidth={2} />
-      </>
-    ),
   },
   {
     id: "gorge",
@@ -167,19 +113,10 @@ const STOPS: Stop[] = [
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
     finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
     color: "#ffc978",
-    at: [665, 470],
+    at: [700, 520],
     patch: [92, 64],
     seed: 83,
     room: "gorge",
-    icon: () => (
-      <path
-        d="M-4,8 a5,4 0 1 1 -2,-4 V-12 l14,-4 V4 a5,4 0 1 1 -2,-4 V-10 l-10,3"
-        fill="#fff"
-        stroke={INK}
-        strokeWidth={2.5}
-        strokeLinejoin="round"
-      />
-    ),
   },
   {
     id: "caves",
@@ -188,19 +125,10 @@ const STOPS: Stop[] = [
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
     color: "#a9b8ff",
-    at: [448, 500],
+    at: [470, 540],
     patch: [92, 60],
     seed: 71,
     room: "caves",
-    icon: () => (
-      <path
-        d="M0,-15 L4,-4 L15,-4 L6,3 L9,14 L0,7 L-9,14 L-6,3 L-15,-4 L-4,-4 Z"
-        fill="#fff3a6"
-        stroke={INK}
-        strokeWidth={2.5}
-        strokeLinejoin="round"
-      />
-    ),
   },
   {
     id: "reef",
@@ -209,18 +137,11 @@ const STOPS: Stop[] = [
     blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
     finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
     color: "#6fd3e6",
-    at: [140, 604],
+    at: [125, 580],
     patch: [70, 36],
     seed: 67,
     room: "reef",
     islet: true,
-    icon: () => (
-      <>
-        <path d="M-14,0 q10,-12 22,0 q-12,12 -22,0 Z" fill="#ff9e9e" stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
-        <path d="M8,0 l8,-7 v14 Z" fill="#ff9e9e" stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
-        <circle cx={-6} cy={-2} r={1.8} fill={INK} />
-      </>
-    ),
   },
   {
     id: "shore",
@@ -229,17 +150,10 @@ const STOPS: Stop[] = [
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
     color: "#7fdccf",
-    at: [238, 418],
+    at: [230, 420],
     patch: [80, 100],
     seed: 53,
     room: "shore",
-    icon: (c) => (
-      <>
-        <circle cx={6} cy={-7} r={7} fill="#ffe27a" stroke={INK} strokeWidth={2.5} />
-        <path d="M-15,6 q4,-5 8,0 t8,0 t8,0 t8,0" fill="none" stroke={c} strokeWidth={4} strokeLinecap="round" />
-        <path d="M-15,6 q4,-5 8,0 t8,0 t8,0 t8,0" fill="none" stroke={INK} strokeWidth={2} strokeLinecap="round" />
-      </>
-    ),
   },
   {
     id: "rainwood",
@@ -248,16 +162,10 @@ const STOPS: Stop[] = [
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
     finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
     color: "#9fd88f",
-    at: [278, 238],
+    at: [255, 235],
     patch: [86, 70],
     seed: 41,
     room: "rainwood",
-    icon: (c) => (
-      <>
-        <path d="M0,-16 L11,2 H-11 Z M0,-8 L13,10 H-13 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
-        <rect x={-2.5} y={10} width={5} height={5} fill={INK} />
-      </>
-    ),
   },
   {
     id: "lagoon",
@@ -266,17 +174,10 @@ const STOPS: Stop[] = [
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
-    at: [470, 168],
+    at: [470, 150],
     patch: [104, 56],
     seed: 37,
     room: "lagoon",
-    icon: () => (
-      <>
-        <path d="M-16,12 L-3,-10 L10,12 Z" fill="#fff" stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
-        <path d="M-3,-10 l-5,8 l5,-2 l5,2 Z" fill="#ff9e9e" />
-        <path d="M9,2 q-4,-5 0,-9 q4,-4 0,-9" fill="none" stroke={INK} strokeWidth={2.2} strokeLinecap="round" />
-      </>
-    ),
   },
 ];
 
@@ -291,15 +192,20 @@ function rng(seed: number) {
 }
 
 /** a soft, wobbly closed outline, smoothed into curves */
-function blob(cx: number, cy: number, rx: number, ry: number, seed: number, amp = 0.12, n = 64) {
+/** how far out a wobbly outline reaches at angle t, as a multiple of its radius */
+function wobble(seed: number, amp: number) {
   const rand = rng(seed);
   const waves = [2, 3, 4, 5, 7, 11].map((k) => ({ k, a: (rand() * amp) / Math.sqrt(k / 2), p: rand() * Math.PI * 2 }));
+  return (t: number) => waves.reduce((m, w) => m + w.a * Math.sin(w.k * t + w.p), 1);
+}
+
+/** a soft, wobbly closed outline, smoothed into curves */
+function blob(cx: number, cy: number, rx: number, ry: number, seed: number, amp = 0.12, n = 64) {
+  const m = wobble(seed, amp);
   const pts: [number, number][] = [];
   for (let i = 0; i < n; i++) {
     const t = (i / n) * Math.PI * 2;
-    let m = 1;
-    for (const w of waves) m += w.a * Math.sin(w.k * t + w.p);
-    pts.push([cx + Math.cos(t) * rx * m, cy + Math.sin(t) * ry * m]);
+    pts.push([cx + Math.cos(t) * rx * m(t), cy + Math.sin(t) * ry * m(t)]);
   }
   let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
   for (let i = 0; i < n; i++) {
@@ -325,7 +231,62 @@ function trail(a: [number, number], b: [number, number], i: number) {
   return `M${a[0]},${a[1]} Q${(mx + (nx / len) * bend).toFixed(1)},${(my + (ny / len) * bend).toFixed(1)} ${b[0]},${b[1]}`;
 }
 
-const ISLAND = { cx: 500, cy: 352, rx: 378, ry: 250, seed: 5 };
+const ISLAND = { cx: 500, cy: 352, rx: 378, ry: 250, seed: 5, amp: 0.1 };
+const islandEdge = wobble(ISLAND.seed, ISLAND.amp);
+/** 0 at the middle of the island, 1 at its coast */
+const inland = (x: number, y: number) => {
+  const dx = (x - ISLAND.cx) / ISLAND.rx;
+  const dy = (y - ISLAND.cy) / ISLAND.ry;
+  return Math.hypot(dx, dy) / islandEdge(Math.atan2(dy, dx));
+};
+
+/** each stop's picture, in a round gilt frame */
+const FRAME = 44;
+const labelOf = (s: Stop) => s.name;
+const labelWidth = (s: Stop) => labelOf(s).length * 8.6 + 30;
+
+const picture = (s: Stop) => `${process.env.PUBLIC_URL}/palais/map/${s.room ?? s.id}.webp`;
+
+/** a cluster of apple blossom and leaves, for the corners of the frame */
+function Blossoms({ className }: { className: string }) {
+  const flower = (x: number, y: number, r: number, pink: boolean, rot = 0) => (
+    <g transform={`translate(${x} ${y}) rotate(${rot})`}>
+      {[0, 72, 144, 216, 288].map((a) => (
+        <ellipse key={a} cx={0} cy={-r * 0.55} rx={r * 0.42} ry={r * 0.55} transform={`rotate(${a})`} fill={pink ? "url(#wm-petal-pink)" : "url(#wm-petal-white)"} stroke="#e2b8c4" strokeWidth={0.6} />
+      ))}
+      <circle r={r * 0.2} fill="#f2c45a" />
+      {[0, 60, 120, 180, 240, 300].map((a) => (
+        <circle key={a} cx={Math.cos((a * Math.PI) / 180) * r * 0.3} cy={Math.sin((a * Math.PI) / 180) * r * 0.3} r={r * 0.05} fill="#c98a2e" />
+      ))}
+    </g>
+  );
+  const leaf = (x: number, y: number, len: number, rot: number) => (
+    <path transform={`translate(${x} ${y}) rotate(${rot})`} d={`M0,0 C${len * 0.3},${-len * 0.28} ${len * 0.75},${-len * 0.22} ${len},0 C${len * 0.75},${len * 0.22} ${len * 0.3},${len * 0.28} 0,0 Z`} fill="#6f9a5a" stroke="#4f7a44" strokeWidth={0.7} />
+  );
+  return (
+    <svg className={className} viewBox="0 0 120 120" aria-hidden>
+      <defs>
+        <radialGradient id="wm-petal-white">
+          <stop offset="0" stopColor="#fff" />
+          <stop offset="1" stopColor="#f6e4ea" />
+        </radialGradient>
+        <radialGradient id="wm-petal-pink">
+          <stop offset="0" stopColor="#fde7ef" />
+          <stop offset="1" stopColor="#eea6bf" />
+        </radialGradient>
+      </defs>
+      {leaf(50, 52, 44, -150)}
+      {leaf(56, 58, 40, 80)}
+      {leaf(48, 60, 36, 150)}
+      {leaf(60, 48, 38, -40)}
+      {flower(40, 40, 22, false, 10)}
+      {flower(74, 58, 18, true, -20)}
+      {flower(46, 80, 15, false, 30)}
+      {flower(80, 26, 11, true, 5)}
+      {flower(20, 66, 10, true, 40)}
+    </svg>
+  );
+}
 
 export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { place, go } = usePlace();
@@ -338,23 +299,75 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   }, [open, place]);
   const closeBtn = useRef<HTMLButtonElement>(null);
 
-  const shapes = useMemo(() => {
-    const island = blob(ISLAND.cx, ISLAND.cy, ISLAND.rx, ISLAND.ry, ISLAND.seed, 0.1, 120);
-    const beach = blob(ISLAND.cx, ISLAND.cy + 6, ISLAND.rx + 16, ISLAND.ry + 16, ISLAND.seed, 0.1, 120);
-    const patches = STOPS.map((s) => blob(s.at[0], s.at[1], s.patch[0], s.patch[1], s.seed, 0.14, 48));
+  const art = useMemo(() => {
+    const I = ISLAND;
+    const island = blob(I.cx, I.cy, I.rx, I.ry, I.seed, I.amp, 140);
+    const beach = blob(I.cx, I.cy + 5, I.rx + 14, I.ry + 13, I.seed, I.amp, 140);
+    const shallows = blob(I.cx, I.cy + 6, I.rx + 40, I.ry + 36, I.seed, I.amp, 140);
     const islets = STOPS.filter((s) => s.islet).map((s) => ({
       id: s.id,
-      beach: blob(s.at[0], s.at[1] + 4, s.patch[0] + 24, s.patch[1] + 22, s.seed + 1, 0.12, 48),
-      land: blob(s.at[0], s.at[1], s.patch[0] + 12, s.patch[1] + 12, s.seed + 1, 0.12, 48),
+      at: s.at,
+      shallows: blob(s.at[0], s.at[1] + 6, FRAME + 58, FRAME + 44, s.seed + 1, 0.14, 48),
+      beach: blob(s.at[0], s.at[1] + 5, FRAME + 40, FRAME + 30, s.seed + 1, 0.14, 48),
+      land: blob(s.at[0], s.at[1] + 2, FRAME + 30, FRAME + 20, s.seed + 1, 0.14, 48),
     }));
+    const meadows = STOPS.map((s) => blob(s.at[0], s.at[1], s.patch[0] + 16, s.patch[1] + 12, s.seed, 0.18, 48));
     const trails = STOPS.slice(0, -1).map((s, i) => trail(s.at, STOPS[i + 1].at, i));
-    const rand = rng(909);
-    const sparkles = Array.from({ length: 26 }, () => {
+
+    // keep trees, flowers and mountains off the pictures and their names
+    const clear = (x: number, y: number, pad: number) =>
+      STOPS.every((s) => {
+        if (Math.hypot(x - s.at[0], y - s.at[1]) < FRAME + 10 + pad) return false;
+        const ly = s.at[1] + FRAME + 22;
+        return !(Math.abs(x - s.at[0]) < labelWidth(s) / 2 + 8 + pad && Math.abs(y - ly) < 16 + pad);
+      });
+
+    const rand = rng(4242);
+    const trees: { x: number; y: number; r: number; kind: 0 | 1; tone: number }[] = [];
+    for (let n = 0; n < 5000 && trees.length < 230; n++) {
+      const x = 130 + rand() * 740;
+      const y = 110 + rand() * 500;
+      const d = inland(x, y);
+      if (d > 0.9 || !clear(x, y, 6)) continue;
+      if (trees.some((t) => Math.hypot(t.x - x, t.y - y) < 13)) continue;
+      trees.push({ x, y, r: 6 + rand() * 4, kind: rand() < 0.45 ? 1 : 0, tone: rand() });
+    }
+    trees.sort((a, b) => a.y - b.y);
+
+    const flowers: { x: number; y: number; c: string }[] = [];
+    const PETALS = ["#f4a6c6", "#c9a3ec", "#ffffff", "#f7c2d6", "#b48be0"];
+    for (let n = 0; n < 4000 && flowers.length < 260; n++) {
+      const x = 130 + rand() * 740;
+      const y = 110 + rand() * 500;
+      if (inland(x, y) > 0.88 || !clear(x, y, 2)) continue;
+      flowers.push({ x, y, c: PETALS[Math.floor(rand() * PETALS.length)] });
+    }
+
+    // a range of snowy peaks in the north, and cliffs round the coast
+    const peaks = [
+      [555, 185, 46],
+      [600, 172, 38],
+      [380, 180, 40],
+      [335, 195, 30],
+      [640, 190, 28],
+    ].filter(([x, y]) => clear(x, y, 4)) as [number, number, number][];
+    const rocks = Array.from({ length: 26 }, () => {
       const t = rand() * Math.PI * 2;
-      const r = 1.08 + rand() * 0.28;
-      return { x: ISLAND.cx + Math.cos(t) * ISLAND.rx * r, y: ISLAND.cy + Math.sin(t) * ISLAND.ry * r, d: -rand() * 3 };
-    });
-    return { island, beach, patches, islets, trails, sparkles };
+      const e = islandEdge(t) * (0.97 + rand() * 0.06);
+      return { x: I.cx + Math.cos(t) * I.rx * e, y: I.cy + Math.sin(t) * I.ry * e, r: 5 + rand() * 7 };
+    }).filter((r) => clear(r.x, r.y, 0));
+    const seaRocks = [
+      [300, 78, 10],
+      [690, 60, 8],
+      [930, 250, 9],
+      [80, 300, 8],
+      [610, 655, 9],
+      [960, 560, 7],
+    ];
+    const waves = Array.from({ length: 40 }, () => ({ x: 20 + rand() * 960, y: 16 + rand() * 650 })).filter(
+      (w) => ((w.x - I.cx) / (I.rx + 70)) ** 2 + ((w.y - I.cy) / (I.ry + 64)) ** 2 > 1,
+    );
+    return { island, beach, shallows, islets, meadows, trails, trees, flowers, peaks, rocks, seaRocks, waves };
   }, []);
 
   useEffect(() => {
@@ -374,96 +387,164 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   if (!open) return null;
   const stop = STOPS[here];
 
+  const tree = (t: { x: number; y: number; r: number; kind: 0 | 1; tone: number }, i: number) => {
+    const green = t.tone < 0.33 ? "#4f8a4c" : t.tone < 0.66 ? "#5f9c55" : "#3f7a45";
+    const light = t.tone < 0.33 ? "#7cb26a" : t.tone < 0.66 ? "#8cc076" : "#6aa262";
+    return (
+      <g key={i} transform={`translate(${t.x.toFixed(1)} ${t.y.toFixed(1)})`}>
+        <ellipse cx={2} cy={t.r * 0.9} rx={t.r * 0.9} ry={t.r * 0.35} fill="#2f4a2a" opacity={0.25} />
+        {t.kind ? (
+          <>
+            <path d={`M0,${-t.r * 1.9} L${t.r * 0.85},${t.r * 0.7} L${-t.r * 0.85},${t.r * 0.7} Z`} fill={green} />
+            <path d={`M0,${-t.r * 1.9} L${-t.r * 0.85},${t.r * 0.7} L${-t.r * 0.1},${t.r * 0.7} Z`} fill={light} opacity={0.7} />
+          </>
+        ) : (
+          <>
+            <rect x={-1} y={0} width={2} height={t.r * 0.8} fill="#7a5a3c" />
+            <circle r={t.r} fill={green} />
+            <circle cx={-t.r * 0.3} cy={-t.r * 0.3} r={t.r * 0.55} fill={light} opacity={0.8} />
+          </>
+        )}
+      </g>
+    );
+  };
+
   return (
     <div className="wm-backdrop" onPointerDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="wm-panel" role="dialog" aria-modal="true" aria-labelledby="wm-title">
-        <div className="wm-banner">
-          <span aria-hidden className="wm-banner-tail wm-banner-tail--l" />
+        <Blossoms className="wm-bloom wm-bloom--tl" />
+        <Blossoms className="wm-bloom wm-bloom--bl" />
+        <Blossoms className="wm-bloom wm-bloom--tr" />
+        <Blossoms className="wm-bloom wm-bloom--br" />
+
+        <div className="wm-title">
+          <Blossoms className="wm-bloom wm-bloom--title-l" />
           <h2 id="wm-title">
-            <span aria-hidden>✿ </span>Area M<span aria-hidden> ✿</span>
+            <span aria-hidden>✿</span> Area M <span aria-hidden>✿</span>
           </h2>
-          <span aria-hidden className="wm-banner-tail wm-banner-tail--r" />
+          <Blossoms className="wm-bloom wm-bloom--title-r" />
         </div>
         <button ref={closeBtn} type="button" className="wm-close" onClick={onClose} aria-label="Close the map">
           ×
         </button>
 
         <div className="wm-stage">
-          <svg className="wm-map" viewBox="0 0 1000 680" role="img" aria-label={`World map. Honeysuckle is at ${stop.name}.`}>
+          <svg className="wm-map" viewBox="25 25 960 640" role="img" aria-label={`World map. Honeysuckle is at ${stop.name}.`}>
             <defs>
-              <linearGradient id="wm-rainbow" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#ff9ecf" />
-                <stop offset="0.25" stopColor="#ffd88a" />
-                <stop offset="0.5" stopColor="#a6f0cf" />
-                <stop offset="0.75" stopColor="#9fc8ff" />
-                <stop offset="1" stopColor="#d3b3ff" />
+              <radialGradient id="wm-sea" cx="0.5" cy="0.5" r="0.75">
+                <stop offset="0" stopColor="#56c3e6" />
+                <stop offset="0.7" stopColor="#3aa6d6" />
+                <stop offset="1" stopColor="#2c8fc4" />
+              </radialGradient>
+              <radialGradient id="wm-grass" cx="0.5" cy="0.45" r="0.6">
+                <stop offset="0" stopColor="#a9d77f" />
+                <stop offset="0.7" stopColor="#8cc46c" />
+                <stop offset="1" stopColor="#6fae5c" />
+              </radialGradient>
+              <linearGradient id="wm-gilt" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#fbeec1" />
+                <stop offset="0.45" stopColor="#d9b25a" />
+                <stop offset="1" stopColor="#9c7632" />
               </linearGradient>
-              <pattern id="wm-waves" width="46" height="30" patternUnits="userSpaceOnUse">
-                <path d="M4,16 q5,-5 10,0 t10,0" fill="none" stroke="#fff" strokeOpacity={0.55} strokeWidth={2.2} strokeLinecap="round" />
-              </pattern>
-              <clipPath id="wm-land">
-                <path d={shapes.island} />
+              <radialGradient id="wm-halo">
+                <stop offset="0.6" stopColor="#fff7dc" stopOpacity={0.95} />
+                <stop offset="1" stopColor="#fff7dc" stopOpacity={0} />
+              </radialGradient>
+              <clipPath id="wm-island">
+                <path d={art.island} />
+              </clipPath>
+              <clipPath id="wm-frame">
+                <circle r={FRAME} />
               </clipPath>
             </defs>
 
-            <rect width={1000} height={680} fill="#aee6ef" />
-            <rect width={1000} height={680} fill="url(#wm-waves)" />
+            {/* the sea */}
+            <rect x={0} y={0} width={1000} height={680} fill="url(#wm-sea)" />
+            {art.waves.map((w, i) => (
+              <path key={i} d={`M${w.x.toFixed(0)},${w.y.toFixed(0)} q7,-5 14,0 t14,0`} fill="none" stroke="#e8f8ff" strokeOpacity={0.7} strokeWidth={1.8} strokeLinecap="round" />
+            ))}
+            {art.seaRocks.map(([x, y, r], i) => (
+              <g key={i}>
+                <ellipse cx={x} cy={y + 3} rx={r * 1.6} ry={r * 0.6} fill="#e8f8ff" opacity={0.6} />
+                <path d={`M${x - r},${y + 2} Q${x - r * 0.6},${y - r} ${x},${y - r} Q${x + r * 0.8},${y - r * 0.6} ${x + r},${y + 2} Z`} fill="#8a8f98" stroke="#5f656e" strokeWidth={1} />
+              </g>
+            ))}
 
-            {/* the Shimmer: a bubble wall around the world */}
-            <ellipse className="wm-shimmer" cx={500} cy={348} rx={478} ry={322} fill="none" stroke="url(#wm-rainbow)" strokeWidth={10} strokeDasharray="26 14" strokeLinecap="round" />
+            {/* sailboats */}
+            {[
+              [215, 100],
+              [915, 455],
+              [835, 640],
+            ].map(([x, y], i) => (
+              <g key={i} transform={`translate(${x} ${y})`}>
+                <path d="M-12,4 L12,4 L8,10 L-8,10 Z" fill="#8a5a3c" />
+                <path d="M0,-22 L0,4 L13,4 Z" fill="#fffdf6" stroke="#c9c0b0" strokeWidth={0.8} />
+                <path d="M-2,-16 L-2,3 L-11,3 Z" fill="#f3ece0" stroke="#c9c0b0" strokeWidth={0.8} />
+                <path d="M-18,12 q9,3 18,0 t18,0" fill="none" stroke="#e8f8ff" strokeWidth={1.6} strokeLinecap="round" />
+              </g>
+            ))}
 
-            {shapes.sparkles.map((s, i) => (
-              <path
-                key={i}
-                className="wm-sparkle"
-                style={{ animationDelay: `${s.d}s` }}
-                d={`M${s.x},${s.y - 6} L${s.x + 1.8},${s.y - 1.8} L${s.x + 6},${s.y} L${s.x + 1.8},${s.y + 1.8} L${s.x},${s.y + 6} L${s.x - 1.8},${s.y + 1.8} L${s.x - 6},${s.y} L${s.x - 1.8},${s.y - 1.8} Z`}
-                fill="#fff"
-              />
+            {/* seagulls */}
+            {[
+              [120, 390],
+              [140, 405],
+              [104, 412],
+            ].map(([x, y], i) => (
+              <path key={i} d={`M${x - 7},${y} q4,-5 7,0 q3,-5 7,0`} fill="none" stroke="#fff" strokeWidth={1.8} strokeLinecap="round" />
             ))}
 
             {/* islets out at sea */}
-            {shapes.islets.map((s) => (
+            {art.islets.map((s) => (
               <g key={s.id}>
-                <path d={s.beach} fill="#ffe6a8" stroke={INK} strokeWidth={4} />
-                <path d={s.land} fill="#c7eeb0" stroke={INK} strokeWidth={3} />
+                <path d={s.shallows} fill="#8fe0ee" opacity={0.8} />
+                <path d={s.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={2} />
+                <path d={s.land} fill="url(#wm-grass)" />
               </g>
             ))}
 
-            {/* the island: sand, then grass */}
-            <path d={shapes.beach} fill="#ffe6a8" stroke={INK} strokeWidth={5} strokeLinejoin="round" />
-            <path d={shapes.island} fill="#c7eeb0" stroke="#e9c77f" strokeWidth={3} />
-
-            {/* each region's patch of land */}
-            {STOPS.map((s, i) => (
-              <path
-                key={s.id}
-                d={shapes.patches[i]}
-                fill={s.color}
-                fillOpacity={i === here ? 0.95 : 0.7}
-                stroke="#fff"
-                strokeWidth={3}
-                strokeDasharray="2 7"
-                strokeLinecap="round"
-                clipPath={s.islet ? undefined : "url(#wm-land)"}
-                className="wm-patch"
-              />
+            {/* the island: turquoise shallows, a ring of sand and surf, then grass */}
+            <path d={art.shallows} fill="#8fe0ee" opacity={0.85} />
+            <path d={art.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
+            <path d={art.island} fill="url(#wm-grass)" />
+            <g clipPath="url(#wm-island)">
+              {STOPS.map((s, i) => (s.islet ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
+              {/* a lake by the lakehouse, and a river down to the sea */}
+              <path d="M470,190 C440,240 470,268 440,292" fill="none" stroke="#5fc0e0" strokeWidth={6} strokeLinecap="round" />
+              <path d="M470,372 C520,410 600,470 640,500 C720,560 820,590 930,640" fill="none" stroke="#5fc0e0" strokeWidth={7} strokeLinecap="round" />
+              {art.flowers.map((f, i) => (
+                <circle key={i} cx={f.x} cy={f.y} r={2.4} fill={f.c} />
+              ))}
+            </g>
+            {art.rocks.map((r, i) => (
+              <path key={i} d={`M${r.x - r.r},${r.y + r.r * 0.4} Q${r.x - r.r * 0.5},${r.y - r.r} ${r.x + r.r * 0.2},${r.y - r.r * 0.8} Q${r.x + r.r},${r.y - r.r * 0.3} ${r.x + r.r},${r.y + r.r * 0.4} Z`} fill="#9a9aa0" stroke="#6f7078" strokeWidth={1} />
             ))}
 
-            {/* a river from the lagoon, through the lake, out to sea */}
-            <path d="M470,196 C455,250 500,280 470,318 M500,352 C560,390 610,440 640,480 C700,540 800,560 900,620" fill="none" stroke="#8fd3f0" strokeWidth={7} strokeLinecap="round" clipPath="url(#wm-land)" />
+            {/* snowy peaks */}
+            {art.peaks.map(([x, y, h], i) => (
+              <g key={i}>
+                <path d={`M${x - h},${y + h * 0.35} L${x},${y - h} L${x + h},${y + h * 0.35} Z`} fill="#8e99a8" />
+                <path d={`M${x},${y - h} L${x + h},${y + h * 0.35} L${x + h * 0.15},${y + h * 0.35} Z`} fill="#6f7a8a" />
+                <path d={`M${x - h * 0.32},${y - h * 0.36} L${x},${y - h} L${x + h * 0.32},${y - h * 0.36} L${x + h * 0.1},${y - h * 0.46} L${x - h * 0.08},${y - h * 0.3} Z`} fill="#fbfdff" />
+              </g>
+            ))}
+            {art.trees.map(tree)}
 
             {/* the dotted path between the stops */}
-            {shapes.trails.map((d, i) => (
-              <g key={i}>
-                <path d={d} fill="none" stroke="#fff" strokeWidth={9} strokeLinecap="round" opacity={0.7} />
-                <path d={d} fill="none" stroke={INK} strokeWidth={4} strokeDasharray="0.1 13" strokeLinecap="round" />
-              </g>
+            {art.trails.map((d, i) => (
+              <path key={i} d={d} fill="none" stroke="#fffdf6" strokeWidth={4.5} strokeDasharray="0.1 11" strokeLinecap="round" />
             ))}
 
-            {/* the stops */}
+            {/* a compass rose, top left */}
+            <g transform="translate(108 96)" aria-hidden>
+              <circle r={26} fill="none" stroke="#f7e3a6" strokeWidth={1.5} opacity={0.9} />
+              <path d="M0,-40 L5,-5 L40,0 L5,5 L0,40 L-5,5 L-40,0 L-5,-5 Z" fill="#fbeec1" stroke="#b98f3e" strokeWidth={1} />
+              <path d="M0,-24 L3,-3 L24,0 L3,3 L0,24 L-3,3 L-24,0 L-3,-3 Z" fill="#d9b25a" transform="rotate(45)" opacity={0.85} />
+            </g>
+
+            {/* the stops: a round gilt frame with the place inside */}
             {STOPS.map((s, i) => {
               const on = i === here;
+              const w = labelWidth(s);
               return (
                 <g
                   key={s.id}
@@ -481,16 +562,35 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                     }
                   }}
                 >
-                  <ellipse cx={0} cy={26} rx={24} ry={7} fill={INK} opacity={0.18} />
-                  <g className="wm-stop-bob">
-                    <circle r={27} fill="#fff" stroke={INK} strokeWidth={4} />
-                    <circle r={21} fill={s.color} fillOpacity={0.45} />
-                    {s.icon(s.color)}
+                  <g className="wm-cameo">
+                    {on && <circle className="wm-halo" r={FRAME + 24} fill="url(#wm-halo)" />}
+                    <ellipse cy={FRAME - 2} rx={FRAME * 0.9} ry={10} fill="#2f3a2a" opacity={0.28} />
+                    <circle r={FRAME + 1} fill="#fffaf0" />
+                    <image
+                      href={picture(s)}
+                      x={-FRAME * 1.4}
+                      y={-FRAME}
+                      width={FRAME * 2.8}
+                      height={FRAME * 2}
+                      preserveAspectRatio="xMidYMid slice"
+                      clipPath="url(#wm-frame)"
+                    />
+                    <circle r={FRAME + 2} fill="none" stroke="url(#wm-gilt)" strokeWidth={5} />
+                    <circle r={FRAME + 5} fill="none" stroke="#fffaf0" strokeWidth={1.2} opacity={0.9} />
                   </g>
-                  <g transform={`translate(0 ${s.nameAbove ? -44 : 44})`}>
-                    <rect x={-(s.name.length * 4.6 + 12)} y={-12} width={s.name.length * 9.2 + 24} height={24} rx={12} fill="#fff" stroke={INK} strokeWidth={3} />
-                    <text className="wm-stop-name" y={5} textAnchor="middle">
-                      {s.name}
+                  <g transform={`translate(0 ${FRAME + 22})`}>
+                    <rect
+                      x={-w / 2}
+                      y={-15}
+                      width={w}
+                      height={30}
+                      rx={15}
+                      fill={on ? "#fbe3ea" : "#fffaf0"}
+                      stroke={on ? "#d27a98" : "#c9a14e"}
+                      strokeWidth={2}
+                    />
+                    <text className="wm-stop-name" y={6} textAnchor="middle">
+                      {labelOf(s)}
                     </text>
                   </g>
                 </g>
@@ -498,41 +598,23 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             })}
 
             {/* Honeysuckle, hopping from stop to stop */}
-            <g className="wm-player" style={{ transform: `translate(${stop.at[0] + 30}px, ${stop.at[1] - 8}px)` }}>
+            <g className="wm-player" style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${stop.at[1] + 10}px)` }}>
               <g className="wm-player-hop" key={here}>
-                <image href={propSrc("cat-honeysuckle")} x={-34} y={-86} width={68} height={86} />
+                <image href={propSrc("cat-honeysuckle")} x={-29} y={-74} width={58} height={74} />
               </g>
             </g>
           </svg>
         </div>
 
         <div className="wm-card" aria-live="polite">
-          <figure className="wm-peek" style={{ borderColor: stop.color }}>
-            {stop.room ? (
-              <img
-                key={stop.id}
-                src={`${process.env.PUBLIC_URL}/palais/map/${stop.room}.webp`}
-                alt={`A look inside ${stop.name}`}
-                decoding="async"
-              />
-            ) : (
-              <div className="wm-peek-soon" style={{ background: stop.color }}>
-                <svg viewBox="-30 -30 60 60" aria-hidden>
-                  {stop.icon(stop.color)}
-                </svg>
-                <span>🔒 Not built yet</span>
-              </div>
-            )}
-            <span className="wm-peek-tape" aria-hidden />
+          <figure className="wm-peek">
+            <img key={stop.id} src={picture(stop)} alt={`A look inside ${stop.name}`} decoding="async" />
           </figure>
           <div className="wm-card-head">
-            <span className="wm-dot" style={{ background: stop.color }} aria-hidden />
-            <div>
-              <h3>{stop.name}</h3>
-              <p className="wm-tag">
-                Stop {here + 1} of {STOPS.length} · {stop.tag}
-              </p>
-            </div>
+            <h3>{stop.name}</h3>
+            <p className="wm-tag">
+              Stop {here + 1} of {STOPS.length} · {stop.tag}
+            </p>
           </div>
           <p className="wm-blurb">{stop.blurb}</p>
           <ul className="wm-finds">
@@ -540,9 +622,12 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               <li key={f}>{f}</li>
             ))}
           </ul>
+          <div className="wm-flourish" aria-hidden>
+            ✦
+          </div>
           {stop.room ? (
             stop.room === place ? (
-              <p className="wm-here">✿ You're here</p>
+              <p className="wm-here">✿ You're here ✿</p>
             ) : (
               <button
                 type="button"
@@ -552,11 +637,11 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                   onClose();
                 }}
               >
-                Visit {stop.name} ✦
+                Visit {stop.name} ✿
               </button>
             )
           ) : (
-            <p className="wm-soon">🔒 Coming soon</p>
+            <p className="wm-soon">Coming soon</p>
           )}
           <div className="wm-nav">
             <button type="button" className="wm-btn" onClick={() => setHere((h) => Math.max(0, h - 1))} disabled={here === 0}>
@@ -564,7 +649,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             </button>
             <button
               type="button"
-              className="wm-btn wm-btn--go"
+              className="wm-btn wm-btn--next"
               onClick={() => setHere((h) => Math.min(STOPS.length - 1, h + 1))}
               disabled={here === STOPS.length - 1}
             >
