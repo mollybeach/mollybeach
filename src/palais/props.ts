@@ -202,6 +202,19 @@ export const PROPS = catalogue({
   "decor-green-glass-insulator": { label: "an emerald glass insulator", glass: true, plane: "near" },
   "decor-pink-glass-jar": { label: "a pink depression-glass jar", glass: true, plane: "near" },
   "decor-ivy-bottle": { label: "ivy in an old glass bottle", plane: "near" },
+
+  /* ---- from the garden set: files named main-noun-first, ending _sticker -- */
+  suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker: { label: "a stained-glass suncatcher, in flower", glass: true, plane: "mid" },
+  bottle_glass_jar_embossed_aqua_vintage_sticker: { label: "an aqua glass bottle, embossed", glass: true, plane: "near" },
+  radiator_heater_cast_iron_ribbed_white_vintage_sticker: { label: "an old cast-iron radiator", plane: "mid" },
+  shelf_rack_garden_three_tier_scrollwork_glass_white_sticker: { label: "a white scrollwork garden shelf", plane: "mid" },
+  mirror_wall_arch_ornate_gold_vintage_sticker: { label: "an arched gilt mirror", glass: true, plane: "mid" },
+  can_watering_garden_metal_blush_pink_sticker: { label: "a blush-pink watering can", plane: "near" },
+  mister_plant_spray_bottle_embossed_glass_ombre_turquoise_pink_antique_sticker: { label: "an embossed ombré glass plant mister", glass: true, plane: "near" },
+  bottle_glass_embossed_decanter_peach_pink_vintage_sticker: { label: "an embossed peach glass decanter", glass: true, plane: "near" },
+  flute_glass_champagne_tall_cobalt_blue_sticker: { label: "a cobalt blue champagne flute", glass: true, plane: "near" },
+  goblet_glass_wine_aqua_turquoise_sticker: { label: "an aqua wine glass", glass: true, plane: "near" },
+  bottle_glass_gin_sealed_green_vintage_sticker: { label: "a green glass gin bottle with a red seal", glass: true, plane: "near" },
 });
 
 export type PropId = keyof typeof PROPS;

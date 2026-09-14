@@ -21,7 +21,17 @@ export const SHELVES: Shelf[] = [
     key: "furniture",
     name: "Furniture",
     emoji: "🛋️",
-    items: ["bed-iron", "dresser", "armchair-sage", "loveseat", "vanity", "chair-vanity", "cabinet-jewelry"],
+    items: [
+      "bed-iron",
+      "dresser",
+      "armchair-sage",
+      "loveseat",
+      "vanity",
+      "chair-vanity",
+      "cabinet-jewelry",
+      "shelf_rack_garden_three_tier_scrollwork_glass_white_sticker",
+      "radiator_heater_cast_iron_ribbed_white_vintage_sticker",
+    ],
   },
   { key: "trellises", name: "Trellises", emoji: "🌿", items: ["trellis-wisteria", "trellis-ivy"] },
   {
@@ -81,6 +91,8 @@ export const SHELVES: Shelf[] = [
       "plaque-ivory",
       "plaque-rose-wood",
       "plaque-wood-dark",
+      "mirror_wall_arch_ornate_gold_vintage_sticker",
+      "suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker",
     ],
   },
   {

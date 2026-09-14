@@ -37,6 +37,8 @@ export const DECOR: PropId[] = [
   "decor-perfume-dreamland",
   "decor-heart-gift-box",
   "decor-perfume-pink",
+  "can_watering_garden_metal_blush_pink_sticker",
+  "mister_plant_spray_bottle_embossed_glass_ombre_turquoise_pink_antique_sticker",
 ];
 
 /** trinkets and a plant added later: on the Trinkets and House plants shelves,
@@ -49,6 +51,15 @@ export const MORE_TRINKETS: PropId[] = [
   "decor-green-glass-insulator",
   "decor-pink-glass-jar",
   "decor-ivy-bottle",
+  "bottle_glass_jar_embossed_aqua_vintage_sticker",
+  "suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker",
+  "mirror_wall_arch_ornate_gold_vintage_sticker",
+  "radiator_heater_cast_iron_ribbed_white_vintage_sticker",
+  "shelf_rack_garden_three_tier_scrollwork_glass_white_sticker",
+  "bottle_glass_embossed_decanter_peach_pink_vintage_sticker",
+  "flute_glass_champagne_tall_cobalt_blue_sticker",
+  "goblet_glass_wine_aqua_turquoise_sticker",
+  "bottle_glass_gin_sealed_green_vintage_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */
