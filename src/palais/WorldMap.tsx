@@ -103,12 +103,13 @@ const STOPS: Stop[] = [
     id: "domes",
     name: "The City of Domes",
     tag: "the old city",
-    blurb: "Domes over hot springs, tiled streets tumbling down to canals full of glass-blowers.",
-    finds: ["Warm baths under a dome", "Tiled stairs up to a rooftop patio", "Glass-blowers' furnaces by the canal"],
+    blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
+    finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
     color: "#ffb99b",
     at: [720, 280],
     patch: [98, 66],
     seed: 97,
+    room: "domes",
     icon: (c) => (
       <>
         <path d="M-13,8 a13,13 0 0 1 26,0 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />

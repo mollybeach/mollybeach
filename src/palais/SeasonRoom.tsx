@@ -17,6 +17,8 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   rainwood: { file: "rainwood", focus: "50% 55%", seasons: false },
   // the festival stage on the canyon rim at sunset: one photograph for now
   gorge: { file: "amphitheatre", focus: "50% 55%", seasons: false },
+  // the thermal bath over the old city of domes, canals and the volcano: one photograph for now
+  domes: { file: "domes", focus: "50% 55%", seasons: false },
 };
 
 /**
