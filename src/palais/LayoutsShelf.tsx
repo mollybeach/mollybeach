@@ -310,7 +310,7 @@ function SaveForm({
   );
 }
 
-function SignIn({ editor, onError }: { editor: Collection["editor"]; onError: (m: string) => void }) {
+export function SignIn({ editor, onError, label = "Sign in to save looks" }: { editor: Collection["editor"]; onError: (m: string) => void; label?: string }) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -331,7 +331,7 @@ function SignIn({ editor, onError }: { editor: Collection["editor"]; onError: (m
     return (
       <p className="cat-signin-line">
         <button type="button" className="cat-link" onClick={() => setOpen(true)}>
-          Sign in to save looks
+          {label}
         </button>
       </p>
     );

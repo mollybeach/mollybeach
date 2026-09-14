@@ -1,13 +1,16 @@
 import { useSyncExternalStore } from "react";
 import { CLOSET_LINES } from "./clothes";
+import { db, dbConfigured } from "./layoutsDb";
 
 /**
  * The order of the clothes on each of the closet's rails, shelves and racks.
  *
- * The code (clothes.ts) says where everything starts. The catalogue's Racks
- * page moves things along a rail or onto another one, and the closet follows
- * straight away. The rearrangement is kept in this browser, and "Copy
- * arrangement" copies it out, to be made the one everyone sees.
+ * The default everyone sees is kept in Supabase (table palais_closet_racks,
+ * see supabase/migrations); until it has loaded, or without a database, the
+ * order written in clothes.ts is used. Anyone can rearrange the closet from
+ * the catalogue's Racks page, and the closet follows straight away, but only
+ * for them and only until they reload. When Molly, signed in, rearranges it
+ * and clicks Done, her arrangement is saved as the new default.
  *
  * The wide photographs and the tall one for phones have different rails, so
  * each has its own arrangement.
@@ -17,15 +20,16 @@ export type Which = "wide" | "tall";
 /** rail id → garment ids, first = front (the near end of the rail) */
 export type RackOrder = Record<string, string[]>;
 
-const KEY = "palais-closet-racks-v1";
+const TABLE = "palais_closet_racks";
 
-const defaults = (which: Which): RackOrder =>
+const fromCode = (which: Which): RackOrder =>
   Object.fromEntries(CLOSET_LINES[which].map((line) => [line.id, [...line.ids]]));
 
-/** a saved arrangement, mended against the code: rails that no longer exist
-    are dropped, and anything new goes where the code puts it */
+/** an arrangement, mended against the code: rails that no longer exist are
+    dropped, clothes that are gone are skipped, and anything new goes where
+    the code puts it */
 function mend(which: Which, saved: RackOrder | undefined): RackOrder {
-  const base = defaults(which);
+  const base = fromCode(which);
   if (!saved) return base;
   const known = new Set(Object.values(base).flat());
   const seen = new Set<string>();
@@ -39,32 +43,55 @@ function mend(which: Which, saved: RackOrder | undefined): RackOrder {
   return out;
 }
 
-function load(): Record<Which, RackOrder> {
-  let saved: Partial<Record<Which, RackOrder>> = {};
-  try {
-    saved = JSON.parse(localStorage.getItem(KEY) || "{}");
-  } catch {
-    /* nothing saved, or unreadable */
-  }
-  return { wide: mend("wide", saved.wide), tall: mend("tall", saved.tall) };
+const same = (a: RackOrder, b: RackOrder) => JSON.stringify(a) === JSON.stringify(b);
+
+/** the default (from the database, once loaded) */
+let published: Record<Which, RackOrder> = { wide: fromCode("wide"), tall: fromCode("tall") };
+/** what the closet is showing right now */
+let state = published;
+const listeners = new Set<() => void>();
+const notify = () => listeners.forEach((l) => l());
+
+// arrangements used to be kept in the browser; the database has taken over
+try {
+  localStorage.removeItem("palais-closet-racks-v1");
+} catch {
+  /* no storage */
 }
 
-let state = load();
-const listeners = new Set<() => void>();
-
-function commit(next: Record<Which, RackOrder>) {
-  state = next;
-  try {
-    localStorage.setItem(KEY, JSON.stringify(state));
-  } catch {
-    /* private mode: it still works until the page reloads */
-  }
-  listeners.forEach((l) => l());
+let loading: Promise<void> | undefined;
+/** fetch the default from the database, once */
+export function loadPublished() {
+  if (!dbConfigured) return Promise.resolve();
+  loading ??= (async () => {
+    try {
+      const sb = await db();
+      const { data, error } = await sb.from(TABLE).select("closet, racks");
+      if (error || !data) return;
+      const next = { ...published };
+      for (const row of data as { closet: Which; racks: RackOrder }[]) {
+        if (row.closet === "wide" || row.closet === "tall") next[row.closet] = mend(row.closet, row.racks);
+      }
+      // anything not yet rearranged picks up the default
+      state = {
+        wide: same(state.wide, published.wide) ? next.wide : state.wide,
+        tall: same(state.tall, published.tall) ? next.tall : state.tall,
+      };
+      published = next;
+      notify();
+    } catch {
+      /* the closet keeps the order in the code */
+    }
+  })();
+  return loading;
 }
 
 const subscribe = (l: () => void) => {
   listeners.add(l);
-  return () => listeners.delete(l);
+  void loadPublished();
+  return () => {
+    listeners.delete(l);
+  };
 };
 
 export function useRackOrder(which: Which): RackOrder {
@@ -89,13 +116,28 @@ export function movePiece(which: Which, id: string, toLine: string, index: numbe
   // taking it out shifts everything after it along by one
   const to = from === toLine && at < index ? index - 1 : index;
   order[toLine].splice(Math.max(0, Math.min(to, order[toLine].length)), 0, id);
-  commit({ ...state, [which]: order });
+  state = { ...state, [which]: order };
+  notify();
 }
 
+/** back to the default */
 export function resetRacks(which: Which) {
-  commit({ ...state, [which]: defaults(which) });
+  state = { ...state, [which]: published[which] };
+  notify();
 }
 
+/** whether the closet has been rearranged since the default */
 export function racksChanged(which: Which) {
-  return JSON.stringify(state[which]) !== JSON.stringify(defaults(which));
+  return !same(state[which], published[which]);
+}
+
+/** save the closet as it is now as the default everyone sees (editors only;
+    the database refuses anyone else) */
+export async function publishRacks(which: Which) {
+  const racks = state[which];
+  const sb = await db();
+  const { error } = await sb.from(TABLE).upsert({ closet: which, racks }, { onConflict: "closet" });
+  if (error) throw new Error(error.message);
+  published = { ...published, [which]: racks };
+  notify();
 }

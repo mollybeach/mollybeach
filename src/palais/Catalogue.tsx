@@ -5,10 +5,11 @@ import { capture, type SeasonLayout } from "./arrangement";
 import { LayoutsShelf } from "./LayoutsShelf";
 import { VisitorsShelf } from "./VisitorsShelf";
 import type { Season } from "./seasons";
-import type { Collection } from "./useCollection";
 import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 import { RacksShelf } from "./RacksShelf";
-import { racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
+import { publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
+import { SignIn } from "./LayoutsShelf";
+import { messageOf, type Collection } from "./useCollection";
 
 /** the one account that sees the visitor book */
 const OWNER = "mollyjbeach@gmail.com";
@@ -91,6 +92,30 @@ export function Catalogue({
   // which of the closet's photographs is showing, for the Racks page
   const [which, setWhich] = useState<Which>("wide");
   const rackOrder = useRackOrder(which);
+  const [saving, setSaving] = useState<"" | "busy" | "saved">("");
+  const [rackError, setRackError] = useState("");
+  // Molly, signed in: Done on the Racks page makes her arrangement the default
+  const owner = Boolean(collection.editor?.canSave && collection.editor.email.toLowerCase() === OWNER);
+
+  const done = async () => {
+    if (wardrobe && owner && racksChanged(which)) {
+      setSaving("busy");
+      setRackError("");
+      try {
+        await publishRacks(which);
+        setSaving("saved");
+        setTimeout(() => {
+          setSaving("");
+          onClose();
+        }, 700);
+      } catch (e) {
+        setSaving("");
+        setRackError(`Couldn't save the arrangement: ${messageOf(e)}`);
+      }
+      return;
+    }
+    onClose();
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -257,7 +282,25 @@ export function Catalogue({
 
         <div className="cat-scroll">
           {page === "racks" ? (
-            <RacksShelf which={which} hidden={hidden} />
+            <>
+              <div className="rack-save-note">
+                {!collection.configured ? (
+                  <p>Rearranging here only changes the closet for you, until the page reloads.</p>
+                ) : owner ? (
+                  <p>
+                    ✦ Signed in — click <b>Done</b> and this arrangement becomes the closet everyone sees
+                    {which === "tall" ? " on phones" : " on computers"}.
+                  </p>
+                ) : (
+                  <>
+                    <p>Rearranging here only changes the closet for you, until the page reloads.</p>
+                    <SignIn editor={collection.editor} onError={setRackError} label="Molly? Sign in to make it the default" />
+                  </>
+                )}
+                {rackError && <p className="rack-save-error">{rackError}</p>}
+              </div>
+              <RacksShelf which={which} hidden={hidden} />
+            </>
           ) : page === "visitors" ? (
             <VisitorsShelf />
           ) : page === "looks" ? (
@@ -352,8 +395,8 @@ export function Catalogue({
           >
             {copied === "ok" ? "Copied ♡" : copied === "fail" ? "Couldn't copy" : page === "racks" ? "Copy arrangement" : "Copy layout"}
           </button>
-          <button type="button" className="cat-btn cat-btn--done" onClick={onClose}>
-            Done ♡
+          <button type="button" className="cat-btn cat-btn--done" onClick={done} disabled={saving === "busy"}>
+            {saving === "busy" ? "Saving…" : saving === "saved" ? "Saved ♡" : "Done ♡"}
           </button>
         </footer>
       </div>

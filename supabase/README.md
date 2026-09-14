@@ -24,3 +24,12 @@ Anyone can read them. Only editors can save.
    select id from auth.users where email = '<your email>';
    ```
 5. On the site, open Catalogue → Saved looks → "Sign in to save looks".
+
+## Closet arrangement
+
+The Wardrobe Wing's default arrangement of clothes lives in
+`palais_closet_racks`: one row for computers (`wide`) and one for phones
+(`tall`). Run `migrations/20260914120000_palais_closet_racks.sql` once in the
+SQL editor. After that, sign in on the Wardrobe catalogue's Racks page,
+rearrange the clothes, and click **Done**. That arrangement becomes the one
+everyone sees.

@@ -1918,3 +1918,7 @@
   font: 700 0.72rem/1.2 var(--cat-round);
   cursor: pointer;
 }
+.palais .rack-save-note { margin: 0.7rem 0 0; text-align: center; font: 600 0.8rem/1.35 var(--cat-round); color: #8a6a1c; }
+.palais .rack-save-note p { margin: 0.2rem 0; }
+.palais .rack-save-note .cat-signin-line, .palais .rack-save-note .cat-signin { justify-content: center; }
+.palais .rack-save-error { color: #c0203f; }
