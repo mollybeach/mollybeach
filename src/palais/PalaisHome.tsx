@@ -12,6 +12,7 @@ import { Weather } from "./Weather";
 import { Draggable } from "./Draggable";
 import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
+import { DECOR } from "./decor";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
@@ -298,6 +299,23 @@ export default function PalaisHome() {
           <Prop id="cat-honeysuckle" w={w(0.5, 0.955)} left="71.2%" ground={at(0.955).ground} tilt={-2} motion="bob" dur={14} rise={2} z={70} className={lg} />
           <Prop id="kittens-christmas" w={w(0.58, 0.99)} left="87.4%" ground={at(0.99).ground} tilt={1} motion="bob" dur={14} rise={2} z={70} className={md} />
           <Prop id="cat-strawberry-window" w={w(0.5, 0.955)} left="82.0%" ground={at(0.955).ground} tilt={-1} motion="bob" dur={16} rise={2} z={72} className={lg} />
+
+          {/* the room decor (decor.ts): lined up along the front of the terrace,
+              out of the room until the catalogue puts a piece in */}
+          {DECOR.map((id, n) => (
+            <Prop
+              key={id}
+              id={id}
+              w={w(/umbrella|postcards|moon-kiss|towels/.test(id) ? 0.55 : 0.32, 0.93)}
+              left={`${(3 + ((n * 31) % 90)).toFixed(1)}%`}
+              ground={at(0.93 - (n % 3) * 0.03).ground}
+              tilt={0}
+              motion="bob"
+              dur={10 + (n % 5)}
+              rise={2}
+              z={76 + (n % 3)}
+            />
+          ))}
 
           {/* these two live on things rather than on the tiles */}
           <Prop set="settee" id="cat-blueberry-party" w={w(0.5, 0.84)} left="20%" ground={`calc(${SETTEE_SEAT} + 0.6cqw)`} tilt={-2} motion="bob" dur={12} rise={3} z={53} className={sm} />

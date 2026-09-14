@@ -1,4 +1,5 @@
 import type { PropId } from "./props";
+import { DECOR } from "./decor";
 
 /**
  * The catalogue: every sticker in the room, sorted onto shelves.
@@ -108,6 +109,7 @@ export const SHELVES: Shelf[] = [
       "teacup-rosebud-mini",
     ],
   },
+  { key: "decor", name: "Room decor", emoji: "🕯️", items: DECOR },
   /* everything else in the room — the gilded medallion, the jasperware and
      the woman at her lyre land here rather than in Artwork */
   { key: "trinkets", name: "Trinkets", emoji: "💎", items: [] },

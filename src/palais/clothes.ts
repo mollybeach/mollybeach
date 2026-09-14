@@ -157,6 +157,9 @@ export const CLOTHES = wardrobe({
   "tt-plaid-halter-dress": { label: "Vintage plaid halter dress with velvet bows", store: "TikTok Shop · SML Vogue", bought: "2026-09", kind: "dress" },
   "tt-plaid-blazer-set": { label: "Khaki plaid blazer & mini skirt set", store: "TikTok Shop · Chic Modern Suits", bought: "2026-08", kind: "dress" },
   "ed-keinan-shorts": { label: "Keinan Low Rise Denim Shorts", store: "TikTok Shop · Edikted", bought: "2026-03", kind: "bottom" },
+  "etsy-purple-veil": { label: "Purple chapel veil with floral embroidery", store: "Etsy · MariaVeils", bought: "2023-11", kind: "accessory" },
+  "etsy-bernadette-veil": { label: "St Bernadette infinity veil", store: "Etsy · StLinusVeils", bought: "2023-11", kind: "accessory" },
+  "temu-floral-lingerie-set": { label: "Floral embroidery lingerie set", store: "Temu", bought: "2024-05", kind: "swim" },
 });
 
 export type GarmentId = keyof typeof CLOTHES;
@@ -263,8 +266,8 @@ const WIDE: Line[] = [
   { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan"], from: [336, 245], to: [432, 281], w: [78, 70], hang: true, z: 46 },
   // the bars added to the outer bays, left empty to be filled from the Racks page
   { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: [], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
-  { id: "outer-right-top", name: "Outer right bay · top bar", ids: [], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
-  { id: "outer-right-second", name: "Outer right bay · second bar", ids: [], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
+  { id: "outer-right-top", name: "Outer right bay · top bar", ids: ["etsy-purple-veil", "etsy-bernadette-veil"], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
+  { id: "outer-right-second", name: "Outer right bay · second bar", ids: ["temu-floral-lingerie-set"], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
   { id: "outer-right-bottom", name: "Outer right bay · bottom bar", ids: [], from: [1852, 772], to: [1662, 738], w: [92, 84], hang: true, z: 32 },
 ];
 
@@ -291,7 +294,7 @@ const TALL: Line[] = [
   { id: "right-shelf", name: "Right bay · shelf", ids: ["dh-grey-hobo", "dh-cleo-bag"], from: [786, 832], to: [744, 828], w: [44, 40], z: 66 },
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami"], from: [788, 632], to: [744, 650], w: [58, 54], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan"], from: [160, 474], to: [208, 500], w: [46, 42], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan", "etsy-purple-veil", "etsy-bernadette-veil", "temu-floral-lingerie-set"], from: [160, 474], to: [208, 500], w: [46, 42], hang: true, z: 46 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */

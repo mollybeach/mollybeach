@@ -2,6 +2,7 @@ import autumnLayout from "./layouts/autumn.json";
 import { BUNDLED_LAYOUTS, hiddenOf, type SeasonLayout } from "./arrangement";
 import { PHONE_LAYOUTS } from "./phoneLayout";
 import { PROPS } from "./props";
+import { DECOR_SET } from "./decor";
 import type { Device, SavedLayout } from "./layoutsDb";
 import type { Place } from "./place";
 import type { Season } from "./seasons";
@@ -45,7 +46,11 @@ export function defaultLook(saved: SavedLayout[], place: Place, season: Season, 
     doesn't mention stays in (the code's layouts list only some); in every
     other room it stays out. */
 export function hiddenFor(layout: SeasonLayout, place: Place): string[] {
-  if (place === "palace") return hiddenOf(layout);
+  if (place === "palace") {
+    // the room decor came later than the code's layouts: out unless a layout puts it in
+    const decorOut = Array.from(DECOR_SET).filter((id) => !layout.props[id]);
+    return [...hiddenOf(layout), ...decorOut];
+  }
   return ALL_STICKERS.filter((id) => !layout.props[id]?.shown);
 }
 

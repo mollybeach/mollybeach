@@ -163,6 +163,38 @@ export const PROPS = catalogue({
   /* ---- more for the walls ----------------------------------------------- */
   "panel-four-seasons": { label: "Mucha — the four seasons", plane: "mid" },
   "fresco-panel": { label: "a baroque frame, with cherubs", plane: "mid" },
+
+  /* ---- room decor and trinkets, from Molly's Temu orders (decor.ts) ------ */
+  "decor-angel-candle": { label: "a little blue angel candle", plane: "near" },
+  "decor-soy-candle": { label: "a veiled lady, in peach soy wax", plane: "near" },
+  "decor-plant-mister-blue": { label: "a turquoise glass plant mister", glass: true, plane: "near" },
+  "decor-plant-mister-mint": { label: "a mint glass plant mister", glass: true, plane: "near" },
+  "decor-plant-mister-pink": { label: "a pink glass plant mister", glass: true, plane: "near" },
+  "decor-angel-candle-lilac": { label: "a lilac sleeping angel candle", plane: "near" },
+  "decor-carved-bell": { label: "a carved brass bell", plane: "near" },
+  "decor-fruit-towels": { label: "towels embroidered with fruit", plane: "near" },
+  "decor-strawberry-towel": { label: "a strawberry hand towel", plane: "near" },
+  "decor-heart-towels": { label: "towels with little red hearts", plane: "near" },
+  "decor-taper-candles": { label: "flickering taper candles", lit: true, plane: "near" },
+  "decor-crystal-roses": { label: "crystal roses", plane: "near" },
+  "decor-cupid-candle-blue": { label: "a pensive cupid candle, in blue", plane: "near" },
+  "decor-cupid-candle-pink": { label: "a pensive cupid candle, in pink", plane: "near" },
+  "decor-pocket-watch": { label: "a goddess pocket watch", plane: "near" },
+  "decor-moon-kiss-art": { label: "a girl kissing the moon, framed", plane: "mid" },
+  "decor-glass-mister": { label: "an ombré glass mister", glass: true, plane: "near" },
+  "decor-crystal-prism": { label: "a crystal prism", glass: true, plane: "near" },
+  "decor-tissue-box-blue": { label: "a gilded powder-blue tissue box", plane: "near" },
+  "decor-botanical-postcards": { label: "botanical postcards", plane: "mid" },
+  "decor-flower-perfume": { label: "a perfume with a flower stopper", plane: "near" },
+  "decor-strawberry-glass": { label: "a strawberry glass, with a straw", glass: true, plane: "near" },
+  "decor-strawberry-molds": { label: "strawberry ice moulds", plane: "near" },
+  "decor-cherry-umbrella": { label: "a cherry blossom umbrella", plane: "near" },
+  "decor-strawberry-soaps": { label: "strawberry soaps", plane: "near" },
+  "decor-perfume-amber": { label: "an amber eau de parfum", glass: true, plane: "near" },
+  "decor-perfume-bow": { label: "a perfume with a black bow", glass: true, plane: "near" },
+  "decor-perfume-dreamland": { label: "Dreamland, in pink daisies", glass: true, plane: "near" },
+  "decor-heart-gift-box": { label: "a heart in a gift box", plane: "near" },
+  "decor-perfume-pink": { label: "a pink perfume and its box", glass: true, plane: "near" },
 });
 
 export type PropId = keyof typeof PROPS;

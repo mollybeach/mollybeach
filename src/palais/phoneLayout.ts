@@ -4,6 +4,7 @@ import { SHELVES } from "./shelves";
 import type { SeasonLayout } from "./arrangement";
 import type { PropId } from "./props";
 import type { Season } from "./seasons";
+import { DECOR } from "./decor";
 
 /**
  * The phone room's arrangement, and the rest of the catalogue on the phone.
@@ -36,7 +37,7 @@ export interface Extra {
 const ids = (key: string) => (SHELVES.find((s) => s.key === key)?.items ?? []) as PropId[];
 
 /* everything the desktop room has, which is everything in the catalogue */
-const ALL = Object.keys(autumnLayout.props) as PropId[];
+const ALL = [...(Object.keys(autumnLayout.props) as PropId[]), ...DECOR];
 /* the stickers PortraitTerrace.tsx sets out itself; the rest are PHONE_EXTRAS */
 const PLACED = new Set<string>([
   "armchair-sage", "bed-iron", "cabinet-jewelry", "cat-blueberry-party", "cat-blueberry-running", "cats-birthday",
@@ -66,6 +67,7 @@ const KIND: Record<string, { w: number; ground?: number; top?: number }> = {
   pillows: { w: 12, ground: 14 },
   teacups: { w: 7, ground: 16 },
   trinkets: { w: 8, ground: 12 },
+  decor: { w: 11, ground: 10 },
 };
 
 export const PHONE_EXTRAS: Extra[] = (() => {
