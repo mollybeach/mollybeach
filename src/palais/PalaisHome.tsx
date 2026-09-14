@@ -139,6 +139,8 @@ export default function PalaisHome() {
           <SeasonRoom place="domes" />
           <SeasonRoom place="jacaranda" />
           <SeasonRoom place="reef" />
+          <SeasonRoom place="lanterns" />
+          <SeasonRoom place="shore" />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
           <Weather layer="back" />
           <Pollen count={portrait ? 60 : 110} className="palais-pollen--front" />

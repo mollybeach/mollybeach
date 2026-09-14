@@ -122,12 +122,13 @@ const STOPS: Stop[] = [
     id: "lanterns",
     name: "The Lantern Isles",
     tag: "by ferry",
-    blurb: "Temple roofs stepping up a forest ridge, with a tower of lanterns at the very top.",
-    finds: ["Lanterns glowing up the hillside", "An island avenue lined with trees", "Tea in a wooden temple"],
+    blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
+    finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
     color: "#ffab9e",
     at: [888, 158],
     patch: [56, 40],
     seed: 131,
+    room: "lanterns",
     islet: true,
     nameAbove: true,
     icon: () => (
@@ -224,12 +225,13 @@ const STOPS: Stop[] = [
     id: "shore",
     name: "The Shore of All Shores",
     tag: "every beach at once",
-    blurb: "Black sand on one side, turquoise coves on the other, and it's always golden hour.",
-    finds: ["Cave rooms carved into a white cliff", "A little yacht that's always at anchor", "A sunset boat along the coast"],
+    blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
+    finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
     color: "#7fdccf",
     at: [238, 418],
     patch: [80, 100],
     seed: 53,
+    room: "shore",
     icon: (c) => (
       <>
         <circle cx={6} cy={-7} r={7} fill="#ffe27a" stroke={INK} strokeWidth={2.5} />
@@ -504,6 +506,24 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         </div>
 
         <div className="wm-card" aria-live="polite">
+          <figure className="wm-peek" style={{ borderColor: stop.color }}>
+            {stop.room ? (
+              <img
+                key={stop.id}
+                src={`${process.env.PUBLIC_URL}/palais/map/${stop.room}.webp`}
+                alt={`A look inside ${stop.name}`}
+                decoding="async"
+              />
+            ) : (
+              <div className="wm-peek-soon" style={{ background: stop.color }}>
+                <svg viewBox="-30 -30 60 60" aria-hidden>
+                  {stop.icon(stop.color)}
+                </svg>
+                <span>🔒 Not built yet</span>
+              </div>
+            )}
+            <span className="wm-peek-tape" aria-hidden />
+          </figure>
           <div className="wm-card-head">
             <span className="wm-dot" style={{ background: stop.color }} aria-hidden />
             <div>
