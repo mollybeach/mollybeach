@@ -21,6 +21,8 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   domes: { file: "domes", focus: "50% 55%", seasons: false },
   // the balcony over the jacaranda street at dusk: one photograph for now
   jacaranda: { file: "jacaranda", focus: "50% 55%", seasons: false },
+  // the glass pavilion half under the sea, looking into the reef: one photograph for now
+  reef: { file: "reef", focus: "50% 55%", seasons: false },
 };
 
 /**

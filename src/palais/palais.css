@@ -140,7 +140,8 @@
 .palais [data-place="rainwood"] .palais-room--rainwood,
 .palais [data-place="gorge"] .palais-room--gorge,
 .palais [data-place="domes"] .palais-room--domes,
-.palais [data-place="jacaranda"] .palais-room--jacaranda { opacity: 1; }
+.palais [data-place="jacaranda"] .palais-room--jacaranda,
+.palais [data-place="reef"] .palais-room--reef { opacity: 1; }
 .palais .palais-stage:not([data-place="palace"]) .palais-arrive,
 .palais .palais-stage:not([data-place="palace"]) .palais-weather,
 .palais .palais-stage:not([data-place="palace"]) .palais-pollen { visibility: hidden; }

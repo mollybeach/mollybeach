@@ -204,12 +204,13 @@ const STOPS: Stop[] = [
     id: "reef",
     name: "The Glass Reef",
     tag: "out at sea",
-    blurb: "Water so clear the boat looks like it's floating in the air above the coral.",
-    finds: ["Coral in every colour of the Shimmer", "Sea turtles circling a sandbar", "A ring of glassy shallows"],
+    blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
+    finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
     color: "#6fd3e6",
     at: [140, 604],
     patch: [70, 36],
     seed: 67,
+    room: "reef",
     islet: true,
     icon: () => (
       <>
