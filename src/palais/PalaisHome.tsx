@@ -12,7 +12,7 @@ import { Weather } from "./Weather";
 import { Draggable } from "./Draggable";
 import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
-import { DECOR } from "./decor";
+import { LOOSE } from "./decor";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
@@ -305,7 +305,7 @@ export default function PalaisHome() {
 
           {/* the room decor (decor.ts): lined up along the front of the terrace,
               out of the room until the catalogue puts a piece in */}
-          {DECOR.map((id, n) => (
+          {LOOSE.map((id, n) => (
             <Prop
               key={id}
               id={id}

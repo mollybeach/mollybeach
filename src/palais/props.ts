@@ -195,6 +195,13 @@ export const PROPS = catalogue({
   "decor-perfume-dreamland": { label: "Dreamland, in pink daisies", glass: true, plane: "near" },
   "decor-heart-gift-box": { label: "a heart in a gift box", plane: "near" },
   "decor-perfume-pink": { label: "a pink perfume and its box", glass: true, plane: "near" },
+  "decor-pink-gilt-box": { label: "a pink box with gilt peonies", plane: "near" },
+  "decor-jade-buddha": { label: "a green jade Buddha", plane: "near" },
+  "decor-stone-deity-head": { label: "a carved stone head", plane: "near" },
+  "decor-gilt-bell": { label: "a brass bell, enamelled in green", plane: "near" },
+  "decor-green-glass-insulator": { label: "an emerald glass insulator", glass: true, plane: "near" },
+  "decor-pink-glass-jar": { label: "a pink depression-glass jar", glass: true, plane: "near" },
+  "decor-ivy-bottle": { label: "ivy in an old glass bottle", plane: "near" },
 });
 
 export type PropId = keyof typeof PROPS;

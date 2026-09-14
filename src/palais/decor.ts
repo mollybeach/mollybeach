@@ -39,4 +39,19 @@ export const DECOR: PropId[] = [
   "decor-perfume-pink",
 ];
 
-export const DECOR_SET = new Set<string>(DECOR);
+/** trinkets and a plant added later: on the Trinkets and House plants shelves,
+    not Room decor, but out of every room at first like the decor */
+export const MORE_TRINKETS: PropId[] = [
+  "decor-pink-gilt-box",
+  "decor-jade-buddha",
+  "decor-stone-deity-head",
+  "decor-gilt-bell",
+  "decor-green-glass-insulator",
+  "decor-pink-glass-jar",
+  "decor-ivy-bottle",
+];
+
+/** everything that starts out of the rooms and is set out along the terrace's front */
+export const LOOSE: PropId[] = [...DECOR, ...MORE_TRINKETS];
+
+export const DECOR_SET = new Set<string>(LOOSE);
