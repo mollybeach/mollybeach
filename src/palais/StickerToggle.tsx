@@ -153,6 +153,31 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const [paused, setPaused] = useState(false);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
 
+  /* When Molly, signed in, moves, resizes, puts in or takes out anything, the
+     year holds still. Otherwise the season could turn before she saves, and
+     the next season's layout would sweep her changes away (each season keeps
+     its own). "Play seasons" lets it carry on. */
+  const owner = Boolean(collection.editor?.canSave && collection.editor.email.toLowerCase() === "mollyjbeach@gmail.com");
+  const ownerRef = useRef(owner);
+  ownerRef.current = owner;
+  const holdForEditing = useCallback(() => {
+    if (!ownerRef.current || !seasons) return;
+    const scope = switches.current?.closest(".palais-stage");
+    if (scope) holdSeasons(scope, true);
+    setPaused(true);
+  }, [seasons]);
+  useEffect(() => {
+    window.addEventListener("palais:arranged", holdForEditing);
+    return () => window.removeEventListener("palais:arranged", holdForEditing);
+  }, [holdForEditing]);
+  const setHiddenHeld = useCallback(
+    (next: Set<string>) => {
+      holdForEditing();
+      setHidden(next);
+    },
+    [holdForEditing],
+  );
+
   // keep the label, and the season the room is dressed for, in step with the
   // year as it turns on its own
   useEffect(() => {
@@ -295,7 +320,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         place={place}
         device={device}
         hidden={hidden}
-        setHidden={setHidden}
+        setHidden={setHiddenHeld}
         closetHidden={closetHidden}
         setClosetHidden={setClosetHidden}
         collection={collection}

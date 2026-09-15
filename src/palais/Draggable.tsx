@@ -147,6 +147,7 @@ export function resizeSticker(scope: ParentNode, selector: string, id: string, f
     el.dataset.scale = String(s);
     size = s;
   });
+  window.dispatchEvent(new CustomEvent("palais:arranged"));
   return size;
 }
 
@@ -314,11 +315,13 @@ export function Draggable() {
       if (resize && e.pointerId === resize.pointer) {
         delete resize.el.dataset.dragging;
         resize = null;
+        window.dispatchEvent(new CustomEvent("palais:arranged"));
         if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
         return;
       }
       if (!grab || e.pointerId !== grab.pointer) return;
       delete grab.el.dataset.dragging;
+      if (e.clientX !== grab.startX || e.clientY !== grab.startY) window.dispatchEvent(new CustomEvent("palais:arranged"));
       if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
       grab = null;
     };

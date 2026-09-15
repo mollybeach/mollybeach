@@ -220,8 +220,9 @@ export function Catalogue({
         const stage = stageOf();
         const moves = stage ? closetMovesNow(stage) : undefined;
         const outChanged = hiddenChanged(closetHidden);
-        if (racksChanged(which) || (moves && movesChanged(which, moves)) || outChanged) {
-          await publishRacks(which, moves, outChanged ? closetHidden : undefined);
+        const moved = !!moves && movesChanged(which, moves);
+        if (racksChanged(which) || moved || outChanged) {
+          await publishRacks(which, moved ? moves : undefined, outChanged ? closetHidden : undefined);
           saved = true;
         }
       }
@@ -285,7 +286,7 @@ export function Catalogue({
   const where = `${phone ? "phone" : "computer"}`;
   const saveNote = !collection.configured ? null : owner ? (
     <p>
-      ✦ Signed in — <b>Done</b> saves {wardrobe ? "the rails and " : ""}this room as its {SEASON_EMOJI[season]} {season} layout on a {where}.
+      ✦ Signed in — <b>Save</b> keeps {wardrobe ? "the rails and " : ""}this room as its {SEASON_EMOJI[season]} {season} layout on a {where}.
     </p>
   ) : (
     <>
@@ -510,7 +511,7 @@ export function Catalogue({
             {copied === "ok" ? "Copied ♡" : copied === "fail" ? "Couldn't copy" : page === "racks" ? "Copy arrangement" : "Copy layout"}
           </button>
           <button type="button" className="cat-btn cat-btn--done" onClick={done} disabled={saving === "busy"}>
-            {saving === "busy" ? "Saving…" : saving === "saved" ? "Saved ♡" : "Done ♡"}
+            {saving === "busy" ? "Saving…" : saving === "saved" ? "Saved ♡" : owner ? "Save ♡" : "Done ♡"}
           </button>
         </footer>
       </div>
