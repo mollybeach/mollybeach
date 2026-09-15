@@ -8,7 +8,7 @@ import type { Season } from "./seasons";
 import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 import { RacksShelf } from "./RacksShelf";
 import { SeasonsShelf, SEASON_EMOJI, titleCase } from "./SeasonsShelf";
-import { closetMovesNow, movesChanged, publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
+import { closetMovesNow, hiddenChanged, movesChanged, publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
 import { resizeSticker } from "./Draggable";
 import { saveSeasonDefault, type Device } from "./layoutsDb";
 import { defaultLook } from "./roomLayouts";
@@ -215,11 +215,13 @@ export function Catalogue({
     void withSaving(async () => {
       let saved = false;
       if (wardrobe) {
-        // the rails, and where the clothes have been dragged and how big they've been made
+        // the rails; where the clothes have been dragged and how big they've been
+        // made (− and +); and which have been unhearted
         const stage = stageOf();
         const moves = stage ? closetMovesNow(stage) : undefined;
-        if (racksChanged(which) || (moves && movesChanged(which, moves))) {
-          await publishRacks(which, moves);
+        const outChanged = hiddenChanged(closetHidden);
+        if (racksChanged(which) || (moves && movesChanged(which, moves)) || outChanged) {
+          await publishRacks(which, moves, outChanged ? closetHidden : undefined);
           saved = true;
         }
       }

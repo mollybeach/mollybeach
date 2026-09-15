@@ -8,6 +8,7 @@ import { defaultLook, hiddenFor } from "./roomLayouts";
 import { usePortrait } from "./PortraitTerrace";
 import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
+import { useClosetHiddenDefault } from "./closetRacks";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -74,7 +75,18 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const [map, setMap] = useState(false);
   const closeMap = useCallback(() => setMap(false), []);
   // what's been taken out of the closet (Wardrobe.tsx); everything starts in it
-  const [closetHidden, setClosetHidden] = useState<Set<string>>(() => new Set());
+  const [closetHidden, setClosetHiddenState] = useState<Set<string>>(() => new Set());
+  // Molly's saved list of what's taken out (closetRacks.ts): worn once it loads,
+  // unless the hearts have already been changed here
+  const closetHiddenDefault = useClosetHiddenDefault();
+  const touchedCloset = useRef(false);
+  const setClosetHidden = useCallback((next: Set<string>) => {
+    touchedCloset.current = true;
+    setClosetHiddenState(next);
+  }, []);
+  useEffect(() => {
+    if (!touchedCloset.current) setClosetHiddenState(new Set(closetHiddenDefault));
+  }, [closetHiddenDefault]);
 
   const [wearing, setWearing] = useState<{ desktop: SeasonLayout; phone: SeasonLayout; rev: number }>(() => ({
     desktop: desktopDefault.layout,

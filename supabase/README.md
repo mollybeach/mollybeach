@@ -34,9 +34,11 @@ SQL editor. After that, sign in on the Wardrobe catalogue's Racks page,
 rearrange the clothes, and click **Done**. That arrangement becomes the one
 everyone sees.
 
-To keep where clothes have been dragged in the closet and how big they've been
-made, also run `migrations/20260914150000_palais_closet_moves.sql`. Then drag
-them around the closet while signed in and click **Done**.
+To keep where clothes have been dragged in the closet, how big they've been
+made (the catalogue's − and +), and which have been unhearted, also run
+`migrations/20260914150000_palais_closet_moves.sql` (safe to run again if you
+ran an earlier copy of it). Then change the closet while signed in and click
+**Done**.
 
 ## Layouts for every room
 

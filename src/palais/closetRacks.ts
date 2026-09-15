@@ -61,6 +61,9 @@ let published: Record<Which, RackOrder> = { wide: fromCode("wide"), tall: fromCo
 let state = published;
 /** where the clothes have been dragged, by default (the database) */
 let publishedMoves: Record<Which, ClosetMoves> = { wide: {}, tall: {} };
+/** the clothes taken out of the closet, by default (the database); the same
+    on computers and phones */
+let publishedHidden: string[] = [];
 const listeners = new Set<() => void>();
 const notify = () => listeners.forEach((l) => l());
 
@@ -78,19 +81,23 @@ export function loadPublished() {
   loading ??= (async () => {
     try {
       const sb = await db();
-      // the moves column comes with a later migration: without it, just the rails
-      let res = await sb.from(TABLE).select("closet, racks, moves");
+      // moves and hidden come with a later migration: without them, just the rails
+      let res = await sb.from(TABLE).select("closet, racks, moves, hidden");
       if (res.error) res = await sb.from(TABLE).select("closet, racks");
       const { data, error } = res;
       if (error || !data) return;
       const next = { ...published };
       const nextMoves = { ...publishedMoves };
-      for (const row of data as { closet: Which; racks: RackOrder; moves?: ClosetMoves }[]) {
+      let nextHidden: string[] | undefined;
+      for (const row of data as { closet: Which; racks: RackOrder; moves?: ClosetMoves; hidden?: string[] }[]) {
         if (row.closet === "wide" || row.closet === "tall") {
           next[row.closet] = mend(row.closet, row.racks);
           nextMoves[row.closet] = row.moves ?? {};
+          // both rows keep the same list; the wide one wins if they ever differ
+          if (Array.isArray(row.hidden) && (row.closet === "wide" || !nextHidden)) nextHidden = row.hidden;
         }
       }
+      if (nextHidden) publishedHidden = nextHidden;
       publishedMoves = nextMoves;
       // anything not yet rearranged picks up the default
       state = {
@@ -116,6 +123,18 @@ const subscribe = (l: () => void) => {
 
 export function useRackOrder(which: Which): RackOrder {
   return useSyncExternalStore(subscribe, () => state[which]);
+}
+
+/** the clothes taken out of the closet, by default */
+export function useClosetHiddenDefault(): string[] {
+  return useSyncExternalStore(subscribe, () => publishedHidden);
+}
+
+const sorted = (ids: Iterable<string>) => Array.from(ids).sort();
+
+/** whether the clothes taken out differ from the default */
+export function hiddenChanged(hidden: Set<string>) {
+  return JSON.stringify(sorted(hidden)) !== JSON.stringify(sorted(publishedHidden));
 }
 
 /** where the clothes have been dragged to, by default */
@@ -184,17 +203,23 @@ export function racksChanged(which: Which) {
 
 /** save the closet as it is now as the default everyone sees (editors only;
     the database refuses anyone else) */
-export async function publishRacks(which: Which, moves?: ClosetMoves) {
+export async function publishRacks(which: Which, moves?: ClosetMoves, hidden?: Set<string>) {
   const racks = state[which];
+  const list = hidden ? sorted(hidden) : undefined;
   const sb = await db();
-  const { error } = await sb.from(TABLE).upsert({ closet: which, racks, ...(moves ? { moves } : {}) }, { onConflict: "closet" });
+  const rows: Record<string, unknown>[] = [{ closet: which, racks, ...(moves ? { moves } : {}), ...(list ? { hidden: list } : {}) }];
+  // what's taken out is the same on computers and phones, so the other row gets it too
+  const other: Which = which === "wide" ? "tall" : "wide";
+  if (list) rows.push({ closet: other, racks: state[other], hidden: list });
+  const { error } = await sb.from(TABLE).upsert(rows, { onConflict: "closet" });
   if (error) {
-    if (moves && /moves/.test(error.message)) {
-      throw new Error("the closet table has no room for moved clothes yet: run supabase/migrations/20260914150000_palais_closet_moves.sql");
+    if ((moves || list) && /moves|hidden/.test(error.message)) {
+      throw new Error("the closet table has no room for moved or taken-out clothes yet: run supabase/migrations/20260914150000_palais_closet_moves.sql");
     }
     throw new Error(error.message);
   }
-  published = { ...published, [which]: racks };
+  published = { ...published, [which]: racks, ...(list ? { [other]: state[other] } : {}) };
   if (moves) publishedMoves = { ...publishedMoves, [which]: moves };
+  if (list) publishedHidden = list;
   notify();
 }
