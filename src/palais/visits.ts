@@ -23,6 +23,8 @@ const SESSION_KEY = "palais-visit";
 
 interface Geo {
   city?: string;
+  organization_name?: string;
+  asn?: number;
   region?: string;
   country?: string;
   country_code?: string;
@@ -323,6 +325,14 @@ const tagsIn = (search: string) => {
   };
 };
 
+const ownZone = () => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
+  } catch {
+    return null;
+  }
+};
+
 const referrerPath = () => {
   try {
     if (!document.referrer) return null;
@@ -451,6 +461,9 @@ export async function recordVisit() {
       p_utm_campaign: marks.campaign,
       p_utm_term: marks.term,
       p_utm_content: marks.content,
+      p_network: geo.organization_name ?? null,
+      p_asn: geo.asn ?? null,
+      p_zone: ownZone(),
     });
     watchStay();
   } catch {
@@ -467,6 +480,8 @@ export interface VisitStats {
   devices: { device: string; visits: number; unique: number }[];
   sources?: { source: string; visits: number; unique: number }[];
   me?: { name: string | null; visits: number };
+  vpn?: { visits: number; networks: { network: string | null; why: string; visits: number }[] };
+  networks?: { network: string; visits: number; unique: number }[];
   places?: { place: string; visits: number; unique: number; seconds: number }[];
   time?: { median_seconds: number; longest_seconds: number; glances: number };
   by_hour?: { hour: number; visits: number }[];
@@ -553,6 +568,11 @@ export interface VisitLogEntry {
   seconds: number | null;
   pages: number | null;
   last_seen: string | null;
+  network: string | null;
+  asn: number | null;
+  zone: string | null;
+  /** why this visit looks like a VPN, or null if it doesn't */
+  vpn: string | null;
 }
 
 export async function visitLog(before?: number, visitor?: string | null, limit = 50): Promise<VisitLogEntry[]> {
@@ -578,6 +598,8 @@ export interface VisitorProfile {
   busiest_hour: number | null;
   timezone: string | null;
   language: string | null;
+  network: string | null;
+  vpn_visits: number;
   sources: { name: string; visits: number }[];
   places: { name: string; code: string | null; visits: number }[];
   map_places: { place: string; visits: number; seconds: number }[];

@@ -1499,6 +1499,7 @@
 .palais .vis-me span { color: var(--cat-deep); }
 .palais .vis-name { color: var(--cat-deep) !important; }
 .palais .vis-name.is-me { color: var(--cat-hot) !important; }
+.palais .vis-vpn { color: #9a5bd6 !important; }
 /* a card for each visitor */
 .palais .vis-people { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem; }
 .palais .vis-person { padding: 0.55rem 0.7rem; border-radius: 14px; border: 2px solid var(--cat-line); background: #fffafd; font: 600 0.74rem/1.4 var(--cat-round); color: #8a5a70; }

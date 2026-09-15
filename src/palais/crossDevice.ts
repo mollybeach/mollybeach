@@ -48,6 +48,7 @@ const PHOTO_MAPS: Record<string, PhotoMap> = {
   bathroom: { kx: 1.435, tx: -0.21, ky: 0.729, ty: 0.079 },
   madeleine: { kx: 1.172, tx: -0.086, ky: 0.816, ty: 0.074 },
   closet: { kx: 1.451, tx: -0.221, ky: 0.754, ty: 0.031 },
+  garden: { kx: 0.94, tx: 0.038, ky: 1, ty: 0 },
   lakehouse: { kx: 1.089, tx: -0.072, ky: 0.705, ty: 0.127 },
   lagoon: { kx: 1.504, tx: -0.356, ky: 0.718, ty: 0.158 },
   domes: { kx: 1.332, tx: -0.351, ky: 0.505, ty: 0.273 },

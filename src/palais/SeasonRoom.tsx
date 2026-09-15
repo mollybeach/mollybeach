@@ -16,7 +16,7 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // the bathroom through the arch on the terrace's right: rose wallpaper, a ruffled shower curtain, a painted sky; one photograph for now
   bathroom: { file: "bathroom", focus: "50% 60%", seasons: false, portrait: true },
   // a conservatory: glass and iron over the garden, full of blossom
-  garden: { file: "garden", focus: "50% 55%" },
+  garden: { file: "garden", focus: "50% 55%", portrait: "seasons" },
   // pink walls, lemon-papered shelves, Snoqualmie Falls through the window
   closet: { file: "closet", focus: "50% 60%", portrait: true },
   // the house on the lake: marble fireplace, the red bridge, the dock, Rainier

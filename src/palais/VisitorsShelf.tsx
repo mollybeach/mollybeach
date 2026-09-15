@@ -386,6 +386,32 @@ export function VisitorsShelf() {
 
           <div className="vis-cols">
             <section className="vis-card">
+              <h3>🛡 Likely VPNs</h3>
+              {stats.vpn?.visits ? (
+                <ul className="vis-list">
+                  <li>
+                    <span>
+                      Visits that look like a VPN
+                      <small>of {stats.period.visits} in this stretch</small>
+                    </span>
+                    <b>{stats.vpn.visits}</b>
+                  </li>
+                  {stats.vpn.networks.map((n, i) => (
+                    <li key={i}>
+                      <span>
+                        {n.network ?? "Unknown network"}
+                        <small>{n.why}</small>
+                      </span>
+                      <b>{n.visits}</b>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="cat-note">Nothing looks like a VPN{stats.vpn ? "" : " yet (run the visitor SQL)"}.</p>
+              )}
+              <p className="vis-hint">A guess, not proof: offices, travellers and Apple's Private Relay set it off too.</p>
+            </section>
+            <section className="vis-card">
               <h3>🗣 Languages</h3>
               {stats.languages?.length ? (
                 <ul className="vis-list">
@@ -500,9 +526,12 @@ export function VisitorsShelf() {
                       ⏱ {mins(p.total_seconds)} in all · longest {mins(p.longest_seconds)}
                       {p.busiest_hour !== null ? ` · usually around ${hour(p.busiest_hour)}` : ""}
                     </p>
-                    {(p.timezone || p.language) && (
+                    {(p.timezone || p.language || p.network) && (
+                      <p>🕰 {[p.timezone, p.language, p.network].filter(Boolean).join(" · ")}</p>
+                    )}
+                    {p.vpn_visits > 0 && (
                       <p>
-                        🕰 {[p.timezone, p.language].filter(Boolean).join(" · ")}
+                        <b className="vis-vpn">🛡 {p.vpn_visits === p.visits ? "Always" : `${p.vpn_visits} of ${p.visits} visits`}</b> looks like a VPN
                       </p>
                     )}
                     {p.places.length > 0 && <p>📍 {p.places.map((x) => `${flag(x.code)} ${x.name}`).join(" · ")}</p>}
@@ -570,6 +599,13 @@ export function VisitorsShelf() {
                       {deviceIcon(v.device)} {machineOf(v) || deviceName(v.device)}
                       {v.source ? ` · via ${v.source}` : v.referrer ? ` · from ${v.referrer}` : ""}
                     </small>
+                    {(v.network || v.vpn) && (
+                      <small>
+                        {v.vpn ? <b className="vis-vpn">🛡 {v.vpn}</b> : null}
+                        {v.vpn && v.network ? " · " : ""}
+                        {v.network}
+                      </small>
+                    )}
                     <small>
                       {[
                         v.seconds ? `stayed ${mins(v.seconds)}` : null,
