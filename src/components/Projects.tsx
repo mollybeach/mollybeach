@@ -115,6 +115,65 @@ const projects: Project[] = [
     }
   },
   {
+    title: "wyd?",
+    date: "Jul 2026",
+    description: "📍 Built at ETHGlobal Lisbon 2026 🇵🇹 Find My Friends meets a social event concierge. wyd is a native SwiftUI iOS app that helps you find your friends, discover the best events, and make the plan without giving up your privacy. Ask \"wyd tonight?\" or \"find an event everyone can make\", see friends and events on a live map, and choose exactly what each circle of friends can see, with privacy enforced on the server.",
+    technologies: ["Swift", "SwiftUI", "MapKit", "EventKit", "CoreLocation", "Postgres", "iCalendar (ICS)", "XCTest", "GitHub Pages"],
+    microlink: `${process.env.PUBLIC_URL}/images/wyd_preview.webp`,
+    link: "https://mollybeach.github.io/wyd/",
+    previewType: "image",
+    overview: "A privacy-first iOS app for finding your friends and the best plans at big events",
+    keyFeatures: [
+      {
+        title: "Chat Concierge",
+        description: "Ask \"wyd tonight?\", \"Where is everyone?\", \"What's trending?\" or \"Find an event everyone can make\". Answers come from live backend data, with event cards you can join in one tap.",
+      },
+      {
+        title: "Live Map",
+        description: "A MapKit map of events colored by category with friend-count badges, friends who share their location, and your own position, with a filter for events your friends are going to.",
+      },
+      {
+        title: "Events & Calendar",
+        description: "Personalized recommendations, every event grouped by day with category filters and RSVP, and a real day timeline that merges RSVPs, personal events and synced calendars side by side.",
+      },
+      {
+        title: "Circles with Per-Circle Privacy",
+        description: "Group friends into circles and choose what each one sees: free/busy blocks, public events, approximate or live location. Hide your events from one specific friend without leaving the circle.",
+      },
+      {
+        title: "Privacy Enforced on the Server",
+        description: "Sharing rules live in the SQL functions, not just the UI. Synced calendars are always private, and location is opt-in twice, throttled to once a minute.",
+      },
+      {
+        title: "Calendar Sync",
+        description: "Import Google Calendar, Luma, Partiful, Outlook, any .ics or webcal feed, or Apple Calendar via EventKit, deduplicated by each event's UID.",
+      },
+      {
+        title: "Conference Mode",
+        description: "Replays ETHGlobal Lisbon in real time from the opening keynote, so recommendations, \"where is everyone\" and the calendar all have data after the event is over.",
+      },
+    ],
+    installation: {
+      steps: [
+        { command: "open wydiOS/MyProject.xcodeproj", description: "Open the project in Xcode 16 or later" },
+        { command: "⌘R", description: "Run the MyProject scheme on an iPhone simulator (the hosted backend is already running)" },
+        { command: "xcodebuild test -project MyProject.xcodeproj -scheme MyProject -destination 'platform=iOS Simulator,name=iPhone 17 Pro'", description: "Run the unit tests from wydiOS/" },
+      ],
+    },
+    screenshots: [
+      { url: `${process.env.PUBLIC_URL}/images/wyd_preview.webp`, alt: "wyd? landing page with the chat concierge" }
+    ],
+    demoUrl: "https://mollybeach.github.io/wyd/",
+    githubUrl: "https://github.com/mollybeach/wyd",
+    status: "Completed",
+    techStack: {
+      frontend: ["Swift", "SwiftUI", "MapKit", "CoreLocation", "EventKit"],
+      backend: ["LingCode Cloud", "Postgres", "SQL RPC functions"],
+      tools: ["Xcode", "XCTest", "iCalendar (ICS) parsing"],
+      deployment: ["iOS 17+", "GitHub Pages landing site"],
+    }
+  },
+  {
     title: "HedgePod",
     date: "Nov 2025-Present",
     description: "🦔🫛 HedgePod is a World mini app that solves crypto's biggest UX problem: chain fragmentation. Autonomous cross-chain DeFi that makes 23M World App users their own hedge fund. Deposit once. AI agents automatically rebalance across 8+ chains for optimal yield. Gasless. Chain-abstracted. Human-readable. Built for non-crypto users.",
