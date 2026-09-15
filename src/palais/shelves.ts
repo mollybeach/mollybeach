@@ -133,6 +133,7 @@ export const SHELVES: Shelf[] = [
       "artwork_framed_print_woman_blue_leaves_sticker",
       "artwork_framed_print_red_poppies_pink_sticker",
       "artwork_framed_vogue_cover_art_deco_sticker",
+      "artwork_framed_abstract_splatter_painting_blue_green_gold_frame_sticker",
     ],
   },
   {
