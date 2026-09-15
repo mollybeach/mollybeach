@@ -19,7 +19,7 @@ import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
 import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
-import { recordPlace, recordVisit } from "./visits";
+import { countPage, recordPlace, recordVisit } from "./visits";
 import { useEffect } from "react";
 import "./palais.css";
 
@@ -109,6 +109,7 @@ export default function PalaisHome() {
   }, []);
   // and each place on the map this visit walks into
   useEffect(() => {
+    countPage();
     recordPlace(places.place);
   }, [places.place]);
   return (

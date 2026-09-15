@@ -1117,6 +1117,23 @@
 }
 .palais .cat-close:hover { background: rgba(22, 84, 86, 0.85); }
 
+.palais .cat-find {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin: 0.45rem auto 0; max-width: 26rem; padding: 0.3rem 0.7rem;
+  border-radius: 99px; border: 2px solid var(--cat-line); background: #fff;
+}
+.palais .cat-find input {
+  flex: 1; min-width: 0; border: 0; background: none; outline: none;
+  font: 700 0.85rem/1.4 var(--cat-round); color: var(--cat-deep);
+}
+.palais .cat-find input::placeholder { color: #c58fa8; font-weight: 600; }
+.palais .cat-find input::-webkit-search-cancel-button { display: none; }
+.palais .cat-find-count { flex: none; font: 800 0.7rem/1 var(--cat-round); color: var(--cat-hot); white-space: nowrap; }
+.palais .cat-find button {
+  flex: none; width: 1.3rem; height: 1.3rem; border: 0; border-radius: 99px; cursor: pointer;
+  background: var(--cat-soft); color: var(--cat-deep); font: 800 0.9rem/1 var(--cat-round);
+}
+.palais .cat-find button:hover { background: var(--cat-hot); color: #fff; }
 .palais .cat-tabs {
   display: flex;
   gap: 0.4rem;

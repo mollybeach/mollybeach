@@ -190,6 +190,190 @@ const num = (s?: string) => {
   return Number.isFinite(n) ? n : null;
 };
 
+const PHONE_MAKERS: [RegExp, string][] = [
+  [/^(mi|redmi|poco|xiaomi|m[0-9]{4}|2[0-9]{6}|22[0-9]{5}|23[0-9]{5}|24[0-9]{5}|25[0-9]{5})/i, "Xiaomi"],
+  [/^(sm-|gt-|sch-|galaxy)/i, "Samsung"],
+  [/^(pixel|gm[0-9]|g[0-9a-z]{4}$)/i, "Google"],
+  [/^(cph[0-9]|oppo|pd[a-z0-9]{2})/i, "OPPO"],
+  [/^(ne[0-9]|kb[0-9]|le[0-9]{4}|in[0-9]{4}|oneplus|dn[0-9])/i, "OnePlus"],
+  [/^(vivo|v[0-9]{4}[a-z])/i, "vivo"],
+  [/^(rmx[0-9]|realme)/i, "realme"],
+  [/^(moto|xt[0-9]{4})/i, "Motorola"],
+  [/^(nokia|ta-[0-9]{4})/i, "Nokia"],
+  [/^(lm-[a-z][0-9]|lg-)/i, "LG"],
+  [/^(ane|ele|vog|lya|mar|jny|nen|bla|wgr|eml|cdy|mrd|stk|jkm|pot|yal|noh|tas|lio|els|ana|nam|anp|ags|honor|hma|hry|jsn|lld|mha|par|rne|sne|vce|vtr|was)/i, "Huawei / Honor"],
+  [/^(asus|zs[0-9]{3}|ai[0-9]{4})/i, "ASUS"],
+  [/^(sony|xq-|so-[0-9]|g8[0-9]{3})/i, "Sony"],
+  [/^(nothing|a0[0-9]{2}$|a142|a059|a065)/i, "Nothing"],
+  [/^(tecno|infinix|itel)/i, "Transsion"],
+  [/^(fp[0-9]|fairphone)/i, "Fairphone"],
+];
+
+const makerOf = (model: string) => PHONE_MAKERS.find(([re]) => re.test(model))?.[1] ?? null;
+
+function versionFrom(ua: string, browser: string) {
+  const at = (re: RegExp) => ua.match(re)?.[1] ?? null;
+  if (browser === "Edge") return at(/Edg\/([\d.]+)/);
+  if (browser === "Opera") return at(/OPR\/([\d.]+)/);
+  if (browser === "Samsung") return at(/SamsungBrowser\/([\d.]+)/);
+  if (browser === "Firefox") return at(/(?:Firefox|FxiOS)\/([\d.]+)/);
+  if (browser === "Chrome") return at(/(?:Chrome|CriOS)\/([\d.]+)/);
+  if (browser === "Safari") return at(/Version\/([\d.]+)/);
+  return null;
+}
+
+function osVersionFrom(ua: string) {
+  const m =
+    ua.match(/Android (\d+(?:\.\d+)*)/) ??
+    ua.match(/(?:iPhone )?OS (\d+(?:[._]\d+)*) like Mac/) ??
+    ua.match(/Mac OS X (\d+(?:[._]\d+)*)/) ??
+    ua.match(/Windows NT (\d+(?:\.\d+)*)/) ??
+    ua.match(/CrOS \S+ (\d+(?:\.\d+)*)/);
+  if (!m) return null;
+  const v = m[1].replace(/_/g, ".");
+  if (/Windows NT/.test(m[0])) return { "10.0": "10 or 11", "6.3": "8.1", "6.2": "8", "6.1": "7" }[v] ?? v;
+  return v;
+}
+
+const engineOf = (ua: string) =>
+  /Gecko\/|Firefox|FxiOS/.test(ua) && !/like Gecko/.test(ua.replace(/Firefox.*/, ""))
+    ? "Gecko"
+    : /Chrome|Chromium|CriOS|Edg\/|OPR\//.test(ua)
+      ? "Blink"
+      : /AppleWebKit/.test(ua)
+        ? "WebKit"
+        : "Other";
+
+async function describeMachine() {
+  const nav = navigator as Navigator & {
+    userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<Record<string, unknown>> };
+    deviceMemory?: number;
+    connection?: { effectiveType?: string; downlink?: number; saveData?: boolean };
+    standalone?: boolean;
+  };
+  const ua = navigator.userAgent;
+  const { device, os, browser } = describeDevice();
+
+  let model: string | null = null;
+  let osVersion: string | null = null;
+  let browserVersion: string | null = null;
+  try {
+    const hints = await nav.userAgentData?.getHighEntropyValues?.(["model", "platformVersion", "uaFullVersion", "fullVersionList"]);
+    if (hints) {
+      model = (hints.model as string) || null;
+      osVersion = (hints.platformVersion as string) || null;
+      const list = (hints.fullVersionList as { brand: string; version: string }[] | undefined)?.filter((b) => !/Not.?A.?Brand/i.test(b.brand));
+      browserVersion = (hints.uaFullVersion as string) || list?.[list.length - 1]?.version || null;
+    }
+  } catch {
+    model = null;
+  }
+  if (!model) model = ua.match(/;\s*([A-Za-z0-9_+ -]+)\s*(?:Build\/|\))/)?.[1]?.trim() ?? null;
+  if (model && /^(K|wv|Linux|Android|U)$/i.test(model)) model = null;
+
+  const brand = os === "iPhone" || os === "iPad" || os === "Mac" ? "Apple" : model ? makerOf(model) : /MiuiBrowser/i.test(ua) ? "Xiaomi" : null;
+  const media = (q: string) => {
+    try {
+      return window.matchMedia(q).matches;
+    } catch {
+      return false;
+    }
+  };
+  const net = nav.connection ?? {};
+  const landscape = window.innerWidth > window.innerHeight;
+
+  return {
+    device,
+    os,
+    browser,
+    brand,
+    model,
+    osVersion: osVersion ?? osVersionFrom(ua),
+    browserVersion: browserVersion ?? versionFrom(ua, browser),
+    engine: engineOf(ua),
+    screenW: Math.round(window.screen?.width ?? 0) || null,
+    screenH: Math.round(window.screen?.height ?? 0) || null,
+    viewportW: Math.round(window.innerWidth) || null,
+    viewportH: Math.round(window.innerHeight) || null,
+    dpr: Math.round((window.devicePixelRatio ?? 1) * 100) / 100,
+    orientation: landscape ? "landscape" : "portrait",
+    language: navigator.language ?? null,
+    languages: (navigator.languages ?? []).slice(0, 6).join(",") || null,
+    tzOffset: -new Date().getTimezoneOffset(),
+    cores: navigator.hardwareConcurrency ?? null,
+    memory: nav.deviceMemory ?? null,
+    touch: navigator.maxTouchPoints ?? 0,
+    connection: net.effectiveType ?? null,
+    downlink: net.downlink ?? null,
+    saveData: net.saveData ?? null,
+    colorScheme: media("(prefers-color-scheme: dark)") ? "dark" : "light",
+    reducedMotion: media("(prefers-reduced-motion: reduce)"),
+    installed: media("(display-mode: standalone)") || nav.standalone === true,
+  };
+}
+
+const tagsIn = (search: string) => {
+  const p = new URLSearchParams(search);
+  return {
+    tag: (p.get("from") ?? p.get("ref") ?? p.get("source") ?? p.get("utm_source") ?? "").trim().slice(0, 40) || null,
+    medium: p.get("utm_medium")?.trim().slice(0, 40) || null,
+    campaign: p.get("utm_campaign")?.trim().slice(0, 60) || null,
+    term: p.get("utm_term")?.trim().slice(0, 60) || null,
+    content: p.get("utm_content")?.trim().slice(0, 60) || null,
+  };
+};
+
+const referrerPath = () => {
+  try {
+    if (!document.referrer) return null;
+    const u = new URL(document.referrer);
+    return u.host === window.location.host ? null : (u.pathname + u.search).slice(0, 200);
+  } catch {
+    return null;
+  }
+};
+
+let watching = false;
+let seen = 0;
+let lastTick = Date.now();
+let pagesSeen = 1;
+
+export function countPage() {
+  pagesSeen += 1;
+}
+
+function watchStay() {
+  if (watching) return;
+  watching = true;
+  const tick = () => {
+    const now = Date.now();
+    if (document.visibilityState === "visible") seen += Math.min(60_000, now - lastTick);
+    lastTick = now;
+  };
+  const send = async () => {
+    tick();
+    let session: string | null = null;
+    try {
+      session = sessionStorage.getItem(SESSION_KEY);
+    } catch {
+      return;
+    }
+    if (!session) return;
+    try {
+      const sb = await db();
+      await sb.rpc("palais_touch_visit", { p_session: session, p_seconds: Math.round(seen / 1000), p_pages: pagesSeen });
+    } catch {
+      return;
+    }
+  };
+  setInterval(send, 30_000);
+  document.addEventListener("visibilitychange", () => {
+    tick();
+    if (document.visibilityState === "hidden") void send();
+  });
+  window.addEventListener("pagehide", () => void send());
+}
+
 export async function recordVisit() {
   if (!dbConfigured) return;
   if (process.env.NODE_ENV !== "production") return;
@@ -204,8 +388,11 @@ export async function recordVisit() {
   }
 
   const geo = await lookUp();
-  const { device, os, browser } = describeDevice();
+  const machine = await describeMachine();
   const source = describeSource();
+  const marks = tagsIn(window.location.search);
+  const fromPath = referrerPath();
+  const landing = window.location.hash || "/";
   // tidy a ?from=… tag out of the address bar once it's been read
   try {
     const url = new URL(window.location.href);
@@ -230,11 +417,42 @@ export async function recordVisit() {
       p_lat: num(geo.latitude),
       p_lon: num(geo.longitude),
       p_timezone: geo.timezone ?? null,
-      p_device: device,
-      p_os: os,
-      p_browser: browser,
+      p_device: machine.device,
+      p_os: machine.os,
+      p_browser: machine.browser,
       p_source: source,
+      p_brand: machine.brand,
+      p_model: machine.model,
+      p_os_version: machine.osVersion,
+      p_browser_version: machine.browserVersion,
+      p_engine: machine.engine,
+      p_screen_w: machine.screenW,
+      p_screen_h: machine.screenH,
+      p_viewport_w: machine.viewportW,
+      p_viewport_h: machine.viewportH,
+      p_dpr: machine.dpr,
+      p_orientation: machine.orientation,
+      p_language: machine.language,
+      p_languages: machine.languages,
+      p_tz_offset: machine.tzOffset,
+      p_cores: machine.cores,
+      p_memory: machine.memory,
+      p_touch: machine.touch,
+      p_connection: machine.connection,
+      p_downlink: machine.downlink,
+      p_save_data: machine.saveData,
+      p_color_scheme: machine.colorScheme,
+      p_reduced_motion: machine.reducedMotion,
+      p_installed: machine.installed,
+      p_landing: landing,
+      p_referrer_path: fromPath,
+      p_tag: marks.tag,
+      p_utm_medium: marks.medium,
+      p_utm_campaign: marks.campaign,
+      p_utm_term: marks.term,
+      p_utm_content: marks.content,
     });
+    watchStay();
   } catch {
     /* counting visitors must never break the page */
   }
@@ -249,7 +467,15 @@ export interface VisitStats {
   devices: { device: string; visits: number; unique: number }[];
   sources?: { source: string; visits: number; unique: number }[];
   me?: { name: string | null; visits: number };
-  places?: { place: string; visits: number; unique: number }[];
+  places?: { place: string; visits: number; unique: number; seconds: number }[];
+  time?: { median_seconds: number; longest_seconds: number; glances: number };
+  by_hour?: { hour: number; visits: number }[];
+  makes?: { brand: string; model: string | null; visits: number; unique: number }[];
+  screens?: { size: string; visits: number; unique: number }[];
+  languages?: { language: string; visits: number; unique: number }[];
+  connections?: { connection: string; visits: number; downlink: number | null }[];
+  campaigns?: { tag: string | null; medium: string | null; campaign: string | null; visits: number }[];
+  tastes?: { dark: number; light: number; reduced_motion: number; installed: number; save_data: number };
   systems: { os: string; browser: string; visits: number; unique: number }[];
   countries: { country: string; code: string | null; visits: number; unique: number }[];
   cities: { city: string; region: string | null; country: string | null; code: string | null; lat: number | null; lon: number | null; visits: number; unique: number }[];
@@ -297,6 +523,36 @@ export interface VisitLogEntry {
   name: string | null;
   is_me: boolean;
   places: string[];
+  timezone: string | null;
+  landing: string | null;
+  referrer_path: string | null;
+  tag: string | null;
+  campaign: string | null;
+  medium: string | null;
+  os_version: string | null;
+  browser_version: string | null;
+  engine: string | null;
+  brand: string | null;
+  model: string | null;
+  screen: string | null;
+  viewport: string | null;
+  dpr: number | null;
+  orientation: string | null;
+  language: string | null;
+  languages: string | null;
+  tz_offset: number | null;
+  cores: number | null;
+  memory: number | null;
+  touch: number | null;
+  connection: string | null;
+  downlink: number | null;
+  save_data: boolean | null;
+  color_scheme: string | null;
+  reduced_motion: boolean | null;
+  installed: boolean | null;
+  seconds: number | null;
+  pages: number | null;
+  last_seen: string | null;
 }
 
 export async function visitLog(before?: number, visitor?: string | null, limit = 50): Promise<VisitLogEntry[]> {
@@ -316,10 +572,26 @@ export interface VisitorProfile {
   last_at: string;
   last_7: number;
   last_30: number;
+  note: string | null;
+  total_seconds: number;
+  longest_seconds: number;
+  busiest_hour: number | null;
+  timezone: string | null;
+  language: string | null;
   sources: { name: string; visits: number }[];
   places: { name: string; code: string | null; visits: number }[];
-  map_places: { place: string; visits: number }[];
-  devices: { device: string | null; os: string | null; browser: string | null; visits: number }[];
+  map_places: { place: string; visits: number; seconds: number }[];
+  devices: {
+    device: string | null;
+    os: string | null;
+    os_version: string | null;
+    browser: string | null;
+    browser_version: string | null;
+    brand: string | null;
+    model: string | null;
+    screen: string | null;
+    visits: number;
+  }[];
 }
 
 export async function visitorProfiles(): Promise<VisitorProfile[]> {
@@ -329,9 +601,9 @@ export async function visitorProfiles(): Promise<VisitorProfile[]> {
   return (data ?? []) as VisitorProfile[];
 }
 
-export async function nameVisitor(visitor: string, name: string, isMe = false) {
+export async function nameVisitor(visitor: string, name: string, isMe = false, note?: string | null) {
   const sb = await db();
-  const { error } = await sb.rpc("palais_name_visitor", { p_prefix: visitor, p_name: name, p_is_me: isMe });
+  const { error } = await sb.rpc("palais_name_visitor", { p_prefix: visitor, p_name: name, p_is_me: isMe, p_note: note ?? null });
   if (error) throw new Error(error.message);
 }
 

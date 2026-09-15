@@ -35,6 +35,25 @@ const ago = (iso: string) => {
 
 const placeName = (p: string) => PLACE_NAMES[p as Place] ?? p;
 
+const mins = (sec: number | null | undefined) => {
+  const n = sec ?? 0;
+  if (!n) return "—";
+  if (n < 60) return `${Math.round(n)}s`;
+  if (n < 3600) return `${Math.floor(n / 60)}m ${Math.round(n % 60)}s`;
+  return `${Math.floor(n / 3600)}h ${Math.round((n % 3600) / 60)}m`;
+};
+
+const hour = (h: number | null) => (h === null ? "" : `${((h + 11) % 12) + 1}${h < 12 ? "am" : "pm"}`);
+
+const machineOf = (v: VisitLogEntry) =>
+  [
+    v.brand && v.model ? `${v.brand} ${v.model}` : v.brand ?? v.model,
+    [v.os, v.os_version].filter(Boolean).join(" "),
+    [v.browser, v.browser_version?.split(".")[0]].filter(Boolean).join(" "),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
 const dateOf = (iso: string) => new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
 
 /** how often a visitor comes, in words */
@@ -254,6 +273,7 @@ export function VisitorsShelf() {
                       {placeName(p.place)}
                       <small>
                         {p.visits} time{p.visits === 1 ? "" : "s"}
+                        {p.seconds ? ` · about ${mins(p.seconds)} each` : ""}
                       </small>
                     </span>
                     <b>{p.unique}</b>
@@ -264,6 +284,28 @@ export function VisitorsShelf() {
               <p className="cat-note">No map walks recorded yet{stats.places ? "" : " (run the visitor names SQL to start)"}.</p>
             )}
           </section>
+
+          {!!stats.time && (
+            <section className="vis-card">
+              <h3>⏱ How long they stay</h3>
+              <ul className="vis-list">
+                <li>
+                  <span>Typical visit</span>
+                  <b>{mins(stats.time.median_seconds)}</b>
+                </li>
+                <li>
+                  <span>Longest visit</span>
+                  <b>{mins(stats.time.longest_seconds)}</b>
+                </li>
+                <li>
+                  <span>
+                    Quick glances<small>under 10 seconds</small>
+                  </span>
+                  <b>{stats.time.glances}</b>
+                </li>
+              </ul>
+            </section>
+          )}
 
           <div className="vis-cols">
             <section className="vis-card">
@@ -303,6 +345,94 @@ export function VisitorsShelf() {
               ) : (
                 <p className="cat-note">No visits yet.</p>
               )}
+            </section>
+          </div>
+
+          <div className="vis-cols">
+            <section className="vis-card">
+              <h3>🏷️ Makes &amp; models</h3>
+              {stats.makes?.length ? (
+                <ul className="vis-list">
+                  {stats.makes.map((m) => (
+                    <li key={`${m.brand}-${m.model}`}>
+                      <span>
+                        {m.brand}
+                        {m.model ? <small>{m.model}</small> : null}
+                      </span>
+                      <b>{m.unique}</b>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="cat-note">No makes yet: phones only tell us from the next visit on.</p>
+              )}
+            </section>
+            <section className="vis-card">
+              <h3>🖥 Screens</h3>
+              {stats.screens?.length ? (
+                <ul className="vis-list">
+                  {stats.screens.map((sc) => (
+                    <li key={sc.size}>
+                      <span>{sc.size}</span>
+                      <b>{sc.unique}</b>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="cat-note">No screens yet.</p>
+              )}
+            </section>
+          </div>
+
+          <div className="vis-cols">
+            <section className="vis-card">
+              <h3>🗣 Languages</h3>
+              {stats.languages?.length ? (
+                <ul className="vis-list">
+                  {stats.languages.map((l) => (
+                    <li key={l.language}>
+                      <span>{l.language}</span>
+                      <b>{l.unique}</b>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="cat-note">No languages yet.</p>
+              )}
+            </section>
+            <section className="vis-card">
+              <h3>📶 Connection &amp; taste</h3>
+              <ul className="vis-list">
+                {(stats.connections ?? []).map((c) => (
+                  <li key={c.connection}>
+                    <span>
+                      {c.connection}
+                      {c.downlink ? <small>about {c.downlink} Mbps</small> : null}
+                    </span>
+                    <b>{c.visits}</b>
+                  </li>
+                ))}
+                {!!stats.tastes && (
+                  <>
+                    <li>
+                      <span>Dark mode</span>
+                      <b>{stats.tastes.dark}</b>
+                    </li>
+                    <li>
+                      <span>Light mode</span>
+                      <b>{stats.tastes.light}</b>
+                    </li>
+                    <li>
+                      <span>Less motion</span>
+                      <b>{stats.tastes.reduced_motion}</b>
+                    </li>
+                    <li>
+                      <span>Added to a home screen</span>
+                      <b>{stats.tastes.installed}</b>
+                    </li>
+                  </>
+                )}
+              </ul>
             </section>
           </div>
 
@@ -348,7 +478,7 @@ export function VisitorsShelf() {
             <h3>👥 Visitors</h3>
             {peopleError && (
               <p className="cat-error" role="alert">
-                {needsMigration(peopleError) ? "Visitor profiles aren't set up yet: run supabase/migrations/20260915120000_palais_visitor_names.sql." : peopleError}
+                {needsMigration(peopleError) ? "Visitor profiles aren't set up yet: run supabase/migrations/20260915120000_palais_visitor_id.sql." : peopleError}
               </p>
             )}
             {people && !people.length && <p className="cat-note">No visitors yet.</p>}
@@ -366,14 +496,33 @@ export function VisitorsShelf() {
                     <p>
                       First {dateOf(p.first_at)} · last {ago(p.last_at)}
                     </p>
-                    {p.places.length > 0 && <p>📍 {p.places.map((x) => `${flag(x.code)} ${x.name}`).join(" · ")}</p>}
-                    {p.map_places.length > 0 && <p>🗺️ {p.map_places.map((x) => `${placeName(x.place)} ×${x.visits}`).join(" · ")}</p>}
-                    {p.sources.length > 0 && <p>🔗 {p.sources.map((x) => x.name).join(" · ")}</p>}
-                    {p.devices.length > 0 && (
+                    <p>
+                      ⏱ {mins(p.total_seconds)} in all · longest {mins(p.longest_seconds)}
+                      {p.busiest_hour !== null ? ` · usually around ${hour(p.busiest_hour)}` : ""}
+                    </p>
+                    {(p.timezone || p.language) && (
                       <p>
-                        {p.devices.map((d) => `${deviceIcon(d.device)} ${[d.os, d.browser].filter(Boolean).join(" ")}`).join(" · ")}
+                        🕰 {[p.timezone, p.language].filter(Boolean).join(" · ")}
                       </p>
                     )}
+                    {p.places.length > 0 && <p>📍 {p.places.map((x) => `${flag(x.code)} ${x.name}`).join(" · ")}</p>}
+                    {p.map_places.length > 0 && (
+                      <p>🗺️ {p.map_places.map((x) => `${placeName(x.place)} ×${x.visits}${x.seconds ? ` (${mins(x.seconds)})` : ""}`).join(" · ")}</p>
+                    )}
+                    {p.sources.length > 0 && <p>🔗 {p.sources.map((x) => x.name).join(" · ")}</p>}
+                    {p.devices.map((d, i) => (
+                      <p key={i}>
+                        {deviceIcon(d.device)}{" "}
+                        {[
+                          d.brand && d.model ? `${d.brand} ${d.model}` : d.brand ?? d.model,
+                          [d.os, d.os_version].filter(Boolean).join(" "),
+                          [d.browser, d.browser_version?.split(".")[0]].filter(Boolean).join(" "),
+                          d.screen,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </p>
+                    ))}
                     <div className="vis-person-actions">
                       <button type="button" className="cat-mini" onClick={() => setOnly(only === p.visitor ? null : p.visitor)}>
                         {only === p.visitor ? "Show everyone" : "Their visits"}
@@ -392,7 +541,7 @@ export function VisitorsShelf() {
             <h3>✦ {only ? `Visits by ${who(people?.find((p) => p.visitor === only)?.name ?? null, only)}` : "Every visit"}</h3>
             {logError && (
               <p className="cat-error" role="alert">
-                {needsMigration(logError) ? "The visit log isn't set up yet: run supabase/migrations/20260915120000_palais_visitor_names.sql." : logError}
+                {needsMigration(logError) ? "The visit log isn't set up yet: run supabase/migrations/20260915120000_palais_visitor_id.sql." : logError}
               </p>
             )}
             <ul className="vis-list vis-list--recent">
@@ -418,8 +567,26 @@ export function VisitorsShelf() {
                     <small>
                       <b className={v.is_me ? "vis-name is-me" : "vis-name"}>{who(v.name, v.visitor, v.is_me)}</b>
                       {" · "}
-                      {deviceIcon(v.device)} {[deviceName(v.device), v.os, v.browser].filter(Boolean).join(" · ")}
+                      {deviceIcon(v.device)} {machineOf(v) || deviceName(v.device)}
                       {v.source ? ` · via ${v.source}` : v.referrer ? ` · from ${v.referrer}` : ""}
+                    </small>
+                    <small>
+                      {[
+                        v.seconds ? `stayed ${mins(v.seconds)}` : null,
+                        v.pages && v.pages > 1 ? `${v.pages} pages` : null,
+                        v.screen ? `screen ${v.screen}` : null,
+                        v.viewport ? `window ${v.viewport}` : null,
+                        v.dpr && v.dpr !== 1 ? `${v.dpr}×` : null,
+                        v.language,
+                        v.color_scheme === "dark" ? "dark mode" : null,
+                        v.installed ? "home screen" : null,
+                        v.connection,
+                        v.cores ? `${v.cores} cores` : null,
+                        v.memory ? `${v.memory} GB` : null,
+                        v.timezone,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
                     </small>
                     {v.places.length > 0 && <small>🗺️ {v.places.map(placeName).join(" → ")}</small>}
                   </span>

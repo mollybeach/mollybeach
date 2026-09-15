@@ -115,6 +115,7 @@ export function Catalogue({
   const [stickers, setStickers] = useState<string[]>([]);
   const [clothes, setClothes] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
+  const [find, setFind] = useState("");
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
   const [page, setPage] = useState<Page>(wardrobe ? "clothes" : "stickers");
   // which of the closet's photographs is showing, for the Racks page
@@ -132,6 +133,7 @@ export function Catalogue({
     setStickers(idsIn(stage, ".palais-layer [data-prop]"));
     setClothes(idsIn(stage, ".palais-closet [data-prop]"));
     setPage(place === "closet" ? "clothes" : "stickers");
+    setFind("");
     setWhich(stage?.querySelector(".palais-closet-frame--tall") ? "tall" : "wide");
     setSaveError("");
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -145,8 +147,30 @@ export function Catalogue({
   const inRoom = clothesPage ? clothes : stickers;
   const out = clothesPage ? closetHidden : hidden;
   const setOut = clothesPage ? setClosetHidden : setHidden;
-  const shelves = clothesPage ? wardrobeStock(clothes) : stock(stickers);
+  const allShelves = clothesPage ? wardrobeStock(clothes) : stock(stickers);
   const shown = inRoom.filter((id) => !out.has(id)).length;
+
+  /* the search box: every word has to appear somewhere in the piece's name,
+     the shop it came from, its shelf, or its id */
+  const words = find.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const describe = (id: string, shelfName: string) => {
+    const g = clothesPage ? garment(id) : undefined;
+    return `${g ? `${g.label} ${g.store} ${g.bought}` : nice(id)} ${shelfName} ${id}`.toLowerCase();
+  };
+  const shelves = words.length
+    ? allShelves
+        .map(({ shelf, items }) => ({
+          shelf,
+          items: items.filter((id) => {
+            const text = describe(id, shelf.name);
+            return words.every((w) => text.includes(w));
+          }),
+        }))
+        .filter((s) => s.items.length > 0)
+    : allShelves;
+  const hits = shelves.reduce((n, s) => n + s.items.length, 0);
+  /* what the buttons at the bottom work on: the search's matches, or the lot */
+  const onPage = words.length ? shelves.flatMap((s) => s.items) : inRoom;
 
   const setMany = (ids: string[], show: boolean) => {
     const next = new Set(out);
@@ -356,6 +380,29 @@ export function Catalogue({
             ))}
           </div>
           {(clothesPage || page === "stickers") && (
+            <div className="cat-find">
+              <span aria-hidden>🔍</span>
+              <input
+                type="search"
+                value={find}
+                placeholder={clothesPage ? "Search the wardrobe…" : "Search the catalogue…"}
+                aria-label={clothesPage ? "Search the wardrobe" : "Search the catalogue"}
+                onChange={(e) => setFind(e.target.value)}
+                onKeyDown={(e) => e.key === "Escape" && find && (e.stopPropagation(), setFind(""))}
+              />
+              {!!words.length && (
+                <>
+                  <span className="cat-find-count">
+                    {hits} {hits === 1 ? "match" : "matches"}
+                  </span>
+                  <button type="button" onClick={() => setFind("")} aria-label="Clear the search">
+                    ×
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+          {(clothesPage || page === "stickers") && !!shelves.length && (
             <nav className="cat-tabs" aria-label="Shelves">
               {shelves.map(({ shelf }) => (
                 <button
@@ -437,6 +484,11 @@ export function Catalogue({
               stageOf={stageOf}
             />
           ) : (
+            !shelves.length ? (
+              <p className="cat-note">
+                Nothing here matches “{find.trim()}”.
+              </p>
+            ) : (
             shelves.map(({ shelf, items }) => {
               const on = items.filter((id) => !out.has(id)).length;
               const all = on === items.length;
@@ -494,6 +546,7 @@ export function Catalogue({
                 </section>
               );
             })
+            )
           )}
         </div>
 
@@ -512,13 +565,14 @@ export function Catalogue({
           {(clothesPage || page === "stickers") && (
             <>
               <span className="cat-size-all">
-                Size of everything {sizeGroup(inRoom, clothesPage ? "all the clothes" : "everything in the room")}
+                Size of {words.length ? "the matches" : "everything"}{" "}
+                {sizeGroup(onPage, words.length ? "everything the search found" : clothesPage ? "all the clothes" : "everything in the room")}
               </span>
-              <button type="button" className="cat-btn" onClick={() => setMany(inRoom, true)}>
-                Show everything
+              <button type="button" className="cat-btn" onClick={() => setMany(onPage, true)}>
+                Show {words.length ? "the matches" : "everything"}
               </button>
-              <button type="button" className="cat-btn cat-btn--ghost" onClick={() => setMany(inRoom, false)}>
-                Hide everything
+              <button type="button" className="cat-btn cat-btn--ghost" onClick={() => setMany(onPage, false)}>
+                Hide {words.length ? "the matches" : "everything"}
               </button>
             </>
           )}
