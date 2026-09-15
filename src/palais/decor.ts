@@ -58,6 +58,7 @@ export const MORE_TRINKETS: PropId[] = [
   "telescope_refractor_tripod_navy_blue_meade_sticker",
   "telescope_refractor_tripod_navy_blue_meade_facing_left_sticker",
   "dresser_walnut_mid_century_drawers_tapered_legs_sticker",
+  "wardrobe_antique_mahogany_mirror_door_drawers_sticker",
   "sofa_sectional_chaise_slipcover_grey_rolled_arms_sticker",
   "sofa_sectional_chaise_slipcover_grey_rolled_arms_angled_left_sticker",
   "sofa_sectional_chaise_slipcover_grey_rolled_arms_angled_chaise_right_sticker",

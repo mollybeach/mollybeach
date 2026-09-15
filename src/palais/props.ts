@@ -215,6 +215,7 @@ export const PROPS = catalogue({
   telescope_refractor_tripod_navy_blue_meade_sticker: { label: "a navy blue Meade telescope on its tripod", plane: "near", metres: 0.85 },
   telescope_refractor_tripod_navy_blue_meade_facing_left_sticker: { label: "a navy blue Meade telescope, pointing left", plane: "near", metres: 0.85 },
   dresser_walnut_mid_century_drawers_tapered_legs_sticker: { label: "a walnut mid-century chest of drawers", plane: "mid", metres: 0.8 },
+  wardrobe_antique_mahogany_mirror_door_drawers_sticker: { label: "an antique mahogany wardrobe with a mirrored door", glass: true, plane: "mid", metres: 1.9 },
   sofa_sectional_chaise_slipcover_grey_rolled_arms_sticker: { label: "a grey slipcovered sectional sofa with a chaise", plane: "near", metres: 2.6 },
   sofa_sectional_chaise_slipcover_grey_rolled_arms_angled_left_sticker: { label: "a grey slipcovered sectional, turned a little left", plane: "near", metres: 2.6 },
   sofa_sectional_chaise_slipcover_grey_rolled_arms_angled_chaise_right_sticker: { label: "a grey slipcovered sectional, angled, chaise on the right", plane: "near", metres: 2.6 },

@@ -149,6 +149,7 @@ export default function PalaisHome() {
           <SeasonRoom place="shore" />
           <SeasonRoom place="caves" />
           <SeasonRoom place="madeleine" />
+          <SeasonRoom place="library" />
           {/* the clothes in the Wardrobe Wing */}
           <Wardrobe />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}

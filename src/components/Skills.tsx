@@ -35,7 +35,7 @@ const skills = {
     'Firebase Functions', 'AWS Lambda'
   ],
   'Blockchain & Web3': [
-    'Solidity', 'Ethereum', 'Aptos', 'Near', 'Arbitrum', 'Solana', 
+    'Solidity', 'Ethereum', 'Stellar', 'Soroban', 'Aptos', 'Near', 'Arbitrum', 'Solana', 
     'Hardhat', 'Truffle', 'Remix', 'Ganache', 'Foundry', 'IPFS', 
     'Moralis', 'Chainlink', 'Arweave'
   ],
