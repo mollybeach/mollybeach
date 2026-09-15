@@ -87,6 +87,7 @@ export const MORE_TRINKETS: PropId[] = [
   "coffee_maker_drip_smeg_retro_pink_sticker",
   "espresso_machine_smeg_retro_cream_sticker",
   "microwave_insignia_retro_mint_teal_sticker",
+  "stove_range_smeg_victoria_lavender_sticker",
   "cabinet_china_peach_pink_jadeite_pink_depression_glass_sticker",
   "dresser_five_drawer_light_oak_scalloped_gold_pulls_sticker",
   "shelf_wall_geometric_diamond_gold_frame_three_tier_white_sticker",

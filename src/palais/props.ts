@@ -244,6 +244,7 @@ export const PROPS = catalogue({
   coffee_maker_drip_smeg_retro_pink_sticker: { label: "a pink Smeg drip coffee maker", plane: "near", metres: 0.3 },
   espresso_machine_smeg_retro_cream_sticker: { label: "a cream Smeg espresso machine", plane: "near", metres: 0.32 },
   microwave_insignia_retro_mint_teal_sticker: { label: "a mint Insignia microwave", plane: "near", metres: 0.5 },
+  stove_range_smeg_victoria_lavender_sticker: { label: "a lavender Smeg range cooker", plane: "near", metres: 1.1 },
   cabinet_china_peach_pink_jadeite_pink_depression_glass_sticker: { label: "a peach china cabinet of jadeite and pink glass", glass: true, plane: "mid", metres: 1.1 },
   dresser_five_drawer_light_oak_scalloped_gold_pulls_sticker: { label: "a light oak five-drawer dresser", plane: "mid", metres: 0.85 },
   shelf_wall_geometric_diamond_gold_frame_three_tier_white_sticker: { label: "a gold diamond wall shelf", plane: "mid", metres: 0.75 },

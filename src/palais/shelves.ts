@@ -191,6 +191,7 @@ export const SHELVES: Shelf[] = [
       "coffee_maker_drip_smeg_retro_pink_sticker",
       "espresso_machine_smeg_retro_cream_sticker",
       "microwave_insignia_retro_mint_teal_sticker",
+      "stove_range_smeg_victoria_lavender_sticker",
     ],
   },
   { key: "decor", name: "Room decor", emoji: "🕯️", items: DECOR },

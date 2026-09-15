@@ -12,7 +12,7 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
     (`<file>-portrait-<season>.webp`) */
 const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons" }> = {
   // the kitchen off the terrace, whose marble bar the terrace only shows the end of
-  kitchen: { file: "kitchen", focus: "50% 55%" },
+  kitchen: { file: "kitchen", focus: "50% 55%", seasons: false, portrait: true },
   // the bathroom through the arch on the terrace's right: rose wallpaper, a ruffled shower curtain, a painted sky; one photograph for now
   bathroom: { file: "bathroom", focus: "50% 60%", seasons: false, portrait: true },
   // a conservatory: glass and iron over the garden, full of blossom
