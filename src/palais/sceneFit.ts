@@ -65,25 +65,122 @@ export function sceneTransform(W: number, H: number) {
   return { k, x: X - k * cx, y: Y - k * cy };
 }
 
-/** keeps an element's transform fitted to the stage it sits in */
-export function useSceneFit<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
+/* ---- following the photograph as the window changes shape ----------------
+
+   The stickers used to be laid out on a box the size of the stage, so when the
+   window changed shape their spots stretched with it while the photograph,
+   cropped to cover the window, didn't: they slid off the things they stood on.
+
+   Now they're laid out on a fixed box instead, the size of the stage the room's
+   look was saved on (its layout's stage), so every spot means the same place
+   whatever the window. That box is then moved and scaled so the photograph, as
+   it would have been cropped on that stage, lands on the photograph as it's
+   cropped now. On the stage a look was made on, nothing moves at all. */
+
+/** the stage stickers are laid out on when a look doesn't say (the arrangement's) */
+export const DEFAULT_REFERENCE = { w: 2766, h: 1654 };
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+}
+
+/** where the old terrace photograph (the palace stickers' own coordinates) is on a stage */
+function terraceOn(W: number, H: number): Box {
+  const t = sceneTransform(W, H);
+  const o = frame(W, H, OLD);
+  return { x: t.k * o.left + t.x, y: t.k * o.top + t.y, w: t.k * o.w };
+}
+
+/** a photograph cropped to cover a stage, at an object-position */
+function coverOn(W: number, H: number, nw: number, nh: number, fx: number, fy: number): Box {
+  const sc = Math.max(W / nw, H / nh);
+  const w = nw * sc;
+  const h = nh * sc;
+  return { x: (W - w) * fx, y: (H - h) * fy, w };
+}
+
+/** the photograph of a room on the map that's showing now, if it has loaded */
+function roomImage(stage: HTMLElement, place: string): HTMLImageElement | null {
+  let best: HTMLImageElement | null = null;
+  let seen = -1;
+  stage.querySelectorAll<HTMLImageElement>(`.palais-room--${place} img`).forEach((img) => {
+    if (!img.naturalWidth) return;
+    const o = parseFloat(getComputedStyle(img).opacity) || 0;
+    if (o > seen) {
+      best = img;
+      seen = o;
+    }
+  });
+  return best;
+}
+
+/** the transform that lays a look made on a `ref` stage onto this stage's photograph */
+export function followTransform(stage: HTMLElement, place: string, ref: { w: number; h: number }) {
+  const W = stage.clientWidth;
+  const H = stage.clientHeight;
+  const base = sceneTransform(ref.w, ref.h);
+  let then: Box;
+  let now: Box;
+  const img = place === "palace" ? null : roomImage(stage, place);
+  if (img) {
+    const cs = getComputedStyle(img);
+    const [px = 50, py = 50] = cs.objectPosition.split(" ").map((v) => parseFloat(v));
+    const fit = cs.objectFit === "fill";
+    const nw = fit ? img.clientWidth : img.naturalWidth;
+    const nh = fit ? img.clientHeight : img.naturalHeight;
+    // where it really is (allowing for any zoom on it) against where plain covering puts it
+    const r = img.getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+    const plain = coverOn(W, H, nw, nh, px / 100, py / 100);
+    const sc = Math.max(r.width / nw, r.height / nh);
+    now = { x: r.left - sr.left + ((r.width - nw * sc) * px) / 100, y: r.top - sr.top + ((r.height - nh * sc) * py) / 100, w: nw * sc };
+    const zoom = now.w / plain.w;
+    const c = coverOn(ref.w, ref.h, nw, nh, px / 100, py / 100);
+    then = { x: ref.w / 2 + zoom * (c.x - ref.w / 2), y: ref.h / 2 + zoom * (c.y - ref.h / 2), w: zoom * c.w };
+  } else {
+    then = terraceOn(ref.w, ref.h);
+    now = terraceOn(W, H);
+  }
+  const s = now.w / then.w;
+  return { k: s * base.k, x: s * (base.x - then.x) + now.x, y: s * (base.y - then.y) + now.y };
+}
+
+/** keeps the stickers' box laid out on the look's stage, and fitted to the photograph in view */
+export function useSceneFit<T extends HTMLElement>(place: string, ref: { w: number; h: number }) {
+  const el = useRef<T>(null);
+  const latest = useRef({ place, ref });
+  latest.current = { place, ref };
+  const fitRef = useRef<() => void>(() => {});
   useLayoutEffect(() => {
-    const el = ref.current;
-    const stage = el?.closest<HTMLElement>(".palais-stage");
-    if (!el || !stage) return;
+    const box = el.current;
+    const stage = box?.closest<HTMLElement>(".palais-stage");
+    if (!box || !stage) return;
     let last = "";
     const fit = () => {
-      const { k, x, y } = sceneTransform(stage.clientWidth, stage.clientHeight);
-      el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${k.toFixed(5)})`;
+      const { place: at, ref: r } = latest.current;
+      box.style.width = `${r.w}px`;
+      box.style.height = `${r.h}px`;
+      const { k, x, y } = followTransform(stage, at, r);
+      box.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${k.toFixed(5)})`;
       // say which set of photographs is showing, for anything that cares
       const which = photoFor(stage.clientWidth, stage.clientHeight) === PHOTOS.wide ? "wide" : "tall";
       if (which !== last) stage.dataset.photo = last = which;
     };
+    fitRef.current = fit;
     fit();
     const ro = new ResizeObserver(fit);
     ro.observe(stage);
-    return () => ro.disconnect();
+    // a room's photograph arriving, or turning to the next season's, can move where it's cropped
+    const onLoad = (e: Event) => (e.target as Element).closest?.(".palais-room") && fit();
+    stage.addEventListener("load", onLoad, true);
+    return () => {
+      ro.disconnect();
+      stage.removeEventListener("load", onLoad, true);
+    };
   }, []);
-  return ref;
+  // walking into another room, or wearing a look made on another stage
+  useLayoutEffect(() => fitRef.current(), [place, ref.w, ref.h]);
+  return el;
 }

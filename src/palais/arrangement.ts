@@ -203,9 +203,11 @@ export function capture(
   scope: "room" | "closet" = "room",
 ): SeasonLayout & { layout: "desktop" | "phone" | "closet-wide" | "closet-tall" } {
   const closet = scope === "closet";
-  // a phone layout is measured on the photograph's frame, so it holds on any phone
+  // a phone layout is measured on the photograph's frame, so it holds on any phone;
+  // a computer one on the stickers' own box (sceneFit.ts), unscaled
   const frame = stage.querySelector<HTMLElement>(closet ? ".palais-closet-frame" : ".palais-layer .palais-frame");
-  const r = (frame ?? stage).getBoundingClientRect();
+  const scene = closet || frame ? null : stage.querySelector<HTMLElement>(".palais-layer .palais-scene");
+  const r = scene ? { width: scene.offsetWidth, height: scene.offsetHeight } : (frame ?? stage).getBoundingClientRect();
   const props: SeasonLayout["props"] = {};
   stage.querySelectorAll<HTMLElement>(closet ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]").forEach((el) => {
     const cs = getComputedStyle(el);

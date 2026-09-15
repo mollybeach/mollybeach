@@ -159,7 +159,7 @@ export function resolvePortable(stage: HTMLElement, place: Place, device: Device
     if (inLayer(el, device) && layout.props[el.dataset.prop!]?.at) els.set(el.dataset.prop!, el);
   });
 
-  const place1 = (el: HTMLElement, id: string, box: ReturnType<typeof photoBox>, cr: DOMRect) => {
+  const place1 = (el: HTMLElement, id: string, box: ReturnType<typeof photoBox>, cr: { width: number; height: number }) => {
     const at = layout.props[id].at!;
     const transition = el.style.transition;
     el.style.transition = "none";
@@ -191,8 +191,8 @@ export function resolvePortable(stage: HTMLElement, place: Place, device: Device
     }
     const box = photoBox(img);
     // the box the stickers' cqw and cqh are measured against
-    const container = device === "phone" ? stage.querySelector<HTMLElement>(".palais-layer .palais-frame") : stage;
-    const cr = (container ?? stage).getBoundingClientRect();
+    const container = stage.querySelector<HTMLElement>(device === "phone" ? ".palais-layer .palais-frame" : ".palais-layer .palais-scene");
+    const cr = container ? { width: container.offsetWidth, height: container.offsetHeight } : stage.getBoundingClientRect();
     els.forEach((el, id) => {
       const pic = el.querySelector("img");
       if (pic && !pic.complete) {
