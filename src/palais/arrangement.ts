@@ -122,9 +122,10 @@ export const ARRANGEMENT: Record<string, Move> = {
    stacking order. */
 
 export interface SeasonLayout {
-  stage: { w: number; h: number };
+  /** `portable`: saved on the other device, with where each sticker should land (crossDevice.ts) */
+  stage: { w: number; h: number; portable?: boolean };
   season?: string;
-  props: Record<string, { shown: boolean; x: number; y: number; s: number; z: number }>;
+  props: Record<string, { shown: boolean; x: number; y: number; s: number; z: number; at?: { cx: number; b: number; w: number } }>;
 }
 
 /** the layouts that ship with the code */

@@ -1429,8 +1429,8 @@
   background: #fff8fc;
 }
 .palais .cat-save h3 { margin: 0; font: 800 0.95rem/1.2 var(--cat-round); color: var(--cat-deep); }
-.palais .cat-save-row { display: flex; gap: 0.4rem; }
-.palais .cat-save-row .cat-input:first-child { flex: 1; }
+.palais .cat-save-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.palais .cat-save-row .cat-input:first-child { flex: 1 1 12rem; }
 .palais .cat-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #9a4a72; }
 .palais .cat-check input { accent-color: var(--cat-hot); }
 .palais .cat-save .cat-btn { align-self: flex-start; }

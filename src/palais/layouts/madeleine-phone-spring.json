@@ -1,0 +1,100 @@
+{
+  "season": "spring",
+  "stage": {
+    "w": 462,
+    "h": 820
+  },
+  "props": {
+    "cat-strawberry": {
+      "shown": true,
+      "x": -110,
+      "y": -202.4,
+      "s": 0.408,
+      "z": 241
+    },
+    "stool_strawberry_red_glazed_sticker": {
+      "shown": true,
+      "x": 64.1,
+      "y": -64.1,
+      "s": 0.705,
+      "z": 242
+    },
+    "rug_cat_tufted_peach_flowers_sticker": {
+      "shown": true,
+      "x": -18.4,
+      "y": -40.5,
+      "s": 0.433,
+      "z": 234
+    },
+    "vanity_oak_scalloped_round_mirror_sticker": {
+      "shown": true,
+      "x": 65.9,
+      "y": -124.9,
+      "s": 0.498,
+      "z": 166
+    },
+    "sofa_sectional_chaise_blush_pink_pillows_sticker": {
+      "shown": true,
+      "x": 82.9,
+      "y": -47.7,
+      "s": 0.58,
+      "z": 240
+    },
+    "bed_french_cream_cherry_print_pink_bedding_sticker": {
+      "shown": true,
+      "x": -105.1,
+      "y": -105.5,
+      "s": 0.906,
+      "z": 223
+    },
+    "rug_floral_tufted_grey_multicolour_flowers_sticker": {
+      "shown": true,
+      "x": 149.4,
+      "y": -32.4,
+      "s": 0.378,
+      "z": 157
+    },
+    "radiator_heater_cast_iron_ribbed_white_vintage_sticker": {
+      "shown": true,
+      "x": -204.3,
+      "y": -33.2,
+      "s": 0.699,
+      "z": 227
+    },
+    "dresser_five_drawer_light_oak_scalloped_gold_pulls_sticker": {
+      "shown": true,
+      "x": -117.2,
+      "y": -39,
+      "s": 0.637,
+      "z": 224
+    },
+    "cabinet_china_peach_pink_jadeite_pink_depression_glass_sticker": {
+      "shown": true,
+      "x": 177.8,
+      "y": -118.4,
+      "s": 0.674,
+      "z": 152
+    },
+    "shelf_wall_geometric_diamond_gold_frame_three_tier_white_sticker": {
+      "shown": true,
+      "x": 158.1,
+      "y": -247.5,
+      "s": 0.771,
+      "z": 125
+    },
+    "shelf_wall_picture_ledge_oak_vinyl_records_hers_mitski_top_sticker": {
+      "shown": true,
+      "x": -199,
+      "y": -88,
+      "s": 0.425,
+      "z": 226
+    },
+    "shelf_wall_picture_ledge_oak_vinyl_records_puberty_be_the_cowboy_bottom_sticker": {
+      "shown": true,
+      "x": -60,
+      "y": -95.3,
+      "s": 0.395,
+      "z": 225
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "season": "spring",
+  "stage": {
+    "w": 457,
+    "h": 812
+  },
+  "props": {
+    "cat-strawberry": {
+      "shown": true,
+      "x": 51.5,
+      "y": -337.1,
+      "s": 0.564,
+      "z": 891
+    },
+    "teacup-rosebud": {
+      "shown": true,
+      "x": -156.3,
+      "y": -218.4,
+      "s": 0.296,
+      "z": 25
+    },
+    "cat-honeysuckle": {
+      "shown": true,
+      "x": 4,
+      "y": -328.3,
+      "s": 0.48,
+      "z": 884
+    },
+    "ornament_ball_turquoise_small_sticker": {
+      "shown": true,
+      "x": -310.2,
+      "y": -199.2,
+      "s": 0.481,
+      "z": 835
+    },
+    "ornament_santa_claus_glass_pink_sticker": {
+      "shown": true,
+      "x": -164.8,
+      "y": -240.6,
+      "s": 0.481,
+      "z": 894
+    },
+    "ornament_reflector_saucer_silver_sticker": {
+      "shown": true,
+      "x": -176.7,
+      "y": -201.4,
+      "s": 0.481,
+      "z": 896
+    },
+    "coffee_maker_drip_smeg_retro_pink_sticker": {
+      "shown": true,
+      "x": 51.4,
+      "y": -299.4,
+      "s": 0.397,
+      "z": 877
+    },
+    "espresso_machine_smeg_retro_cream_sticker": {
+      "shown": true,
+      "x": -51,
+      "y": -271.6,
+      "s": 0.516,
+      "z": 878
+    },
+    "microwave_insignia_retro_mint_teal_sticker": {
+      "shown": true,
+      "x": -97.7,
+      "y": -248.8,
+      "s": 0.534,
+      "z": 876
+    },
+    "ornament_grape_cluster_cobalt_blue_sticker": {
+      "shown": true,
+      "x": -121.8,
+      "y": -213.3,
+      "s": 0.481,
+      "z": 892
+    },
+    "stove_range_smeg_victoria_lavender_sticker": {
+      "shown": true,
+      "x": -111.9,
+      "y": -206,
+      "s": 0.632,
+      "z": 872
+    },
+    "artwork_framed_print_red_poppies_pink_sticker": {
+      "shown": true,
+      "x": 286.2,
+      "y": -38.9,
+      "s": 0.692,
+      "z": 844
+    },
+    "ornament_strawberry_frosted_coral_red_sticker": {
+      "shown": true,
+      "x": -67.8,
+      "y": -195.8,
+      "s": 0.481,
+      "z": 895
+    },
+    "ornament_ball_painted_stripes_red_green_silver_sticker": {
+      "shown": true,
+      "x": -211.6,
+      "y": -220.1,
+      "s": 0.481,
+      "z": 837
+    },
+    "radiator_heater_cast_iron_ribbed_white_vintage_sticker": {
+      "shown": true,
+      "x": -206.1,
+      "y": -54.1,
+      "s": 0.672,
+      "z": 880
+    },
+    "cabinet_china_peach_pink_jadeite_pink_depression_glass_sticker": {
+      "shown": true,
+      "x": 235,
+      "y": -29.3,
+      "s": 0.715,
+      "z": 873
+    }
+  }
+}

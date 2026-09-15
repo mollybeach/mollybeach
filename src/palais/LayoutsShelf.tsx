@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { BUNDLED_LAYOUTS, capture, type SeasonLayout } from "./arrangement";
+import { portableFor } from "./crossDevice";
 import { deleteLayout, makeDefault, saveLayout, signIn, signOut, updateLayout, type Device, type SavedLayout } from "./layoutsDb";
 import type { Place } from "./place";
 import { SEASON_NAMES, type Season } from "./seasons";
@@ -46,6 +47,7 @@ export function LayoutsShelf({
   const { configured, saved, editor, error, setError, refresh } = collection;
   const [viewing, setViewing] = useState<Season>(season);
   const [busy, setBusy] = useState(false);
+  const [note, setNote] = useState("");
   const canSave = Boolean(editor?.canSave);
 
   const run = async (job: () => Promise<unknown>) => {
@@ -177,14 +179,30 @@ export function LayoutsShelf({
           season={viewing}
           count={looks.length}
           busy={busy}
-          onSave={(name, s, asDefault) =>
+          device={device}
+          onSave={(name, s, target, asDefault) =>
             run(async () => {
-              const look = await saveLayout({ name, place, season: s, device, ...room() });
+              setNote("");
+              let layout: { stage: SeasonLayout["stage"]; props: SeasonLayout["props"] };
+              if (target === device) layout = room();
+              else {
+                // for the other device: where everything should land there (crossDevice.ts)
+                const stage = stageOf();
+                if (!stage) throw new Error("Couldn't find the room");
+                layout = portableFor(stage, place, device, hidden);
+              }
+              const look = await saveLayout({ name, place, season: s, device: target, ...layout });
               if (asDefault) await makeDefault(look.id);
+              if (target !== device) {
+                setNote(
+                  `Saved for ${target === "phone" ? "phones" : "computers"}: open the room on a ${target === "phone" ? "phone" : "computer"} in ${s} to see it, and press Save there to keep any changes.`,
+                );
+              }
             })
           }
         />
       ) : null}
+      {note && <p className="cat-note">{note}</p>}
 
       <SignIn editor={editor} onError={setError} />
     </div>
@@ -270,21 +288,25 @@ function Look({
 
 function SaveForm({
   season,
+  device,
   count,
   busy,
   onSave,
 }: {
   season: Season;
+  /** the device the room is being arranged on */
+  device: Device;
   count: number;
   busy: boolean;
-  onSave: (name: string, season: Season, asDefault: boolean) => void;
+  onSave: (name: string, season: Season, device: Device, asDefault: boolean) => void;
 }) {
   const [name, setName] = useState("");
   const [s, setS] = useState<Season>(season);
+  const [d, setD] = useState<Device>(device);
   const [asDefault, setAsDefault] = useState(true);
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    onSave(name.trim() || `${title(s)} look ${count + 1}`, s, asDefault);
+    onSave(name.trim() || `${title(s)} look ${count + 1}${d !== device ? ` · ${d === "phone" ? "phone" : "computer"}` : ""}`, s, d, asDefault);
     setName("");
   };
   return (
@@ -298,6 +320,10 @@ function SaveForm({
           placeholder={`${title(s)} look ${count + 1}`}
           aria-label="Name for this look"
         />
+        <select className="cat-input" value={d} onChange={(e) => setD(e.target.value as Device)} aria-label="Device">
+          <option value="desktop">💻 Computer</option>
+          <option value="phone">📱 Phone</option>
+        </select>
         <select className="cat-input" value={s} onChange={(e) => setS(e.target.value as Season)} aria-label="Season">
           {SEASON_NAMES.map((x) => (
             <option key={x} value={x}>
@@ -308,7 +334,7 @@ function SaveForm({
       </div>
       <label className="cat-check">
         <input type="checkbox" checked={asDefault} onChange={(e) => setAsDefault(e.target.checked)} /> Make it the{" "}
-        {s} default (the old one stays in the collection)
+        {s} default on a {d === "phone" ? "phone" : "computer"} (the old one stays in the collection)
       </label>
       <button type="submit" className="cat-btn cat-btn--done" disabled={busy}>
         {busy ? "Saving…" : "Save look ♡"}

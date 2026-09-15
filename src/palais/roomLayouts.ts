@@ -1,4 +1,6 @@
 import autumnLayout from "./layouts/autumn.json";
+import kitchenPhoneSpring from "./layouts/kitchen-phone-spring.json";
+import madeleinePhoneSpring from "./layouts/madeleine-phone-spring.json";
 import { BUNDLED_LAYOUTS, hiddenOf, type SeasonLayout } from "./arrangement";
 import { PHONE_LAYOUTS } from "./phoneLayout";
 import { PROPS } from "./props";
@@ -13,10 +15,17 @@ import type { Season } from "./seasons";
  * Every room on the map has the same catalogue of stickers, and its own
  * layout for each season on a computer and on a phone: eight per room. The
  * room's default for a season and device, saved in the collection
- * (layoutsDb.ts), wins; then, for the palace, the layouts in the code; any
- * other room with nothing saved starts empty, ready to be dressed from the
- * catalogue.
+ * (layoutsDb.ts), wins; then the layouts in the code (the palace's, and a few
+ * rooms' phone layouts copied from their computer ones and scaled to the
+ * phone photographs); any other room with nothing saved starts empty, ready
+ * to be dressed from the catalogue.
  */
+
+/** rooms' layouts kept in the code, by room, device and season */
+const ROOM_LAYOUTS: Partial<Record<Place, Partial<Record<Device, Partial<Record<Season, SeasonLayout>>>>>> = {
+  kitchen: { phone: { spring: kitchenPhoneSpring as SeasonLayout } },
+  madeleine: { phone: { spring: madeleinePhoneSpring as SeasonLayout } },
+};
 
 /** every sticker there is */
 export const ALL_STICKERS: string[] = Array.from(new Set([...Object.keys(PROPS), ...Object.keys(autumnLayout.props)]));
@@ -33,8 +42,13 @@ export interface RoomLook {
 }
 
 export function defaultLook(saved: SavedLayout[], place: Place, season: Season, device: Device): RoomLook {
-  const mine = saved.find((l) => (l.place ?? "palace") === place && l.season === season && l.device === device && l.is_default);
+  // a saved layout measured on no room at all (a 1 × 1 stage) is a broken save: skip it
+  const mine = saved.find(
+    (l) => (l.place ?? "palace") === place && l.season === season && l.device === device && l.is_default && l.stage.w > 1,
+  );
   if (mine) return { layout: mine, source: "saved", saved: mine };
+  const inCode = ROOM_LAYOUTS[place]?.[device]?.[season];
+  if (inCode) return { layout: inCode, source: "code" };
   if (place === "palace") {
     const code = device === "phone" ? PHONE_LAYOUTS[season] : BUNDLED_LAYOUTS[season];
     if (code) return { layout: code, source: "code" };

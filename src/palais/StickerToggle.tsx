@@ -9,6 +9,7 @@ import { usePortrait } from "./PortraitTerrace";
 import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
 import { useClosetHiddenDefault } from "./closetRacks";
+import { isPortable, resolvePortable } from "./crossDevice";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -148,6 +149,15 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     const scope = switches.current?.closest(".palais-stage");
     if (scope) settle(scope, wearing.desktop, wearing.phone);
   }, [wearing]);
+
+  // a look saved on the other device: put its stickers where they belong here (crossDevice.ts)
+  const wornHere = portrait ? wearing.phone : wearing.desktop;
+  useEffect(() => {
+    if (!isPortable(wornHere)) return;
+    const scope = switches.current?.closest<HTMLElement>(".palais-stage");
+    if (!scope) return;
+    return resolvePortable(scope, place, portrait ? "phone" : "desktop", wornHere);
+  }, [wornHere, place, portrait]);
 
   // pauses the year, and the furniture taking turns to vanish (Conjure)
   const [paused, setPaused] = useState(false);
