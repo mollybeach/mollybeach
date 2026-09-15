@@ -42,6 +42,7 @@ export const SHELVES: Shelf[] = [
       "bed_french_cream_cherry_print_pink_bedding_sticker",
       "shelf_wall_picture_ledge_oak_vinyl_records_hers_mitski_top_sticker",
       "shelf_wall_picture_ledge_oak_vinyl_records_puberty_be_the_cowboy_bottom_sticker",
+      "rug_cat_tufted_peach_flowers_sticker",
     ],
   },
   { key: "trellises", name: "Trellises", emoji: "🌿", items: ["trellis-wisteria", "trellis-ivy"] },
@@ -123,6 +124,7 @@ export const SHELVES: Shelf[] = [
       "artwork_framed_line_drawing_woman_braids_black_white_sticker",
       "artwork_framed_print_woman_blue_leaves_sticker",
       "artwork_framed_print_red_poppies_pink_sticker",
+      "artwork_framed_vogue_cover_art_deco_sticker",
     ],
   },
   {

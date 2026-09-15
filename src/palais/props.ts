@@ -273,6 +273,11 @@ export const PROPS = catalogue({
   artwork_framed_print_red_poppies_pink_sticker: { label: "a framed print of red poppies", plane: "mid", metres: 0.6 },
   shelf_wall_picture_ledge_oak_vinyl_records_hers_mitski_top_sticker: { label: "an oak ledge of records: Hers, Bury Me at Makeout Creek", plane: "mid", metres: 1.4 },
   shelf_wall_picture_ledge_oak_vinyl_records_puberty_be_the_cowboy_bottom_sticker: { label: "an oak ledge of records: Puberty 2, Be the Cowboy", plane: "mid", metres: 1.4 },
+  rug_cat_tufted_peach_flowers_sticker: { label: "a peach tufted cat rug with flowers", plane: "near", metres: 0.9 },
+  artwork_framed_vogue_cover_art_deco_sticker: { label: "a framed Art Deco Vogue cover", plane: "mid", metres: 0.5 },
+  book_the_game_changing_attorney_michael_mogill_hardcover_sticker: { label: "The Game Changing Attorney, standing", plane: "near" },
+  book_hot_girl_crochet_rose_svane_hardcover_sticker: { label: "Hot Girl Crochet, standing", plane: "near" },
+  book_world_travel_anthony_bourdain_hardcover_sticker: { label: "World Travel, standing", plane: "near" },
   /* ---- antique glass Christmas ornaments -------------------------------- */
   ornament_reflector_rounded_magenta_sticker: { label: "a magenta reflector ornament", glass: true, plane: "near" },
   ornament_teardrop_frosted_glitter_orange_sticker: { label: "an orange frosted teardrop ornament", glass: true, plane: "near" },
