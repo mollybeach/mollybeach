@@ -4,7 +4,7 @@ import { movePiece, useRackOrder, type Which } from "./closetRacks";
 
 /* what each kind of place gets as a picture, and which way its order runs */
 const LOOK: [RegExp, string, string][] = [
-  [/hooks-side/, "🪝", "top → bottom"],
+  [/hooks-(side|left)/, "🪝", "top → bottom"],
   [/hooks/, "🪝", "left → right"],
   [/rack/, "🧺", "front → back"],
   [/rail|bar|mirror/, "🪝", "front → back"],
@@ -22,7 +22,7 @@ const ORDER = [
   "outer-left-top", "outer-left-low", "outer-left-bottom",
   "left-top", "left-rail", "left-shelf", "left-bottom",
   "cubby-rail", "cubby-top", "cubby-row-1", "cubby-row-2", "cubby-row-3",
-  "seat", "window-hooks-top", "window-hooks-side", "mirror", "mirror-shelves",
+  "seat", "window-hooks-top", "window-hooks-left", "window-hooks-side", "mirror", "mirror-shelves",
   "right-top", "right-middle", "right-low", "right-shelf", "right-bottom",
   "outer-right-top", "outer-right-second", "outer-right-upper", "outer-right-lower", "outer-right-bottom",
   "floor-front", "shoes",
