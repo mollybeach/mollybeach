@@ -120,6 +120,7 @@ export const SHELVES: Shelf[] = [
       "plaque-rose-wood",
       "plaque-wood-dark",
       "mirror_wall_arch_ornate_gold_vintage_sticker",
+      "mirror_wall_oval_ornate_gold_crest_vintage_sticker",
       "suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker",
       "artwork_framed_line_drawing_woman_braids_black_white_sticker",
       "artwork_framed_print_woman_blue_leaves_sticker",
