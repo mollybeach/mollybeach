@@ -212,6 +212,7 @@ export const PROPS = catalogue({
   shelf_rack_garden_three_tier_scrollwork_glass_white_sticker: { label: "a white scrollwork garden shelf", plane: "mid", metres: 0.9 },
   mirror_wall_arch_ornate_gold_vintage_sticker: { label: "an arched gilt mirror", glass: true, plane: "mid" },
   mirror_wall_oval_ornate_gold_crest_vintage_sticker: { label: "an oval gilt mirror with a carved crest", glass: true, plane: "mid", metres: 0.6 },
+  telescope_refractor_tripod_navy_blue_meade_sticker: { label: "a navy blue Meade telescope on its tripod", plane: "near", metres: 0.85 },
   can_watering_garden_metal_blush_pink_sticker: { label: "a blush-pink watering can", plane: "near" },
   mister_plant_spray_bottle_embossed_glass_ombre_turquoise_pink_antique_sticker: { label: "an embossed ombré glass plant mister", glass: true, plane: "near" },
   bottle_glass_embossed_decanter_peach_pink_vintage_sticker: { label: "an embossed peach glass decanter", glass: true, plane: "near" },
