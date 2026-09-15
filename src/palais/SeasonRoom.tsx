@@ -42,7 +42,7 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // Madeleine's room: pink panelled walls, a mosaic floor, and the sea at sunset through the arch; one photograph for now
   madeleine: { file: "madeleine", focus: "50% 60%", seasons: false, portrait: true },
   // the library: carved shelves to a painted sky, a spiral of books, the desk at the window over the lake
-  library: { file: "library", focus: "50% 60%", portrait: true },
+  library: { file: "library", focus: "50% 60%", portrait: "seasons" },
 };
 
 /**

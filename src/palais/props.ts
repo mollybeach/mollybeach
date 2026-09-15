@@ -222,6 +222,7 @@ export const PROPS = catalogue({
   sofa_sectional_chaise_slipcover_grey_rolled_arms_side_view_sticker: { label: "a grey slipcovered sectional, turned side-on", plane: "near", metres: 2.3 },
   saxophone_alto_brass_vintage_gold_sticker: { label: "a vintage gold brass saxophone", plane: "near", metres: 0.7 },
   hat_propeller_noogler_blue_yellow_red_green_sticker: { label: "a Noogler propeller hat", plane: "near", metres: 0.3 },
+  ghost_sheet_navy_bow_books_candlestick_sticker: { label: "a friendly ghost carrying books and a candle", lit: true, plane: "near", metres: 0.7 },
   artwork_framed_abstract_splatter_painting_blue_green_gold_frame_sticker: { label: "an abstract blue and green splatter painting in a gilt frame", plane: "mid", metres: 0.7 },
   artwork_framed_abstract_pour_painting_pink_blue_black_gold_frame_sticker: { label: "an abstract pink and blue pour painting on black, in a gilt frame", plane: "mid", metres: 0.7 },
   can_watering_garden_metal_blush_pink_sticker: { label: "a blush-pink watering can", plane: "near" },
