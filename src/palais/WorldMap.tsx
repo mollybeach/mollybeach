@@ -215,6 +215,18 @@ const STOPS: Stop[] = [
     seed: 37,
     room: "lagoon",
   },
+  {
+    id: "madeleine",
+    name: "Madeleine's Room",
+    tag: "upstairs, facing the sea",
+    blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
+    finds: ["A mosaic floor of blue flowers", "Bougainvillea over the balcony", "The sunset path across the water"],
+    color: "#ffc2cf",
+    at: [592, 96],
+    patch: [48, 36],
+    seed: 151,
+    room: "madeleine",
+  },
 ];
 
 function rng(seed: number) {

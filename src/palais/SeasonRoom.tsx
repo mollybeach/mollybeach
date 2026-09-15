@@ -39,6 +39,8 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   shore: { file: "shore", focus: "50% 55%", portrait: true },
   // the glowworm grotto opening onto hobbit hills, a mountain and hot springs
   caves: { file: "caves", focus: "50% 55%", portrait: true },
+  // Madeleine's room: pink panelled walls, a mosaic floor, and the sea at sunset through the arch; one photograph for now
+  madeleine: { file: "madeleine", focus: "50% 60%", seasons: false, portrait: true },
 };
 
 /**

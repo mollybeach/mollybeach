@@ -152,7 +152,8 @@
 .palais [data-place="reef"] .palais-room--reef,
 .palais [data-place="lanterns"] .palais-room--lanterns,
 .palais [data-place="shore"] .palais-room--shore,
-.palais [data-place="caves"] .palais-room--caves { opacity: 1; }
+.palais [data-place="caves"] .palais-room--caves,
+.palais [data-place="madeleine"] .palais-room--madeleine { opacity: 1; }
 /* the stickers follow you into every room, each room with its own layout
    (roomLayouts.ts), as do the weather and the flyers; the terrace's pollen
    stays on the terrace */
