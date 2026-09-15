@@ -233,7 +233,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             }}
             aria-pressed={paused}
             aria-label={paused ? "Play the seasons" : "Pause the seasons"}
-            title={paused ? "Let the year carry on, and the furniture vanish in turns" : `Stay in ${season}, with all the furniture in place`}
+            title={paused ? "Let the year carry on" : `Stay in ${season}`}
             className="palais-pill palais-pill--action"
           >
             <span className="palais-pill-long">{paused ? "Play seasons" : "Pause seasons"}</span>

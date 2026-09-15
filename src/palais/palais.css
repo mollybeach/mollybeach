@@ -1662,7 +1662,7 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  animation: palais-arrive var(--arrive-dur, 3s) cubic-bezier(0.2, 0.6, 0.2, 1) var(--arrive-delay, 4.5s) both;
+  animation: palais-arrive var(--arrive-dur, 1.5s) cubic-bezier(0.2, 0.6, 0.2, 1) var(--arrive-delay, 2.25s) both;
 }
 
 /* ==========================================================================

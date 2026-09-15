@@ -21,10 +21,10 @@ import type { Styled } from "./styled";
  */
 
 /** seconds of empty terrace before anything appears */
-export const INTRO_EMPTY = 4.5;
+export const INTRO_EMPTY = 2.25;
 
 /** seconds the stickers take to materialise */
-export const ARRIVAL = 3;
+export const ARRIVAL = 1.5;
 
 /** seconds for every set to have had its turn */
 export const CONJURE_CYCLE = 36;
