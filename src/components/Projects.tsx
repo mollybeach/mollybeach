@@ -51,6 +51,70 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "🍐 Pear Pay",
+    date: "Sep 2026-Present",
+    description: "🍐 EthGlobal NYC 2026 🗽 iMessage Apple Pay extension for Web3 peer-to-peer messaging payments. Turn conversations into transactions: Pear Pay is the universal payment layer for messaging, social apps, and AI agents. Type \"Send Molly $20\" in iMessage, Telegram, WhatsApp, Discord, Slack, or X and Pear Pay resolves the recipient, creates wallets, routes across chains, and settles privately in USDC. No addresses, no chains, no gas.",
+    technologies: ["Next.js", "TypeScript", "Solidity", "Foundry", "Dynamic", "Arc", "Circle Gateway", "x402", "Unlink", "Twilio", "USDC", "Base Sepolia"],
+    microlink: `${process.env.PUBLIC_URL}/images/pearpay_preview.webp`,
+    link: "https://pearpay.app/",
+    previewType: "image",
+    overview: "Conversational, chain-abstracted, private USDC payments anywhere people message, for humans and AI agents",
+    keyFeatures: [
+      {
+        title: "Natural Language Payments",
+        description: "Pay by saying what you want: \"Send Molly $20\", \"Pay Alex back for dinner\", \"Split the Airbnb with everyone\". No addresses, no chain selection, no blockchain expertise.",
+      },
+      {
+        title: "Works Wherever You Message",
+        description: "iMessage, Telegram, WhatsApp, Discord, Slack and X today, designed for Signal, Teams, Farcaster, Instagram and AI agent ecosystems. If you can send a message, you can send money.",
+      },
+      {
+        title: "Claimable Payments",
+        description: "Send to a phone number, email, @handle or wallet, even if the recipient has never used crypto. Funds are escrowed in USDC and released when they claim with an embedded Dynamic wallet.",
+      },
+      {
+        title: "Smart Escrow",
+        description: "PearPayEscrow.sol adds hashlock claims, time-based auto-refunds, sender cancellation and an on-chain dispute path with a per-payment arbiter (15 passing forge tests).",
+      },
+      {
+        title: "Private Nanopayments",
+        description: "An agent pays a sub-cent, gas-free USDC fee from the Unlink shielded pool through a single-use burner, settled on Arc via Circle's x402 batching. The public ledger never links the payment to the user.",
+      },
+      {
+        title: "Chain Abstraction with Arc as Liquidity Hub",
+        description: "USDC from any Circle Gateway chain becomes one unified balance, minted onto Arc on demand. Users never think about bridges, swaps or gas.",
+      },
+      {
+        title: "Twilio Delivery Layer",
+        description: "SMS and WhatsApp claim links, Twilio Verify phone checks and voice payments reach recipients who don't have a wallet yet, solving crypto payments' cold-start problem.",
+      },
+      {
+        title: "AI Agent Commerce",
+        description: "The same rails let agents buy APIs, compute and data, and pay each other autonomously after a single FaceID via Dynamic delegated access.",
+      },
+    ],
+    installation: {
+      steps: [
+        { command: "npm install", description: "Install project dependencies" },
+        { command: "npm run dev", description: "Start the app locally" },
+        { command: "npm run test:contracts", description: "Run the escrow contract's forge tests" },
+        { command: "npm run verify:nanopay", description: "Run a private nanopayment end to end (needs Unlink and funder env)" },
+      ],
+    },
+    screenshots: [
+      { url: `${process.env.PUBLIC_URL}/images/pearpay_preview.webp`, alt: "Pear Pay iMessage simulator" }
+    ],
+    demoUrl: "https://pearpay.app/",
+    status: "In Development",
+    techStack: {
+      frontend: ["Next.js", "TypeScript", "TailwindCSS", "Messaging app simulator"],
+      backend: ["Next.js API routes", "Twilio (SMS, WhatsApp, Verify, Voice)", "Circle x402 batching SDK"],
+      blockchain: ["Solidity", "Foundry", "Arc Testnet", "Circle Gateway", "USDC / EURC", "Base Sepolia", "Unlink shielded pool"],
+      auth: ["Dynamic embedded, server and agent wallets", "Delegated access"],
+      deployment: ["pearpay.app"],
+    }
+  },
+  {
     title: "HedgePod",
     date: "Nov 2025-Present",
     description: "🦔🫛 HedgePod is a World mini app that solves crypto's biggest UX problem: chain fragmentation. Autonomous cross-chain DeFi that makes 23M World App users their own hedge fund. Deposit once. AI agents automatically rebalance across 8+ chains for optimal yield. Gasless. Chain-abstracted. Human-readable. Built for non-crypto users.",
