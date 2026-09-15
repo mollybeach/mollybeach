@@ -66,6 +66,8 @@ export const MORE_TRINKETS: PropId[] = [
   "saxophone_alto_brass_vintage_gold_sticker",
   "hat_propeller_noogler_blue_yellow_red_green_sticker",
   "ghost_sheet_navy_bow_books_candlestick_sticker",
+  "computer_imac_purple_back_view_sticker",
+  "computer_imac_g3_lime_green_keyboard_mouse_sticker",
   "artwork_framed_abstract_splatter_painting_blue_green_gold_frame_sticker",
   "artwork_framed_abstract_pour_painting_pink_blue_black_gold_frame_sticker",
   "radiator_heater_cast_iron_ribbed_white_vintage_sticker",

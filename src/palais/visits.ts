@@ -248,10 +248,91 @@ export interface VisitStats {
   by_day: { day: string; visits: number; unique: number }[];
   devices: { device: string; visits: number; unique: number }[];
   sources?: { source: string; visits: number; unique: number }[];
+  me?: { name: string | null; visits: number };
+  places?: { place: string; visits: number; unique: number }[];
   systems: { os: string; browser: string; visits: number; unique: number }[];
   countries: { country: string; code: string | null; visits: number; unique: number }[];
   cities: { city: string; region: string | null; country: string | null; code: string | null; lat: number | null; lon: number | null; visits: number; unique: number }[];
   recent: { at: string; city: string | null; region: string | null; country: string | null; code: string | null; page: string | null; referrer: string | null; device: string | null; os: string | null; browser: string | null; source?: string | null; visitor: string | null }[];
+}
+
+let placeQueue: Promise<void> = Promise.resolve();
+
+export function recordPlace(place: string) {
+  if (!dbConfigured || process.env.NODE_ENV !== "production") return;
+  placeQueue = placeQueue.then(async () => {
+    let session: string | null = null;
+    for (let i = 0; i < 20 && !session; i++) {
+      try {
+        session = sessionStorage.getItem(SESSION_KEY);
+      } catch {
+        return;
+      }
+      if (!session) await new Promise((r) => setTimeout(r, 250));
+    }
+    if (!session) return;
+    try {
+      const sb = await db();
+      await sb.rpc("palais_record_place", { p_session: session, p_place: place });
+    } catch {
+      return;
+    }
+  });
+}
+
+export interface VisitLogEntry {
+  id: number;
+  at: string;
+  city: string | null;
+  region: string | null;
+  country: string | null;
+  code: string | null;
+  page: string | null;
+  referrer: string | null;
+  device: string | null;
+  os: string | null;
+  browser: string | null;
+  source: string | null;
+  visitor: string | null;
+  name: string | null;
+  is_me: boolean;
+  places: string[];
+}
+
+export async function visitLog(before?: number, visitor?: string | null, limit = 50): Promise<VisitLogEntry[]> {
+  const sb = await db();
+  const { data, error } = await sb.rpc("palais_visit_log", { p_before: before ?? null, p_limit: limit, p_visitor: visitor ?? null });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as VisitLogEntry[];
+}
+
+export interface VisitorProfile {
+  visitor: string;
+  name: string | null;
+  is_me: boolean;
+  visits: number;
+  days_active: number;
+  first_at: string;
+  last_at: string;
+  last_7: number;
+  last_30: number;
+  sources: { name: string; visits: number }[];
+  places: { name: string; code: string | null; visits: number }[];
+  map_places: { place: string; visits: number }[];
+  devices: { device: string | null; os: string | null; browser: string | null; visits: number }[];
+}
+
+export async function visitorProfiles(): Promise<VisitorProfile[]> {
+  const sb = await db();
+  const { data, error } = await sb.rpc("palais_visitor_profiles");
+  if (error) throw new Error(error.message);
+  return (data ?? []) as VisitorProfile[];
+}
+
+export async function nameVisitor(visitor: string, name: string, isMe = false) {
+  const sb = await db();
+  const { error } = await sb.rpc("palais_name_visitor", { p_prefix: visitor, p_name: name, p_is_me: isMe });
+  if (error) throw new Error(error.message);
 }
 
 export async function visitStats(days = 30): Promise<VisitStats> {

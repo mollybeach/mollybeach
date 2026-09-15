@@ -19,7 +19,7 @@ import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
 import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
-import { recordVisit } from "./visits";
+import { recordPlace, recordVisit } from "./visits";
 import { useEffect } from "react";
 import "./palais.css";
 
@@ -107,6 +107,10 @@ export default function PalaisHome() {
   useEffect(() => {
     void recordVisit();
   }, []);
+  // and each place on the map this visit walks into
+  useEffect(() => {
+    recordPlace(places.place);
+  }, [places.place]);
   return (
     <PlaceNow.Provider value={places}>
     <>

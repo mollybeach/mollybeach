@@ -1476,7 +1476,23 @@
 .palais .vis-list b { color: var(--cat-hot); font-variant-numeric: tabular-nums; }
 .palais .vis-list small { display: block; font-weight: 600; color: #b5708f; font-size: 0.7rem; }
 .palais .vis-list time { flex: none; font-size: 0.72rem; color: #b5708f; }
-.palais .vis-list--recent { max-height: 18rem; }
+/* the visit log keeps going as far back as you scroll */
+.palais .vis-list--recent { max-height: none; overflow: visible; }
+.palais .vis-more { justify-content: center !important; color: #b5708f !important; font-size: 0.75rem !important; padding: 0.4rem 0; }
+.palais .vis-me span { color: var(--cat-deep); }
+.palais .vis-name { color: var(--cat-deep) !important; }
+.palais .vis-name.is-me { color: var(--cat-hot) !important; }
+/* a card for each visitor */
+.palais .vis-people { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem; }
+.palais .vis-person { padding: 0.55rem 0.7rem; border-radius: 14px; border: 2px solid var(--cat-line); background: #fffafd; font: 600 0.74rem/1.4 var(--cat-round); color: #8a5a70; }
+.palais .vis-person.is-me { border-color: #ffb3d6; background: #fff0f7; }
+.palais .vis-person.is-on { border-color: var(--cat-hot); }
+.palais .vis-person p { margin: 0.1rem 0; }
+.palais .vis-person b { color: var(--cat-hot); }
+.palais .vis-person-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.4rem; margin-bottom: 0.15rem; }
+.palais .vis-person-head strong { font: 800 0.9rem/1.2 var(--cat-round); color: var(--cat-deep); }
+.palais .vis-freq { flex: none; padding: 0.05rem 0.45rem; border-radius: 99px; background: var(--cat-soft); color: var(--cat-deep); font-size: 0.66rem; font-weight: 800; }
+.palais .vis-person-actions { display: flex; gap: 0.3rem; margin-top: 0.35rem; }
 .palais .vis-hint { margin: 0.5rem 0 0; font: 600 0.72rem/1.4 var(--cat-round); color: #b5708f; }
 .palais .vis-hint code { font-size: 0.7rem; background: var(--cat-soft); padding: 0 0.25rem; border-radius: 4px; color: var(--cat-deep); }
 @container palais (max-width: 639px) {

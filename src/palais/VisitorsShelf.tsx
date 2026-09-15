@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { visitStats, type VisitStats } from "./visits";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { PLACE_NAMES, type Place } from "./place";
+import { nameVisitor, visitLog, visitorProfiles, visitStats, type VisitLogEntry, type VisitorProfile, type VisitStats } from "./visits";
 import { messageOf } from "./useCollection";
 
 /**
@@ -32,10 +33,107 @@ const ago = (iso: string) => {
   return `${Math.floor(s / 86400)}d ago`;
 };
 
+const placeName = (p: string) => PLACE_NAMES[p as Place] ?? p;
+
+const dateOf = (iso: string) => new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+
+/** how often a visitor comes, in words */
+function frequency(p: VisitorProfile) {
+  if (p.visits <= 1) return "Came once";
+  const spanDays = Math.max(1, (new Date(p.last_at).getTime() - new Date(p.first_at).getTime()) / 86_400_000);
+  const perWeek = (p.visits / spanDays) * 7;
+  if (p.days_active / (spanDays + 1) >= 0.6) return "Almost every day";
+  if (perWeek >= 3) return "Several times a week";
+  if (perWeek >= 1) return "About weekly";
+  if (perWeek >= 0.25) return "A few times a month";
+  return "Now and then";
+}
+
+const who = (name: string | null, visitor: string | null, isMe = false) => (isMe ? `${name ?? "Molly"} (me)` : name ?? (visitor ? `visitor ${visitor}` : "someone"));
+
+const where = (v: { city: string | null; region: string | null; country: string | null }) => {
+  const parts = [v.city, v.region, v.country].filter(Boolean) as string[];
+  return parts.filter((x, i) => parts.indexOf(x) === i).join(", ") || "Somewhere";
+};
+
 export function VisitorsShelf() {
   const [days, setDays] = useState(30);
   const [stats, setStats] = useState<VisitStats | null>(null);
   const [error, setError] = useState("");
+
+  // every visitor, with how often they come (all time)
+  const [people, setPeople] = useState<VisitorProfile[] | null>(null);
+  const [peopleError, setPeopleError] = useState("");
+  const loadPeople = useCallback(() => {
+    visitorProfiles()
+      .then((p) => {
+        setPeople(p);
+        setPeopleError("");
+      })
+      .catch((e) => setPeopleError(messageOf(e)));
+  }, []);
+  useEffect(loadPeople, [loadPeople]);
+
+  // the visit log: every visit, a page at a time, as far back as you scroll
+  const [only, setOnly] = useState<string | null>(null);
+  const [log, setLog] = useState<VisitLogEntry[]>([]);
+  const [logDone, setLogDone] = useState(false);
+  const [logError, setLogError] = useState("");
+  const loading = useRef(false);
+  const more = useCallback(
+    (reset = false) => {
+      if (loading.current) return;
+      loading.current = true;
+      const before = reset ? undefined : log[log.length - 1]?.id;
+      visitLog(before, only)
+        .then((page) => {
+          setLog((l) => (reset ? page : [...l, ...page]));
+          setLogDone(page.length < 50);
+          setLogError("");
+        })
+        .catch((e) => setLogError(messageOf(e)))
+        .finally(() => {
+          loading.current = false;
+        });
+    },
+    [log, only],
+  );
+  // start again when the filter changes
+  const lastOnly = useRef<string | null | undefined>(undefined);
+  useEffect(() => {
+    if (lastOnly.current === only) return;
+    lastOnly.current = only;
+    setLog([]);
+    setLogDone(false);
+    loading.current = false;
+    more(true);
+  }, [only, more]);
+  // load the next page when the end of the log scrolls into view
+  const end = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    const el = end.current;
+    if (!el || logDone) return;
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && more(), { rootMargin: "400px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [more, logDone, log.length]);
+
+  const rename = async (p: VisitorProfile) => {
+    const name = window.prompt(`Name for visitor ${p.visitor} (leave empty to remove the name)`, p.name ?? "");
+    if (name === null) return;
+    try {
+      await nameVisitor(p.visitor, name, p.is_me);
+      loadPeople();
+      setLog([]);
+      lastOnly.current = undefined;
+      setOnly((o) => o);
+      more(true);
+    } catch (e) {
+      setPeopleError(messageOf(e));
+    }
+  };
+
+  const needsMigration = (e: string) => /does not exist|Could not find/i.test(e);
 
   useEffect(() => {
     let live = true;
@@ -112,9 +210,20 @@ export function VisitorsShelf() {
 
           <section className="vis-card">
             <h3>🔗 Where they came from</h3>
-            {stats.sources?.length ? (
+            {stats.sources?.length || stats.me?.visits ? (
               <ul className="vis-list vis-list--sources">
-                {stats.sources.map((s) => (
+                {!!stats.me?.visits && (
+                  <li className="vis-me">
+                    <span>
+                      Me
+                      <small>
+                        {stats.me.visits} visit{stats.me.visits === 1 ? "" : "s"} · {Math.round((stats.me.visits / Math.max(1, stats.period.visits)) * 100)}%
+                      </small>
+                    </span>
+                    <b>1</b>
+                  </li>
+                )}
+                {(stats.sources ?? []).map((s) => (
                   <li key={s.source}>
                     <span>
                       {s.source}
@@ -133,6 +242,27 @@ export function VisitorsShelf() {
               iMessage, WhatsApp and the Discord app don't pass this along. To see them, share a tagged link like{" "}
               <code>mollybeach.app/?from=discord</code>.
             </p>
+          </section>
+
+          <section className="vis-card">
+            <h3>🗺️ Where they went on the map</h3>
+            {stats.places?.length ? (
+              <ul className="vis-list">
+                {stats.places.map((p) => (
+                  <li key={p.place}>
+                    <span>
+                      {placeName(p.place)}
+                      <small>
+                        {p.visits} time{p.visits === 1 ? "" : "s"}
+                      </small>
+                    </span>
+                    <b>{p.unique}</b>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="cat-note">No map walks recorded yet{stats.places ? "" : " (run the visitor names SQL to start)"}.</p>
+            )}
           </section>
 
           <div className="vis-cols">
@@ -215,27 +345,105 @@ export function VisitorsShelf() {
           </div>
 
           <section className="vis-card">
-            <h3>✦ Latest visits</h3>
-            {stats.recent.length ? (
-              <ul className="vis-list vis-list--recent">
-                {stats.recent.map((v, i) => (
-                  <li key={i}>
+            <h3>👥 Visitors</h3>
+            {peopleError && (
+              <p className="cat-error" role="alert">
+                {needsMigration(peopleError) ? "Visitor profiles aren't set up yet: run supabase/migrations/20260915120000_palais_visitor_names.sql." : peopleError}
+              </p>
+            )}
+            {people && !people.length && <p className="cat-note">No visitors yet.</p>}
+            {people && people.length > 0 && (
+              <ul className="vis-people">
+                {people.map((p) => (
+                  <li key={p.visitor} className={`vis-person${p.is_me ? " is-me" : ""}${only === p.visitor ? " is-on" : ""}`}>
+                    <div className="vis-person-head">
+                      <strong>{who(p.name, p.visitor, p.is_me)}</strong>
+                      <span className="vis-freq">{frequency(p)}</span>
+                    </div>
+                    <p>
+                      <b>{p.visits}</b> visit{p.visits === 1 ? "" : "s"} on {p.days_active} day{p.days_active === 1 ? "" : "s"} · {p.last_30} in the last 30 days
+                    </p>
+                    <p>
+                      First {dateOf(p.first_at)} · last {ago(p.last_at)}
+                    </p>
+                    {p.places.length > 0 && <p>📍 {p.places.map((x) => `${flag(x.code)} ${x.name}`).join(" · ")}</p>}
+                    {p.map_places.length > 0 && <p>🗺️ {p.map_places.map((x) => `${placeName(x.place)} ×${x.visits}`).join(" · ")}</p>}
+                    {p.sources.length > 0 && <p>🔗 {p.sources.map((x) => x.name).join(" · ")}</p>}
+                    {p.devices.length > 0 && (
+                      <p>
+                        {p.devices.map((d) => `${deviceIcon(d.device)} ${[d.os, d.browser].filter(Boolean).join(" ")}`).join(" · ")}
+                      </p>
+                    )}
+                    <div className="vis-person-actions">
+                      <button type="button" className="cat-mini" onClick={() => setOnly(only === p.visitor ? null : p.visitor)}>
+                        {only === p.visitor ? "Show everyone" : "Their visits"}
+                      </button>
+                      <button type="button" className="cat-mini" onClick={() => rename(p)}>
+                        {p.name ? "Rename" : "Name"}
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section className="vis-card">
+            <h3>✦ {only ? `Visits by ${who(people?.find((p) => p.visitor === only)?.name ?? null, only)}` : "Every visit"}</h3>
+            {logError && (
+              <p className="cat-error" role="alert">
+                {needsMigration(logError) ? "The visit log isn't set up yet: run supabase/migrations/20260915120000_palais_visitor_names.sql." : logError}
+              </p>
+            )}
+            <ul className="vis-list vis-list--recent">
+              {/* until the migration is run, the last 40 visits the old way */}
+              {needsMigration(logError) &&
+                stats.recent.map((v, i) => (
+                  <li key={`old-${i}`}>
                     <span>
-                      {flag(v.code)} {[v.city, v.country].filter(Boolean).join(", ") || "Somewhere"}
+                      {flag(v.code)} {where(v)}
                       <small>
+                        {v.visitor ? `visitor ${v.visitor} · ` : ""}
                         {deviceIcon(v.device)} {[deviceName(v.device), v.os, v.browser].filter(Boolean).join(" · ")}
-                        {v.source ? ` · via ${v.source}` : v.referrer ? ` · from ${v.referrer}` : ""}
-                        {v.page && v.page !== "/" ? ` · ${v.page}` : ""}
-                        {v.visitor ? ` · visitor ${v.visitor}` : ""}
+                        {v.source ? ` · via ${v.source}` : ""}
                       </small>
                     </span>
                     <time dateTime={v.at}>{ago(v.at)}</time>
                   </li>
                 ))}
-              </ul>
-            ) : (
-              <p className="cat-note">No visits yet.</p>
-            )}
+              {log.map((v) => (
+                <li key={v.id}>
+                  <span>
+                    {flag(v.code)} {where(v)}
+                    <small>
+                      <b className={v.is_me ? "vis-name is-me" : "vis-name"}>{who(v.name, v.visitor, v.is_me)}</b>
+                      {" · "}
+                      {deviceIcon(v.device)} {[deviceName(v.device), v.os, v.browser].filter(Boolean).join(" · ")}
+                      {v.source ? ` · via ${v.source}` : v.referrer ? ` · from ${v.referrer}` : ""}
+                    </small>
+                    {v.places.length > 0 && <small>🗺️ {v.places.map(placeName).join(" → ")}</small>}
+                  </span>
+                  <time dateTime={v.at} title={new Date(v.at).toLocaleString()}>
+                    {ago(v.at)}
+                  </time>
+                </li>
+              ))}
+              {!logDone && !logError && (
+                <li ref={end} className="vis-more">
+                  <span>Loading more visits…</span>
+                </li>
+              )}
+              {logDone && log.length > 0 && (
+                <li className="vis-more">
+                  <span>That's every visit.</span>
+                </li>
+              )}
+              {logDone && !log.length && !logError && (
+                <li className="vis-more">
+                  <span>No visits yet.</span>
+                </li>
+              )}
+            </ul>
           </section>
           <p className="cat-signin-line">
             IP addresses aren't stored; each visitor is a scrambled code. Visits from localhost aren't counted.

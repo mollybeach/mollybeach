@@ -46,3 +46,18 @@ a phone (8 per room). Run `migrations/20260914130000_palais_layouts_places.sql`
 once, which adds a `place` column. Signed in, clicking **Done** in the
 catalogue saves the room as its layout for the current season on that device.
 The catalogue's Seasons page shows all eight.
+
+## Visitor names, profiles and map walks
+
+Run `migrations/20260915120000_palais_visitor_names.sql` after the three
+`palais_visits` migrations. It:
+
+- names visitor codes in `palais_visitor_names` (seeded: `068f44` is Molly,
+  marked as "me"; `1ae5f6` is YanYan; `da62a5` is Ignas; `133283` is Zach). Rename anyone from the
+  catalogue's Visitors page, or with `palais_name_visitor`.
+- keeps Molly's own visits out of "Where they came from" and counts them on
+  their own.
+- records which places on the map each visit walks into
+  (`palais_place_visits`), still keyed only by the salted hash, never an IP.
+- adds `palais_visit_log` (every visit, a page at a time) and
+  `palais_visitor_profiles` (a profile of each visitor).

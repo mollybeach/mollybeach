@@ -56,7 +56,7 @@ const PHOTO_MAPS: Record<string, PhotoMap> = {
   lanterns: { kx: 0.869, tx: 0.066, ky: 0.946, ty: -0.013 },
   shore: { kx: 0.926, tx: 0.033, ky: 0.848, ty: 0.028 },
   caves: { kx: 0.92, tx: 0.067, ky: 0.762, ty: 0.122 },
-  library: { kx: 1.284, tx: -0.143, ky: 0.82, ty: 0.087 },
+  library: { kx: 1.399, tx: -0.206, ky: 0.72, ty: 0.121 },
 };
 /* a room with no tall photograph shows the same one on a phone */
 const SAME: PhotoMap = { kx: 1, tx: 0, ky: 1, ty: 0 };

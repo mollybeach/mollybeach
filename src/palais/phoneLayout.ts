@@ -75,6 +75,7 @@ const KIND: Record<string, { w: number; ground?: number; top?: number }> = {
   bath: { w: 10, ground: 12 },
   bottles: { w: 6, ground: 14 },
   keepsakes: { w: 7, ground: 14 },
+  tech: { w: 14, ground: 14 },
   kitchen: { w: 14, ground: 16 },
   decor: { w: 11, ground: 10 },
 };

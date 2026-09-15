@@ -342,6 +342,7 @@ export const SHELVES: Shelf[] = [
       "box_incense_burner_wood_lattice_moon_stars_upright_sticker",
     ],
   },
+  { key: "tech", name: "Tech", emoji: "💻", items: ["computer_imac_purple_back_view_sticker", "computer_imac_g3_lime_green_keyboard_mouse_sticker"] },
   // the rest of the Temu room decor, not on any shelf above (filled in below)
   { key: "decor", name: "Room decor", emoji: "🏺", items: [] },
   /* everything else in the room — the gilded medallion, the jasperware and
