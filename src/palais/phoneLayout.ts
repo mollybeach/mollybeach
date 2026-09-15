@@ -68,6 +68,13 @@ const KIND: Record<string, { w: number; ground?: number; top?: number }> = {
   teacups: { w: 7, ground: 16 },
   trinkets: { w: 8, ground: 12 },
   ornaments: { w: 6, ground: 14 },
+  books: { w: 7, ground: 14 },
+  dishes: { w: 7, ground: 16 },
+  candles: { w: 7, ground: 14 },
+  vanity: { w: 7, ground: 14 },
+  bath: { w: 10, ground: 12 },
+  bottles: { w: 6, ground: 14 },
+  keepsakes: { w: 7, ground: 14 },
   kitchen: { w: 14, ground: 16 },
   decor: { w: 11, ground: 10 },
 };
