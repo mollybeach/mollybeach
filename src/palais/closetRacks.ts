@@ -75,27 +75,32 @@ try {
 }
 
 let loading: Promise<void> | undefined;
+
+/* Where the clothes have been dragged and which are taken out are kept in the
+   same row as the rails, inside its racks: under MOVES and HIDDEN, beside the
+   rail ids. So they need no extra columns, and save on the table as it is. */
+const MOVES = "__moves";
+const HIDDEN = "__hidden";
+type StoredRacks = Record<string, unknown>;
+
 /** fetch the default from the database, once */
 export function loadPublished() {
   if (!dbConfigured) return Promise.resolve();
   loading ??= (async () => {
     try {
       const sb = await db();
-      // moves and hidden come with a later migration: without them, just the rails
-      let res = await sb.from(TABLE).select("closet, racks, moves, hidden");
-      if (res.error) res = await sb.from(TABLE).select("closet, racks");
-      const { data, error } = res;
+      const { data, error } = await sb.from(TABLE).select("closet, racks");
       if (error || !data) return;
       const next = { ...published };
       const nextMoves = { ...publishedMoves };
       let nextHidden: string[] | undefined;
-      for (const row of data as { closet: Which; racks: RackOrder; moves?: ClosetMoves; hidden?: string[] }[]) {
-        if (row.closet === "wide" || row.closet === "tall") {
-          next[row.closet] = mend(row.closet, row.racks);
-          nextMoves[row.closet] = row.moves ?? {};
-          // both rows keep the same list; the wide one wins if they ever differ
-          if (Array.isArray(row.hidden) && (row.closet === "wide" || !nextHidden)) nextHidden = row.hidden;
-        }
+      for (const row of data as { closet: Which; racks: StoredRacks | null }[]) {
+        if (row.closet !== "wide" && row.closet !== "tall") continue;
+        const { [MOVES]: moves, [HIDDEN]: hidden, ...rails } = row.racks ?? {};
+        next[row.closet] = mend(row.closet, rails as RackOrder);
+        nextMoves[row.closet] = moves && typeof moves === "object" ? (moves as ClosetMoves) : {};
+        // both rows keep the same list; the wide one wins if they ever differ
+        if (Array.isArray(hidden) && (row.closet === "wide" || !nextHidden)) nextHidden = hidden as string[];
       }
       if (nextHidden) publishedHidden = nextHidden;
       publishedMoves = nextMoves;
@@ -204,22 +209,20 @@ export function racksChanged(which: Which) {
 /** save the closet as it is now as the default everyone sees (editors only;
     the database refuses anyone else) */
 export async function publishRacks(which: Which, moves?: ClosetMoves, hidden?: Set<string>) {
-  const racks = state[which];
-  const list = hidden ? sorted(hidden) : undefined;
-  const sb = await db();
-  const rows: Record<string, unknown>[] = [{ closet: which, racks, ...(moves ? { moves } : {}), ...(list ? { hidden: list } : {}) }];
-  // what's taken out is the same on computers and phones, so the other row gets it too
   const other: Which = which === "wide" ? "tall" : "wide";
-  if (list) rows.push({ closet: other, racks: state[other], hidden: list });
+  const nextMoves = { ...publishedMoves, ...(moves ? { [which]: moves } : {}) };
+  const nextHidden = hidden ? sorted(hidden) : publishedHidden;
+  const row = (w: Which): { closet: Which; racks: StoredRacks } => ({
+    closet: w,
+    racks: { ...state[w], [MOVES]: nextMoves[w], [HIDDEN]: nextHidden },
+  });
+  const sb = await db();
+  // what's taken out is the same on computers and phones, so both rows get it
+  const rows = hidden ? [row(which), row(other)] : [row(which)];
   const { error } = await sb.from(TABLE).upsert(rows, { onConflict: "closet" });
-  if (error) {
-    if ((moves || list) && /moves|hidden/.test(error.message)) {
-      throw new Error("the closet table has no room for moved or taken-out clothes yet: run supabase/migrations/20260914150000_palais_closet_moves.sql");
-    }
-    throw new Error(error.message);
-  }
-  published = { ...published, [which]: racks, ...(list ? { [other]: state[other] } : {}) };
-  if (moves) publishedMoves = { ...publishedMoves, [which]: moves };
-  if (list) publishedHidden = list;
+  if (error) throw new Error(error.message);
+  published = { ...published, [which]: state[which], ...(hidden ? { [other]: state[other] } : {}) };
+  publishedMoves = nextMoves;
+  publishedHidden = nextHidden;
   notify();
 }
