@@ -56,6 +56,7 @@ export const MORE_TRINKETS: PropId[] = [
   "mirror_wall_arch_ornate_gold_vintage_sticker",
   "mirror_wall_oval_ornate_gold_crest_vintage_sticker",
   "telescope_refractor_tripod_navy_blue_meade_sticker",
+  "dresser_walnut_mid_century_drawers_tapered_legs_sticker",
   "radiator_heater_cast_iron_ribbed_white_vintage_sticker",
   "shelf_rack_garden_three_tier_scrollwork_glass_white_sticker",
   "bottle_glass_embossed_decanter_peach_pink_vintage_sticker",

@@ -44,6 +44,7 @@ export const SHELVES: Shelf[] = [
       "shelf_wall_picture_ledge_oak_vinyl_records_puberty_be_the_cowboy_bottom_sticker",
       "rug_cat_tufted_peach_flowers_sticker",
       "telescope_refractor_tripod_navy_blue_meade_sticker",
+      "dresser_walnut_mid_century_drawers_tapered_legs_sticker",
     ],
   },
   { key: "trellises", name: "Trellises", emoji: "🌿", items: ["trellis-wisteria", "trellis-ivy"] },
