@@ -162,6 +162,22 @@ export function Catalogue({
     const stage = stageOf();
     if (stage) resizeSticker(stage, clothesPage ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]", id, factor);
   };
+  /** the same, for a whole shelf of pieces, or everything on the page, at once
+      (only what's in the room: a piece taken out keeps its size) */
+  const nudgeMany = (ids: string[], factor: number) => ids.filter((id) => !out.has(id)).forEach((id) => nudge(id, factor));
+  const sizeGroup = (ids: string[], what: string) => {
+    const none = !ids.some((id) => !out.has(id));
+    return (
+      <span className="cat-size cat-size--group" role="group" aria-label={`Size of ${what}`}>
+        <button type="button" disabled={none} aria-label={`Make ${what} smaller`} title={`Make ${what} smaller`} onClick={() => nudgeMany(ids, 1 / 1.12)}>
+          −
+        </button>
+        <button type="button" disabled={none} aria-label={`Make ${what} bigger`} title={`Make ${what} bigger`} onClick={() => nudgeMany(ids, 1.12)}>
+          +
+        </button>
+      </span>
+    );
+  };
 
   /** the stickers in the room as they are right now, in the form a layout keeps */
   const roomNow = () => {
@@ -439,6 +455,7 @@ export function Catalogue({
                     <span className="cat-shelf-count">
                       {on}/{items.length}
                     </span>
+                    {sizeGroup(items, `all the ${shelf.name.toLowerCase()}`)}
                   </div>
                   <ul className="cat-grid">
                     {items.map((id) => {
@@ -494,6 +511,9 @@ export function Catalogue({
           )}
           {(clothesPage || page === "stickers") && (
             <>
+              <span className="cat-size-all">
+                Size of everything {sizeGroup(inRoom, clothesPage ? "all the clothes" : "everything in the room")}
+              </span>
               <button type="button" className="cat-btn" onClick={() => setMany(inRoom, true)}>
                 Show everything
               </button>

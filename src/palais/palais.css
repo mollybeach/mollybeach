@@ -1266,6 +1266,10 @@
 }
 .palais .cat-size button:hover:not(:disabled) { border-color: var(--cat-hot); transform: scale(1.1); }
 .palais .cat-size button:disabled { opacity: 0.35; cursor: default; }
+/* the same − and + for a whole shelf, in its header, and for the whole page, in the footer */
+.palais .cat-size--group { position: static; margin-left: 0.2rem; }
+.palais .cat-size--group button { width: 1.6rem; height: 1.6rem; font-size: 1rem; }
+.palais .cat-size-all { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 600; color: #9a4a72; }
 .palais .cat-thumb {
   display: grid;
   place-items: center;
