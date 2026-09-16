@@ -1,5 +1,5 @@
 import { Room } from "./Room";
-import { floralSrc, useFloral } from "./florals";
+import { floralSrc, paletteOf, useFloral } from "./florals";
 import { Prop } from "./Prop";
 import { propSpec } from "./props";
 import { Pollen } from "./Pollen";
@@ -104,6 +104,8 @@ export default function PalaisHome() {
   const portrait = usePortrait();
   // the buttons along the top wear whatever the sidebar is wearing
   const chips = useFloral("sidebar");
+  // and they swap to the footer's pattern while you point at one
+  const chipsHover = useFloral("footer");
   // which room you're in: the terrace or one of the rooms off it (place.ts)
   const places = usePlaceState();
   // count this visit, once per session (visits.ts)
@@ -118,7 +120,14 @@ export default function PalaisHome() {
   return (
     <PlaceNow.Provider value={places}>
     <>
-      <div className="palais" style={{ ["--palais-chip" as string]: `url("${floralSrc(chips.now)}")` }}>
+      <div
+        className="palais"
+        style={{
+          ["--palais-chip" as string]: `url("${floralSrc(chips.now)}")`,
+          ["--palais-chip-hover" as string]: `url("${floralSrc(chipsHover.now)}")`,
+          ["--palais-jewel" as string]: paletteOf(chips.now).jewel,
+        }}
+      >
         
 
         {/* ==============================================================

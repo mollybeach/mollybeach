@@ -309,43 +309,72 @@ const labelWidth = (s: Stop) => labelOf(s).length * 8.6 + 30;
 const picture = (s: Stop) => `${process.env.PUBLIC_URL}/palais/map/${s.room ?? s.id}.webp`;
 
 /** a cluster of apple blossom and leaves, for the corners of the frame */
-function Blossoms({ className }: { className: string }) {
-  const flower = (x: number, y: number, r: number, pink: boolean, rot = 0) => (
-    <g transform={`translate(${x} ${y}) rotate(${rot})`}>
-      {[0, 72, 144, 216, 288].map((a) => (
-        <ellipse key={a} cx={0} cy={-r * 0.55} rx={r * 0.42} ry={r * 0.55} transform={`rotate(${a})`} fill={pink ? "url(#wm-petal-pink)" : "url(#wm-petal-white)"} stroke="#e2b8c4" strokeWidth={0.6} />
-      ))}
-      <circle r={r * 0.2} fill="#f2c45a" />
-      {[0, 60, 120, 180, 240, 300].map((a) => (
-        <circle key={a} cx={Math.cos((a * Math.PI) / 180) * r * 0.3} cy={Math.sin((a * Math.PI) / 180) * r * 0.3} r={r * 0.05} fill="#c98a2e" />
-      ))}
-    </g>
-  );
-  const leaf = (x: number, y: number, len: number, rot: number) => (
-    <path transform={`translate(${x} ${y}) rotate(${rot})`} d={`M0,0 C${len * 0.3},${-len * 0.28} ${len * 0.75},${-len * 0.22} ${len},0 C${len * 0.75},${len * 0.22} ${len * 0.3},${len * 0.28} 0,0 Z`} fill="#6f9a5a" stroke="#4f7a44" strokeWidth={0.7} />
-  );
+/**
+ * The painted flowers around the map's frame, cut from Molly's own sheet
+ * (public/palais/blooms). Each corner gets its own posy: a big flower, a
+ * smaller one and a leaf or two, laid over each other and turned a little, so
+ * no two corners are alike.
+ */
+const BLOOM = (name: string) => `${process.env.PUBLIC_URL}/palais/blooms/${name}.webp`;
+
+type Petal = { name: string; x: number; y: number; w: number; rot?: number };
+
+const POSIES: Record<string, Petal[]> = {
+  tl: [
+    { name: "leaf-long", x: 8, y: 52, w: 62, rot: -24 },
+    { name: "leaf-sprig", x: 44, y: 8, w: 44, rot: 28 },
+    { name: "lily-pink", x: 6, y: 10, w: 74 },
+    { name: "tulip-bud-pink", x: 62, y: 44, w: 34, rot: 18 },
+    { name: "forget-me-nots", x: 48, y: 70, w: 38, rot: -8 },
+  ],
+  bl: [
+    { name: "leaf-pair", x: 6, y: 6, w: 52, rot: 200 },
+    { name: "daisy-yellow", x: 30, y: 30, w: 50, rot: -12 },
+    { name: "violet-purple", x: 4, y: 52, w: 36, rot: 14 },
+    { name: "lavender-sprig", x: 54, y: 40, w: 42, rot: 24 },
+    { name: "cornflower-blue", x: 58, y: 8, w: 30, rot: -20 },
+  ],
+  tr: [
+    { name: "leaf-single", x: 50, y: 48, w: 48, rot: 140 },
+    { name: "daisy-cream", x: 20, y: 14, w: 58, rot: 16 },
+    { name: "bellflower-blue", x: 56, y: 6, w: 38, rot: -14 },
+    { name: "violet-lilac", x: 10, y: 60, w: 34, rot: 22 },
+  ],
+  br: [
+    { name: "leaf-long", x: 46, y: 6, w: 58, rot: 156 },
+    { name: "daisy-white", x: 34, y: 34, w: 54, rot: -18 },
+    { name: "tulip-bud-red", x: 6, y: 20, w: 34, rot: -26 },
+    { name: "forget-me-nots-tall", x: 4, y: 52, w: 40, rot: 10 },
+    { name: "lavender-small", x: 62, y: 62, w: 32, rot: 18 },
+  ],
+  "title-l": [
+    { name: "leaf-sprig", x: 4, y: 40, w: 46, rot: -16 },
+    { name: "violet-pink", x: 22, y: 10, w: 44, rot: 12 },
+    { name: "periwinkle-blue", x: 52, y: 42, w: 34, rot: -10 },
+    { name: "lavender-bud", x: 56, y: 4, w: 30, rot: 22 },
+  ],
+  "title-r": [
+    { name: "leaf-pair", x: 46, y: 38, w: 46, rot: 200 },
+    { name: "daisy-yellow", x: 18, y: 12, w: 44, rot: -14 },
+    { name: "cornflower-bright", x: 52, y: 6, w: 32, rot: 16 },
+    { name: "violet-purple", x: 8, y: 52, w: 34, rot: -8 },
+  ],
+};
+
+function Blossoms({ className, posy }: { className: string; posy: keyof typeof POSIES }) {
   return (
-    <svg className={className} viewBox="0 0 120 120" aria-hidden>
-      <defs>
-        <radialGradient id="wm-petal-white">
-          <stop offset="0" stopColor="#fff" />
-          <stop offset="1" stopColor="#f6e4ea" />
-        </radialGradient>
-        <radialGradient id="wm-petal-pink">
-          <stop offset="0" stopColor="#fde7ef" />
-          <stop offset="1" stopColor="#eea6bf" />
-        </radialGradient>
-      </defs>
-      {leaf(50, 52, 44, -150)}
-      {leaf(56, 58, 40, 80)}
-      {leaf(48, 60, 36, 150)}
-      {leaf(60, 48, 38, -40)}
-      {flower(40, 40, 22, false, 10)}
-      {flower(74, 58, 18, true, -20)}
-      {flower(46, 80, 15, false, 30)}
-      {flower(80, 26, 11, true, 5)}
-      {flower(20, 66, 10, true, 40)}
-    </svg>
+    <span className={className} aria-hidden>
+      {POSIES[posy].map((p, i) => (
+        <img
+          key={i}
+          src={BLOOM(p.name)}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          style={{ left: `${p.x}%`, top: `${p.y}%`, width: `${p.w}%`, rotate: `${p.rot ?? 0}deg` }}
+        />
+      ))}
+    </span>
   );
 }
 
@@ -488,7 +517,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const stop = STOPS[here];
 
   const tree = (t: { x: number; y: number; r: number; kind: 0 | 1; tone: number }, i: number) => {
-    const green = t.tone < 0.33 ? "#4f8a4c" : t.tone < 0.66 ? "#5f9c55" : "#3f7a45";
+    const green = t.tone < 0.33 ? "#1d5324" : t.tone < 0.66 ? "#2b6630" : "#14471b";
     const light = t.tone < 0.33 ? "#7cb26a" : t.tone < 0.66 ? "#8cc076" : "#6aa262";
     return (
       <g key={i} transform={`translate(${t.x.toFixed(1)} ${t.y.toFixed(1)})`}>
@@ -523,17 +552,17 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         /* the same cream paper over a floral as the catalogue */
         style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
       >
-        <Blossoms className="wm-bloom wm-bloom--tl" />
-        <Blossoms className="wm-bloom wm-bloom--bl" />
-        <Blossoms className="wm-bloom wm-bloom--tr" />
-        <Blossoms className="wm-bloom wm-bloom--br" />
+        <Blossoms className="wm-bloom wm-bloom--tl" posy="tl" />
+        <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
+        <Blossoms className="wm-bloom wm-bloom--tr" posy="tr" />
+        <Blossoms className="wm-bloom wm-bloom--br" posy="br" />
 
         <div className="wm-title">
-          <Blossoms className="wm-bloom wm-bloom--title-l" />
+          <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
           <h2 id="wm-title">
             <span aria-hidden>✿</span> Area M <span aria-hidden>✿</span>
           </h2>
-          <Blossoms className="wm-bloom wm-bloom--title-r" />
+          <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
         </div>
         <button ref={closeBtn} type="button" className="wm-close" onClick={onClose} aria-label="Close the map">
           ×
@@ -554,15 +583,17 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             onPointerLeave={() => setHover(null)}
           >
             <defs>
+              {/* the sea is the blue of the cornflowers round the frame, the
+                  grass the green of their leaves (public/palais/blooms) */}
               <radialGradient id="wm-sea" cx="0.5" cy="0.5" r="0.75">
-                <stop offset="0" stopColor="#56c3e6" />
-                <stop offset="0.7" stopColor="#3aa6d6" />
-                <stop offset="1" stopColor="#2c8fc4" />
+                <stop offset="0" stopColor="#6fa1f9" />
+                <stop offset="0.7" stopColor="#3663c8" />
+                <stop offset="1" stopColor="#1a51b3" />
               </radialGradient>
               <radialGradient id="wm-grass" cx="0.5" cy="0.45" r="0.6">
-                <stop offset="0" stopColor="#a9d77f" />
-                <stop offset="0.7" stopColor="#8cc46c" />
-                <stop offset="1" stopColor="#6fae5c" />
+                <stop offset="0" stopColor="#547d38" />
+                <stop offset="0.7" stopColor="#346836" />
+                <stop offset="1" stopColor="#21582a" />
               </radialGradient>
               <linearGradient id="wm-gilt" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stopColor="#fbeec1" />
@@ -619,14 +650,14 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* islets out at sea */}
             {art.islets.map((s) => (
               <g key={s.id}>
-                <path d={s.shallows} fill="#8fe0ee" opacity={0.8} />
+                <path d={s.shallows} fill="#7fa8ef" opacity={0.8} />
                 <path d={s.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={2} />
                 <path d={s.land} fill="url(#wm-grass)" />
               </g>
             ))}
 
             {/* the island: turquoise shallows, a ring of sand and surf, then grass */}
-            <path d={art.shallows} fill="#8fe0ee" opacity={0.85} />
+            <path d={art.shallows} fill="#7fa8ef" opacity={0.85} />
             <path d={art.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
             <path d={art.island} fill="url(#wm-grass)" />
             <g clipPath="url(#wm-island)">

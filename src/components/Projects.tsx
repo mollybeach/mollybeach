@@ -1,5 +1,6 @@
 // path: src/components/Projects.tsx
 import React from 'react';
+import { shelfAt } from './garden';
 import ProjectCard from './ProjectCard';
 
 interface Project {
@@ -865,6 +866,7 @@ const Projects: React.FC = () => {
           <ProjectCard
             key={index}
             project={project}
+            shelf={shelfAt(index)}
           />
         ))}
       </div>

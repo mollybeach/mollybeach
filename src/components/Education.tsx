@@ -1,5 +1,6 @@
 // path: src/components/Education.tsx
 import React, { useState } from 'react';
+import { GardenHeading, shelfAt } from './garden';
 
 const Education: React.FC = () => {
   const [expandedSchools, setExpandedSchools] = useState<{[key: string]: boolean}>({});
@@ -45,17 +46,16 @@ const Education: React.FC = () => {
     <section className="space-y-6">
       <h2 className="text-3xl font-bold mb-8 text-center">Education</h2>
       {education.map((edu, index) => (
-        <article key={index} className="bg-[#fffdf6] rounded-lg shadow-md border-2 border-[#c9a44c]/55 p-6">
+        <article
+          key={index}
+          className="gilt-card bg-[#fffdf6] rounded-2xl p-6"
+        >
           <div className="flex items-center gap-4 mb-4">
-            <img 
-              src={edu.logo}
-              alt={`${edu.school} logo`}
-              className="w-16 h-16 object-contain rounded-lg"
-            />
-            <div>
-              <h3 className="text-xl font-bold text-gray-900">{edu.school}</h3>
-              <p className="text-gray-600">{edu.degree}</p>
-              <p className="text-sm text-gray-500">{edu.date} • {edu.location}</p>
+            <img src={edu.logo} alt={`${edu.school} logo`} className="w-16 h-16 object-contain rounded-lg" />
+            <div className="min-w-0 flex-1">
+              <GardenHeading shelf={shelfAt(index)} as="h3" note={`${edu.degree} · ${edu.date} • ${edu.location}`}>
+                <span className="font-bold">{edu.school}</span>
+              </GardenHeading>
             </div>
           </div>
           <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">

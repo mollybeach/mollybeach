@@ -1,5 +1,6 @@
 // src/components/ProjectCard.tsx
 import React from 'react';
+import { GardenTag, type Shelf } from './garden';
 
 interface ProjectCardProps {
   project: {
@@ -40,14 +41,14 @@ interface ProjectCardProps {
   }
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps & { shelf: Shelf }> = ({ project, shelf }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   
   return (
     <div 
-      className={`block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out bg-[#fffdf6] border-2 border-[#c9a44c]/55
-        ${isExpanded ? 'col-span-full w-[85%] mx-auto relative z-10' : 'relative z-0'}`}
       style={{ order: isExpanded ? -1 : 0 }}
+      className={`gilt-card block rounded-2xl overflow-hidden transition-all duration-300 ease-in-out bg-[#fffdf6]
+        ${isExpanded ? 'col-span-full w-[85%] mx-auto relative z-10' : 'relative z-0'}`}
     >
       <div className="flex flex-col">
         {/* Preview Image with Link */}
@@ -132,12 +133,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             {project.technologies
               .slice(0, isExpanded ? undefined : 6)
               .map((tech, index) => (
-                <span key={index} className="px-2 py-1 bg-gray-100 rounded-full text-sm">
-                  {tech}
-                </span>
+                <GardenTag key={index} shelf={shelf}>{tech}</GardenTag>
             ))}
             {!isExpanded && project.technologies.length > 6 && (
-              <span className="px-2 py-1 bg-gray-100 rounded-full text-sm text-gray-500">
+              <span className="px-2.5 py-1 rounded-full text-sm" style={{ color: shelf.ink, opacity: 0.75 }}>
                 +{project.technologies.length - 6} more
               </span>
             )}

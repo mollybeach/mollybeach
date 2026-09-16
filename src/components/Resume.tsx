@@ -1,9 +1,11 @@
 // path: src/components/Resume.tsx
 import React from 'react';
+import { floralSrc, useFloral } from '../palais/florals';
 import { Helmet } from 'react-helmet-async';
 import { ArrowDownTrayIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 
 const Resume: React.FC = () => {
+  const floral = useFloral('footer');
   const resumePath = `${process.env.PUBLIC_URL}/Beach_Molly_Resume.pdf`;
 
   return (
@@ -36,13 +38,21 @@ const Resume: React.FC = () => {
         </div>
 
         {/* Download Card */}
-        <div className="bg-gradient-to-br from-[#fff6d6] via-[#e0bd6a] to-[#b08f43] rounded-xl shadow-xl border-2 border-[#9c7632] p-8 mb-8 text-[#3a2b10]">
+        <div className="rounded-xl shadow-xl border-2 border-[#9c7632] p-8 mb-8 text-[#fffaf0]"
+          /* the same cloth the Palais footer is wearing, under a shade so the
+             writing reads (florals.ts) */
+          style={{
+            backgroundColor: 'rgba(58, 44, 22, 0.5)',
+            backgroundImage: `linear-gradient(rgba(40, 30, 14, 0.5), rgba(40, 30, 14, 0.6)), url("${floralSrc(floral.now)}")`,
+            backgroundSize: 'auto, 320px auto',
+            backgroundRepeat: 'repeat',
+          }}>
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4 text-[#3a2b10]">
+            <div className="flex items-center gap-4 text-[#fffaf0]">
               <DocumentTextIcon className="h-16 w-16" />
               <div>
                 <h3 className="text-2xl font-bold mb-2">Molly Beach Resume</h3>
-                <p className="text-[#6b5320]">Full-Stack Software Engineer</p>
+                <p className="text-[#ffe9b8]">Full-Stack Software Engineer</p>
               </div>
             </div>
             <a
@@ -57,7 +67,7 @@ const Resume: React.FC = () => {
         </div>
 
         {/* PDF Viewer */}
-        <div className="bg-[#fffdf6] rounded-xl shadow-lg border-2 border-[#c9a44c]/55 overflow-hidden">
+        <div className="gilt-card bg-[#fffdf6] rounded-2xl overflow-hidden">
           <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900">Preview</h3>
           </div>

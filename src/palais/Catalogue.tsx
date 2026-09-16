@@ -349,6 +349,8 @@ export function Catalogue({
         ["--cat-jewel" as string]: palette.jewel,
         ["--cat-ink" as string]: palette.ink,
         ["--cat-chip" as string]: `url("${floralSrc(chips.now)}")`,
+        // the head's own stone for what's selected here, the sidebar's for Save
+        ["--cat-jewel-side" as string]: paletteOf(chips.now).jewel,
       }}
       onPointerDown={(e) => e.target === e.currentTarget && onClose()}
     >

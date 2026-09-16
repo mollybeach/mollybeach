@@ -1,5 +1,6 @@
 // path: src/components/Certifications.tsx
 import CertBadge, { type BadgeKind } from './CertBadge';
+import { bloomSrc, shelfAt } from './garden';
 
 interface Certification {
     title: string;
@@ -132,11 +133,16 @@ export default function Certifications() {
       <h2 className="text-3xl font-bold mb-8 text-center">Certifications</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {certifications.map((cert, index) => (
-          <div key={index} className="bg-[#fffdf6] rounded-lg shadow-md border-2 border-[#c9a44c]/55 p-4 flex flex-col">
-            <div className="mb-3">
+          <div
+            key={index}
+            className="gilt-card bg-[#fffdf6] rounded-2xl p-4 flex flex-col"
+          >
+            <div className="mb-3 flex items-center gap-2">
               <CertBadge kind={cert.badge} issuer={cert.issuer} title={cert.title} />
+              <img src={bloomSrc(shelfAt(index).bloom)} alt="" aria-hidden className="h-6 w-6 object-contain" />
             </div>
-            <h3 className="font-semibold text-lg mb-2">{cert.title}</h3>
+            <h3 className="font-semibold text-lg mb-2" style={{ color: shelfAt(index).ink }}>{cert.title}</h3>
+            <span className="mb-2 h-px w-full" style={{ background: `linear-gradient(90deg, ${shelfAt(index).edge}, transparent)` }} />
             <div className="text-gray-600">
               <p>{cert.issuer}</p>
               {cert.issueDate && <p>Issued {cert.issueDate}</p>}

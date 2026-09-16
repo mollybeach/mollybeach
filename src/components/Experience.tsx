@@ -1,5 +1,6 @@
 // path: src/components/Experience.tsx
 import React from 'react';
+import { GardenHeading, GardenList, shelfAt } from './garden';
 
 interface Project {
   title: string;
@@ -369,14 +370,17 @@ const Experience: React.FC = () => {
     <div className="space-y-8">
       <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
       {experiences.map((exp, companyIndex) => (
-        <div key={companyIndex} className="rounded-lg p-4 bg-[#fffdf6] border-2 border-[#c9a44c]/55 shadow-md">
-          <div className="flex items-center gap-4 mb-4">
-            <img 
-              src={exp.logo} 
-              alt={`${exp.company} logo`} 
-              className="w-12 h-12 object-contain"
-            />
-            <h3 className="font-bold text-xl">{exp.company}</h3>
+        <div
+          key={companyIndex}
+          className="gilt-card rounded-2xl p-5 bg-[#fffdf6]"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <img src={exp.logo} alt={`${exp.company} logo`} className="w-12 h-12 object-contain" />
+            <div className="min-w-0 flex-1">
+              <GardenHeading shelf={shelfAt(companyIndex)} as="h3" size="text-xl" count={exp.roles.length > 1 ? `${exp.roles.length} roles` : undefined}>
+                <span className="font-bold">{exp.company}</span>
+              </GardenHeading>
+            </div>
           </div>
           
           <div className="space-y-6">
@@ -398,18 +402,18 @@ const Experience: React.FC = () => {
                       />
                     </svg>
                     <div>
-                      <p className="font-semibold text-lg">{role.title}</p>
-                      <p className="text-sm text-gray-500">{role.date} • {role.location}</p>
+                      <p className="font-semibold text-lg" style={{ color: shelfAt(companyIndex).ink }}>{role.title}</p>
+                      <p className="text-sm" style={{ color: shelfAt(companyIndex).ink, opacity: 0.7 }}>
+                        {role.date} • {role.location}
+                      </p>
                     </div>
                   </button>
                   
                   {isExpanded && (
                     <div className="mt-4 ml-6">
-                      <ul className="list-disc list-inside mb-4">
-                        {role.details.map((detail, idx) => (
-                          <li key={idx} className="text-gray-700">{detail}</li>
-                        ))}
-                      </ul>
+                      <div className="mb-4">
+                        <GardenList shelf={shelfAt(companyIndex)} items={role.details} />
+                      </div>
                       
                       {role.projects.length > 0 && (
                         <div className="mt-4">
@@ -424,7 +428,7 @@ const Experience: React.FC = () => {
                               </ul>
                               <div className="flex flex-wrap gap-2">
                                 {project.technologies.map((tech, techIdx) => (
-                                  <span key={techIdx} className="px-2 py-1 bg-[#f6ecd6] border border-[#c9a44c]/45 rounded-full text-xs">
+                                  <span key={techIdx} className="skill-pill inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs" style={{ background: shelfAt(companyIndex).tint, border: `1.5px solid ${shelfAt(companyIndex).edge}`, color: shelfAt(companyIndex).ink }}>
                                     {tech}
                                   </span>
                                 ))}
@@ -436,7 +440,7 @@ const Experience: React.FC = () => {
                       
                       <div className="mt-4 flex flex-wrap gap-2">
                         {role.skills.map((skill, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-[#f6ecd6] border border-[#c9a44c]/45 rounded-full text-sm">
+                          <span key={idx} className="skill-pill inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs" style={{ background: shelfAt(companyIndex).tint, border: `1.5px solid ${shelfAt(companyIndex).edge}`, color: shelfAt(companyIndex).ink }}>
                             {skill}
                           </span>
                         ))}

@@ -1,5 +1,6 @@
 // path: src/components/Awards.tsx
 import React from 'react';
+import { GardenHeading, shelfAt } from './garden';
 import { Helmet } from 'react-helmet-async';
 
 interface Award {
@@ -95,16 +96,20 @@ const Awards: React.FC = () => {
       <div className="space-y-8">
         <h2 className="text-3xl font-bold mb-8 text-center">Awards</h2>
         {awards.map((award, index) => (
-          <div key={index} className="rounded-lg p-4 bg-[#fffdf6] border-2 border-[#c9a44c]/55 shadow-md">
+          <div
+            key={index}
+            className="gilt-card rounded-2xl p-5 bg-[#fffdf6]"
+          >
             <div className="flex items-center gap-4 mb-4">
               <img 
                 src={award.logo} 
                 alt={`${award.hackathon} logo`} 
                 className="w-16 h-16 object-contain rounded-lg"
               />
-              <div className="flex-1">
-                <h3 className="font-bold text-xl">{award.hackathon}</h3>
-                <p className="text-sm text-gray-600">{award.date} • {award.location}</p>
+              <div className="min-w-0 flex-1">
+                <GardenHeading shelf={shelfAt(index)} as="h3" note={`${award.date} • ${award.location}`}>
+                  <span className="font-bold">{award.hackathon}</span>
+                </GardenHeading>
               </div>
             </div>
             

@@ -196,14 +196,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
             onClick={handleNavClick}
             title={collapsed ? item.name : undefined}
             aria-label={item.name}
+            style={({ isActive }) =>
+              isActive
+                ? { backgroundColor: palette.jewel, color: '#fffaf0', boxShadow: `0 1px 0 ${palette.ink}` }
+                : { color: palette.ink }
+            }
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 collapsed ? 'lg:justify-center lg:px-0 lg:py-2.5' : ''
-              } ${
-                isActive
-                  ? 'bg-[#D63384] text-white shadow-sm'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm'
-              }`
+              } ${isActive ? 'shadow-sm' : 'hover:bg-[#f6ecd6] hover:shadow-sm'}`
             }
           >
             <item.icon className={`h-5 w-5 shrink-0 hidden ${collapsed ? 'lg:block' : ''}`} aria-hidden />
@@ -216,7 +217,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       <button
         type="button"
         onClick={() => setCollapsed((c) => !c)}
-        className="hidden lg:flex w-full items-center justify-center gap-2 rounded-2xl bg-[#fffdf6] py-2 text-sm font-medium text-gray-600 shadow-md ring-1 ring-[#c9a44c]/60 hover:text-[#D63384] transition-colors"
+        style={{ color: palette.ink }}
+        className="hidden lg:flex w-full items-center justify-center gap-2 rounded-2xl bg-[#fffdf6] py-2 text-sm font-medium shadow-md ring-1 ring-[#c9a44c]/60 hover:bg-[#f6ecd6] transition-colors"
         aria-label={collapsed ? 'Open the sidebar' : 'Fold the sidebar away'}
         title={collapsed ? 'Open the sidebar' : 'Fold the sidebar away'}
       >

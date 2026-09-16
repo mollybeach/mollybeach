@@ -2522,21 +2522,10 @@
   .palais .palais-pill:hover { background: #f6ecd6; color: #3a2f1c; }
 }
 .palais .palais-pill:active { transform: translateY(1px); box-shadow: none; }
-.palais .palais-pill[aria-pressed="true"] {
-  background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
-  border-color: #9c7632;
-  color: #3a2b10;
-}
-/* the two that open something are the gold ones, like Done in the catalogue */
 .palais .palais-pill--catalogue,
 .palais .palais-pill--map {
-  background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
-  border: 2px solid #9c7632;
-  color: #3a2b10;
-  font-family: "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  border-width: 2px;
   font-weight: 700;
-  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
-  box-shadow: 0 2px 0 #9c7632, 0 5px 12px rgba(40, 26, 10, 0.25);
   transform: none;
 }
 @media (hover: hover) {
@@ -2640,7 +2629,7 @@
    enough shade over it for the white lettering to read on the pale patterns */
 .palais .cat-page {
   background-image: linear-gradient(rgba(40, 30, 14, 0.42), rgba(40, 30, 14, 0.52)), var(--cat-chip);
-  background-size: auto 240%, 190px auto;
+  background-size: auto, 320px auto;
   background-position: center, center;
   background-color: rgba(58, 44, 22, 0.5);
   -webkit-backdrop-filter: none;
@@ -2660,7 +2649,7 @@
 /* the ribbon over the map wears the sidebar's floral, like the catalogue's tabs */
 .palais .wm-title h2 {
   background-image: linear-gradient(rgba(40, 30, 14, 0.42), rgba(40, 30, 14, 0.52)), var(--wm-chip);
-  background-size: auto 260%, 230px auto;
+  background-size: auto, 320px auto;
   background-position: center, center;
   background-color: rgba(58, 44, 22, 0.5);
   color: #fffaf0;
@@ -2673,7 +2662,7 @@
    something stay gold, the way the catalogue's own tabs do. */
 .palais .palais-pill {
   background-image: linear-gradient(rgba(40, 30, 14, 0.44), rgba(40, 30, 14, 0.54)), var(--palais-chip);
-  background-size: auto 240%, 200px auto;
+  background-size: auto, 320px auto;
   background-position: center, center;
   background-color: rgba(58, 44, 22, 0.5);
   border-color: rgba(255, 246, 222, 0.85);
@@ -2683,27 +2672,76 @@
   backdrop-filter: none;
 }
 @media (hover: hover) {
-  /* only a touch lighter, and a gold rim: lifting the shade any further looks
-     like the pattern itself has changed */
+  /* pointing at one fills it with a colour picked out of the pattern it's
+     wearing — the same idea as the page you're on in the sidebar */
   .palais .palais-pill:hover {
-    background-image: linear-gradient(rgba(40, 30, 14, 0.36), rgba(40, 30, 14, 0.46)), var(--palais-chip);
+    background-image: none;
+    background-color: var(--palais-jewel, #9c7632);
     color: #fffaf0;
-    border-color: #f0d79a;
-    box-shadow: 0 2px 0 rgba(122, 90, 30, 0.28), 0 0 0 1px rgba(201, 164, 76, 0.5);
+    border-color: #ffe9b8;
+    box-shadow: 0 2px 0 rgba(122, 90, 30, 0.35), 0 4px 10px rgba(40, 26, 10, 0.25);
   }
 }
 .palais .palais-pill[aria-pressed="true"] {
-  background-image: var(--cat-gold, linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad));
-  background-size: auto;
-  color: #3a2b10;
-  border-color: #9c7632;
-  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
+  /* the wording says which way it's set; a gold fill made one button shout */
+  border-color: #ffe9b8;
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.35), inset 0 0 0 1px rgba(255, 233, 184, 0.5);
 }
 .palais .palais-pill--catalogue,
 .palais .palais-pill--map {
-  background-image: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
-  background-size: auto;
-  color: #3a2b10;
-  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
-  border-color: #9c7632;
+  background-image: linear-gradient(rgba(40, 30, 14, 0.44), rgba(40, 30, 14, 0.54)), var(--palais-chip);
+  background-size: auto, 320px auto;
+  background-position: center, center;
+  background-color: rgba(58, 44, 22, 0.5);
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  border-color: #f0d79a;
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.35), 0 4px 10px rgba(40, 26, 10, 0.25);
 }
+@media (hover: hover) {
+  .palais .palais-pill--catalogue:hover,
+  .palais .palais-pill--map:hover {
+    background-image: none;
+    background-color: var(--palais-jewel, #9c7632);
+    color: #fffaf0;
+  }
+}
+.palais .palais-pill:hover .palais-map-icon { color: #fffaf0; }
+.palais .palais-map-icon { color: #ffe9b8; }
+
+/* the posies at the corners of the map: real flowers now, laid over each other
+   (WorldMap.tsx), so each is a small arrangement rather than one drawn sprig */
+.palais .wm-bloom { display: block; }
+.palais .wm-bloom img {
+  position: absolute;
+  filter: drop-shadow(0 2px 3px rgba(60, 35, 40, 0.3));
+}
+
+/* the tab you're on: filled with the stone of the pattern the head is wearing,
+   the way the page you're on is filled in the sidebar. Hovering the others is
+   unchanged. */
+.palais .cat-page.is-on {
+  background-image: none;
+  background-color: var(--cat-jewel, #9c7632);
+  color: #fffaf0;
+  border-color: #ffe9b8;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.35), 0 5px 12px rgba(40, 26, 10, 0.3);
+}
+
+/* the line under the title wore a dark wash; it takes the same stone */
+.palais .cat-count {
+  background: var(--cat-jewel, #9c7632);
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.palais .cat-season-now { background: rgba(255, 250, 235, 0.95); color: #3a2b10; text-shadow: none; }
+
+/* Save wears the sidebar's stone, so the two agree across the page */
+.palais .cat-btn--done {
+  background: var(--cat-jewel-side, #9c7632);
+  border-color: #ffe9b8;
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.palais .cat-btn--done:hover { background: var(--cat-jewel-side, #9c7632); filter: brightness(1.08); }

@@ -14,7 +14,7 @@ import { isPortable, resolvePortable } from "./crossDevice";
 /**
  * Small brass switches pinned to the top-right corner of the room.
  *
- * "Hide the room" shows or hides every sticker, leaving the photograph and its
+ * "Hide the items" shows or hides every sticker, leaving the photograph and its
  * falling pollen behind. It hides them by making them transparent rather than
  * removing them from the page: removed and put back, every animation would
  * start over, and the room would replay its whole entrance — slow enough that
@@ -247,7 +247,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             className="palais-pill palais-pill--action"
           >
             <span className="palais-pill-long">{paused ? "Play seasons" : "Pause seasons"}</span>
-            <span className="palais-pill-short">{paused ? "Play" : "Pause"}</span>
+            <span className="palais-pill-short" aria-hidden>{paused ? "▶" : "❚❚"}</span>
           </button>
         )}
         <button
@@ -279,11 +279,11 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           type="button"
           onClick={() => setRoom((v) => !v)}
           aria-pressed={room}
-          aria-label={room ? "Hide the room" : "Show the room"}
+          aria-label={room ? "Hide the items" : "Show the items"}
           className="palais-pill"
         >
-          <span className="palais-pill-long">{room ? "Hide the room" : "Show the room"}</span>
-          <span className="palais-pill-short">Room</span>
+          <span className="palais-pill-long">{room ? "Hide the items" : "Show the items"}</span>
+          <span className="palais-pill-short">Items</span>
         </button>
       </div>
 
@@ -305,7 +305,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       </div>
 
       {/* what the catalogue has taken out of the room. Hidden rather than
-          removed, for the same reason as "Hide the room". */}
+          removed, for the same reason as "Hide the items". */}
       {hidden.size > 0 && (
         <style>
           {`${Array.from(hidden)

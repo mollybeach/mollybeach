@@ -1,5 +1,6 @@
 // src/components/Overview.tsx
 import React from 'react';
+import { GardenTag, shelfAt } from './garden';
 import { Helmet } from 'react-helmet-async';
 
 import { 
@@ -45,7 +46,7 @@ const Overview: React.FC = () => {
         <meta property="twitter:description" content="Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems. Building decentralized applications with cutting-edge technology." />
       </Helmet>
       
-      <div className="p-6 bg-[#fffdf6] rounded-lg shadow-md border-2 border-[#c9a44c]/55">
+      <div className="gilt-card p-6 bg-[#fffdf6] rounded-2xl">
       {/* Header with name and avatar */}
       <div className="flex items-center gap-6 mb-6">
         <div className="flex-1">
@@ -109,25 +110,11 @@ const Overview: React.FC = () => {
           Recent hackathon results include Praxos (1st place, Rayls Hackathon Buenos Aires), LiveStakes (finalist, ETHGlobal Cannes), and HedgePod (World Pool prize, ETHGlobal Buenos Aires). Those builds mix modern Solidity, cross-chain tooling, and AI-driven UX on Next.js. She invests in the creative side of the stack too (shader work, GLSL, Three.js, and Unity), so protocol-heavy work still ships with interfaces people want to use. That pairing of rigor and craft is what she carries from hackathon demos into longer product roadmaps.
         </p>
         
+        {/* the same tinted tags as the Skills page, a colour per line */}
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Solidity</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Go</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Rust</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">React</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">TypeScript</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">JavaScript</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Python</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Swift</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Blockchain</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Web3</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">AI/ML</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Three.js</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">GLSL</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Hardhat</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Next.js</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">AWS</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">Azure</span>
-          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">GCP</span>
+          {["Solidity", "Go", "Rust", "React", "TypeScript", "JavaScript", "Python", "Swift", "Blockchain", "Web3", "AI/ML", "Three.js", "GLSL", "Hardhat", "Next.js", "AWS", "Azure", "GCP"].map((tag, i) => (
+            <GardenTag key={tag} shelf={shelfAt(Math.floor(i / 3))}>{tag}</GardenTag>
+          ))}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">

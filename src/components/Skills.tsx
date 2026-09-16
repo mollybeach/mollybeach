@@ -1,5 +1,6 @@
 // path: src/components/Skills.tsx
 import React from 'react';
+import { GardenHeading, GardenTag, shelfAt } from './garden';
 
 const skills = {
   'Programming Languages': [
@@ -66,24 +67,25 @@ const Skills: React.FC = () => {
   return (
     <section className="space-y-6 p-8">
       <h2 className="text-3xl font-bold mb-8 text-center">Skills</h2>
-      {Object.entries(skills).map(([category, items]) => (
-        <div key={category} className="space-y-2">
-          <h3 className="text-xl font-medium text-gray-800 capitalize">
-            {category}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {items.map(skill => (
-              <span
-                key={skill}
-                className="px-3 py-1 bg-[#fffdf6] border border-[#c9a44c]/55 hover:bg-[#f6ecd6] transition-colors 
-                          rounded-full text-sm text-gray-700"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-      ))}
+      {/* two columns of cards on a wide screen, one on a phone; each card keeps
+          its own colour and flower */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+        {Object.entries(skills).map(([category, items], i) => {
+          const shelf = shelfAt(i);
+          return (
+            <div key={category} className="gilt-card space-y-3 rounded-2xl bg-[#fffdf6] p-5">
+              <GardenHeading shelf={shelf} count={items.length}>
+                <span className="capitalize">{category}</span>
+              </GardenHeading>
+              <div className="flex flex-wrap gap-2">
+                {items.map(skill => (
+                  <GardenTag key={skill} shelf={shelf}>{skill}</GardenTag>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 };
