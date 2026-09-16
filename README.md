@@ -6,7 +6,7 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/poke.gif"/>
        <img align="left"    width="15%"    height="100%" src="./assets/visitors.svg"/> 
         <img align="left"   width="10%"    height="100%" src="./assets/count.svg"/> 
-        <img align="left"   width="20%"    height="100%" src="https://profile-counter.glitch.me/mollybeach/count.svg"/>
+        <img align="left"   width="20%"    height="100%" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&label=visitors"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
@@ -40,6 +40,14 @@
         <img align="left"   width="20px"   height="20px"
            src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></img>
         
+<br clear="all" />
+
+<p align="center">
+  <a href="https://mollybeach.app" target="_blank" rel="noopener">
+    <img width="300" height="62" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/>
+  </a>
+</p>
+
 <table><tr><td valign="top" width="50%">
         <h2 align="center"> 💼 Languages and Tools</h2>
 <br />
