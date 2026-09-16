@@ -89,7 +89,7 @@ function ChairMark() {
       {/* the seat, the legs, and the rail between them */}
       <path d="M5.8 13.2h12.4" {...line} />
       <path d="M7.2 13.2v7.2M16.8 13.2v7.2" {...line} />
-      <path d="M7.2 17.9h9.6" {...line} />
+      <path d="M7.2 18.6h9.6" {...line} />
     </svg>
   );
 }
@@ -347,10 +347,19 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           aria-label="Open the world map"
           className="palais-pill palais-pill--map"
         >
-          <svg className="palais-map-icon" viewBox="0 0 24 24" aria-hidden>
-            <path d="M3 6.5 8.5 4l7 2.5L21 4v13.5L15.5 20l-7-2.5L3 20Z" fill="#fff6d6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-            <path d="M8.5 4v13.5M15.5 6.5V20" stroke="currentColor" strokeWidth="1.6" />
-            <path d="M11 11.5l2 2m0-2-2 2" stroke="#ff4f8b" strokeWidth="1.8" strokeLinecap="round" />
+          <svg
+            className="palais-map-icon"
+            viewBox="0 0 24 24"
+            aria-hidden
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.7}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3.4 6.6 9 4.2l6 2.4 5.6-2.4v13.2L15 19.8l-6-2.4-5.6 2.4Z" />
+            <path d="M9 4.2v13.2M15 6.6v13.2" />
+            <path d="M10.9 10.9l2.2 2.2m0-2.2-2.2 2.2" />
           </svg>
           <span className="palais-pill-long">Map</span>
           <span className="palais-pill-short">Map</span>
