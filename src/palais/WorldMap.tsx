@@ -39,7 +39,7 @@ const STOPS: Stop[] = [
     name: "The Palais",
     tag: "home",
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
-    finds: ["A painted ceiling full of cherubs", "Honeysuckle riding her tricycle", "A pool out back for the dogs in summer"],
+    finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
     at: [560, 420],
     patch: [58, 42],
@@ -734,7 +734,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                       preserveAspectRatio="xMidYMid slice"
                       clipPath="url(#wm-frame)"
                     />
-                    <circle r={FRAME + 2} fill="none" stroke="url(#wm-gilt)" strokeWidth={5} />
+                    <circle r={FRAME + 2} fill="none" stroke="var(--wm-jewel-side, #c9a44c)" strokeWidth={5} />
                     <circle r={FRAME + 5} fill="none" stroke="#fffaf0" strokeWidth={1.2} opacity={0.9} />
                   </g>
                   <g transform={`translate(0 ${FRAME + 22})`}>
@@ -757,7 +757,10 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             })}
 
             {/* Honeysuckle, hopping from stop to stop */}
-            <g className="wm-player" style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${stop.at[1] + 10}px)` }}>
+            <g
+              className="wm-player"
+              style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${Math.max(stop.at[1] + 10, 146)}px)` }}
+            >
               <g className="wm-player-hop" key={here}>
                 <image href={propSrc("cat-honeysuckle")} x={-41} y={-104} width={82} height={104} />
               </g>

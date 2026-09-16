@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { nextFloral } from "./florals";
 import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
@@ -36,6 +37,61 @@ import { isPortable, resolvePortable } from "./crossDevice";
  * own layout for the season and device (roomLayouts.ts), so a room starts
  * empty until it's dressed from the catalogue and saved.
  */
+/** the four seasons as small drawings, inked in whatever colour the button is
+    written in, rather than as emoji */
+function SeasonMark({ season }: { season: string }) {
+  const line = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  const art =
+    season === "spring" ? (
+      <>
+        {[0, 72, 144, 216, 288].map((a) => (
+          <ellipse key={a} cx={12} cy={7.4} rx={2.6} ry={4.2} transform={`rotate(${a} 12 12)`} {...line} />
+        ))}
+        <circle cx={12} cy={12} r={1.5} fill="currentColor" />
+      </>
+    ) : season === "summer" ? (
+      <>
+        <circle cx={12} cy={12} r={4.4} {...line} />
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+          <path key={a} d="M12 3.4V5.8" transform={`rotate(${a} 12 12)`} {...line} />
+        ))}
+      </>
+    ) : season === "autumn" ? (
+      <>
+        <path d="M12 20.5V11" {...line} />
+        <path d="M12 11c0-4 2.6-7 6.4-7.6.6 3.8-1 7.6-6.4 7.6Z" {...line} />
+        <path d="M12 14.6c-3.4 0-5.6-2-6-5.2 3.2-.4 5.6 1.6 6 5.2Z" {...line} />
+      </>
+    ) : (
+      <>
+        <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9" {...line} />
+        <path d="M9.4 4.9 12 7.5l2.6-2.6M9.4 19.1 12 16.5l2.6 2.6" {...line} />
+        <path d="M4.6 11.2 5.4 7.8l3.4.5M19.4 12.8l-.8 3.4-3.4-.5" {...line} />
+        <path d="M8.8 15.7l-3.4.5-.8-3.4M15.2 8.3l3.4-.5.8 3.4" {...line} />
+      </>
+    );
+  return (
+    <svg className="palais-season-mark" viewBox="0 0 24 24" aria-hidden>
+      {art}
+    </svg>
+  );
+}
+
+/** the heart on the catalogue button, drawn so it can carry a proper weight */
+function HeartMark() {
+  return (
+    <svg className="palais-heart-mark" viewBox="0 0 24 24" aria-hidden>
+      <path
+        d="M12 20.4S3.4 14.9 3.4 9.3A4.7 4.7 0 0 1 12 6.6a4.7 4.7 0 0 1 8.6 2.7c0 5.6-8.6 11.1-8.6 11.1Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2.6}
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function StickerToggle({ children, seasons = false }: { children: ReactNode; seasons?: boolean }) {
   const [room, setRoom] = useState(true);
   // on a phone the room has its own layouts (phoneLayout.ts)
@@ -210,9 +266,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     <>
       <div className="palais-switches" ref={switches}>
         {!inPalace && (
-          <button type="button" onClick={() => go("palace")} className="palais-pill palais-pill--home" aria-label="Back to the palace">
-            <span className="palais-pill-long">← Back to the palace</span>
-            <span className="palais-pill-short">← Palace</span>
+          <button type="button" onClick={() => go("palace")} className="palais-pill palais-pill--home" aria-label="Back to the Palais">
+            <span className="palais-pill-long">← Palais</span>
+            <span className="palais-pill-short">← Palais</span>
           </button>
         )}
         {seasons && (
@@ -228,7 +284,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             aria-label={`Skip to ${upcoming}`}
             className="palais-pill palais-pill--action"
           >
-            <span className="palais-pill-long">Skip to {upcoming}</span>
+            <span className="palais-pill-long">
+              <SeasonMark season={upcoming} /> Skip
+            </span>
             <span className="palais-pill-short">Season</span>
           </button>
         )}
@@ -246,7 +304,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             title={paused ? "Let the year carry on" : `Stay in ${season}`}
             className="palais-pill palais-pill--action"
           >
-            <span className="palais-pill-long">{paused ? "Play seasons" : "Pause seasons"}</span>
+            <span className="palais-pill-long">{paused ? "▶ Seasons" : "❚❚ Seasons"}</span>
             <span className="palais-pill-short" aria-hidden>{paused ? "▶" : "❚❚"}</span>
           </button>
         )}
@@ -257,8 +315,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           aria-label={inCloset ? "Open the wardrobe catalogue" : "Open the catalogue"}
           className="palais-pill palais-pill--catalogue"
         >
-          <span className="palais-pill-long">{inCloset ? "♡ Wardrobe" : "♡ Catalogue"}</span>
-          <span className="palais-pill-short">{inCloset ? "♡ Wardrobe" : "♡ Catalogue"}</span>
+          <span className="palais-pill-long">
+            <HeartMark /> {inCloset ? "Wardrobe" : "Catalogue"}
+          </span>
+          <span className="palais-pill-short">
+            <HeartMark /> {inCloset ? "Wardrobe" : "Catalogue"}
+          </span>
         </button>
         <button
           type="button"
@@ -277,12 +339,29 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
+          onClick={() => nextFloral()}
+          aria-label="Change the floral patterns"
+          title="Change the floral patterns"
+          className="palais-pill palais-pill--floral"
+        >
+          <span className="palais-pill-long">
+            <span className="palais-floral-mark" aria-hidden>
+              ✿
+            </span>{" "}
+            Pattern
+          </span>
+          <span className="palais-pill-short" aria-hidden>
+            ✿
+          </span>
+        </button>
+        <button
+          type="button"
           onClick={() => setRoom((v) => !v)}
           aria-pressed={room}
           aria-label={room ? "Hide the items" : "Show the items"}
           className="palais-pill"
         >
-          <span className="palais-pill-long">{room ? "Hide the items" : "Show the items"}</span>
+          <span className="palais-pill-long">{room ? "Hide" : "Show"}</span>
           <span className="palais-pill-short">Items</span>
         </button>
       </div>

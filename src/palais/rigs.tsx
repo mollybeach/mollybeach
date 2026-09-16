@@ -83,7 +83,7 @@ const sewing: Rig = {
       <img className="prop-rig-layer palais-rig-fabric" src={layer("honeysuckle-sewing-fabric")} alt="" decoding="async" />
       {/* the needle bar, going up and down */}
       <img className="prop-rig-layer palais-rig-needle" src={layer("honeysuckle-sewing-needle")} alt="" decoding="async" />
-      {/* what the needle slides through, and her paw holding the cloth down */}
+      {/* what the needle slides through, and his paw holding the cloth down */}
       <img className="prop-rig-layer" src={layer("honeysuckle-sewing-front")} alt="" decoding="async" />
     </>
   ),

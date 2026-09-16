@@ -26,7 +26,12 @@ export const FLORALS = [
   "red-toile",
 ] as const;
 
-export type Floral = (typeof FLORALS)[number];
+/** the blue toile isn't in the turn of its own accord: it stands in for the
+    purple whenever the black-and-gold is on the page at the same time, which
+    the two of them don't sit well together */
+export const INSTEAD_OF_PURPLE = "blue-toile";
+
+export type Floral = (typeof FLORALS)[number] | typeof INSTEAD_OF_PURPLE;
 
 export const floralSrc = (key: Floral) => `${process.env.PUBLIC_URL}/palais/florals/${key}.webp`;
 
@@ -53,19 +58,32 @@ export const PALETTES: Record<Floral, Palette> = {
   yellow: { jewel: "#c9a227", ink: "#6b5406", gold: "#e8c774" },
   cream: { jewel: "#c0392b", ink: "#4a4030", gold: "#c9a44c" },
   "red-toile": { jewel: "#8f1420", ink: "#5c0f16", gold: "#c9a44c" },
+  "blue-toile": { jewel: "#3f7fb8", ink: "#243b52", gold: "#e0d6bd" },
 };
 
 export const paletteOf = (key: Floral) => PALETTES[key];
 
 /** a place that wears one, and how far along the list it starts: spacing them
     out means the three are never wearing the same pattern at once */
-const PLACES = { footer: 0, map: 2, catalogue: 3, card: 4, panel: 5, sidebar: 6, admin: 8 } as const;
+const PLACES = { catalogue: 0, map: 2, sidebar: 3, card: 4, panel: 5, footer: 6, admin: 8 } as const;
 export type FloralPlace = keyof typeof PLACES;
 
 /** how long each pattern stays on */
-const EVERY = 22_500;
+const EVERY = 11_250;
 
-const at = (place: FloralPlace, when: number) => FLORALS[(Math.floor(when / EVERY) + PLACES[place]) % FLORALS.length];
+/** how many patterns the turn has been pushed on by hand (the ✿ button) */
+let nudged = 0;
+
+const stepAt = (place: FloralPlace, when: number) =>
+  FLORALS[(Math.floor(when / EVERY) + nudged + PLACES[place]) % FLORALS.length];
+
+/** every pattern on the page at this moment, whichever place is wearing it */
+const onNow = (when: number) => new Set((Object.keys(PLACES) as FloralPlace[]).map((p) => stepAt(p, when)));
+
+const at = (place: FloralPlace, when: number): Floral => {
+  const key = stepAt(place, when);
+  return key === "purple" && onNow(when).has("black-gold") ? INSTEAD_OF_PURPLE : key;
+};
 
 /**
  * The pattern this place is wearing, and the one it's just come off, so it can
@@ -139,6 +157,12 @@ function watch(place: FloralPlace) {
     document.addEventListener("visibilitychange", tick);
   }
   tick();
+}
+
+/** move every pattern on to the next one, now, without waiting for the clock */
+export function nextFloral() {
+  nudged += 1;
+  TURNS.forEach((_, place) => watch(place));
 }
 
 export function useFloral(place: FloralPlace): Wearing {

@@ -3085,3 +3085,29 @@
 }
 /* the frame is filled with the same ink the search box writes in */
 .palais .cat-find.is-away { background: var(--cat-ink, #3a2f1c); }
+/* on a phone the ✿ is the whole label, so it carries the chip on its own */
+.palais .palais-pill--floral .palais-pill-short { font-size: 1.45em; line-height: 0.85; }
+/* the season mark and the map icon are drawn in the button's own ink */
+.palais .palais-season-mark,
+.palais .palais-heart-mark,
+.palais .palais-map-icon {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+  flex: none;
+}
+.palais .palais-season-mark { width: 1.05em; height: 1.05em; }
+.palais .palais-map-icon { color: currentColor; }
+/* the ✿ reads as a little emblem, not a stray character */
+.palais .palais-floral-mark { display: inline-block; font-size: 1.35em; line-height: 0; vertical-align: middle; }
+/* the heart on the catalogue button: bigger and heavier than the glyph was */
+.palais .palais-heart-mark { width: 1.2em; height: 1.2em; margin-right: 0.05em; }
+
+/* the chips keep the height they always had, and only grow sideways; the label
+   sits in a row so a drawn mark is level with the writing beside it */
+.palais .palais-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  line-height: 1.25rem;
+}
