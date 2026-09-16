@@ -131,12 +131,14 @@ export function note({
   const fit = wide < 21 ? ` textLength="${room}" lengthAdjust="spacingAndGlyphs"` : "";
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${label ?? safe}">
   <defs>
-    <clipPath id="sheet"><rect width="${width}" height="${height}"/></clipPath>
+    <clipPath id="sheet"><rect width="${width}" height="${height}" rx="${height / 2}"/></clipPath>
     <filter id="noteInk" x="-20%" y="-60%" width="140%" height="260%">
       <feDropShadow dx="0" dy="1.5" stdDeviation="0" flood-color="#241a12" flood-opacity=".4"/>
     </filter>
   </defs>
-  ${pattern ? `<g clip-path="url(#sheet)"><image x="0" y="0" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice" href="${pattern}"/></g>` : `<rect width="${width}" height="${height}" fill="${CREAM}"/>`}
+  ${pattern
+    ? `<g clip-path="url(#sheet)"><image x="0" y="0" width="${width}" height="${height}" preserveAspectRatio="xMidYMid slice" href="${pattern}"/></g>`
+    : `<rect width="${width}" height="${height}" rx="${height / 2}" fill="${CREAM}"/>`}
   <rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}" fill="${ink}" fill-opacity=".97"/>
   <rect x="${px + 5}" y="${py + 5}" width="${pw - 10}" height="${ph - 10}" rx="${r - 5}" fill="none" stroke="${CREAM}" stroke-width="3" stroke-dasharray="7 5" stroke-linecap="round"/>
   <text x="${width / 2}" y="${py + ph / 2 + size * 0.36}" text-anchor="middle" font-family="${FONT}" font-size="${size.toFixed(1)}" font-weight="700" fill="${CREAM}" filter="url(#noteInk)"${fit}>${safe}</text>
