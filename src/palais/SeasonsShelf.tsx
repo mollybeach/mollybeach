@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { SeasonLayout } from "./arrangement";
 import type { Device } from "./layoutsDb";
-import { PLACE_NAMES, type Place } from "./place";
+import { type Place } from "./place";
 import { propSpec, propSrc, type PropId } from "./props";
 import { ALL_STICKERS, defaultLook, hiddenFor, type RoomLook } from "./roomLayouts";
 import { SEASON_NAMES, type Season } from "./seasons";
@@ -128,10 +128,6 @@ export function SeasonsShelf({
 
   return (
     <div className="season-page">
-      <p className="rack-intro">
-        {PLACE_NAMES[place]} has a layout for each season, on a computer and on a phone. It's {SEASON_EMOJI[season]}{" "}
-        {season} now, on a {device === "phone" ? "phone" : "computer"}. Tap + to add a sticker.
-      </p>
       {DEVICES.map((d) =>
         SEASON_NAMES.map((s) => {
           const key = `${d.key}-${s}`;

@@ -2838,9 +2838,18 @@
 /* and a little room under the whole head, before the page's own first line */
 .palais .cat-scroll { padding-top: 0.35rem; }
 .palais .cat-looks { padding-top: 1.1rem; }
-/* kept in place but out of sight, so the head is the same height on every page */
 .palais .cat-find.is-away,
-.palais .cat-tabs.is-away { visibility: hidden; pointer-events: none; }
+.palais .cat-tabs.is-away { pointer-events: none; }
+.palais .cat-find.is-away {
+  background: none;
+  border: 3px dashed rgba(255, 253, 246, 0.95);
+  padding-block: calc(0.14rem - 1px);
+  box-shadow: none;
+}
+.palais .cat-find.is-away > * { visibility: hidden; }
+.palais .cat-tabs.is-away { visibility: hidden; }
+.palais .cat-tabs[hidden],
+.palais .cat-seasons[hidden] { display: none; }
 
 /* the season buttons behave like the shelf tabs on the Stickers page: solid
    cream with the sidebar's stone round them, the head's stone while you point
@@ -2906,13 +2915,31 @@
 
 /* the visitor book: the bars, the tiles and the marks take the same stones as
    everything else, instead of the pink and teal they were drawn in */
+/* the bars: solid, rounded, and rimmed in the other stone, so the two charts
+   read as a pair without either going flat */
+.palais .vis-bars,
+.palais .adm-hours {
+  padding: 0.35rem 0.5rem 0;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 8%, #fffdf6);
+  box-shadow: inset 0 -1.5px 0 color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 45%, #fffdf6);
+}
 .palais .vis-bar {
-  background: linear-gradient(180deg, var(--cat-jewel, #9c7632), color-mix(in srgb, var(--cat-jewel, #9c7632) 45%, #fffdf6));
-  border-radius: 4px 4px 0 0;
+  min-width: 6px;
+  border-radius: 8px 8px 3px 3px;
+  background: var(--cat-jewel, #9c7632);
+  border: 1.5px solid var(--cat-jewel-side, #c9a44c);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
+  transition: filter 160ms ease;
 }
+.palais .vis-bar:hover { filter: brightness(1.15); }
 .palais .adm-hours i {
-  background: linear-gradient(180deg, var(--cat-jewel-side, #c9a44c), color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 40%, #fffdf6));
+  border-radius: 8px 8px 3px 3px;
+  background: var(--cat-jewel-side, #c9a44c);
+  border: 1.5px solid var(--cat-jewel, #9c7632);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
 }
+.palais .adm-hours span:hover i { filter: brightness(1.15); }
 .palais .adm-hours small { color: var(--cat-ink-side, #6b5a33); }
 .palais .vis-tile { background: var(--cat-jewel, #9c7632); color: #fffaf0; }
 .palais .vis-tile--soft { background: #fffdf6; color: var(--cat-ink, #3a2f1c); }
@@ -2930,3 +2957,64 @@
 .palais .vis-name.is-me { color: var(--cat-jewel, #9c7632) !important; }
 .palais .vis-scroll-thumb,
 .palais .cat-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 70%, #fffdf6); }
+
+/* a saved look: the peach rim and pink halo were fixed colours; the one that's
+   the default takes the head's stone, the one you're wearing the sidebar's */
+.palais .cat-look.is-default {
+  border-color: var(--cat-jewel, #9c7632);
+  background: linear-gradient(180deg, #fffdf6, #fffaf0);
+}
+.palais .cat-look.is-wearing {
+  box-shadow: 0 0 0 3px var(--cat-jewel-side, #c9a44c), 0 3px 0 rgba(122, 90, 30, 0.12);
+}
+.palais .cat-badge {
+  border-color: var(--cat-jewel-side, #c9a44c);
+  color: var(--cat-ink-side, #3a2f1c);
+  background: color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 16%, #fffdf6);
+}
+.palais .cat-badge--wearing {
+  background: color-mix(in srgb, var(--cat-jewel, #9c7632) 18%, #fffdf6);
+  border-color: var(--cat-jewel, #9c7632);
+  color: var(--cat-ink, #3a2f1c);
+}
+.palais .cat-look-name { color: var(--cat-ink, #3a2f1c); }
+.palais .cat-look-meta { color: color-mix(in srgb, var(--cat-ink-side, #3a2f1c) 60%, #fffdf6); }
+/* the saved-look cards carry a heavier rim, like the cards on the portfolio */
+.palais .cat-look { border-width: 3px; }
+.palais .cat-look.is-default { border-width: 4px; }
+/* the short line the frame carries on the Seasons page */
+.palais .cat-find.is-away { justify-content: center; }
+.palais .cat-find.is-away { position: relative; }
+.palais .cat-find.is-away > .cat-find-note {
+  visibility: visible;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font: 600 0.82rem/1.3 var(--cat-round);
+  color: #fffaf0;
+  text-shadow: 0 1px 3px rgba(20, 14, 6, 0.85);
+  white-space: nowrap;
+}
+
+/* the time buttons sit in the middle of the head, not off to one side */
+.palais .cat-tabs--when { justify-content: center; }
+
+/* Honeysuckle on the map, outlined in the sidebar's stone. The outline is a
+   ring of hard shadows, so it follows her shape rather than boxing her in. */
+.palais .wm-player image {
+  filter:
+    drop-shadow(2px 0 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(-2px 0 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(0 2px 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(0 -2px 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(1.4px 1.4px 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(-1.4px 1.4px 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(1.4px -1.4px 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(-1.4px -1.4px 0 var(--wm-jewel-side, #c9a44c))
+    drop-shadow(0 5px 6px rgba(20, 40, 70, 0.35));
+}
+/* a little air between the search box (or the frame standing in for it) and
+   the row of buttons under it */
+.palais .cat-tabs { margin-top: 0.5rem; }

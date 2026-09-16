@@ -759,7 +759,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* Honeysuckle, hopping from stop to stop */}
             <g className="wm-player" style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${stop.at[1] + 10}px)` }}>
               <g className="wm-player-hop" key={here}>
-                <image href={propSrc("cat-honeysuckle")} x={-29} y={-74} width={58} height={74} />
+                <image href={propSrc("cat-honeysuckle")} x={-41} y={-104} width={82} height={104} />
               </g>
             </g>
           </svg>

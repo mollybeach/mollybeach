@@ -3,8 +3,8 @@ import { propSrc, propSpec, type PropId } from "./props";
 import { stock } from "./shelves";
 import { capture, type SeasonLayout } from "./arrangement";
 import { LayoutsShelf, SignIn } from "./LayoutsShelf";
-import { VisitorsShelf } from "./VisitorsShelf";
-import type { Season } from "./seasons";
+import { VISIT_RANGES, VisitorsShelf } from "./VisitorsShelf";
+import { SEASON_NAMES, type Season } from "./seasons";
 import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { RacksShelf } from "./RacksShelf";
@@ -117,6 +117,10 @@ export function Catalogue({
   const [clothes, setClothes] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
   const [find, setFind] = useState("");
+  // the visitor book's stretch of time, so its buttons can live in the head
+  const [visitDays, setVisitDays] = useState(30);
+  // and which season's looks the Saved looks page is showing
+  const [lookSeason, setLookSeason] = useState<Season>(season);
   const floral = useFloral("catalogue");
   // the panel itself is papered in another of the patterns, under a cream veil
   const paper = useFloral("panel");
@@ -409,6 +413,7 @@ export function Catalogue({
             ))}
           </div>
           <div className={`cat-find${clothesPage || page === "stickers" ? "" : " is-away"}`} aria-hidden={!(clothesPage || page === "stickers")}>
+            {page === "seasons" && <span className="cat-find-note">{PLACE_NAMES[place]} has a layout for each season</span>}
               <span aria-hidden>🔍</span>
               <input
                 type="search"
@@ -429,10 +434,41 @@ export function Catalogue({
                 </>
               )}
           </div>
+          {page === "visitors" && (
+            <nav className="cat-tabs cat-tabs--when" aria-label="Time range">
+              {VISIT_RANGES.map((r) => (
+                <button
+                  key={r.days}
+                  type="button"
+                  className={`cat-tab${visitDays === r.days ? " is-on" : ""}`}
+                  aria-pressed={visitDays === r.days}
+                  onClick={() => setVisitDays(r.days)}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </nav>
+          )}
+          {page === "looks" && (
+            <nav className="cat-tabs cat-tabs--when" aria-label="Season">
+              {SEASON_NAMES.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  className={`cat-tab${lookSeason === s ? " is-on" : ""}`}
+                  aria-pressed={lookSeason === s}
+                  onClick={() => setLookSeason(s)}
+                >
+                  <span aria-hidden>{SEASON_EMOJI[s]}</span> {titleCase(s)}
+                </button>
+              ))}
+            </nav>
+          )}
           <nav
             className={`cat-tabs${(clothesPage || page === "stickers") && shelves.length ? "" : " is-away"}`}
             aria-label="Shelves"
             aria-hidden={!((clothesPage || page === "stickers") && shelves.length)}
+            hidden={page === "visitors" || page === "looks"}
           >
               {shelves.map(({ shelf }) => (
                 <button
@@ -500,7 +536,7 @@ export function Catalogue({
               }}
             />
           ) : page === "visitors" ? (
-            <VisitorsShelf />
+            <VisitorsShelf forDays={visitDays} />
           ) : page === "looks" ? (
             <LayoutsShelf
               collection={collection}
@@ -511,6 +547,8 @@ export function Catalogue({
               onWear={onWear}
               hidden={hidden}
               stageOf={stageOf}
+              viewing={lookSeason}
+              onViewing={setLookSeason}
             />
           ) : (
             !shelves.length ? (

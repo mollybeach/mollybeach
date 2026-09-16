@@ -31,6 +31,8 @@ export function LayoutsShelf({
   onWear,
   hidden,
   stageOf,
+  viewing: viewingFromHead,
+  onViewing,
 }: {
   collection: Collection;
   /** the room, and the device, whose looks these are */
@@ -43,9 +45,14 @@ export function LayoutsShelf({
   onWear: (layout: SeasonLayout) => void;
   hidden: Set<string>;
   stageOf: () => HTMLElement | null;
+  /** which season's looks to show, when the buttons live in the head */
+  viewing?: Season;
+  onViewing?: (s: Season) => void;
 }) {
   const { configured, saved, editor, error, setError, refresh } = collection;
-  const [viewing, setViewing] = useState<Season>(season);
+  const [own, setOwn] = useState<Season>(season);
+  const viewing = viewingFromHead ?? own;
+  const setViewing = onViewing ?? setOwn;
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
   const canSave = Boolean(editor?.canSave);
@@ -89,7 +96,7 @@ export function LayoutsShelf({
 
   return (
     <div className="cat-looks">
-      <nav className="cat-seasons" aria-label="Season">
+      <nav className="cat-seasons" aria-label="Season" hidden={!!onViewing}>
         {SEASON_NAMES.map((s) => (
           <button
             key={s}

@@ -9,12 +9,14 @@ import { messageOf } from "./useCollection";
  * see it; the database refuses everyone else.
  */
 
-const RANGES = [
+export const VISIT_RANGES = [
   { days: 1, label: "Today" },
   { days: 7, label: "7 days" },
   { days: 30, label: "30 days" },
   { days: 3650, label: "All time" },
 ];
+
+const RANGES = VISIT_RANGES;
 
 const flag = (code: string | null) =>
   code && /^[A-Z]{2}$/i.test(code)
