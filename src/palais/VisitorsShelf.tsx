@@ -100,6 +100,9 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
 
   // the visit log: every visit, a page at a time, as far back as you scroll
   const [only, setOnly] = useState<string | null>(null);
+  /* Molly is in the feed every day, which buries everybody else, so her own
+     visits are kept out of it. The button by the heading brings them back. */
+  const [hideMe, setHideMe] = useState(true);
   const [log, setLog] = useState<VisitLogEntry[]>([]);
   const [logDone, setLogDone] = useState(false);
   const [logError, setLogError] = useState("");
@@ -170,6 +173,8 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
     };
   }, [days]);
 
+  /* everybody else's visits, unless the button says otherwise */
+  const feed = hideMe && !only ? log.filter((v) => !v.is_me) : log;
   const max = Math.max(1, ...(stats?.by_day.map((d) => d.visits) ?? [1]));
   const period = RANGES.find((r) => r.days === days)?.label ?? "";
 
@@ -575,6 +580,13 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
 
           <section className="vis-card">
             <h3>✦ {only ? `Visits by ${who(people?.find((p) => p.visitor === only)?.name ?? null, only)}` : "Every visit"}</h3>
+            {!only && (
+              <p className="vis-person-actions">
+                <button type="button" className="cat-mini" onClick={() => setHideMe((v) => !v)} aria-pressed={!hideMe}>
+                  {hideMe ? "Show my own visits" : "Hide my own visits"}
+                </button>
+              </p>
+            )}
             {logError && (
               <p className="cat-error" role="alert">
                 {needsMigration(logError) ? "The visit log isn't set up yet: run supabase/migrations/20260915120000_palais_visitor_id.sql." : logError}
@@ -596,7 +608,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                     <time dateTime={v.at}>{ago(v.at)}</time>
                   </li>
                 ))}
-              {log.map((v) => (
+              {feed.map((v) => (
                 <li key={v.id}>
                   <span>
                     {flag(v.code)} {where(v)}
@@ -643,12 +655,12 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                   <span>Loading more visits…</span>
                 </li>
               )}
-              {logDone && log.length > 0 && (
+              {logDone && feed.length > 0 && (
                 <li className="vis-more">
-                  <span>That's every visit.</span>
+                  <span>{hideMe && !only ? "That's every visit but mine." : "That's every visit."}</span>
                 </li>
               )}
-              {logDone && !log.length && !logError && (
+              {logDone && !feed.length && !logError && (
                 <li className="vis-more">
                   <span>No visits yet.</span>
                 </li>
