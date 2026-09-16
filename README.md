@@ -1,11 +1,11 @@
 <p align="center">
   <a href="https://mollybeach.app" target="_blank" rel="noopener">
-    <img width="300" height="62" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="./assets/visitSite.svg"/>
+    <img width="360" height="96" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/>
   </a>
 </p>
 
 <p align="center">
-  <img alt="Visitors" src="https://komarev.com/ghpvc/?username=mollybeach&style=for-the-badge&color=1a8f8a&label=VISITORS"/>
+  <img width="362" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/>
 </p>
 
 <p align="center">
