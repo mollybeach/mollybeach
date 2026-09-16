@@ -120,6 +120,8 @@ export function Catalogue({
   const floral = useFloral("catalogue");
   // the panel itself is papered in another of the patterns, under a cream veil
   const paper = useFloral("panel");
+  // the tabs across the top wear whatever the sidebar is wearing
+  const chips = useFloral("sidebar");
   const palette = paletteOf(floral.now);
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
   const [page, setPage] = useState<Page>(wardrobe ? "clothes" : "stickers");
@@ -343,7 +345,11 @@ export function Catalogue({
   return (
     <div
       className="cat-backdrop"
-      style={{ ["--cat-jewel" as string]: palette.jewel, ["--cat-ink" as string]: palette.ink }}
+      style={{
+        ["--cat-jewel" as string]: palette.jewel,
+        ["--cat-ink" as string]: palette.ink,
+        ["--cat-chip" as string]: `url("${floralSrc(chips.now)}")`,
+      }}
       onPointerDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div

@@ -366,6 +366,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const paper = useFloral("map");
   // the card beside it wears another one, under a lighter veil
   const cardPaper = useFloral("card");
+  // the ribbon over the map wears whatever the sidebar is wearing
+  const chips = useFloral("sidebar");
 
   /** the place nearest to a point on the screen */
   const nearest = (clientX: number, clientY: number) => {
@@ -508,7 +510,11 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   };
 
   return (
-    <div className="wm-backdrop" onPointerDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div
+      className="wm-backdrop"
+      style={{ ["--wm-chip" as string]: `url("${floralSrc(chips.now)}")` }}
+      onPointerDown={(e) => e.target === e.currentTarget && onClose()}
+    >
       <div
         className="wm-panel"
         role="dialog"

@@ -2610,3 +2610,100 @@
 .palais .wm-stop-name { fill: #3a2f1c; }
 .palais .wm-peek { background: linear-gradient(135deg, #fff6d6, #d9b25a 45%, #f4dc9a 60%, #9c7632); }
 .palais .wm-close { border-color: #9c7632; background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad); color: #3a2b10; }
+
+/* ---- Roboto Mono, everywhere ---------------------------------------------
+   The whole site is set in it (index.html loads it). The catalogue and the map
+   used to have a serif for their headings and a sans for the rest; both now
+   take the same letters, and tell the difference by weight and size instead. */
+.palais,
+.palais .cat-backdrop,
+.palais .wm-backdrop {
+  --cat-round: "Roboto Mono", ui-monospace, SFMono-Regular, monospace;
+  --cat-display: "Roboto Mono", ui-monospace, SFMono-Regular, monospace;
+  --wm-serif: "Roboto Mono", ui-monospace, SFMono-Regular, monospace;
+}
+.palais .palais-pill,
+.palais .palais-pill--catalogue,
+.palais .palais-pill--map,
+.palais .cat-btn,
+.palais .wm-btn,
+.palais .cat-find input,
+.palais .cat-page,
+.palais .cat-tab,
+.palais .cat-season { font-family: "Roboto Mono", ui-monospace, SFMono-Regular, monospace; }
+/* mono runs wide, so the big titles come down a little and lose the flourish */
+.palais .cat-panel h2 { font-size: 1.5rem; letter-spacing: -0.01em; }
+.palais .wm-card h3 { font-size: 1.45rem; letter-spacing: -0.02em; }
+.palais .wm-title h2 { letter-spacing: 0.02em; }
+
+/* the tabs across the catalogue's head wear the sidebar's floral, with just
+   enough shade over it for the white lettering to read on the pale patterns */
+.palais .cat-page {
+  background-image: linear-gradient(rgba(40, 30, 14, 0.42), rgba(40, 30, 14, 0.52)), var(--cat-chip);
+  background-size: auto 240%, 190px auto;
+  background-position: center, center;
+  background-color: rgba(58, 44, 22, 0.5);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+@media (hover: hover) {
+  .palais .cat-page:hover {
+    background-image: linear-gradient(rgba(40, 30, 14, 0.34), rgba(40, 30, 14, 0.44)), var(--cat-chip);
+    border-color: #f0d79a;
+  }
+}
+.palais .cat-page.is-on {
+  background-image: var(--cat-gold);
+  background-size: auto;
+}
+
+/* the ribbon over the map wears the sidebar's floral, like the catalogue's tabs */
+.palais .wm-title h2 {
+  background-image: linear-gradient(rgba(40, 30, 14, 0.42), rgba(40, 30, 14, 0.52)), var(--wm-chip);
+  background-size: auto 260%, 230px auto;
+  background-position: center, center;
+  background-color: rgba(58, 44, 22, 0.5);
+  color: #fffaf0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.palais .wm-title h2 span { color: #ffe9b8; }
+
+/* the buttons along the top of the room wear the sidebar's floral too, with a
+   shade over it so the lettering reads on the pale patterns. The two that open
+   something stay gold, the way the catalogue's own tabs do. */
+.palais .palais-pill {
+  background-image: linear-gradient(rgba(40, 30, 14, 0.44), rgba(40, 30, 14, 0.54)), var(--palais-chip);
+  background-size: auto 240%, 200px auto;
+  background-position: center, center;
+  background-color: rgba(58, 44, 22, 0.5);
+  border-color: rgba(255, 246, 222, 0.85);
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+@media (hover: hover) {
+  /* only a touch lighter, and a gold rim: lifting the shade any further looks
+     like the pattern itself has changed */
+  .palais .palais-pill:hover {
+    background-image: linear-gradient(rgba(40, 30, 14, 0.36), rgba(40, 30, 14, 0.46)), var(--palais-chip);
+    color: #fffaf0;
+    border-color: #f0d79a;
+    box-shadow: 0 2px 0 rgba(122, 90, 30, 0.28), 0 0 0 1px rgba(201, 164, 76, 0.5);
+  }
+}
+.palais .palais-pill[aria-pressed="true"] {
+  background-image: var(--cat-gold, linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad));
+  background-size: auto;
+  color: #3a2b10;
+  border-color: #9c7632;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
+}
+.palais .palais-pill--catalogue,
+.palais .palais-pill--map {
+  background-image: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
+  background-size: auto;
+  color: #3a2b10;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
+  border-color: #9c7632;
+}

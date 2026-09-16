@@ -45,8 +45,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   
   return (
     <div 
-      className={`block border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out
-        ${isExpanded ? 'col-span-full w-[85%] mx-auto bg-white relative z-10' : 'relative z-0'}`}
+      className={`block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out bg-[#fffdf6] border-2 border-[#c9a44c]/55
+        ${isExpanded ? 'col-span-full w-[85%] mx-auto relative z-10' : 'relative z-0'}`}
       style={{ order: isExpanded ? -1 : 0 }}
     >
       <div className="flex flex-col">

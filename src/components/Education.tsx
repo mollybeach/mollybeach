@@ -45,7 +45,7 @@ const Education: React.FC = () => {
     <section className="space-y-6">
       <h2 className="text-3xl font-bold mb-8 text-center">Education</h2>
       {education.map((edu, index) => (
-        <article key={index} className="bg-white rounded-lg shadow p-6">
+        <article key={index} className="bg-[#fffdf6] rounded-lg shadow-md border-2 border-[#c9a44c]/55 p-6">
           <div className="flex items-center gap-4 mb-4">
             <img 
               src={edu.logo}

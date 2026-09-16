@@ -1,4 +1,5 @@
 import { Room } from "./Room";
+import { floralSrc, useFloral } from "./florals";
 import { Prop } from "./Prop";
 import { propSpec } from "./props";
 import { Pollen } from "./Pollen";
@@ -101,6 +102,8 @@ const quilt = (frac: number) => surface(BED_M, BED_D, 1.25, frac);
 
 export default function PalaisHome() {
   const portrait = usePortrait();
+  // the buttons along the top wear whatever the sidebar is wearing
+  const chips = useFloral("sidebar");
   // which room you're in: the terrace or one of the rooms off it (place.ts)
   const places = usePlaceState();
   // count this visit, once per session (visits.ts)
@@ -115,7 +118,7 @@ export default function PalaisHome() {
   return (
     <PlaceNow.Provider value={places}>
     <>
-      <div className="palais">
+      <div className="palais" style={{ ["--palais-chip" as string]: `url("${floralSrc(chips.now)}")` }}>
         
 
         {/* ==============================================================

@@ -43,7 +43,7 @@ export interface Palette {
 }
 
 export const PALETTES: Record<Floral, Palette> = {
-  teal: { jewel: "#2f8f8d", ink: "#05403c", gold: "#e8c774" },
+  teal: { jewel: "#1a8f8a", ink: "#0a5a60", gold: "#e8c774" },
   pink: { jewel: "#c43b6e", ink: "#7a1748", gold: "#f0d79a" },
   "black-gold": { jewel: "#d8b55c", ink: "#12100c", gold: "#f0d894" },
   green: { jewel: "#2f7a3d", ink: "#1d3d1c", gold: "#e8c774" },

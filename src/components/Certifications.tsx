@@ -132,7 +132,7 @@ export default function Certifications() {
       <h2 className="text-3xl font-bold mb-8 text-center">Certifications</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {certifications.map((cert, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md p-4 flex flex-col">
+          <div key={index} className="bg-[#fffdf6] rounded-lg shadow-md border-2 border-[#c9a44c]/55 p-4 flex flex-col">
             <div className="mb-3">
               <CertBadge kind={cert.badge} issuer={cert.issuer} title={cert.title} />
             </div>

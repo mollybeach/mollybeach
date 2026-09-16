@@ -11,6 +11,7 @@ import Certifications from './Certifications';
 import Resume from './Resume';
 import Awards from './Awards';
 import PalaisHome from '../palais/PalaisHome';
+import { floralSrc, useFloral } from '../palais/florals';
 import Admin from './Admin';
 
 interface MainComponentProps {
@@ -22,6 +23,9 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
   // The home page is the Palais room, which fills the whole pane edge to edge,
   // so it is rendered outside the padded wrapper the other pages sit in.
   const isHome = useLocation().pathname === '/';
+  // every other page is papered in whichever floral the Palais footer is
+  // wearing, under a cream veil so the writing still reads (florals.ts)
+  const floral = useFloral('footer');
 
   return (
     <main className="flex-1 overflow-auto bg-white relative">
@@ -38,7 +42,16 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
         <PalaisHome />
       ) : (
       /* Main content with padding */
-      <div className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
+      <div
+        className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8 min-h-full"
+        style={{
+          backgroundColor: '#fdf8ee',
+          backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.86), rgba(250, 243, 229, 0.9)), url("${floralSrc(floral.now)}")`,
+          backgroundSize: 'auto, 460px auto',
+          backgroundRepeat: 'repeat',
+          backgroundAttachment: 'fixed, fixed',
+        }}
+      >
       <Routes>
         <Route path="/overview" element={<Overview />} />
         <Route path="/portfolio" element={<Overview />} />

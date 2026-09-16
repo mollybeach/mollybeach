@@ -369,7 +369,7 @@ const Experience: React.FC = () => {
     <div className="space-y-8">
       <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
       {experiences.map((exp, companyIndex) => (
-        <div key={companyIndex} className="border rounded-lg p-4">
+        <div key={companyIndex} className="rounded-lg p-4 bg-[#fffdf6] border-2 border-[#c9a44c]/55 shadow-md">
           <div className="flex items-center gap-4 mb-4">
             <img 
               src={exp.logo} 
@@ -415,7 +415,7 @@ const Experience: React.FC = () => {
                         <div className="mt-4">
                           <h4 className="font-semibold mb-2">Projects</h4>
                           {role.projects.map((project, idx) => (
-                            <div key={idx} className="mb-4 bg-gray-50 p-4 rounded">
+                            <div key={idx} className="mb-4 bg-[#f8f1e2] p-4 rounded border border-[#c9a44c]/35">
                               <h5 className="font-medium mb-2">{project.title}</h5>
                               <ul className="list-disc list-inside mb-2">
                                 {project.description.map((desc, descIdx) => (
@@ -424,7 +424,7 @@ const Experience: React.FC = () => {
                               </ul>
                               <div className="flex flex-wrap gap-2">
                                 {project.technologies.map((tech, techIdx) => (
-                                  <span key={techIdx} className="px-2 py-1 bg-gray-200 rounded-full text-xs">
+                                  <span key={techIdx} className="px-2 py-1 bg-[#f6ecd6] border border-[#c9a44c]/45 rounded-full text-xs">
                                     {tech}
                                   </span>
                                 ))}
@@ -436,7 +436,7 @@ const Experience: React.FC = () => {
                       
                       <div className="mt-4 flex flex-wrap gap-2">
                         {role.skills.map((skill, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-gray-100 rounded-full text-sm">
+                          <span key={idx} className="px-2 py-1 bg-[#f6ecd6] border border-[#c9a44c]/45 rounded-full text-sm">
                             {skill}
                           </span>
                         ))}

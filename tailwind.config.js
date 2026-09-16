@@ -10,7 +10,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['ui-monospace', 'SFMono-Regular', 'monospace'],
+        sans: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        mono: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
     },
     screens: {

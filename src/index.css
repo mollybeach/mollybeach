@@ -10,6 +10,7 @@
 
 body {
   @apply font-sans text-[#374151];
+  font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
 .alert-box {

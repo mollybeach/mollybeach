@@ -75,7 +75,7 @@ const Skills: React.FC = () => {
             {items.map(skill => (
               <span
                 key={skill}
-                className="px-3 py-1 bg-gray-200 hover:bg-gray-300 transition-colors 
+                className="px-3 py-1 bg-[#fffdf6] border border-[#c9a44c]/55 hover:bg-[#f6ecd6] transition-colors 
                           rounded-full text-sm text-gray-700"
               >
                 {skill}

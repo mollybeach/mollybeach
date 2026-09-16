@@ -45,7 +45,7 @@ const Overview: React.FC = () => {
         <meta property="twitter:description" content="Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems. Building decentralized applications with cutting-edge technology." />
       </Helmet>
       
-      <div className="p-6 bg-white rounded-lg shadow">
+      <div className="p-6 bg-[#fffdf6] rounded-lg shadow-md border-2 border-[#c9a44c]/55">
       {/* Header with name and avatar */}
       <div className="flex items-center gap-6 mb-6">
         <div className="flex-1">

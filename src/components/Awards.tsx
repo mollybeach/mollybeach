@@ -95,7 +95,7 @@ const Awards: React.FC = () => {
       <div className="space-y-8">
         <h2 className="text-3xl font-bold mb-8 text-center">Awards</h2>
         {awards.map((award, index) => (
-          <div key={index} className="border rounded-lg p-4 bg-gradient-to-br from-[#D63384]/5 to-[#B02968]/5 border-[#D63384]/20">
+          <div key={index} className="rounded-lg p-4 bg-[#fffdf6] border-2 border-[#c9a44c]/55 shadow-md">
             <div className="flex items-center gap-4 mb-4">
               <img 
                 src={award.logo} 

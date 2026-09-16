@@ -36,19 +36,19 @@ const Resume: React.FC = () => {
         </div>
 
         {/* Download Card */}
-        <div className="bg-gradient-to-br from-[#D63384] to-[#B02968] rounded-xl shadow-xl p-8 mb-8">
+        <div className="bg-gradient-to-br from-[#fff6d6] via-[#e0bd6a] to-[#b08f43] rounded-xl shadow-xl border-2 border-[#9c7632] p-8 mb-8 text-[#3a2b10]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4 text-white">
+            <div className="flex items-center gap-4 text-[#3a2b10]">
               <DocumentTextIcon className="h-16 w-16" />
               <div>
                 <h3 className="text-2xl font-bold mb-2">Molly Beach Resume</h3>
-                <p className="text-white/90">Full-Stack Software Engineer</p>
+                <p className="text-[#6b5320]">Full-Stack Software Engineer</p>
               </div>
             </div>
             <a
               href={resumePath}
               download="Beach_Molly_Resume.pdf"
-              className="flex items-center gap-2 bg-white text-[#D63384] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform"
+              className="flex items-center gap-2 bg-[#fffdf6] text-[#3a2b10] border-2 border-[#9c7632] px-6 py-3 rounded-lg font-semibold hover:bg-[#f6ecd6] transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform"
             >
               <ArrowDownTrayIcon className="h-5 w-5" />
               Download PDF
@@ -57,7 +57,7 @@ const Resume: React.FC = () => {
         </div>
 
         {/* PDF Viewer */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-[#fffdf6] rounded-xl shadow-lg border-2 border-[#c9a44c]/55 overflow-hidden">
           <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900">Preview</h3>
           </div>
