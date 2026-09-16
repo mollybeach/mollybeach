@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <i>mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room.</i>
+  <img width="860" height="96" alt="mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
 </p>
 
         <img align="left"   width="10%"    height="75px" src="./assets/cowpic.png"/>

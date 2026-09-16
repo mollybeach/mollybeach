@@ -14,6 +14,7 @@
  *
  *   …/github-visits                  the counter
  *   …/github-visits?art=link         the button through to the site
+ *   …/github-visits?art=note         a line of writing in the dotted ribbon
  *   …/github-visits?badge=palais     a counter of its own, for another repo
  *   …/github-visits?style=plain      just the number
  *   …/github-visits?floral=maroon    hold it to one pattern
@@ -21,7 +22,7 @@
  */
 
 import { FLORALS, floralFor, floralNamed, type Floral } from "./florals.ts";
-import { JEWELS, plaque } from "./plaque.ts";
+import { JEWELS, note, plaque } from "./plaque.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -77,6 +78,14 @@ Deno.serve(async (req) => {
   const peek = url.searchParams.get("peek") === "1";
   const style = url.searchParams.get("style");
   const asked = floralNamed(url.searchParams.get("floral"));
+
+  // a line of writing in the catalogue's dotted ribbon; counts nothing either
+  if (url.searchParams.get("art") === "note") {
+    const f = asked ?? floralFor(Math.floor(Math.random() * FLORALS.length));
+    const said = url.searchParams.get("text")?.slice(0, 160) ??
+      "mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room.";
+    return picture(note({ text: said, ink: f.ink, pattern: f.uri }));
+  }
 
   // the button counts nothing; it only goes to the site
   if (url.searchParams.get("art") === "link") {
