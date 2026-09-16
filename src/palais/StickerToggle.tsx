@@ -392,7 +392,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <ChairMark /> {room ? "Hide" : "Show"}
           </span>
           <span className="palais-pill-short">
-            <ChairMark /> {room ? "Hide" : "Show"}
+            <ChairMark />
           </span>
         </button>
       </div>
