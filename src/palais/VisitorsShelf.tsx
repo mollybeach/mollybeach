@@ -75,8 +75,11 @@ const where = (v: { city: string | null; region: string | null; country: string 
   return parts.filter((x, i) => parts.indexOf(x) === i).join(", ") || "Somewhere";
 };
 
-export function VisitorsShelf() {
-  const [days, setDays] = useState(30);
+/** `only` fixes the stretch of time from outside (the /admin page has its own
+    picker), which also takes this one's away */
+export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
+  const [own, setDays] = useState(30);
+  const days = forDays ?? own;
   const [stats, setStats] = useState<VisitStats | null>(null);
   const [error, setError] = useState("");
 
@@ -170,6 +173,7 @@ export function VisitorsShelf() {
 
   return (
     <div className="cat-looks vis">
+      {!forDays && (
       <nav className="cat-seasons" aria-label="Time range">
         {RANGES.map((r) => (
           <button
@@ -183,6 +187,7 @@ export function VisitorsShelf() {
           </button>
         ))}
       </nav>
+      )}
 
       {error && (
         <p className="cat-error" role="alert">

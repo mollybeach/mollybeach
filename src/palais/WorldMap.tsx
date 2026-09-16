@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { floralSrc, useFloral } from "./florals";
 import { propSrc } from "./props";
 import { usePlace, type Place } from "./place";
 
@@ -361,6 +362,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const mapSvg = useRef<SVGSVGElement>(null);
   // the place a click would pick, while the pointer is over the map
   const [hover, setHover] = useState<number | null>(null);
+  // the map wears the same cream paper over a floral as the catalogue
+  const paper = useFloral("map");
 
   /** the place nearest to a point on the screen */
   const nearest = (clientX: number, clientY: number) => {
@@ -504,7 +507,14 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
 
   return (
     <div className="wm-backdrop" onPointerDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="wm-panel" role="dialog" aria-modal="true" aria-labelledby="wm-title">
+      <div
+        className="wm-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="wm-title"
+        /* the same cream paper over a floral as the catalogue */
+        style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
+      >
         <Blossoms className="wm-bloom wm-bloom--tl" />
         <Blossoms className="wm-bloom wm-bloom--bl" />
         <Blossoms className="wm-bloom wm-bloom--tr" />

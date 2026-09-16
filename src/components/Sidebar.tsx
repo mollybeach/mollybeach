@@ -1,5 +1,6 @@
 // path: src/components/Sidebar.tsx
 import React, { useEffect, useState } from 'react';
+import { floralSrc, paletteOf, useFloral } from '../palais/florals';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   HomeIcon,
@@ -33,6 +34,9 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
+  const floral = useFloral('sidebar');
+  const palette = paletteOf(floral.now);
+
   const navItems: NavItem[] = [
     { name: 'Home', path: '/', icon: HomeIcon, end: true },
     { name: 'Overview', path: '/overview', icon: UserCircleIcon },
@@ -87,11 +91,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
         />
       )}
       
-      {/* Sidebar, papered in the same teal lily pattern as the Palais footer */}
+      {/* Sidebar, papered in one of Molly's florals, turning slowly (florals.ts) */}
       <div
         style={{
-          backgroundColor: '#69b3b5',
-          backgroundImage: `url("${process.env.PUBLIC_URL}/images/sidebar-floral.webp")`,
+          backgroundColor: palette.ink,
+          backgroundImage: `url("${floralSrc(floral.now)}")`,
           backgroundSize: '320px auto',
           backgroundRepeat: 'repeat',
         }}
@@ -105,14 +109,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       {/* Close button for mobile */}
       <button
         onClick={() => setIsMobileMenuOpen(false)}
-        className="lg:hidden absolute top-2 right-2 z-10 p-1.5 rounded-full bg-white/90 shadow hover:bg-white transition-colors"
+        className="lg:hidden absolute top-2 right-2 z-10 p-1.5 rounded-full bg-[#fffdf6] shadow hover:bg-white transition-colors"
         aria-label="Close menu"
       >
         <XMarkIcon className="h-6 w-6 text-gray-600" />
       </button>
 
       {/* Profile Section: on a card so it reads over the flowers */}
-      <div className={folded('text-center rounded-2xl bg-white/90 backdrop-blur-sm px-4 pt-5 pb-1 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:px-1.5 lg:pt-1.5 lg:pb-1.5')}>
+      <div className={folded('text-center rounded-2xl bg-[#fffdf6] px-4 pt-5 pb-1 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:px-1.5 lg:pt-1.5 lg:pb-1.5')}>
         <img
           src={`${process.env.PUBLIC_URL}/avi_square.png`}
           alt="Molly Beach"
@@ -163,10 +167,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
           </p>
         </div>
         </div>
+      {/* the pattern it has just come off, fading out over the new one. It is
+          the last thing in the box and carries no margin, so it can't move the
+          cards, and it sits behind them. */}
+      {floral.was && (
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none palais-floral--out"
+          style={{
+            zIndex: -1,
+            marginTop: 0,
+            backgroundColor: palette.ink,
+            backgroundImage: `url("${floralSrc(floral.was)}")`,
+            backgroundSize: '320px auto',
+            backgroundRepeat: 'repeat',
+          }}
+        />
+      )}
       </div>
 
       {/* Navigation Links */}
-      <nav className={folded('space-y-1 rounded-2xl bg-white/90 backdrop-blur-sm p-2 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:p-1.5')}>
+      <nav className={folded('space-y-1 rounded-2xl bg-[#fffdf6] p-2 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:p-1.5')}>
         {navItems.map((item) => (
           <NavLink
             key={item.name}
@@ -195,7 +216,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       <button
         type="button"
         onClick={() => setCollapsed((c) => !c)}
-        className="hidden lg:flex w-full items-center justify-center gap-2 rounded-2xl bg-white/90 backdrop-blur-sm py-2 text-sm font-medium text-gray-600 shadow-md ring-1 ring-[#c9a44c]/60 hover:text-[#D63384] transition-colors"
+        className="hidden lg:flex w-full items-center justify-center gap-2 rounded-2xl bg-[#fffdf6] py-2 text-sm font-medium text-gray-600 shadow-md ring-1 ring-[#c9a44c]/60 hover:text-[#D63384] transition-colors"
         aria-label={collapsed ? 'Open the sidebar' : 'Fold the sidebar away'}
         title={collapsed ? 'Open the sidebar' : 'Fold the sidebar away'}
       >

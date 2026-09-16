@@ -75,48 +75,15 @@ body {
 
 /* the gilded border between the sidebar and the page (GiltDivider.tsx) */
 .gilt-divider {
-  position: relative;
   flex: none;
-  width: 18px;
+  width: 10px;
   height: 100%;
+  margin: 0 2px;
+  border-radius: 9999px;
   z-index: 45;
-  background:
-    url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2218%22%20height%3D%2244%22%20viewBox%3D%220%200%2018%2044%22%3E%3Cpath%20d%3D%22M3.5%200v44M14.5%200v44%22%20stroke%3D%22%237a5a1e%22%20stroke-width%3D%22.8%22%20opacity%3D%22.7%22/%3E%3Cpath%20d%3D%22M9%2010%2014%2022%209%2034%204%2022Z%22%20fill%3D%22%23fbeec1%22%20stroke%3D%22%237a5a1e%22%20stroke-width%3D%22.9%22/%3E%3Cpath%20d%3D%22M9%2014%2011.8%2022%209%2030%206.2%2022Z%22%20fill%3D%22%23d2ab52%22/%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2222%22%20r%3D%221.6%22%20fill%3D%22%233f8f8f%22%20stroke%3D%22%23fff6d6%22%20stroke-width%3D%22.5%22/%3E%3Ccircle%20cx%3D%229%22%20cy%3D%222%22%20r%3D%222%22%20fill%3D%22%23fff6e6%22%20stroke%3D%22%239c7632%22%20stroke-width%3D%22.7%22/%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2242%22%20r%3D%222%22%20fill%3D%22%23fff6e6%22%20stroke%3D%22%239c7632%22%20stroke-width%3D%22.7%22/%3E%3C/svg%3E") center top / 18px 44px repeat-y,
-    linear-gradient(90deg, #5e4417 0%, #b8913f 16%, #f7e7b4 46%, #e3c27a 60%, #b8913f 84%, #5e4417 100%);
+  background: linear-gradient(90deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
   box-shadow:
-    -3px 0 8px rgba(20, 30, 30, 0.35),
-    3px 0 10px rgba(20, 30, 30, 0.35),
-    inset 1px 0 0 rgba(255, 248, 225, 0.55),
-    inset -1px 0 0 rgba(255, 248, 225, 0.35);
+    0 0 0 1px rgba(122, 90, 30, 0.75),
+    -2px 0 7px rgba(20, 30, 30, 0.28),
+    2px 0 8px rgba(20, 30, 30, 0.28);
 }
-.gilt-divider__medallion {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 34px;
-  height: 46px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 42% 38%, #b8f0ea 0 10%, #3f9c9a 30%, #1d5a5c 62%, transparent 64%),
-    radial-gradient(ellipse at 50% 50%, #fbeec1 0 58%, #c9a44c 70%, #7a5a1e 100%);
-  box-shadow: 0 0 0 2px #7a5a1e, 0 0 0 4px #f1d98e, 0 0 0 5px #7a5a1e, 0 4px 10px rgba(0, 0, 0, 0.35);
-}
-.gilt-divider__finial {
-  position: absolute;
-  left: 50%;
-  width: 26px;
-  height: 26px;
-  transform: translateX(-50%) rotate(45deg);
-  background: linear-gradient(135deg, #fbeec1, #c9a44c 55%, #7a5a1e);
-  box-shadow: 0 0 0 1.5px #7a5a1e, 0 3px 8px rgba(0, 0, 0, 0.3);
-}
-.gilt-divider__finial::after {
-  content: "";
-  position: absolute;
-  inset: 7px;
-  background: radial-gradient(circle, #ff9ecf 0 35%, #b83a6e 70%);
-  box-shadow: 0 0 0 1px #7a5a1e;
-}
-.gilt-divider__finial--top { top: 10px; }
-.gilt-divider__finial--bottom { bottom: 10px; }

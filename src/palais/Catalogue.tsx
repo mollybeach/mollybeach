@@ -6,6 +6,7 @@ import { LayoutsShelf, SignIn } from "./LayoutsShelf";
 import { VisitorsShelf } from "./VisitorsShelf";
 import type { Season } from "./seasons";
 import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
+import { floralSrc, paletteOf, useFloral } from "./florals";
 import { RacksShelf } from "./RacksShelf";
 import { SeasonsShelf, SEASON_EMOJI, titleCase } from "./SeasonsShelf";
 import { closetMovesNow, hiddenChanged, movesChanged, publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
@@ -116,6 +117,10 @@ export function Catalogue({
   const [clothes, setClothes] = useState<string[]>([]);
   const [tab, setTab] = useState<string | null>(null);
   const [find, setFind] = useState("");
+  const floral = useFloral("catalogue");
+  // the panel itself is papered in another of the patterns, under a cream veil
+  const paper = useFloral("panel");
+  const palette = paletteOf(floral.now);
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
   const [page, setPage] = useState<Page>(wardrobe ? "clothes" : "stickers");
   // which of the closet's photographs is showing, for the Racks page
@@ -336,13 +341,25 @@ export function Catalogue({
   );
 
   return (
-    <div className="cat-backdrop" onPointerDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div ref={panel} className="cat-panel" role="dialog" aria-modal="true" aria-labelledby="cat-title">
-        <header
-          className="cat-head"
-          // the same teal lily pattern as the footer (Footer.tsx)
-          style={{ backgroundImage: `url("${process.env.PUBLIC_URL}/palais/catalogue-floral.webp")` }}
-        >
+    <div
+      className="cat-backdrop"
+      style={{ ["--cat-jewel" as string]: palette.jewel, ["--cat-ink" as string]: palette.ink }}
+      onPointerDown={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div
+        ref={panel}
+        className="cat-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cat-title"
+        style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
+      >
+        <header className="cat-head">
+          {/* one of Molly's florals, turning slowly, the same as the footer */}
+          {floral.was && (
+            <div aria-hidden className="palais-floral palais-floral--cover palais-floral--out" style={{ backgroundImage: `url("${floralSrc(floral.was)}")` }} />
+          )}
+          <div aria-hidden className="palais-floral palais-floral--cover" key={floral.now} style={{ backgroundImage: `url("${floralSrc(floral.now)}")` }} />
           <span aria-hidden className="cat-sparkle cat-sparkle--a">✦</span>
           <span aria-hidden className="cat-sparkle cat-sparkle--b">✧</span>
           <h2 id="cat-title">

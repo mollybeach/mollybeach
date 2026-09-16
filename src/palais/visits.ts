@@ -629,6 +629,25 @@ export async function nameVisitor(visitor: string, name: string, isMe = false, n
   if (error) throw new Error(error.message);
 }
 
+export interface GithubStats {
+  days: number;
+  all_time: number;
+  period: number;
+  today: number;
+  first_at: string | null;
+  badges: { badge: string; views: number; last_at: string }[];
+  by_day: { day: string; views: number }[];
+  via: { via: string; views: number }[];
+}
+
+/** how many people have looked at the GitHub profile (the badge in its README) */
+export async function githubStats(days = 30): Promise<GithubStats> {
+  const sb = await db();
+  const { data, error } = await sb.rpc("github_view_stats", { p_days: days });
+  if (error) throw new Error(error.message);
+  return data as GithubStats;
+}
+
 export async function visitStats(days = 30): Promise<VisitStats> {
   const sb = await db();
   const { data, error } = await sb.rpc("palais_visit_stats", { p_days: days });

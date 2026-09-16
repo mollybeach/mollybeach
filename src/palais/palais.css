@@ -40,7 +40,6 @@
 
   /* --- wisteria ---------------------------------------------------------- */
   --wisteria-deep: #6f5f96;
-  --wisteria: #9a8ac4;
   --wisteria-pale: #c6bade;
 
   /* --- hydrangea --------------------------------------------------------- */
@@ -2310,3 +2309,287 @@
 .palais .palais-arrive .palais-frame { pointer-events: none; }
 .palais .palais-arrive .palais-layer:not([data-hidden]) [data-prop] { pointer-events: auto; }
 .palais .palais-layer [data-prop][style*="visibility: hidden"] { pointer-events: none; }
+
+/* ---- mollybeach.app/admin: the visitor book on a page of its own ---------- */
+.palais.adm {
+  /* the catalogue's colours, which usually come with its backdrop */
+  --cat-hot: #ff4fa3;
+  --cat-deep: #d6247a;
+  --cat-soft: #ffe3f1;
+  --cat-line: #ffc2df;
+  --cat-round: ui-rounded, "SF Pro Rounded", "Nunito", "Quicksand", system-ui, sans-serif;
+}
+.palais.adm { max-width: 72rem; margin: 0 auto; padding: 0 0 3rem; background: none; }
+.palais.adm .adm-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem; margin: 0 0 0.9rem; }
+.palais.adm h1 { margin: 0; font: 900 1.6rem/1.2 var(--cat-round); color: var(--cat-deep); }
+.palais.adm .cat-looks { display: grid; gap: 0.6rem; }
+.palais.adm--gate { display: grid; place-items: center; min-height: 60vh; }
+.palais.adm .adm-gate {
+  width: min(24rem, 100%); padding: 1.6rem; text-align: center;
+  border: 2px solid var(--cat-line); border-radius: 22px; background: #fff;
+}
+.palais.adm .adm-gate h1 { font-size: 1.3rem; }
+.palais.adm .adm-gate .cat-signin { justify-content: center; }
+.palais .adm-hours { display: flex; align-items: flex-end; gap: 3px; height: 6.5rem; }
+.palais .adm-hours span { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 2px; }
+.palais .adm-hours i { width: 100%; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #7ad4cf, #bdeae6); }
+.palais .adm-hours small { font: 700 0.58rem/1 var(--cat-round); color: #b5708f; height: 0.7rem; }
+
+/* ---- the floral patterns, and the turn between them (florals.ts) --------- */
+.palais-floral {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: center top;
+  animation: palais-floral-in 1.8s ease both;
+}
+/* the catalogue's head wears it as one big picture rather than a band */
+.palais-floral--cover { background-size: cover; background-position: center; background-repeat: no-repeat; z-index: -1; }
+/* the one it has just come off, fading out underneath */
+.palais-floral--out { animation: palais-floral-out 1.8s ease both; }
+.palais-floral--in { animation: palais-floral-in 1.8s ease both; }
+@keyframes palais-floral-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes palais-floral-out { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .palais-floral, .palais-floral--in, .palais-floral--out { animation-duration: 1ms; }
+}
+
+/* ---- the floral patterns, and the turn between them (florals.ts) --------- */
+.palais-floral {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: center top;
+  animation: palais-floral-in 1.8s ease both;
+}
+/* the catalogue's head wears it as one picture rather than a band */
+.palais-floral--cover { background-size: cover; background-position: center; background-repeat: no-repeat; z-index: -1; }
+.palais-floral--out { animation: palais-floral-out 1.8s ease both; }
+.palais-floral--in { animation: palais-floral-in 1.8s ease both; }
+@keyframes palais-floral-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes palais-floral-out { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .palais-floral, .palais-floral--in, .palais-floral--out { animation-duration: 1ms; }
+}
+
+/* ---- the catalogue, dressed to match the florals ------------------------- *
+   It used to be hot pink throughout. Now it's cream paper over one of the
+   patterns, with gold for the rules and rims, the pattern's own ink for the
+   writing and its jewel for the hearts. An old-style serif for the headings,
+   a plain sans for everything that has to be read quickly.                   */
+.palais .cat-backdrop {
+  --cat-hot: #9c7632;
+  --cat-deep: var(--cat-ink, #3a2f1c);
+  --cat-soft: #f6ecd6;
+  --cat-line: #dcc190;
+  --cat-round: "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --cat-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --cat-gold: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
+  background: rgba(38, 28, 16, 0.42);
+}
+.palais .cat-panel {
+  border: 3px solid #c9a44c;
+  background-color: #fdf8ee;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 0 5px rgba(255, 252, 244, 0.9), 0 0 0 6.5px #9c7632, 0 26px 60px rgba(40, 26, 10, 0.45);
+  color: var(--cat-deep);
+}
+.palais .cat-panel h2,
+.palais .cat-shelf-head h3,
+.palais .vis-card h3,
+.palais .cat-title,
+.palais .adm h1 { font-family: var(--cat-display); letter-spacing: 0.01em; }
+.palais .cat-panel h2 { font-weight: 700; }
+
+/* the paper shows through the list and the shelf headings */
+.palais .cat-scroll { background: none; }
+.palais .cat-shelf-head { background: linear-gradient(180deg, rgba(253, 248, 238, 0.97) 72%, rgba(253, 248, 238, 0)); }
+.palais .cat-scroll::-webkit-scrollbar-thumb { background: #d9bd83; border: 2px solid #fdf8ee; }
+.palais .cat-shelf-count { background: #fffaf0; color: #8a6a22; }
+
+/* cards: cream, a gold hairline, and the pattern's jewel when it's in the room */
+.palais .cat-card {
+  background: #fffdf6;
+  border: 2px solid var(--cat-line);
+  box-shadow: 0 1px 0 rgba(122, 90, 30, 0.12);
+}
+.palais .cat-card.is-on { border-color: #c9a44c; background: #fffdf4; box-shadow: 0 2px 0 rgba(122, 90, 30, 0.2); }
+.palais .cat-card:hover { box-shadow: 0 6px 14px rgba(70, 48, 10, 0.18); }
+.palais .cat-heart { border-color: var(--cat-line); background: #fffdf6; }
+.palais .cat-heart::before { color: #c9b27c; }
+.palais input:focus-visible + .cat-heart,
+.palais .cat-heart--card:focus-visible { outline: 3px solid #c9a44c; }
+.palais .cat-name { color: var(--cat-deep); }
+.palais .cat-card:not(.is-on) .cat-name { color: #9c8b66; }
+.palais .cat-store { color: #9c8b66; }
+
+/* buttons: cream with a gold rim, and gold itself for the one that saves */
+.palais .cat-btn {
+  border-color: #c9a44c;
+  background: #fffaf0;
+  color: var(--cat-deep);
+  font-family: var(--cat-round);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.22);
+}
+.palais .cat-btn:hover { background: var(--cat-soft); }
+.palais .cat-btn--ghost { border-color: var(--cat-line); color: #7d6b45; background: rgba(255, 250, 240, 0.7); }
+.palais .cat-btn--done,
+.palais .cat-btn--go,
+.palais .cat-btn--save {
+  border-color: #9c7632;
+  background: var(--cat-gold);
+  color: #3a2b10;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
+}
+.palais .cat-foot { background: rgba(253, 248, 238, 0.95); border-top: 2px solid var(--cat-line); }
+
+/* the tabs along the top, and the pages */
+.palais .cat-tab { background: rgba(255, 250, 240, 0.82); color: #6b5a33; border-color: var(--cat-line); }
+.palais .cat-tab:hover,
+.palais .cat-tab.is-on { background: #fffdf4; color: var(--cat-deep); box-shadow: inset 0 0 0 2px #c9a44c; }
+.palais .cat-season.is-on,
+.palais .cat-page.is-on { background: var(--cat-gold); color: #3a2b10; border-color: #9c7632; }
+
+/* the search box */
+.palais .cat-find { border-color: #c9a44c; background: rgba(255, 253, 246, 0.95); }
+.palais .cat-find input { color: var(--cat-deep); }
+.palais .cat-find input::placeholder { color: #a8956a; }
+.palais .cat-find-count { color: #8a6a22; }
+
+/* only the hearts wear the pattern's stone */
+.palais input:checked + .cat-heart,
+.palais .cat-heart--card.is-on { border-color: var(--cat-jewel, #9c7632); }
+.palais input:checked + .cat-heart::before,
+.palais input:indeterminate + .cat-heart::before,
+.palais .cat-heart--card.is-on::before { color: var(--cat-jewel, #9c7632); }
+.palais .cat-count,
+.palais .cat-season-now { color: #fffaf0; }
+.palais .cat-btn--done:hover { background: linear-gradient(140deg, #fffbe8, #e7c880 40%, #b99a4c 70%, #f8ecc4); }
+.palais .cat-btn--copy { border-color: #c9a44c; color: #6b5a33; }
+
+/* the tabs across the catalogue's head: cream with a gold rim on the pattern,
+   and the one you're on in gold. They were a teal wash, which fought whichever
+   floral was up behind them. */
+.palais .cat-page {
+  border: 2px solid rgba(255, 250, 235, 0.95);
+  background: rgba(58, 44, 22, 0.55);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  color: #fffaf0;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 6px rgba(40, 26, 10, 0.3);
+}
+@media (hover: hover) {
+  .palais .cat-page:hover { background: rgba(58, 44, 22, 0.75); }
+}
+.palais .cat-page.is-on {
+  background: var(--cat-gold);
+  color: #3a2b10;
+  border-color: #fff6de;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.7);
+  box-shadow: 0 2px 0 #9c7632, 0 5px 12px rgba(40, 26, 10, 0.35);
+}
+.palais .cat-page:active { transform: translateY(1px); }
+
+/* the line under the title, and the season chip in it */
+.palais .cat-count { background: rgba(58, 44, 22, 0.55); color: #fffaf0; }
+.palais .cat-season-now { background: rgba(255, 250, 235, 0.95); color: #3a2b10; text-shadow: none; }
+
+/* the rest of the pink that was left inside: the sticker tiles and the notes */
+.palais .cat-thumb { background: radial-gradient(circle at 50% 60%, #fffdf6 0%, #f8f0dd 72%, #efe2c6 100%); }
+.palais .cat-note { color: #6b5a33; border-color: var(--cat-line); background: rgba(255, 253, 246, 0.95); }
+.palais .cat-signin-line, .palais .cat-hint, .palais .rack-save-note p { color: #6b5a33; }
+.palais .cat-link { color: #9c7632; }
+
+/* ---- the room's own buttons, and the map, dressed like the catalogue ----- */
+.palais .palais-pill {
+  border: 2px solid #c9a44c;
+  background: rgba(255, 250, 240, 0.94);
+  color: #3a2f1c;
+  font-family: "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.28);
+}
+@media (hover: hover) {
+  .palais .palais-pill:hover { background: #f6ecd6; color: #3a2f1c; }
+}
+.palais .palais-pill:active { transform: translateY(1px); box-shadow: none; }
+.palais .palais-pill[aria-pressed="true"] {
+  background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
+  border-color: #9c7632;
+  color: #3a2b10;
+}
+/* the two that open something are the gold ones, like Done in the catalogue */
+.palais .palais-pill--catalogue,
+.palais .palais-pill--map {
+  background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
+  border: 2px solid #9c7632;
+  color: #3a2b10;
+  font-family: "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
+  box-shadow: 0 2px 0 #9c7632, 0 5px 12px rgba(40, 26, 10, 0.25);
+  transform: none;
+}
+@media (hover: hover) {
+  .palais .palais-pill--catalogue:hover,
+  .palais .palais-pill--map:hover { background: linear-gradient(140deg, #fffbe8, #e7c880 40%, #b99a4c 70%, #f8ecc4); color: #3a2b10; }
+}
+.palais .palais-pill--map:active { transform: translateY(1px); box-shadow: 0 1px 0 #9c7632; }
+.palais .palais-map-icon { color: #6b5320; }
+
+/* the map: the catalogue's cream paper, gold rims and ink, instead of rose */
+.palais .wm-backdrop {
+  --wm-ink: #3a2f1c;
+  --wm-ink-soft: #6b5a33;
+  --wm-gold: #c9a44c;
+  --wm-gold-deep: #9c7632;
+  --wm-cream: #fffaf0;
+  --wm-rose: #c9a44c;
+  --wm-rose-deep: #9c7632;
+  --wm-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  background: rgba(38, 28, 16, 0.42);
+}
+.palais .wm-panel {
+  background-color: #fdf8ee;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 5px #fffaf0, inset 0 0 0 6.5px rgba(201, 164, 76, 0.8), 0 26px 60px rgba(40, 26, 10, 0.45);
+}
+.palais .wm-btn {
+  border: 2px solid #c9a44c;
+  background: #fffaf0;
+  color: #3a2f1c;
+  font-family: "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.28);
+}
+@media (hover: hover) { .palais .wm-btn:hover { background: #f6ecd6; filter: none; } }
+.palais .wm-btn.wm-btn--next,
+.palais .wm-btn.wm-btn--visit {
+  border-color: #9c7632;
+  background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
+  color: #3a2b10;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.6);
+  box-shadow: 0 2px 0 #9c7632, 0 5px 12px rgba(40, 26, 10, 0.22);
+}
+.palais .wm-btn:active { transform: translateY(1px); box-shadow: none; }
+.palais .wm-here, .palais .wm-soon { color: #9c7632; }
+/* the ribbon over the map, in gold like everything else */
+.palais .wm-title h2 {
+  background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad);
+  border-color: #9c7632;
+  color: #3a2b10;
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.65);
+}
+.palais .wm-title h2 span { color: #6b5320; }

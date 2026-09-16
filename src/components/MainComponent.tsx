@@ -11,6 +11,7 @@ import Certifications from './Certifications';
 import Resume from './Resume';
 import Awards from './Awards';
 import PalaisHome from '../palais/PalaisHome';
+import Admin from './Admin';
 
 interface MainComponentProps {
   isMobileMenuOpen: boolean;
@@ -48,6 +49,8 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
         <Route path="/certifications" element={<Certifications />} />
         <Route path="/awards" element={<Awards />} />
         <Route path="/resume" element={<Resume />} />
+        {/* Molly's own: the visitor book, behind the catalogue's sign-in */}
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       </div>
       )}

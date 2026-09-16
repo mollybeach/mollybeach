@@ -1,16 +1,20 @@
+import { floralSrc, useFloral } from "./florals";
+
 /**
- * The footer: Molly's teal lily pattern, running the width of the room.
+ * The footer: one of Molly's floral patterns, running the width of the room,
+ * turning through them slowly (florals.ts). The pattern it has just come off
+ * lies underneath and fades out, so the change is a dissolve rather than a jump.
  *
  * The pattern tiles horizontally at its natural height, so the flowers stay
  * the same size at any width instead of stretching.
  */
 export function Footer() {
+  const { now, was } = useFloral("footer");
   return (
     <footer className="palais-footer">
-      <div
-        className="palais-footer-band"
-        style={{ backgroundImage: `url("${process.env.PUBLIC_URL}/palais/footer-floral.webp")` }}
-      >
+      <div className="palais-footer-band">
+        {was && <div aria-hidden className="palais-floral palais-floral--out" style={{ backgroundImage: `url("${floralSrc(was)}")` }} />}
+        <div aria-hidden className="palais-floral" key={now} style={{ backgroundImage: `url("${floralSrc(now)}")` }} />
         {/* a gilt rule where the floor meets it */}
         <div aria-hidden className="palais-footer-rule" />
         {/* the light in the room reaches the top of the band */}
