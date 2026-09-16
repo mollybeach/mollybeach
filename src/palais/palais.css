@@ -3096,12 +3096,12 @@
   line-height: 0;
   flex: none;
 }
-.palais .palais-season-mark { width: 1.05em; height: 1.05em; }
+.palais .palais-season-mark { width: 1.05em; height: 1.05em; transform: translateY(-2px); }
 .palais .palais-map-icon { color: currentColor; }
 /* the ✿ reads as a little emblem, not a stray character */
-.palais .palais-floral-mark { display: inline-block; font-size: 1.35em; line-height: 0; vertical-align: middle; }
+.palais .palais-floral-mark { display: inline-block; font-size: 1.35em; line-height: 0; vertical-align: middle; transform: translateY(-2px); }
 /* the heart on the catalogue button: bigger and heavier than the glyph was */
-.palais .palais-heart-mark { width: 1.2em; height: 1.2em; margin-right: 0.05em; }
+.palais .palais-heart-mark { width: 1.2em; height: 1.2em; margin-right: 0.05em; transform: translateY(-1px); }
 
 /* the chips keep the height they always had, and only grow sideways; the label
    sits in a row so a drawn mark is level with the writing beside it */

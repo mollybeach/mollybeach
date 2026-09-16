@@ -287,7 +287,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-long">
               <SeasonMark season={upcoming} /> Skip
             </span>
-            <span className="palais-pill-short">Season</span>
+            <span className="palais-pill-short">
+              <SeasonMark season={upcoming} />
+            </span>
           </button>
         )}
         {seasons && (
@@ -362,7 +364,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           className="palais-pill"
         >
           <span className="palais-pill-long">{room ? "Hide" : "Show"}</span>
-          <span className="palais-pill-short">Items</span>
+          <span className="palais-pill-short">{room ? "Hide" : "Show"}</span>
         </button>
       </div>
 
