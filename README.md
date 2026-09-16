@@ -1,3 +1,17 @@
+<p align="center">
+  <a href="https://mollybeach.app" target="_blank" rel="noopener">
+    <img width="300" height="62" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="./assets/visitSite.svg"/>
+  </a>
+</p>
+
+<p align="center">
+  <img alt="Visitors" src="https://komarev.com/ghpvc/?username=mollybeach&style=for-the-badge&color=1a8f8a&label=VISITORS"/>
+</p>
+
+<p align="center">
+  <i>mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room.</i>
+</p>
+
 <img         align=""       width="15%"    height="100%" src="./assets/commits.svg"/>
         <img align="left"   width="10%"    height="75px" src="./assets/cowpic.png"/>
         <img align="left"   width="35%"    height="75px" src= "./assets/contribution.svg"/>
@@ -41,11 +55,6 @@
         
 <br clear="all" />
 
-<p align="center">
-  <a href="https://mollybeach.app" target="_blank" rel="noopener">
-    <img width="300" height="62" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="./assets/visitSite.svg"/>
-  </a>
-</p>
 
 <table><tr><td valign="top" width="50%">
         <h2 align="center"> 💼 Languages and Tools</h2>
