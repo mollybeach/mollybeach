@@ -44,22 +44,35 @@ const posy = (box: number) =>
 export interface Plaque {
   /** one line, or a big line and a small one under it */
   lines: [string] | [string, string];
-  /** the stone it is filled with */
+  /** the stone it is filled with, behind the pattern */
   jewel: string;
+  /** the floral it is papered in (a picture carried inside this file) */
+  pattern?: string;
+  /** that floral's ink, for the veil that keeps the writing readable */
+  ink?: string;
   /** its rim */
   gold: string;
   label: string;
   width?: number;
 }
 
-export function plaque({ lines, jewel, gold, label, width = 360 }: Plaque): string {
+export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360 }: Plaque): string {
   const h = 96, box = 66, pad = 30;
   const px = pad, py = 18, pw = width - pad * 2, ph = h - 36, r = ph / 2, mid = width / 2;
+  /* the plaque is papered in the floral itself, under a veil of its own ink so
+     the writing still reads over the flowers */
+  const papered = pattern
+    ? `<g clip-path="url(#inside)">
+      <image x="${px}" y="${py}" width="${pw}" height="${ph}" preserveAspectRatio="xMidYMid slice" href="${pattern}"/>
+      <rect x="${px}" y="${py}" width="${pw}" height="${ph}" fill="${ink ?? "#2a2018"}" fill-opacity=".34"/>
+    </g>`
+    : "";
+
   const writing =
     lines.length === 1
       ? `<text x="${mid}" y="${py + ph / 2 + 7}" text-anchor="middle" font-family="${FONT}" font-size="21" font-weight="700" fill="${CREAM}" filter="url(#under)">${lines[0]}</text>`
       : `<text x="${mid}" y="${py + ph / 2 - 2}" text-anchor="middle" font-family="${FONT}" font-size="19" font-weight="700" fill="${CREAM}" filter="url(#under)">${lines[0]}</text>
-    <text x="${mid}" y="${py + ph / 2 + 16}" text-anchor="middle" font-family="${FONT}" font-size="9" font-weight="600" letter-spacing="1.4" fill="${CREAM}" fill-opacity=".92">${lines[1]}</text>`;
+    <text x="${mid}" y="${py + ph / 2 + 16}" text-anchor="middle" font-family="${FONT}" font-size="9" font-weight="600" letter-spacing="1.4" fill="${CREAM}" filter="url(#under)">${lines[1]}</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="${label}">
   <defs>
@@ -69,12 +82,14 @@ export function plaque({ lines, jewel, gold, label, width = 360 }: Plaque): stri
     <filter id="lift" x="-30%" y="-60%" width="160%" height="260%">
       <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#46320a" flood-opacity=".3"/>
     </filter>
+    <clipPath id="inside"><rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}"/></clipPath>
     <g id="posy">${posy(box)}</g>
   </defs>
   <g filter="url(#lift)">
     <rect x="${px - 5.5}" y="${py - 5.5}" width="${pw + 11}" height="${ph + 11}" rx="${r + 5.5}" fill="none" stroke="${gold}" stroke-opacity=".8" stroke-width="1.5"/>
     <rect x="${px - 4}" y="${py - 4}" width="${pw + 8}" height="${ph + 8}" rx="${r + 4}" fill="none" stroke="${CREAM}" stroke-width="4"/>
     <rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}" fill="${jewel}"/>
+    ${papered}
     <rect x="${px + 1.5}" y="${py + 1.5}" width="${pw - 3}" height="${ph - 3}" rx="${r - 1.5}" fill="none" stroke="${gold}" stroke-width="3"/>
     <rect x="${px + 4.5}" y="${py + 4.5}" width="${pw - 9}" height="${ph - 9}" rx="${r - 4.5}" fill="none" stroke="${CREAM}" stroke-opacity=".5" stroke-width="3"/>
   </g>

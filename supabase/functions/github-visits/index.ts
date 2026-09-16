@@ -29,7 +29,7 @@ const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const digits = (n: number) => n.toLocaleString("en-US");
 
 /** the stone and rim this pattern lends the plaque */
-const stone = (f: Floral) => ({ jewel: JEWELS[f.key] ?? "#1a8f8a", gold: f.gold });
+const stone = (f: Floral) => ({ jewel: JEWELS[f.key] ?? "#1a8f8a", gold: f.gold, pattern: f.uri, ink: f.ink });
 
 /** the counter, in the same frame the portfolio's page titles wear */
 const card = (count: number, label: string, f: Floral) =>
