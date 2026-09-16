@@ -722,7 +722,7 @@
 .palais [data-conjure-paused] .conjure-light { display: none !important; }
 
 /* ============================================================================
-   THE WORLD MAP — Area M, a storybook level select (WorldMap.tsx)
+   THE WORLD MAP — a storybook level select (WorldMap.tsx)
    ========================================================================== */
 
 .palais .palais-pill--map {
@@ -799,7 +799,7 @@
 .palais .wm-bloom--tl { top: -2.8rem; left: -3rem; }
 .palais .wm-bloom--bl { bottom: -3rem; left: -2.8rem; transform: rotate(-80deg); }
 .palais .wm-bloom--tr { top: -2.2rem; right: 1.6rem; width: 6.5rem; height: 6.5rem; transform: rotate(70deg); }
-.palais .wm-bloom--br { bottom: -2.8rem; right: -3rem; transform: rotate(160deg); }
+.palais .wm-bloom--br { bottom: 1.6rem; left: 2.4rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
 
 /* the title: a rose plaque with a gilt edge, set into the top of the frame */
 .palais .wm-title {
@@ -856,7 +856,7 @@
   border-radius: 18px;
   border: 3px solid var(--wm-gold);
   box-shadow: 0 0 0 4px var(--wm-cream), 0 0 0 5.5px rgba(207, 169, 86, 0.6), inset 0 0 30px rgba(20, 70, 110, 0.25);
-  background: #3aa6d6;
+  background: #1f56b8;
 }
 .palais .wm-map { display: block; width: 100%; height: auto; max-height: calc(100cqh - 9rem); }
 
@@ -2598,7 +2598,13 @@
 .palais .wm-finds li::before { color: #c9a44c; text-shadow: 0 1px 0 #9c7632; }
 .palais .wm-stop-name { fill: #3a2f1c; }
 .palais .wm-peek { background: linear-gradient(135deg, #fff6d6, #d9b25a 45%, #f4dc9a 60%, #9c7632); }
-.palais .wm-close { border-color: #9c7632; background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad); color: #3a2b10; }
+.palais .wm-close {
+  border-color: #ffe9b8;
+  background: var(--wm-jewel-side, #9c7632);
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.palais .wm-close:hover { background: var(--wm-jewel-side, #9c7632); filter: brightness(1.08); }
 
 /* ---- Roboto Mono, everywhere ---------------------------------------------
    The whole site is set in it (index.html loads it). The catalogue and the map
@@ -2745,3 +2751,14 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .palais .cat-btn--done:hover { background: var(--cat-jewel-side, #9c7632); filter: brightness(1.08); }
+
+/* Next stop takes the sidebar's stone, like Save in the catalogue */
+.palais .wm-btn.wm-btn--next,
+.palais .wm-btn.wm-btn--visit {
+  background: var(--wm-jewel-side, #9c7632);
+  border-color: #ffe9b8;
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.palais .wm-btn.wm-btn--next:hover,
+.palais .wm-btn.wm-btn--visit:hover { background: var(--wm-jewel-side, #9c7632); filter: brightness(1.08); }

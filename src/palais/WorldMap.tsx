@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { floralSrc, useFloral } from "./florals";
+import { floralSrc, paletteOf, useFloral } from "./florals";
 import { propSrc } from "./props";
 import { usePlace, type Place } from "./place";
 
 /**
- * Area M: the world map, like the level select in a storybook game: an
+ * The map, like the level select in a storybook game: an
  * illustrated island in a cream and gilt frame, dressed with blossom.
  *
  * One island, made of everywhere Molly has been, blended together and never
@@ -541,7 +541,10 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   return (
     <div
       className="wm-backdrop"
-      style={{ ["--wm-chip" as string]: `url("${floralSrc(chips.now)}")` }}
+      style={{
+        ["--wm-chip" as string]: `url("${floralSrc(chips.now)}")`,
+        ["--wm-jewel-side" as string]: paletteOf(chips.now).jewel,
+      }}
       onPointerDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
@@ -560,7 +563,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         <div className="wm-title">
           <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
           <h2 id="wm-title">
-            <span aria-hidden>✿</span> Area M <span aria-hidden>✿</span>
+            <span aria-hidden>✿</span> Map <span aria-hidden>✿</span>
           </h2>
           <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
         </div>
@@ -586,9 +589,9 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               {/* the sea is the blue of the cornflowers round the frame, the
                   grass the green of their leaves (public/palais/blooms) */}
               <radialGradient id="wm-sea" cx="0.5" cy="0.5" r="0.75">
-                <stop offset="0" stopColor="#6fa1f9" />
-                <stop offset="0.7" stopColor="#3663c8" />
-                <stop offset="1" stopColor="#1a51b3" />
+                <stop offset="0" stopColor="#3b6ccd" />
+                <stop offset="0.7" stopColor="#245ac0" />
+                <stop offset="1" stopColor="#174ba8" />
               </radialGradient>
               <radialGradient id="wm-grass" cx="0.5" cy="0.45" r="0.6">
                 <stop offset="0" stopColor="#547d38" />
@@ -650,14 +653,14 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* islets out at sea */}
             {art.islets.map((s) => (
               <g key={s.id}>
-                <path d={s.shallows} fill="#7fa8ef" opacity={0.8} />
+                <path d={s.shallows} fill="#5d8ae6" opacity={0.8} />
                 <path d={s.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={2} />
                 <path d={s.land} fill="url(#wm-grass)" />
               </g>
             ))}
 
             {/* the island: turquoise shallows, a ring of sand and surf, then grass */}
-            <path d={art.shallows} fill="#7fa8ef" opacity={0.85} />
+            <path d={art.shallows} fill="#5d8ae6" opacity={0.85} />
             <path d={art.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
             <path d={art.island} fill="url(#wm-grass)" />
             <g clipPath="url(#wm-island)">
