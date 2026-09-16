@@ -5,11 +5,15 @@
 </p>
 
 <p align="center">
-  <img width="362" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/>
+  <a href="https://mollybeach.app" target="_blank" rel="noopener">
+    <img width="362" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/>
+  </a>
 </p>
 
 <p align="center">
-  <img width="860" height="96" alt="mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
+  <a href="https://mollybeach.app" target="_blank" rel="noopener">
+    <img width="860" height="96" alt="mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
+  </a>
 </p>
 
 <img         align=""       width="15%"    height="100%" src="./assets/purugly.gif"/>
