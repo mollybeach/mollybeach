@@ -397,6 +397,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const cardPaper = useFloral("card");
   // the ribbon over the map wears whatever the sidebar is wearing
   const chips = useFloral("sidebar");
+  // the ribbon over the map takes the stone of whatever the footer is wearing
+  const ribbon = useFloral("footer");
 
   /** the place nearest to a point on the screen */
   const nearest = (clientX: number, clientY: number) => {
@@ -544,6 +546,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       style={{
         ["--wm-chip" as string]: `url("${floralSrc(chips.now)}")`,
         ["--wm-jewel-side" as string]: paletteOf(chips.now).jewel,
+        ["--wm-jewel-foot" as string]: paletteOf(ribbon.now).jewel,
       }}
       onPointerDown={(e) => e.target === e.currentTarget && onClose()}
     >

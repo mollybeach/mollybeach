@@ -1,6 +1,6 @@
 // path: src/components/Projects.tsx
 import React from 'react';
-import { shelfAt } from './garden';
+import { PageTitle, shelfAt } from './garden';
 import ProjectCard from './ProjectCard';
 
 interface Project {
@@ -860,8 +860,8 @@ const projects: Project[] = [
 const Projects: React.FC = () => {
   return (
     <section className="space-y-6">
-      <h2 className="text-3xl font-bold mb-8 text-center">Projects</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <PageTitle>Projects</PageTitle>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}

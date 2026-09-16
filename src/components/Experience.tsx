@@ -1,6 +1,6 @@
 // path: src/components/Experience.tsx
 import React from 'react';
-import { GardenHeading, GardenList, shelfAt } from './garden';
+import { GardenHeading, GardenList, PageTitle, shelfAt } from './garden';
 
 interface Project {
   title: string;
@@ -368,7 +368,7 @@ const Experience: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
+      <PageTitle>Experience</PageTitle>
       {experiences.map((exp, companyIndex) => (
         <div
           key={companyIndex}

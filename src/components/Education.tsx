@@ -1,6 +1,6 @@
 // path: src/components/Education.tsx
 import React, { useState } from 'react';
-import { GardenHeading, shelfAt } from './garden';
+import { GardenHeading, PageTitle, shelfAt } from './garden';
 
 const Education: React.FC = () => {
   const [expandedSchools, setExpandedSchools] = useState<{[key: string]: boolean}>({});
@@ -44,7 +44,7 @@ const Education: React.FC = () => {
   ];
   return (
     <section className="space-y-6">
-      <h2 className="text-3xl font-bold mb-8 text-center">Education</h2>
+      <PageTitle>Education</PageTitle>
       {education.map((edu, index) => (
         <article
           key={index}

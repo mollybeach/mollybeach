@@ -1,6 +1,6 @@
 // path: src/components/Certifications.tsx
 import CertBadge, { type BadgeKind } from './CertBadge';
-import { bloomSrc, shelfAt } from './garden';
+import { PageTitle, bloomSrc, shelfAt } from './garden';
 
 interface Certification {
     title: string;
@@ -130,7 +130,7 @@ const certifications: Certification[] = [
 export default function Certifications() {
   return (
     <section className="space-y-6">
-      <h2 className="text-3xl font-bold mb-8 text-center">Certifications</h2>
+      <PageTitle>Certifications</PageTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {certifications.map((cert, index) => (
           <div

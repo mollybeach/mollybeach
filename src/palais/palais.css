@@ -799,7 +799,7 @@
 .palais .wm-bloom--tl { top: -2.8rem; left: -3rem; }
 .palais .wm-bloom--bl { bottom: -3rem; left: -2.8rem; transform: rotate(-80deg); }
 .palais .wm-bloom--tr { top: -2.2rem; right: 1.6rem; width: 6.5rem; height: 6.5rem; transform: rotate(70deg); }
-.palais .wm-bloom--br { bottom: 1.6rem; left: 2.4rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
+.palais .wm-bloom--br { bottom: 1.6rem; right: 21.8rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
 
 /* the title: a rose plaque with a gilt edge, set into the top of the frame */
 .palais .wm-title {
@@ -985,6 +985,7 @@
   .palais .wm-peek { aspect-ratio: auto; height: clamp(3.5rem, calc(100cqh - 38rem), 7rem); }
   .palais .wm-bloom { width: 4.5rem; height: 4.5rem; }
   .palais .wm-bloom--tr { display: none; }
+  .palais .wm-bloom--br { right: 1.5rem; bottom: auto; top: 44%; width: 6rem; height: 6rem; }
   .palais .wm-bloom--title-l, .palais .wm-bloom--title-r { width: 3.2rem; height: 3.2rem; margin: 0 -1.1rem; }
 }
 
@@ -2652,14 +2653,13 @@
   background-size: auto;
 }
 
-/* the ribbon over the map wears the sidebar's floral, like the catalogue's tabs */
+/* the ribbon over the map: one solid colour, the stone of whichever floral the
+   footer is wearing, the way the sidebar fills the page you're on */
 .palais .wm-title h2 {
-  background-image: linear-gradient(rgba(40, 30, 14, 0.42), rgba(40, 30, 14, 0.52)), var(--wm-chip);
-  background-size: auto, 320px auto;
-  background-position: center, center;
-  background-color: rgba(58, 44, 22, 0.5);
+  background-image: none;
+  background-color: var(--wm-jewel-foot, #9c7632);
   color: #fffaf0;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .palais .wm-title h2 span { color: #ffe9b8; }
 

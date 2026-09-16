@@ -120,16 +120,52 @@ body {
    beside the sidebar: a band of gold with a dark line outside it and a cream
    hairline within */
 .gilt-card {
-  border: 4px solid transparent;
-  background-origin: border-box;
+  /* the border takes the stone of whichever floral the sidebar is wearing
+     (Sidebar.tsx sets --mb-accent), with a cream hairline inside it */
+  border: 5px solid var(--mb-accent, #c9a44c);
+  background-color: #fffdf6;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 244, 208, 0.9),
-    0 0 0 1px rgba(122, 90, 30, 0.75),
-    0 6px 16px rgba(70, 48, 10, 0.18);
-  background-image:
-    linear-gradient(#fffdf6, #fffdf6),
-    linear-gradient(140deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
-  background-clip: padding-box, border-box;
-  background-repeat: no-repeat;
+    inset 0 0 0 2px rgba(255, 253, 246, 0.95),
+    0 6px 16px rgba(70, 48, 10, 0.16);
+  transition: border-color 600ms ease, box-shadow 200ms ease;
 }
-.gilt-card:hover { box-shadow: inset 0 0 0 1px rgba(255, 244, 208, 0.9), 0 0 0 1px rgba(122, 90, 30, 0.75), 0 10px 22px rgba(70, 48, 10, 0.24); }
+.gilt-card:hover { box-shadow: inset 0 0 0 2px rgba(255, 253, 246, 0.95), 0 10px 22px rgba(70, 48, 10, 0.22); }
+
+/* the title at the top of a page, the same plaque as the map's ribbon
+   (garden.tsx). The fill is set from the footer's floral in the markup. */
+.page-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 2rem;
+  padding: 0;
+  min-height: 6rem;
+}
+.page-ribbon h2 {
+  margin: 0;
+  padding: 0.3rem 2.4rem 0.35rem;
+  border-radius: 999px;
+  border: 3px solid #cfa956;
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 250, 240, 0.5),
+    0 0 0 4px #fffaf0,
+    0 0 0 5.5px rgba(207, 169, 86, 0.8),
+    0 8px 16px rgba(70, 48, 10, 0.28);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  color: #fffaf0;
+  text-shadow: 0 2px 0 rgba(40, 30, 14, 0.35);
+  white-space: nowrap;
+  transition: background-color 600ms ease;
+}
+.page-ribbon h2 span { font-size: 0.7em; vertical-align: 0.12em; color: #fff4d8; }
+.page-ribbon__posy { position: relative; width: 6rem; height: 6rem; margin: 0 -2.2rem; flex: none; z-index: 1; }
+.page-ribbon__posy img { position: absolute; filter: drop-shadow(0 2px 3px rgba(60, 35, 40, 0.3)); }
+@media (max-width: 640px) {
+  .page-ribbon { min-height: 0; margin-bottom: 1.1rem; }
+  .page-ribbon__posy { width: 3.2rem; height: 3.2rem; margin: 0 -1rem; }
+  .page-ribbon h2 { padding: 0.2rem 1.1rem 0.25rem; font-size: 1.25rem; border-width: 2px; }
+  .page-ribbon h2 span { font-size: 0.62em; }
+}

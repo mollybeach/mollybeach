@@ -1,6 +1,6 @@
 // path: src/components/Skills.tsx
 import React from 'react';
-import { GardenHeading, GardenTag, shelfAt } from './garden';
+import { GardenHeading, GardenTag, PageTitle, shelfAt } from './garden';
 
 const skills = {
   'Programming Languages': [
@@ -65,8 +65,8 @@ const skills = {
 
 const Skills: React.FC = () => {
   return (
-    <section className="space-y-6 p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center">Skills</h2>
+    <section className="space-y-6">
+      <PageTitle>Skills</PageTitle>
       {/* two columns of cards on a wide screen, one on a phone; each card keeps
           its own colour and flower */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 /**
  * Molly's floral patterns, and the slow turn through them.
@@ -71,53 +71,91 @@ const at = (place: FloralPlace, when: number) => FLORALS[(Math.floor(when / EVER
  * The pattern this place is wearing, and the one it's just come off, so it can
  * be faded out underneath. `was` goes back to null once the fade is over.
  */
-export function useFloral(place: FloralPlace) {
-  const [now, setNow] = useState<Floral>(() => at(place, Date.now()));
-  const [was, setWas] = useState<Floral | null>(null);
+/**
+ * One turn per place, shared by everything that asks for it. Each place keeps
+ * a single piece of state and every component that wears it reads the same
+ * one, so a title and a button that both follow the footer can never be a step
+ * out from each other.
+ */
+interface Wearing {
+  now: Floral;
+  /** the one it has just come off, fading out underneath; null once that's over */
+  was: Floral | null;
+}
 
-  useEffect(() => {
-    let fade: ReturnType<typeof setTimeout> | undefined;
-    let waiting: Floral | null = null;
-    let live = true;
+interface Turn {
+  snap: Wearing;
+  listeners: Set<() => void>;
+  timer?: ReturnType<typeof setInterval>;
+  fade?: ReturnType<typeof setTimeout>;
+  waiting: Floral | null;
+}
 
-    /* the new pattern only goes on once its picture has arrived: showing it
-       before then leaves a bare moment with nothing behind the flowers */
-    const wear = (next: Floral) => {
-      if (waiting === next) return;
-      waiting = next;
-      const picture = new Image();
-      const on = () => {
-        if (!live || waiting !== next) return;
-        setNow((old) => {
-          if (old === next) return old;
-          setWas(old);
-          clearTimeout(fade);
-          fade = setTimeout(() => live && setWas(null), 2000);
-          return next;
-        });
-      };
-      picture.onload = on;
-      picture.onerror = on;
-      picture.src = floralSrc(next);
-      if (picture.complete) on();
+const TURNS = new Map<FloralPlace, Turn>();
+
+function turnFor(place: FloralPlace): Turn {
+  let turn = TURNS.get(place);
+  if (!turn) {
+    turn = { snap: { now: at(place, Date.now()), was: null }, listeners: new Set(), waiting: null };
+    TURNS.set(place, turn);
+  }
+  return turn;
+}
+
+function tell(turn: Turn, snap: Wearing) {
+  turn.snap = snap;
+  turn.listeners.forEach((l) => l());
+}
+
+function watch(place: FloralPlace) {
+  const turn = turnFor(place);
+
+  /* the new pattern only goes on once its picture has arrived: showing it
+     before then leaves a bare moment with nothing behind the flowers */
+  const wear = (next: Floral) => {
+    if (turn.waiting === next) return;
+    turn.waiting = next;
+    const picture = new Image();
+    const on = () => {
+      if (turn.waiting !== next || turn.snap.now === next) return;
+      const old = turn.snap.now;
+      tell(turn, { now: next, was: old });
+      clearTimeout(turn.fade);
+      turn.fade = setTimeout(() => tell(turn, { now: turn.snap.now, was: null }), 2000);
     };
+    picture.onload = on;
+    picture.onerror = on;
+    picture.src = floralSrc(next);
+    if (picture.complete) on();
+  };
 
-    const tick = () => {
-      const next = at(place, Date.now());
-      setNow((old) => {
-        if (old !== next) wear(next);
-        return old;
-      });
-    };
-    const timer = setInterval(tick, 1000);
+  const tick = () => {
+    const next = at(place, Date.now());
+    if (next !== turn.snap.now) wear(next);
+  };
+
+  if (!turn.timer) {
+    turn.timer = setInterval(tick, 1000);
     document.addEventListener("visibilitychange", tick);
-    return () => {
-      live = false;
-      clearInterval(timer);
-      clearTimeout(fade);
-      document.removeEventListener("visibilitychange", tick);
-    };
-  }, [place]);
+  }
+  tick();
+}
 
-  return { now, was };
+export function useFloral(place: FloralPlace): Wearing {
+  const turn = turnFor(place);
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      turn.listeners.add(onChange);
+      watch(place);
+      return () => {
+        turn.listeners.delete(onChange);
+      };
+    },
+    [place, turn],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => turn.snap,
+    () => turn.snap,
+  );
 }

@@ -1,6 +1,7 @@
 // path: src/components/Resume.tsx
 import React from 'react';
-import { floralSrc, useFloral } from '../palais/florals';
+import { PageTitle } from './garden';
+import { floralSrc, paletteOf, useFloral } from '../palais/florals';
 import { Helmet } from 'react-helmet-async';
 import { ArrowDownTrayIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 
@@ -31,14 +32,10 @@ const Resume: React.FC = () => {
       
       <section className="max-w-5xl mx-auto">
       <div className="space-y-6">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold mb-4 text-gray-900">Resume</h2>
-          <p className="text-gray-600 text-lg">Download or view my complete professional resume</p>
-        </div>
+        <PageTitle>Resume</PageTitle>
 
         {/* Download Card */}
-        <div className="rounded-xl shadow-xl border-2 border-[#9c7632] p-8 mb-8 text-[#fffaf0]"
+        <div className="gilt-card rounded-2xl shadow-xl p-8 mb-8 text-[#fffaf0]"
           /* the same cloth the Palais footer is wearing, under a shade so the
              writing reads (florals.ts) */
           style={{
@@ -58,7 +55,8 @@ const Resume: React.FC = () => {
             <a
               href={resumePath}
               download="Beach_Molly_Resume.pdf"
-              className="flex items-center gap-2 bg-[#fffdf6] text-[#3a2b10] border-2 border-[#9c7632] px-6 py-3 rounded-lg font-semibold hover:bg-[#f6ecd6] transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform"
+              className="flex items-center gap-2 bg-[#fffdf6] text-[#3a2b10] border-[3px] px-6 py-3 rounded-lg font-semibold hover:bg-[#f6ecd6] transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform"
+                style={{ borderColor: paletteOf(floral.now).jewel }}
             >
               <ArrowDownTrayIcon className="h-5 w-5" />
               Download PDF

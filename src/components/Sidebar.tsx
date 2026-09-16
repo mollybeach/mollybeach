@@ -36,6 +36,10 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const floral = useFloral('sidebar');
   const palette = paletteOf(floral.now);
+  // the cards on the portfolio pages take their border from the same stone
+  useEffect(() => {
+    document.documentElement.style.setProperty('--mb-accent', palette.jewel);
+  }, [palette]);
 
   const navItems: NavItem[] = [
     { name: 'Home', path: '/', icon: HomeIcon, end: true },

@@ -1,5 +1,6 @@
 // path: src/components/garden.tsx
 import React from 'react';
+import { paletteOf, useFloral } from '../palais/florals';
 
 /**
  * The dressing the portfolio pages share, the way the Skills page wears it: a
@@ -91,5 +92,50 @@ export function GardenList({ shelf, items, small = false }: { shelf: Shelf; item
         </li>
       ))}
     </ul>
+  );
+}
+
+/* ---- the page title, dressed like the ribbon over the map ---------------- */
+
+/** a small posy for the side of a title: a few flowers laid over each other */
+const TITLE_POSY: { name: string; x: number; y: number; w: number; rot?: number }[] = [
+  { name: 'leaf-sprig', x: 2, y: 40, w: 48, rot: -18 },
+  { name: 'violet-pink', x: 20, y: 8, w: 46, rot: 12 },
+  { name: 'cornflower-blue', x: 54, y: 40, w: 34, rot: -10 },
+  { name: 'daisy-yellow', x: 52, y: 2, w: 38, rot: 20 },
+];
+
+function Posy({ flip = false }: { flip?: boolean }) {
+  return (
+    <span aria-hidden className="page-ribbon__posy" style={flip ? { transform: 'scaleX(-1)' } : undefined}>
+      {TITLE_POSY.map((p, i) => (
+        <img
+          key={i}
+          src={bloomSrc(p.name)}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          style={{ left: `${p.x}%`, top: `${p.y}%`, width: `${p.w}%`, rotate: `${p.rot ?? 0}deg` }}
+        />
+      ))}
+    </span>
+  );
+}
+
+/**
+ * The title at the top of a page: the same plaque as the map's, filled with the
+ * stone of whichever floral the Palais footer is wearing, with a posy tucked
+ * behind each end.
+ */
+export function PageTitle({ children }: { children: React.ReactNode }) {
+  const jewel = paletteOf(useFloral('footer').now).jewel;
+  return (
+    <div className="page-ribbon">
+      <Posy />
+      <h2 style={{ backgroundColor: jewel }}>
+        <span aria-hidden>✿</span> {children} <span aria-hidden>✿</span>
+      </h2>
+      <Posy flip />
+    </div>
   );
 }

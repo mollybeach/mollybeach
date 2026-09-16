@@ -1,6 +1,7 @@
 // path: src/components/Awards.tsx
 import React from 'react';
-import { GardenHeading, shelfAt } from './garden';
+import { paletteOf, useFloral } from '../palais/florals';
+import { GardenHeading, PageTitle, shelfAt } from './garden';
 import { Helmet } from 'react-helmet-async';
 
 interface Award {
@@ -64,6 +65,8 @@ const awards: Award[] = [
 ];
 
 const Awards: React.FC = () => {
+  // the footer's floral lends its stone to the prize and the button
+  const footer = paletteOf(useFloral('footer').now);
   const [expandedAwards, setExpandedAwards] = React.useState<{[key: number]: boolean}>(() => {
     const initialState: {[key: number]: boolean} = {};
     awards.forEach((_, index) => {
@@ -94,7 +97,7 @@ const Awards: React.FC = () => {
       </Helmet>
 
       <div className="space-y-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Awards</h2>
+        <PageTitle>Awards</PageTitle>
         {awards.map((award, index) => (
           <div
             key={index}
@@ -130,7 +133,7 @@ const Awards: React.FC = () => {
                   </svg>
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <p className="font-bold text-2xl text-[#D63384]">{award.prize}</p>
+                      <p className="font-bold text-2xl" style={{ color: footer.jewel }}>{award.prize}</p>
                     </div>
                     <p className="font-semibold text-lg text-gray-800 mt-1">{award.project}</p>
                   </div>
@@ -151,7 +154,8 @@ const Awards: React.FC = () => {
                             href={award.projectLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#D63384] text-white rounded-lg hover:bg-[#B02968] transition-colors shadow-md hover:shadow-lg"
+                            className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg transition-colors shadow-md hover:shadow-lg hover:brightness-110"
+                            style={{ backgroundColor: footer.jewel }}
                           >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
