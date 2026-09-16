@@ -3018,3 +3018,70 @@
 /* a little air between the search box (or the frame standing in for it) and
    the row of buttons under it */
 .palais .cat-tabs { margin-top: 0.5rem; }
+
+/* the sign-in line in the head on the Seasons page, in the row the shelf tabs
+   would use, so the head keeps its height */
+.palais .cat-tabs--sign { justify-content: center; align-items: center; overflow: visible; }
+.palais .cat-tabs--sign .cat-signin-line {
+  margin: 0;
+  color: #fffaf0;
+  text-shadow: 0 1px 3px rgba(20, 14, 6, 0.85);
+}
+.palais .cat-tabs--sign .cat-link {
+  color: #fffaf0;
+  text-decoration-color: rgba(255, 250, 240, 0.7);
+}
+
+/* the sticker tiles on the Seasons page were pink; they take the stones now */
+.palais .season-grid li {
+  background: color-mix(in srgb, var(--cat-jewel, #9c7632) 12%, #fffdf6);
+  border: 1px solid color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 45%, #fffdf6);
+}
+.palais .season-grid { background: #fffdf6; border-color: var(--cat-jewel-side, #c9a44c); }
+.palais .season-grid--add { border-color: var(--cat-jewel, #9c7632); }
+.palais .season-add { border-color: var(--cat-jewel, #9c7632); background: #fffdf6; }
+.palais .season-add-head { background: #fffdf6; }
+.palais .season-grid--add button:hover { background: color-mix(in srgb, var(--cat-jewel, #9c7632) 14%, #fffdf6); }
+.palais .season-empty { color: color-mix(in srgb, var(--cat-ink-side, #3a2f1c) 62%, #fffdf6); }
+.palais .season-hint { color: color-mix(in srgb, var(--cat-ink-side, #3a2f1c) 62%, #fffdf6); }
+
+/* the sign-in line reads as one of the row's buttons, centred */
+.palais .cat-tabs--sign .cat-signin-line { display: flex; }
+.palais .cat-tabs--sign .cat-link {
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  border: 2px solid var(--cat-jewel-side, #c9a44c);
+  background: #fffdf6;
+  color: var(--cat-ink, #3a2f1c);
+  font: 600 0.82rem/1.2 var(--cat-round);
+  text-decoration: none;
+  text-shadow: none;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .palais .cat-tabs--sign .cat-link:hover {
+    border-color: var(--cat-jewel, #9c7632);
+    box-shadow: inset 0 0 0 2px var(--cat-jewel, #9c7632);
+    background: #fffdf6;
+  }
+}
+
+/* every row under the search box is the same height, so the head never jumps */
+.palais .cat-head .cat-tabs { height: 37px; align-items: center; }
+.palais .cat-head .cat-tabs.is-away { height: 37px; }
+/* the signed-in name is a chip of its own, beside the Sign out button */
+.palais .cat-tabs--sign .cat-signin-line { gap: 0.4rem; align-items: center; }
+.palais .cat-signin-who {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  border: 2px solid var(--cat-jewel-side, #c9a44c);
+  background: #fffdf6;
+  color: var(--cat-ink, #3a2f1c);
+  font: 600 0.82rem/1.2 var(--cat-round);
+  text-shadow: none;
+  white-space: nowrap;
+}
+/* the frame is filled with the same ink the search box writes in */
+.palais .cat-find.is-away { background: var(--cat-ink, #3a2f1c); }

@@ -318,7 +318,6 @@ function SaveForm({
   };
   return (
     <form className="cat-save" onSubmit={submit}>
-      <h3>♡ Save the room as a new look</h3>
       <div className="cat-save-row">
         <input
           className="cat-input"
@@ -359,8 +358,10 @@ export function SignIn({ editor, onError, label = "Sign in to save looks" }: { e
   if (editor) {
     return (
       <p className="cat-signin-line">
-        Signed in as {editor.email}
-        {!editor.canSave && " — not an editor yet, so saving is off (see supabase/README.md)"} ·{" "}
+        <span className="cat-signin-who">
+          Signed in as {editor.email}
+          {!editor.canSave && " — not an editor yet, so saving is off (see supabase/README.md)"}
+        </span>{" "}
         <button type="button" className="cat-link" onClick={() => signOut()}>
           Sign out
         </button>

@@ -339,7 +339,7 @@ export function Catalogue({
   const where = `${phone ? "phone" : "computer"}`;
   const saveNote = !collection.configured ? null : owner ? (
     <p>
-      ✦ Signed in — <b>Save</b> keeps {wardrobe ? "the rails and " : ""}this room as its {SEASON_EMOJI[season]} {season} layout on a {where}.
+      <b>Save</b> keeps {wardrobe ? "the rails and " : ""}this room as its {SEASON_EMOJI[season]} {season} layout on a {where}.
     </p>
   ) : (
     <>
@@ -414,6 +414,8 @@ export function Catalogue({
           </div>
           <div className={`cat-find${clothesPage || page === "stickers" ? "" : " is-away"}`} aria-hidden={!(clothesPage || page === "stickers")}>
             {page === "seasons" && <span className="cat-find-note">{PLACE_NAMES[place]} has a layout for each season</span>}
+            {page === "looks" && <span className="cat-find-note">♡ Save the room as a new look</span>}
+            {page === "visitors" && <span className="cat-find-note">☆ Visitor Information</span>}
               <span aria-hidden>🔍</span>
               <input
                 type="search"
@@ -464,11 +466,16 @@ export function Catalogue({
               ))}
             </nav>
           )}
+          {page === "seasons" && (
+            <div className="cat-tabs cat-tabs--sign">
+              <SignIn editor={collection.editor} onError={setSaveError} label="Sign in" />
+            </div>
+          )}
           <nav
             className={`cat-tabs${(clothesPage || page === "stickers") && shelves.length ? "" : " is-away"}`}
             aria-label="Shelves"
             aria-hidden={!((clothesPage || page === "stickers") && shelves.length)}
-            hidden={page === "visitors" || page === "looks"}
+            hidden={page === "visitors" || page === "looks" || page === "seasons"}
           >
               {shelves.map(({ shelf }) => (
                 <button
