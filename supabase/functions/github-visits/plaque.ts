@@ -48,7 +48,7 @@ export interface Plaque {
   jewel: string;
   /** the floral it is papered in (a picture carried inside this file) */
   pattern?: string;
-  /** that floral's ink, for the veil that keeps the writing readable */
+  /** that floral's ink (unused by the plaque, kept for the note) */
   ink?: string;
   /** its rim */
   gold: string;
@@ -61,14 +61,12 @@ export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360 }:
   const px = pad, py = 18, pw = width - pad * 2, ph = h - 36, r = ph / 2, mid = width / 2;
   /* the floral is laid across the whole picture rather than only inside the
      plaque: with nothing transparent left, GitHub has no bare corners to paint
-     its own background into. The plaque is the same flowers under a veil of
-     their ink, so the writing still reads. */
+     its own background into. The plaque itself stays a solid panel of the
+     pattern's stone, so the writing sits on one colour. */
   const sheet = pattern
     ? `<image x="0" y="0" width="${width}" height="${h}" preserveAspectRatio="xMidYMid slice" href="${pattern}"/>`
     : "";
-  const papered = pattern
-    ? `<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}" fill="${ink ?? "#2a2018"}" fill-opacity=".46"/>`
-    : "";
+
 
   const writing =
     lines.length === 1
@@ -90,8 +88,7 @@ export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360 }:
   <g filter="url(#lift)">
     <rect x="${px - 5.5}" y="${py - 5.5}" width="${pw + 11}" height="${ph + 11}" rx="${r + 5.5}" fill="none" stroke="${gold}" stroke-opacity=".8" stroke-width="1.5"/>
     <rect x="${px - 4}" y="${py - 4}" width="${pw + 8}" height="${ph + 8}" rx="${r + 4}" fill="none" stroke="${CREAM}" stroke-width="4"/>
-    ${pattern ? "" : `<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}" fill="${jewel}"/>`}
-    ${papered}
+    <rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}" fill="${jewel}"/>
     <rect x="${px + 1.5}" y="${py + 1.5}" width="${pw - 3}" height="${ph - 3}" rx="${r - 1.5}" fill="none" stroke="${gold}" stroke-width="3"/>
     <rect x="${px + 4.5}" y="${py + 4.5}" width="${pw - 9}" height="${ph - 9}" rx="${r - 4.5}" fill="none" stroke="${CREAM}" stroke-opacity=".5" stroke-width="3"/>
   </g>
