@@ -59,7 +59,7 @@ export const paletteOf = (key: Floral) => PALETTES[key];
 
 /** a place that wears one, and how far along the list it starts: spacing them
     out means the three are never wearing the same pattern at once */
-const PLACES = { footer: 0, map: 2, catalogue: 3, panel: 5, sidebar: 6, admin: 8 } as const;
+const PLACES = { footer: 0, map: 2, catalogue: 3, card: 4, panel: 5, sidebar: 6, admin: 8 } as const;
 export type FloralPlace = keyof typeof PLACES;
 
 /** how long each pattern stays on */

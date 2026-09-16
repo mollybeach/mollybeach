@@ -364,6 +364,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const [hover, setHover] = useState<number | null>(null);
   // the map wears the same cream paper over a floral as the catalogue
   const paper = useFloral("map");
+  // the card beside it wears another one, under a lighter veil
+  const cardPaper = useFloral("card");
 
   /** the place nearest to a point on the screen */
   const nearest = (clientX: number, clientY: number) => {
@@ -720,7 +722,11 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           </svg>
         </div>
 
-        <div className="wm-card" aria-live="polite">
+        <div
+          className="wm-card"
+          aria-live="polite"
+          style={{ backgroundImage: `linear-gradient(rgba(255, 252, 244, 0.93), rgba(251, 243, 232, 0.95)), url("${floralSrc(cardPaper.now)}")` }}
+        >
           {/* the words scroll if they must; the buttons below always stay in view */}
           <div className="wm-card-body">
           <figure className="wm-peek">

@@ -2593,3 +2593,20 @@
   text-shadow: 0 1px 0 rgba(255, 250, 230, 0.65);
 }
 .palais .wm-title h2 span { color: #6b5320; }
+
+/* the map's card wears a floral of its own under a light veil, so it reads as
+   the same paper as the panel without the two patterns running together */
+.palais .wm-card {
+  background-color: #fffcf6;
+  background-size: cover;
+  background-position: center;
+  border-color: #c9a44c;
+  box-shadow: 0 0 0 4px #fffaf0, 0 0 0 5.5px rgba(201, 164, 76, 0.65);
+}
+.palais .wm-tag { color: #9c8b66; letter-spacing: 0.12em; }
+.palais .wm-blurb { color: #5c4d2e; }
+.palais .wm-finds li { background: rgba(255, 253, 246, 0.9); border: 1.5px solid var(--cat-line, #dcc190); color: #3a2f1c; }
+.palais .wm-finds li::before { color: #c9a44c; text-shadow: 0 1px 0 #9c7632; }
+.palais .wm-stop-name { fill: #3a2f1c; }
+.palais .wm-peek { background: linear-gradient(135deg, #fff6d6, #d9b25a 45%, #f4dc9a 60%, #9c7632); }
+.palais .wm-close { border-color: #9c7632; background: linear-gradient(140deg, #fff6d6, #e0bd6a 38%, #b08f43 66%, #f4e2ad); color: #3a2b10; }
