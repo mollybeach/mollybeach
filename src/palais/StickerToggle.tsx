@@ -78,6 +78,22 @@ function SeasonMark({ season }: { season: string }) {
 }
 
 /** the heart on the catalogue button, drawn so it can carry a proper weight */
+/** the chip that puts the room's things away, drawn as a chair */
+function ChairMark() {
+  const line = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  return (
+    <svg className="palais-chair-mark" viewBox="0 0 24 24" aria-hidden>
+      {/* the back: two posts under a shell rail, with a slat across */}
+      <path d="M7.6 13.2V6.4a4.4 4.4 0 0 1 8.8 0v6.8" {...line} />
+      <path d="M7.6 9.4h8.8" {...line} />
+      {/* the seat, the legs, and the rail between them */}
+      <path d="M5.8 13.2h12.4" {...line} />
+      <path d="M7.2 13.2v7.2M16.8 13.2v7.2" {...line} />
+      <path d="M7.2 17.9h9.6" {...line} />
+    </svg>
+  );
+}
+
 function HeartMark() {
   return (
     <svg className="palais-heart-mark" viewBox="0 0 24 24" aria-hidden>
@@ -363,8 +379,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           aria-label={room ? "Hide the items" : "Show the items"}
           className="palais-pill"
         >
-          <span className="palais-pill-long">{room ? "Hide" : "Show"}</span>
-          <span className="palais-pill-short">{room ? "Hide" : "Show"}</span>
+          <span className="palais-pill-long">
+            <ChairMark /> {room ? "Hide" : "Show"}
+          </span>
+          <span className="palais-pill-short">
+            <ChairMark /> {room ? "Hide" : "Show"}
+          </span>
         </button>
       </div>
 

@@ -3089,6 +3089,7 @@
 .palais .palais-pill--floral .palais-pill-short { font-size: 1.45em; line-height: 0.85; }
 /* the season mark and the map icon are drawn in the button's own ink */
 .palais .palais-season-mark,
+.palais .palais-chair-mark,
 .palais .palais-heart-mark,
 .palais .palais-map-icon {
   display: inline-block;
@@ -3097,6 +3098,7 @@
   flex: none;
 }
 .palais .palais-season-mark { width: 1.05em; height: 1.05em; transform: translateY(-2px); }
+.palais .palais-chair-mark { width: 1.1em; height: 1.1em; transform: translateY(-2px); }
 .palais .palais-map-icon { color: currentColor; }
 /* the ✿ reads as a little emblem, not a stray character */
 .palais .palais-floral-mark { display: inline-block; font-size: 1.35em; line-height: 0; vertical-align: middle; transform: translateY(-2px); }
