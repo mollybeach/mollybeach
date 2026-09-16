@@ -36,7 +36,7 @@ interface Stop {
 const STOPS: Stop[] = [
   {
     id: "palace",
-    name: "The Palais",
+    name: "Palais",
     tag: "home",
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
@@ -48,7 +48,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "kitchen",
-    name: "The Kitchen",
+    name: "Kitchen",
     tag: "just off the terrace",
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
     finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
@@ -60,7 +60,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lakehouse",
-    name: "The Lakehouse",
+    name: "Lakehouse",
     tag: "where it began",
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
     finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
@@ -72,7 +72,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "closet",
-    name: "The Wardrobe Wing",
+    name: "Wardrobe Wing",
     tag: "inside the Lakehouse",
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
@@ -84,7 +84,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "domes",
-    name: "The City of Domes",
+    name: "City of Domes",
     tag: "the old city",
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
     finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
@@ -96,7 +96,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lanterns",
-    name: "The Lantern Isles",
+    name: "Lantern Isles",
     tag: "by ferry",
     blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
     finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
@@ -109,7 +109,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "jacaranda",
-    name: "The Jacaranda Quarter",
+    name: "Jacaranda Quarter",
     tag: "night streets",
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
@@ -121,7 +121,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "bathroom",
-    name: "The Bathroom",
+    name: "Bathroom",
     tag: "through the right arch",
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
     finds: ["A clawfoot tub", "Glass-block windows", "Pink towels and jars of bath salts"],
@@ -133,7 +133,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "gorge",
-    name: "The Amphitheatre",
+    name: "Amphitheatre",
     tag: "the festival",
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
     finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
@@ -145,7 +145,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "caves",
-    name: "The Hollow of Small Stars",
+    name: "Hollow of Small Stars",
     tag: "under the hills",
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
@@ -157,7 +157,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "reef",
-    name: "The Glass Reef",
+    name: "Glass Reef",
     tag: "out at sea",
     blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
     finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
@@ -170,7 +170,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "shore",
-    name: "The Shore of All Shores",
+    name: "Shore of All Shores",
     tag: "every beach at once",
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
@@ -182,7 +182,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "garden",
-    name: "The Glasshouse",
+    name: "Glasshouse",
     tag: "a garden conservatory",
     blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
     finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
@@ -194,7 +194,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "rainwood",
-    name: "The Rainwood",
+    name: "Rainwood",
     tag: "moss & mist",
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
     finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
@@ -206,7 +206,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lagoon",
-    name: "The Steaming Lagoon",
+    name: "Steaming Lagoon",
     tag: "fire under snow",
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
@@ -230,7 +230,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "library",
-    name: "The Library",
+    name: "Library",
     tag: "up the book stairs",
     blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
     finds: ["A spiral staircase made of books", "A globe and a rolling ladder", "Roses round the window over the lake"],
