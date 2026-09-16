@@ -6,7 +6,6 @@
         <img align="right"  width="12.5%"  height="75px" src="./assets/poke.gif"/>
        <img align="left"    width="15%"    height="100%" src="./assets/visitors.svg"/> 
         <img align="left"   width="10%"    height="100%" src="./assets/count.svg"/> 
-        <img align="left"   width="20%"    height="100%" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&label=visitors"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
         <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
@@ -44,7 +43,7 @@
 
 <p align="center">
   <a href="https://mollybeach.app" target="_blank" rel="noopener">
-    <img width="300" height="62" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/>
+    <img width="300" height="62" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="./assets/visitSite.svg"/>
   </a>
 </p>
 
