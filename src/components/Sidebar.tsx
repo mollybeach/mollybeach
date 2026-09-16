@@ -87,6 +87,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
 
   return (
     <>
+      {/* the gilded band beside the drawer, the phone's stand-in for
+          GiltDivider, which only shows once the wide layout does */}
+      <div aria-hidden className={`sidebar-gilt-band lg:hidden ${isMobileMenuOpen ? '' : 'is-away'}`} />
+
       {/* Backdrop overlay for mobile */}
       {isMobileMenuOpen && (
         <div 

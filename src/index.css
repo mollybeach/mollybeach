@@ -171,28 +171,28 @@ body {
 }
 
 /* On a phone the gilded band beside the sidebar (GiltDivider) is hidden with
-   the wide layout, so the drawer carries the same gold down its own right edge
-   while it is open. It is fixed inside the sidebar's own box, so it stays put
-   while the menu scrolls and slides in with it. */
-@media (max-width: 1023px) {
-  .sidebar-gilt.is-open::after {
-    content: "";
-    position: fixed;
-    top: 0.5rem;
-    bottom: 0.5rem;
-    left: 100%;
-    margin-left: 2px;
-    width: 10px;
-    border-radius: 9999px;
-    z-index: 50;
-    pointer-events: none;
-    background: linear-gradient(90deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
-    box-shadow:
-      0 0 0 1px rgba(122, 90, 30, 0.75),
-      -2px 0 7px rgba(20, 30, 30, 0.28),
-      2px 0 8px rgba(20, 30, 30, 0.28);
-  }
+   the wide layout, so the drawer brings its own, riding along the right edge
+   as it slides. It sits outside the menu's box: inside it, the menu's own
+   scrolling would clip it away. */
+.sidebar-gilt-band {
+  position: fixed;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 16rem;
+  margin-left: 2px;
+  width: 10px;
+  border-radius: 9999px;
+  z-index: 50;
+  pointer-events: none;
+  background: linear-gradient(90deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
+  box-shadow:
+    0 0 0 1px rgba(122, 90, 30, 0.75),
+    -2px 0 7px rgba(20, 30, 30, 0.28),
+    2px 0 8px rgba(20, 30, 30, 0.28);
+  transition: transform 300ms ease-in-out;
 }
+/* away with the drawer, at the same pace */
+.sidebar-gilt-band.is-away { transform: translateX(calc(-16rem - 14px)); }
 
 /* On a phone the drawer is as tall as what you can actually see: 100vh counts
    the strip behind the browser's own chrome, which left the foot of the menu
