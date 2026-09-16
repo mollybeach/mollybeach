@@ -799,7 +799,7 @@
 .palais .wm-bloom--tl { top: -2.8rem; left: -3rem; }
 .palais .wm-bloom--bl { bottom: -3rem; left: -2.8rem; transform: rotate(-80deg); }
 .palais .wm-bloom--tr { top: -2.2rem; right: 1.6rem; width: 6.5rem; height: 6.5rem; transform: rotate(70deg); }
-.palais .wm-bloom--br { bottom: 1.6rem; right: 21.8rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
+.palais .wm-bloom--br { bottom: 0.2rem; right: 21.8rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
 
 /* the title: a rose plaque with a gilt edge, set into the top of the frame */
 .palais .wm-title {
@@ -2450,14 +2450,14 @@
 .palais .cat-foot { background: rgba(253, 248, 238, 0.95); border-top: 2px solid var(--cat-line); }
 
 /* the tabs along the top, and the pages */
-.palais .cat-tab { background: rgba(255, 250, 240, 0.82); color: #6b5a33; border-color: var(--cat-line); }
+.palais .cat-tab { background: #fffdf6; color: var(--cat-ink, #3a2f1c); border-color: var(--cat-line); }
 .palais .cat-tab:hover,
 .palais .cat-tab.is-on { background: #fffdf4; color: var(--cat-deep); box-shadow: inset 0 0 0 2px #c9a44c; }
 .palais .cat-season.is-on,
 .palais .cat-page.is-on { background: var(--cat-gold); color: #3a2b10; border-color: #9c7632; }
 
 /* the search box */
-.palais .cat-find { border-color: #c9a44c; background: rgba(255, 253, 246, 0.95); }
+.palais .cat-find { border-color: var(--cat-jewel-side, #c9a44c); background: rgba(255, 253, 246, 0.95); }
 .palais .cat-find input { color: var(--cat-deep); }
 .palais .cat-find input::placeholder { color: #a8956a; }
 .palais .cat-find-count { color: #8a6a22; }
@@ -2501,7 +2501,12 @@
 
 /* the line under the title, and the season chip in it */
 .palais .cat-count { background: rgba(58, 44, 22, 0.55); color: #fffaf0; }
-.palais .cat-season-now { background: rgba(255, 250, 235, 0.95); color: #3a2b10; text-shadow: none; }
+.palais .cat-season-now {
+  background: var(--cat-ink-side, #3a2f1c);
+  border: 1.5px solid rgba(255, 250, 240, 0.7);
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
 
 /* the rest of the pink that was left inside: the sticker tiles and the notes */
 .palais .cat-thumb { background: radial-gradient(circle at 50% 60%, #fffdf6 0%, #f8f0dd 72%, #efe2c6 100%); }
@@ -2737,11 +2742,21 @@
 
 /* the line under the title wore a dark wash; it takes the same stone */
 .palais .cat-count {
-  background: var(--cat-jewel, #9c7632);
-  color: #fffaf0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-top: 0.75rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(20, 14, 6, 0.9), 0 0 12px rgba(20, 14, 6, 0.6);
 }
-.palais .cat-season-now { background: rgba(255, 250, 235, 0.95); color: #3a2b10; text-shadow: none; }
+.palais .cat-season-now {
+  background: var(--cat-ink-side, #3a2f1c);
+  border: 1.5px solid rgba(255, 250, 240, 0.7);
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
 
 /* Save wears the sidebar's stone, so the two agree across the page */
 .palais .cat-btn--done {
@@ -2762,3 +2777,156 @@
 }
 .palais .wm-btn.wm-btn--next:hover,
 .palais .wm-btn.wm-btn--visit:hover { background: var(--wm-jewel-side, #9c7632); filter: brightness(1.08); }
+
+/* the shelf tabs under the search: their rim is the sidebar's stone, and takes
+   the head's own stone while you point at one */
+.palais .cat-tab {
+  border-color: var(--cat-jewel-side, #c9a44c);
+  border-width: 2px;
+  background: #fffdf6;
+  color: var(--cat-ink, #3a2f1c);
+  font-weight: 600;
+  opacity: 1;
+}
+@media (hover: hover) {
+  .palais .cat-tab:hover {
+    border-color: var(--cat-jewel, #9c7632);
+    box-shadow: inset 0 0 0 2px var(--cat-jewel, #9c7632);
+  }
+}
+.palais .cat-tab.is-on {
+  border-color: var(--cat-jewel, #9c7632);
+  box-shadow: inset 0 0 0 2px var(--cat-jewel, #9c7632);
+}
+
+/* the catalogue's title, as the plaque over the map: a gold frame with its
+   cream and gold rings, filled with the stone of the pattern the head wears */
+.palais .cat-head h2 {
+  display: inline-block;
+  padding: 0.25rem 1.8rem 0.3rem;
+  border-radius: 999px;
+  border: 3px solid #cfa956;
+  background-color: var(--cat-jewel-foot, #9c7632);
+  background-image: none;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 250, 240, 0.28),
+    0 0 0 4px #fffaf0,
+    0 0 0 5.5px rgba(207, 169, 86, 0.8),
+    0 8px 16px rgba(40, 30, 14, 0.3);
+  font-family: var(--cat-display);
+  font-style: normal;
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-shadow: 0 2px 0 rgba(30, 20, 8, 0.4);
+  white-space: nowrap;
+  transition: background-color 600ms ease;
+}
+.palais .cat-head h2 > span { font-size: 1.05em; vertical-align: -0.02em; color: #fff0f6; }
+@container palais (max-width: 639px) {
+  .palais .cat-head h2 { font-size: 1.2rem; padding: 0.2rem 1rem 0.25rem; border-width: 2px; }
+}
+/* the search box was a shade taller than it needed to be */
+.palais .cat-find { padding: 0.14rem 0.7rem; }
+.palais .cat-find input { font-size: 0.82rem; line-height: 1.5; padding: 0.1rem 0; }
+
+/* the plaque and the line under it were both inline, so they sat side by side
+   and touched; and the row of tabs came up against the line */
+.palais .cat-head h2 { display: block; width: fit-content; margin: 0 auto; }
+.palais .cat-count { display: block; margin: 0.75rem auto 0.85rem; }
+.palais .cat-pages { margin: 0.2rem 0 0.7rem; }
+/* and a little room under the whole head, before the page's own first line */
+.palais .cat-scroll { padding-top: 0.35rem; }
+.palais .cat-looks { padding-top: 1.1rem; }
+/* kept in place but out of sight, so the head is the same height on every page */
+.palais .cat-find.is-away,
+.palais .cat-tabs.is-away { visibility: hidden; pointer-events: none; }
+
+/* the season buttons behave like the shelf tabs on the Stickers page: solid
+   cream with the sidebar's stone round them, the head's stone while you point
+   at one, and filled with it when it's the one you're on */
+.palais .cat-season {
+  background: #fffdf6;
+  color: var(--cat-ink, #3a2f1c);
+  border: 2px solid var(--cat-jewel-side, #c9a44c);
+  font-weight: 600;
+}
+@media (hover: hover) {
+  .palais .cat-season:hover {
+    border-color: var(--cat-jewel, #9c7632);
+    box-shadow: inset 0 0 0 2px var(--cat-jewel, #9c7632);
+    background: #fffdf6;
+    color: var(--cat-ink, #3a2f1c);
+  }
+}
+.palais .cat-season.is-on {
+  background: var(--cat-jewel, #9c7632);
+  border-color: #ffe9b8;
+  color: #fffaf0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 0 rgba(122, 90, 30, 0.3);
+}
+
+/* ---- one rule for every rim and every fill in the catalogue and /admin ----
+   The gold hairlines become the sidebar's stone and the accents the footer's,
+   so each button and border turns with the florals instead of standing still. */
+.palais .cat-backdrop,
+.palais.adm {
+  --cat-line: var(--cat-jewel-side, #c9a44c);
+  --cat-hot: var(--cat-jewel, #9c7632);
+}
+/* the plain buttons: cream, the sidebar's rim, the head's stone under the
+   pointer — the same as the shelf tabs */
+.palais .cat-btn,
+.palais .cat-mini,
+.palais .season-plus {
+  border-color: var(--cat-jewel-side, #c9a44c);
+  background: #fffdf6;
+  color: var(--cat-ink, #3a2f1c);
+}
+@media (hover: hover) {
+  .palais .cat-btn:hover,
+  .palais .cat-mini:hover,
+  .palais .season-plus:hover {
+    border-color: var(--cat-jewel, #9c7632);
+    box-shadow: inset 0 0 0 2px var(--cat-jewel, #9c7632);
+    background: #fffdf6;
+  }
+}
+.palais .cat-btn--ghost { background: rgba(255, 253, 246, 0.8); }
+/* the cards and panels in the visitor book follow the same rims */
+.palais .vis-card,
+.palais .vis-tile--soft,
+.palais .vis-person,
+.palais .adm-gate,
+.palais .cat-look,
+.palais .cat-note { border-color: var(--cat-jewel-side, #c9a44c); }
+.palais .vis-tile { background: var(--cat-jewel, #9c7632); }
+.palais .vis-person.is-me { border-color: var(--cat-jewel, #9c7632); }
+
+/* the visitor book: the bars, the tiles and the marks take the same stones as
+   everything else, instead of the pink and teal they were drawn in */
+.palais .vis-bar {
+  background: linear-gradient(180deg, var(--cat-jewel, #9c7632), color-mix(in srgb, var(--cat-jewel, #9c7632) 45%, #fffdf6));
+  border-radius: 4px 4px 0 0;
+}
+.palais .adm-hours i {
+  background: linear-gradient(180deg, var(--cat-jewel-side, #c9a44c), color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 40%, #fffdf6));
+}
+.palais .adm-hours small { color: var(--cat-ink-side, #6b5a33); }
+.palais .vis-tile { background: var(--cat-jewel, #9c7632); color: #fffaf0; }
+.palais .vis-tile--soft { background: #fffdf6; color: var(--cat-ink, #3a2f1c); }
+.palais .vis-list b { color: var(--cat-jewel, #9c7632); }
+.palais .vis-list li,
+.palais .vis-person { color: var(--cat-ink-side, #3a2f1c); }
+.palais .vis-list small,
+.palais .vis-list time,
+.palais .vis-hint,
+.palais .vis-person p { color: color-mix(in srgb, var(--cat-ink-side, #3a2f1c) 62%, #fffdf6); }
+.palais .vis-person-head strong,
+.palais .vis-card h3 { color: var(--cat-ink, #3a2f1c); }
+.palais .vis-freq { background: color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 22%, #fffdf6); color: var(--cat-ink-side, #3a2f1c); }
+.palais .vis-name { color: var(--cat-ink, #3a2f1c) !important; }
+.palais .vis-name.is-me { color: var(--cat-jewel, #9c7632) !important; }
+.palais .vis-scroll-thumb,
+.palais .cat-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--cat-jewel-side, #c9a44c) 70%, #fffdf6); }

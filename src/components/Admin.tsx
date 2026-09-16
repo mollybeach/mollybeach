@@ -4,6 +4,7 @@ import { VisitorsShelf } from '../palais/VisitorsShelf';
 import { SignIn } from '../palais/LayoutsShelf';
 import { useCollection, messageOf } from '../palais/useCollection';
 import { githubStats, visitStats, type GithubStats, type VisitStats } from '../palais/visits';
+import { paletteOf, useFloral } from '../palais/florals';
 import '../palais/palais.css';
 
 /**
@@ -50,6 +51,16 @@ function Hours({ hours }: { hours: { hour: number; visits: number }[] }) {
 
 export default function Admin() {
   const collection = useCollection();
+  // the same stones as the catalogue: the sidebar's for the rims, the footer's
+  // for what's filled in
+  const rim = paletteOf(useFloral('sidebar').now);
+  const fill = paletteOf(useFloral('footer').now);
+  const stones = {
+    ['--cat-jewel-side' as string]: rim.jewel,
+    ['--cat-jewel' as string]: fill.jewel,
+    ['--cat-ink' as string]: fill.ink,
+    ['--cat-ink-side' as string]: rim.ink,
+  } as React.CSSProperties;
   const [days, setDays] = useState(30);
   const [stats, setStats] = useState<VisitStats | null>(null);
   const [github, setGithub] = useState<GithubStats | null>(null);
@@ -73,7 +84,7 @@ export default function Admin() {
 
   if (!collection.configured) {
     return (
-      <div className="palais adm">
+      <div className="palais adm" style={stones}>
         <h1>Visitors</h1>
         <p className="cat-note">The database isn't set up in this copy of the site (.env.local).</p>
       </div>
@@ -82,7 +93,7 @@ export default function Admin() {
 
   if (!signedIn) {
     return (
-      <div className="palais adm adm--gate">
+      <div className="palais adm adm--gate" style={stones}>
         <div className="adm-gate">
           <h1>♡ Visitors</h1>
           <p className="cat-note">
@@ -102,7 +113,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="palais adm">
+    <div className="palais adm" style={stones}>
       <header className="adm-head">
         <h1>♡ Visitors</h1>
         <nav className="cat-seasons" aria-label="Time range">

@@ -1,6 +1,7 @@
 // src/components/ProjectCard.tsx
 import React from 'react';
 import { GardenTag, type Shelf } from './garden';
+import { paletteOf, useFloral } from '../palais/florals';
 
 interface ProjectCardProps {
   project: {
@@ -42,6 +43,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps & { shelf: Shelf }> = ({ project, shelf }) => {
+  const ribbon = paletteOf(useFloral('footer').now).jewel;
   const [isExpanded, setIsExpanded] = React.useState(false);
   
   return (
@@ -52,9 +54,14 @@ const ProjectCard: React.FC<ProjectCardProps & { shelf: Shelf }> = ({ project, s
     >
       <div className="flex flex-col">
         {/* Preview Image with Link */}
-        <a href={project.link} target="_blank" rel="noopener noreferrer">
-          <div className={`relative transition-all duration-300 ease-in-out
-            ${isExpanded ? 'h-[400px]' : 'h-48'} p-2`}>
+        <a href={project.link} target="_blank" rel="noopener noreferrer" className="block p-3">
+          {/* the preview sits in a frame of the same stone as the plaque at the
+              top of the page (garden.tsx) */}
+          <div
+            className={`relative overflow-hidden rounded-xl border-[3px] bg-[#fffdf6] transition-all duration-300 ease-in-out
+            ${isExpanded ? 'h-[400px]' : 'h-48'}`}
+            style={{ borderColor: ribbon }}
+          >
             <img
               src={project.microlink}
               alt={project.title}

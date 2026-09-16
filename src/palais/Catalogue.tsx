@@ -122,6 +122,8 @@ export function Catalogue({
   const paper = useFloral("panel");
   // the tabs across the top wear whatever the sidebar is wearing
   const chips = useFloral("sidebar");
+  // the title plaque takes the footer's stone, the same as the map's ribbon
+  const ribbon = useFloral("footer");
   const palette = paletteOf(floral.now);
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
   const [page, setPage] = useState<Page>(wardrobe ? "clothes" : "stickers");
@@ -351,6 +353,8 @@ export function Catalogue({
         ["--cat-chip" as string]: `url("${floralSrc(chips.now)}")`,
         // the head's own stone for what's selected here, the sidebar's for Save
         ["--cat-jewel-side" as string]: paletteOf(chips.now).jewel,
+        ["--cat-ink-side" as string]: paletteOf(chips.now).ink,
+        ["--cat-jewel-foot" as string]: paletteOf(ribbon.now).jewel,
       }}
       onPointerDown={(e) => e.target === e.currentTarget && onClose()}
     >
@@ -404,8 +408,7 @@ export function Catalogue({
               </button>
             ))}
           </div>
-          {(clothesPage || page === "stickers") && (
-            <div className="cat-find">
+          <div className={`cat-find${clothesPage || page === "stickers" ? "" : " is-away"}`} aria-hidden={!(clothesPage || page === "stickers")}>
               <span aria-hidden>🔍</span>
               <input
                 type="search"
@@ -425,10 +428,12 @@ export function Catalogue({
                   </button>
                 </>
               )}
-            </div>
-          )}
-          {(clothesPage || page === "stickers") && !!shelves.length && (
-            <nav className="cat-tabs" aria-label="Shelves">
+          </div>
+          <nav
+            className={`cat-tabs${(clothesPage || page === "stickers") && shelves.length ? "" : " is-away"}`}
+            aria-label="Shelves"
+            aria-hidden={!((clothesPage || page === "stickers") && shelves.length)}
+          >
               {shelves.map(({ shelf }) => (
                 <button
                   key={shelf.key}
@@ -439,8 +444,7 @@ export function Catalogue({
                   <span aria-hidden>{shelf.emoji}</span> {shelf.name}
                 </button>
               ))}
-            </nav>
-          )}
+          </nav>
         </header>
 
         <div className="cat-scroll">
