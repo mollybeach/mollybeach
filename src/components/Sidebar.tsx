@@ -104,6 +104,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
           backgroundRepeat: 'repeat',
         }}
         className={`
+        sidebar-gilt ${isMobileMenuOpen ? 'is-open' : ''}
         fixed lg:sticky top-0 lg:top-6 left-0 h-screen lg:h-auto
         w-64 ${collapsed ? 'lg:w-[5.5rem] lg:p-2.5' : ''} shadow-lg rounded-lg p-4 z-50 space-y-4 shrink-0
         transform transition-all duration-300 ease-in-out
