@@ -11,7 +11,7 @@ import Certifications from './Certifications';
 import Resume from './Resume';
 import Awards from './Awards';
 import PalaisHome from '../palais/PalaisHome';
-import { floralSrc, useFloral } from '../palais/florals';
+import { floralSrc, paletteOf, useFloral } from '../palais/florals';
 import Admin from './Admin';
 
 interface MainComponentProps {
@@ -26,6 +26,9 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
   // every other page is papered in whichever floral the Palais footer is
   // wearing, under a cream veil so the writing still reads (florals.ts)
   const floral = useFloral('footer');
+  // the menu button is drawn in the stone of whichever floral the sidebar is
+  // wearing, so it belongs to the drawer it opens
+  const rim = paletteOf(useFloral('sidebar').now);
 
   return (
     <main className="flex-1 overflow-auto bg-white relative">
@@ -35,7 +38,7 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
         className="lg:hidden fixed top-4 left-4 z-30 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
         aria-label="Open menu"
       >
-        <Bars3Icon className="h-6 w-6 text-gray-700" />
+        <Bars3Icon className="h-6 w-6 transition-colors duration-500" style={{ color: rim.jewel }} />
       </button>
 
       {isHome ? (
