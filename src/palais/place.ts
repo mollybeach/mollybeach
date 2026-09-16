@@ -64,6 +64,6 @@ export const PLACE_NAMES: Record<Place, string> = {
   lanterns: "The Lantern Isles",
   shore: "The Shore of All Shores",
   caves: "The Hollow of Small Stars",
-  madeleine: "Madeleine's Room",
+  madeleine: "Madeleine Room",
   library: "The Library",
 };

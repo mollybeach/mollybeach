@@ -165,8 +165,8 @@ body {
 .page-ribbon__posy img { position: absolute; filter: drop-shadow(0 2px 3px rgba(60, 35, 40, 0.3)); }
 @media (max-width: 640px) {
   .page-ribbon { min-height: 0; margin-bottom: 1.1rem; }
-  .page-ribbon__posy { width: 3.2rem; height: 3.2rem; margin: 0 -1rem; }
-  .page-ribbon h2 { padding: 0.24rem 1.25rem 0.3rem; font-size: clamp(1.45rem, 6.2vw, 1.9rem); border-width: 2px; }
+  .page-ribbon__posy { width: 3rem; height: 3rem; margin: 0 -1rem; }
+  .page-ribbon h2 { padding: 0.28rem 1rem 0.34rem; font-size: clamp(1.55rem, 6.6vw, 2rem); border-width: 2px; }
   .page-ribbon h2 span { font-size: 0.62em; }
 }
 
@@ -176,8 +176,8 @@ body {
    scrolling would clip it away. */
 .sidebar-gilt-band {
   position: fixed;
-  top: 0.5rem;
-  bottom: 0.5rem;
+  top: 0;
+  bottom: 0;
   left: 16rem;
   margin-left: 2px;
   width: 10px;

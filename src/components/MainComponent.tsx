@@ -35,7 +35,7 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
       {/* Mobile hamburger button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-30 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
+        className="lg:hidden fixed top-2 left-2 z-30 p-1.5 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
         aria-label="Open menu"
       >
         <Bars3Icon className="h-6 w-6 transition-colors duration-500" style={{ color: rim.jewel }} />
@@ -46,7 +46,7 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
       ) : (
       /* Main content with padding */
       <div
-        className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8 min-h-full"
+        className="p-4 sm:p-6 lg:p-8 pt-12 lg:pt-8 min-h-full"
         style={{
           backgroundColor: '#fdf8ee',
           backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.86), rgba(250, 243, 229, 0.9)), url("${floralSrc(floral.now)}")`,
