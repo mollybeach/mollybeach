@@ -242,6 +242,7 @@ export const PROPS = catalogue({
   planter_hanging_macrame_woven_basket_string_of_pearls_sticker: { label: "string of pearls in a macramé hanger", plane: "near" },
   box_trinket_round_portrait_cream_gold_vintage_sticker: { label: "a round cream-and-gilt trinket box with a portrait", plane: "near" },
   lamp_aladdin_genie_pink_enamel_gold_jeweled_sticker: { label: "a pink enamel Aladdin lamp", plane: "near" },
+  lamp_bankers_desk_green_glass_shade_brass_pull_chain_sticker: { label: "a banker's lamp, green glass on brass", lit: true, plane: "near", metres: 0.26 },
   candle_cherub_angel_seated_pastel_blue_sticker: { label: "a blue cherub candle", plane: "near" },
   box_incense_burner_wood_lattice_moon_stars_brass_sticker: { label: "a wooden incense box with moons and stars", plane: "near" },
   bottle_dropper_apothecary_glass_emerald_green_sticker: { label: "a green glass dropper bottle", glass: true, plane: "near" },

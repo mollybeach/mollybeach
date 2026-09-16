@@ -261,6 +261,7 @@ export const SHELVES: Shelf[] = [
       "bottle_candle_holder_embossed_dripping_wax_red_pink_sticker",
       "lamp-porcelain",
       "lamp_aladdin_genie_pink_enamel_gold_jeweled_sticker",
+      "lamp_bankers_desk_green_glass_shade_brass_pull_chain_sticker",
     ],
   },
   {
