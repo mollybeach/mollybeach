@@ -385,7 +385,7 @@ const POSIES: Record<string, Petal[]> = {
   ],
 };
 
-function Blossoms({ className, posy }: { className: string; posy: keyof typeof POSIES }) {
+export function Blossoms({ className, posy }: { className: string; posy: keyof typeof POSIES }) {
   return (
     <span className={className} aria-hidden>
       {POSIES[posy].map((p, i) => (

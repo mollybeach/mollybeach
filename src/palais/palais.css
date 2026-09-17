@@ -3150,46 +3150,57 @@
 .palais .vis-fold[open] > summary::after { transform: rotate(90deg); }
 .palais .vis-fold > summary h3 { margin: 0; }
 
-/* the world map under the visit log: a soft sea, hand-drawn coasts, a pin on
-   every city anybody came from, and a label when you point at one */
+/* the world map under the visit log, drawn after an old school wall map: a
+   teal sea, faded land, a rusty grid, the tropics dashed and named, and a pin
+   on every city anybody came from */
 .palais .vis-world { margin: 0; display: grid; gap: 0.4rem; }
 .palais .vis-world svg {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 14px;
+  border-radius: 6px;
   border: 2.5px solid var(--cat-jewel-side, #c9a44c);
-  box-shadow: 0 0 0 3px #fffaf0, 0 4px 12px rgba(60, 35, 40, 0.18);
-  background: #fffaf0;
+  box-shadow: 0 0 0 3px #fffaf0, 0 4px 12px rgba(60, 35, 40, 0.24);
+  background: #7e9aa0;
 }
-.palais .vis-world-grid line { stroke: rgba(120, 150, 180, 0.32); stroke-width: 0.6; }
-.palais .vis-world-equator { stroke: rgba(120, 150, 180, 0.55); stroke-width: 0.9; stroke-dasharray: 4 3; }
-.palais .vis-world-waves path { fill: none; stroke: rgba(255, 255, 255, 0.75); stroke-width: 1.4; stroke-linecap: round; }
-.palais .vis-world-land path {
-  fill: #e9f0dc;
-  stroke: #c3a86a;
-  stroke-width: 1.1;
-  stroke-linejoin: round;
+.palais .vis-world-grid line { stroke: rgba(150, 80, 50, 0.32); stroke-width: 0.5; }
+.palais .vis-world-named line { stroke: rgba(90, 70, 50, 0.5); stroke-width: 0.7; stroke-dasharray: 6 4; }
+.palais .vis-world-named text {
+  font: 6px Georgia, "Times New Roman", serif;
+  letter-spacing: 0.1em;
+  text-anchor: end;
+  fill: rgba(60, 52, 40, 0.75);
+}
+.palais .vis-world-equator { stroke: rgba(80, 60, 40, 0.7); stroke-width: 1; }
+.palais .vis-world-land path { stroke: #6b5a45; stroke-width: 0.8; stroke-linejoin: round; }
+.palais .vis-world-seas text {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  letter-spacing: 0.34em;
+  text-anchor: middle;
+  fill: #38494f;
+  opacity: 0.85;
 }
 .palais .vis-world-rose circle { fill: rgba(255, 250, 240, 0.72); stroke: var(--cat-jewel-side, #c9a44c); stroke-width: 1.2; }
-.palais .vis-world-rose path { fill: var(--cat-jewel-side, #c9a44c); opacity: 0.85; }
+.palais .vis-world-rose path { fill: var(--cat-jewel-side, #c9a44c); opacity: 0.9; }
 .palais .vis-world-rose text { font-size: 9px; text-anchor: middle; fill: #fffaf0; }
 
-.palais .vis-world-pin { cursor: help; outline: none; }
-.palais .vis-world-halo { fill: var(--cat-jewel, #c43b6e); opacity: 0.16; transition: opacity 160ms ease; }
-.palais .vis-world-drop {
-  fill: var(--cat-jewel, #c43b6e);
-  stroke: #fffaf0;
-  stroke-width: 1.3;
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform 160ms ease;
+.palais .vis-world-pin { cursor: help; outline: none; transition: transform 160ms ease; }
+.palais .vis-world-halo { fill: var(--cat-jewel, #c43b6e); opacity: 0.2; transition: opacity 160ms ease; }
+.palais .vis-world-tack { fill: var(--cat-jewel, #c43b6e); stroke: #fffaf0; stroke-width: 0.9; }
+.palais .vis-world-pole { stroke: #4a3f2c; stroke-width: 1.1; stroke-linecap: round; }
+.palais .vis-world-cloth { fill: #fffaf0; stroke: #4a3f2c; stroke-width: 0.8; }
+.palais .vis-world-flag {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
-.palais .vis-world-eye { fill: #fffaf0; }
+.palais .vis-world-pin.is-on,
+.palais .vis-world-pin:focus-visible { transform-box: fill-box; }
 .palais .vis-world-pin.is-on .vis-world-halo,
-.palais .vis-world-pin:focus-visible .vis-world-halo { opacity: 0.34; }
-.palais .vis-world-pin.is-on .vis-world-drop,
-.palais .vis-world-pin:focus-visible .vis-world-drop { transform: scale(1.22); }
+.palais .vis-world-pin:focus-visible .vis-world-halo { opacity: 0.42; }
+.palais .vis-world-pin.is-on .vis-world-cloth,
+.palais .vis-world-pin:focus-visible .vis-world-cloth { stroke-width: 1.3; }
 
 .palais .vis-world-say rect { fill: #fffdf6; stroke: var(--cat-jewel-side, #c9a44c); stroke-width: 1.4; filter: drop-shadow(0 2px 4px rgba(60, 35, 40, 0.28)); }
 .palais .vis-world-say-tip { fill: var(--cat-jewel-side, #c9a44c); }
@@ -3219,36 +3230,16 @@
   outline-offset: 3px;
 }
 
-/* the world it opens */
-.palais .palais-globe-sheet {
-  position: fixed;
-  inset: 0;
-  z-index: 120;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
-  background: rgba(30, 24, 12, 0.55);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
-  animation: wm-pop 240ms ease-out;
+/* the world it opens wears the map's own frame: cream paper over a floral,
+   gilt rims, a posy in each corner and the plaque across the top */
+.palais .wm-panel--globe {
+  width: min(940px, 100%);
+  grid-template-columns: minmax(0, 1fr);
+  padding: 2.2rem 1.4rem 1.4rem;
 }
-.palais .palais-globe-panel {
-  position: relative;
-  width: min(880px, 100%);
-  max-height: calc(100dvh - 3rem);
-  overflow: auto;
-  display: grid;
-  gap: 0.7rem;
-  padding: 1.1rem 1.2rem 1.2rem;
-  border-radius: 20px;
-  border: 3px solid var(--cat-jewel-side, #c9a44c);
-  background: #fffdf6;
-  box-shadow: 0 0 0 4px #fffaf0, 0 0 0 5.5px rgba(201, 164, 76, 0.6), 0 24px 60px rgba(40, 26, 10, 0.45);
-}
-.palais .palais-globe-panel h2 {
-  margin: 0;
-  text-align: center;
-  font: 700 1.25rem/1.2 var(--cat-round, inherit);
-  color: var(--cat-ink, #3a2f1c);
-}
-.palais .palais-globe-panel .wm-close { position: absolute; top: -0.9rem; right: -0.6rem; }
+/* the posies on the right are placed for the map's card column; this panel
+   has no card, so they go to its own corners */
+.palais .wm-panel--globe .wm-bloom--br { right: -2.6rem; bottom: -2.8rem; }
+.palais .wm-panel--globe .wm-bloom--tr { right: -2.4rem; top: -2.4rem; }
+.palais .wm-globe-body { display: grid; gap: 0.5rem; min-height: 0; }
+.palais .wm-globe-body .cat-note { text-align: center; }

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { VisitorMap } from "./VisitorMap";
+import { Blossoms } from "./WorldMap";
+import { floralSrc, paletteOf, useFloral } from "./florals";
 import { visitStats, type VisitStats } from "./visits";
 import { usePlace } from "./place";
 
@@ -38,6 +40,11 @@ function coverBox(img: HTMLImageElement, stage: HTMLElement) {
 
 export function GlobeEgg() {
   const { place } = usePlace();
+  // the same dressing as the world map: cream paper over a floral, with the
+  // rims and the plaque taking their stone from the sidebar and the footer
+  const paper = useFloral("map");
+  const chips = useFloral("sidebar");
+  const ribbon = useFloral("footer");
   const here = place === "library";
   const spot = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -101,18 +108,46 @@ export function GlobeEgg() {
         onClick={() => setOpen(true)}
       />
       {open && (
-        <div className="palais-globe-sheet" role="dialog" aria-modal aria-label="Everywhere anyone has come from" onClick={close}>
-          <div className="palais-globe-panel" onClick={(e) => e.stopPropagation()}>
-            <button type="button" className="wm-close" onClick={close} aria-label="Close the globe">
-              ✕
+        <div
+          className="wm-backdrop"
+          style={{
+            ["--wm-chip" as string]: `url("${floralSrc(chips.now)}")`,
+            ["--wm-jewel-side" as string]: paletteOf(chips.now).jewel,
+            ["--wm-jewel-foot" as string]: paletteOf(ribbon.now).jewel,
+          }}
+          onPointerDown={(e) => e.target === e.currentTarget && close()}
+        >
+          <div
+            className="wm-panel wm-panel--globe"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="globe-title"
+            style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
+          >
+            <Blossoms className="wm-bloom wm-bloom--tl" posy="tl" />
+            <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
+            <Blossoms className="wm-bloom wm-bloom--tr" posy="tr" />
+            <Blossoms className="wm-bloom wm-bloom--br" posy="br" />
+
+            <div className="wm-title">
+              <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
+              <h2 id="globe-title">
+                <span aria-hidden>✿</span> Visitors <span aria-hidden>✿</span>
+              </h2>
+              <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
+            </div>
+            <button type="button" className="wm-close" onClick={close} aria-label="Close the visitors map">
+              ×
             </button>
-            <h2>✿ Everywhere anyone's come from ✿</h2>
-            <VisitorMap cities={stats?.cities ?? []} />
-            {!stats && (
-              <p className="cat-note">
-                The globe keeps its pins for Molly. Spin it anyway: the world is the same either way.
-              </p>
-            )}
+
+            <div className="wm-globe-body">
+              <VisitorMap cities={stats?.cities ?? []} />
+              {!stats && (
+                <p className="cat-note">
+                  The globe keeps its pins for Molly. Spin it anyway: the world is the same either way.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}
