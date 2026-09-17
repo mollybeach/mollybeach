@@ -22,7 +22,7 @@ import { usePlace } from "./place";
 const GLOBE = { x: 0.71, y: 0.517, r: 0.032 };
 
 /** the drawn box of a photograph that has been cropped to cover its box */
-function coverBox(img: HTMLImageElement, stage: HTMLElement) {
+export function coverBox(img: HTMLImageElement, stage: HTMLElement) {
   const r = img.getBoundingClientRect();
   const s = stage.getBoundingClientRect();
   const cs = getComputedStyle(img);

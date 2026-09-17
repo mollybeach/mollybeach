@@ -3243,3 +3243,137 @@
 .palais .wm-panel--globe .wm-bloom--tr { right: -2.4rem; top: -2.4rem; }
 .palais .wm-globe-body { display: grid; gap: 0.5rem; min-height: 0; }
 .palais .wm-globe-body .cat-note { text-align: center; }
+
+/* the iMac on the library desk, and the close-up it opens */
+.palais .palais-imac-spot {
+  position: absolute;
+  z-index: 5;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 6px 8px rgba(40, 30, 20, 0.35));
+  transition: transform 200ms ease, filter 200ms ease;
+}
+.palais .palais-imac-spot img { display: block; width: 100%; height: 100%; }
+@media (hover: hover) {
+  .palais .palais-imac-spot:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: drop-shadow(0 8px 10px rgba(40, 30, 20, 0.4)) drop-shadow(0 0 16px rgba(180, 255, 120, 0.5));
+  }
+}
+.palais .palais-imac-spot:focus-visible { outline: 2px solid rgba(255, 246, 214, 0.9); outline-offset: 4px; }
+
+.palais .wm-panel--imac {
+  width: min(820px, 100%);
+  grid-template-columns: minmax(0, 1fr);
+  padding: 2.2rem 1.4rem 1.4rem;
+}
+.palais .wm-panel--imac .wm-bloom--br { right: -2.6rem; bottom: -2.8rem; }
+.palais .wm-panel--imac .wm-bloom--tr { right: -2.4rem; top: -2.4rem; }
+
+.palais .imac-close-up { position: relative; width: 100%; }
+.palais .imac-body { display: block; width: 100%; height: auto; }
+
+/* the lit screen, laid over the photograph of the machine */
+.palais .imac-screen {
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  background: linear-gradient(160deg, #2f6b2a, #5aa03f 45%, #bcd98a);
+  box-shadow: inset 0 0 18px rgba(10, 30, 10, 0.45);
+  font-family: var(--cat-round, system-ui), sans-serif;
+  color: #12300f;
+}
+.palais .imac-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.15em 0.6em;
+  background: linear-gradient(#fdfdfd, #e6e6e6);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  font-size: clamp(6px, 1.5cqw, 11px);
+  color: #222;
+}
+.palais .imac-menu-clock { margin-left: auto; }
+
+.palais .imac-desk {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5em;
+  padding: 0.7em;
+}
+.palais .imac-icon {
+  display: grid;
+  justify-items: center;
+  gap: 0.15em;
+  padding: 0.25em 0.4em;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fffdf4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font: 600 clamp(6px, 1.5cqw, 11px) var(--cat-round, inherit);
+  cursor: pointer;
+}
+.palais .imac-icon span { font-size: 1.9em; line-height: 1; }
+@media (hover: hover) {
+  .palais .imac-icon:hover { background: rgba(255, 255, 255, 0.3); }
+}
+
+.palais .imac-window {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 22%;
+  bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: #fffdf6;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+.palais .imac-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.2em 0.5em;
+  background: linear-gradient(#f4f4f4, #dcdcdc);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  font: 600 clamp(6px, 1.5cqw, 11px) var(--cat-round, inherit);
+  color: #333;
+}
+.palais .imac-window-shut {
+  width: 0.9em;
+  height: 0.9em;
+  padding: 0;
+  border: 1px solid #a33;
+  border-radius: 50%;
+  background: #ff6b6b;
+  cursor: pointer;
+}
+.palais .imac-window-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.6em 0.8em;
+  font: 500 clamp(6px, 1.5cqw, 11px)/1.45 var(--cat-round, inherit);
+  color: #3a2f1c;
+}
+.palais .imac-window-body p { margin: 0; }
+.palais .imac-window-body ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.3em; }
+.palais .imac-window-body a,
+.palais .imac-window-body li button {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #1a5fb4;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}

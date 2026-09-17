@@ -358,7 +358,7 @@ export const SHELVES: Shelf[] = [
       "cactus_saguaro_cholla_desert_cluster_sticker",
     ],
   },
-  { key: "tech", name: "Tech", emoji: "💻", items: ["computer_imac_purple_back_view_sticker", "computer_imac_g3_lime_green_keyboard_mouse_sticker"] },
+  { key: "tech", name: "Tech", emoji: "💻", items: ["computer_imac_purple_back_view_sticker", "computer_imac_g3_lime_green_keyboard_mouse_sticker", "computer_imac_g3_lime_green_front_facing_sticker"] },
   // the rest of the Temu room decor, not on any shelf above (filled in below)
   { key: "decor", name: "Room decor", emoji: "🏺", items: [] },
   /* everything else in the room — the gilded medallion, the jasperware and

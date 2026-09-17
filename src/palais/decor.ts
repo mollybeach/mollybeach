@@ -68,6 +68,7 @@ export const MORE_TRINKETS: PropId[] = [
   "ghost_sheet_navy_bow_books_candlestick_sticker",
   "computer_imac_purple_back_view_sticker",
   "computer_imac_g3_lime_green_keyboard_mouse_sticker",
+  "computer_imac_g3_lime_green_front_facing_sticker",
   "lamp_bankers_desk_green_glass_shade_brass_pull_chain_sticker",
   "jackrabbit_desert_black_tailed_standing_sticker",
   "tortoise_desert_walking_sticker",

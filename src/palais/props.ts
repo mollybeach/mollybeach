@@ -225,6 +225,7 @@ export const PROPS = catalogue({
   ghost_sheet_navy_bow_books_candlestick_sticker: { label: "a friendly ghost carrying books and a candle", lit: true, plane: "near", metres: 0.7 },
   computer_imac_purple_back_view_sticker: { label: "a purple iMac, seen from the back", plane: "near", metres: 0.55 },
   computer_imac_g3_lime_green_keyboard_mouse_sticker: { label: "a lime iMac G3 with its keyboard and mouse", glass: true, plane: "near", metres: 0.6 },
+  computer_imac_g3_lime_green_front_facing_sticker: { label: "a lime iMac, facing you", lit: true, plane: "near", metres: 0.45 },
   artwork_framed_abstract_splatter_painting_blue_green_gold_frame_sticker: { label: "an abstract blue and green splatter painting in a gilt frame", plane: "mid", metres: 0.7 },
   artwork_framed_abstract_pour_painting_pink_blue_black_gold_frame_sticker: { label: "an abstract pink and blue pour painting on black, in a gilt frame", plane: "mid", metres: 0.7 },
   can_watering_garden_metal_blush_pink_sticker: { label: "a blush-pink watering can", plane: "near" },
