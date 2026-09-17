@@ -31,14 +31,14 @@ const PAPER = {
   straw: "#ddd3a0",
 };
 
-interface Land {
+export interface Land {
   name: string;
   fill: string;
   /** [longitude, latitude] */
   pts: [number, number][];
 }
 
-const LANDS: Land[] = [
+export const LANDS: Land[] = [
   {
     name: "North America",
     fill: PAPER.rose,

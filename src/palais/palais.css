@@ -3383,3 +3383,69 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* the globe: the island's own colours, wrapped onto a world that turns */
+.palais .wm-globe { display: block; width: 100%; height: auto; max-height: calc(100cqh - 9rem); cursor: grab; touch-action: none; }
+.palais .wm-globe:active { cursor: grabbing; }
+.palais .wm-globe-grid path { fill: none; stroke: rgba(255, 253, 246, 0.28); stroke-width: 0.8; }
+.palais .wm-globe-land path {
+  fill: #8bbd6a;
+  stroke: #f4e3b6;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+.palais .wm-globe-rim { fill: none; stroke: var(--wm-gold, #cfa956); stroke-width: 3; }
+.palais .wm-globe-stop { cursor: pointer; outline: none; }
+.palais .wm-globe-halo { opacity: 0.5; }
+.palais .wm-globe-ring { fill: none; stroke: var(--wm-jewel-side, #c9a44c); stroke-width: 4; }
+.palais .wm-globe-stop.is-on .wm-globe-ring { stroke: var(--wm-rose-deep, #b0436a); stroke-width: 5; }
+.palais .wm-globe-stop:focus-visible .wm-globe-ring { stroke: var(--wm-rose-deep, #b0436a); }
+.palais .wm-globe-stop text {
+  font: 700 17px var(--wm-serif, inherit);
+  text-anchor: middle;
+  fill: var(--wm-ink, #4a3b22);
+  paint-order: stroke;
+  stroke: #fffdf6;
+  stroke-width: 4;
+}
+.palais .wm-globe-zoom g { cursor: pointer; }
+.palais .wm-globe-zoom circle { fill: rgba(255, 253, 246, 0.9); stroke: var(--wm-gold, #cfa956); stroke-width: 2; }
+.palais .wm-globe-zoom path { stroke: #6b5320; stroke-width: 2.6; stroke-linecap: round; }
+
+/* the switch between the island and the world */
+.palais .wm-globe-switch {
+  position: absolute;
+  top: -1.1rem;
+  left: 1.4rem;
+  z-index: 6;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: var(--wm-jewel-side, #9c7632);
+  color: #fffaf0;
+  font: 700 0.85rem var(--cat-round, inherit);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 3px #fffaf0, 0 4px 10px rgba(60, 35, 40, 0.3);
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .palais .wm-globe-switch:hover { filter: brightness(1.08); }
+}
+
+/* the map's card never sets the modal's height: on a wide screen it takes the
+   height of the map beside it, and the words about each place scroll inside
+   it, so going from place to place doesn't make the whole modal jump */
+@container palais (min-width: 821px) {
+  .palais .wm-card { contain: size; }
+}
+.palais .wm-card-body {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--wm-gold, #cfa956) transparent;
+}
+.palais .wm-card-body::-webkit-scrollbar { width: 7px; }
+.palais .wm-card-body::-webkit-scrollbar-track { background: transparent; }
+.palais .wm-card-body::-webkit-scrollbar-thumb { background: var(--wm-gold, #cfa956); border-radius: 7px; }
+/* and the globe takes up the same box as the island, so switching between
+   them doesn't resize it either */
+.palais .wm-globe { aspect-ratio: 960 / 640; }

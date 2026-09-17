@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { propSrc } from "./props";
 import { usePlace, type Place } from "./place";
+import { Globe } from "./Globe";
 import { currentSeason, type Season } from "./seasons";
 import { usePortrait } from "./PortraitTerrace";
 
@@ -31,6 +32,8 @@ interface Stop {
   seed: number;
   /** out at sea, on its own island */
   islet?: boolean;
+  /** where it would be on Earth, if the island were the world */
+  earth: [number, number];
   /** the room of the Palais you can walk into from here, if there is one yet */
   room?: Place;
   /** for a stop that is somewhere Molly has been rather than a room to come:
@@ -44,6 +47,7 @@ interface Stop {
 const STOPS: Stop[] = [
   {
     id: "palace",
+    earth: [47.6, -121.9],
     name: "Palais",
     tag: "home",
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
@@ -56,6 +60,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "kitchen",
+    earth: [47.2, -123.1],
     name: "Kitchen",
     tag: "just off the terrace",
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
@@ -68,6 +73,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lakehouse",
+    earth: [45.4, -121.7],
     name: "Lakehouse",
     tag: "where it began",
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
@@ -80,6 +86,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "closet",
+    earth: [48.9, -120.4],
     name: "Wardrobe Wing",
     tag: "inside the Lakehouse",
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
@@ -92,6 +99,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "domes",
+    earth: [41.0, 29.0],
     name: "City of Domes",
     tag: "the old city",
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
@@ -104,6 +112,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lanterns",
+    earth: [34.9, 135.8],
     name: "Lantern Isles",
     tag: "by ferry",
     blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
@@ -117,6 +126,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "jacaranda",
+    earth: [-34.6, -58.4],
     name: "Jacaranda Quarter",
     tag: "night streets",
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
@@ -129,6 +139,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "bathroom",
+    earth: [48.4, -122.8],
     name: "Bathroom",
     tag: "through the right arch",
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
@@ -141,6 +152,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "sunliner",
+    earth: [34.1, -116.3],
     name: "Sunliner Halt",
     tag: "where the desert kept the train",
     blurb: "A journey that stopped short: the Sunliner came off the rails out in the desert past the city in 2023, and the desert kept it. The carriages have gone gold in the late sun, with ocotillo and prickly pear growing up through the ties.",
@@ -154,6 +166,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "gorge",
+    earth: [37.6, 22.9],
     name: "Amphitheatre",
     tag: "the festival",
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
@@ -166,6 +179,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "caves",
+    earth: [-38.3, 175.1],
     name: "Hollow of Small Stars",
     tag: "under the hills",
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
@@ -178,6 +192,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "reef",
+    earth: [-18.3, 147.7],
     name: "Glass Reef",
     tag: "out at sea",
     blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
@@ -191,6 +206,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "shore",
+    earth: [36.4, 25.4],
     name: "Strand",
     tag: "every beach at once",
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
@@ -203,6 +219,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "garden",
+    earth: [46.4, -121.0],
     name: "Glasshouse",
     tag: "a garden conservatory",
     blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
@@ -215,6 +232,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "rainwood",
+    earth: [47.9, -124.4],
     name: "Rainwood",
     tag: "moss & mist",
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
@@ -227,6 +245,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lagoon",
+    earth: [64.1, -21.8],
     name: "Steaming Lagoon",
     tag: "fire under snow",
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
@@ -239,6 +258,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "madeleine",
+    earth: [46.6, -123.6],
     name: "Madeleine Room",
     tag: "upstairs, facing the sea",
     blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
@@ -251,6 +271,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "library",
+    earth: [49.4, -122.0],
     name: "Library",
     tag: "up the book stairs",
     blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
@@ -323,6 +344,9 @@ const inland = (x: number, y: number) => {
 };
 
 /** each stop's picture, in a round gilt frame */
+/** the rooms that are inside the Palais rather than places of their own */
+const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library"]);
+
 const FRAME = 44;
 const labelOf = (s: Stop) => s.name;
 const labelWidth = (s: Stop) => labelOf(s).length * 8.6 + 30;
@@ -428,6 +452,20 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const mapSvg = useRef<SVGSVGElement>(null);
   // the place a click would pick, while the pointer is over the map
   const [hover, setHover] = useState<number | null>(null);
+  // the island, or the same places on a world that turns
+  const [globe, setGlobe] = useState(false);
+  const spots = useMemo(
+    () =>
+      STOPS.map((s) => ({
+        id: s.id,
+        name: s.name,
+        earth: s.earth,
+        picture: picture(s, season, false),
+        color: s.color,
+        inside: INSIDE.has(s.id),
+      })),
+    [season],
+  );
   // the map wears the same cream paper over a floral as the catalogue
   const paper = useFloral("map");
   // the card beside it wears another one, under a lighter veil
@@ -607,11 +645,23 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           </h2>
           <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
         </div>
+        <button
+          type="button"
+          className="wm-globe-switch"
+          onClick={() => setGlobe((v) => !v)}
+          aria-pressed={globe}
+          title={globe ? "Back to the island" : "See it as a world"}
+        >
+          {globe ? "🗺 Island" : "🌍 Globe"}
+        </button>
         <button ref={closeBtn} type="button" className="wm-close" onClick={onClose} aria-label="Close the map">
           ×
         </button>
 
         <div className="wm-stage">
+          {globe ? (
+            <Globe spots={spots} here={here} onPick={setHere} />
+          ) : (
           <svg
             ref={mapSvg}
             className="wm-map"
@@ -803,6 +853,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               </g>
             </g>
           </svg>
+          )}
         </div>
 
         <div
