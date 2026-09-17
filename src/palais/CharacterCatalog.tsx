@@ -97,6 +97,16 @@ const CHARACTERS: Character[] = [
     face: 0.09,
     sticker: "character_moselle_sticker",
   },
+  {
+    id: "kayenat",
+    name: "Kayenat",
+    tag: "friend of the Palais",
+    blurb: "Kayenat, caught in golden-hour light in a little cream dress under a big brown jacket, long dark hair blowing and a soft smile.",
+    notes: ["A cream square-neck mini dress", "A brown jacket lined in plaid", "A fine gold chain", "White socks and white sneakers"],
+    color: "#b07a3a",
+    face: 0.08,
+    sticker: "character_kayenat_sticker",
+  },
 ];
 
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
