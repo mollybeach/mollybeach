@@ -137,16 +137,32 @@ const CAST: Character[] = [
     face: 0.08,
     sticker: "character_stephanie_sticker",
   },
+  {
+    id: "jonathan",
+    name: "Jonathan",
+    tag: "friend of the Palais",
+    blurb: "Jonathan, hands in his pockets and grinning at something just off to the side, in a navy hoodie with the strings pulled uneven.",
+    notes: ["A navy hooded sweatshirt over a white tee", "Khaki chinos", "White Nike sneakers", "A black watch on his left wrist"],
+    color: "#2b3a55",
+    face: 0.08,
+    sticker: "character_jonathan_sticker",
+  },
 ];
 
 /**
  * Who stands where on the carousel.
  *
- * Molly is always in the middle when the catalogue opens, with Ella on her left
- * and Sarah on her right; everyone else falls in behind them in the order
- * they were written, so adding people never moves those three apart.
+ * Molly is always in the middle when the catalogue opens, and the girls keep
+ * their places either side of her — Moselle, Madeleine, Brea, Ella on her left,
+ * then Sarah, Kayenat, Stephanie, Kate on her right. Everyone else falls in
+ * behind them in the order they were written, so adding people never shuffles
+ * this line.
  */
-const MIDDLE = ["ella", "molly", "sarah"] as const;
+const MIDDLE = [
+  "moselle", "madeleine", "brea", "ella",
+  "molly",
+  "sarah", "kayenat", "stephanie", "kate",
+] as const;
 const CHARACTERS: Character[] = [
   ...MIDDLE.map((id) => CAST.find((c) => c.id === id)!),
   ...CAST.filter((c) => !MIDDLE.includes(c.id as (typeof MIDDLE)[number])),

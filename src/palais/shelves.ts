@@ -145,7 +145,7 @@ export const SHELVES: Shelf[] = [
     items: ["pendant-opal", "pendant-cameo", "pendant-opal-antique", "garland_ivy_vine_fairy_lights_sticker"],
   },
   { key: "people", name: "People", emoji: "👯‍♀️", items: ["fall-table-brea-molly"] },
-  { key: "dogs", name: "Dogs", emoji: "🐶", items: ["dog-maggie-frisbee", "dog-charlie-kiddie-pool", "dog-frisbee"] },
+  { key: "dogs", name: "Dogs", emoji: "🐶", items: ["dog-maggie-frisbee", "dog-charlie-kiddie-pool", "dog-frisbee", "dog-leo-dalmatian"] },
   { key: "goats", name: "Goats", emoji: "🐐", items: ["goat-bambi", "goats-pumpkin-ferdinand"] },
   { key: "pillows", name: "Pillows", emoji: "🎀", items: ["pillow-floral", "pillow-lace", "pillow-bolster"] },
   {
@@ -358,7 +358,7 @@ export const SHELVES: Shelf[] = [
       "cactus_saguaro_cholla_desert_cluster_sticker",
     ],
   },
-  { key: "characters", name: "Characters", emoji: "👤", items: ["character_molly_sticker", "character_kate_sticker", "character_brea_sticker", "character_leonardo_sticker", "character_madeleine_sticker", "character_moselle_sticker", "character_kayenat_sticker", "character_ella_sticker", "character_sarah_sticker", "character_stephanie_sticker"] },
+  { key: "characters", name: "Characters", emoji: "👤", items: ["character_molly_sticker", "character_kate_sticker", "character_brea_sticker", "character_leonardo_sticker", "character_madeleine_sticker", "character_moselle_sticker", "character_kayenat_sticker", "character_ella_sticker", "character_sarah_sticker", "character_stephanie_sticker", "character_jonathan_sticker"] },
   { key: "tech", name: "Tech", emoji: "💻", items: ["computer_imac_purple_back_view_sticker", "computer_imac_g3_lime_green_keyboard_mouse_sticker", "computer_imac_g3_lime_green_front_facing_sticker"] },
   // the rest of the Temu room decor, not on any shelf above (filled in below)
   { key: "decor", name: "Room decor", emoji: "🏺", items: [] },

@@ -147,6 +147,7 @@ export const PROPS = catalogue({
   "goats-pumpkin-ferdinand": { label: "Pumpkin and Ferdinand", plane: "mid" },
   "dog-maggie-frisbee": { label: "Maggie, swimming with her frisbee", plane: "mid" },
   "dog-charlie-kiddie-pool": { label: "Charlie in the kiddie pool, with floaties", plane: "mid" },
+  "dog-leo-dalmatian": { label: "Leo, looking up in his red collar", plane: "near", metres: 0.55 },
   "honeysuckle-sewing-floral": { label: "Honeysuckle, and the floral", plane: "near" },
 
   /* ---- more tea --------------------------------------------------------- */
@@ -256,6 +257,7 @@ export const PROPS = catalogue({
   character_ella_sticker: { label: "Ella", plane: "near", metres: 0.8 },
   character_sarah_sticker: { label: "Sarah", plane: "near", metres: 0.72 },
   character_stephanie_sticker: { label: "Stephanie", plane: "near", metres: 0.5 },
+  character_jonathan_sticker: { label: "Jonathan", plane: "near", metres: 0.6 },
 
   /* ---- the desert, from the Sunliner's stretch of it ------------------- */
   jackrabbit_desert_black_tailed_standing_sticker: { label: "a jackrabbit, all ears", plane: "near", metres: 0.6 },
