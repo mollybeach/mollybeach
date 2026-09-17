@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PLACE_NAMES, type Place } from "./place";
 import { VisitorMap } from "./VisitorMap";
-import { nameVisitor, visitLog, visitorProfiles, visitStats, type VisitLogEntry, type VisitorProfile, type VisitStats } from "./visits";
+import { nameVisitor, visitLog, visitorProfiles, visitStats, type VisitDoing, type VisitLogEntry, type VisitorProfile, type VisitStats } from "./visits";
 import { messageOf } from "./useCollection";
 
 /**
@@ -37,6 +37,27 @@ const ago = (iso: string) => {
 };
 
 const placeName = (p: string) => PLACE_NAMES[p as Place] ?? p;
+
+/** what someone did inside, read back as a sentence: "opened the catalogue ·
+    characters: Molly → Ella". People they scrolled past in a row are gathered
+    up rather than listed one line each. */
+function doingTrail(doings: VisitDoing[]) {
+  const bits: string[] = [];
+  for (const d of doings) {
+    if (d.kind === "character") {
+      const last = bits[bits.length - 1];
+      if (last?.startsWith("characters: ")) bits[bits.length - 1] = `${last} → ${d.detail}`;
+      else bits.push(`characters: ${d.detail}`);
+    } else if (d.kind === "characters") {
+      bits.push("opened the character catalogue");
+    } else if (d.kind === "catalogue") {
+      bits.push("opened the catalogue");
+    } else {
+      bits.push(d.detail ? `${d.kind}: ${d.detail}` : d.kind);
+    }
+  }
+  return bits.join(" · ");
+}
 
 const mins = (sec: number | null | undefined) => {
   const n = sec ?? 0;
@@ -651,6 +672,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                         .join(" · ")}
                     </small>
                     {v.places.length > 0 && <small>🗺️ {v.places.map(placeName).join(" → ")}</small>}
+                    {v.doings?.length > 0 && <small>✿ {doingTrail(v.doings)}</small>}
                   </span>
                   <time dateTime={v.at} title={new Date(v.at).toLocaleString()}>
                     {ago(v.at)}

@@ -12,6 +12,7 @@ import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
 import { useClosetHiddenDefault } from "./closetRacks";
 import { isPortable, resolvePortable } from "./crossDevice";
+import { noteDoing } from "./visits";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -352,7 +353,10 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         )}
         <button
           type="button"
-          onClick={() => setCatalogue(true)}
+          onClick={() => {
+            setCatalogue(true);
+            noteDoing("catalogue");
+          }}
           aria-haspopup="dialog"
           aria-label={inCloset ? "Open the wardrobe catalogue" : "Open the catalogue"}
           className="palais-pill palais-pill--catalogue"
@@ -390,7 +394,10 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
-          onClick={() => setCast(true)}
+          onClick={() => {
+            setCast(true);
+            noteDoing("characters");
+          }}
           aria-haspopup="dialog"
           aria-label="Open the characters"
           className="palais-pill palais-pill--cast"

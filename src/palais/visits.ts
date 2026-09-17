@@ -521,6 +521,41 @@ export function recordPlace(place: string) {
   });
 }
 
+/**
+ * What someone is doing inside: opening the catalogue, opening the character
+ * catalogue, stopping on a character. Same shape as recordPlace — it waits for
+ * the session the visit was recorded under, and never speaks up on localhost.
+ */
+let doingQueue: Promise<void> = Promise.resolve();
+
+export function noteDoing(kind: string, detail?: string) {
+  if (!dbConfigured || process.env.NODE_ENV !== "production") return;
+  doingQueue = doingQueue.then(async () => {
+    let session: string | null = null;
+    for (let i = 0; i < 20 && !session; i++) {
+      try {
+        session = sessionStorage.getItem(SESSION_KEY);
+      } catch {
+        return;
+      }
+      if (!session) await new Promise((r) => setTimeout(r, 250));
+    }
+    if (!session) return;
+    try {
+      const sb = await db();
+      await sb.rpc("palais_note_doing", { p_session: session, p_kind: kind, p_detail: detail ?? null });
+    } catch {
+      return;
+    }
+  });
+}
+
+export interface VisitDoing {
+  kind: string;
+  detail: string | null;
+  at: string;
+}
+
 export interface VisitLogEntry {
   id: number;
   at: string;
@@ -573,6 +608,8 @@ export interface VisitLogEntry {
   zone: string | null;
   /** why this visit looks like a VPN, or null if it doesn't */
   vpn: string | null;
+  /** what they opened and who they stopped on, in order */
+  doings: VisitDoing[];
 }
 
 export async function visitLog(before?: number, visitor?: string | null, limit = 50): Promise<VisitLogEntry[]> {

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { noteDoing } from "./visits";
 import { Blossoms } from "./WorldMap";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 
@@ -205,6 +206,15 @@ export function CharacterCatalog({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
+
+  /* who they stopped on. Only once they've stopped: sliding past four people
+     on the way to the fifth isn't looking at four people. */
+  useEffect(() => {
+    if (!open) return;
+    const who = CHARACTERS[here];
+    const t = setTimeout(() => noteDoing("character", who.name), 2500);
+    return () => clearTimeout(t);
+  }, [open, here]);
 
   if (!open) return null;
   const who = CHARACTERS[here];
