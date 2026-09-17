@@ -3269,8 +3269,14 @@
   grid-template-columns: minmax(0, 1fr);
   padding: 2.2rem 1.4rem 1.4rem;
 }
-.palais .wm-panel--imac .wm-bloom--br { right: -2.6rem; bottom: -2.8rem; }
 .palais .wm-panel--imac .wm-bloom--tr { right: -2.4rem; top: -2.4rem; }
+/* the posies at the foot sit further out and lower, and the machine is inset
+   a little, so the flowers never land on the keyboard */
+.palais .wm-panel--imac .wm-bloom--bl { left: -5rem; bottom: -5rem; }
+.palais .wm-panel--imac .wm-bloom--br { right: -5rem; bottom: -5rem; }
+.palais .wm-panel--imac .imac-close-up { width: 84%; margin: 0 auto; }
+/* the close-up sits on the green floral, so it wants a paler page under it */
+.palais .wm-panel--imac .imac-close-up { filter: drop-shadow(0 10px 22px rgba(30, 40, 20, 0.35)); }
 
 .palais .imac-close-up { position: relative; width: 100%; }
 .palais .imac-body { display: block; width: 100%; height: auto; }

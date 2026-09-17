@@ -17,12 +17,15 @@ import { usePlace } from "./place";
  */
 
 /** where the iMac stands on the desk, as a fraction of the library photograph */
-const ON_THE_DESK = { x: 0.455, base: 0.566, w: 0.095 };
+const ON_THE_DESK = { x: 0.44, base: 0.58, w: 0.092 };
 
 /** the lit part of the screen, as a fraction of the sticker */
 const SCREEN = { x: 0.22, y: 0.115, w: 0.52, h: 0.475 };
 
-const MAC = "computer_imac_g3_lime_green_front_facing_sticker" as const;
+/** the one on the desk is the three-quarter view, with its keyboard and mouse;
+    the close-up is the one facing you, as if you had sat down at it */
+const ON_DESK = "computer_imac_g3_lime_green_keyboard_mouse_sticker" as const;
+const UP_CLOSE = "computer_imac_g3_lime_green_front_facing_sticker" as const;
 
 type App = "readme" | "rooms" | null;
 
@@ -48,7 +51,7 @@ export function LibraryImac() {
       if (!img) return;
       const box = coverBox(img, stage);
       const w = box.w * ON_THE_DESK.w;
-      const h = w * 0.797; // the sticker's own shape
+      const h = w * 0.839; // the sticker's own shape
       el.style.width = `${w}px`;
       el.style.height = `${h}px`;
       el.style.left = `${box.left + box.w * ON_THE_DESK.x - w / 2}px`;
@@ -87,7 +90,7 @@ export function LibraryImac() {
         title="The iMac"
         onClick={() => setOpen(true)}
       >
-        <img src={propSrc(MAC)} alt="" />
+        <img src={propSrc(ON_DESK)} alt="" />
       </button>
 
       {open && (
@@ -105,7 +108,7 @@ export function LibraryImac() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="imac-title"
-            style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
+            style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.28), rgba(250, 243, 229, 0.34)), url("${floralSrc("green")}")` }}
           >
             <Blossoms className="wm-bloom wm-bloom--tl" posy="tl" />
             <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
@@ -115,7 +118,7 @@ export function LibraryImac() {
             <div className="wm-title">
               <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
               <h2 id="imac-title">
-                <span aria-hidden>✿</span> iMac <span aria-hidden>✿</span>
+                <span aria-hidden>✿</span> Desktop <span aria-hidden>✿</span>
               </h2>
               <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
             </div>
@@ -124,7 +127,7 @@ export function LibraryImac() {
             </button>
 
             <div className="imac-close-up">
-              <img className="imac-body" src={propSrc(MAC)} alt="A lime green iMac" />
+              <img className="imac-body" src={propSrc(UP_CLOSE)} alt="A lime green iMac" />
               <div
                 className="imac-screen"
                 style={{
