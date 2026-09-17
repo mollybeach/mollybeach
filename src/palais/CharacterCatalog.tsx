@@ -117,6 +117,16 @@ const CHARACTERS: Character[] = [
     face: 0.13,
     sticker: "character_ella_sticker",
   },
+  {
+    id: "sarah",
+    name: "Sarah",
+    tag: "friend of the Palais",
+    blurb: "Sarah, all smiles in ivory and gold, with a high dark ponytail, henna on her hand and a long embroidered scarf falling over one shoulder.",
+    notes: ["An ivory beaded top with pearl tassels", "Wide flowing ivory trousers with embroidered hems", "A maang tikka and gold bangles", "Henna on her hand"],
+    color: "#c9a44c",
+    face: 0.09,
+    sticker: "character_sarah_sticker",
+  },
 ];
 
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
