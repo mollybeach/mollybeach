@@ -3149,3 +3149,20 @@
 }
 .palais .vis-fold[open] > summary::after { transform: rotate(90deg); }
 .palais .vis-fold > summary h3 { margin: 0; }
+
+/* the world map under the visit log: a flat sea, hand-drawn coasts, and a pin
+   on every city anybody came from */
+.palais .vis-world { margin: 0; display: grid; gap: 0.4rem; }
+.palais .vis-world svg { display: block; width: 100%; height: auto; border-radius: 10px; }
+.palais .vis-world-sea { fill: #dceaf6; }
+.palais .vis-world-grid line { stroke: rgba(120, 150, 180, 0.35); stroke-width: 0.6; }
+.palais .vis-world-equator { stroke: rgba(120, 150, 180, 0.6); stroke-width: 0.9; stroke-dasharray: 4 3; }
+.palais .vis-world-land path {
+  fill: #e7efdc;
+  stroke: var(--cat-jewel-side, #c9a44c);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+.palais .vis-world-halo { fill: var(--cat-jewel, #c43b6e); opacity: 0.18; }
+.palais .vis-world-pin { fill: var(--cat-jewel, #c43b6e); stroke: #fffaf0; stroke-width: 1.2; }
+.palais .vis-world figcaption { font-size: 0.82rem; }

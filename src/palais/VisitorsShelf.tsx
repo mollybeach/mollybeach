@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PLACE_NAMES, type Place } from "./place";
+import { VisitorMap } from "./VisitorMap";
 import { nameVisitor, visitLog, visitorProfiles, visitStats, type VisitLogEntry, type VisitorProfile, type VisitStats } from "./visits";
 import { messageOf } from "./useCollection";
 
@@ -673,6 +674,11 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
               )}
             </ul>
           </details>
+
+          <section className="vis-card">
+            <h3>🌍 Where in the world</h3>
+            <VisitorMap cities={stats.cities} />
+          </section>
           <p className="cat-signin-line">
             IP addresses aren't stored; each visitor is a scrambled code. Visits from localhost aren't counted.
           </p>
