@@ -15,8 +15,8 @@ export function Footer() {
       <div className="palais-footer-band">
         {was && <div aria-hidden className="palais-floral palais-floral--out" style={{ backgroundImage: `url("${floralSrc(was)}")` }} />}
         <div aria-hidden className="palais-floral" key={now} style={{ backgroundImage: `url("${floralSrc(now)}")` }} />
-        {/* a gilt rule where the floor meets it */}
-        <div aria-hidden className="palais-footer-rule" />
+        {/* the gilt rule where the floor meets it is the room's hem, up at the
+            bottom of the stage (PalaisHome), so it shows without scrolling */}
         {/* the light in the room reaches the top of the band */}
         <div aria-hidden className="palais-footer-light" />
       </div>

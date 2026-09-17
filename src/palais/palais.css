@@ -554,15 +554,17 @@
 }
 
 /* the same gilded band that runs down the side of the sidebar (index.css,
-   .gilt-divider), laid along the top of the footer */
-.palais-footer-rule {
+   .gilt-divider), laid along the foot of the room. It sits at the bottom of
+   the stage rather than the top of the footer, so it is on screen from the
+   start, and comes to rest on the footer's edge as the page scrolls. */
+.palais .palais-stage-hem {
   position: absolute;
   left: 2px;
   right: 2px;
-  top: 0;
-  /* over the wash of light on the band, which was washing the gold out */
-  z-index: 2;
+  bottom: 0;
   height: 10px;
+  z-index: 40;
+  pointer-events: none;
   border-radius: 9999px;
   background: linear-gradient(180deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
   box-shadow:

@@ -351,6 +351,10 @@ export default function PalaisHome() {
           </StickerToggle>
           <Weather layer="front" />
           <Draggable />
+          {/* the gilded band the footer wears, brought up onto the bottom of
+              the room so it shows at the foot of the screen without scrolling;
+              scroll on and it lands exactly on the top of the footer */}
+          <div aria-hidden className="palais-stage-hem" />
         </section>
 
         <Footer />
