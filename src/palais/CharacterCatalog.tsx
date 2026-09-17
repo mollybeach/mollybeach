@@ -36,7 +36,7 @@ interface Character {
   sticker: string;
 }
 
-const CHARACTERS: Character[] = [
+const CAST: Character[] = [
   {
     id: "molly",
     name: "Molly",
@@ -139,6 +139,21 @@ const CHARACTERS: Character[] = [
   },
 ];
 
+/**
+ * Who stands where on the carousel.
+ *
+ * Molly is always in the middle when the catalogue opens, with Ella on her left
+ * and Sarah on her right; everyone else falls in behind them in the order
+ * they were written, so adding people never moves those three apart.
+ */
+const MIDDLE = ["ella", "molly", "sarah"] as const;
+const CHARACTERS: Character[] = [
+  ...MIDDLE.map((id) => CAST.find((c) => c.id === id)!),
+  ...CAST.filter((c) => !MIDDLE.includes(c.id as (typeof MIDDLE)[number])),
+];
+/** the one the catalogue opens on */
+const START = CHARACTERS.findIndex((c) => c.id === "molly");
+
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
 
 export function CharacterCatalog({
@@ -155,7 +170,7 @@ export function CharacterCatalog({
   onPutIn: (ids: string[]) => void;
   onTakeOut: (ids: string[]) => void;
 }) {
-  const [here, setHere] = useState(0);
+  const [here, setHere] = useState(START);
   const paper = useFloral("map");
   const cardPaper = useFloral("card");
   const chips = useFloral("sidebar");
@@ -164,11 +179,12 @@ export function CharacterCatalog({
 
   useEffect(() => {
     if (!open) return;
+    setHere(START); // Molly is who you meet first
     closeBtn.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") setHere((h) => Math.min(CHARACTERS.length - 1, h + 1));
-      if (e.key === "ArrowLeft") setHere((h) => Math.max(0, h - 1));
+      if (e.key === "ArrowRight") setHere((h) => (h + 1) % CHARACTERS.length);
+      if (e.key === "ArrowLeft") setHere((h) => (h - 1 + CHARACTERS.length) % CHARACTERS.length);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -318,14 +334,17 @@ export function CharacterCatalog({
               </button>
             )}
             <div className="wm-nav">
-              <button type="button" className="wm-btn" onClick={() => setHere((h) => Math.max(0, h - 1))} disabled={here === 0}>
+              <button
+                type="button"
+                className="wm-btn"
+                onClick={() => setHere((h) => (h - 1 + CHARACTERS.length) % CHARACTERS.length)}
+              >
                 ◀ Back
               </button>
               <button
                 type="button"
                 className="wm-btn wm-btn--next"
-                onClick={() => setHere((h) => Math.min(CHARACTERS.length - 1, h + 1))}
-                disabled={here === CHARACTERS.length - 1}
+                onClick={() => setHere((h) => (h + 1) % CHARACTERS.length)}
               >
                 Next ▶
               </button>
