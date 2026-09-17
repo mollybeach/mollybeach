@@ -38,6 +38,16 @@ interface Character {
 
 const CHARACTERS: Character[] = [
   {
+    id: "molly",
+    name: "Molly",
+    tag: "keeper of the Palais",
+    blurb: "Molly, who the whole place belongs to, in a sharp black blazer over a cream bow blouse, sunglasses pushed up into her hair and a smile like she's about to show you round.",
+    notes: ["A long black blazer", "A cream blouse tied in a big soft bow", "A checked cream shoulder bag", "Cream peep-toe heels with little bows"],
+    color: "#c43b6e",
+    face: 0.1,
+    sticker: "character_molly_sticker",
+  },
+  {
     id: "kate",
     name: "Kate",
     tag: "friend of the Palais",
@@ -46,6 +56,46 @@ const CHARACTERS: Character[] = [
     color: "#3f7f6a",
     face: 0.12,
     sticker: "character_kate_sticker",
+  },
+  {
+    id: "brea",
+    name: "Brea",
+    tag: "friend of the Palais",
+    blurb: "Brea, long red-gold waves down her back, in a floor-length gown printed with leaves and butterfly wings in greens and blues, glancing over her shoulder.",
+    notes: ["A long gown of leaves and butterfly wings", "A keyhole neckline and a high collar", "Sheer blue skirts to the floor", "Small gold hoops"],
+    color: "#4f8f3f",
+    face: 0.09,
+    sticker: "character_brea_sticker",
+  },
+  {
+    id: "leonardo",
+    name: "Leonardo",
+    tag: "friend of the Palais",
+    blurb: "Leonardo, walking through in a black leather jacket with a big fur collar, hands in his pockets and an earbud in, lost in whatever he's listening to.",
+    notes: ["A black leather jacket with a fur collar", "A black half-zip underneath", "Black trousers and a black belt", "Black leather loafers"],
+    color: "#5a4a8a",
+    face: 0.1,
+    sticker: "character_leonardo_sticker",
+  },
+  {
+    id: "madeleine",
+    name: "Madeleine",
+    tag: "friend of the Palais",
+    blurb: "Madeleine, all in black with long brown waves and curtain bangs, gazing off to one side like she's thinking of somewhere she'd rather be.",
+    notes: ["A black high-neck sleeveless top", "High-waisted black flares", "A gold coin necklace and gold hoops", "Little tattoos on both forearms"],
+    color: "#8a4a6a",
+    face: 0.1,
+    sticker: "character_madeleine_sticker",
+  },
+  {
+    id: "moselle",
+    name: "Moselle",
+    tag: "friend of the Palais",
+    blurb: "Moselle, looking back over her shoulder in a long black satin gown, dark waves down her back and a little black handbag at her side.",
+    notes: ["A strapless black satin gown", "A slit up the side", "A small black top-handle bag with a gold clasp", "Black strappy heels"],
+    color: "#3a3550",
+    face: 0.09,
+    sticker: "character_moselle_sticker",
   },
 ];
 
@@ -120,25 +170,72 @@ export function CharacterCatalog({
           ×
         </button>
 
-        {/* the line-up, standing on the island's grass */}
+        {/* the line-up as a carousel: whoever is picked stands in the middle,
+            the ones either side step back smaller, and the rest wait off stage */}
         <div className="wm-stage cc-stage">
-          <div className="cc-lineup">
+          <div className="cc-carousel">
+            {CHARACTERS.map((c, i) => {
+              // measured round the ring, so there's always someone either side
+              const n = CHARACTERS.length;
+              let off = i - here;
+              if (off > n / 2) off -= n;
+              if (off < -n / 2) off += n;
+              const away = Math.abs(off);
+              if (away > 2) return null;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  className={`cc-person${off === 0 ? " is-on" : ""}`}
+                  style={{
+                    ["--cc-glow" as string]: c.color,
+                    left: `${50 + off * 24}%`,
+                    transform: `translateX(-50%) scale(${[1, 0.7, 0.5][away]})`,
+                    opacity: [1, 0.72, 0.38][away],
+                    zIndex: 10 - away,
+                  }}
+                  onClick={() => setHere(i)}
+                  aria-pressed={off === 0}
+                  aria-label={c.name}
+                  tabIndex={away > 1 ? -1 : 0}
+                >
+                  <img src={src(c)} alt="" decoding="async" />
+                  <span className="cc-name">{c.name}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="cc-ground" aria-hidden />
+
+          <button
+            type="button"
+            className="cc-arrow cc-arrow--back"
+            onClick={() => setHere((h) => (h - 1 + CHARACTERS.length) % CHARACTERS.length)}
+            aria-label="The one before"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            className="cc-arrow cc-arrow--next"
+            onClick={() => setHere((h) => (h + 1) % CHARACTERS.length)}
+            aria-label="The next one"
+          >
+            ›
+          </button>
+          <div className="cc-dots" role="tablist" aria-label="Characters">
             {CHARACTERS.map((c, i) => (
               <button
                 key={c.id}
                 type="button"
-                className={`cc-person${i === here ? " is-on" : ""}`}
-                style={{ ["--cc-glow" as string]: c.color }}
-                onClick={() => setHere(i)}
-                aria-pressed={i === here}
+                role="tab"
+                aria-selected={i === here}
                 aria-label={c.name}
-              >
-                <img src={src(c)} alt="" decoding="async" />
-                <span className="cc-name">{c.name}</span>
-              </button>
+                className={`cc-dot${i === here ? " is-on" : ""}`}
+                onClick={() => setHere(i)}
+              />
             ))}
           </div>
-          <div className="cc-ground" aria-hidden />
         </div>
 
         <div
