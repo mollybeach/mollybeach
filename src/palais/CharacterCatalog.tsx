@@ -10,8 +10,13 @@ import { floralSrc, paletteOf, useFloral } from "./florals";
  * card the map uses for a place, with their picture, a line or two about them,
  * and Back and Next to walk the line-up.
  *
- * Each one is a cut-out in /public/palais/characters. Adding someone is one
- * more entry below.
+ * It is also a catalogue: each character is a sticker as well (props.ts), so
+ * the card can put them into the room you're in, where they stand and can be
+ * dragged about like anything else, and take them out again.
+ *
+ * Each one is a cut-out in /public/palais/characters, with the same picture as
+ * a sticker in /public/palais/props. Adding someone is one more entry below,
+ * plus the sticker.
  */
 
 interface Character {
@@ -27,6 +32,8 @@ interface Character {
   /** where their face is in the cut-out, as a fraction down it, so the card's
       picture can frame it */
   face: number;
+  /** the sticker that puts them in a room */
+  sticker: string;
 }
 
 const CHARACTERS: Character[] = [
@@ -38,12 +45,26 @@ const CHARACTERS: Character[] = [
     notes: ["A big black fringed scarf", "A deep green crewneck", "A brown leather shoulder bag", "White socks over black Chelsea boots"],
     color: "#3f7f6a",
     face: 0.12,
+    sticker: "character_kate_sticker",
   },
 ];
 
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
 
-export function CharacterCatalog({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function CharacterCatalog({
+  open,
+  onClose,
+  hidden,
+  onPutIn,
+  onTakeOut,
+}: {
+  open: boolean;
+  onClose: () => void;
+  /** the stickers taken out of the room, so the card knows who is standing in it */
+  hidden: Set<string>;
+  onPutIn: (ids: string[]) => void;
+  onTakeOut: (ids: string[]) => void;
+}) {
   const [here, setHere] = useState(0);
   const paper = useFloral("map");
   const cardPaper = useFloral("card");
@@ -143,6 +164,22 @@ export function CharacterCatalog({ open, onClose }: { open: boolean; onClose: ()
             </ul>
           </div>
           <div className="wm-actions">
+            {hidden.has(who.sticker) ? (
+              <button
+                type="button"
+                className="wm-btn wm-btn--visit"
+                onClick={() => {
+                  onPutIn([who.sticker]);
+                  onClose();
+                }}
+              >
+                Put {who.name} in the room ✿
+              </button>
+            ) : (
+              <button type="button" className="wm-btn" onClick={() => onTakeOut([who.sticker])}>
+                ✓ {who.name} is in the room · take out
+              </button>
+            )}
             <div className="wm-nav">
               <button type="button" className="wm-btn" onClick={() => setHere((h) => Math.max(0, h - 1))} disabled={here === 0}>
                 ◀ Back

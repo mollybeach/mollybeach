@@ -184,6 +184,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const now = useRef({ place, portrait });
   now.current = { place, portrait };
 
+  /* the characters put into each room from the character catalogue. A look
+     going on (the season turning, walking in) would otherwise take them
+     straight back out; they stay until they're taken out by hand */
+  const standingIn = useRef(new Map<string, Set<string>>());
+  const castIn = (at: string) => {
+    let set = standingIn.current.get(at);
+    if (!set) standingIn.current.set(at, (set = new Set()));
+    return set;
+  };
+
   /** put a look on the room for this device (and, with both, for the other too) */
   const worn = useRef(wearing);
   worn.current = wearing;
@@ -193,7 +203,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     const next = { desktop: look.desktop ?? w.desktop, phone: look.phone ?? w.phone, rev: w.rev + 1 };
     worn.current = next;
     setWearing(next);
-    setHidden(new Set(hiddenFor(tall ? next.phone : next.desktop, at)));
+    const standing = standingIn.current.get(at);
+    setHidden(new Set(hiddenFor(tall ? next.phone : next.desktop, at).filter((id) => !standing?.has(id))));
     clearTimeout(glide.current);
     setRearranging(animate);
     if (animate) glide.current = setTimeout(() => setRearranging(false), 1800);
@@ -457,7 +468,19 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       )}
 
       <WorldMap open={map} onClose={closeMap} />
-      <CharacterCatalog open={cast} onClose={closeCast} />
+      <CharacterCatalog
+        open={cast}
+        onClose={closeCast}
+        hidden={hidden}
+        onPutIn={(ids) => {
+          ids.forEach((id) => castIn(place).add(id));
+          putIn(ids);
+        }}
+        onTakeOut={(ids) => {
+          ids.forEach((id) => castIn(place).delete(id));
+          setHiddenHeld(new Set([...Array.from(hidden), ...ids]));
+        }}
+      />
 
       <Catalogue
         open={catalogue}

@@ -245,6 +245,9 @@ export const PROPS = catalogue({
   lamp_aladdin_genie_pink_enamel_gold_jeweled_sticker: { label: "a pink enamel Aladdin lamp", plane: "near" },
   lamp_bankers_desk_green_glass_shade_brass_pull_chain_sticker: { label: "a banker's lamp, green glass on brass", lit: true, plane: "near", metres: 0.26 },
 
+  /* ---- the characters (CharacterCatalog.tsx), who can stand in any room ---- */
+  character_kate_sticker: { label: "Kate", plane: "near", metres: 0.55 },
+
   /* ---- the desert, from the Sunliner's stretch of it ------------------- */
   jackrabbit_desert_black_tailed_standing_sticker: { label: "a jackrabbit, all ears", plane: "near", metres: 0.6 },
   tortoise_desert_walking_sticker: { label: "a desert tortoise, walking somewhere", plane: "near", metres: 0.38 },
