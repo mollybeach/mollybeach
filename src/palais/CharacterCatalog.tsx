@@ -148,6 +148,16 @@ const CAST: Character[] = [
     face: 0.08,
     sticker: "character_jonathan_sticker",
   },
+  {
+    id: "dream",
+    name: "Dream",
+    tag: "friend of the Palais",
+    blurb: "Dream in full Hospitaller kit — a black surcoat with the white eight-pointed cross, a chainmail coif pushed back, caught mid-laugh with his fist up by his chin.",
+    notes: ["A black sleeveless surcoat with a white Maltese cross", "A chainmail coif and hood", "A wide black sash with a beaded tie", "Grey leather boots"],
+    color: "#1f2430",
+    face: 0.07,
+    sticker: "character_dream_sticker",
+  },
 ];
 
 /**
