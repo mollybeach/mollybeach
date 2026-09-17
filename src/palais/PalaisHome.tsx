@@ -18,6 +18,7 @@ import { LOOSE } from "./decor";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
+import { GlobeEgg } from "./GlobeEgg";
 import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
 import { countPage, recordPlace, recordVisit } from "./visits";
@@ -351,6 +352,8 @@ export default function PalaisHome() {
           </StickerToggle>
           <Weather layer="front" />
           <Draggable />
+          {/* the globe in the library, for anyone who thinks to click it */}
+          <GlobeEgg />
           {/* the gilded band the footer wears, brought up onto the bottom of
               the room so it shows at the foot of the screen without scrolling;
               scroll on and it lands exactly on the top of the footer */}

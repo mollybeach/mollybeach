@@ -513,9 +513,9 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
             </section>
           </div>
 
-          {/* the two long lists are folded up in the catalogue, where they
-              come after everything else; the /admin page has them open */}
-          <details className="vis-card vis-fold" open={Boolean(forDays)}>
+          {/* the two long lists start folded: the page opens as a summary
+              rather than a wall of visits */}
+          <details className="vis-card vis-fold">
             <summary>
               <h3>👥 Visitors{people?.length ? ` · ${people.length}` : ""}</h3>
             </summary>
@@ -583,7 +583,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
             )}
           </details>
 
-          <details className="vis-card vis-fold" open={Boolean(forDays)}>
+          <details className="vis-card vis-fold">
             <summary>
               <h3>✦ {only ? `Visits by ${who(people?.find((p) => p.visitor === only)?.name ?? null, only)}` : "Every visit"}</h3>
             </summary>
