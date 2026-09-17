@@ -3105,6 +3105,7 @@
 .palais .palais-pill--floral .palais-pill-short { font-size: 1.45em; line-height: 0.85; }
 /* the season mark and the map icon are drawn in the button's own ink */
 .palais .palais-season-mark,
+.palais .palais-person-mark,
 .palais .palais-chair-mark,
 .palais .palais-heart-mark,
 .palais .palais-map-icon {
@@ -3451,3 +3452,76 @@
 /* and the globe takes up the same box as the island, so switching between
    them doesn't resize it either */
 .palais .wm-globe { aspect-ratio: 960 / 640; }
+
+.palais .palais-person-mark { width: 1.1em; height: 1.1em; transform: translateY(-1px); }
+
+/* the characters: the map's frame, with a line-up of people on its left */
+.palais .cc-stage {
+  position: relative;
+  align-items: flex-end;
+  justify-content: center;
+  /* a fixed height, so the people standing in it are sized by the stage and
+     not the other way round */
+  height: min(520px, calc(100cqh - 9rem));
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 250, 235, 0.95), rgba(255, 250, 235, 0) 70%),
+    linear-gradient(#cfe6f4, #e8f1dc 62%);
+}
+/* the grass they stand on, the island's own green */
+.palais .cc-ground {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -18%;
+  height: 34%;
+  border-radius: 50%;
+  background: radial-gradient(60% 80% at 50% 30%, #6f9c45, #547d38 45%, #346836 80%, #21582a);
+  box-shadow: inset 0 10px 0 #f4e3b6, 0 -2px 0 #fffaf0;
+}
+.palais .cc-lineup {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1.5rem 1rem 6%;
+}
+.palais .cc-person {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  height: 86%;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 220ms ease, filter 220ms ease;
+  filter: saturate(0.85) brightness(0.96);
+}
+.palais .cc-person img { height: 100%; width: auto; min-height: 0; filter: drop-shadow(0 10px 10px rgba(30, 40, 20, 0.35)); }
+.palais .cc-person.is-on {
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 0 18px var(--cc-glow, #c9a44c));
+}
+@media (hover: hover) {
+  .palais .cc-person:hover { filter: none; }
+}
+.palais .cc-name {
+  position: absolute;
+  bottom: -0.4rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 9999px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: #fffdf6;
+  color: var(--wm-ink, #4a3b22);
+  font: 700 0.9rem var(--wm-serif, inherit);
+  white-space: nowrap;
+}
+.palais .cc-person.is-on .cc-name { background: var(--wm-jewel-side, #9c7632); color: #fffaf0; }
+
+/* on the card, a portrait: the cut-out framed round the face */
+.palais .cc-peek { background: linear-gradient(135deg, #fff6d6, #d9b25a 45%, #f4dc9a 60%, #9c7632); }
+.palais .cc-peek img { object-fit: cover; background: radial-gradient(circle at 50% 30%, #fffdf6, #e8f1dc); }

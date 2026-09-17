@@ -271,7 +271,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "library",
-    earth: [49.4, -122.0],
+    earth: [43.65, -79.38],
     name: "Library",
     tag: "up the book stairs",
     blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",

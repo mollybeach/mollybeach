@@ -4,6 +4,7 @@ import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
 import { WorldMap } from "./WorldMap";
+import { CharacterCatalog } from "./CharacterCatalog";
 import { LayoutNow, PhoneLayoutNow, settle, type SeasonLayout } from "./arrangement";
 import { defaultLook, hiddenFor } from "./roomLayouts";
 import { usePortrait } from "./PortraitTerrace";
@@ -78,6 +79,16 @@ function SeasonMark({ season }: { season: string }) {
 }
 
 /** the heart on the catalogue button, drawn so it can carry a proper weight */
+/** the chip that opens the characters, drawn as a little person */
+function PersonMark() {
+  return (
+    <svg className="palais-person-mark" viewBox="0 0 24 24" aria-hidden fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="7.6" r="3.4" />
+      <path d="M5.2 20.2c.6-4 3.3-6.4 6.8-6.4s6.2 2.4 6.8 6.4" />
+    </svg>
+  );
+}
+
 /** the chip that puts the room's things away, drawn as a chair */
 function ChairMark() {
   const line = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
@@ -147,6 +158,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   // the world map (WorldMap.tsx)
   const [map, setMap] = useState(false);
   const closeMap = useCallback(() => setMap(false), []);
+  const [cast, setCast] = useState(false);
+  const closeCast = useCallback(() => setCast(false), []);
   // what's been taken out of the closet (Wardrobe.tsx); everything starts in it
   const [closetHidden, setClosetHiddenState] = useState<Set<string>>(() => new Set());
   // Molly's saved list of what's taken out (closetRacks.ts): worn once it loads,
@@ -366,6 +379,17 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
+          onClick={() => setCast(true)}
+          aria-haspopup="dialog"
+          aria-label="Open the characters"
+          className="palais-pill palais-pill--cast"
+        >
+          <PersonMark />
+          <span className="palais-pill-long">Characters</span>
+          <span className="palais-pill-short">Cast</span>
+        </button>
+        <button
+          type="button"
           onClick={() => nextFloral()}
           aria-label="Change the floral patterns"
           title="Change the floral patterns"
@@ -433,6 +457,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       )}
 
       <WorldMap open={map} onClose={closeMap} />
+      <CharacterCatalog open={cast} onClose={closeCast} />
 
       <Catalogue
         open={catalogue}

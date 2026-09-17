@@ -256,25 +256,46 @@ export function Globe({
     .filter(({ p }) => p.front);
   const groups: (typeof facing)[] = [];
   for (const it of facing) {
-    const near = groups.find((g) => {
-      const cx = g.reduce((a, b) => a + b.p.x, 0) / g.length;
-      const cy = g.reduce((a, b) => a + b.p.y, 0) / g.length;
-      return Math.hypot(it.p.x - cx, it.p.y - cy) < FRAME * 1.9;
-    });
+    // a gathering is only the places genuinely at the same spot: measured from
+    // where the gathering started, not from its middle, so it can't creep out
+    // and take in a neighbour a region away
+    const near = groups.find((g) => Math.hypot(it.p.x - g[0].p.x, it.p.y - g[0].p.y) < FRAME * 1.2);
     if (near) near.push(it);
     else groups.push([it]);
   }
-  const cameos = groups.flatMap((g) => {
-    if (g.length === 1) return [{ ...g[0], at: { x: g[0].p.x, y: g[0].p.y }, k: 0.6 + 0.4 * g[0].p.face, fanned: false }];
+  const cameos = groups.flatMap((g, group) => {
+    if (g.length === 1) return [{ ...g[0], at: { x: g[0].p.x, y: g[0].p.y }, k: 0.6 + 0.4 * g[0].p.face, fanned: false, group }];
     const cx = g.reduce((a, b) => a + b.p.x, 0) / g.length;
     const cy = g.reduce((a, b) => a + b.p.y, 0) / g.length;
     const k = 0.62;
     const ring = Math.max(FRAME * 1.5, (FRAME * k * 1.28) / Math.sin(Math.PI / g.length));
     return g.map((it, n) => {
       const a = -Math.PI / 2 + (2 * Math.PI * n) / g.length;
-      return { ...it, at: { x: cx + ring * Math.cos(a), y: cy + ring * Math.sin(a) }, k, fanned: true };
+      return { ...it, at: { x: cx + ring * Math.cos(a), y: cy + ring * Math.sin(a) }, k, fanned: true, group };
     });
   });
+  /* a place of its own always stays exactly where it is on the world; if a
+     ring of gathered places would land on it, the whole ring steps aside
+     (its threads still run back to the real spots) */
+  const radius = (c: { k: number; i: number }) => FRAME * c.k * (c.i === here ? 1.15 : 1) + 3;
+  for (let round = 0; round < 10; round++) {
+    let moved = false;
+    for (const c of cameos) {
+      if (c.fanned) continue;
+      const hit = cameos.find((o) => o.fanned && Math.hypot(o.at.x - c.at.x, o.at.y - c.at.y) < radius(o) + radius(c));
+      if (!hit) continue;
+      const dx = hit.at.x - c.at.x;
+      const dy = hit.at.y - c.at.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const push = radius(hit) + radius(c) - d + 1;
+      for (const o of cameos) {
+        if (o.group === hit.group) o.at = { x: o.at.x + (dx / d) * push, y: o.at.y + (dy / d) * push };
+      }
+      moved = true;
+    }
+    if (!moved) break;
+  }
+
   // the picked one last, so it sits over its neighbours
   cameos.sort((a, b) => (a.i === here ? 1 : b.i === here ? -1 : a.p.face - b.p.face));
 
