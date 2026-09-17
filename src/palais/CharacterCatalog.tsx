@@ -107,6 +107,16 @@ const CHARACTERS: Character[] = [
     face: 0.08,
     sticker: "character_kayenat_sticker",
   },
+  {
+    id: "ella",
+    name: "Ella",
+    tag: "friend of the Palais",
+    blurb: "Ella, up on pointe with one arm raised, in a painted leotard and a sheer wrap skirt, gazing up and away mid-dance.",
+    notes: ["A leotard painted with a cameo and classical scrolls", "A sheer grey wrap skirt", "A black velvet choker", "Pink satin pointe shoes"],
+    color: "#b58aa0",
+    face: 0.13,
+    sticker: "character_ella_sticker",
+  },
 ];
 
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
