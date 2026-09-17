@@ -191,8 +191,9 @@ body {
     2px 0 8px rgba(20, 30, 30, 0.28);
   transition: transform 300ms ease-in-out;
 }
-/* away with the drawer, at the same pace */
-.sidebar-gilt-band.is-away { transform: translateX(calc(-16rem - 14px)); }
+/* with the drawer shut it stays, flush against the edge of the screen: a
+   gilded seam down the side, with the menu button riding over it */
+.sidebar-gilt-band.is-away { transform: translateX(calc(-16rem - 2px)); z-index: 20; }
 
 /* On a phone the drawer is as tall as what you can actually see: 100vh counts
    the strip behind the browser's own chrome, which left the foot of the menu

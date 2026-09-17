@@ -153,7 +153,8 @@
 .palais [data-place="shore"] .palais-room--shore,
 .palais [data-place="caves"] .palais-room--caves,
 .palais [data-place="madeleine"] .palais-room--madeleine,
-.palais [data-place="library"] .palais-room--library { opacity: 1; }
+.palais [data-place="library"] .palais-room--library,
+.palais [data-place="sunliner"] .palais-room--sunliner { opacity: 1; }
 /* the stickers follow you into every room, each room with its own layout
    (roomLayouts.ts), as do the weather and the flyers; the terrace's pollen
    stays on the terrace */
@@ -559,6 +560,8 @@
   left: 2px;
   right: 2px;
   top: 0;
+  /* over the wash of light on the band, which was washing the gold out */
+  z-index: 2;
   height: 10px;
   border-radius: 9999px;
   background: linear-gradient(180deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
