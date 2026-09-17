@@ -3388,12 +3388,14 @@
 .palais .wm-globe { display: block; width: 100%; height: auto; max-height: calc(100cqh - 9rem); cursor: grab; touch-action: none; }
 .palais .wm-globe:active { cursor: grabbing; }
 .palais .wm-globe-grid path { fill: none; stroke: rgba(255, 253, 246, 0.28); stroke-width: 0.8; }
-.palais .wm-globe-land path {
-  fill: #8bbd6a;
-  stroke: #f4e3b6;
-  stroke-width: 1.6;
-  stroke-linejoin: round;
-}
+/* the ground, drawn three times like the island's: a wide pale stroke for the
+   shallows, a narrower sand one for the beach, then the grass on top */
+.palais .wm-globe-shallows path { fill: none; stroke: #5d8ae6; stroke-width: 9; stroke-linejoin: round; opacity: 0.85; }
+.palais .wm-globe-sand path { fill: none; stroke: #f4e3b6; stroke-width: 4.5; stroke-linejoin: round; }
+.palais .wm-globe-land path { stroke: #fffaf0; stroke-width: 0.8; stroke-linejoin: round; stroke-opacity: 0.6; }
+.palais .wm-globe-threads line { stroke: #fffdf6; stroke-width: 1.6; stroke-dasharray: 0.1 5; stroke-linecap: round; }
+.palais .wm-globe-threads circle { fill: #fffdf6; stroke: var(--wm-jewel-side, #c9a44c); stroke-width: 1.2; }
+.palais .wm-globe-castle { pointer-events: none; filter: drop-shadow(0 4px 6px rgba(20, 30, 40, 0.35)); }
 .palais .wm-globe-rim { fill: none; stroke: var(--wm-gold, #cfa956); stroke-width: 3; }
 .palais .wm-globe-stop { cursor: pointer; outline: none; }
 .palais .wm-globe-halo { opacity: 0.5; }

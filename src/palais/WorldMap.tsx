@@ -47,7 +47,7 @@ interface Stop {
 const STOPS: Stop[] = [
   {
     id: "palace",
-    earth: [47.6, -121.9],
+    earth: [46.85, -121.76],
     name: "Palais",
     tag: "home",
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
@@ -60,7 +60,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "kitchen",
-    earth: [47.2, -123.1],
+    earth: [46.97, -121.98],
     name: "Kitchen",
     tag: "just off the terrace",
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
@@ -73,7 +73,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "lakehouse",
-    earth: [45.4, -121.7],
+    earth: [47.66, -122.26],
     name: "Lakehouse",
     tag: "where it began",
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
@@ -86,7 +86,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "closet",
-    earth: [48.9, -120.4],
+    earth: [47.02, -121.52],
     name: "Wardrobe Wing",
     tag: "inside the Lakehouse",
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
@@ -139,7 +139,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "bathroom",
-    earth: [48.4, -122.8],
+    earth: [46.74, -121.52],
     name: "Bathroom",
     tag: "through the right arch",
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
@@ -232,7 +232,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "rainwood",
-    earth: [47.9, -124.4],
+    earth: [10.3, -84.8],
     name: "Rainwood",
     tag: "moss & mist",
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
@@ -258,7 +258,7 @@ const STOPS: Stop[] = [
   },
   {
     id: "madeleine",
-    earth: [46.6, -123.6],
+    earth: [46.68, -121.98],
     name: "Madeleine Room",
     tag: "upstairs, facing the sea",
     blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
