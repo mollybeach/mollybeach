@@ -3129,3 +3129,23 @@
   gap: 0.3em;
   line-height: 1.25rem;
 }
+
+/* the visitor book's two long lists fold up, so the page opens as a summary
+   rather than a wall of visits */
+.palais .vis-fold > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  list-style: none;
+}
+.palais .vis-fold > summary::-webkit-details-marker { display: none; }
+.palais .vis-fold > summary::after {
+  content: "▸";
+  margin-left: auto;
+  font-size: 0.9em;
+  color: var(--cat-jewel-side, #c9a44c);
+  transition: transform 160ms ease;
+}
+.palais .vis-fold[open] > summary::after { transform: rotate(90deg); }
+.palais .vis-fold > summary h3 { margin: 0; }

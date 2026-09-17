@@ -512,8 +512,12 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
             </section>
           </div>
 
-          <section className="vis-card">
-            <h3>👥 Visitors</h3>
+          {/* the two long lists are folded up in the catalogue, where they
+              come after everything else; the /admin page has them open */}
+          <details className="vis-card vis-fold" open={Boolean(forDays)}>
+            <summary>
+              <h3>👥 Visitors{people?.length ? ` · ${people.length}` : ""}</h3>
+            </summary>
             {peopleError && (
               <p className="cat-error" role="alert">
                 {needsMigration(peopleError) ? "Visitor profiles aren't set up yet: run supabase/migrations/20260915120000_palais_visitor_id.sql." : peopleError}
@@ -576,10 +580,12 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                 ))}
               </ul>
             )}
-          </section>
+          </details>
 
-          <section className="vis-card">
-            <h3>✦ {only ? `Visits by ${who(people?.find((p) => p.visitor === only)?.name ?? null, only)}` : "Every visit"}</h3>
+          <details className="vis-card vis-fold" open={Boolean(forDays)}>
+            <summary>
+              <h3>✦ {only ? `Visits by ${who(people?.find((p) => p.visitor === only)?.name ?? null, only)}` : "Every visit"}</h3>
+            </summary>
             {!only && (
               <p className="vis-person-actions">
                 <button type="button" className="cat-mini" onClick={() => setHideMe((v) => !v)} aria-pressed={!hideMe}>
@@ -666,7 +672,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                 </li>
               )}
             </ul>
-          </section>
+          </details>
           <p className="cat-signin-line">
             IP addresses aren't stored; each visitor is a scrambled code. Visits from localhost aren't counted.
           </p>
