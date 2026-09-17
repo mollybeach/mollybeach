@@ -785,9 +785,12 @@
 .palais .wm-panel {
   position: relative;
   width: min(1120px, 100%);
-  max-height: 100%;
+  /* never taller than the window: the card's words scroll inside it instead,
+     so the Visit button is always in reach */
+  max-height: calc(100cqh - 1.5rem);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 19rem;
+  grid-template-rows: minmax(0, 1fr);
   gap: 1rem;
   padding: 1.2rem;
   border-radius: 26px;

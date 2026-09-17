@@ -313,7 +313,7 @@ function trail(a: [number, number], b: [number, number], i: number) {
   return `M${a[0]},${a[1]} Q${(mx + (nx / len) * bend).toFixed(1)},${(my + (ny / len) * bend).toFixed(1)} ${b[0]},${b[1]}`;
 }
 
-const ISLAND = { cx: 500, cy: 352, rx: 440, ry: 296, seed: 5, amp: 0.1 };
+const ISLAND = { cx: 500, cy: 345, rx: 420, ry: 276, seed: 5, amp: 0.06 };
 const islandEdge = wobble(ISLAND.seed, ISLAND.amp);
 /** 0 at the middle of the island, 1 at its coast */
 const inland = (x: number, y: number) => {
@@ -471,7 +471,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     const I = ISLAND;
     const island = blob(I.cx, I.cy, I.rx, I.ry, I.seed, I.amp, 140);
     const beach = blob(I.cx, I.cy + 5, I.rx + 14, I.ry + 13, I.seed, I.amp, 140);
-    const shallows = blob(I.cx, I.cy + 6, I.rx + 40, I.ry + 36, I.seed, I.amp, 140);
+    const shallows = blob(I.cx, I.cy + 2, I.rx + 22, I.ry + 22, I.seed, I.amp, 140);
     const islets = STOPS.filter((s) => s.islet).map((s) => ({
       id: s.id,
       at: s.at,
