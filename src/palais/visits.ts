@@ -494,6 +494,8 @@ export interface VisitStats {
   systems: { os: string; browser: string; visits: number; unique: number }[];
   countries: { country: string; code: string | null; visits: number; unique: number }[];
   cities: { city: string; region: string | null; country: string | null; code: string | null; lat: number | null; lon: number | null; visits: number; unique: number }[];
+  /** how many cities there really are, which can be more than the map is given */
+  cities_total?: number;
   recent: { at: string; city: string | null; region: string | null; country: string | null; code: string | null; page: string | null; referrer: string | null; device: string | null; os: string | null; browser: string | null; source?: string | null; visitor: string | null }[];
 }
 

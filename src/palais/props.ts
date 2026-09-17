@@ -260,6 +260,7 @@ export const PROPS = catalogue({
   character_jonathan_sticker: { label: "Jonathan", plane: "near", metres: 0.6 },
   character_dream_sticker: { label: "Dream", plane: "near", metres: 0.6 },
   character_bryan_sticker: { label: "Bryan", plane: "near", metres: 0.6 },
+  character_jessica_sticker: { label: "Jessica", plane: "near", metres: 0.55 },
 
   /* ---- the desert, from the Sunliner's stretch of it ------------------- */
   jackrabbit_desert_black_tailed_standing_sticker: { label: "a jackrabbit, all ears", plane: "near", metres: 0.6 },

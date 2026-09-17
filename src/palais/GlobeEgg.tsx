@@ -141,7 +141,7 @@ export function GlobeEgg() {
             </button>
 
             <div className="wm-globe-body">
-              <VisitorMap cities={stats?.cities ?? []} />
+              <VisitorMap cities={stats?.cities ?? []} total={stats?.cities_total} />
               {!stats && (
                 <p className="cat-note">
                   The globe keeps its pins for Molly. Spin it anyway: the world is the same either way.

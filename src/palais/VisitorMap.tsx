@@ -176,9 +176,12 @@ const flagOf = (code: string | null) =>
 const nameOf = (c: City) =>
   [c.city, c.region, c.country].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(", ");
 
-export function VisitorMap({ cities }: { cities: City[] }) {
+export function VisitorMap({ cities, total }: { cities: City[]; total?: number }) {
   const placed = cities.filter((c) => c.lat != null && c.lon != null);
   const lost = cities.length - placed.length;
+  // the map is only handed so many cities; the caption should own up to the rest
+  const all = Math.max(total ?? 0, cities.length);
+  const beyond = all - cities.length;
   const most = Math.max(1, ...placed.map((c) => c.visits));
   const [over, setOver] = useState<number | null>(null);
   const shown = over != null ? placed[over] : null;
@@ -306,7 +309,8 @@ export function VisitorMap({ cities }: { cities: City[] }) {
         {shown && callout(shown)}
       </svg>
       <figcaption className="cat-note">
-        {placed.length ? `${placed.length} cit${placed.length === 1 ? "y" : "ies"} · point at a pin for the place` : "No cities yet"}
+        {placed.length ? `${all} cit${all === 1 ? "y" : "ies"} · point at a pin for the place` : "No cities yet"}
+        {beyond > 0 && ` · the ${placed.length} busiest are pinned`}
         {lost > 0 && ` · ${lost} more whose lookup was blocked, so they have no place on the map`}
       </figcaption>
     </figure>

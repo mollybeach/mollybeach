@@ -168,19 +168,29 @@ const CAST: Character[] = [
     face: 0.08,
     sticker: "character_bryan_sticker",
   },
+  {
+    id: "jessica",
+    name: "Jessica",
+    tag: "friend of the Palais",
+    blurb: "Jessica in a deep red gown with the skirt gathered at her hip, a gold rayed halo crown behind her long waved hair, looking steadily out like a painting of a saint.",
+    notes: ["A red velvet gown with a gathered, trained skirt", "A cream blouse with full sleeves and lace cuffs", "A gilt halo crown of rays and roses", "A gold rosary necklace"],
+    color: "#b3132c",
+    face: 0.13,
+    sticker: "character_jessica_sticker",
+  },
 ];
 
 /**
  * Who stands where on the carousel.
  *
  * Molly is always in the middle when the catalogue opens, and the girls keep
- * their places either side of her — Moselle, Madeleine, Brea, Ella on her left,
- * then Sarah, Kayenat, Stephanie, Kate on her right. Everyone else falls in
- * behind them in the order they were written, so adding people never shuffles
- * this line.
+ * their places either side of her — Moselle, Madeleine, Brea, Jessica, Ella on
+ * her left, then Sarah, Kayenat, Stephanie, Kate on her right. Everyone else
+ * falls in behind them in the order they were written, so adding people never
+ * shuffles this line.
  */
 const MIDDLE = [
-  "moselle", "madeleine", "brea", "ella",
+  "moselle", "madeleine", "brea", "jessica", "ella",
   "molly",
   "sarah", "kayenat", "stephanie", "kate",
 ] as const;

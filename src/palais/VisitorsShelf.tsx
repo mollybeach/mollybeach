@@ -699,7 +699,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
 
           <section className="vis-card">
             <h3>🌍 Where in the world</h3>
-            <VisitorMap cities={stats.cities} />
+            <VisitorMap cities={stats.cities} total={stats.cities_total} />
           </section>
           <p className="cat-signin-line">
             IP addresses aren't stored; each visitor is a scrambled code. Visits from localhost aren't counted.
