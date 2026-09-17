@@ -813,7 +813,7 @@
 .palais .wm-bloom--tl { top: -2.8rem; left: -3rem; }
 .palais .wm-bloom--bl { bottom: -3rem; left: -2.8rem; transform: rotate(-80deg); }
 .palais .wm-bloom--tr { top: -2.2rem; right: 1.6rem; width: 6.5rem; height: 6.5rem; transform: rotate(70deg); }
-.palais .wm-bloom--br { bottom: 0.2rem; right: 21.8rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
+.palais .wm-bloom--br { bottom: -2.8rem; right: 20.4rem; width: 8rem; height: 8rem; transform: rotate(196deg); }
 
 /* the title: a rose plaque with a gilt edge, set into the top of the frame */
 .palais .wm-title {

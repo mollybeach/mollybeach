@@ -243,6 +243,16 @@ export const PROPS = catalogue({
   box_trinket_round_portrait_cream_gold_vintage_sticker: { label: "a round cream-and-gilt trinket box with a portrait", plane: "near" },
   lamp_aladdin_genie_pink_enamel_gold_jeweled_sticker: { label: "a pink enamel Aladdin lamp", plane: "near" },
   lamp_bankers_desk_green_glass_shade_brass_pull_chain_sticker: { label: "a banker's lamp, green glass on brass", lit: true, plane: "near", metres: 0.26 },
+
+  /* ---- the desert, from the Sunliner's stretch of it ------------------- */
+  jackrabbit_desert_black_tailed_standing_sticker: { label: "a jackrabbit, all ears", plane: "near", metres: 0.6 },
+  tortoise_desert_walking_sticker: { label: "a desert tortoise, walking somewhere", plane: "near", metres: 0.38 },
+  fox_kit_desert_standing_sticker: { label: "a kit fox, out at dusk", plane: "near", metres: 0.8 },
+  roadrunner_desert_running_sticker: { label: "a roadrunner, mid-stride", plane: "near", metres: 0.56 },
+  ocotillo_agave_cluster_flowering_red_sticker: { label: "ocotillo in flower over an agave", plane: "mid", metres: 2.4 },
+  cactus_golden_barrel_agave_cluster_sticker: { label: "a golden barrel cactus and an agave", plane: "mid", metres: 1.3 },
+  cactus_prickly_pear_cluster_fruiting_sticker: { label: "a prickly pear in fruit", plane: "mid", metres: 2 },
+  cactus_saguaro_cholla_desert_cluster_sticker: { label: "a saguaro with cholla at its feet", plane: "mid", metres: 2.6 },
   candle_cherub_angel_seated_pastel_blue_sticker: { label: "a blue cherub candle", plane: "near" },
   box_incense_burner_wood_lattice_moon_stars_brass_sticker: { label: "a wooden incense box with moons and stars", plane: "near" },
   bottle_dropper_apothecary_glass_emerald_green_sticker: { label: "a green glass dropper bottle", glass: true, plane: "near" },

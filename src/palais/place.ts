@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * Which room of the Palais you're standing in.
  *
  * The palace terrace is home. The closet (the Wardrobe Wing on the world map)
- * the Lakehouse, the Steaming Lagoon, the Rainwood, the Amphitheatre, the City of Domes, the Jacaranda Quarter, the Glass Reef, the Lantern Isles, the Shore of All Shores and the Hollow of Small Stars are rooms you can walk into. Every room stays on the page
+ * the Lakehouse, the Steaming Lagoon, the Rainwood, the Amphitheatre, the City of Domes, the Jacaranda Quarter, the Glass Reef, the Lantern Isles, the Strand and the Hollow of Small Stars are rooms you can walk into. Every room stays on the page
  * the whole time, and only the one you're in shows, so the seasons keep turning together
  * and a room you come back to is exactly as you left it.
  *
@@ -62,7 +62,7 @@ export const PLACE_NAMES: Record<Place, string> = {
   jacaranda: "The Jacaranda Quarter",
   reef: "The Glass Reef",
   lanterns: "The Lantern Isles",
-  shore: "The Shore of All Shores",
+  shore: "The Strand",
   caves: "The Hollow of Small Stars",
   madeleine: "Madeleine Room",
   library: "The Library",

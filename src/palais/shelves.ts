@@ -343,6 +343,21 @@ export const SHELVES: Shelf[] = [
       "box_incense_burner_wood_lattice_moon_stars_upright_sticker",
     ],
   },
+  {
+    key: "desert",
+    name: "Desert",
+    emoji: "🌵",
+    items: [
+      "jackrabbit_desert_black_tailed_standing_sticker",
+      "tortoise_desert_walking_sticker",
+      "fox_kit_desert_standing_sticker",
+      "roadrunner_desert_running_sticker",
+      "ocotillo_agave_cluster_flowering_red_sticker",
+      "cactus_golden_barrel_agave_cluster_sticker",
+      "cactus_prickly_pear_cluster_fruiting_sticker",
+      "cactus_saguaro_cholla_desert_cluster_sticker",
+    ],
+  },
   { key: "tech", name: "Tech", emoji: "💻", items: ["computer_imac_purple_back_view_sticker", "computer_imac_g3_lime_green_keyboard_mouse_sticker"] },
   // the rest of the Temu room decor, not on any shelf above (filled in below)
   { key: "decor", name: "Room decor", emoji: "🏺", items: [] },
