@@ -158,6 +158,16 @@ const CAST: Character[] = [
     face: 0.07,
     sticker: "character_dream_sticker",
   },
+  {
+    id: "bryan",
+    name: "Bryan",
+    tag: "friend of the Palais",
+    blurb: "Bryan in a cream cricket jumper over a blue shirt and tie, hands at his sides, smiling straight at whoever's taking the picture.",
+    notes: ["A cream cable jumper with navy and red tipping", "A pale blue shirt and a spotted navy tie", "Tan pleated trousers", "Black horsebit loafers"],
+    color: "#c8b48a",
+    face: 0.08,
+    sticker: "character_bryan_sticker",
+  },
 ];
 
 /**
