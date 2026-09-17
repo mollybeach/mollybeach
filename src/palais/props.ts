@@ -246,7 +246,7 @@ export const PROPS = catalogue({
   lamp_bankers_desk_green_glass_shade_brass_pull_chain_sticker: { label: "a banker's lamp, green glass on brass", lit: true, plane: "near", metres: 0.26 },
 
   /* ---- the characters (CharacterCatalog.tsx), who can stand in any room ---- */
-  character_molly_sticker: { label: "Molly", plane: "near", metres: 0.55 },
+  character_molly_sticker: { label: "Molly", plane: "near", metres: 0.6 },
   character_kate_sticker: { label: "Kate", plane: "near", metres: 0.55 },
   character_leonardo_sticker: { label: "Leonardo", plane: "near", metres: 0.6 },
   character_brea_sticker: { label: "Brea", plane: "near", metres: 0.45 },
