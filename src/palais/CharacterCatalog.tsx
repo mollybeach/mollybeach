@@ -198,6 +198,16 @@ const CAST: Character[] = [
     face: 0.08,
     sticker: "character_jordan_sticker",
   },
+  {
+    id: "destiny",
+    name: "Destiny",
+    tag: "friend of the Palais",
+    blurb: "Destiny in a blue ditsy floral maxi dress with a high slit, long hair down past her shoulders, looking away to one side.",
+    notes: ["A blue floral maxi dress, smocked bodice and tie sleeves", "A high slit down one side", "A small black shoulder bag", "Cream strappy heeled sandals"],
+    color: "#4a86ad",
+    face: 0.09,
+    sticker: "character_destiny_sticker",
+  },
 ];
 
 /**
