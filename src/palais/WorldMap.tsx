@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { propSrc } from "./props";
 import { usePlace, type Place } from "./place";
+import { currentSeason, type Season } from "./seasons";
+import { usePortrait } from "./PortraitTerrace";
 
 /**
  * The map, like the level select in a storybook game: an
@@ -31,6 +33,12 @@ interface Stop {
   islet?: boolean;
   /** the room of the Palais you can walk into from here, if there is one yet */
   room?: Place;
+  /** for a stop that is somewhere Molly has been rather than a room to come:
+      what stands in place of the visit button */
+  aside?: string;
+  /** its picture was painted four times, one for each season, and again tall
+      for a phone */
+  seasons?: boolean;
 }
 
 const STOPS: Stop[] = [
@@ -41,7 +49,7 @@ const STOPS: Stop[] = [
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
-    at: [560, 420],
+    at: [560, 460],
     patch: [58, 42],
     seed: 7,
     room: "palace",
@@ -53,7 +61,7 @@ const STOPS: Stop[] = [
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
     finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
     color: "#f7b7a3",
-    at: [408, 414],
+    at: [408, 453],
     patch: [52, 38],
     seed: 23,
     room: "kitchen",
@@ -65,7 +73,7 @@ const STOPS: Stop[] = [
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
     finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
     color: "#8fcbe8",
-    at: [400, 276],
+    at: [400, 290],
     patch: [80, 58],
     seed: 11,
     room: "lakehouse",
@@ -77,7 +85,7 @@ const STOPS: Stop[] = [
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
     color: "#ffb3d6",
-    at: [548, 222],
+    at: [548, 227],
     patch: [46, 38],
     seed: 23,
     room: "closet",
@@ -101,7 +109,7 @@ const STOPS: Stop[] = [
     blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
     finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
     color: "#ffab9e",
-    at: [885, 142],
+    at: [885, 132],
     patch: [56, 40],
     seed: 131,
     room: "lanterns",
@@ -114,7 +122,7 @@ const STOPS: Stop[] = [
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
-    at: [841, 373],
+    at: [841, 405],
     patch: [52, 58],
     seed: 103,
     room: "jacaranda",
@@ -126,10 +134,23 @@ const STOPS: Stop[] = [
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
     finds: ["A clawfoot tub", "Glass-block windows", "Pink towels and jars of bath salts"],
     color: "#f3c6d8",
-    at: [687, 337],
+    at: [687, 362],
     patch: [48, 36],
     seed: 29,
     room: "bathroom",
+  },
+  {
+    id: "sunliner",
+    name: "Sunliner Halt",
+    tag: "where the desert kept the train",
+    blurb: "A journey that stopped short: the Sunliner came off the rails out in the desert past the city in 2023, and the desert kept it. The carriages have gone gold in the late sun, with ocotillo and prickly pear growing up through the ties.",
+    finds: ["Car 31025, still on its wheels", "Ocotillo in flower along the rails", "A rainbow over the mountains at sundown"],
+    color: "#f0a14e",
+    aside: "✦ Somewhere I've been, not a room ✦",
+    seasons: true,
+    at: [820, 545],
+    patch: [86, 54],
+    seed: 41,
   },
   {
     id: "gorge",
@@ -138,7 +159,7 @@ const STOPS: Stop[] = [
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
     finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
     color: "#ffc978",
-    at: [681, 520],
+    at: [681, 578],
     patch: [92, 64],
     seed: 83,
     room: "gorge",
@@ -150,7 +171,7 @@ const STOPS: Stop[] = [
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
     color: "#a9b8ff",
-    at: [462, 552],
+    at: [462, 616],
     patch: [92, 60],
     seed: 71,
     room: "caves",
@@ -162,7 +183,7 @@ const STOPS: Stop[] = [
     blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
     finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
     color: "#6fd3e6",
-    at: [125, 580],
+    at: [125, 649],
     patch: [70, 36],
     seed: 67,
     room: "reef",
@@ -175,7 +196,7 @@ const STOPS: Stop[] = [
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
     color: "#7fdccf",
-    at: [220, 442],
+    at: [220, 486],
     patch: [80, 100],
     seed: 53,
     room: "shore",
@@ -187,7 +208,7 @@ const STOPS: Stop[] = [
     blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
     finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
     color: "#b5dca8",
-    at: [242, 304],
+    at: [262, 323],
     patch: [56, 42],
     seed: 31,
     room: "garden",
@@ -199,7 +220,7 @@ const STOPS: Stop[] = [
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
     finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
     color: "#9fd88f",
-    at: [242, 166],
+    at: [242, 161],
     patch: [86, 70],
     seed: 41,
     room: "rainwood",
@@ -211,7 +232,7 @@ const STOPS: Stop[] = [
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
-    at: [408, 99],
+    at: [408, 81],
     patch: [104, 56],
     seed: 37,
     room: "lagoon",
@@ -223,7 +244,7 @@ const STOPS: Stop[] = [
     blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
     finds: ["A mosaic floor of blue flowers", "Bougainvillea over the balcony", "The sunset path across the water"],
     color: "#ffc2cf",
-    at: [592, 96],
+    at: [592, 78],
     patch: [48, 36],
     seed: 151,
     room: "madeleine",
@@ -235,7 +256,7 @@ const STOPS: Stop[] = [
     blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
     finds: ["A spiral staircase made of books", "A globe and a rolling ladder", "Roses round the window over the lake"],
     color: "#d9a066",
-    at: [120, 300],
+    at: [120, 319],
     patch: [48, 36],
     seed: 167,
     room: "library",
@@ -292,7 +313,7 @@ function trail(a: [number, number], b: [number, number], i: number) {
   return `M${a[0]},${a[1]} Q${(mx + (nx / len) * bend).toFixed(1)},${(my + (ny / len) * bend).toFixed(1)} ${b[0]},${b[1]}`;
 }
 
-const ISLAND = { cx: 500, cy: 352, rx: 416, ry: 275, seed: 5, amp: 0.1 };
+const ISLAND = { cx: 500, cy: 380, rx: 416, ry: 330, seed: 5, amp: 0.1 };
 const islandEdge = wobble(ISLAND.seed, ISLAND.amp);
 /** 0 at the middle of the island, 1 at its coast */
 const inland = (x: number, y: number) => {
@@ -306,7 +327,10 @@ const FRAME = 44;
 const labelOf = (s: Stop) => s.name;
 const labelWidth = (s: Stop) => labelOf(s).length * 8.6 + 30;
 
-const picture = (s: Stop) => `${process.env.PUBLIC_URL}/palais/map/${s.room ?? s.id}.webp`;
+const picture = (s: Stop, season: Season, tall = false) => {
+  const which = s.seasons ? `${tall ? "-portrait" : ""}-${season}` : "";
+  return `${process.env.PUBLIC_URL}/palais/map/${s.room ?? s.id}${which}.webp`;
+};
 
 /** a cluster of apple blossom and leaves, for the corners of the frame */
 /**
@@ -387,6 +411,19 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     const at = STOPS.findIndex((s) => s.room === place);
     setHere(at >= 0 ? at : 0);
   }, [open, place]);
+  /* the year the room is having, so a stop painted four times shows the right
+     one. It is read from the season animations themselves, the same way the
+     room's own chips read it. */
+  const [season, setSeason] = useState<Season>("spring");
+  useEffect(() => {
+    if (!open) return;
+    const read = () => setSeason(currentSeason(document));
+    read();
+    const id = setInterval(read, 2000);
+    return () => clearInterval(id);
+  }, [open]);
+  // a phone gets the tall painting of a stop that has one
+  const portrait = usePortrait();
   const closeBtn = useRef<HTMLButtonElement>(null);
   const mapSvg = useRef<SVGSVGElement>(null);
   // the place a click would pick, while the pointer is over the map
@@ -578,7 +615,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           <svg
             ref={mapSvg}
             className="wm-map"
-            viewBox="25 25 960 640"
+            viewBox="25 10 960 740"
             role="img"
             aria-label={`World map. Honeysuckle is at ${stop.name}. Click a place to hop there, and click it again to visit.`}
             onClick={(e) => {
@@ -726,7 +763,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                     <ellipse cy={FRAME - 2} rx={FRAME * 0.9} ry={10} fill="#2f3a2a" opacity={0.28} />
                     <circle r={FRAME + 1} fill="#fffaf0" />
                     <image
-                      href={picture(s)}
+                      href={picture(s, season)}
                       x={-FRAME * 1.4}
                       y={-FRAME}
                       width={FRAME * 2.8}
@@ -759,7 +796,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* Honeysuckle, hopping from stop to stop */}
             <g
               className="wm-player"
-              style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${Math.max(stop.at[1] + 10, 146)}px)` }}
+              style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${Math.max(stop.at[1] + 10, 131)}px)` }}
             >
               <g className="wm-player-hop" key={here}>
                 <image href={propSrc("cat-honeysuckle")} x={-41} y={-104} width={82} height={104} />
@@ -775,8 +812,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         >
           {/* the words scroll if they must; the buttons below always stay in view */}
           <div className="wm-card-body">
-          <figure className="wm-peek">
-            <img key={stop.id} src={picture(stop)} alt={`A look inside ${stop.name}`} decoding="async" />
+          <figure className={`wm-peek${portrait && stop.seasons ? " wm-peek--tall" : ""}`}>
+            <img key={`${stop.id}-${season}-${portrait}`} src={picture(stop, season, portrait)} alt={`A look inside ${stop.name}`} decoding="async" />
           </figure>
           <div className="wm-card-head">
             <h3>{stop.name}</h3>
@@ -811,7 +848,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               </button>
             )
           ) : (
-            <p className="wm-soon">Coming soon</p>
+            <p className="wm-soon">{stop.aside ?? "Coming soon"}</p>
           )}
           <div className="wm-nav">
             <button type="button" className="wm-btn" onClick={() => setHere((h) => Math.max(0, h - 1))} disabled={here === 0}>

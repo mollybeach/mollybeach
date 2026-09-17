@@ -552,14 +552,20 @@
   background-position: center top;
 }
 
+/* the same gilded band that runs down the side of the sidebar (index.css,
+   .gilt-divider), laid along the top of the footer */
 .palais-footer-rule {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 2px;
+  right: 2px;
   top: 0;
-  height: 3px;
-  background: linear-gradient(to right, transparent, #8f7541 8%, #e8ce86 34%, #f4e6bd 50%, #e8ce86 66%, #8f7541 92%, transparent);
-  box-shadow: 0 2px 10px rgba(30, 70, 68, 0.5);
+  height: 10px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #8a6a22 0%, #d8b55c 22%, #fff3cf 48%, #e0bd6a 66%, #a9863a 100%);
+  box-shadow:
+    0 0 0 1px rgba(122, 90, 30, 0.75),
+    0 -2px 7px rgba(20, 30, 30, 0.28),
+    0 2px 8px rgba(20, 30, 30, 0.28);
 }
 
 .palais-footer-light {
@@ -983,6 +989,8 @@
   .palais .wm-close { top: -1rem; right: -0.5rem; }
   /* a smaller picture on short phones, so the words still fit above the buttons */
   .palais .wm-peek { aspect-ratio: auto; height: clamp(3.5rem, calc(100cqh - 38rem), 7rem); }
+  /* a stop with a tall painting of its own gets a deeper window for it */
+  .palais .wm-peek--tall { height: clamp(6.5rem, calc(100cqh - 34rem), 10rem); }
   .palais .wm-bloom { width: 4.5rem; height: 4.5rem; }
   .palais .wm-bloom--tr { display: none; }
   .palais .wm-bloom--br { right: 1.5rem; bottom: auto; top: 44%; width: 6rem; height: 6rem; }
