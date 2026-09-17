@@ -178,6 +178,16 @@ const CAST: Character[] = [
     face: 0.13,
     sticker: "character_jessica_sticker",
   },
+  {
+    id: "peter",
+    name: "Peter",
+    tag: "friend of the Palais",
+    blurb: "Peter in Neverland green with pointed ears and a red feather in his cap, hands in his pockets, half smiling like he's about to suggest something.",
+    notes: ["A green tunic with a laced front and leafy hem", "A green cap with a red feather", "A brown belt with a little pouch", "Tall brown cuffed boots"],
+    color: "#2f5d3a",
+    face: 0.08,
+    sticker: "character_peter_sticker",
+  },
 ];
 
 /**
