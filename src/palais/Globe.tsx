@@ -94,7 +94,7 @@ const inside = (lon: number, lat: number, pts: [number, number][]) => {
   for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
     const [xi, yi] = pts[i];
     const [xj, yj] = pts[j];
-    if (yi > lat !== yj > lat && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) hit = !hit;
+    if ((yi > lat) !== (yj > lat) && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) hit = !hit;
   }
   return hit;
 };

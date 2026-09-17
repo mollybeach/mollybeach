@@ -35,7 +35,6 @@ export function LibraryImac() {
   const mac = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [app, setApp] = useState<App>(null);
-  const paper = useFloral("map");
   const chips = useFloral("sidebar");
   const ribbon = useFloral("footer");
 
