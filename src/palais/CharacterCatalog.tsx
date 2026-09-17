@@ -127,6 +127,16 @@ const CHARACTERS: Character[] = [
     face: 0.09,
     sticker: "character_sarah_sticker",
   },
+  {
+    id: "stephanie",
+    name: "Stephanie",
+    tag: "friend of the Palais",
+    blurb: "Stephanie, turned to one side in a dark green satin slip dress, long braids over her shoulder and a small smile.",
+    notes: ["A dark green satin slip dress", "Long braids past her waist", "A gold chain necklace and a gold bangle", "Chunky black loafers"],
+    color: "#2f6b5a",
+    face: 0.08,
+    sticker: "character_stephanie_sticker",
+  },
 ];
 
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
