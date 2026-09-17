@@ -139,16 +139,6 @@ const CAST: Character[] = [
     sticker: "character_stephanie_sticker",
   },
   {
-    id: "jonathan",
-    name: "Jonathan",
-    tag: "friend of the Palais",
-    blurb: "Jonathan, hands in his pockets and grinning at something just off to the side, in a navy hoodie with the strings pulled uneven.",
-    notes: ["A navy hooded sweatshirt over a white tee", "Khaki chinos", "White Nike sneakers", "A black watch on his left wrist"],
-    color: "#2b3a55",
-    face: 0.08,
-    sticker: "character_jonathan_sticker",
-  },
-  {
     id: "dream",
     name: "Dream",
     tag: "friend of the Palais",
@@ -157,6 +147,16 @@ const CAST: Character[] = [
     color: "#1f2430",
     face: 0.07,
     sticker: "character_dream_sticker",
+  },
+  {
+    id: "jonathan",
+    name: "Jonathan",
+    tag: "friend of the Palais",
+    blurb: "Jonathan, hands in his pockets and grinning at something just off to the side, in a navy hoodie with the strings pulled uneven.",
+    notes: ["A navy hooded sweatshirt over a white tee", "Khaki chinos", "White Nike sneakers", "A black watch on his left wrist"],
+    color: "#2b3a55",
+    face: 0.08,
+    sticker: "character_jonathan_sticker",
   },
   {
     id: "bryan",
@@ -187,6 +187,16 @@ const CAST: Character[] = [
     color: "#2f5d3a",
     face: 0.08,
     sticker: "character_peter_sticker",
+  },
+  {
+    id: "jordan",
+    name: "Jordan",
+    tag: "friend of the Palais",
+    blurb: "Jordan in a teal and lime colour-blocked anorak over a blue oxford shirt, hands in his pockets, giving the camera a small closed-mouth smile.",
+    notes: ["A teal, lime and black quarter-zip anorak", "A pale blue oxford shirt underneath", "Navy straight-leg jeans", "White Nike sneakers"],
+    color: "#11707d",
+    face: 0.08,
+    sticker: "character_jordan_sticker",
   },
 ];
 
