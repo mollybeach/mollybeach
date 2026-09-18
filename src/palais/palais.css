@@ -3524,11 +3524,12 @@
 
 /* on the card, a portrait: the cut-out framed round the face */
 .palais .cc-peek { background: linear-gradient(135deg, #fff6d6, #d9b25a 45%, #f4dc9a 60%, #9c7632); }
-.palais .cc-peek img { object-fit: cover; background: var(--cc-floral, none) center / cover, #69b3b5; }
+/* inside the gold frame she stands on plain white, so she reads clearly against the floral round it */
+.palais .cc-peek img { object-fit: cover; background: radial-gradient(circle at 50% 30%, #ffffff, #f8f4ec); }
 
 /* the character card wears the catalogue header's floral, turning with it:
-   behind the portrait and behind the buttons, with the words kept on paper so
-   they can still be read over it */
+   round the portrait's frame and behind the buttons, with the words kept on
+   paper so they can still be read over it */
 .palais .cc-card { position: relative; isolation: isolate; background: #69b3b5; }
 .palais .cc-card > .palais-floral { border-radius: 15px; }
 .palais .cc-card .wm-card-head,

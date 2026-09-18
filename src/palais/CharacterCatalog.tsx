@@ -52,10 +52,10 @@ const CAST: Character[] = [
     id: "kate",
     name: "Kate",
     tag: "friend of the Palais",
-    blurb: "Kate, bundled up for the cold in a black scarf and vest over a green sweater, grinning like she's just heard the best news.",
-    notes: ["A big black fringed scarf", "A deep green crewneck", "A brown leather shoulder bag", "White socks over black Chelsea boots"],
-    color: "#3f7f6a",
-    face: 0.12,
+    blurb: "Kate in a long ivory chiffon gown, her hair half up, turned a little toward you with a soft smile and a corsage of red roses at her wrist.",
+    notes: ["An ivory chiffon gown with a ruched waist", "Beaded halter straps", "A red rose wrist corsage", "Pearl drop earrings"],
+    color: "#a51f2c",
+    face: 0.08,
     sticker: "character_kate_sticker",
   },
   {
@@ -234,15 +234,15 @@ const CAST: Character[] = [
  * Who stands where on the carousel.
  *
  * Molly is always in the middle when the catalogue opens, and the girls keep
- * their places either side of her — Moselle, Madeleine, Brea, Jessica, Ella on
- * her left, then Sarah, Kayenat, Stephanie, Kate on her right. Everyone else
- * falls in behind them in the order they were written, so adding people never
- * shuffles this line.
+ * their places either side of her — Jerusha, Jericha, Brea, Jessica, Ella on
+ * her left, then Sarah, Kayenat, Stephanie, Kate, Moselle, Madeleine on her
+ * right. Everyone else falls in behind them in the order they were written, so
+ * adding people never shuffles this line.
  */
 const MIDDLE = [
-  "moselle", "madeleine", "brea", "jessica", "ella",
+  "jerusha", "jericha", "brea", "jessica", "ella",
   "molly",
-  "sarah", "kayenat", "stephanie", "kate",
+  "sarah", "kayenat", "stephanie", "kate", "moselle", "madeleine",
 ] as const;
 const CHARACTERS: Character[] = [
   ...MIDDLE.map((id) => CAST.find((c) => c.id === id)!),
@@ -404,7 +404,6 @@ export function CharacterCatalog({
         <div
           className="wm-card cc-card"
           aria-live="polite"
-          style={{ ["--cc-floral" as string]: `url("${floralSrc(floral.now)}")` }}
         >
           {floral.was && (
             <div aria-hidden className="palais-floral palais-floral--cover palais-floral--out" style={{ backgroundImage: `url("${floralSrc(floral.was)}")` }} />
