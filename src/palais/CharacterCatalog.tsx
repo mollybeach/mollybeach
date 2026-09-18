@@ -102,9 +102,9 @@ const CAST: Character[] = [
     id: "kayenat",
     name: "Kayenat",
     tag: "friend of the Palais",
-    blurb: "Kayenat, caught in golden-hour light in a little cream dress under a big brown jacket, long dark hair blowing and a soft smile.",
-    notes: ["A cream square-neck mini dress", "A brown jacket lined in plaid", "A fine gold chain", "White socks and white sneakers"],
-    color: "#b07a3a",
+    blurb: "Kayenat in golden-hour light, in a midnight blue velvet anarkali scattered with silver, a sheer ivory dupatta over one shoulder and her long hair blowing loose.",
+    notes: ["A navy velvet anarkali with silver embroidery at the hem", "A sheer ivory net dupatta with a worked border", "Silver chandelier earrings", "Tassels of navy velvet at the dupatta's ends"],
+    color: "#1f2f6b",
     face: 0.08,
     sticker: "character_kayenat_sticker",
   },
@@ -228,21 +228,31 @@ const CAST: Character[] = [
     face: 0.08,
     sticker: "character_jerusha_sticker",
   },
+  {
+    id: "alisha",
+    name: "Alisha",
+    tag: "friend of the Palais",
+    blurb: "Alisha in a sage green daisy-print sundress with tie straps and a high slit, dark curls down one shoulder and a small gold bindi, smiling straight at you.",
+    notes: ["A sage green daisy-print midi sundress", "Tie shoulder straps and a thigh-high slit", "A small gold bindi and a fine gold necklace", "Green strappy heeled sandals"],
+    color: "#6f8f4a",
+    face: 0.08,
+    sticker: "character_alisha_sticker",
+  },
 ];
 
 /**
  * Who stands where on the carousel.
  *
  * Molly is always in the middle when the catalogue opens, and the girls keep
- * their places either side of her — Jerusha, Jericha, Brea, Jessica, Ella on
- * her left, then Sarah, Kayenat, Stephanie, Kate, Moselle, Madeleine on her
- * right. Everyone else falls in behind them in the order they were written, so
+ * their places either side of her — Jerusha, Destiny, Jericha, Brea, Jessica,
+ * Ella on her left, then Sarah, Kayenat, Kate, Stephanie, Moselle, Madeleine,
+ * Alisha on her right. Everyone else falls in behind them in the order they were written, so
  * adding people never shuffles this line.
  */
 const MIDDLE = [
-  "jerusha", "jericha", "brea", "jessica", "ella",
+  "jerusha", "destiny", "jericha", "brea", "jessica", "ella",
   "molly",
-  "sarah", "kayenat", "stephanie", "kate", "moselle", "madeleine",
+  "sarah", "kayenat", "kate", "stephanie", "moselle", "madeleine", "alisha",
 ] as const;
 const CHARACTERS: Character[] = [
   ...MIDDLE.map((id) => CAST.find((c) => c.id === id)!),

@@ -89,6 +89,7 @@ export const MORE_TRINKETS: PropId[] = [
   "character_destiny_sticker",
   "character_jericha_sticker",
   "character_jerusha_sticker",
+  "character_alisha_sticker",
   "dog-leo-dalmatian",
   "jackrabbit_desert_black_tailed_standing_sticker",
   "tortoise_desert_walking_sticker",

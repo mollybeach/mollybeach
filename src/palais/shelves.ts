@@ -358,7 +358,7 @@ export const SHELVES: Shelf[] = [
       "cactus_saguaro_cholla_desert_cluster_sticker",
     ],
   },
-  { key: "characters", name: "Characters", emoji: "👤", items: ["character_molly_sticker", "character_kate_sticker", "character_brea_sticker", "character_leonardo_sticker", "character_madeleine_sticker", "character_moselle_sticker", "character_kayenat_sticker", "character_ella_sticker", "character_sarah_sticker", "character_stephanie_sticker", "character_jonathan_sticker", "character_dream_sticker", "character_bryan_sticker", "character_jessica_sticker", "character_peter_sticker", "character_jordan_sticker", "character_destiny_sticker", "character_jericha_sticker", "character_jerusha_sticker"] },
+  { key: "characters", name: "Characters", emoji: "👤", items: ["character_molly_sticker", "character_kate_sticker", "character_brea_sticker", "character_leonardo_sticker", "character_madeleine_sticker", "character_moselle_sticker", "character_kayenat_sticker", "character_ella_sticker", "character_sarah_sticker", "character_stephanie_sticker", "character_jonathan_sticker", "character_dream_sticker", "character_bryan_sticker", "character_jessica_sticker", "character_peter_sticker", "character_jordan_sticker", "character_destiny_sticker", "character_jericha_sticker", "character_jerusha_sticker", "character_alisha_sticker"] },
   { key: "tech", name: "Tech", emoji: "💻", items: ["computer_imac_purple_back_view_sticker", "computer_imac_g3_lime_green_keyboard_mouse_sticker", "computer_imac_g3_lime_green_front_facing_sticker"] },
   // the rest of the Temu room decor, not on any shelf above (filled in below)
   { key: "decor", name: "Room decor", emoji: "🏺", items: [] },
