@@ -33,7 +33,9 @@ interface Geo {
   timezone?: string;
 }
 
-async function lookUp(): Promise<Geo> {
+/** the browser asking geojs about itself: the usual way, and the one Safari
+    on an iPhone has started to block as fingerprinting */
+async function lookUpHere(): Promise<Geo> {
   const ctl = new AbortController();
   const t = setTimeout(() => ctl.abort(), 4000);
   try {
@@ -44,6 +46,28 @@ async function lookUp(): Promise<Geo> {
   } finally {
     clearTimeout(t);
   }
+}
+
+/** the same question asked by Molly's own Supabase (supabase/functions/palais-geo),
+    which nothing in the browser can block */
+async function lookUpThere(): Promise<Geo> {
+  try {
+    const sb = await db();
+    const asked = sb.functions.invoke("palais-geo").then(({ data, error }) => (error || !data ? {} : (data as Geo)));
+    const late = new Promise<Geo>((done) => setTimeout(() => done({}), 4000));
+    return await Promise.race([asked, late]);
+  } catch {
+    return {};
+  }
+}
+
+/** Both are asked at once, so a blocked lookup costs no extra waiting; the
+    browser's own answer is used when it has one, the server's when it doesn't. */
+async function lookUp(): Promise<Geo> {
+  const there = lookUpThere();
+  const here = await lookUpHere();
+  if (here.city || here.country) return here;
+  return there;
 }
 
 /** phone, tablet or desktop, and the system and browser, read from the
