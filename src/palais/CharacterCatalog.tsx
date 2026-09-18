@@ -218,6 +218,16 @@ const CAST: Character[] = [
     face: 0.09,
     sticker: "character_jericha_sticker",
   },
+  {
+    id: "jerusha",
+    name: "Jerusha",
+    tag: "friend of the Palais",
+    blurb: "Jerusha in a raspberry silk lehenga embroidered with pale flowers, a blush dupatta draped over her shoulder, her long hair down and a quiet smile.",
+    notes: ["A raspberry silk lehenga with white floral embroidery", "A blush net dupatta with a scalloped gold border", "Pearl and gold jhumkas and a choker", "Gold bangles on both wrists"],
+    color: "#a3285a",
+    face: 0.08,
+    sticker: "character_jerusha_sticker",
+  },
 ];
 
 /**
