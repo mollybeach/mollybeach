@@ -114,7 +114,7 @@ const SITES: [RegExp, string][] = [
   // the buttons on Molly's GitHub profile README, told apart from github.com itself
   [/^github-?readme$/, "GitHub README"],
   [/(^|\.)github\.com$|^github|^gh$/, "GitHub"],
-  [/^imessage|^text|^sms|^messages/, "iMessage / texts"],
+  [/^imessage|^im$|^text|^sms|^messages/, "iMessage / texts"],
   [/^email|^mail|mail\.google\.com$|outlook\.|mail\.yahoo\.|^gmail/, "Email"],
   [/(^|\.)google\.|^google/, "Google"],
   [/(^|\.)bing\.com$|duckduckgo\.com$|(^|\.)yahoo\.|ecosia\.org$|search\.brave\.com$/, "Search"],
