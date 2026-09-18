@@ -229,6 +229,7 @@ const STOPS: Stop[] = [
     patch: [56, 42],
     seed: 31,
     room: "garden",
+    seasons: true,
   },
   {
     id: "rainwood",

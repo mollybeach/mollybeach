@@ -208,6 +208,16 @@ const CAST: Character[] = [
     face: 0.09,
     sticker: "character_destiny_sticker",
   },
+  {
+    id: "jericha",
+    name: "Jericha",
+    tag: "friend of the Palais",
+    blurb: "Jericha in a dusty rose lehenga worked all over in silver thread and sequins, the dupatta over one shoulder, smiling wide.",
+    notes: ["A mauve embroidered lehenga with a scalloped blouse", "A sheer dupatta scattered with flowers", "Silver jhumkas, a choker and a maang tikka", "A stack of silver bangles"],
+    color: "#b58a99",
+    face: 0.09,
+    sticker: "character_jericha_sticker",
+  },
 ];
 
 /**
@@ -249,7 +259,8 @@ export function CharacterCatalog({
 }) {
   const [here, setHere] = useState(START);
   const paper = useFloral("map");
-  const cardPaper = useFloral("card");
+  // the card wears the same turning floral as the catalogue's header
+  const floral = useFloral("catalogue");
   const chips = useFloral("sidebar");
   const ribbon = useFloral("footer");
   const closeBtn = useRef<HTMLButtonElement>(null);
@@ -381,10 +392,14 @@ export function CharacterCatalog({
         </div>
 
         <div
-          className="wm-card"
+          className="wm-card cc-card"
           aria-live="polite"
-          style={{ backgroundImage: `linear-gradient(rgba(255, 252, 244, 0.93), rgba(251, 243, 232, 0.95)), url("${floralSrc(cardPaper.now)}")` }}
+          style={{ ["--cc-floral" as string]: `url("${floralSrc(floral.now)}")` }}
         >
+          {floral.was && (
+            <div aria-hidden className="palais-floral palais-floral--cover palais-floral--out" style={{ backgroundImage: `url("${floralSrc(floral.was)}")` }} />
+          )}
+          <div aria-hidden className="palais-floral palais-floral--cover" key={floral.now} style={{ backgroundImage: `url("${floralSrc(floral.now)}")` }} />
           <div className="wm-card-body">
             <figure className="wm-peek cc-peek">
               <img key={who.id} src={src(who)} alt={who.name} style={{ objectPosition: `50% ${who.face * 100}%` }} decoding="async" />

@@ -111,6 +111,8 @@ const SITES: [RegExp, string][] = [
   [/(^|\.)whatsapp\.com$|^wa\.me$|^whatsapp|^wa$/, "WhatsApp"],
   [/(^|\.)t\.me$|telegram|^tg$/, "Telegram"],
   [/(^|\.)slack\.com$|^slack/, "Slack"],
+  // the buttons on Molly's GitHub profile README, told apart from github.com itself
+  [/^github-?readme$/, "GitHub README"],
   [/(^|\.)github\.com$|^github|^gh$/, "GitHub"],
   [/^imessage|^text|^sms|^messages/, "iMessage / texts"],
   [/^email|^mail|mail\.google\.com$|outlook\.|mail\.yahoo\.|^gmail/, "Email"],

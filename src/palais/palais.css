@@ -3524,7 +3524,21 @@
 
 /* on the card, a portrait: the cut-out framed round the face */
 .palais .cc-peek { background: linear-gradient(135deg, #fff6d6, #d9b25a 45%, #f4dc9a 60%, #9c7632); }
-.palais .cc-peek img { object-fit: cover; background: radial-gradient(circle at 50% 30%, #fffdf6, #e8f1dc); }
+.palais .cc-peek img { object-fit: cover; background: var(--cc-floral, none) center / cover, #69b3b5; }
+
+/* the character card wears the catalogue header's floral, turning with it:
+   behind the portrait and behind the buttons, with the words kept on paper so
+   they can still be read over it */
+.palais .cc-card { position: relative; isolation: isolate; background: #69b3b5; }
+.palais .cc-card > .palais-floral { border-radius: 15px; }
+.palais .cc-card .wm-card-head,
+.palais .cc-card .wm-blurb,
+.palais .cc-card .wm-finds {
+  padding: 0.5rem 0.7rem;
+  border-radius: 12px;
+  background: rgba(255, 252, 244, 0.94);
+  box-shadow: 0 2px 8px rgba(60, 35, 40, 0.12);
+}
 
 /* the characters as a carousel */
 .palais .cc-carousel { position: absolute; inset: 0 0 7% 0; z-index: 1; }
