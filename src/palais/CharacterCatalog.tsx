@@ -238,6 +238,16 @@ const CAST: Character[] = [
     face: 0.08,
     sticker: "character_alisha_sticker",
   },
+  {
+    id: "jeannette",
+    name: "Jeannette",
+    tag: "friend of the Palais",
+    blurb: "Jeannette as an angel of gold lace: wings worked in lace flowers, a halo tied in a lace bow, and a midnight velvet gown of starbursts with sheer ruffles edged in gold.",
+    notes: ["A navy velvet gown embroidered with gold starbursts", "Sheer navy ruffles trimmed in gold lace, with a high slit", "Gold lace wings and a lace halo tied in a bow", "Black pointed heels with bows"],
+    color: "#c9a05a",
+    face: 0.14,
+    sticker: "character_jeannette_sticker",
+  },
 ];
 
 /**
