@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/x", "destination": "/?from=x", "permanent": false },
+    { "source": "/ig", "destination": "/?from=instagram", "permanent": false },
+    { "source": "/li", "destination": "/?from=linkedin", "permanent": false },
+    { "source": "/tt", "destination": "/?from=tiktok", "permanent": false },
+    { "source": "/dc", "destination": "/?from=discord", "permanent": false },
+    { "source": "/im", "destination": "/?from=im", "permanent": false },
+    { "source": "/gh", "destination": "/?from=githubreadme", "permanent": false },
+    { "source": "/go/:tag", "destination": "/?from=:tag", "permanent": false }
+  ]
+}
