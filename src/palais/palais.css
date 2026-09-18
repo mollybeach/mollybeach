@@ -3591,3 +3591,47 @@
   cursor: pointer;
 }
 .palais .cc-dot.is-on { background: var(--wm-jewel-side, #9c7632); transform: scale(1.25); }
+
+/* ============================================================================
+   Pinch-zooming on a phone makes the browser redraw every blurred and shadowed
+   layer at the zoomed size, and when that runs out of memory iOS throws the
+   whole page away ("Can't open this page"). The worst of it is a modal's
+   frosted backdrop, which has to blur the entire room behind it — a room full
+   of stickers that each cast two shadows — at the new size, every frame.
+   So on touch screens the modals give up the effects that cost the most for
+   flat stand-ins that cost next to nothing, and look much the same.
+   ========================================================================== */
+@media (pointer: coarse) {
+  /* a plain tinted scrim instead of a blur of the room behind it */
+  .palais .wm-backdrop,
+  .palais .cat-backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .palais .wm-backdrop { background: rgba(50, 32, 40, 0.5); }
+  .palais .cat-backdrop { background: rgba(80, 20, 52, 0.46); }
+
+  /* the corner posies, unshadowed — every flower in them carries its own */
+  .palais .wm-bloom,
+  .palais .wm-bloom img { filter: none; }
+
+  /* the carousel: no filters stacked on each figure */
+  .palais .cc-person,
+  .palais .cc-person img,
+  .palais .cc-carousel .cc-person.is-on { filter: none; }
+  .palais .cc-carousel .cc-person {
+    transition: left 380ms cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 380ms cubic-bezier(0.2, 0.9, 0.3, 1.1), opacity 380ms ease;
+  }
+  /* the glow round whoever is chosen, as a soft light behind her rather than
+     a blurred copy of her outline */
+  .palais .cc-carousel .cc-person.is-on::before {
+    content: "";
+    position: absolute;
+    inset: 6% -22% 0;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--cc-glow, #c9a44c), transparent);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
