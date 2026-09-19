@@ -3635,3 +3635,82 @@
     pointer-events: none;
   }
 }
+
+/* ---------------------------------------------- rearranging the line-up ---- */
+/* the Characters plaque is a button: it keeps the plaque's own lettering */
+.palais .cc-title-btn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+.palais .cc-title-btn:focus-visible { outline: 2px solid #fff4f8; outline-offset: 4px; border-radius: 6px; }
+.palais .cc-title-caret { font-size: 0.6em; }
+
+.palais .cc-sort {
+  position: absolute;
+  inset: 0.5rem;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: rgba(255, 252, 244, 0.97);
+  box-shadow: 0 10px 24px rgba(60, 35, 40, 0.25);
+  overflow: hidden;
+}
+.palais .cc-sort-head {
+  margin: 0;
+  padding: 0.5rem 0.8rem;
+  font: 600 0.8rem var(--wm-serif);
+  color: var(--wm-ink-soft, #6e525a);
+  border-bottom: 1px solid rgba(207, 169, 86, 0.4);
+}
+.palais .cc-sort-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  overflow-y: auto;
+  display: grid;
+  gap: 0.25rem;
+}
+.palais .cc-sort-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 10px;
+  background: #fffdf8;
+  border: 1px solid rgba(207, 169, 86, 0.35);
+  cursor: grab;
+  user-select: none;
+}
+.palais .cc-sort-row.is-on { border-color: var(--wm-jewel-side, #9c7632); box-shadow: inset 0 0 0 1px var(--wm-jewel-side, #9c7632); }
+.palais .cc-sort-row.is-dragging { opacity: 0.45; }
+.palais .cc-sort-grip { color: #b8a27a; letter-spacing: -0.2em; font-size: 0.9rem; }
+.palais .cc-sort-num { width: 1.4rem; text-align: right; font: 600 0.75rem var(--wm-serif); color: #9c8a66; }
+.palais .cc-sort-row img { width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover; background: #fff; border: 1px solid rgba(207, 169, 86, 0.6); }
+.palais .cc-sort-name { all: unset; flex: 1 1 auto; cursor: pointer; font: 700 0.9rem var(--wm-serif); color: var(--wm-ink, #4a2f36); }
+.palais .cc-sort-moves { display: flex; gap: 0.2rem; }
+.palais .cc-sort-moves button {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(207, 169, 86, 0.6);
+  background: #fff8e8;
+  color: var(--wm-ink, #4a2f36);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.palais .cc-sort-moves button:disabled { opacity: 0.3; cursor: default; }
+.palais .cc-sort-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-top: 1px solid rgba(207, 169, 86, 0.4);
+}
+.palais .cc-sort-foot .wm-btn:disabled { opacity: 0.45; }

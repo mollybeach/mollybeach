@@ -264,12 +264,41 @@ const MIDDLE = [
   "molly",
   "sarah", "kayenat", "kate", "stephanie", "moselle", "madeleine", "alisha",
 ] as const;
-const CHARACTERS: Character[] = [
+const USUAL: Character[] = [
   ...MIDDLE.map((id) => CAST.find((c) => c.id === id)!),
   ...CAST.filter((c) => !MIDDLE.includes(c.id as (typeof MIDDLE)[number])),
 ];
+
+/**
+ * The line-up can be rearranged from the catalogue (press its "Characters"
+ * plaque). A rearrangement is kept in this browser only, as a list of ids;
+ * anyone added since it was saved joins at the end, and anyone since removed
+ * is simply skipped. It never changes the usual order written above.
+ */
+const ORDER_KEY = "palais-character-order";
+
+function savedLine(): Character[] {
+  try {
+    const ids: unknown = JSON.parse(localStorage.getItem(ORDER_KEY) ?? "null");
+    if (!Array.isArray(ids)) return USUAL;
+    const kept = ids.map((id) => USUAL.find((c) => c.id === id)).filter((c): c is Character => !!c);
+    return [...kept, ...USUAL.filter((c) => !kept.includes(c))];
+  } catch {
+    return USUAL;
+  }
+}
+
+function saveLine(line: Character[] | null) {
+  try {
+    if (line) localStorage.setItem(ORDER_KEY, JSON.stringify(line.map((c) => c.id)));
+    else localStorage.removeItem(ORDER_KEY);
+  } catch {
+    /* a private window: the order just won't outlast the page */
+  }
+}
+
 /** the one the catalogue opens on */
-const START = CHARACTERS.findIndex((c) => c.id === "molly");
+const startOf = (line: Character[]) => Math.max(0, line.findIndex((c) => c.id === "molly"));
 
 const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/characters/${c.id}.webp`;
 
@@ -287,7 +316,31 @@ export function CharacterCatalog({
   onPutIn: (ids: string[]) => void;
   onTakeOut: (ids: string[]) => void;
 }) {
-  const [here, setHere] = useState(START);
+  const [line, setLine] = useState<Character[]>(savedLine);
+  const [here, setHere] = useState(() => startOf(line));
+  const [sorting, setSorting] = useState(false);
+  const [dragging, setDragging] = useState<number | null>(null);
+  const count = useRef(line.length);
+  count.current = line.length;
+  const custom = line.some((c, i) => c.id !== USUAL[i].id);
+
+  /** move someone to a new place in the line, keeping whoever is on stage on stage */
+  const move = (from: number, to: number) => {
+    if (from === to || to < 0 || to >= line.length) return;
+    const onStage = line[here];
+    const next = [...line];
+    const [who] = next.splice(from, 1);
+    next.splice(to, 0, who);
+    setLine(next);
+    setHere(next.indexOf(onStage));
+    saveLine(next);
+  };
+  const reset = () => {
+    const onStage = line[here];
+    setLine(USUAL);
+    setHere(USUAL.indexOf(onStage));
+    saveLine(null);
+  };
   const paper = useFloral("map");
   // the card wears the same turning floral as the catalogue's header
   const floral = useFloral("catalogue");
@@ -297,28 +350,31 @@ export function CharacterCatalog({
 
   useEffect(() => {
     if (!open) return;
-    setHere(START); // Molly is who you meet first
+    setHere(startOf(line)); // Molly is who you meet first
+    setSorting(false);
     closeBtn.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") setHere((h) => (h + 1) % CHARACTERS.length);
-      if (e.key === "ArrowLeft") setHere((h) => (h - 1 + CHARACTERS.length) % CHARACTERS.length);
+      if (e.key === "ArrowRight") setHere((h) => (h + 1) % count.current);
+      if (e.key === "ArrowLeft") setHere((h) => (h - 1 + count.current) % count.current);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+    // the line is read fresh on each open; reordering mid-visit keeps the current place
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, onClose]);
 
   /* who they stopped on. Only once they've stopped: sliding past four people
      on the way to the fifth isn't looking at four people. */
   useEffect(() => {
     if (!open) return;
-    const who = CHARACTERS[here];
+    const who = line[here];
     const t = setTimeout(() => noteDoing("character", who.name), 2500);
     return () => clearTimeout(t);
-  }, [open, here]);
+  }, [open, here, line]);
 
   if (!open) return null;
-  const who = CHARACTERS[here];
+  const who = line[here];
 
   return (
     <div
@@ -345,7 +401,17 @@ export function CharacterCatalog({
         <div className="wm-title">
           <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
           <h2 id="cc-title">
-            <span aria-hidden>✿</span> Characters <span aria-hidden>✿</span>
+            {/* the plaque is also the way into rearranging the line-up */}
+            <button
+              type="button"
+              className="cc-title-btn"
+              onClick={() => setSorting((v) => !v)}
+              aria-expanded={sorting}
+              aria-controls="cc-sort"
+              title="Rearrange the line-up"
+            >
+              <span aria-hidden>✿</span> Characters <span aria-hidden className="cc-title-caret">{sorting ? "▴" : "▾"}</span>
+            </button>
           </h2>
           <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
         </div>
@@ -357,9 +423,9 @@ export function CharacterCatalog({
             the ones either side step back smaller, and the rest wait off stage */}
         <div className="wm-stage cc-stage">
           <div className="cc-carousel">
-            {CHARACTERS.map((c, i) => {
+            {line.map((c, i) => {
               // measured round the ring, so there's always someone either side
-              const n = CHARACTERS.length;
+              const n = line.length;
               let off = i - here;
               if (off > n / 2) off -= n;
               if (off < -n / 2) off += n;
@@ -390,10 +456,62 @@ export function CharacterCatalog({
           </div>
           <div className="cc-ground" aria-hidden />
 
+          {sorting && (
+            <div id="cc-sort" className="cc-sort" role="region" aria-label="Rearrange the characters">
+              <p className="cc-sort-head">
+                Drag to rearrange, or use ↑ ↓ · kept in this browser
+              </p>
+              <ol className="cc-sort-list">
+                {line.map((c, i) => (
+                  <li
+                    key={c.id}
+                    className={`cc-sort-row${i === here ? " is-on" : ""}${dragging === i ? " is-dragging" : ""}`}
+                    draggable
+                    onDragStart={(e) => {
+                      setDragging(i);
+                      e.dataTransfer.effectAllowed = "move";
+                    }}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      if (dragging !== null && dragging !== i) {
+                        move(dragging, i);
+                        setDragging(i);
+                      }
+                    }}
+                    onDragEnd={() => setDragging(null)}
+                  >
+                    <span className="cc-sort-grip" aria-hidden>⋮⋮</span>
+                    <span className="cc-sort-num">{i + 1}</span>
+                    <img src={src(c)} alt="" style={{ objectPosition: `50% ${c.face * 100}%` }} />
+                    <button type="button" className="cc-sort-name" onClick={() => setHere(i)}>
+                      {c.name}
+                    </button>
+                    <span className="cc-sort-moves">
+                      <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} aria-label={`Move ${c.name} earlier`}>
+                        ↑
+                      </button>
+                      <button type="button" onClick={() => move(i, i + 1)} disabled={i === line.length - 1} aria-label={`Move ${c.name} later`}>
+                        ↓
+                      </button>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <div className="cc-sort-foot">
+                <button type="button" className="wm-btn" onClick={reset} disabled={!custom}>
+                  Usual order
+                </button>
+                <button type="button" className="wm-btn wm-btn--visit" onClick={() => setSorting(false)}>
+                  Done ✿
+                </button>
+              </div>
+            </div>
+          )}
+
           <button
             type="button"
             className="cc-arrow cc-arrow--back"
-            onClick={() => setHere((h) => (h - 1 + CHARACTERS.length) % CHARACTERS.length)}
+            onClick={() => setHere((h) => (h - 1 + line.length) % line.length)}
             aria-label="The one before"
           >
             ‹
@@ -401,13 +519,13 @@ export function CharacterCatalog({
           <button
             type="button"
             className="cc-arrow cc-arrow--next"
-            onClick={() => setHere((h) => (h + 1) % CHARACTERS.length)}
+            onClick={() => setHere((h) => (h + 1) % line.length)}
             aria-label="The next one"
           >
             ›
           </button>
           <div className="cc-dots" role="tablist" aria-label="Characters">
-            {CHARACTERS.map((c, i) => (
+            {line.map((c, i) => (
               <button
                 key={c.id}
                 type="button"
@@ -436,7 +554,7 @@ export function CharacterCatalog({
             <div className="wm-card-head">
               <h3>{who.name}</h3>
               <p className="wm-tag">
-                {here + 1} of {CHARACTERS.length} · {who.tag}
+                {here + 1} of {line.length} · {who.tag}
               </p>
             </div>
             <p className="wm-blurb">{who.blurb}</p>
@@ -467,14 +585,14 @@ export function CharacterCatalog({
               <button
                 type="button"
                 className="wm-btn"
-                onClick={() => setHere((h) => (h - 1 + CHARACTERS.length) % CHARACTERS.length)}
+                onClick={() => setHere((h) => (h - 1 + line.length) % line.length)}
               >
                 ◀ Back
               </button>
               <button
                 type="button"
                 className="wm-btn wm-btn--next"
-                onClick={() => setHere((h) => (h + 1) % CHARACTERS.length)}
+                onClick={() => setHere((h) => (h + 1) % line.length)}
               >
                 Next ▶
               </button>
