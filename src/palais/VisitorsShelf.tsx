@@ -298,6 +298,32 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
           </section>
 
           <section className="vis-card">
+            <h4>🚪 Came in through</h4>
+            {stats.landings?.length ? (
+              <ul className="vis-list">
+                {stats.landings.map((l) => (
+                  <li key={l.landing}>
+                    <span>
+                      {l.room ?? l.landing}
+                      <small>
+                        {l.landing === "/" ? "the front door" : `mollybeach.app/${l.landing}`} · {l.visits} visit
+                        {l.visits === 1 ? "" : "s"}
+                      </small>
+                    </span>
+                    <b>{l.unique}</b>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="cat-note">No arrivals recorded yet{stats.landings ? "" : " (run the front doors SQL to start)"}.</p>
+            )}
+            <p className="vis-hint">
+              A link straight to a room — <code>mollybeach.app/lakehouse</code> — lands someone there rather than in the
+              palace, and shows up here.
+            </p>
+          </section>
+
+          <section className="vis-card">
             <h3>🗺️ Where they went on the map</h3>
             {stats.places?.length ? (
               <ul className="vis-list">
@@ -671,6 +697,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                         .filter(Boolean)
                         .join(" · ")}
                     </small>
+                    {v.landing && v.landing !== "/" && <small>🚪 came in at {placeName(v.landing.replace(/^#/, ""))}</small>}
                     {v.places.length > 0 && <small>🗺️ {v.places.map(placeName).join(" → ")}</small>}
                     {v.doings?.length > 0 && <small>✿ {doingTrail(v.doings)}</small>}
                   </span>

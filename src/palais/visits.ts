@@ -509,6 +509,8 @@ export interface VisitStats {
   vpn?: { visits: number; networks: { network: string | null; why: string; visits: number }[] };
   networks?: { network: string; visits: number; unique: number }[];
   places?: { place: string; visits: number; unique: number; seconds: number }[];
+  /** which room they walked in by: "/" is the front door, "#lakehouse" a link straight to a room */
+  landings?: { landing: string; room: string | null; visits: number; unique: number }[];
   time?: { median_seconds: number; longest_seconds: number; glances: number };
   by_hour?: { hour: number; visits: number }[];
   makes?: { brand: string; model: string | null; visits: number; unique: number }[];
