@@ -3,6 +3,7 @@ import { Blossoms } from "./WorldMap";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
+import { noteDoing } from "./visits";
 import { editLetter, postLetter, readLetters, remember, remembered, type Letter } from "./letters";
 
 /**
@@ -20,12 +21,15 @@ import { editLetter, postLetter, readLetters, remember, remembered, type Letter 
  */
 
 /** opens the letters, from wherever in the house you are standing */
-const Drawer = createContext<() => void>(() => {});
+const Drawer = createContext<(from?: string) => void>(() => {});
 export const useLetters = () => useContext(Drawer);
 
 export function LettersDrawer({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const pull = useCallback(() => setOpen(true), []);
+  const pull = useCallback((from?: string) => {
+    setOpen(true);
+    noteDoing("letters", from);        // and Molly hears which door it was (visits.ts)
+  }, []);
   return (
     <Drawer.Provider value={pull}>
       {children}
@@ -84,7 +88,7 @@ export function LibraryLetters() {
       className="palais-letters-spot"
       aria-label="The desk drawer"
       title="The drawer"
-      onClick={pull}
+      onClick={() => pull("the desk drawer")}
     />
   );
 }
@@ -184,7 +188,7 @@ function LettersPanel({ open, setOpen }: { open: boolean; setOpen: (b: boolean) 
         aria-labelledby="lt-title"
         style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
       >
-        <Blossoms className="wm-bloom wm-bloom--tl" posy="tl" />
+        {/* no posy in the top left: it lay over the first letters in the list */}
         <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
         <Blossoms className="wm-bloom wm-bloom--tr" posy="tr" />
         <Blossoms className="wm-bloom wm-bloom--br" posy="br" />

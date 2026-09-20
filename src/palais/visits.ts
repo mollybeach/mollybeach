@@ -553,7 +553,8 @@ export function recordPlace(place: string) {
 
 /**
  * What someone is doing inside: opening the catalogue, opening the character
- * catalogue, stopping on a character. Same shape as recordPlace — it waits for
+ * catalogue, stopping on a character, putting the record on in the Lakehouse,
+ * opening the letters. Same shape as recordPlace — it waits for
  * the session the visit was recorded under, and never speaks up on localhost.
  */
 let doingQueue: Promise<void> = Promise.resolve();

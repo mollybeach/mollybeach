@@ -66,7 +66,7 @@ export function LakehouseCase() {
       ref={box}
       type="button"
       className="palais-lake-case"
-      onClick={pull}
+      onClick={() => pull("the road case")}
       aria-label="The road case of letters"
       title="Letters"
     >

@@ -52,6 +52,10 @@ function doingTrail(doings: VisitDoing[]) {
       bits.push("opened the character catalogue");
     } else if (d.kind === "catalogue") {
       bits.push("opened the catalogue");
+    } else if (d.kind === "record") {
+      bits.push("put the record on");
+    } else if (d.kind === "letters") {
+      bits.push(d.detail ? `opened the letters · ${d.detail}` : "opened the letters");
     } else {
       bits.push(d.detail ? `${d.kind}: ${d.detail}` : d.kind);
     }

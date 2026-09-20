@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePlace } from "./place";
+import { noteDoing } from "./visits";
 
 /**
  * The Lakehouse record player: Vulfpeck's "The Beautiful Game", the full album
@@ -96,7 +97,13 @@ function Turntable() {
         width: 200,
         height: 200,
         playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
-        events: { onStateChange: (e) => setPlaying(e.data === PLAYING) },
+        events: {
+          onStateChange: (e) => {
+            setPlaying(e.data === PLAYING);
+            // worth knowing that someone put the record on (visits.ts)
+            if (e.data === PLAYING) noteDoing("record", "Vulfpeck");
+          },
+        },
       });
     });
     return () => {
