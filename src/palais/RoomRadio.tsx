@@ -174,13 +174,15 @@ function Turntable({ disc }: { disc: Disc }) {
     };
   }, [open, disc.video, disc.name]);
 
-  /* any click in the Palais puts the record on, once. Clicks on the deck
-     itself are its own business — that's how it gets stopped. */
+  /* any click — or, on a phone, any tap — puts the record on, once. Touches on
+     the deck itself are its own business: that's how it gets stopped.
+     Safari counts some events as a gesture worth starting sound on and not
+     others, so it listens for the lot and takes whichever comes first. */
   useEffect(() => {
-    const kick = (e: PointerEvent) => {
+    const kick = (e: Event) => {
       if (spent.current) return;
       const on = e.target as HTMLElement | null;
-      if (on?.closest(".lake-radio, .lake-knob")) return;
+      if (on?.closest?.(".lake-radio, .lake-knob")) return;
       spent.current = true;
       if (player.current) player.current.playVideo();
       else {
@@ -188,8 +190,9 @@ function Turntable({ disc }: { disc: Disc }) {
         setOpen(true);
       }
     };
-    document.addEventListener("pointerdown", kick, true);
-    return () => document.removeEventListener("pointerdown", kick, true);
+    const kinds = ["pointerdown", "touchend", "click"] as const;
+    kinds.forEach((k) => document.addEventListener(k, kick, true));
+    return () => kinds.forEach((k) => document.removeEventListener(k, kick, true));
   }, []);
 
   const toggle = () => {
