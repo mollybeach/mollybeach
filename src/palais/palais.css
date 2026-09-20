@@ -4112,10 +4112,14 @@
   .palais .lt-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(5rem, 26%) minmax(0, 1fr); gap: 0.5rem; }
   .palais .lt-read h3 { font-size: 1.7rem; }
   .palais .lt-prose { font-size: 1.25rem; }
+  /* no posies on a phone: there isn't room for them beside the letters, and
+     they lay over the list */
+  .palais .lt-panel .wm-bloom { display: none; }
+}
+@container palais (max-width: 820px) {
+  .palais .lt-panel .wm-bloom { display: none; }
 }
 
-/* the road case of letters on the Lakehouse floor: part of the room, not a
-   sticker to be moved, so it takes no clicks */
 /* The road case on the Lakehouse floor opens the letters, so it answers to a
    pointer: it breathes where it stands, lifts when it's pointed at and gives a
    little under a press, and a small brass tag says what's in it. */
