@@ -101,6 +101,7 @@ export const SHELVES: Shelf[] = [
       "cat-strawberry",
       "cat-strawberry-roses",
       "cat-strawberry-window",
+      "cat-petunia",
       "kitten-strawberry",
       "cats-roses",
       "cats-toilet",
