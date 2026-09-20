@@ -201,6 +201,14 @@ export function resetRacks(which: Which) {
   notify();
 }
 
+/** lay the closet out the way the code arranges it, ready to be saved over a
+    stale default (the saved arrangement wins over the code otherwise: see
+    mend, which lets whatever is already placed keep its piece) */
+export function freshFromCode(which: Which) {
+  state = { ...state, [which]: fromCode(which) };
+  notify();
+}
+
 /** whether the closet has been rearranged since the default */
 export function racksChanged(which: Which) {
   return !same(state[which], published[which]);

@@ -112,7 +112,7 @@ const scaleOf = (el: HTMLElement) => parseFloat(getComputedStyle(el).scale) || 1
 /** how much the scene around a sticker is zoomed on screen (the desktop room
     is scaled to fit its photograph), so pointer moves in screen pixels can be
     turned into the sticker's own */
-const zoomOf = (el: HTMLElement) => {
+export const zoomOf = (el: HTMLElement) => {
   const w = el.offsetWidth * scaleOf(el);
   return w ? el.getBoundingClientRect().width / w || 1 : 1;
 };

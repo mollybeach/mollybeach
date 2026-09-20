@@ -15,7 +15,7 @@ import { isPortable, resolvePortable } from "./crossDevice";
 import { noteDoing } from "./visits";
 import { JustPlaced } from "./justPlaced";
 import { RoomClothes } from "./RoomClothes";
-import { pickSticker, resizeSticker, usePicked } from "./Draggable";
+import { pickSticker, resizeSticker, usePicked, zoomOf } from "./Draggable";
 import { capture } from "./arrangement";
 import { saveSeasonDefault } from "./layoutsDb";
 
@@ -259,6 +259,37 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       return next;
     });
   }, []);
+
+  /* A thing just put in is carried to the middle of the room — by moving it,
+     the way a hand would, not by dressing it up in different styles. What a
+     look keeps is a sticker's translate (arrangement.ts: capture), so a
+     centring that only lived in the styles was never saved: the sticker went
+     back to its place in the scatter on the next load, often behind the
+     furniture. This writes the move itself. */
+  useLayoutEffect(() => {
+    if (!justPlaced.size) return;
+    const scope = stage();
+    if (!scope) return;
+    const room = scope.getBoundingClientRect();
+    let moved = false;
+    justPlaced.forEach((turn, id) => {
+      const el = scope.querySelector<HTMLElement>(`.palais-layer [data-prop="${CSS.escape(id)}"]`);
+      const box = el?.getBoundingClientRect();
+      if (!el || !box?.width) return;
+      const zoom = zoomOf(el) || 1;
+      const step = (turn % 6) * 28;
+      const now = getComputedStyle(el).translate;
+      const [tx = "0", ty = "0"] = now === "none" ? [] : now.split(" ");
+      const dx = (room.left + room.width / 2 + step - (box.left + box.width / 2)) / zoom;
+      const dy = (room.top + room.height / 2 + step - (box.top + box.height / 2)) / zoom;
+      el.style.translate = `${((parseFloat(tx) || 0) + dx).toFixed(1)}px ${((parseFloat(ty) || 0) + dy).toFixed(1)}px`;
+      el.style.zIndex = String(900 + turn);      // and in front of the furniture
+      moved = true;
+    });
+    if (!moved) return;
+    setJustPlaced(new Map());                    // it has a place of its own now
+    window.dispatchEvent(new CustomEvent("palais:arranged"));
+  }, [justPlaced]);
 
   /* things stand in the middle of the view until you walk into another room —
      the seasons may turn over them meanwhile, and they stay where they were

@@ -9,7 +9,7 @@ import { CLOTHES, WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { RacksShelf } from "./RacksShelf";
 import { SeasonsShelf, SEASON_EMOJI, titleCase } from "./SeasonsShelf";
-import { closetMovesNow, hiddenChanged, movesChanged, publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
+import { closetMovesNow, freshFromCode, hiddenChanged, movesChanged, publishRacks, racksChanged, resetRacks, useRackOrder, type Which } from "./closetRacks";
 import { resizeSticker } from "./Draggable";
 import { saveSeasonDefault, type Device } from "./layoutsDb";
 import { defaultLook } from "./roomLayouts";
@@ -687,6 +687,16 @@ export function Catalogue({
               title="Put every piece back where it started"
             >
               Put it all back
+            </button>
+          )}
+          {page === "racks" && owner && (
+            <button
+              type="button"
+              className="cat-btn cat-btn--ghost"
+              onClick={() => freshFromCode(which)}
+              title="Hang everything where the closet itself says it goes — then Save to keep it"
+            >
+              Lay it out fresh
             </button>
           )}
           {(clothesPage || page === "stickers") && (
