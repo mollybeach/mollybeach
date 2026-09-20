@@ -74,6 +74,11 @@ export function BoudoirPictures() {
   // the frame is measured to the room it has, so a tall portrait can't push
   // the panel off the screen and a wide one doesn't leave a band of paper
   const [frame, setFrame] = useState<{ w: number; h: number } | null>(null);
+  /* a picture is hung only once its shape is known, so the frame is never
+     built at the wrong size and then jump: the shapes it has learned, and the
+     one picture it is ready to show */
+  const shapes = useRef(new Map<string, number>());
+  const [ready, setReady] = useState<string | null>(null);
   const panel = useRef<HTMLDivElement>(null);
   const pit = useRef<HTMLDivElement>(null);
 
@@ -154,6 +159,40 @@ export function BoudoirPictures() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, inside, shut, step]);
+
+  /* learn a picture's shape before hanging it, and have the next one ready */
+  const onNow = hanging?.[at] ?? hanging?.[0] ?? null;
+  useEffect(() => {
+    const url = onNow?.url;
+    if (!url) return;
+    const learn = (u: string, then?: (r: number) => void) => {
+      const known = shapes.current.get(u);
+      if (known) return then?.(known);
+      const img = new Image();
+      img.onload = () => {
+        const r = img.naturalWidth / img.naturalHeight || 4 / 3;
+        shapes.current.set(u, r);
+        then?.(r);
+      };
+      img.onerror = () => {
+        shapes.current.set(u, 4 / 3);
+        then?.(4 / 3);
+      };
+      img.src = u;
+    };
+    let gone = false;
+    learn(url, (r) => {
+      if (gone) return;
+      setShape(r);
+      setReady(url);
+      // the one along, so stepping to it is instant
+      const next = hanging?.[(at + 1) % (hanging.length || 1)];
+      if (next && next.url !== url) learn(next.url);
+    });
+    return () => {
+      gone = true;
+    };
+  }, [onNow?.url, hanging, at]);
 
   /* the frame, measured rather than guessed: the biggest box of the picture's
      own shape that the panel can hold, and then the panel drawn down to it, so
@@ -261,11 +300,11 @@ export function BoudoirPictures() {
             ) : (
               /* one picture at a time, an arrow either side */
               <div className="bd-look">
-                {!showing ? (
-                  hanging === null ? (
-                    <Waiting say="Opening the dresser…" />
-                  ) : (
+                {!showing || ready !== showing.url ? (
+                  hanging?.length === 0 ? (
                     <p className="cat-note">Nothing hanging in here yet.</p>
+                  ) : (
+                    <Waiting say="Opening the dresser…" />
                   )
                 ) : (
                   <>
@@ -280,12 +319,9 @@ export function BoudoirPictures() {
                         className="bd-frame"
                         style={frame ? { width: `${frame.w}px`, height: `${frame.h}px` } : { aspectRatio: String(shape) }}
                       >
-                        <img
-                          src={showing.url}
-                          alt={showing.title}
-                          decoding="async"
-                          onLoad={(e) => setShape(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight || 4 / 3)}
-                        />
+                        {/* already fetched and measured above, so it paints
+                            straight into a frame of the right shape */}
+                        <img src={showing.url} alt={showing.title} decoding="async" />
                       </figure>
 
                       {many > 1 && (
