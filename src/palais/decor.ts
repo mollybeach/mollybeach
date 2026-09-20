@@ -197,6 +197,7 @@ export const MORE_TRINKETS: PropId[] = [
   "cat-petunia",
   "tree_christmas_decorated_presents_sticker",
   "book_everybodys_story_loyal_rue_hardcover_sticker",
+  "book_everybodys_story_loyal_rue_lying_down_sticker",
   "poster_lillebaeltsbroen_bridge_denmark_vintage_sticker",
   "poster_danish_composer_pianist_portrait_vintage_sticker",
 ];

@@ -123,6 +123,11 @@ export const PROPS = catalogue({
     plane: "near",
     metres: 0.16,
   },
+  book_everybodys_story_loyal_rue_lying_down_sticker: {
+    label: "Everybody's Story, lying down",
+    plane: "near",
+    metres: 0.24,
+  },
   poster_lillebaeltsbroen_bridge_denmark_vintage_sticker: {
     label: "a vintage Danish railway poster of the Little Belt bridge",
     plane: "mid",

@@ -72,19 +72,12 @@ export function BoudoirPictures() {
 
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState(() => remembered("key"));
-  const [inside, setInside] = useState(true); // TEMP
+  const [inside, setInside] = useState(false);
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [at, setAt] = useState(0);
-  const [hanging, setHanging] = useState<Portrait[] | null>(
-    Array.from({ length: 60 }, (_, n) => ({
-      url:
-        process.env.PUBLIC_URL +
-        (n % 3 === 0 ? "/palais/boudoir-summer.webp" : "/palais/boudoir-portrait-spring.webp"),
-      title: `test ${n}`,
-    })),
-  ); // TEMP
+  const [hanging, setHanging] = useState<Portrait[] | null>(null);   // null while they're still coming
   // the frame takes the picture's own shape, so it can grow to fill the panel
   // whatever shape the picture is
   const [shape, setShape] = useState(4 / 3);
