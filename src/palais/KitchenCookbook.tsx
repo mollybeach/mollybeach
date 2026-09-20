@@ -267,7 +267,7 @@ export function KitchenCookbook() {
                 disabled={many < 2 || writing}
                 aria-label="The page before"
               >
-                ‹
+                <span className="ck-knob-say">The page before</span>
               </button>
               <button
                 type="button"
@@ -276,7 +276,7 @@ export function KitchenCookbook() {
                 disabled={many < 2 || writing}
                 aria-label="The next page"
               >
-                ›
+                <span className="ck-knob-say">The next page</span>
               </button>
 
               {writing ? (

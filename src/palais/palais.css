@@ -4762,7 +4762,19 @@
 .palais .ck-doing { display: flex; gap: 0.6cqw; justify-content: flex-end; }
 .palais .ck-doing .wm-btn { padding: 0.3cqw 0.8cqw; font-size: 1.05cqw; }
 
-/* the knobs either side of the book, on its clasps */
+/* the knobs either side of the book: the clasp painted on it is the arrow, so
+   the button is only somewhere to press — its own words are there for a
+   screen reader and nowhere on the page */
+.palais .ck-knob-say {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .palais .ck-knob {
   position: absolute;
   top: 42.7%;                      /* over the clasp painted on the book */
@@ -4775,9 +4787,6 @@
   border: none;
   border-radius: 9999px;
   background: none;                /* the clasp itself is the button */
-  color: #5d3a1c;
-  font: 700 3.2cqw/1 var(--wm-serif, Georgia, serif);
-  text-shadow: 0 1px 0 rgba(255, 243, 216, 0.85);
   cursor: pointer;
   transition: filter 160ms ease, transform 160ms ease;
 }
@@ -4804,6 +4813,6 @@
   .palais .ck-tally { font-size: 0.78rem; }
   .palais .ck-in { font-size: 1.9cqw; }
   .palais .ck-in--name { font-size: 2.6cqw; }
-  .palais .ck-knob { font-size: 4.4cqw; }
+
   .palais .ck-panel .wm-bloom { display: none; }
 }
