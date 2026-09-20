@@ -73,8 +73,20 @@ function Turntable() {
   const holder = useRef<HTMLDivElement>(null);
   const player = useRef<YTPlayer | null>(null);
   const [playing, setPlaying] = useState(false);
+  // a phone hasn't room for a turntable and a 200px sleeve, so there it starts
+  // as a knob in the corner and opens when it's tapped
+  const [open, setOpen] = useState(() => {
+    try {
+      return !window.matchMedia("(max-width: 820px)").matches;
+    } catch {
+      return true;
+    }
+  });
 
+  /* the player is built when the turntable is out, and taken down when it is
+     put away — the div it is built on goes with it, so it can't be kept */
   useEffect(() => {
+    if (!open) return;
     let gone = false;
     youtube().then((YT) => {
       if (gone || !holder.current) return;
@@ -91,8 +103,9 @@ function Turntable() {
       gone = true;
       player.current?.destroy();
       player.current = null;
+      setPlaying(false);
     };
-  }, []);
+  }, [open]);
 
   const toggle = () => {
     const p = player.current;
@@ -101,8 +114,24 @@ function Turntable() {
     else p.playVideo();
   };
 
+  const shut = () => {
+    player.current?.pauseVideo();     // nothing plays out of sight; putting it
+    setOpen(false);                   // away takes the player down as well
+  };
+
+  if (!open) {
+    return (
+      <button type="button" className="lake-knob" onClick={() => setOpen(true)} aria-label="Open the record player">
+        <span className="lake-knob-record" aria-hidden />
+        <span aria-hidden>♪</span>
+      </button>
+    );
+  }
+
   return (
     <aside className={`lake-radio${playing ? " is-playing" : ""}`} aria-label="The Lakehouse record player">
+      {/* YouTube's player, standing behind the deck as the album's sleeve. On a
+          phone it only comes out while the record plays (see palais.css). */}
       <div className="tt-sleeve">
         <div ref={holder} />
       </div>
@@ -139,6 +168,9 @@ function Turntable() {
 
       <p className="lake-radio-now">
         <span aria-hidden>♪</span> {playing ? "Now playing" : "Tap the record"} · Vulfpeck
+        <button type="button" className="lake-radio-shut" onClick={shut} aria-label="Put the record player away">
+          ×
+        </button>
       </p>
     </aside>
   );
