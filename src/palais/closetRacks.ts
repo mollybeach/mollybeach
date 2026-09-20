@@ -44,7 +44,18 @@ function mend(which: Which, saved: RackOrder | undefined): RackOrder {
   const known = new Set(Object.values(base).flat());
   const seen = new Set<string>();
   const out: RackOrder = {};
+  /* A rail the saved arrangement has never heard of keeps what the code hangs
+     on it. Without this a new rail could never appear: the old arrangement
+     still lists those pieces somewhere else, claims them first, and the new
+     rail comes up empty — which is what happened to the window hooks on a
+     phone. Once the closet is saved again the rail is in the arrangement like
+     any other, and what Molly did with it stands. */
+  for (const [lineId, ids] of Object.entries(base)) {
+    if (saved[lineId]) continue;
+    out[lineId] = ids.filter((id) => !seen.has(id) && seen.add(id));
+  }
   for (const lineId of Object.keys(base)) {
+    if (out[lineId]) continue;
     out[lineId] = (saved[lineId] ?? []).filter((id) => known.has(id) && !seen.has(id) && seen.add(id));
   }
   for (const [lineId, ids] of Object.entries(base)) {
