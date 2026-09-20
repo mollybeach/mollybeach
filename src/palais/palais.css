@@ -4736,7 +4736,7 @@
 }
 .palais .ck-write-btn { flex: none; }
 .palais .ck-tally {
-  margin-left: auto;
+  margin-right: auto;      /* the count on the left, the quill over on the right */
   font: 600 0.9rem/1.3 var(--wm-serif, Georgia, serif);
   color: #7c5a2c;
 }

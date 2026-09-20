@@ -338,6 +338,7 @@ export function KitchenCookbook() {
                 page of it you are on */}
             {!writing && recipe && (
               <div className="ck-below">
+                <span className="ck-tally">{at + 1} of {many}</span>
                 <button
                   type="button"
                   className="wm-btn wm-btn--visit ck-write-btn"
@@ -368,7 +369,6 @@ export function KitchenCookbook() {
                     Tidy this one ✿
                   </button>
                 )}
-                <span className="ck-tally">{at + 1} of {many}</span>
               </div>
             )}
           </div>

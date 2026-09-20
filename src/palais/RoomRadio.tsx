@@ -7,7 +7,7 @@ import { noteDoing } from "./visits";
  * The record player: a turntable in the corner of a room, with whatever album
  * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
  * in the Palais, Mild High Club in the Boudoir, Norah Jones in the Kitchen,
- * the Growlers out at Sunliner Halt.
+ * the Growlers out at Sunliner Halt and in the Library.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Browsers won't start
@@ -43,6 +43,8 @@ const RECORDS: Partial<Record<Place, Disc>> = {
   boudoir: { video: "RDNymaNBy2I", name: "Mild High Club", title: "Skiptracing", folded: true },
   kitchen: { video: "9e5qNUd6gBA", name: "Norah Jones", title: "Come Away with Me", folded: true },
   sunliner: { video: "RofKpQWccjA", name: "The Growlers", title: "Naked Kids", folded: true },
+  // the same record as out at the halt
+  library: { video: "RofKpQWccjA", name: "The Growlers", title: "Naked Kids", folded: true },
 };
 
 type YTPlayer = {
