@@ -20,9 +20,10 @@ import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
 import { GlobeEgg } from "./GlobeEgg";
 import { LibraryImac } from "./LibraryImac";
-import { LakehouseRadio } from "./LakehouseRadio";
+import { RoomRadio } from "./RoomRadio";
 import { LettersDrawer, LibraryLetters } from "./LibraryLetters";
 import { LakehouseCase } from "./LakehouseCase";
+import { BoudoirPictures } from "./BoudoirPictures";
 import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
 import { countPage, recordPlace, recordVisit } from "./visits";
@@ -172,6 +173,7 @@ export default function PalaisHome() {
           <SeasonRoom place="caves" />
           <SeasonRoom place="madeleine" />
           <SeasonRoom place="library" />
+          <SeasonRoom place="boudoir" />
           <SeasonRoom place="sunliner" />
           {/* the clothes in the Wardrobe Wing */}
           <Wardrobe />
@@ -360,13 +362,16 @@ export default function PalaisHome() {
           <GlobeEgg />
           {/* and the iMac on its desk, which opens when you click it */}
           <LibraryImac />
-          {/* and a radio in the Lakehouse, playing Vulfpeck */}
-          <LakehouseRadio />
+          {/* and a record player: Norah Jones in the Palais, Vulfpeck in the
+              Lakehouse (RoomRadio) */}
+          <RoomRadio />
           {/* the letters: the library desk drawer and the Lakehouse road case
               are two ways into the one drawer of them */}
           <LettersDrawer>
             <LibraryLetters />
             <LakehouseCase />
+          {/* the pictures in the Boudoir dresser */}
+          <BoudoirPictures />
           </LettersDrawer>
           {/* the gilded band the footer wears, brought up onto the bottom of
               the room so it shows at the foot of the screen without scrolling;

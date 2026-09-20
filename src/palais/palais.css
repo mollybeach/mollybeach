@@ -154,6 +154,7 @@
 .palais [data-place="caves"] .palais-room--caves,
 .palais [data-place="madeleine"] .palais-room--madeleine,
 .palais [data-place="library"] .palais-room--library,
+.palais [data-place="boudoir"] .palais-room--boudoir,
 .palais [data-place="sunliner"] .palais-room--sunliner { opacity: 1; }
 /* the stickers follow you into every room, each room with its own layout
    (roomLayouts.ts), as do the weather and the flyers; the terrace's pollen
@@ -4203,4 +4204,155 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .palais .palais-lake-case { animation: none; }
+}
+
+
+/* ------------------------------------------- the pictures in the boudoir ----
+   The white dresser opens like the library's drawer, to the same word as the
+   letters, and what's in it is one picture at a time in a carved gilt frame —
+   the gold of the mirrors in the catalogue, done in gradients: a bevelled
+   outer band, a carved rib, and a dark lip round the picture so it sits back
+   in the glass. An arrow either side walks along them. */
+.palais .palais-pictures-spot {
+  position: absolute;
+  z-index: 30;          /* over the room's things, under the modals */
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+.palais .palais-pictures-spot:hover,
+.palais .palais-pictures-spot:focus-visible {
+  background: rgba(255, 233, 170, 0.18);
+  box-shadow: 0 0 18px 6px rgba(255, 220, 150, 0.3);
+  outline: none;
+}
+
+.palais .bd-panel {
+  box-sizing: border-box;
+  /* the panel takes the shape of what's hanging in it rather than leaving a
+     band of empty paper under a wide picture */
+  height: auto;
+  min-height: 0;
+  max-height: min(880px, 100%);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.6rem;
+  padding: 1.3rem 0.8rem 0.8rem;
+}
+/* the posy that sits along the bottom of the other modals belongs in the
+   corner here, off the picture */
+.palais .bd-panel .wm-bloom--br { right: -2.4rem; bottom: -2.6rem; }
+
+/* the picture, as big as the panel will allow: it takes the whole of the
+   panel below the title, and the arrows ride on its edges rather than taking
+   room of their own */
+.palais .bd-look {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  gap: 0.5rem;
+  min-height: 0;
+  padding: 0;
+}
+.palais .bd-hang {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* the frame itself */
+.palais .bd-frame {
+  display: grid;
+  place-items: stretch;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0.85rem;
+  border-radius: 6px;
+  background:
+    linear-gradient(145deg, #f6e3a8 0%, #d9ae53 18%, #b78a33 38%, #efd995 52%, #b78a33 66%, #d9ae53 86%, #f3dc9c 100%);
+  box-shadow:
+    0 0 0 1px #8a6522,                         /* the outer edge of the carving */
+    inset 0 0 0 1px rgba(255, 246, 214, 0.75),
+    inset 0 0 0 6px rgba(140, 103, 36, 0.32),  /* the carved rib */
+    inset 0 0 0 7px rgba(255, 244, 205, 0.6),
+    0 12px 22px rgba(72, 50, 20, 0.3);
+}
+.palais .bd-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* the frame is cut to the picture's own shape */
+  border-radius: 2px;
+  /* the dark lip the picture sits behind, and the light off the glass */
+  box-shadow:
+    0 0 0 3px #6f5220,
+    inset 0 0 26px rgba(60, 40, 12, 0.22);
+}
+
+.palais .bd-arrow {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 2px solid #c9a44c;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #fdf3d8, #e9cf94);
+  box-shadow: 0 3px 0 #a8863c, 0 6px 14px rgba(120, 90, 30, 0.25);
+  color: #6b4f1c;
+  font: 700 1.9rem/1 var(--wm-serif, Georgia, serif);
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+.palais .bd-arrow--back { left: 0.2rem; }
+.palais .bd-arrow--on { right: 0.2rem; }
+.palais .bd-arrow:hover,
+.palais .bd-arrow:focus-visible { filter: brightness(1.08); outline: none; }
+.palais .bd-arrow:active { box-shadow: 0 1px 0 #a8863c; }
+
+.palais .bd-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.15rem 0.6rem;
+  text-align: center;
+}
+.palais .bd-caption b { font: 700 1.15rem/1.2 var(--wm-serif, Georgia, serif); color: #6b4f1c; }
+.palais .bd-caption small { font-size: 0.86rem; color: #8a7340; }
+/* a row of little beads: which portrait of them this is */
+.palais .bd-count { display: flex; align-self: center; gap: 0.35rem; }
+.palais .bd-count i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(150, 120, 55, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(120, 90, 30, 0.35);
+}
+.palais .bd-count i.is-on { background: #c9a44c; box-shadow: 0 0 6px rgba(201, 164, 76, 0.8); }
+
+@media (max-width: 820px) {
+  .palais .bd-panel { max-height: 100%; padding: 1.9rem 0.6rem 0.7rem; }
+  .palais .bd-look { gap: 0.4rem; padding: 0; }
+  .palais .bd-frame { padding: 0.5rem; }
+  .palais .bd-arrow { width: 2.4rem; height: 2.4rem; font-size: 1.5rem; }
+  .palais .bd-caption b { font-size: 1.1rem; }
+  .palais .bd-panel .wm-bloom { display: none; }
+}
+@container palais (max-width: 820px) {
+  .palais .bd-panel .wm-bloom { display: none; }
 }

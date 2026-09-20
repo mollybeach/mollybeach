@@ -239,7 +239,7 @@ const STOPS: Stop[] = [
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
     finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
     color: "#9fd88f",
-    at: [227, 155],
+    at: [300, 380],
     patch: [86, 70],
     seed: 41,
     room: "rainwood",
@@ -252,7 +252,7 @@ const STOPS: Stop[] = [
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
-    at: [402, 83],
+    at: [227, 155],
     patch: [104, 56],
     seed: 37,
     room: "lagoon",
@@ -282,6 +282,19 @@ const STOPS: Stop[] = [
     patch: [48, 36],
     seed: 167,
     room: "library",
+  },
+  {
+    id: "boudoir",
+    earth: [48.8, 2.12],
+    name: "Boudoir",
+    tag: "along from the wardrobe",
+    blurb: "A gilded dressing room: lilac curtains swagged over tall windows, a chandelier over a marble floor, and a trifold mirror on the vanity with the roses outside coming in.",
+    finds: ["A trifold mirror and a walnut vanity", "A blue tufted ottoman in the middle", "Candles on gilt sconces all round"],
+    color: "#e6c2e0",
+    at: [402, 83],
+    patch: [46, 34],
+    seed: 173,
+    room: "boudoir",
   },
 ];
 
@@ -346,7 +359,7 @@ const inland = (x: number, y: number) => {
 
 /** each stop's picture, in a round gilt frame */
 /** the rooms that are inside the Palais rather than places of their own */
-const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library"]);
+const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library", "boudoir"]);
 
 const FRAME = 44;
 const labelOf = (s: Stop) => s.name;

@@ -12,7 +12,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * opens the same room.
  */
 
-export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "sunliner"] as const;
+export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner"] as const;
 export type Place = (typeof PLACES)[number];
 
 const fromHash = (): Place => {
@@ -66,5 +66,6 @@ export const PLACE_NAMES: Record<Place, string> = {
   caves: "The Hollow of Small Stars",
   madeleine: "Madeleine Room",
   library: "The Library",
+  boudoir: "The Boudoir",
   sunliner: "Sunliner Halt",
 };

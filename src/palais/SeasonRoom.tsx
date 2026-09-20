@@ -43,6 +43,9 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   madeleine: { file: "madeleine", focus: "50% 60%", seasons: false, portrait: true },
   // the library: carved shelves to a painted sky, a spiral of books, the desk at the window over the lake
   library: { file: "library", focus: "50% 60%", portrait: "seasons" },
+  // the boudoir: gilt panelling, lilac swagged curtains, a chandelier, the
+  // trifold vanity and the blue tufted ottoman; one photograph for now
+  boudoir: { file: "boudoir", focus: "50% 60%", seasons: false, portrait: true },
   // the derailed Sunliner out in the desert, four times over, with a tall one
   // of each for a phone
   sunliner: { file: "sunliner", focus: "50% 55%", portrait: "seasons" },

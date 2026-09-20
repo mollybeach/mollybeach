@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { usePlace } from "./place";
+import { usePlace, type Place } from "./place";
 import { noteDoing } from "./visits";
 
 /**
- * The Lakehouse record player: Vulfpeck's "The Beautiful Game", the full album
- * from Vulf's own YouTube channel, on a turntable in the corner.
+ * The record player: a turntable in the corner of a room, with whatever album
+ * that room keeps on it (RECORDS below). The Lakehouse has Vulfpeck's "The
+ * Beautiful Game" from Vulf's own channel; the Palais has Norah Jones.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Tapping the record plays
@@ -16,10 +17,21 @@ import { noteDoing } from "./visits";
  * so it stands behind the turntable as the album's sleeve. It's the
  * privacy-enhanced youtube-nocookie.com player, driven through YouTube's
  * IFrame API so the turntable knows when the music is playing. Leaving the
- * Lakehouse takes the turntable away, and the music with it.
+ * room takes the turntable away, and the music with it.
  */
 
-const VIDEO = "DRdnpKRvMwI";
+/** an album on a deck: the video it plays, and what the label reads */
+interface Disc {
+  video: string;
+  name: string;
+  title: string;
+}
+
+/** what's on the deck in each room. A room left out of this has no deck. */
+const RECORDS: Partial<Record<Place, Disc>> = {
+  palace: { video: "Ir1Bl5odrIQ", name: "Norah Jones", title: "Best of, the whole album" },
+  lakehouse: { video: "DRdnpKRvMwI", name: "Vulfpeck", title: "The Beautiful Game" },
+};
 
 type YTPlayer = {
   playVideo(): void;
@@ -71,16 +83,19 @@ function youtube(): Promise<YTApi> {
 const PLAYING = 1;
 
 /** narrower than this and the deck folds down to its knob */
-const NARROW = "(max-width: 820px)";
+const NARROW = 820;
+/** is there room for the deck and its 200px sleeve? */
 const roomForIt = () => {
   try {
-    return !window.matchMedia(NARROW).matches;
+    // the widest honest answer: some browsers report a stale innerWidth on the
+    // first paint, and the media query can answer before the window has settled
+    return Math.max(window.innerWidth || 0, document.documentElement.clientWidth || 0) > NARROW;
   } catch {
     return true;
   }
 };
 
-function Turntable() {
+function Turntable({ disc }: { disc: Disc }) {
   const holder = useRef<HTMLDivElement>(null);
   const player = useRef<YTPlayer | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -90,19 +105,23 @@ function Turntable() {
   const [open, setOpen] = useState(roomForIt);
 
   /* the first render can happen before the window has settled at its real
-     width, so ask again once it has — and again whenever the screen crosses
-     between the two. Putting it away by hand holds until that happens. */
+     width, so ask again once it has, and again whenever the window changes
+     size. Putting it away by hand holds until the screen crosses the line
+     between a deck and a knob. */
+  const wasWide = useRef(roomForIt());
   useEffect(() => {
-    let mq: MediaQueryList;
-    try {
-      mq = window.matchMedia(NARROW);
-    } catch {
-      return;
-    }
-    const settle = () => setOpen(!mq.matches);
-    settle();
-    mq.addEventListener("change", settle);
-    return () => mq.removeEventListener("change", settle);
+    const settle = () => {
+      const wide = roomForIt();
+      if (wide === wasWide.current) return;   // no crossing: leave a hand-made
+      wasWide.current = wide;                 // choice alone
+      setOpen(wide);
+    };
+    const frame = requestAnimationFrame(settle);   // after the first paint, when
+    window.addEventListener("resize", settle);     // the width is the real one
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", settle);
+    };
   }, []);
 
   /* the player is built when the turntable is out, and taken down when it is
@@ -113,7 +132,7 @@ function Turntable() {
     youtube().then((YT) => {
       if (gone || !holder.current) return;
       player.current = new YT.Player(holder.current, {
-        videoId: VIDEO,
+        videoId: disc.video,
         host: "https://www.youtube-nocookie.com",
         width: 200,
         height: 200,
@@ -122,7 +141,7 @@ function Turntable() {
           onStateChange: (e) => {
             setPlaying(e.data === PLAYING);
             // worth knowing that someone put the record on (visits.ts)
-            if (e.data === PLAYING) noteDoing("record", "Vulfpeck");
+            if (e.data === PLAYING) noteDoing("record", disc.name);
           },
         },
       });
@@ -133,7 +152,7 @@ function Turntable() {
       player.current = null;
       setPlaying(false);
     };
-  }, [open]);
+  }, [open, disc.video, disc.name]);
 
   const toggle = () => {
     const p = player.current;
@@ -157,7 +176,7 @@ function Turntable() {
   }
 
   return (
-    <aside className={`lake-radio${playing ? " is-playing" : ""}`} aria-label="The Lakehouse record player">
+    <aside className={`lake-radio${playing ? " is-playing" : ""}`} aria-label="The record player">
       {/* YouTube's player, standing behind the deck as the album's sleeve. On a
           phone it only comes out while the record plays (see palais.css). */}
       <div className="tt-sleeve">
@@ -174,9 +193,9 @@ function Turntable() {
         >
           <span className="tt-record" aria-hidden>
             <span className="tt-label">
-              <span className="tt-label-name">VULFPECK</span>
+              <span className="tt-label-name">{disc.name.toUpperCase()}</span>
               <span className="tt-label-dot" />
-              <span className="tt-label-title">The Beautiful Game</span>
+              <span className="tt-label-title">{disc.title}</span>
             </span>
           </span>
           <span className="tt-sheen" aria-hidden />
@@ -195,7 +214,7 @@ function Turntable() {
       </div>
 
       <p className="lake-radio-now">
-        <span aria-hidden>♪</span> {playing ? "Now playing" : "Tap the record"} · Vulfpeck
+        <span aria-hidden>♪</span> {playing ? "Now playing" : "Tap the record"} · {disc.name}
         <button type="button" className="lake-radio-shut" onClick={shut} aria-label="Put the record player away">
           ×
         </button>
@@ -204,7 +223,9 @@ function Turntable() {
   );
 }
 
-export function LakehouseRadio() {
+export function RoomRadio() {
   const { place } = usePlace();
-  return place === "lakehouse" ? <Turntable /> : null;
+  const disc = RECORDS[place];
+  // a fresh deck (and a fresh player) in each room
+  return disc ? <Turntable key={place} disc={disc} /> : null;
 }
