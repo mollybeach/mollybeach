@@ -4249,6 +4249,14 @@
   min-height: 0;
   max-height: min(880px, 100%);
 }
+/* an empty dresser, or one still opening: a line in the middle of the paper,
+   not a column stretched down it */
+.palais .bd-look .cat-note {
+  place-self: center;
+  max-width: 26rem;
+  text-align: center;
+}
+
 /* the word, in the middle of all that paper (the panel's rows don't stretch
    their children on their own) */
 .palais .bd-panel .lt-gate,

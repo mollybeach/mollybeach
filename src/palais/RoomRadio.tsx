@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePlace, type Place } from "./place";
 import { noteDoing } from "./visits";
 
@@ -8,9 +8,12 @@ import { noteDoing } from "./visits";
  * Beautiful Game" from Vulf's own channel; the Palais has Widowspeak.
  *
  * The record spins while the album plays and stops when it's paused, and the
- * tone arm swings onto the record and back off again. Tapping the record plays
- * or pauses it. Browsers won't start sound on their own, so it always takes one
- * tap.
+ * tone arm swings onto the record and back off again. Browsers won't start
+ * sound on their own, so it takes a click — but any click anywhere in the
+ * Palais will do it, once: the first one puts the record on (and brings the
+ * deck out, if it was folded away). After that the record itself is the only
+ * thing that stops it, and once it's been stopped by hand nothing starts it
+ * again but another tap on the record.
  *
  * The music is YouTube's own player, embedded (nothing is copied onto the
  * site). YouTube asks that its player stay visible and at least 200px square,
@@ -25,11 +28,13 @@ interface Disc {
   video: string;
   name: string;
   title: string;
+  /** stands as the little brass knob until it's tapped, even on a wide screen */
+  folded?: boolean;
 }
 
 /** what's on the deck in each room. A room left out of this has no deck. */
 const RECORDS: Partial<Record<Place, Disc>> = {
-  palace: { video: "Pq5VAFOfuQw", name: "Widowspeak", title: "In the Pines" },
+  palace: { video: "Pq5VAFOfuQw", name: "Widowspeak", title: "In the Pines", folded: true },
   lakehouse: { video: "DRdnpKRvMwI", name: "Vulfpeck", title: "The Beautiful Game" },
 };
 
@@ -48,7 +53,7 @@ type YTApi = {
       width: number;
       height: number;
       playerVars: Record<string, number>;
-      events: { onStateChange: (e: { data: number }) => void };
+      events: { onReady?: () => void; onStateChange: (e: { data: number }) => void };
     },
   ) => YTPlayer;
 };
@@ -99,10 +104,17 @@ function Turntable({ disc }: { disc: Disc }) {
   const holder = useRef<HTMLDivElement>(null);
   const player = useRef<YTPlayer | null>(null);
   const [playing, setPlaying] = useState(false);
-  // a screen with room for it stands the deck open; a phone hasn't room for a
-  // turntable and a 200px sleeve, so there it starts as a knob in the corner
-  // and opens when it's tapped
-  const [open, setOpen] = useState(roomForIt);
+  /* the page's first click puts the record on. `spent` is that click, gone;
+     `asked` is a record wanted while the deck was still folded, waiting for a
+     player to exist */
+  const spent = useRef(false);
+  const asked = useRef(false);
+  // a screen with room for it stands the deck open, unless the room would
+  // rather keep it folded away (folded, above); a phone hasn't room for a
+  // turntable and a 200px sleeve, so there it always starts as a knob in the
+  // corner and opens when it's tapped
+  const out = useCallback(() => roomForIt() && !disc.folded, [disc.folded]);
+  const [open, setOpen] = useState(out);
 
   /* the first render can happen before the window has settled at its real
      width, so ask again once it has, and again whenever the window changes
@@ -114,7 +126,7 @@ function Turntable({ disc }: { disc: Disc }) {
       const wide = roomForIt();
       if (wide === wasWide.current) return;   // no crossing: leave a hand-made
       wasWide.current = wide;                 // choice alone
-      setOpen(wide);
+      setOpen(wide && !disc.folded);
     };
     const frame = requestAnimationFrame(settle);   // after the first paint, when
     window.addEventListener("resize", settle);     // the width is the real one
@@ -122,7 +134,7 @@ function Turntable({ disc }: { disc: Disc }) {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", settle);
     };
-  }, []);
+  }, [disc.folded]);
 
   /* the player is built when the turntable is out, and taken down when it is
      put away — the div it is built on goes with it, so it can't be kept */
@@ -138,6 +150,11 @@ function Turntable({ disc }: { disc: Disc }) {
         height: 200,
         playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
         events: {
+          onReady: () => {
+            if (!asked.current) return;     // the page was clicked while it was folded
+            asked.current = false;
+            player.current?.playVideo();
+          },
           onStateChange: (e) => {
             setPlaying(e.data === PLAYING);
             // worth knowing that someone put the record on (visits.ts)
@@ -154,6 +171,24 @@ function Turntable({ disc }: { disc: Disc }) {
     };
   }, [open, disc.video, disc.name]);
 
+  /* any click in the Palais puts the record on, once. Clicks on the deck
+     itself are its own business — that's how it gets stopped. */
+  useEffect(() => {
+    const kick = (e: PointerEvent) => {
+      if (spent.current) return;
+      const on = e.target as HTMLElement | null;
+      if (on?.closest(".lake-radio, .lake-knob")) return;
+      spent.current = true;
+      if (player.current) player.current.playVideo();
+      else {
+        asked.current = true;              // no deck out yet: bring it out first
+        setOpen(true);
+      }
+    };
+    document.addEventListener("pointerdown", kick, true);
+    return () => document.removeEventListener("pointerdown", kick, true);
+  }, []);
+
   const toggle = () => {
     const p = player.current;
     if (!p) return;
@@ -162,6 +197,8 @@ function Turntable({ disc }: { disc: Disc }) {
   };
 
   const shut = () => {
+    spent.current = true;             // put away by hand: don't start it again
+    asked.current = false;
     player.current?.pauseVideo();     // nothing plays out of sight; putting it
     setOpen(false);                   // away takes the player down as well
   };
