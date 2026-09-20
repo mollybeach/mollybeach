@@ -70,19 +70,40 @@ function youtube(): Promise<YTApi> {
 
 const PLAYING = 1;
 
+/** narrower than this and the deck folds down to its knob */
+const NARROW = "(max-width: 820px)";
+const roomForIt = () => {
+  try {
+    return !window.matchMedia(NARROW).matches;
+  } catch {
+    return true;
+  }
+};
+
 function Turntable() {
   const holder = useRef<HTMLDivElement>(null);
   const player = useRef<YTPlayer | null>(null);
   const [playing, setPlaying] = useState(false);
-  // a phone hasn't room for a turntable and a 200px sleeve, so there it starts
-  // as a knob in the corner and opens when it's tapped
-  const [open, setOpen] = useState(() => {
+  // a screen with room for it stands the deck open; a phone hasn't room for a
+  // turntable and a 200px sleeve, so there it starts as a knob in the corner
+  // and opens when it's tapped
+  const [open, setOpen] = useState(roomForIt);
+
+  /* the first render can happen before the window has settled at its real
+     width, so ask again once it has — and again whenever the screen crosses
+     between the two. Putting it away by hand holds until that happens. */
+  useEffect(() => {
+    let mq: MediaQueryList;
     try {
-      return !window.matchMedia("(max-width: 820px)").matches;
+      mq = window.matchMedia(NARROW);
     } catch {
-      return true;
+      return;
     }
-  });
+    const settle = () => setOpen(!mq.matches);
+    settle();
+    mq.addEventListener("change", settle);
+    return () => mq.removeEventListener("change", settle);
+  }, []);
 
   /* the player is built when the turntable is out, and taken down when it is
      put away — the div it is built on goes with it, so it can't be kept */
