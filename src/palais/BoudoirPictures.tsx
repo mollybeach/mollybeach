@@ -3,7 +3,7 @@ import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
 import { lettersOpen, remember, remembered } from "./letters";
-import { readPortraits, type Portrait } from "./portraits";
+import { addPortrait, PORTRAIT_TYPES, readPortraits, type Portrait } from "./portraits";
 import { noteDoing } from "./visits";
 
 /**
@@ -14,10 +14,12 @@ import { noteDoing } from "./visits";
  * that has already opened the drawer walks straight in (letters.ts). Inside,
  * the pictures hang one at a time in a carved gilt frame, the gold of the
  * mirrors in the catalogue (.bd-frame in palais.css), with an arrow either
- * side and the arrow keys to walk along them.
+ * side and the arrow keys to walk along them. A film hangs in the same frame
+ * and plays there.
  *
- * PICTURES is the whole gallery — swap these for Molly's own and the room
- * follows.
+ * Whoever opened the dresser can also put one in — the button under the frame
+ * sends the file straight to the bucket on a link signed for it alone
+ * (portraits.ts), and the drawer is read again so the new one hangs last.
  */
 
 /** a rabbit's head, drawn for this room: a round face and two long ears */
@@ -90,6 +92,10 @@ export function BoudoirPictures() {
   const shapes = useRef(new Map<string, number>());
   const [ready, setReady] = useState<string | null>(null);
   const pit = useRef<HTMLDivElement>(null);
+  /* putting one in: the file picker, and what to say while it goes */
+  const picker = useRef<HTMLInputElement>(null);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState<string | null>(null);
 
   /* keep the dresser where the photograph put it, whichever photograph it is */
   useLayoutEffect(() => {
@@ -142,7 +148,7 @@ export function BoudoirPictures() {
         remember("key", word);
         noteDoing("pictures");          // Molly hears that someone looked (visits.ts)
         // the pictures themselves, signed for ten minutes at a time
-        // (portraits.ts). Before the bucket exists, the bundled ones stay up.
+        // (portraits.ts). Before the bucket exists, nothing comes back.
         readPortraits(word)
           .then((got) => {
             setHanging(got);
@@ -164,9 +170,36 @@ export function BoudoirPictures() {
     if (open && key && !inside && !busy) tryWord(key);
   }, [open, key, inside, busy, tryWord]);
 
+  /* putting one in: straight from here to the bucket, on a link signed for
+     this one file (portraits.ts). Then the drawer is read again, and the new
+     one is the one hanging — it is stamped, so it hangs last. */
+  const takeIn = useCallback(
+    async (file: File | null | undefined) => {
+      if (!file || !key) return;
+      setSending(true);
+      setTrouble(null);
+      setSent(null);
+      try {
+        await addPortrait(key, file);
+        noteDoing("portrait", file.name);      // Molly hears that one went in
+        const got = await readPortraits(key);
+        setHanging(got);
+        setAt(Math.max(0, got.length - 1));
+        setSent(`${file.name} is in the dresser.`);
+      } catch (e) {
+        setTrouble(e instanceof Error ? e.message : "It didn't get there. Try again?");
+      } finally {
+        setSending(false);
+        if (picker.current) picker.current.value = "";
+      }
+    },
+    [key],
+  );
+
   const shut = useCallback(() => {
     setOpen(false);
     setTrouble(null);
+    setSent(null);
   }, []);
   const many = hanging?.length ?? 0;
   const step = useCallback((by: number) => setAt((n) => (n + by + many) % many), [many]);
@@ -175,6 +208,10 @@ export function BoudoirPictures() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") shut();
       if (!inside) return;
+      // a film's own controls use the arrows to run it back and forth, so
+      // while it has the focus they're its, not the drawer's
+      const on = e.target as HTMLElement | null;
+      if (on && (on.tagName === "VIDEO" || on.closest?.("video"))) return;
       if (e.key === "ArrowRight") step(1);
       if (e.key === "ArrowLeft") step(-1);
     };
@@ -182,39 +219,47 @@ export function BoudoirPictures() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, inside, shut, step]);
 
-  /* learn a picture's shape before hanging it, and have the next one ready */
+  /* learn a picture's shape before hanging it, and have the next one ready.
+     A film is asked the same question of its first frame: enough of it is
+     fetched to know how big it is, and no more. */
   const onNow = hanging?.[at] ?? hanging?.[0] ?? null;
   useEffect(() => {
     const url = onNow?.url;
     if (!url) return;
-    const learn = (u: string, then?: (r: number) => void) => {
+    const learn = (u: string, film?: boolean, then?: (r: number) => void) => {
       const known = shapes.current.get(u);
       if (known) return then?.(known);
+      const take = (r: number) => {
+        shapes.current.set(u, r || 4 / 3);
+        then?.(r || 4 / 3);
+      };
+      if (film) {
+        const reel = document.createElement("video");
+        reel.preload = "metadata";
+        reel.muted = true;
+        reel.onloadedmetadata = () => take(reel.videoWidth / reel.videoHeight);
+        reel.onerror = () => take(16 / 9);
+        reel.src = u;
+        return;
+      }
       const img = new Image();
-      img.onload = () => {
-        const r = img.naturalWidth / img.naturalHeight || 4 / 3;
-        shapes.current.set(u, r);
-        then?.(r);
-      };
-      img.onerror = () => {
-        shapes.current.set(u, 4 / 3);
-        then?.(4 / 3);
-      };
+      img.onload = () => take(img.naturalWidth / img.naturalHeight);
+      img.onerror = () => take(4 / 3);
       img.src = u;
     };
     let gone = false;
-    learn(url, (r) => {
+    learn(url, onNow?.kind === "film", (r) => {
       if (gone) return;
       setShape(r);
       setReady(url);
       // the one along, so stepping to it is instant
       const next = hanging?.[(at + 1) % (hanging.length || 1)];
-      if (next && next.url !== url) learn(next.url);
+      if (next && next.url !== url) learn(next.url, next.kind === "film");
     });
     return () => {
       gone = true;
     };
-  }, [onNow?.url, hanging, at]);
+  }, [onNow?.url, onNow?.kind, hanging, at]);
 
   /* The panel is always the same size — no modal in the Palais changes shape
      with what's in it. The picture is measured to the fixed area it hangs in
@@ -227,8 +272,12 @@ export function BoudoirPictures() {
     const fit = () => {
       // the picture's own shape, asked of the picture itself when it is there:
       // the remembered one can belong to the picture before this one
-      const img = room.querySelector("img");
-      const real = img?.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : shape;
+      const hangs = room.querySelector<HTMLImageElement | HTMLVideoElement>("img, video");
+      const own =
+        hangs instanceof HTMLVideoElement
+          ? { w: hangs.videoWidth, h: hangs.videoHeight }
+          : { w: hangs?.naturalWidth ?? 0, h: hangs?.naturalHeight ?? 0 };
+      const real = own.w && own.h ? own.w / own.h : shape;
       const room_ = { w: room.clientWidth, h: room.clientHeight };
       // the biggest box of that shape that fits inside the area, bounded on
       // BOTH sides so it can never be wider than the panel it hangs in
@@ -340,7 +389,18 @@ export function BoudoirPictures() {
                       >
                         {/* already fetched and measured above, so it paints
                             straight into a frame of the right shape */}
-                        <img src={showing.url} alt={showing.title} decoding="async" />
+                        {showing.kind === "film" ? (
+                          <video
+                            key={showing.url}
+                            src={showing.url}
+                            controls
+                            playsInline
+                            preload="metadata"
+                            aria-label={showing.title}
+                          />
+                        ) : (
+                          <img src={showing.url} alt={showing.title} decoding="async" />
+                        )}
                       </figure>
                     </div>
 
@@ -376,6 +436,30 @@ export function BoudoirPictures() {
                     </div>
                   </>
                 )}
+
+                {/* and the way to put one in, under everything, the way the
+                    cookbook keeps its pen under the left page */}
+                <div className="bd-add">
+                  <input
+                    ref={picker}
+                    type="file"
+                    className="bd-picker"
+                    accept={PORTRAIT_TYPES}
+                    onChange={(e) => takeIn(e.target.files?.[0])}
+                    disabled={sending}
+                  />
+                  <button
+                    type="button"
+                    className="wm-btn bd-add-btn"
+                    onClick={() => picker.current?.click()}
+                    disabled={sending}
+                  >
+                    {sending ? "Putting it in…" : "Add a picture or a film ✿"}
+                  </button>
+                  {sending && <Waiting say="Putting it in the dresser…" />}
+                  {trouble && <p className="lt-trouble">{trouble}</p>}
+                  {sent && !trouble && <p className="bd-said">{sent}</p>}
+                </div>
               </div>
             )}
           </div>

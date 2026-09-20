@@ -15,7 +15,7 @@ create table if not exists public.palais_visit_doings (
   created_at timestamptz not null default now(),
   session text not null,   -- the same per-tab session as palais_visits
   visitor text,            -- the same salted hash; never the address
-  kind text not null,      -- catalogue | characters | character | shelf | record | letters | pictures
+  kind text not null,      -- catalogue | characters | character | shelf | record | letters | pictures | portrait
   detail text              -- who they stopped on, or which shelf
 );
 create index if not exists palais_visit_doings_session on public.palais_visit_doings (session, created_at);
@@ -214,6 +214,7 @@ begin
     when 'record' then 'put the record on' || coalesce(' · ' || new.detail, '')
     when 'letters' then 'opened the letters' || coalesce(' · ' || new.detail, '')
     when 'pictures' then 'looked through the pictures in the boudoir'
+    when 'portrait' then 'put something in the boudoir dresser' || coalesce(' · ' || new.detail, '')
     else 'did something: ' || new.kind || coalesce(' · ' || new.detail, '')
   end;
 

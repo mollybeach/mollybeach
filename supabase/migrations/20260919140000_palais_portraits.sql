@@ -10,6 +10,20 @@
 -- "portraits", Public bucket OFF. Then drag pictures into it. They show up in
 -- the order they're named, titled after the filename.
 --
+-- Films hang there too — .mp4, .webm, .mov and .m4v play in the frame. Two
+-- things in the bucket's settings decide whether one can be put in:
+--   * File size limit — the default is 50 MB, which is a short film. Raise it
+--     on the bucket (Storage → portraits → Settings) for longer ones.
+--   * Allowed MIME types — leave it empty, or it has to include video/*.
+--
+-- The dresser can also be added to from the room: whoever knows the word gets
+-- a button under the frame, and the file goes straight from their browser to
+-- the bucket on a link the function signs for that one file. It is stamped
+-- with the time it arrived, so nothing is ever overwritten and the newest
+-- hangs last. That needs the function deployed again:
+--
+--   supabase functions deploy palais-portraits
+--
 -- This table is only for saying it better: a row gives a picture a title, a
 -- line underneath, and a place in the order. It's optional, and only Molly can
 -- write it.
