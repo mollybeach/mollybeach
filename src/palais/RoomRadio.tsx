@@ -6,8 +6,9 @@ import { noteDoing } from "./visits";
 /**
  * The record player: a turntable in the corner of a room, with whatever album
  * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
- * in the Palais, Norah Jones in the Kitchen, the Growlers in the Boudoir and
- * out at Sunliner Halt, Mild High Club in the Library.
+ * in the Palais, Norah Jones in the Kitchen, the Growlers in the Boudoir,
+ * Mild High Club in the Library, and Lana Del Rey out at Sunliner Halt, in the
+ * Hollow of Small Stars, the Jacaranda Quarter and the Steaming Lagoon.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Browsers won't start
@@ -42,7 +43,10 @@ const RECORDS: Partial<Record<Place, Disc>> = {
   // the bunny sits there
   boudoir: { video: "RofKpQWccjA", name: "The Growlers", title: "Naked Kids", folded: true },
   kitchen: { video: "9e5qNUd6gBA", name: "Norah Jones", title: "Come Away with Me", folded: true },
-  sunliner: { video: "RofKpQWccjA", name: "The Growlers", title: "Naked Kids", folded: true },
+  sunliner: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
+  caves: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
+  jacaranda: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
+  lagoon: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
   library: { video: "RDNymaNBy2I", name: "Mild High Club", title: "Skiptracing", folded: true },
 };
 
