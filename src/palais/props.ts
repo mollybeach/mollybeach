@@ -118,6 +118,16 @@ export const PROPS = catalogue({
   "cat-strawberry-roses": { label: "Strawberry, and a jug of roses", plane: "near" },
   "cat-honeysuckle": { label: "Honeysuckle", plane: "near" },
   "cat-petunia": { label: "Petunia, a lilac-point ragdoll", plane: "near" },
+  poster_lillebaeltsbroen_bridge_denmark_vintage_sticker: {
+    label: "a vintage Danish railway poster of the Little Belt bridge",
+    plane: "mid",
+    metres: 0.62,
+  },
+  poster_danish_composer_pianist_portrait_vintage_sticker: {
+    label: "a vintage poster of a Danish composer at his chair",
+    plane: "mid",
+    metres: 0.62,
+  },
   tree_christmas_decorated_presents_sticker: {
     label: "a Christmas tree, lit, with the presents under it",
     plane: "mid",

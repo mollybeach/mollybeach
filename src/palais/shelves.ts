@@ -119,6 +119,8 @@ export const SHELVES: Shelf[] = [
     name: "Artwork",
     emoji: "🖼️",
     items: [
+      "poster_lillebaeltsbroen_bridge_denmark_vintage_sticker",
+      "poster_danish_composer_pianist_portrait_vintage_sticker",
       "mirror-glass-floral",
       "mirror-glass-blue",
       "mirror-glass-tulip",
