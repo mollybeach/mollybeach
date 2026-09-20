@@ -3,6 +3,7 @@ import { propSpec, propSrc, type Plane, type PropId } from "./props";
 import type { SetName } from "./conjureSchedule";
 import { RIGS } from "./rigs";
 import { useContext } from "react";
+import { JustPlaced } from "./justPlaced";
 import { ArrangedRoom, InPhoneRoom, LayoutNow, PhoneLayoutNow, arranged } from "./arrangement";
 import { Conjure } from "./Conjure";
 
@@ -132,6 +133,19 @@ export function Prop({
     ...(inRoom ? arranged(id, layout) : inPhone ? arranged(id, phoneLayout) : undefined),
   };
   const sharing = slot !== undefined;
+
+  /* just put in from the catalogue: stand it in the middle of the view, where
+     it can't be missed, each one after the first a step along so they don't
+     stack exactly */
+  const turn = useContext(JustPlaced).get(id);
+  if (turn !== undefined && !ghost && !sharing) {
+    const step = (turn % 6) * 2.4;
+    outer.left = `calc(50% + ${step}cqw)`;
+    outer.top = `calc(50% + ${step}cqw)`;
+    outer.right = undefined;
+    outer.bottom = undefined;
+    outer.transform = "translate(-50%, -50%)";
+  }
   if (ghost || sharing) {
     const offset = delay - (sharing ? phase * (ghostDur / 2) : 0);
     outer.animation = `palais-ghost ${ghostDur}s ease-in-out ${offset}s infinite`;

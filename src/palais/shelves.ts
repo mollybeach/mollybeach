@@ -325,6 +325,7 @@ export const SHELVES: Shelf[] = [
     name: "Boxes & keepsakes",
     emoji: "🎁",
     items: [
+      "road_case_vintage_mail_stack_black_sticker",
       "trinket-box",
       "box_trinket_round_portrait_cream_gold_vintage_sticker",
       "box_trinket_jasperware_cameo_powder_blue_sticker",

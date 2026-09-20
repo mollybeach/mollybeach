@@ -13,6 +13,7 @@ import { usePlace } from "./place";
 import { useClosetHiddenDefault } from "./closetRacks";
 import { isPortable, resolvePortable } from "./crossDevice";
 import { noteDoing } from "./visits";
+import { JustPlaced } from "./justPlaced";
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -217,10 +218,19 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   );
   useEffect(() => () => clearTimeout(glide.current), []);
   /** put stickers into the room as it is (after anything tried on just before) */
+  const [justPlaced, setJustPlaced] = useState<Map<string, number>>(() => new Map());
+
   const putIn = useCallback((ids: string[]) => {
     setHidden((h) => {
       const next = new Set(h);
       ids.forEach((id) => next.delete(id));
+      return next;
+    });
+    // and stand them in the middle of the view, so they are never lost behind
+    // the furniture (justPlaced.ts)
+    setJustPlaced((was) => {
+      const next = new Map(was);
+      ids.forEach((id) => next.set(id, next.size));
       return next;
     });
   }, []);
@@ -237,6 +247,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     // walking into another room swaps its things in at once; a turning season glides
     const moved = lastPlace.current !== place;
     lastPlace.current = place;
+    setJustPlaced(new Map());
     wear(latestDefaults.current, !moved);
   }, [defaultKey, wear, portrait, place]);
 
@@ -450,9 +461,11 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         {/* the arrival animates the layer's own opacity, which would override
             an opacity set on it here, so hiding happens one level in */}
         <div className="palais-layer" data-hidden={room ? undefined : ""} aria-hidden={room ? undefined : true}>
-          <LayoutNow.Provider value={wearing.desktop}>
-            <PhoneLayoutNow.Provider value={wearing.phone}>{children}</PhoneLayoutNow.Provider>
-          </LayoutNow.Provider>
+          <JustPlaced.Provider value={justPlaced}>
+            <LayoutNow.Provider value={wearing.desktop}>
+              <PhoneLayoutNow.Provider value={wearing.phone}>{children}</PhoneLayoutNow.Provider>
+            </LayoutNow.Provider>
+          </JustPlaced.Provider>
         </div>
       </div>
 

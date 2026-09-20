@@ -3938,3 +3938,265 @@
   .palais .tt-record { animation-duration: 6s; }
   .palais .tt-arm { transition: none; }
 }
+
+/* ------------------------------------------------- the letters in the desk ---- */
+/* the left drawer of the library desk: unmarked, but it lights a little when
+   a cursor finds it */
+.palais .palais-letters-spot {
+  position: absolute;
+  z-index: 30;          /* over the room's things, under the modals */
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+.palais .palais-letters-spot:hover,
+.palais .palais-letters-spot:focus-visible {
+  background: rgba(255, 233, 170, 0.22);
+  box-shadow: 0 0 14px 4px rgba(255, 220, 150, 0.35);
+  outline: none;
+}
+
+/* The drawer opens on a desk of scrolls. The panel is the full size of the
+   other modals whether there are letters in it or two hundred: the lists and
+   the paper scroll inside it. */
+.palais .lt-panel {
+  --lt-hand: "Dancing Script", "Snell Roundhand", "Apple Chancery", cursive;
+  --lt-flourish: "Parisienne", "Snell Roundhand", cursive;
+  box-sizing: border-box;
+  height: min(820px, 100%);    /* the same size whether the drawer holds two letters or two hundred */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  padding: 1.5rem 1.2rem 1.2rem;
+}
+
+/* the word */
+.palais .lt-gate {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  text-align: center;
+}
+.palais .lt-gate-line { margin: 0; font: 400 1.7rem/1.4 var(--lt-flourish); color: var(--wm-ink, #4a2f36); }
+.palais .lt-input {
+  width: min(22rem, 78vw);
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: #fffdf8;
+  color: var(--wm-ink, #4a2f36);
+  font: 500 1rem var(--wm-serif);
+}
+.palais .lt-trouble { margin: 0; font: 600 0.85rem var(--wm-serif); color: #b8506f; }
+
+/* the drawer, open: the bundle of letters on the left, the one unrolled on the right */
+.palais .lt-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(13rem, 20rem) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0.8rem;
+}
+.palais .lt-list {
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  overflow-y: auto;
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  border-radius: 14px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: rgba(255, 252, 244, 0.92);
+}
+.palais .lt-item {
+  all: unset;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(207, 169, 86, 0.45);
+  background: linear-gradient(180deg, #fffdf6, #f7eddc);
+}
+.palais .lt-item.is-on { border-color: var(--wm-jewel-side, #9c7632); box-shadow: inset 0 0 0 1px var(--wm-jewel-side, #9c7632); }
+.palais .lt-seal { font-size: 1.15rem; color: var(--wm-rose-deep, #b8506f); }
+.palais .lt-item-words { display: grid; gap: 0.05rem; min-width: 0; }
+.palais .lt-item-words b { font: 600 1.15rem/1.2 var(--lt-hand); color: var(--wm-ink, #4a2f36); }
+.palais .lt-item-words small { font: 500 0.72rem var(--wm-serif); color: var(--wm-ink-soft, #6e525a); letter-spacing: 0.02em; }
+.palais .lt-empty { padding: 0.9rem; font: 400 1.2rem var(--lt-hand); color: var(--wm-ink-soft, #6e525a); }
+
+/* the scroll itself: two turned rollers with paper wound between them */
+.palais .lt-sheet {
+  position: relative;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  border-radius: 6px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+.palais .lt-sheet::before,
+.palais .lt-sheet::after {
+  content: "";
+  height: 18px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #c9a44c, #8a6a2a 45%, #6b5120 70%, #a58436);
+  box-shadow: 0 2px 5px rgba(60, 40, 15, 0.45), inset 0 1px 0 rgba(255, 240, 200, 0.6);
+}
+.palais .lt-sheet::before { margin: 0 -0.5rem 0.2rem; }
+.palais .lt-sheet::after { margin: 0.2rem -0.5rem 0; }
+.palais .lt-paper {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem 1.3rem 1.4rem;
+  background:
+    linear-gradient(90deg, rgba(120, 85, 40, 0.16), rgba(120, 85, 40, 0) 5% 95%, rgba(120, 85, 40, 0.16)),
+    repeating-linear-gradient(180deg, rgba(150, 110, 60, 0.05) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #fffaf0, #f7ecd8);
+  box-shadow: inset 0 8px 10px -8px rgba(90, 60, 20, 0.45), inset 0 -8px 10px -8px rgba(90, 60, 20, 0.45);
+}
+.palais .lt-read h3 { margin: 0 0 0.1rem; font: 600 2.1rem/1.15 var(--lt-flourish); color: var(--wm-ink, #4a2f36); }
+.palais .lt-read .wm-tag { margin: 0 0 0.6rem; }
+.palais .lt-prose {
+  white-space: pre-wrap;
+  margin: 0 0 1rem;
+  font: 500 1.45rem/1.75 var(--lt-hand);
+  color: #4a3b2a;
+}
+.palais .lt-sheet .wm-actions { margin-top: auto; padding-top: 0.6rem; }
+
+/* writing one */
+.palais .lt-write { display: grid; gap: 0.5rem; }
+.palais .lt-field { display: grid; gap: 0.2rem; }
+.palais .lt-field span { font: 700 0.8rem var(--wm-serif); color: var(--wm-ink-soft, #6e525a); }
+.palais .lt-field .lt-input { width: auto; }
+.palais .lt-seals { display: flex; gap: 0.3rem; align-items: center; margin: 0; padding: 0; border: 0; }
+.palais .lt-seals legend { float: left; margin-right: 0.4rem; font: 700 0.8rem var(--wm-serif); color: var(--wm-ink-soft, #6e525a); }
+.palais .lt-seal-pick {
+  all: unset;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid rgba(207, 169, 86, 0.6);
+  background: #fffdf8;
+}
+.palais .lt-seal-pick.is-on { background: var(--wm-jewel-side, #9c7632); color: #fffaf0; }
+.palais .lt-area {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 9rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: linear-gradient(180deg, #fffaf0, #f7ecd8);
+  color: #4a3b2a;
+  font: 500 1.3rem/1.7 var(--lt-hand);
+  resize: vertical;
+}
+
+@media (max-width: 820px) {
+  .palais .lt-panel { height: 100%; padding: 1.9rem 0.6rem 0.7rem; }
+  .palais .lt-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(5rem, 26%) minmax(0, 1fr); gap: 0.5rem; }
+  .palais .lt-read h3 { font-size: 1.7rem; }
+  .palais .lt-prose { font-size: 1.25rem; }
+}
+
+/* the road case of letters on the Lakehouse floor: part of the room, not a
+   sticker to be moved, so it takes no clicks */
+/* The road case on the Lakehouse floor opens the letters, so it answers to a
+   pointer: it breathes where it stands, lifts when it's pointed at and gives a
+   little under a press, and a small brass tag says what's in it. */
+.palais .palais-lake-case {
+  position: absolute;
+  z-index: 6;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 10px 14px rgba(30, 24, 18, 0.45));
+  transform-origin: 50% 100%;
+  animation: lake-case-breathe 7s ease-in-out infinite;
+  transition: transform 260ms ease, filter 260ms ease;
+}
+.palais .palais-lake-case img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 260ms ease;
+}
+.palais .palais-lake-case:hover,
+.palais .palais-lake-case:focus-visible {
+  animation: none;
+  outline: none;
+  transform: translateY(-5px) scale(1.035);
+  filter: drop-shadow(0 16px 20px rgba(30, 24, 18, 0.5));
+}
+.palais .palais-lake-case:hover img,
+.palais .palais-lake-case:focus-visible img {
+  filter: brightness(1.12) drop-shadow(0 0 14px rgba(255, 216, 140, 0.55));
+}
+.palais .palais-lake-case:active {
+  animation: none;
+  transform: translateY(-1px) scale(0.995);
+  transition-duration: 90ms;
+}
+
+/* a warm pool of light under the case, up only while it's pointed at */
+.palais .lake-case-glow {
+  position: absolute;
+  inset: 12% -6% -10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 216, 140, 0.4), rgba(255, 216, 140, 0));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+  z-index: -1;
+}
+.palais .palais-lake-case:hover .lake-case-glow,
+.palais .palais-lake-case:focus-visible .lake-case-glow { opacity: 1; }
+
+.palais .lake-case-tag {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.35rem);
+  transform: translate(-50%, 6px);
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(183, 153, 90, 0.85);
+  border-radius: 999px;
+  background: rgba(37, 30, 22, 0.86);
+  color: #f2e3c0;
+  font: 600 0.72rem/1.4 var(--palais-sans, inherit);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.palais .palais-lake-case:hover .lake-case-tag,
+.palais .palais-lake-case:focus-visible .lake-case-tag {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes lake-case-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.008); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .palais .palais-lake-case { animation: none; }
+}

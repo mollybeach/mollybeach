@@ -21,6 +21,8 @@ import { SeasonRoom } from "./SeasonRoom";
 import { GlobeEgg } from "./GlobeEgg";
 import { LibraryImac } from "./LibraryImac";
 import { LakehouseRadio } from "./LakehouseRadio";
+import { LettersDrawer, LibraryLetters } from "./LibraryLetters";
+import { LakehouseCase } from "./LakehouseCase";
 import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
 import { countPage, recordPlace, recordVisit } from "./visits";
@@ -360,6 +362,12 @@ export default function PalaisHome() {
           <LibraryImac />
           {/* and a radio in the Lakehouse, playing Vulfpeck */}
           <LakehouseRadio />
+          {/* the letters: the library desk drawer and the Lakehouse road case
+              are two ways into the one drawer of them */}
+          <LettersDrawer>
+            <LibraryLetters />
+            <LakehouseCase />
+          </LettersDrawer>
           {/* the gilded band the footer wears, brought up onto the bottom of
               the room so it shows at the foot of the screen without scrolling;
               scroll on and it lands exactly on the top of the footer */}
