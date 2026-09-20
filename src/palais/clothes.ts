@@ -214,6 +214,7 @@ export const CLOTHES = wardrobe({
   "light-blue-floral-lace-trim-head-scarf": { label: "Light blue floral head scarf with gold lace", store: "Closet", bought: "", kind: "accessory" },
   "pink-floral-lace-trim-head-scarf": { label: "Pink floral head scarf with lace trim", store: "Closet", bought: "", kind: "accessory" },
   "lavender-lace-head-scarf": { label: "Lavender lace head scarf", store: "Closet", bought: "", kind: "accessory" },
+  "gold-lace-head-scarf": { label: "Gold lace head scarf", store: "Closet", bought: "", kind: "accessory" },
   "beige-rib-knit-pom-pom-ears-beanie": { label: "Beige rib-knit beanie with pom-pom ears", store: "Closet", bought: "", kind: "hat" },
   "navy_satin_lace_slip_dress_sticker": { label: "Navy satin lace slip dress", store: "Closet", bought: "", kind: "dress" },
   "cream_rose_floral_lace_dress_sticker": { label: "Cream rose floral ruffle dress", store: "Closet", bought: "", kind: "dress" },
@@ -341,7 +342,7 @@ const WIDE: Line[] = [
   // the middle of the window seat, between the two rails
   // hooks on the moulding round the window: a row along its top, and a row down its right side, beside the mirror
   { id: "window-hooks-top", name: "Window moulding · hooks across the top", ids: ["shein-white-fur-hat", "shein-bear-ear-bonnet", "shein-mint-fur-bucket-hat", "shein-lamb-bonnet", "shein-black-fur-beanie", "icelandic-white-fur-hat", "brown-faux-fur-round-hat", "beige-rib-knit-pom-pom-ears-beanie", "lavender-lace-head-scarf", "red-faux-fur-round-hat", "pink-faux-fur-round-hat", "green-faux-fur-round-hat"], from: [640, 281], to: [1180, 281], w: [60, 60], hang: true, z: 36, hooks: 12 },
-  { id: "window-hooks-side", name: "Window moulding · hooks down the right", ids: ["etsy-purple-veil", "temu-mantilla", "temu-fur-headband", "etsy-bernadette-veil", "light-blue-floral-lace-trim-head-scarf", "pink-floral-lace-trim-head-scarf"], from: [1219, 336], to: [1219, 636], w: [54, 54], hang: true, z: 36, hooks: 6 },
+  { id: "window-hooks-side", name: "Window moulding · hooks down the right", ids: ["etsy-purple-veil", "temu-mantilla", "temu-fur-headband", "etsy-bernadette-veil", "light-blue-floral-lace-trim-head-scarf", "pink-floral-lace-trim-head-scarf", "gold-lace-head-scarf"], from: [1219, 336], to: [1219, 636], w: [54, 54], hang: true, z: 36, hooks: 7 },
   { id: "window-hooks-left", name: "Window moulding · hooks down the left", ids: ["pink-sherpa-pom-pom-bucket-bag"], from: [601, 336], to: [601, 636], w: [54, 54], hang: true, z: 36, hooks: 6 },
   { id: "seat", name: "Window seat", ids: ["temu-saddle-bag", "shein-fluffy-shawl", "temu-bow-handbag", "white-prada-re-edition-shoulder-bag", "louis-vuitton-denim-monogram-pochette", "louis-vuitton-damier-azur-felicie-pochette"], from: [918, 690], to: [1020, 690], w: [74, 74], z: 20 },
   // the two rolling rails
@@ -393,7 +394,7 @@ const TALL: Line[] = [
   { id: "right-shelf", name: "Right bay · shelf", ids: ["dh-cleo-bag", "black-long-ribbon-bow", "white-cat-eye-sunglasses"], from: [786, 832], to: [744, 828], w: [44, 40], z: 66 },
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [788, 632], to: [744, 650], w: [58, 54], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan", "etsy-purple-veil", "etsy-bernadette-veil", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "light-blue-floral-lace-trim-head-scarf", "pink-floral-lace-trim-head-scarf", "lavender-lace-head-scarf"], from: [160, 474], to: [208, 500], w: [46, 42], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan", "etsy-purple-veil", "etsy-bernadette-veil", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "light-blue-floral-lace-trim-head-scarf", "pink-floral-lace-trim-head-scarf", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [160, 474], to: [208, 500], w: [46, 42], hang: true, z: 46 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */
