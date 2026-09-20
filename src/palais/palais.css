@@ -1306,6 +1306,7 @@
 .palais .cat-size--group button { width: 1.6rem; height: 1.6rem; font-size: 1rem; }
 .palais .cat-size-all { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 600; color: #9a4a72; }
 .palais .cat-thumb {
+  position: relative;
   display: grid;
   place-items: center;
   aspect-ratio: 1;
@@ -1313,7 +1314,11 @@
   background: radial-gradient(circle at 50% 60%, #fff 0%, #ffeaf4 70%, #ffd9ec 100%);
   overflow: hidden;
 }
+/* held to the tile whatever shape it is: a tall thing (a suncatcher, a bottle)
+   would otherwise run out of the square and get cropped */
 .palais .cat-thumb img {
+  position: absolute;
+  inset: 7%;
   width: 86%;
   height: 86%;
   object-fit: contain;

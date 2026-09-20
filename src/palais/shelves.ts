@@ -59,6 +59,7 @@ export const SHELVES: Shelf[] = [
     name: "House plants",
     emoji: "🪴",
     items: [
+      "vase_cat_pink_ceramic_trailing_plant_sticker",
       "monstera-crystal",
       "dracaena",
       "fiddle-leaf-fig",
@@ -119,6 +120,8 @@ export const SHELVES: Shelf[] = [
     name: "Artwork",
     emoji: "🖼️",
     items: [
+      "artwork_print_woman_moka_pot_line_black_white_sticker",
+      "artwork_framed_magazine_cover_deco_yellow_sticker",
       "poster_lillebaeltsbroen_bridge_denmark_vintage_sticker",
       "poster_danish_composer_pianist_portrait_vintage_sticker",
       "mirror-glass-floral",
@@ -133,12 +136,16 @@ export const SHELVES: Shelf[] = [
       "mirror_wall_arch_ornate_gold_vintage_sticker",
       "mirror_wall_oval_ornate_gold_crest_vintage_sticker",
       "suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker",
+      "suncatcher_crystal_prisms_gold_moon_sun_hanging_sticker",
+      "suncatcher_crystal_hummingbird_prism_hanging_sticker",
+      "suncatcher_crystal_rose_quartz_gold_prism_hanging_sticker",
       "artwork_framed_line_drawing_woman_braids_black_white_sticker",
       "artwork_framed_print_woman_blue_leaves_sticker",
       "artwork_framed_print_red_poppies_pink_sticker",
       "artwork_framed_vogue_cover_art_deco_sticker",
       "artwork_framed_abstract_splatter_painting_blue_green_gold_frame_sticker",
       "artwork_framed_abstract_pour_painting_pink_blue_black_gold_frame_sticker",
+      "artwork_print_art_nouveau_girl_crown_green_giantess_sticker",
     ],
   },
   {
@@ -150,6 +157,7 @@ export const SHELVES: Shelf[] = [
   { key: "people", name: "People", emoji: "👯‍♀️", items: ["fall-table-brea-molly"] },
   { key: "dogs", name: "Dogs", emoji: "🐶", items: ["dog-maggie-frisbee", "dog-charlie-kiddie-pool", "dog-frisbee", "dog-leo-dalmatian"] },
   { key: "goats", name: "Goats", emoji: "🐐", items: ["goat-bambi", "goats-pumpkin-ferdinand"] },
+  { key: "birds", name: "Birds", emoji: "🦚", items: ["peacock_bird_standing_trailing_tail_sticker"] },
   { key: "pillows", name: "Pillows", emoji: "🎀", items: ["pillow-floral", "pillow-lace", "pillow-bolster"] },
   {
     key: "teacups",
@@ -196,6 +204,8 @@ export const SHELVES: Shelf[] = [
       "ornament_strawberry_frosted_coral_red_sticker",
       "ornament_ball_reflector_magenta_small_sticker",
       "ornament_strawberry_small_red_sticker",
+      "tree_jadeite_glass_christmas_large_sticker",
+      "tree_jadeite_glass_christmas_small_sticker",
     ],
   },
   {
@@ -227,6 +237,7 @@ export const SHELVES: Shelf[] = [
       "book_world_travel_anthony_bourdain_hardcover_sticker",
       "book_hundred_years_war_on_palestine_rashid_khalidi_sticker",
       "book_grc_engineering_for_aws_aj_yawn_sticker",
+      "book_madeleine_ludwig_bemelmans_hardcover_sticker",
     ],
   },
   {
@@ -242,6 +253,8 @@ export const SHELVES: Shelf[] = [
       "decor-strawberry-glass",
       "decor-strawberry-molds",
       "urn-glass",
+      "pomegranate_glass_red_gold_stem_sticker",
+      "dish_jadeite_glass_rabbit_on_nest_covered_sticker",
     ],
   },
   {
@@ -306,6 +319,7 @@ export const SHELVES: Shelf[] = [
       "decor-strawberry-towel",
       "decor-heart-towels",
       "decor-strawberry-soaps",
+      "caddy_shower_hanging_wire_three_tier_blue_sticker",
     ],
   },
   {
@@ -326,6 +340,9 @@ export const SHELVES: Shelf[] = [
       "decor-plant-mister-pink",
       "decor-glass-mister",
       "mister_plant_spray_bottle_embossed_glass_ombre_turquoise_pink_antique_sticker",
+      "canister_jadeite_glass_lidded_cocoa_sticker",
+      "canister_jadeite_glass_lidded_sugar_sticker",
+      "canister_jadeite_glass_lidded_rosemary_sticker",
     ],
   },
   {

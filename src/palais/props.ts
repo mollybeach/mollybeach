@@ -118,6 +118,21 @@ export const PROPS = catalogue({
   "cat-strawberry-roses": { label: "Strawberry, and a jug of roses", plane: "near" },
   "cat-honeysuckle": { label: "Honeysuckle", plane: "near" },
   "cat-petunia": { label: "Petunia, a lilac-point ragdoll", plane: "near" },
+  artwork_print_woman_moka_pot_line_black_white_sticker: {
+    label: "a line drawing of a woman with her coffee, in black and white",
+    plane: "mid",
+    metres: 0.45,
+  },
+  artwork_framed_magazine_cover_deco_yellow_sticker: {
+    label: "a framed Deco fashion print, on yellow",
+    plane: "mid",
+    metres: 0.5,
+  },
+  vase_cat_pink_ceramic_trailing_plant_sticker: {
+    label: "a pink cat vase, with something trailing out of it",
+    plane: "near",
+    metres: 0.2,
+  },
   cookbook_recipes_red_gilt_closed_sticker: {
     label: "the red cookbook, shut",
     plane: "near",
@@ -244,6 +259,20 @@ export const PROPS = catalogue({
 
   /* ---- from the garden set: files named main-noun-first, ending _sticker -- */
   suncatcher_stained_glass_hanging_scalloped_floral_turquoise_sticker: { label: "a stained-glass suncatcher, in flower", glass: true, plane: "mid" },
+  suncatcher_crystal_prisms_gold_moon_sun_hanging_sticker: { label: "a crystal suncatcher, with a gold moon and sun", glass: true, plane: "mid", metres: 0.22 },
+  suncatcher_crystal_hummingbird_prism_hanging_sticker: { label: "a crystal hummingbird on a prism chain", glass: true, plane: "mid", metres: 0.17 },
+  suncatcher_crystal_rose_quartz_gold_prism_hanging_sticker: { label: "a rose-quartz suncatcher, hung in gold", glass: true, plane: "mid", metres: 0.20 },
+  caddy_shower_hanging_wire_three_tier_blue_sticker: { label: "a blue wire shower caddy", plane: "mid", metres: 0.3 },
+  canister_jadeite_glass_lidded_cocoa_sticker: { label: "a jadeite canister, for cocoa", glass: true, plane: "near", metres: 0.13 },
+  canister_jadeite_glass_lidded_sugar_sticker: { label: "a jadeite canister, for sugar", glass: true, plane: "near", metres: 0.13 },
+  canister_jadeite_glass_lidded_rosemary_sticker: { label: "a jadeite canister, for rosemary", glass: true, plane: "near", metres: 0.13 },
+  artwork_print_art_nouveau_girl_crown_green_giantess_sticker: { label: "an art nouveau print, the crowned girl and the green giantess", plane: "mid", metres: 0.5 },
+  book_madeleine_ludwig_bemelmans_hardcover_sticker: { label: "Madeleine, by Ludwig Bemelmans", plane: "near", metres: 0.2 },
+  pomegranate_glass_red_gold_stem_sticker: { label: "a red glass pomegranate, gilded at the stem", glass: true, plane: "near", metres: 0.14 },
+  dish_jadeite_glass_rabbit_on_nest_covered_sticker: { label: "a jadeite rabbit on her nest", glass: true, plane: "near", metres: 0.2 },
+  tree_jadeite_glass_christmas_large_sticker: { label: "a jadeite Christmas tree", glass: true, plane: "near", metres: 0.24 },
+  tree_jadeite_glass_christmas_small_sticker: { label: "a smaller jadeite Christmas tree", glass: true, plane: "near", metres: 0.16 },
+  peacock_bird_standing_trailing_tail_sticker: { label: "a peacock, his train trailing behind him", plane: "near", metres: 0.9 },
   bottle_glass_jar_embossed_aqua_vintage_sticker: { label: "an aqua glass bottle, embossed", glass: true, plane: "near" },
   radiator_heater_cast_iron_ribbed_white_vintage_sticker: { label: "an old cast-iron radiator", plane: "mid", metres: 0.9 },
   shelf_rack_garden_three_tier_scrollwork_glass_white_sticker: { label: "a white scrollwork garden shelf", plane: "mid", metres: 0.9 },
