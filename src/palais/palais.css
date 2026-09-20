@@ -2430,6 +2430,39 @@
 .palais .adm-hours i { width: 100%; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #7ad4cf, #bdeae6); }
 .palais .adm-hours small { font: 700 0.58rem/1 var(--cat-round); color: #b5708f; height: 0.7rem; }
 
+/* on a phone. The admin page stands on its own rather than inside the room's
+   frame, so the catalogue's container queries never reach it: these are plain
+   media queries, and they come after the rules they mend so they win. */
+@media (max-width: 820px) {
+  .palais.adm { padding: 0 0.7rem 2.5rem; }
+  .palais.adm h1 { font-size: 1.25rem; }
+  .palais.adm .adm-head { gap: 0.5rem; margin-bottom: 0.7rem; }
+  .palais.adm .adm-head .cat-seasons { flex-wrap: wrap; gap: 0.3rem; width: 100%; }
+  .palais.adm .adm-head .cat-season { padding: 0.28rem 0.6rem; font-size: 0.76rem; }
+  .palais.adm .cat-looks { gap: 0.5rem; }
+  .palais.adm .vis-card { padding: 0.65rem 0.7rem; border-radius: 16px; }
+  .palais.adm .vis-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; }
+  /* the odd one out takes the width rather than leaving a gap */
+  .palais.adm .vis-tile--soft { grid-column: 1 / -1; }
+  .palais.adm .vis-num { font-size: 1.15rem; }
+  /* the short lists in the cards are capped so one can't take over the page —
+     never the visit log, which is meant to run on as far as you scroll and
+     would otherwise spill out over everything under it */
+  .palais.adm .vis-list:not(.vis-list--recent) { max-height: 11rem; }
+  .palais.adm .vis-list li { font-size: 0.78rem; }
+  .palais.adm .adm-hours { height: 4.6rem; gap: 2px; }
+  .palais.adm .adm-hours small { font-size: 0.5rem; }
+  /* the visitor book below, which is laid out for the catalogue's panel */
+  .palais.adm .vis-cols, .palais.adm .cat-looks.vis { grid-template-columns: minmax(0, 1fr); }
+  .palais.adm .vis-person { padding: 0.55rem 0.6rem; }
+  .palais.adm .vis-hint { font-size: 0.68rem; }
+}
+@media (max-width: 420px) {
+  /* a narrow phone: every tile on its own line rather than squeezed in two */
+  .palais.adm .vis-tiles { grid-template-columns: minmax(0, 1fr); }
+  .palais.adm .adm-hours small { display: none; }
+}
+
 /* ---- the floral patterns, and the turn between them (florals.ts) --------- */
 .palais-floral {
   position: absolute;

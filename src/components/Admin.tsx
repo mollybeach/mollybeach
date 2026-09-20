@@ -138,6 +138,45 @@ export default function Admin() {
       )}
 
       <div className="cat-looks vis">
+
+        {!!stats?.by_hour?.length && (
+          <section className="vis-card">
+            <h3>🕰 What time they come</h3>
+            <Hours hours={stats.by_hour} />
+          </section>
+        )}
+
+        {!!stats?.campaigns?.length && (
+          <section className="vis-card">
+            <h3>🏷️ Tagged links</h3>
+            <ul className="vis-list">
+              {stats.campaigns.map((c, i) => (
+                <li key={i}>
+                  <span>
+                    {c.tag ?? c.campaign ?? c.medium}
+                    <small>{[c.medium, c.campaign].filter(Boolean).join(' · ') || 'no campaign'}</small>
+                  </span>
+                  <b>{c.visits}</b>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {!!stats?.networks?.length && (
+          <section className="vis-card">
+            <h3>🌐 Their internet providers</h3>
+            <ul className="vis-list">
+              {stats.networks.map((n) => (
+                <li key={n.network}>
+                  <span>{n.network}</span>
+                  <b>{n.unique}</b>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         <section className="vis-card">
           <h3>🐙 The GitHub profile</h3>
           {githubError ? (
@@ -184,44 +223,6 @@ export default function Admin() {
             </>
           )}
         </section>
-
-        {!!stats?.by_hour?.length && (
-          <section className="vis-card">
-            <h3>🕰 What time they come</h3>
-            <Hours hours={stats.by_hour} />
-          </section>
-        )}
-
-        {!!stats?.campaigns?.length && (
-          <section className="vis-card">
-            <h3>🏷️ Tagged links</h3>
-            <ul className="vis-list">
-              {stats.campaigns.map((c, i) => (
-                <li key={i}>
-                  <span>
-                    {c.tag ?? c.campaign ?? c.medium}
-                    <small>{[c.medium, c.campaign].filter(Boolean).join(' · ') || 'no campaign'}</small>
-                  </span>
-                  <b>{c.visits}</b>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {!!stats?.networks?.length && (
-          <section className="vis-card">
-            <h3>🌐 Their internet providers</h3>
-            <ul className="vis-list">
-              {stats.networks.map((n) => (
-                <li key={n.network}>
-                  <span>{n.network}</span>
-                  <b>{n.unique}</b>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
       </div>
 
       {/* the same visitor book as the catalogue's ☆ Visitors page */}
