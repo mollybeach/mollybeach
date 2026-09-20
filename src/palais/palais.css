@@ -1443,9 +1443,28 @@
 }
 .palais .cat-mini:hover { background: var(--cat-soft); }
 .palais .cat-mini--hot { border-color: var(--cat-hot); color: var(--cat-hot); }
+.palais .cat-mini--strong {
+  border-color: var(--cat-hot);
+  background: linear-gradient(180deg, #ffd9e7, #ffc2d9);
+  color: #8c2352;
+}
 .palais .cat-mini--ghost { color: #b5708f; }
 .palais .cat-mini:disabled,
 .palais .cat-btn:disabled { opacity: 0.5; cursor: progress; }
+
+/* one press to put the room in as the default for the whole year */
+.palais .cat-allyear {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.2rem 0 0.4rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 16px;
+  border: 2px dashed var(--cat-line);
+  background: rgba(255, 253, 249, 0.9);
+}
+.palais .cat-allyear-line { margin: 0; font: 500 0.8rem/1.45 var(--cat-round); color: #6b5a33; }
+.palais .cat-allyear-line strong { color: #8c2352; }
+.palais .cat-allyear-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 .palais .cat-input {
   min-width: 0;
@@ -4417,7 +4436,10 @@
   height: 100%;
   min-width: 0;
   min-height: 0;
-  overflow: hidden;      /* nothing hangs outside the panel, whatever its size */
+  /* a fixed area, whatever is hung in it. If a picture can't be fitted, this
+     scrolls — the panel never changes size. */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* the frame itself */

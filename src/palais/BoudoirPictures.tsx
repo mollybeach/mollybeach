@@ -89,7 +89,6 @@ export function BoudoirPictures() {
      one picture it is ready to show */
   const shapes = useRef(new Map<string, number>());
   const [ready, setReady] = useState<string | null>(null);
-  const panel = useRef<HTMLDivElement>(null);
   const pit = useRef<HTMLDivElement>(null);
 
   /* keep the dresser where the photograph put it, whichever photograph it is */
@@ -217,37 +216,21 @@ export function BoudoirPictures() {
     };
   }, [onNow?.url, hanging, at]);
 
-  /* the frame, measured rather than guessed: the biggest box of the picture's
-     own shape that the panel can hold, and then the panel drawn down to it, so
-     a tall portrait fits on the screen and a wide one isn't hung in the middle
-     of a sheet of empty paper */
+  /* The panel is always the same size — no modal in the Palais changes shape
+     with what's in it. The picture is measured to the fixed area it hangs in
+     instead: the biggest box of its own shape that fits, and if it somehow
+     can't be made to fit, the area scrolls rather than the panel growing. */
   const hung = inside && hanging?.length;
   useLayoutEffect(() => {
-    const card = panel.current;
     const room = pit.current;
-    if (!card) return;
-    if (!hung || !room) {
-      card.style.height = "";
-      return;
-    }
+    if (!hung || !room) return;
     const fit = () => {
-      card.style.height = "";                        // full size, to measure by
-      const spare = card.clientHeight - room.clientHeight;   // title, beads, padding
-      // the room the panel stands in can be taller than the window, so the
-      // window has the last word: a tall portrait must not hang off the screen
-      const view = document.documentElement.clientHeight;
-      const h = Math.max(
-        200,
-        Math.min(room.clientHeight, view - spare - 80, room.clientWidth / shape),
-      );
+      const h = Math.max(48, Math.min(room.clientHeight, room.clientWidth / shape));
       setFrame({ w: Math.round(h * shape), h: Math.round(h) });
-      card.style.height = `${Math.round(h + spare)}px`;
     };
     fit();
-    // the backdrop is the window's size, never the panel's, so watching it
-    // can't chase its own tail
     const watch = new ResizeObserver(fit);
-    if (card.parentElement) watch.observe(card.parentElement);
+    watch.observe(room);
     return () => watch.disconnect();
   }, [hung, shape, at]);
 
@@ -289,7 +272,6 @@ export function BoudoirPictures() {
           onPointerDown={(e) => e.target === e.currentTarget && shut()}
         >
           <div
-            ref={panel}
             className="wm-panel bd-panel"
             role="dialog"
             aria-modal="true"

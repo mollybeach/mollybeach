@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { BUNDLED_LAYOUTS, capture, type SeasonLayout } from "./arrangement";
 import { portableFor } from "./crossDevice";
-import { deleteLayout, makeDefault, saveLayout, signIn, signOut, updateLayout, type Device, type SavedLayout } from "./layoutsDb";
+import { deleteLayout, makeDefault, saveLayout, saveSeasonDefault, signIn, signOut, updateLayout, type Device, type SavedLayout } from "./layoutsDb";
 import type { Place } from "./place";
 import { SEASON_NAMES, type Season } from "./seasons";
 import { messageOf, type Collection } from "./useCollection";
@@ -14,6 +14,12 @@ import { messageOf, type Collection } from "./useCollection";
  * over a look, rename it, delete it, and choose which look is each season's
  * default — the one the room puts on when that season comes. Making a new
  * default keeps the old one in the collection.
+ *
+ * "The room as it is, all year" does the same in one press: it makes the room
+ * as it stands now the default for every season at once, on this device, on
+ * the other one, or on both. What goes to the other device is worked out the
+ * way a save for it is (crossDevice.ts) — where each sticker should land on a
+ * screen of that shape, not the same numbers.
  */
 
 const EMOJI: Record<Season, string> = { spring: "🌷", summer: "☀️", autumn: "🍂", winter: "❄️" };
@@ -75,6 +81,34 @@ export function LayoutsShelf({
     if (!stage) throw new Error("Couldn't find the room");
     const { stage: size, props } = capture(stage, hidden);
     return { stage: size, props };
+  };
+
+  /** the room as it stands now, ready for a device: this one measured, the
+      other one worked out (crossDevice.ts) */
+  const forDevice = (target: Device) => {
+    if (target === device) return room();
+    const stage = stageOf();
+    if (!stage) throw new Error("Couldn't find the room");
+    return portableFor(stage, place, device, hidden);
+  };
+
+  /** make the room as it is now the default for every season, on these devices */
+  const allYear = (targets: Device[]) => {
+    const what =
+      targets.length === 2 ? "every season, on phones and computers"
+      : targets[0] === "phone" ? "every season on phones"
+      : "every season on computers";
+    if (!window.confirm(`Make the room as it is now the default for ${what}? There are ${targets.length * 4} defaults to replace.`)) return;
+    run(async () => {
+      setNote("");
+      for (const target of targets) {
+        const layout = forDevice(target);
+        for (const s of SEASON_NAMES) {
+          await saveSeasonDefault(saved, { place, season: s, device: target, name: `${title(s)} · all year`, ...layout });
+        }
+      }
+      setNote(`Set as the default for ${what}.`);
+    });
   };
 
   const looks = saved
@@ -179,6 +213,26 @@ export function LayoutsShelf({
           </li>
         )}
       </ul>
+
+      {canSave && (
+        <div className="cat-allyear">
+          <p className="cat-allyear-line">
+            <strong>The room as it is, all year.</strong> One press puts this arrangement in as the default for
+            every season at once.
+          </p>
+          <div className="cat-allyear-row">
+            <button type="button" className="cat-mini" disabled={busy} onClick={() => allYear(["desktop"])}>
+              🖥 All computer seasons
+            </button>
+            <button type="button" className="cat-mini" disabled={busy} onClick={() => allYear(["phone"])}>
+              📱 All phone seasons
+            </button>
+            <button type="button" className="cat-mini cat-mini--strong" disabled={busy} onClick={() => allYear(["desktop", "phone"])}>
+              ✿ Both, every season
+            </button>
+          </div>
+        </div>
+      )}
 
       {canSave ? (
         <SaveForm
