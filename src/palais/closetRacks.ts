@@ -92,6 +92,15 @@ let loading: Promise<void> | undefined;
    rail ids. So they need no extra columns, and save on the table as it is. */
 const MOVES = "__moves";
 const HIDDEN = "__hidden";
+/* The closet on a phone was laid out again — the window's hooks, the bays
+   brought forward, the rails moved apart — and an arrangement saved before
+   that describes a closet that no longer exists: everything ends up heaped at
+   the back. So a saved phone arrangement is only followed once it has been
+   saved against this layout; older ones are set aside and the phone gets the
+   closet as the code arranges it. Saving from the Racks page marks it, and
+   from then on what Molly arranges stands. */
+const LAYOUT = "__layout";
+const LAYOUT_NOW = 2;
 type StoredRacks = Record<string, unknown>;
 
 /** fetch the default from the database, once */
@@ -107,9 +116,10 @@ export function loadPublished() {
       let nextHidden: string[] | undefined;
       for (const row of data as { closet: Which; racks: StoredRacks | null }[]) {
         if (row.closet !== "wide" && row.closet !== "tall") continue;
-        const { [MOVES]: moves, [HIDDEN]: hidden, ...rails } = row.racks ?? {};
-        next[row.closet] = mend(row.closet, rails as RackOrder);
-        nextMoves[row.closet] = moves && typeof moves === "object" ? (moves as ClosetMoves) : {};
+        const { [MOVES]: moves, [HIDDEN]: hidden, [LAYOUT]: version, ...rails } = row.racks ?? {};
+        const stale = row.closet === "tall" && version !== LAYOUT_NOW;
+        next[row.closet] = stale ? fromCode("tall") : mend(row.closet, rails as RackOrder);
+        nextMoves[row.closet] = !stale && moves && typeof moves === "object" ? (moves as ClosetMoves) : {};
         // both rows keep the same list; the wide one wins if they ever differ
         if (Array.isArray(hidden) && (row.closet === "wide" || !nextHidden)) nextHidden = hidden as string[];
       }
@@ -233,7 +243,7 @@ export async function publishRacks(which: Which, moves?: ClosetMoves, hidden?: S
   const nextHidden = hidden ? sorted(hidden) : publishedHidden;
   const row = (w: Which): { closet: Which; racks: StoredRacks } => ({
     closet: w,
-    racks: { ...state[w], [MOVES]: nextMoves[w], [HIDDEN]: nextHidden },
+    racks: { ...state[w], [MOVES]: nextMoves[w], [HIDDEN]: nextHidden, [LAYOUT]: LAYOUT_NOW },
   });
   const sb = await db();
   // what's taken out is the same on computers and phones, so both rows get it
