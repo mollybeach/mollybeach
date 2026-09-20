@@ -21,19 +21,6 @@ import { noteDoing } from "./visits";
  * follows.
  */
 
-const pic = (file: string) => `${process.env.PUBLIC_URL}/palais/map/${file}.webp`;
-
-/* what hangs there until there are pictures in the bucket: the rooms of the
-   house, the way a boudoir keeps views of the place it's in */
-const BUNDLED: Portrait[] = [
-  { url: pic("palace"), title: "The Palais", note: "the terrace, through the four seasons" },
-  { url: pic("lakehouse"), title: "The Lakehouse", note: "the red bridge and the dock" },
-  { url: pic("library"), title: "The Library", note: "the staircase of books" },
-  { url: pic("madeleine"), title: "Madeleine Room", note: "the sea at sunset through the arch" },
-  { url: pic("garden"), title: "The Glasshouse", note: "glass and iron over the garden" },
-  { url: pic("boudoir"), title: "The Boudoir", note: "this room, from the door" },
-];
-
 /** the white dresser, as a fraction of the photograph — one for each of the two */
 const DRESSER = {
   wide: { x: 0.128, y: 0.565, w: 0.215, h: 0.35 },
@@ -55,7 +42,7 @@ export function BoudoirPictures() {
   const [trouble, setTrouble] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [at, setAt] = useState(0);
-  const [hanging, setHanging] = useState<Portrait[]>(BUNDLED);
+  const [hanging, setHanging] = useState<Portrait[] | null>(null);   // null while they're still coming
   // the frame takes the picture's own shape, so it can grow to fill the panel
   // whatever shape the picture is
   const [shape, setShape] = useState(4 / 3);
@@ -101,12 +88,10 @@ export function BoudoirPictures() {
         // (portraits.ts). Before the bucket exists, the bundled ones stay up.
         readPortraits(word)
           .then((got) => {
-            if (got.length) {
-              setHanging(got);
-              setAt(0);
-            }
+            setHanging(got);
+            setAt(0);
           })
-          .catch(() => undefined);
+          .catch(() => setHanging([]));
       } else {
         setTrouble("That word doesn't open the dresser.");
       }
@@ -126,7 +111,8 @@ export function BoudoirPictures() {
     setOpen(false);
     setTrouble(null);
   }, []);
-  const step = useCallback((by: number) => setAt((n) => (n + by + hanging.length) % hanging.length), [hanging.length]);
+  const many = hanging?.length ?? 0;
+  const step = useCallback((by: number) => setAt((n) => (n + by + many) % many), [many]);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -141,7 +127,7 @@ export function BoudoirPictures() {
 
   if (!here) return null;
 
-  const showing = hanging[at] ?? hanging[0];
+  const showing = hanging?.[at] ?? hanging?.[0] ?? null;
 
   return (
     <>
@@ -165,7 +151,7 @@ export function BoudoirPictures() {
           onPointerDown={(e) => e.target === e.currentTarget && shut()}
         >
           <div
-            className="wm-panel bd-panel"
+            className={`wm-panel bd-panel${showing ? " bd-panel--hung" : ""}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="bd-title"
@@ -214,34 +200,44 @@ export function BoudoirPictures() {
             ) : (
               /* one picture at a time, an arrow either side */
               <div className="bd-look">
-                <div className="bd-hang">
-                  <button type="button" className="bd-arrow bd-arrow--back" onClick={() => step(-1)} aria-label="The one before">
-                    ‹
-                  </button>
+                {!showing ? (
+                  <p className="cat-note">
+                    {hanging === null ? "Opening the dresser…" : "Nothing hanging in here yet."}
+                  </p>
+                ) : (
+                  <>
+                    <div className="bd-hang">
+                      {many > 1 && (
+                        <button type="button" className="bd-arrow bd-arrow--back" onClick={() => step(-1)} aria-label="The one before">
+                          ‹
+                        </button>
+                      )}
 
-                  <figure className="bd-frame" style={{ aspectRatio: String(shape) }}>
-                    <img
-                      src={showing.url}
-                      alt={showing.title}
-                      decoding="async"
-                      onLoad={(e) => setShape(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight || 4 / 3)}
-                    />
-                  </figure>
+                      <figure className="bd-frame" style={{ aspectRatio: String(shape) }}>
+                        <img
+                          src={showing.url}
+                          alt={showing.title}
+                          decoding="async"
+                          onLoad={(e) => setShape(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight || 4 / 3)}
+                        />
+                      </figure>
 
-                  <button type="button" className="bd-arrow bd-arrow--on" onClick={() => step(1)} aria-label="The next one">
-                    ›
-                  </button>
-                </div>
+                      {many > 1 && (
+                        <button type="button" className="bd-arrow bd-arrow--on" onClick={() => step(1)} aria-label="The next one">
+                          ›
+                        </button>
+                      )}
+                    </div>
 
-                <figcaption className="bd-caption">
-                  <b>{showing.title}</b>
-                  {showing.note && <small>{showing.note}</small>}
-                  <span className="bd-count" aria-hidden>
-                    {hanging.map((p, n) => (
-                      <i key={p.url} className={n === at ? "is-on" : undefined} />
-                    ))}
-                  </span>
-                </figcaption>
+                    {many > 1 && (
+                      <span className="bd-count" aria-hidden>
+                        {hanging!.map((p, n) => (
+                          <i key={p.url} className={n === at ? "is-on" : undefined} />
+                        ))}
+                      </span>
+                    )}
+                  </>
+                )}
               </div>
             )}
           </div>

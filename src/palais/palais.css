@@ -4232,16 +4232,27 @@
 
 .palais .bd-panel {
   box-sizing: border-box;
-  /* the panel takes the shape of what's hanging in it rather than leaving a
-     band of empty paper under a wide picture */
+  /* the full size of the other modals — at the word, and with an empty
+     dresser, there's nothing to shrink around */
+  height: min(880px, 100%);
+  /* the title is hung over the top edge, so the panel is one row: what's in
+     the dresser gets all of it */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0.6rem;
+  padding: 1.5rem 0.8rem 0.8rem;
+}
+/* with a picture up, it takes the shape of the picture rather than leaving a
+   band of empty paper under a wide one */
+.palais .bd-panel--hung {
   height: auto;
   min-height: 0;
   max-height: min(880px, 100%);
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 0.6rem;
-  padding: 1.3rem 0.8rem 0.8rem;
 }
+/* the word, in the middle of all that paper (the panel's rows don't stretch
+   their children on their own) */
+.palais .bd-panel .lt-gate,
+.palais .bd-panel .bd-look { align-self: stretch; height: 100%; align-content: center; }
 /* the posy that sits along the bottom of the other modals belongs in the
    corner here, off the picture */
 .palais .bd-panel .wm-bloom--br { right: -2.4rem; bottom: -2.6rem; }
@@ -4324,18 +4335,9 @@
 .palais .bd-arrow:focus-visible { filter: brightness(1.08); outline: none; }
 .palais .bd-arrow:active { box-shadow: 0 1px 0 #a8863c; }
 
-.palais .bd-caption {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.15rem 0.6rem;
-  text-align: center;
-}
-.palais .bd-caption b { font: 700 1.15rem/1.2 var(--wm-serif, Georgia, serif); color: #6b4f1c; }
-.palais .bd-caption small { font-size: 0.86rem; color: #8a7340; }
-/* a row of little beads: which portrait of them this is */
-.palais .bd-count { display: flex; align-self: center; gap: 0.35rem; }
+/* a row of little beads under the frame: which portrait of them this is.
+   Nothing is written under the pictures — they speak for themselves. */
+.palais .bd-count { display: flex; justify-content: center; gap: 0.35rem; padding-bottom: 0.15rem; }
 .palais .bd-count i {
   width: 7px;
   height: 7px;
@@ -4346,11 +4348,11 @@
 .palais .bd-count i.is-on { background: #c9a44c; box-shadow: 0 0 6px rgba(201, 164, 76, 0.8); }
 
 @media (max-width: 820px) {
-  .palais .bd-panel { max-height: 100%; padding: 1.9rem 0.6rem 0.7rem; }
+  .palais .bd-panel { height: 100%; padding: 1.9rem 0.6rem 0.7rem; }
+  .palais .bd-panel--hung { height: auto; max-height: 100%; }
   .palais .bd-look { gap: 0.4rem; padding: 0; }
   .palais .bd-frame { padding: 0.5rem; }
   .palais .bd-arrow { width: 2.4rem; height: 2.4rem; font-size: 1.5rem; }
-  .palais .bd-caption b { font-size: 1.1rem; }
   .palais .bd-panel .wm-bloom { display: none; }
 }
 @container palais (max-width: 820px) {
