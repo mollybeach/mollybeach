@@ -72,12 +72,19 @@ export function BoudoirPictures() {
 
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState(() => remembered("key"));
-  const [inside, setInside] = useState(false);
+  const [inside, setInside] = useState(true); // TEMP
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [at, setAt] = useState(0);
-  const [hanging, setHanging] = useState<Portrait[] | null>(null);   // null while they're still coming
+  const [hanging, setHanging] = useState<Portrait[] | null>(
+    Array.from({ length: 60 }, (_, n) => ({
+      url:
+        process.env.PUBLIC_URL +
+        (n % 3 === 0 ? "/palais/boudoir-summer.webp" : "/palais/boudoir-portrait-spring.webp"),
+      title: `test ${n}`,
+    })),
+  ); // TEMP
   // the frame takes the picture's own shape, so it can grow to fill the panel
   // whatever shape the picture is
   const [shape, setShape] = useState(4 / 3);
@@ -354,11 +361,19 @@ export function BoudoirPictures() {
                         </button>
                       )}
                       {many > 1 && (
-                        <span className="bd-count" aria-hidden>
-                          {hanging!.map((p, n) => (
-                            <i key={p.url} className={n === at ? "is-on" : undefined} />
-                          ))}
-                        </span>
+                        <>
+                          {/* a bead for each picture on a screen with room for
+                              them; a phone gets the count instead, since sixty
+                              dots is not a rail, it's a carpet */}
+                          <span className="bd-count" aria-hidden>
+                            {hanging!.map((p, n) => (
+                              <i key={p.url} className={n === at ? "is-on" : undefined} />
+                            ))}
+                          </span>
+                          <span className="bd-tally">
+                            {at + 1} / {many}
+                          </span>
+                        </>
                       )}
                       {many > 1 && (
                         <button type="button" className="bd-arrow bd-arrow--on" onClick={() => step(1)} aria-label="The next one">

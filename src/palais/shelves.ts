@@ -215,6 +215,7 @@ export const SHELVES: Shelf[] = [
     emoji: "📚",
     items: [
       "book-tiffany",
+      "book_everybodys_story_loyal_rue_hardcover_sticker",
       "book_the_game_changing_attorney_michael_mogill_sticker",
       "book_the_game_changing_attorney_michael_mogill_hardcover_sticker",
       "book_hot_girl_crochet_rose_svane_sticker",

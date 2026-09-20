@@ -118,6 +118,11 @@ export const PROPS = catalogue({
   "cat-strawberry-roses": { label: "Strawberry, and a jug of roses", plane: "near" },
   "cat-honeysuckle": { label: "Honeysuckle", plane: "near" },
   "cat-petunia": { label: "Petunia, a lilac-point ragdoll", plane: "near" },
+  book_everybodys_story_loyal_rue_hardcover_sticker: {
+    label: "Everybody's Story, in its dust jacket",
+    plane: "near",
+    metres: 0.16,
+  },
   poster_lillebaeltsbroen_bridge_denmark_vintage_sticker: {
     label: "a vintage Danish railway poster of the Little Belt bridge",
     plane: "mid",

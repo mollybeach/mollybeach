@@ -4361,6 +4361,7 @@
    width they are on the paper Molly sent (about 26px), and no posies at the
    corners */
 .palais .bd-panel {
+  max-width: calc(100vw - 1rem);
   --bd-pink: #f6accd;
   --bd-pink-deep: #f379b2;
   background:
@@ -4494,14 +4495,21 @@
   justify-content: center;
   gap: 0.9rem;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding-bottom: 0.15rem;
 }
+/* a drawer of many portraits makes a long row of beads: it wraps rather than
+   stretching the panel */
+.palais .bd-count { flex-wrap: wrap; max-width: 100%; min-width: 0; row-gap: 0.25rem; }
 .palais .bd-hang {
   position: relative;
   display: grid;
   place-items: center;
   width: 100%;
+  max-width: 100%;
   height: 100%;
+  max-height: 100%;
   min-width: 0;
   min-height: 0;
   /* a fixed area, whatever is hung in it. Nothing may spill out of its sides —
@@ -4537,7 +4545,12 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;        /* the frame is cut to the picture's own shape */
+  max-width: 100%;
+  max-height: 100%;
+  /* the frame is cut to the picture's own shape, so this fills it exactly —
+     and if the frame is ever the wrong shape, the whole picture still shows
+     rather than being cropped or pushed out of its side */
+  object-fit: contain;
   border-radius: 2px;
   /* the dark lip the picture sits behind, and the light off the glass */
   box-shadow:
@@ -4566,14 +4579,6 @@
 }
 .palais .bd-arrow--back { left: 0.2rem; }
 .palais .bd-arrow--on { right: 0.2rem; }
-/* on a phone they come down off the picture and stand in the rail, so nothing
-   sits over the portrait or squeezes it sideways */
-@media (max-width: 820px) {
-  .palais .bd-arrow {
-    position: static;
-    translate: none;
-  }
-}
 .palais .bd-arrow:hover,
 .palais .bd-arrow:focus-visible { filter: brightness(1.08); outline: none; }
 .palais .bd-arrow:active { box-shadow: 0 1px 0 #a8863c; }
@@ -4581,6 +4586,13 @@
 /* a row of little beads under the frame: which portrait of them this is.
    Nothing is written under the pictures — they speak for themselves. */
 .palais .bd-count { display: flex; justify-content: center; gap: 0.35rem; }
+/* the count a phone shows in place of the beads */
+.palais .bd-tally {
+  display: none;
+  font: 700 0.85rem/1 var(--wm-serif, Georgia, serif);
+  color: #8a5c2a;
+  letter-spacing: 0.04em;
+}
 .palais .bd-count i {
   width: 7px;
   height: 7px;
@@ -4594,8 +4606,24 @@
   .palais .bd-panel { height: 100%; padding: 1.9rem 0.6rem 0.7rem; }
   .palais .bd-look { gap: 0.4rem; padding: 0; }
   .palais .bd-frame { padding: 0.5rem; }
-  .palais .bd-arrow { width: 2.4rem; height: 2.4rem; font-size: 1.5rem; }
   .palais .bd-panel .wm-bloom { display: none; }
+
+  /* the arrows come down off the picture and stand in the rail, where they
+     take the width the beads give up: a wide, easy thing to hit with a thumb */
+  .palais .bd-arrow {
+    position: static;
+    translate: none;
+    flex: 1 1 0;
+    width: auto;
+    max-width: 11rem;
+    height: 2.7rem;
+    border-radius: 9999px;
+    font-size: 1.6rem;
+  }
+  /* sixty beads is a carpet, not a rail: a phone gets the count instead */
+  .palais .bd-count { display: none; }
+  .palais .bd-tally { display: block; flex: 0 0 auto; }
+  .palais .bd-foot { gap: 0.6rem; padding: 0 0.4rem 0.15rem; }
 }
 @container palais (max-width: 820px) {
   .palais .bd-panel .wm-bloom { display: none; }
