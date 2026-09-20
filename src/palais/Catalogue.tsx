@@ -17,6 +17,9 @@ import { PLACE_NAMES, type Place } from "./place";
 import { differs } from "./roomLayouts";
 import { messageOf, type Collection } from "./useCollection";
 
+/** the season after this one, for the plaque's "skip" label */
+const nextSeason = (s: Season) => SEASON_NAMES[(SEASON_NAMES.indexOf(s) + 1) % SEASON_NAMES.length];
+
 /** the one account that sees the visitor book, and whose Done saves the room */
 const OWNER = "mollyjbeach@gmail.com";
 
@@ -92,6 +95,7 @@ export function Catalogue({
   wearing,
   onWear,
   onPutIn,
+  onSkipSeason,
 }: {
   open: boolean;
   onClose: () => void;
@@ -110,6 +114,8 @@ export function Catalogue({
   onWear: (layout: SeasonLayout) => void;
   /** put stickers into the room as it is now */
   onPutIn: (ids: string[]) => void;
+  /** on to the next season, the way the header's Skip pill does it */
+  onSkipSeason?: () => void;
 }) {
   const wardrobe = place === "closet";
   const panel = useRef<HTMLDivElement>(null);
@@ -388,9 +394,21 @@ export function Catalogue({
             <span aria-hidden> ♡</span>
           </h2>
           <p className="cat-count">
-            <span className="cat-season-now">
-              {SEASON_EMOJI[season]} {titleCase(season)}
-            </span>{" "}
+            {onSkipSeason ? (
+              <button
+                type="button"
+                className="cat-season-now cat-season-now--go"
+                onClick={onSkipSeason}
+                aria-label={`Skip to ${nextSeason(season)}`}
+                title={`On to ${titleCase(nextSeason(season))}`}
+              >
+                {SEASON_EMOJI[season]} {titleCase(season)} <span aria-hidden>▸</span>
+              </button>
+            ) : (
+              <span className="cat-season-now">
+                {SEASON_EMOJI[season]} {titleCase(season)}
+              </span>
+            )}{" "}
             · {PLACE_NAMES[place]}
             {(clothesPage || page === "stickers") && (
               <>

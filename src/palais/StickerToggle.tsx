@@ -277,6 +277,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const [paused, setPaused] = useState(false);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
 
+  /* on to the next season. The header's Skip pill does this, and so does the
+     season on the catalogue's own plaque */
+  const skip = useCallback(() => {
+    const scope = switches.current?.closest(".palais-stage");
+    if (!scope) return;
+    skipSeason(scope, paused);
+    setUpcoming(upcomingSeason(scope));
+    setSeason(currentSeason(scope));
+  }, [paused]);
+
   /* When Molly, signed in, moves, resizes, puts in or takes out anything, the
      year holds still. Otherwise the season could turn before she saves, and
      the next season's layout would sweep her changes away (each season keeps
@@ -332,13 +342,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         {seasons && (
           <button
             type="button"
-            onClick={() => {
-              const scope = stage();
-              if (!scope) return;
-              skipSeason(scope, paused);
-              setUpcoming(upcomingSeason(scope));
-              setSeason(currentSeason(scope));
-            }}
+            onClick={skip}
             aria-label={`Skip to ${upcoming}`}
             className="palais-pill palais-pill--action"
           >
@@ -522,6 +526,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         wearing={portrait ? wearing.phone : wearing.desktop}
         onWear={tryOn}
         onPutIn={putIn}
+        onSkipSeason={seasons ? skip : undefined}
       />
     </>
   );

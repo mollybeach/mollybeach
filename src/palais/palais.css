@@ -2090,6 +2090,22 @@
   color: var(--cat-deep);
   text-shadow: none;
 }
+/* the season on the catalogue's plaque is a button too: press it and the year
+   moves on, the same as the Skip pill in the header */
+.palais .cat-season-now--go {
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.palais .cat-season-now--go:hover,
+.palais .cat-season-now--go:focus-visible {
+  background: #fff;
+  transform: translateY(-1px);
+  outline: none;
+}
+.palais .cat-season-now--go:active { transform: translateY(1px); }
+
 .palais .season-shelf { margin-bottom: 0.4rem; }
 .palais .season-shelf.is-now .cat-shelf-head h3 { color: var(--cat-hot); }
 .palais .season-source {
