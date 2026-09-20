@@ -192,6 +192,10 @@ export function Catalogue({
       else next.add(id);
     }
     setOut(next);
+    // one thing put into the room stands in the middle of the view, so it's
+    // never lost behind the furniture (justPlaced.ts); a whole shelf at once
+    // goes where the room always puts it
+    if (show && !clothesPage && ids.length === 1) onPutIn(ids);
   };
 
   /** make a piece in the room (or the closet) bigger or smaller, like its size handle */

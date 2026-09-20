@@ -235,6 +235,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     });
   }, []);
 
+  /* things stand in the middle only until the room or the season turns over —
+     after that they are wherever the layout, or a hand, has put them */
+  useEffect(() => {
+    setJustPlaced(new Map());
+  }, [place, season]);
+
   const latestDefaults = useRef({ desktop: desktopDefault.layout, phone: phoneDefault.layout });
   latestDefaults.current = { desktop: desktopDefault.layout, phone: phoneDefault.layout };
   const firstLook = useRef(true);
@@ -247,7 +253,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     // walking into another room swaps its things in at once; a turning season glides
     const moved = lastPlace.current !== place;
     lastPlace.current = place;
-    setJustPlaced(new Map());
     wear(latestDefaults.current, !moved);
   }, [defaultKey, wear, portrait, place]);
 

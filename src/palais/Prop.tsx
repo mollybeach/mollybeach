@@ -136,15 +136,19 @@ export function Prop({
 
   /* just put in from the catalogue: stand it in the middle of the view, where
      it can't be missed, each one after the first a step along so they don't
-     stack exactly */
+     stack exactly. The arrangement's own offset is dropped with it — it was
+     measured from where the sticker used to stand — but it keeps its size, and
+     dragging it from here still works, since that writes its own translate. */
   const turn = useContext(JustPlaced).get(id);
   if (turn !== undefined && !ghost && !sharing) {
-    const step = (turn % 6) * 2.4;
-    outer.left = `calc(50% + ${step}cqw)`;
-    outer.top = `calc(50% + ${step}cqw)`;
+    const step = (turn % 6) * 28;
+    outer.left = `calc(50% + ${step}px)`;
+    outer.top = `calc(50% + ${step}px)`;
     outer.right = undefined;
     outer.bottom = undefined;
+    outer.translate = undefined;
     outer.transform = "translate(-50%, -50%)";
+    outer.zIndex = 900 + turn;                 // and in front of the furniture
   }
   if (ghost || sharing) {
     const offset = delay - (sharing ? phase * (ghostDur / 2) : 0);
@@ -168,7 +172,7 @@ export function Prop({
     (spec.lit ? "prop--lit" : spec.glass ? "prop--glass" : `prop--${p}`);
 
   return (
-    <div style={outer} data-prop={id} data-slot={slot} data-group={group} data-set={set} className={className || undefined}>
+    <div style={outer} data-just={turn} data-prop={id} data-slot={slot} data-group={group} data-set={set} className={className || undefined}>
       <Conjure set={set}>
         <div
           className={`${ghost || sharing ? "" : MOTION[motion]} ${motion === "swing" ? "pivot-top" : ""}`}
