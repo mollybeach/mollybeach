@@ -133,7 +133,7 @@ function LettersPanel({ open, setOpen }: { open: boolean; setOpen: (b: boolean) 
     setOpen(false);
     setWriting(false);
     setTrouble(null);
-  }, []);
+  }, [setOpen]);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && shut();

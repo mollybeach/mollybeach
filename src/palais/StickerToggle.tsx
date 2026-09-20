@@ -235,11 +235,12 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     });
   }, []);
 
-  /* things stand in the middle only until the room or the season turns over —
-     after that they are wherever the layout, or a hand, has put them */
+  /* things stand in the middle of the view until you walk into another room —
+     the seasons may turn over them meanwhile, and they stay where they were
+     put. After that they're wherever the layout, or a hand, has left them. */
   useEffect(() => {
     setJustPlaced(new Map());
-  }, [place, season]);
+  }, [place]);
 
   const latestDefaults = useRef({ desktop: desktopDefault.layout, phone: phoneDefault.layout });
   latestDefaults.current = { desktop: desktopDefault.layout, phone: phoneDefault.layout };
