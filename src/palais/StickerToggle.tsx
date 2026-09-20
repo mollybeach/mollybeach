@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { nextFloral } from "./florals";
+import { nextFloral, paletteOf, useFloral } from "./florals";
 import { arrivalVars } from "./conjureSchedule";
 import { currentSeason, holdSeasons, skipSeason, upcomingSeason, type Season } from "./seasons";
 import { Catalogue } from "./Catalogue";
@@ -14,6 +14,19 @@ import { useClosetHiddenDefault } from "./closetRacks";
 import { isPortable, resolvePortable } from "./crossDevice";
 import { noteDoing } from "./visits";
 import { JustPlaced } from "./justPlaced";
+import { pickSticker, resizeSticker, usePicked } from "./Draggable";
+import { capture } from "./arrangement";
+import { saveSeasonDefault } from "./layoutsDb";
+
+/** the solid jewel a chosen thing wears — the sidebar's selected link, exactly
+    (Sidebar.tsx), so these switches turn colour with the patterns */
+const jewelled = (palette: { jewel: string; ink: string }) => ({
+  backgroundColor: palette.jewel,
+  color: "#fffaf0",
+  boxShadow: `0 1px 0 ${palette.ink}`,
+  borderColor: palette.ink,
+});
+
 
 /**
  * Small brass switches pinned to the top-right corner of the room.
@@ -240,6 +253,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
      put. After that they're wherever the layout, or a hand, has left them. */
   useEffect(() => {
     setJustPlaced(new Map());
+    pickSticker(null);
   }, [place]);
 
   const latestDefaults = useRef({ desktop: desktopDefault.layout, phone: phoneDefault.layout });
@@ -276,6 +290,47 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   // pauses the year, and the furniture taking turns to vanish (Conjure)
   const [paused, setPaused] = useState(false);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
+
+  /* whatever sticker was last picked up in the room, and the four switches
+     that work on it: bigger, smaller, out of the room, and keep it. They save
+     walking back into the catalogue for every little change. */
+  const picked = usePicked();
+  const sidebarFloral = useFloral("sidebar");
+  const jewel = paletteOf(sidebarFloral.now);
+  const [keeping, setKeeping] = useState<"" | "busy" | "kept" | "no">("");
+
+  const sizePicked = (factor: number) => {
+    const scope = stage();
+    if (scope && picked) resizeSticker(scope, ".palais-layer [data-prop]", picked, factor);
+  };
+  const takePickedOut = () => {
+    if (!picked) return;
+    setHiddenHeld(new Set([...Array.from(hidden), picked]));
+    pickSticker(null);
+  };
+  /** keep the room as it stands: this season's look on this device */
+  const keepTheRoom = async () => {
+    const scope = stage();
+    if (!scope || !collection.editor?.canSave) return;
+    setKeeping("busy");
+    try {
+      const { stage: size, props } = capture(scope as HTMLElement, hidden);
+      await saveSeasonDefault(collection.saved, {
+        place,
+        season,
+        device,
+        name: `${season} · the room as it was`,
+        stage: size,
+        props,
+      });
+      await collection.refresh();
+      setKeeping("kept");
+    } catch {
+      setKeeping("no");
+    } finally {
+      setTimeout(() => setKeeping(""), 2200);
+    }
+  };
 
   /* on to the next season. The header's Skip pill does this, and so does the
      season on the catalogue's own plaque */
@@ -333,6 +388,53 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   return (
     <>
       <div className="palais-switches" ref={switches}>
+        {picked && (
+          <span className="palais-picked" role="group" aria-label="The piece you picked up">
+            <button
+              type="button"
+              className="palais-pill palais-pill--picked"
+              style={jewelled(jewel)}
+              onClick={() => sizePicked(1.12)}
+              aria-label="Make it bigger"
+              title="Bigger"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              className="palais-pill palais-pill--picked"
+              style={jewelled(jewel)}
+              onClick={() => sizePicked(1 / 1.12)}
+              aria-label="Make it smaller"
+              title="Smaller"
+            >
+              −
+            </button>
+            <button
+              type="button"
+              className="palais-pill palais-pill--picked"
+              style={jewelled(jewel)}
+              onClick={takePickedOut}
+              aria-label="Take it out of the room"
+              title="Take it out"
+            >
+              ×
+            </button>
+            {collection.editor?.canSave && (
+              <button
+                type="button"
+                className="palais-pill palais-pill--picked"
+                style={jewelled(jewel)}
+                onClick={keepTheRoom}
+                disabled={keeping === "busy"}
+                aria-label={`Keep the room as it is, as the ${season} look`}
+                title={`Keep the room as the ${season} look`}
+              >
+                {keeping === "busy" ? "…" : keeping === "kept" ? "✓" : keeping === "no" ? "!" : "❤"}
+              </button>
+            )}
+          </span>
+        )}
         {!inPalace && (
           <button type="button" onClick={() => go("palace")} className="palais-pill palais-pill--home" aria-label="Back to the Palais">
             <span className="palais-pill-long">← Palais</span>

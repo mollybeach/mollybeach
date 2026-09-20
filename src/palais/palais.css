@@ -2090,6 +2090,31 @@
   color: var(--cat-deep);
   text-shadow: none;
 }
+/* the four switches that work on whatever sticker was last picked up: bigger,
+   smaller, out of the room, and keep it. They wear the solid jewel the chosen
+   link in the sidebar wears (the colour itself comes from the patterns, set on
+   the elements in StickerToggle). */
+.palais .palais-picked {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding-right: 0.3rem;
+  margin-right: 0.1rem;
+  border-right: 2px solid rgba(201, 164, 76, 0.5);
+  animation: lake-radio-in 260ms ease-out;
+}
+.palais .palais-pill--picked {
+  min-width: 2.1rem;
+  justify-content: center;
+  padding: 0.2rem 0.55rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-shadow: none;
+}
+.palais .palais-pill--picked:hover { filter: brightness(1.08); }
+.palais .palais-pill--picked:active { transform: translateY(1px); }
+.palais .palais-pill--picked:disabled { opacity: 0.6; cursor: progress; }
+
 /* the season on the catalogue's plaque is a button too: press it and the year
    moves on, the same as the Skip pill in the header */
 .palais .cat-season-now--go {

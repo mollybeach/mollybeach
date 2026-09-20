@@ -92,18 +92,18 @@ export function LayoutsShelf({
     return portableFor(stage, place, device, hidden);
   };
 
-  /** make the room as it is now the default for the season on show, on one device */
+  /** make the room as it is now the default for the season the room is in */
   const thisSeason = (target: Device) =>
     run(async () => {
       setNote("");
       await saveSeasonDefault(saved, {
         place,
-        season: viewing,
+        season,
         device: target,
-        name: `${title(viewing)} · the room as it was`,
+        name: `${title(season)} · the room as it was`,
         ...forDevice(target),
       });
-      setNote(`Set as the ${viewing} default on ${target === "phone" ? "phones" : "computers"}.`);
+      setNote(`Set as the ${season} default on ${target === "phone" ? "phones" : "computers"}.`);
     });
 
   /** make the room as it is now the default for every season, on these devices */
@@ -231,15 +231,15 @@ export function LayoutsShelf({
       {canSave && (
         <div className="cat-allyear">
           <p className="cat-allyear-line">
-            <strong>The room as it is.</strong> One press puts this arrangement in as the default — for {viewing}{" "}
-            alone, or for every season at once.
+            <strong>The room as it is.</strong> One press puts this arrangement in as the default — for {season}{" "}
+            alone, the season the room is in, or for every season at once.
           </p>
           <div className="cat-allyear-row">
             <button type="button" className="cat-mini" disabled={busy} onClick={() => thisSeason("desktop")}>
-              🖥 {title(viewing)} on computers
+              🖥 {title(season)} on computers
             </button>
             <button type="button" className="cat-mini" disabled={busy} onClick={() => thisSeason("phone")}>
-              📱 {title(viewing)} on phones
+              📱 {title(season)} on phones
             </button>
           </div>
           <div className="cat-allyear-row">

@@ -125,8 +125,13 @@ export function Catalogue({
   const [find, setFind] = useState("");
   // the visitor book's stretch of time, so its buttons can live in the head
   const [visitDays, setVisitDays] = useState(30);
-  // and which season's looks the Saved looks page is showing
+  // and which season's looks the Saved looks page is showing — it follows the
+  // room as the year turns, so the page is never talking about a season the
+  // room left behind
   const [lookSeason, setLookSeason] = useState<Season>(season);
+  useEffect(() => {
+    setLookSeason(season);
+  }, [season]);
   const floral = useFloral("catalogue");
   // the panel itself is papered in another of the patterns, under a cream veil
   const paper = useFloral("panel");

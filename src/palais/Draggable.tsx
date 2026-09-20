@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Pick up anything in the room and put it somewhere else.
@@ -137,6 +137,36 @@ interface Resize {
 /** make every copy of a sticker in `scope` bigger or smaller by `factor`,
     growing from its feet (or, for a hanging light, from its ceiling), the way
     the size handle does; returns its new size */
+/**
+ * The sticker last picked up, so the room's own switches can work on it: the
+ * header's + − × and Save (StickerToggle) act on whatever is picked, which
+ * saves walking back into the catalogue for every little change.
+ *
+ * It is a plain store rather than React state because the picking happens down
+ * in raw pointer handlers, where there is no component to set state on.
+ */
+let picked: string | null = null;
+const watching = new Set<(id: string | null) => void>();
+
+export function pickSticker(id: string | null) {
+  if (picked === id) return;
+  picked = id;
+  watching.forEach((tell) => tell(id));
+}
+
+/** what is picked, as a React value */
+export function usePicked(): string | null {
+  const [id, setId] = useState(picked);
+  useEffect(() => {
+    watching.add(setId);
+    setId(picked);
+    return () => {
+      watching.delete(setId);
+    };
+  }, []);
+  return id;
+}
+
 export function resizeSticker(scope: ParentNode, selector: string, id: string, factor: number) {
   let size = 1;
   scope.querySelectorAll<HTMLElement>(selector).forEach((el) => {
@@ -265,9 +295,11 @@ export function Draggable() {
       if ((e.target as Element).closest("button, a, input, label, .cat-backdrop, .wm-backdrop, .jb-backdrop")) return;
       const hit = pick(e.clientX, e.clientY);
       if (!hit) {
+        pickSticker(null);            // the bare floor: nothing is picked now
         if (e.pointerType !== "mouse") hide(0);
         return;
       }
+      pickSticker(hit.el.dataset.prop ?? null);
       const group = groupOf(hit.el);
       raise(group);
       grab = {
