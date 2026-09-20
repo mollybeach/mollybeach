@@ -4,8 +4,8 @@ import { noteDoing } from "./visits";
 
 /**
  * The record player: a turntable in the corner of a room, with whatever album
- * that room keeps on it (RECORDS below). The Lakehouse has Vulfpeck's "The
- * Beautiful Game" from Vulf's own channel; the Palais has Widowspeak.
+ * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
+ * in the Palais, Mild High Club in the Boudoir.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Browsers won't start
@@ -36,6 +36,9 @@ interface Disc {
 const RECORDS: Partial<Record<Place, Disc>> = {
   palace: { video: "Pq5VAFOfuQw", name: "Widowspeak", title: "In the Pines", folded: true },
   lakehouse: { video: "DRdnpKRvMwI", name: "Vulfpeck", title: "The Beautiful Game" },
+  // folded away to begin with: the corner it stands in is the dresser's, and
+  // the bunny sits there
+  boudoir: { video: "RDNymaNBy2I", name: "Mild High Club", title: "Skiptracing", folded: true },
 };
 
 type YTPlayer = {

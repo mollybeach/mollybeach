@@ -57,7 +57,7 @@ const DRESSER = {
     where his feet are, and how tall he stands, as fractions of the photograph */
 const BUNNY = {
   wide: { x: 0.27, base: 0.82, h: 0.2 },
-  tall: { x: 0.3, base: 0.665, h: 0.1 },
+  tall: { x: 0.3, base: 0.665, h: 0.13 },      // a phone crops the room in, so he sits up bigger
 };
 /** his own shape, so the width follows the height (631 x 1100) */
 const BUNNY_SHAPE = 631 / 1100;
