@@ -260,7 +260,7 @@ const STOPS: Stop[] = [
   {
     id: "madeleine",
     earth: [46.68, -121.98],
-    name: "Madeleine Room",
+    name: "Madeleine",
     tag: "upstairs, facing the sea",
     blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
     finds: ["A mosaic floor of blue flowers", "Bougainvillea over the balcony", "The sunset path across the water"],

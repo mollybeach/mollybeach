@@ -195,6 +195,7 @@ export const MORE_TRINKETS: PropId[] = [
   "ornament_ball_reflector_magenta_small_sticker",
   "ornament_strawberry_small_red_sticker",
   "cat-petunia",
+  "tree_christmas_decorated_presents_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */

@@ -170,6 +170,7 @@ export const SHELVES: Shelf[] = [
     name: "Ornaments",
     emoji: "🎄",
     items: [
+      "tree_christmas_decorated_presents_sticker",
       "ornament_reflector_rounded_magenta_sticker",
       "ornament_teardrop_frosted_glitter_orange_sticker",
       "ornament_ball_hand_painted_red_flower_silver_sticker",

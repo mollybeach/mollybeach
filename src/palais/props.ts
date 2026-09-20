@@ -118,6 +118,11 @@ export const PROPS = catalogue({
   "cat-strawberry-roses": { label: "Strawberry, and a jug of roses", plane: "near" },
   "cat-honeysuckle": { label: "Honeysuckle", plane: "near" },
   "cat-petunia": { label: "Petunia, a lilac-point ragdoll", plane: "near" },
+  tree_christmas_decorated_presents_sticker: {
+    label: "a Christmas tree, lit, with the presents under it",
+    plane: "mid",
+    metres: 1.3,
+  },
 
   /* ---- more scent, for the coiffeuse ------------------------------------ */
   "perfume-collection": { label: "the whole tray of flacons", plane: "near" },
