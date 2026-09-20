@@ -4693,8 +4693,13 @@
 .palais .ck-page--left { left: 16.5%; width: 27.5%; }
 .palais .ck-page--right { right: 16.5%; width: 27.5%; }
 .palais .ck-page h3 {
-  margin: 0 0 0.1rem;
-  font: 700 2.05cqw/1.15 var(--wm-serif, Georgia, serif);
+  margin: 0 0 0.35cqw;
+  padding: 0.45cqw 0.9cqw;
+  border-radius: 9999px;
+  border: 1px solid rgba(154, 43, 43, 0.35);
+  background: linear-gradient(180deg, rgba(255, 252, 245, 0.96), rgba(250, 238, 226, 0.94));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 6px rgba(120, 60, 40, 0.12);
+  font: 700 2.05cqw/1.2 var(--wm-serif, Georgia, serif);
   color: #9a2b2b;
   text-align: center;
 }
@@ -4761,26 +4766,30 @@
 /* the knobs either side of the book, on its clasps */
 .palais .ck-knob {
   position: absolute;
-  top: 50%;
+  top: 42.7%;                      /* over the clasp painted on the book */
   translate: 0 -50%;
   display: grid;
   place-items: center;
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 11%;
+  height: 12.5%;
   padding: 0;
-  border: 2px solid #b08a46;
-  border-radius: 50%;
-  background: linear-gradient(160deg, #fdf3d8, #e3c586);
-  box-shadow: 0 3px 0 #9c7632, 0 6px 14px rgba(90, 60, 20, 0.3);
-  color: #6b4f1c;
-  font: 700 1.7rem/1 var(--wm-serif, Georgia, serif);
+  border: none;
+  border-radius: 9999px;
+  background: none;                /* the clasp itself is the button */
+  color: #5d3a1c;
+  font: 700 3.2cqw/1 var(--wm-serif, Georgia, serif);
+  text-shadow: 0 1px 0 rgba(255, 243, 216, 0.85);
   cursor: pointer;
   transition: filter 160ms ease, transform 160ms ease;
 }
-.palais .ck-knob--back { left: -1.1rem; }
-.palais .ck-knob--on { right: -1.1rem; }
+.palais .ck-knob--back { left: 0.4%; }
+.palais .ck-knob--on { right: 0.4%; }
 .palais .ck-knob:hover:not(:disabled),
-.palais .ck-knob:focus-visible { filter: brightness(1.06); outline: none; }
+.palais .ck-knob:focus-visible {
+  outline: none;
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 8px rgba(255, 216, 140, 0.9));
+}
 .palais .ck-knob:active:not(:disabled) { transform: translateY(1px); }
 .palais .ck-knob:disabled { opacity: 0.45; cursor: default; }
 
@@ -4793,8 +4802,6 @@
   .palais .ck-foot, .palais .ck-quill, .palais .ck-in--small { font-size: 1.7cqw; }
   .palais .ck-in { font-size: 1.9cqw; }
   .palais .ck-in--name { font-size: 2.6cqw; }
-  .palais .ck-knob { width: 2rem; height: 2rem; font-size: 1.2rem; }
-  .palais .ck-knob--back { left: -0.7rem; }
-  .palais .ck-knob--on { right: -0.7rem; }
+  .palais .ck-knob { font-size: 4.4cqw; }
   .palais .ck-panel .wm-bloom { display: none; }
 }

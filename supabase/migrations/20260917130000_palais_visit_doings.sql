@@ -1,6 +1,6 @@
 -- What people actually do once they're inside: opening the catalogue, opening
--- the character catalogue, and which character they stop on
--- (src/palais/visits.ts → noteDoing).
+-- the character catalogue, which character they stop on, putting the record on
+-- in the Lakehouse and opening the letters (src/palais/visits.ts → noteDoing).
 --
 -- Same rules as the rest of the visitor book: the session is the per-tab one
 -- palais_visits already knows, the visitor is still only a salted hash of the
@@ -15,7 +15,7 @@ create table if not exists public.palais_visit_doings (
   created_at timestamptz not null default now(),
   session text not null,   -- the same per-tab session as palais_visits
   visitor text,            -- the same salted hash; never the address
-  kind text not null,      -- catalogue | characters | character | shelf
+  kind text not null,      -- catalogue | characters | character | shelf | record | letters | pictures
   detail text              -- who they stopped on, or which shelf
 );
 create index if not exists palais_visit_doings_session on public.palais_visit_doings (session, created_at);
@@ -211,6 +211,9 @@ begin
     when 'characters' then 'opened the character catalogue'
     when 'catalogue' then 'opened the catalogue'
     when 'shelf' then 'opened the ' || coalesce(new.detail, '') || ' shelf'
+    when 'record' then 'put the record on' || coalesce(' · ' || new.detail, '')
+    when 'letters' then 'opened the letters' || coalesce(' · ' || new.detail, '')
+    when 'pictures' then 'looked through the pictures in the boudoir'
     else 'did something: ' || new.kind || coalesce(' · ' || new.detail, '')
   end;
 
