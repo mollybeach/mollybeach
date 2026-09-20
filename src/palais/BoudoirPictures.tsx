@@ -20,6 +20,33 @@ import { noteDoing } from "./visits";
  * follows.
  */
 
+/** a rabbit's head, drawn for this room: a round face and two long ears */
+function Rabbit() {
+  return (
+    <svg viewBox="0 0 24 34" aria-hidden focusable="false">
+      <ellipse cx="8.4" cy="10" rx="3.1" ry="9.2" transform="rotate(-14 8.4 10)" />
+      <ellipse cx="16.2" cy="10.4" rx="2.9" ry="8.8" transform="rotate(13 16.2 10.4)" />
+      <ellipse cx="12" cy="25.6" rx="7.4" ry="6.6" />
+    </svg>
+  );
+}
+
+/** the wait while the dresser is being opened: rabbits, going round */
+function Waiting({ say }: { say: string }) {
+  return (
+    <p className="bd-wait">
+      <span className="bd-wait-ring" aria-hidden>
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => (
+          <span key={n} style={{ ["--n" as string]: n }}>
+            <Rabbit />
+          </span>
+        ))}
+      </span>
+      {say}
+    </p>
+  );
+}
+
 /** the white dresser, as a fraction of the photograph — one for each of the two */
 const DRESSER = {
   wide: { x: 0.128, y: 0.565, w: 0.215, h: 0.35 },
@@ -228,15 +255,18 @@ export function BoudoirPictures() {
                 <button type="submit" className="wm-btn wm-btn--visit" disabled={busy || !tried.trim()}>
                   {busy ? "Trying…" : "Open the dresser ✿"}
                 </button>
+                {busy && <Waiting say="Trying the word…" />}
                 {trouble && <p className="lt-trouble">{trouble}</p>}
               </form>
             ) : (
               /* one picture at a time, an arrow either side */
               <div className="bd-look">
                 {!showing ? (
-                  <p className="cat-note">
-                    {hanging === null ? "Opening the dresser…" : "Nothing hanging in here yet."}
-                  </p>
+                  hanging === null ? (
+                    <Waiting say="Opening the dresser…" />
+                  ) : (
+                    <p className="cat-note">Nothing hanging in here yet.</p>
+                  )
                 ) : (
                   <>
                     <div className="bd-hang" ref={pit}>
