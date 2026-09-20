@@ -3734,9 +3734,12 @@
 .palais .tt-sleeve {
   grid-column: 1;
   grid-row: 1;
+  /* YouTube's own player. Their terms hold an embedded player at 200 x 200,
+     so this is as small as it is allowed to be — the deck beside it is half
+     the size it was. */
   width: 200px;
   height: 200px;
-  margin-right: -18px;       /* tucked in behind the deck */
+  margin-right: -9px;        /* tucked in behind the deck */
   border: 3px solid #f2e6c8;
   border-radius: 4px;
   background: #111;
@@ -3748,25 +3751,25 @@
 .palais .tt-sleeve iframe { display: block; width: 200px; height: 200px; border: 0; }
 
 .palais .tt-deck {
-  --size: 176px;
+  --size: 88px;
   grid-column: 2;
   grid-row: 1;
   position: relative;
   z-index: 1;
-  width: calc(var(--size) + 64px);
-  height: calc(var(--size) + 28px);
-  border-radius: 14px;
+  width: calc(var(--size) + 32px);
+  height: calc(var(--size) + 14px);
+  border-radius: 8px;
   background:
     repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 2px, transparent 2px 9px),
     linear-gradient(160deg, #9a6a42, #6b4127 60%, #4e2d19);
-  border: 2px solid #c9a44c;
-  box-shadow: 0 0 0 3px #2e1b0e, 0 14px 28px rgba(20, 12, 6, 0.5), inset 0 2px 0 rgba(255, 230, 180, 0.25);
+  border: 1px solid #c9a44c;
+  box-shadow: 0 0 0 2px #2e1b0e, 0 7px 14px rgba(20, 12, 6, 0.5), inset 0 1px 0 rgba(255, 230, 180, 0.25);
 }
 .palais .tt-platter {
   all: unset;
   position: absolute;
-  left: 14px;
-  top: 14px;
+  left: 7px;
+  top: 7px;
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
@@ -3800,11 +3803,11 @@
   text-align: center;
   background: radial-gradient(circle, #fff5dc 0 4%, #e8574a 5% 100%);
   color: #fff5dc;
-  font: 800 0.5rem/1 "Roboto Mono", ui-monospace, monospace;
-  letter-spacing: 0.06em;
+  font: 800 0.3rem/1 "Roboto Mono", ui-monospace, monospace;
+  letter-spacing: 0.04em;
 }
-.palais .tt-label-dot { width: 6px; height: 6px; border-radius: 50%; background: #1b1b1b; }
-.palais .tt-label-title { font-size: 0.34rem; font-weight: 600; letter-spacing: 0; }
+.palais .tt-label-dot { width: 3px; height: 3px; border-radius: 50%; background: #1b1b1b; }
+.palais .tt-label-title { font-size: 0.2rem; font-weight: 600; letter-spacing: 0; }
 /* the light on the vinyl stays put while the record turns under it */
 .palais .tt-sheen {
   position: absolute;
@@ -3816,11 +3819,11 @@
 }
 .palais .tt-arm {
   position: absolute;
-  right: 4px;
-  top: 6px;
-  width: 58px;
-  height: 145px;
-  transform-origin: 44px 16px;          /* the pivot */
+  right: 2px;
+  top: 3px;
+  width: 29px;
+  height: 73px;
+  transform-origin: 22px 8px;            /* the pivot */
   transform: rotate(-26deg);             /* resting, off the record */
   transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1);
   filter: drop-shadow(2px 4px 3px rgba(0, 0, 0, 0.45));
@@ -3829,20 +3832,20 @@
 .palais .lake-radio.is-playing .tt-arm { transform: rotate(4deg); }
 .palais .tt-knob {
   position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 20px;
-  height: 20px;
+  right: 6px;
+  bottom: 6px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #f1dca3, #a8843c 70%);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
 }
 .palais .tt-light {
   position: absolute;
-  right: 40px;
-  bottom: 18px;
-  width: 7px;
-  height: 7px;
+  right: 20px;
+  bottom: 9px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: #4a2a1a;
 }
@@ -3916,23 +3919,28 @@
     grid-template-rows: auto auto auto;
     justify-items: start;
   }
-  .palais .tt-sleeve { grid-column: 1; grid-row: 1; margin: 0 0 0.4rem 0; transform: rotate(-2deg); }
+  /* a phone has no room for a full deck: the turntable is a little one, and
+     the sleeve behind it is YouTube's own player, which their terms hold at
+     200 x 200 — it can't go smaller than that */
+  .palais .tt-sleeve { grid-column: 1; grid-row: 1; margin: 0 0 0.3rem 0; transform: rotate(-2deg); }
   .palais .tt-deck {
-    --size: 112px;
+    --size: 58px;
     grid-column: 1;
     grid-row: 2;
-    border-radius: 12px;
-    width: calc(var(--size) + 52px);
-    height: calc(var(--size) + 20px);
+    border-radius: 8px;
+    border-width: 1px;
+    width: calc(var(--size) + 30px);
+    height: calc(var(--size) + 12px);
+    box-shadow: 0 0 0 2px #2e1b0e, 0 7px 14px rgba(20, 12, 6, 0.45), inset 0 1px 0 rgba(255, 230, 180, 0.25);
   }
-  .palais .tt-platter { left: 10px; top: 10px; }
-  .palais .tt-arm { right: 2px; top: 4px; width: 44px; height: 110px; transform-origin: 32px 12px; }
-  .palais .tt-knob { right: 9px; bottom: 9px; width: 14px; height: 14px; }
-  .palais .tt-light { right: 30px; bottom: 13px; width: 6px; height: 6px; }
-  .palais .tt-label { font-size: 0.34rem; }
-  .palais .tt-label-title { font-size: 0.26rem; }
-  .palais .tt-label-dot { width: 4px; height: 4px; }
-  .palais .lake-radio-now { grid-row: 3; margin-top: 0.3rem; padding: 0.15rem 0.5rem; font-size: 0.62rem; }
+  .palais .tt-platter { left: 6px; top: 6px; }
+  .palais .tt-arm { right: 1px; top: 2px; width: 24px; height: 58px; transform-origin: 17px 6px; }
+  .palais .tt-knob { right: 5px; bottom: 5px; width: 8px; height: 8px; }
+  .palais .tt-light { right: 16px; bottom: 7px; width: 4px; height: 4px; }
+  .palais .tt-label { font-size: 0.22rem; }
+  .palais .tt-label-title { font-size: 0.18rem; }
+  .palais .tt-label-dot { width: 2px; height: 2px; }
+  .palais .lake-radio-now { grid-row: 3; margin-top: 0.25rem; padding: 0.1rem 0.4rem; font-size: 0.56rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .palais .lake-radio { animation: none; }
@@ -4230,7 +4238,18 @@
   outline: none;
 }
 
+/* the dresser is papered, not flowered: pink and deeper pink stripes, the
+   width they are on the paper Molly sent (about 26px), and no posies at the
+   corners */
 .palais .bd-panel {
+  --bd-pink: #f6accd;
+  --bd-pink-deep: #f379b2;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--bd-pink) 0 26px,
+      var(--bd-pink-deep) 26px 52px
+    );
   box-sizing: border-box;
   /* the full size of the other modals — at the word, and with an empty
      dresser, there's nothing to shrink around */

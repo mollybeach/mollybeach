@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Blossoms } from "./WorldMap";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
@@ -31,7 +30,6 @@ export function BoudoirPictures() {
   const { place } = usePlace();
   const here = place === "boudoir";
   const spot = useRef<HTMLButtonElement>(null);
-  const paper = useFloral("map");
   const chips = useFloral("sidebar");
   const ribbon = useFloral("footer");
 
@@ -195,18 +193,13 @@ export function BoudoirPictures() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="bd-title"
-            style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.96), rgba(250, 243, 229, 0.97)), url("${floralSrc(paper.now)}")` }}
           >
-            <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
-            <Blossoms className="wm-bloom wm-bloom--tr" posy="tr" />
-            <Blossoms className="wm-bloom wm-bloom--br" posy="br" />
-
+            {/* no posies in here: the dresser is papered in pink stripes
+                instead (.bd-panel in palais.css) */}
             <div className="wm-title">
-              <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
               <h2 id="bd-title">
                 <span aria-hidden>✿</span> Portraits <span aria-hidden>✿</span>
               </h2>
-              <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
             </div>
             <button type="button" className="wm-close" onClick={shut} aria-label="Close the dresser">
               ×
@@ -221,7 +214,7 @@ export function BoudoirPictures() {
                   tryWord(tried.trim());
                 }}
               >
-                <p className="lt-gate-line">A dresser of portraits. It opens to the same word as the letters.</p>
+                <p className="lt-gate-line">A dresser of private portraits. Enter the passphrase ;) to enter.</p>
                 <input
                   type="password"
                   className="lt-input"
