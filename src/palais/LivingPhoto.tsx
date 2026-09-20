@@ -130,7 +130,7 @@ void main() {
 const maskFor = (src: string) => src.replace(/\/palais\/([^/]+)\.webp$/, "/palais/masks/$1.webp");
 
 /** photographs with nothing to animate (no sky or water in the picture) */
-const STILL = /\/palais\/(rainwood|kitchen(?:-\w+)?|bathroom(?:-\w+)?|garden-\w+|madeleine(?:-portrait)?|library(?:-\w+)?|boudoir)\.webp$/;
+const STILL = /\/palais\/(rainwood|kitchen(?:-\w+)?|bathroom(?:-\w+)?|garden-\w+|madeleine(?:-portrait)?|library(?:-\w+)?|boudoir(?:-\w+)*)\.webp$/;
 
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const sh = gl.createShader(type)!;

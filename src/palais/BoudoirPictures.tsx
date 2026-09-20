@@ -46,6 +46,11 @@ export function BoudoirPictures() {
   // the frame takes the picture's own shape, so it can grow to fill the panel
   // whatever shape the picture is
   const [shape, setShape] = useState(4 / 3);
+  // the frame is measured to the room it has, so a tall portrait can't push
+  // the panel off the screen and a wide one doesn't leave a band of paper
+  const [frame, setFrame] = useState<{ w: number; h: number } | null>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const pit = useRef<HTMLDivElement>(null);
 
   /* keep the dresser where the photograph put it, whichever photograph it is */
   useLayoutEffect(() => {
@@ -125,6 +130,40 @@ export function BoudoirPictures() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, inside, shut, step]);
 
+  /* the frame, measured rather than guessed: the biggest box of the picture's
+     own shape that the panel can hold, and then the panel drawn down to it, so
+     a tall portrait fits on the screen and a wide one isn't hung in the middle
+     of a sheet of empty paper */
+  const hung = inside && hanging?.length;
+  useLayoutEffect(() => {
+    const card = panel.current;
+    const room = pit.current;
+    if (!card) return;
+    if (!hung || !room) {
+      card.style.height = "";
+      return;
+    }
+    const fit = () => {
+      card.style.height = "";                        // full size, to measure by
+      const spare = card.clientHeight - room.clientHeight;   // title, beads, padding
+      // the room the panel stands in can be taller than the window, so the
+      // window has the last word: a tall portrait must not hang off the screen
+      const view = document.documentElement.clientHeight;
+      const h = Math.max(
+        200,
+        Math.min(room.clientHeight, view - spare - 80, room.clientWidth / shape),
+      );
+      setFrame({ w: Math.round(h * shape), h: Math.round(h) });
+      card.style.height = `${Math.round(h + spare)}px`;
+    };
+    fit();
+    // the backdrop is the window's size, never the panel's, so watching it
+    // can't chase its own tail
+    const watch = new ResizeObserver(fit);
+    if (card.parentElement) watch.observe(card.parentElement);
+    return () => watch.disconnect();
+  }, [hung, shape, at]);
+
   if (!here) return null;
 
   const showing = hanging?.[at] ?? hanging?.[0] ?? null;
@@ -151,7 +190,8 @@ export function BoudoirPictures() {
           onPointerDown={(e) => e.target === e.currentTarget && shut()}
         >
           <div
-            className={`wm-panel bd-panel${showing ? " bd-panel--hung" : ""}`}
+            ref={panel}
+            className="wm-panel bd-panel"
             role="dialog"
             aria-modal="true"
             aria-labelledby="bd-title"
@@ -206,14 +246,17 @@ export function BoudoirPictures() {
                   </p>
                 ) : (
                   <>
-                    <div className="bd-hang">
+                    <div className="bd-hang" ref={pit}>
                       {many > 1 && (
                         <button type="button" className="bd-arrow bd-arrow--back" onClick={() => step(-1)} aria-label="The one before">
                           ‹
                         </button>
                       )}
 
-                      <figure className="bd-frame" style={{ aspectRatio: String(shape) }}>
+                      <figure
+                        className="bd-frame"
+                        style={frame ? { width: `${frame.w}px`, height: `${frame.h}px` } : { aspectRatio: String(shape) }}
+                      >
                         <img
                           src={showing.url}
                           alt={showing.title}
