@@ -118,6 +118,16 @@ export const PROPS = catalogue({
   "cat-strawberry-roses": { label: "Strawberry, and a jug of roses", plane: "near" },
   "cat-honeysuckle": { label: "Honeysuckle", plane: "near" },
   "cat-petunia": { label: "Petunia, a lilac-point ragdoll", plane: "near" },
+  cookbook_recipes_red_gilt_closed_sticker: {
+    label: "the red cookbook, shut",
+    plane: "near",
+    metres: 0.26,
+  },
+  book_cookbook_open_recipes_sticker: {
+    label: "the red cookbook, open at a recipe",
+    plane: "near",
+    metres: 0.42,
+  },
   book_everybodys_story_loyal_rue_hardcover_sticker: {
     label: "Everybody's Story, in its dust jacket",
     plane: "near",

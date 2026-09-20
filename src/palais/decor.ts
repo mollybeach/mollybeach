@@ -196,6 +196,8 @@ export const MORE_TRINKETS: PropId[] = [
   "ornament_strawberry_small_red_sticker",
   "cat-petunia",
   "tree_christmas_decorated_presents_sticker",
+  "cookbook_recipes_red_gilt_closed_sticker",
+  "book_cookbook_open_recipes_sticker",
   "book_everybodys_story_loyal_rue_hardcover_sticker",
   "book_everybodys_story_loyal_rue_lying_down_sticker",
   "poster_lillebaeltsbroen_bridge_denmark_vintage_sticker",
