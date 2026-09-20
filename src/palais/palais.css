@@ -4261,6 +4261,30 @@
   gap: 0.6rem;
   padding: 1.5rem 0.8rem 0.8rem;
 }
+/* the bunny in his bow tie, sitting on the marble in front of the dresser.
+   He opens the same drawer it does, so he answers to a pointer: he sits up a
+   little and catches the light when he's pointed at. */
+.palais .palais-bunny {
+  position: absolute;
+  z-index: 29;          /* just under the drawer's own spot, over the room */
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: 50% 100%;
+  transition: transform 260ms ease, filter 260ms ease;
+  filter: drop-shadow(0 6px 8px rgba(40, 24, 32, 0.45));
+}
+.palais .palais-bunny img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.palais .palais-bunny:hover,
+.palais .palais-bunny:focus-visible {
+  outline: none;
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 12px 14px rgba(40, 24, 32, 0.5)) drop-shadow(0 0 14px rgba(255, 190, 225, 0.75));
+}
+.palais .palais-bunny:active { transform: translateY(-1px) scale(0.995); transition-duration: 90ms; }
+
 /* the wait while the dresser is opening: eight little rabbits going round,
    each one lighting up in its turn */
 .palais .bd-wait {

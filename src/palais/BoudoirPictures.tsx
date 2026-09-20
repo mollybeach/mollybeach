@@ -53,10 +53,20 @@ const DRESSER = {
   tall: { x: 0.125, y: 0.507, w: 0.25, h: 0.171 },
 };
 
+/** the bunny sitting on the marble in front of the dresser, off to its right:
+    where his feet are, and how tall he stands, as fractions of the photograph */
+const BUNNY = {
+  wide: { x: 0.27, base: 0.82, h: 0.2 },
+  tall: { x: 0.3, base: 0.665, h: 0.1 },
+};
+/** his own shape, so the width follows the height (631 x 1100) */
+const BUNNY_SHAPE = 631 / 1100;
+
 export function BoudoirPictures() {
   const { place } = usePlace();
   const here = place === "boudoir";
   const spot = useRef<HTMLButtonElement>(null);
+  const bunny = useRef<HTMLButtonElement>(null);
   const chips = useFloral("sidebar");
   const ribbon = useFloral("footer");
 
@@ -92,12 +102,25 @@ export function BoudoirPictures() {
         .filter((i) => i.naturalWidth)
         .sort((a, b) => (parseFloat(getComputedStyle(b).opacity) || 0) - (parseFloat(getComputedStyle(a).opacity) || 0))[0];
       if (!img) return;
-      const on = img.naturalHeight > img.naturalWidth ? DRESSER.tall : DRESSER.wide;
+      const tall = img.naturalHeight > img.naturalWidth;
+      const on = tall ? DRESSER.tall : DRESSER.wide;
       const box = coverBox(img, stage);
       el.style.width = `${box.w * on.w}px`;
       el.style.height = `${box.h * on.h}px`;
       el.style.left = `${box.left + box.w * on.x - (box.w * on.w) / 2}px`;
       el.style.top = `${box.top + box.h * on.y - (box.h * on.h) / 2}px`;
+
+      // and the bunny, standing on the floor in front of it
+      const rabbit = bunny.current;
+      if (rabbit) {
+        const sits = tall ? BUNNY.tall : BUNNY.wide;
+        const height = box.h * sits.h;
+        const width = height * BUNNY_SHAPE;
+        rabbit.style.width = `${width}px`;
+        rabbit.style.height = `${height}px`;
+        rabbit.style.left = `${box.left + box.w * sits.x - width / 2}px`;
+        rabbit.style.top = `${box.top + box.h * sits.base - height}px`;
+      }
     };
     fit();
     const watch = new ResizeObserver(fit);
@@ -242,6 +265,18 @@ export function BoudoirPictures() {
         title="The portraits"
         onClick={() => setOpen(true)}
       />
+
+      {/* the bunny on the marble, who opens the same dresser */}
+      <button
+        ref={bunny}
+        type="button"
+        className="palais-bunny"
+        aria-label="The bunny by the dresser"
+        title="The portraits"
+        onClick={() => setOpen(true)}
+      >
+        <img src={`${process.env.PUBLIC_URL}/palais/boudoir-bunny.webp`} alt="" decoding="async" />
+      </button>
 
       {open && (
         <div
