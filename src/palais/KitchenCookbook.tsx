@@ -329,43 +329,48 @@ export function KitchenCookbook() {
                         <li key={l}>{l}</li>
                       ))}
                     </ol>
-                    <p className="ck-foot">
-                      <button
-                        type="button"
-                        className="ck-quill"
-                        onClick={() => {
-                          setDraft({ name: "", note: "", ingredients: "", steps: "", editing: 0 });
-                          setTrouble(null);
-                          setWriting(true);
-                        }}
-                      >
-                        Write a recipe ✎
-                      </button>
-                      {mine && recipe && (
-                        <button
-                          type="button"
-                          className="ck-quill"
-                          onClick={() => {
-                            setDraft({
-                              name: recipe.name,
-                              note: recipe.note ?? "",
-                              ingredients: recipe.ingredients,
-                              steps: recipe.steps,
-                              editing: recipe.id,
-                            });
-                            setTrouble(null);
-                            setWriting(true);
-                          }}
-                        >
-                          Tidy this one
-                        </button>
-                      )}
-                      <span className="ck-tally" aria-hidden>{at + 1} / {many}</span>
-                    </p>
                   </div>
                 </>
               ) : null}
             </div>
+
+            {/* under the book, where it can't be missed: the quill, and which
+                page of it you are on */}
+            {!writing && recipe && (
+              <div className="ck-below">
+                <button
+                  type="button"
+                  className="wm-btn wm-btn--visit ck-write-btn"
+                  onClick={() => {
+                    setDraft({ name: "", note: "", ingredients: "", steps: "", editing: 0 });
+                    setTrouble(null);
+                    setWriting(true);
+                  }}
+                >
+                  Write a recipe ✎
+                </button>
+                {mine && (
+                  <button
+                    type="button"
+                    className="wm-btn"
+                    onClick={() => {
+                      setDraft({
+                        name: recipe.name,
+                        note: recipe.note ?? "",
+                        ingredients: recipe.ingredients,
+                        steps: recipe.steps,
+                        editing: recipe.id,
+                      });
+                      setTrouble(null);
+                      setWriting(true);
+                    }}
+                  >
+                    Tidy this one ✿
+                  </button>
+                )}
+                <span className="ck-tally">{at + 1} of {many}</span>
+              </div>
+            )}
           </div>
         </div>
       )}
