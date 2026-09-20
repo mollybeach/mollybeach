@@ -14,9 +14,12 @@ import { useClosetHiddenDefault } from "./closetRacks";
 import { isPortable, resolvePortable } from "./crossDevice";
 import { noteDoing } from "./visits";
 import { JustPlaced } from "./justPlaced";
+import { RoomClothes } from "./RoomClothes";
 import { pickSticker, resizeSticker, usePicked } from "./Draggable";
 import { capture } from "./arrangement";
 import { saveSeasonDefault } from "./layoutsDb";
+
+const EMPTY: string[] = [];
 
 /** the solid jewel a chosen thing wears — the sidebar's selected link, exactly
     (Sidebar.tsx), so these switches turn colour with the patterns */
@@ -232,6 +235,15 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   useEffect(() => () => clearTimeout(glide.current), []);
   /** put stickers into the room as it is (after anything tried on just before) */
   const [justPlaced, setJustPlaced] = useState<Map<string, number>>(() => new Map());
+
+  /* clothes brought out of the wardrobe into an ordinary room, kept room by
+     room so walking out and back finds them still there (RoomClothes.tsx) */
+  const [dressed, setDressed] = useState<Record<string, string[]>>({});
+  const wearingHere = dressed[place] ?? EMPTY;
+  const setWearingHere = useCallback(
+    (ids: string[]) => setDressed((was) => ({ ...was, [place]: ids })),
+    [place],
+  );
 
   const putIn = useCallback((ids: string[]) => {
     setHidden((h) => {
@@ -577,6 +589,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <LayoutNow.Provider value={wearing.desktop}>
               <PhoneLayoutNow.Provider value={wearing.phone}>{children}</PhoneLayoutNow.Provider>
             </LayoutNow.Provider>
+            {/* and anything worn out of the wardrobe into this room */}
+            <RoomClothes ids={wearingHere} />
           </JustPlaced.Provider>
         </div>
       </div>
@@ -629,6 +643,8 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         onWear={tryOn}
         onPutIn={putIn}
         onSkipSeason={seasons ? skip : undefined}
+        roomClothes={wearingHere}
+        onRoomClothes={setWearingHere}
       />
     </>
   );

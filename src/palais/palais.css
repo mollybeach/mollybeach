@@ -2090,6 +2090,23 @@
   color: var(--cat-deep);
   text-shadow: none;
 }
+/* a piece of clothing brought out of the wardrobe into an ordinary room
+   (RoomClothes.tsx): it stands in the middle until it's dragged somewhere */
+.palais .palais-room-garment {
+  position: absolute;
+  width: 14cqw;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 10px 16px rgba(40, 24, 32, 0.4));
+}
+.palais .palais-room-garment img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 /* the four switches that work on whatever sticker was last picked up: bigger,
    smaller, out of the room, and keep it. They wear the solid jewel the chosen
    link in the sidebar wears (the colour itself comes from the patterns, set on

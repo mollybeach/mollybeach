@@ -5,7 +5,7 @@ import { capture, type SeasonLayout } from "./arrangement";
 import { LayoutsShelf, SignIn } from "./LayoutsShelf";
 import { VISIT_RANGES, VisitorsShelf } from "./VisitorsShelf";
 import { SEASON_NAMES, type Season } from "./seasons";
-import { WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
+import { CLOTHES, WARDROBE_SHELVES, closetSrc, garment } from "./clothes";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { RacksShelf } from "./RacksShelf";
 import { SeasonsShelf, SEASON_EMOJI, titleCase } from "./SeasonsShelf";
@@ -16,6 +16,8 @@ import { defaultLook } from "./roomLayouts";
 import { PLACE_NAMES, type Place } from "./place";
 import { differs } from "./roomLayouts";
 import { messageOf, type Collection } from "./useCollection";
+
+const EMPTY_LIST: string[] = [];
 
 /** the season after this one, for the plaque's "skip" label */
 const nextSeason = (s: Season) => SEASON_NAMES[(SEASON_NAMES.indexOf(s) + 1) % SEASON_NAMES.length];
@@ -96,6 +98,8 @@ export function Catalogue({
   onWear,
   onPutIn,
   onSkipSeason,
+  roomClothes,
+  onRoomClothes,
 }: {
   open: boolean;
   onClose: () => void;
@@ -116,6 +120,9 @@ export function Catalogue({
   onPutIn: (ids: string[]) => void;
   /** on to the next season, the way the header's Skip pill does it */
   onSkipSeason?: () => void;
+  /** clothes brought out of the wardrobe into this room (RoomClothes.tsx) */
+  roomClothes?: string[];
+  onRoomClothes?: (ids: string[]) => void;
 }) {
   const wardrobe = place === "closet";
   const panel = useRef<HTMLDivElement>(null);
@@ -168,10 +175,27 @@ export function Catalogue({
   if (!open) return <div ref={panel} hidden />;
 
   const clothesPage = page === "clothes";
-  const inRoom = clothesPage ? clothes : stickers;
-  const out = clothesPage ? closetHidden : hidden;
-  const setOut = clothesPage ? setClosetHidden : setHidden;
-  const allShelves = clothesPage ? wardrobeStock(clothes) : stock(stickers);
+  /* in the Wardrobe Wing the clothes page is the closet itself; anywhere else
+     it is the whole wardrobe, to be worn into the room (RoomClothes.tsx) */
+  const dressingRoom = clothesPage && !wardrobe && !!onRoomClothes;
+  const everyGarment = dressingRoom ? Object.keys(CLOTHES) : EMPTY_LIST;
+  const wornHere = new Set(roomClothes ?? EMPTY_LIST);
+  const inRoom = dressingRoom ? everyGarment : clothesPage ? clothes : stickers;
+  const out = dressingRoom
+    ? new Set(everyGarment.filter((id) => !wornHere.has(id)))
+    : clothesPage
+      ? closetHidden
+      : hidden;
+  const setOut = dressingRoom
+    ? (next: Set<string>) => onRoomClothes!(everyGarment.filter((id) => !next.has(id)))
+    : clothesPage
+      ? setClosetHidden
+      : setHidden;
+  const allShelves = dressingRoom
+    ? wardrobeStock(everyGarment)
+    : clothesPage
+      ? wardrobeStock(clothes)
+      : stock(stickers);
   const shown = inRoom.filter((id) => !out.has(id)).length;
 
   /* the search box: every word has to appear somewhere in the piece's name,
@@ -212,7 +236,7 @@ export function Catalogue({
   /** make a piece in the room (or the closet) bigger or smaller, like its size handle */
   const nudge = (id: string, factor: number) => {
     const stage = stageOf();
-    if (stage) resizeSticker(stage, clothesPage ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]", id, factor);
+    if (stage) resizeSticker(stage, clothesPage && !dressingRoom ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]", id, factor);
   };
   /** the same, for a whole shelf of pieces, or everything on the page, at once
       (only what's in the room: a piece taken out keeps its size) */
@@ -345,6 +369,8 @@ export function Catalogue({
   const pages: [Page, string][] = [
     ...(wardrobe ? ([["clothes", "♡ Clothes"], ["racks", "🪝 Racks"]] as [Page, string][]) : []),
     ["stickers", wardrobe ? "✿ Stickers" : "♡ Stickers"],
+    // the wardrobe comes with you: clothes can be worn into any room
+    ...(!wardrobe && onRoomClothes ? ([["clothes", "♡ Clothes"]] as [Page, string][]) : []),
     ["seasons", `${SEASON_EMOJI[season]} Seasons`],
     ["looks", "✦ Saved looks"],
     // the visitor book is Molly's alone (the database also only answers editors)

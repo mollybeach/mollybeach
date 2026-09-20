@@ -14,7 +14,7 @@
  * The wide photographs and the tall one for phones are measured separately.
  */
 
-export type ClothesKind = "coat" | "dress" | "top" | "bottom" | "swim" | "shoes" | "hat" | "bag" | "accessory";
+export type ClothesKind = "coat" | "robe" | "dress" | "top" | "bottom" | "swim" | "shoes" | "hat" | "bag" | "accessory";
 
 export interface Garment {
   label: string;
@@ -227,9 +227,9 @@ export const CLOTHES = wardrobe({
   "rhianna-dress": { label: "Rhianna dress · marigold brocade gown trimmed in fur", store: "Closet", bought: "", kind: "dress" },
   "yellow-ball-gown": { label: "Yellow ball gown · beaded corset and sunset organza", store: "Closet", bought: "", kind: "dress" },
   "peacock-wings": { label: "Peacock feather wings", store: "Closet", bought: "", kind: "accessory" },
-  "outfit_suit_brocade_robe_crimson_gold_regal_sticker": { label: "Crimson suit under a gold brocade robe · black gloves and jeweled brooches", store: "Closet", bought: "", kind: "coat" },
-  "cape_royal_pleated_jeweled_cobalt_blue_sticker": { label: "Royal cobalt blue pleated cape · jeweled capelet trimmed in ivory fur", store: "Closet", bought: "", kind: "coat" },
-  "mughal-couture-ensemble": { label: "Mughal-inspired couture ensemble · black velvet cape painted with court scenes, over a gold-embroidered sherwani", store: "Closet", bought: "", kind: "coat" },
+  "outfit_suit_brocade_robe_crimson_gold_regal_sticker": { label: "Crimson suit under a gold brocade robe · black gloves and jeweled brooches", store: "Closet", bought: "", kind: "robe" },
+  "cape_royal_pleated_jeweled_cobalt_blue_sticker": { label: "Royal cobalt blue pleated cape · jeweled capelet trimmed in ivory fur", store: "Closet", bought: "", kind: "robe" },
+  "mughal-couture-ensemble": { label: "Mughal-inspired couture ensemble · black velvet cape painted with court scenes, over a gold-embroidered sherwani", store: "Closet", bought: "", kind: "robe" },
   "cloud_cardigan_blue_white_knit_sticker": { label: "Blue cloud knit cardigan", store: "Closet", bought: "", kind: "top" },
   "red-faux-fur-round-hat": { label: "Red faux fur round hat", store: "Closet", bought: "", kind: "hat" },
   "pink-faux-fur-round-hat": { label: "Pink faux fur round hat", store: "Closet", bought: "", kind: "hat" },
@@ -262,6 +262,7 @@ export const closetSrc = (id: string) => `${process.env.PUBLIC_URL}/palais/close
 /** the catalogue's shelves in the closet, one per kind of thing */
 export const WARDROBE_SHELVES: { key: ClothesKind; name: string; emoji: string }[] = [
   { key: "coat", name: "Coats", emoji: "🧥" },
+  { key: "robe", name: "Robes", emoji: "👘" },
   { key: "dress", name: "Dresses", emoji: "👗" },
   { key: "top", name: "Tops & knits", emoji: "👚" },
   { key: "bottom", name: "Skirts & shorts", emoji: "🩳" },
