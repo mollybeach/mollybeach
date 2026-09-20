@@ -24,6 +24,7 @@ import { RoomRadio } from "./RoomRadio";
 import { LettersDrawer, LibraryLetters } from "./LibraryLetters";
 import { LakehouseCase } from "./LakehouseCase";
 import { BoudoirPictures } from "./BoudoirPictures";
+import { KitchenCookbook } from "./KitchenCookbook";
 import { Wardrobe } from "./Wardrobe";
 import { PlaceNow, usePlaceState } from "./place";
 import { countPage, recordPlace, recordVisit } from "./visits";
@@ -372,6 +373,8 @@ export default function PalaisHome() {
             <LakehouseCase />
           {/* the pictures in the Boudoir dresser */}
           <BoudoirPictures />
+          {/* and the cookbook on the kitchen counter */}
+          <KitchenCookbook />
           </LettersDrawer>
           {/* the gilded band the footer wears, brought up onto the bottom of
               the room so it shows at the foot of the screen without scrolling;
