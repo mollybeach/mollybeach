@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePlace, type Place } from "./place";
 import { noteDoing } from "./visits";
 
@@ -90,6 +91,9 @@ function youtube(): Promise<YTApi> {
 
 const PLAYING = 1;
 
+/** the sleeve, either where it stands in the room or over on the footer's shelf */
+const sleeve = (it: JSX.Element, shelf: HTMLElement | null) => (shelf ? createPortal(it, shelf) : it);
+
 /** narrower than this and the deck folds down to its knob */
 const NARROW = 820;
 /** is there room for the deck and its 200px sleeve? */
@@ -112,6 +116,13 @@ function Turntable({ disc }: { disc: Disc }) {
      player to exist */
   const spent = useRef(false);
   const asked = useRef(false);
+  /* on a phone the album stands on the shelf in the footer instead of beside
+     the deck: YouTube holds its player at 200 x 200 and won't have it covered,
+     which is half the room on a phone (Footer.tsx) */
+  const [shelf, setShelf] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!roomForIt()) setShelf(document.getElementById("palais-record-shelf"));
+  }, []);
   // a screen with room for it stands the deck open, unless the room would
   // rather keep it folded away (folded, above); a phone hasn't room for a
   // turntable and a 200px sleeve, so there it always starts as a knob in the
@@ -172,7 +183,7 @@ function Turntable({ disc }: { disc: Disc }) {
       player.current = null;
       setPlaying(false);
     };
-  }, [open, disc.video, disc.name]);
+  }, [open, shelf, disc.video, disc.name]);
 
   /* any click — or, on a phone, any tap — puts the record on, once. Touches on
      the deck itself are its own business: that's how it gets stopped.
@@ -220,11 +231,9 @@ function Turntable({ disc }: { disc: Disc }) {
 
   return (
     <aside className={`lake-radio${playing ? " is-playing" : ""}`} aria-label="The record player">
-      {/* YouTube's player, standing behind the deck as the album's sleeve. On a
-          phone it only comes out while the record plays (see palais.css). */}
-      <div className="tt-sleeve">
-        <div ref={holder} />
-      </div>
+      {/* YouTube's player: the album's sleeve behind the deck on a screen with
+          room for it, and down on the footer's shelf on a phone */}
+      {sleeve(<div className="tt-sleeve"><div ref={holder} /></div>, shelf)}
 
       <div className="tt-deck">
         <button

@@ -3865,6 +3865,23 @@
 @keyframes tt-spin { to { transform: rotate(360deg); } }
 @keyframes lake-radio-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
+/* the shelf in the footer the album stands on when the room hasn't space for
+   it (a phone). Empty, it takes no room at all. */
+.palais .lake-shelf:empty { display: none; }
+.palais .lake-shelf {
+  display: grid;
+  place-items: center;
+  padding: 0.7rem 0.6rem 0.9rem;
+  background: rgba(46, 27, 14, 0.14);
+}
+.palais .lake-shelf .tt-sleeve {
+  position: relative;
+  grid-column: auto;
+  grid-row: auto;
+  margin: 0;
+  transform: rotate(-1.5deg);
+}
+
 /* put-away knob: what the record player folds down to. Nothing plays while
    it's away — closing pauses the album — so YouTube's player is never hidden
    mid-song. */
@@ -3919,14 +3936,18 @@
     grid-template-rows: auto auto auto;
     justify-items: start;
   }
-  /* a phone has no room for a full deck: the turntable is a little one, and
-     the sleeve behind it is YouTube's own player, which their terms hold at
-     200 x 200 — it can't go smaller than that */
-  .palais .tt-sleeve { grid-column: 1; grid-row: 1; margin: 0 0 0.3rem 0; transform: rotate(-2deg); }
+  /* A phone has no room for a full deck: the turntable is a little one, and
+     the album it's playing stands on the shelf in the footer instead of in the
+     room (Footer.tsx), so all that's up here is the deck itself. */
+  .palais .lake-radio {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    align-items: end;
+  }
   .palais .tt-deck {
     --size: 58px;
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 1;
     border-radius: 8px;
     border-width: 1px;
     width: calc(var(--size) + 30px);
@@ -3940,7 +3961,7 @@
   .palais .tt-label { font-size: 0.22rem; }
   .palais .tt-label-title { font-size: 0.18rem; }
   .palais .tt-label-dot { width: 2px; height: 2px; }
-  .palais .lake-radio-now { grid-row: 3; margin-top: 0.25rem; padding: 0.1rem 0.4rem; font-size: 0.56rem; }
+  .palais .lake-radio-now { grid-column: 1; grid-row: 2; margin-top: 0.25rem; padding: 0.1rem 0.4rem; font-size: 0.56rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .palais .lake-radio { animation: none; }

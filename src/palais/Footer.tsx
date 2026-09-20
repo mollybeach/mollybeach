@@ -7,6 +7,11 @@ import { floralSrc, useFloral } from "./florals";
  *
  * The pattern tiles horizontally at its natural height, so the flowers stay
  * the same size at any width instead of stretching.
+ *
+ * It also keeps a shelf for the album that's on the deck: on a phone the room
+ * hasn't space for YouTube's player beside the turntable, so the player stands
+ * down here instead and the turntable up in the room works it (RoomRadio).
+ * The shelf is invisible until something is put on it.
  */
 export function Footer() {
   const { now, was } = useFloral("footer");
@@ -20,6 +25,7 @@ export function Footer() {
         {/* the light in the room reaches the top of the band */}
         <div aria-hidden className="palais-footer-light" />
       </div>
+      <div className="lake-shelf" id="palais-record-shelf" />
     </footer>
   );
 }
