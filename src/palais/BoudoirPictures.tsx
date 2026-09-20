@@ -326,12 +326,6 @@ export function BoudoirPictures() {
                 ) : (
                   <>
                     <div className="bd-hang" ref={pit}>
-                      {many > 1 && (
-                        <button type="button" className="bd-arrow bd-arrow--back" onClick={() => step(-1)} aria-label="The one before">
-                          ‹
-                        </button>
-                      )}
-
                       <figure
                         className={`bd-frame${frame ? " is-fitted" : ""}`}
                         style={frame ? { width: `${frame.w}px`, height: `${frame.h}px` } : undefined}
@@ -340,21 +334,30 @@ export function BoudoirPictures() {
                             straight into a frame of the right shape */}
                         <img src={showing.url} alt={showing.title} decoding="async" />
                       </figure>
+                    </div>
 
+                    {/* the rail under the pictures: an arrow either side of the
+                        beads. On a screen with room the arrows ride on the
+                        picture's own edges instead (palais.css). */}
+                    <div className="bd-foot">
+                      {many > 1 && (
+                        <button type="button" className="bd-arrow bd-arrow--back" onClick={() => step(-1)} aria-label="The one before">
+                          ‹
+                        </button>
+                      )}
+                      {many > 1 && (
+                        <span className="bd-count" aria-hidden>
+                          {hanging!.map((p, n) => (
+                            <i key={p.url} className={n === at ? "is-on" : undefined} />
+                          ))}
+                        </span>
+                      )}
                       {many > 1 && (
                         <button type="button" className="bd-arrow bd-arrow--on" onClick={() => step(1)} aria-label="The next one">
                           ›
                         </button>
                       )}
                     </div>
-
-                    {many > 1 && (
-                      <span className="bd-count" aria-hidden>
-                        {hanging!.map((p, n) => (
-                          <i key={p.url} className={n === at ? "is-on" : undefined} />
-                        ))}
-                      </span>
-                    )}
                   </>
                 )}
               </div>
