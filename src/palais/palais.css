@@ -4504,9 +4504,11 @@
   height: 100%;
   min-width: 0;
   min-height: 0;
-  /* a fixed area, whatever is hung in it. If a picture can't be fitted, this
-     scrolls — the panel never changes size. */
-  overflow: auto;
+  /* a fixed area, whatever is hung in it. Nothing may spill out of its sides —
+     a picture that somehow can't be fitted scrolls up and down instead, and
+     the panel never changes size. */
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -4517,6 +4519,7 @@
   box-sizing: border-box;
   overflow: hidden;
   max-width: 100%;
+  justify-self: center;
   max-height: 100%;
   margin: 0;
   padding: 0.85rem;

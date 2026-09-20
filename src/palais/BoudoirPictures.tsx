@@ -225,8 +225,16 @@ export function BoudoirPictures() {
     const room = pit.current;
     if (!hung || !room) return;
     const fit = () => {
-      const h = Math.max(48, Math.min(room.clientHeight, room.clientWidth / shape));
-      setFrame({ w: Math.round(h * shape), h: Math.round(h) });
+      // the picture's own shape, asked of the picture itself when it is there:
+      // the remembered one can belong to the picture before this one
+      const img = room.querySelector("img");
+      const real = img?.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : shape;
+      const room_ = { w: room.clientWidth, h: room.clientHeight };
+      // the biggest box of that shape that fits inside the area, bounded on
+      // BOTH sides so it can never be wider than the panel it hangs in
+      const h = Math.max(48, Math.min(room_.h, room_.w / real));
+      const w = Math.min(Math.round(h * real), room_.w);
+      setFrame({ w, h: Math.round(Math.min(h, w / real)) });
     };
     fit();
     const watch = new ResizeObserver(fit);
