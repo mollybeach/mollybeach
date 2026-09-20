@@ -351,8 +351,8 @@ export function BoudoirPictures() {
                       )}
 
                       <figure
-                        className="bd-frame"
-                        style={frame ? { width: `${frame.w}px`, height: `${frame.h}px` } : { aspectRatio: String(shape) }}
+                        className={`bd-frame${frame ? " is-fitted" : ""}`}
+                        style={frame ? { width: `${frame.w}px`, height: `${frame.h}px` } : undefined}
                       >
                         {/* already fetched and measured above, so it paints
                             straight into a frame of the right shape */}

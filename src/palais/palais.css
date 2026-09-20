@@ -4285,6 +4285,18 @@
 }
 .palais .palais-bunny:active { transform: translateY(-1px) scale(0.995); transition-duration: 90ms; }
 
+/* until the frame has been measured (BoudoirPictures measures it against the
+   panel), the picture is held inside the box it hangs in rather than being
+   allowed to decide how big the box is */
+.palais .bd-frame:not(.is-fitted) { width: auto; height: auto; }
+.palais .bd-frame:not(.is-fitted) img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 /* the wait while the dresser is opening: eight little rabbits going round,
    each one lighting up in its turn */
 .palais .bd-wait {
@@ -4361,7 +4373,9 @@
   place-items: center;
   width: 100%;
   height: 100%;
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;      /* nothing hangs outside the panel, whatever its size */
 }
 
 /* the frame itself */
@@ -4369,6 +4383,7 @@
   display: grid;
   place-items: stretch;
   box-sizing: border-box;
+  overflow: hidden;
   max-width: 100%;
   max-height: 100%;
   margin: 0;
