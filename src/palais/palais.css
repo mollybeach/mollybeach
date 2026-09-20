@@ -3865,21 +3865,42 @@
 @keyframes tt-spin { to { transform: rotate(360deg); } }
 @keyframes lake-radio-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
-/* the shelf in the footer the album stands on when the room hasn't space for
-   it (a phone). Empty, it takes no room at all. */
+/* the album, propped on the footer's flowers when the room hasn't space for it
+   (a phone). Empty, there is nothing there at all. */
 .palais .lake-shelf:empty { display: none; }
 .palais .lake-shelf {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.8rem, 3vh, 2.2rem);
+  translate: -50% 0;
+  z-index: 2;
   display: grid;
   place-items: center;
-  padding: 0.7rem 0.6rem 0.9rem;
-  background: rgba(46, 27, 14, 0.14);
 }
 .palais .lake-shelf .tt-sleeve {
   position: relative;
   grid-column: auto;
   grid-row: auto;
   margin: 0;
-  transform: rotate(-1.5deg);
+  transform: rotate(-2deg);
+  border-width: 5px;                       /* a wider mount, like a record sleeve */
+  border-radius: 6px;
+  box-shadow:
+    0 14px 26px rgba(30, 18, 10, 0.45),    /* the shadow it casts on the flowers */
+    0 2px 0 rgba(255, 246, 214, 0.55);
+}
+/* a little shade under it, so it sits on the pattern rather than floating */
+.palais .lake-shelf::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  translate: -50% 0;
+  width: 78%;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(40, 24, 12, 0.4), rgba(40, 24, 12, 0));
+  pointer-events: none;
 }
 
 /* put-away knob: what the record player folds down to. Nothing plays while

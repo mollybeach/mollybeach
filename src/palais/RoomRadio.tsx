@@ -120,9 +120,6 @@ function Turntable({ disc }: { disc: Disc }) {
      the deck: YouTube holds its player at 200 x 200 and won't have it covered,
      which is half the room on a phone (Footer.tsx) */
   const [shelf, setShelf] = useState<HTMLElement | null>(null);
-  useEffect(() => {
-    if (!roomForIt()) setShelf(document.getElementById("palais-record-shelf"));
-  }, []);
   // a screen with room for it stands the deck open, unless the room would
   // rather keep it folded away (folded, above); a phone hasn't room for a
   // turntable and a 200px sleeve, so there it always starts as a knob in the
@@ -149,6 +146,15 @@ function Turntable({ disc }: { disc: Disc }) {
       window.removeEventListener("resize", settle);
     };
   }, [disc.folded]);
+
+  /* looked up again whenever the deck comes out: the footer is re-drawn as the
+     patterns turn, and a shelf caught once can be one that has since been
+     replaced — a portal into that would be a player in a detached corner of
+     nowhere, playing to no one */
+  useEffect(() => {
+    const now = roomForIt() ? null : document.getElementById("palais-record-shelf");
+    setShelf((was) => (was && was === now && document.contains(was) ? was : now));
+  }, [open]);
 
   /* the player is built when the turntable is out, and taken down when it is
      put away — the div it is built on goes with it, so it can't be kept */
