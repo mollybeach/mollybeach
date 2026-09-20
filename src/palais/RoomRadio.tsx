@@ -5,7 +5,7 @@ import { noteDoing } from "./visits";
 /**
  * The record player: a turntable in the corner of a room, with whatever album
  * that room keeps on it (RECORDS below). The Lakehouse has Vulfpeck's "The
- * Beautiful Game" from Vulf's own channel; the Palais has Norah Jones.
+ * Beautiful Game" from Vulf's own channel; the Palais has Widowspeak.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Tapping the record plays
@@ -29,7 +29,7 @@ interface Disc {
 
 /** what's on the deck in each room. A room left out of this has no deck. */
 const RECORDS: Partial<Record<Place, Disc>> = {
-  palace: { video: "Ir1Bl5odrIQ", name: "Norah Jones", title: "Best of, the whole album" },
+  palace: { video: "Pq5VAFOfuQw", name: "Widowspeak", title: "In the Pines" },
   lakehouse: { video: "DRdnpKRvMwI", name: "Vulfpeck", title: "The Beautiful Game" },
 };
 

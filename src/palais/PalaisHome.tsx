@@ -362,7 +362,7 @@ export default function PalaisHome() {
           <GlobeEgg />
           {/* and the iMac on its desk, which opens when you click it */}
           <LibraryImac />
-          {/* and a record player: Norah Jones in the Palais, Vulfpeck in the
+          {/* and a record player: Widowspeak in the Palais, Vulfpeck in the
               Lakehouse (RoomRadio) */}
           <RoomRadio />
           {/* the letters: the library desk drawer and the Lakehouse road case
