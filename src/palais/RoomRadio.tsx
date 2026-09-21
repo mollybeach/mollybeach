@@ -41,11 +41,11 @@ const RECORDS: Partial<Record<Place, Disc>> = {
   lakehouse: { video: "DRdnpKRvMwI", name: "Vulfpeck", title: "The Beautiful Game" },
   // folded away to begin with: the corner it stands in is the dresser's, and
   // the bunny sits there
-  boudoir: { video: "OnF0o6CoGEo", name: "Widowspeak", title: "Coke Bottle Green", folded: true },
+  boudoir: { video: "lNhPKvM3Hdw", name: "Widowspeak", title: "Wicked Game", folded: true },
   reef: { video: "RofKpQWccjA", name: "The Growlers", title: "Naked Kids", folded: true },
   kitchen: { video: "9e5qNUd6gBA", name: "Norah Jones", title: "Come Away with Me", folded: true },
   sunliner: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
-  caves: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
+  caves: { video: "OnF0o6CoGEo", name: "Widowspeak", title: "Coke Bottle Green", folded: true },
   jacaranda: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
   lagoon: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
   library: { video: "RDNymaNBy2I", name: "Mild High Club", title: "Skiptracing", folded: true },

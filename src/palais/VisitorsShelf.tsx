@@ -93,6 +93,14 @@ function doingTrail(doings: VisitDoing[]) {
   return bits.join(" · ");
 }
 
+/** a stop on the walk, with how long they stood in it: "Awards (22s)". The
+    one they're still standing in has no seconds yet, and just gives its name. */
+const stopName = (stop: string | { place: string; seconds: number | null }) => {
+  if (typeof stop === "string") return placeName(stop);
+  const held = stop.seconds ?? 0;
+  return held > 0 ? `${placeName(stop.place)} (${mins(held)})` : placeName(stop.place);
+};
+
 const mins = (sec: number | null | undefined) => {
   const n = sec ?? 0;
   if (!n) return "—";
@@ -732,7 +740,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                         .join(" · ")}
                     </small>
                     {v.landing && v.landing !== "/" && <small>🚪 came in at {placeName(v.landing.replace(/^#/, ""))}</small>}
-                    {v.places.length > 0 && <small>🗺️ {v.places.map(placeName).join(" → ")}</small>}
+                    {v.places.length > 0 && <small>🗺️ {v.places.map(stopName).join(" → ")}</small>}
                     {v.doings?.length > 0 && <small>✿ {doingTrail(v.doings)}</small>}
                   </span>
                   <time dateTime={v.at} title={new Date(v.at).toLocaleString()}>

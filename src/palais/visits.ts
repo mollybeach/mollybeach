@@ -411,6 +411,9 @@ function watchStay() {
       return;
     }
   };
+  // the first beat comes early, so a visit that's only a few seconds old
+  // already has a time against it rather than sitting blank for half a minute
+  setTimeout(send, 5_000);
   setInterval(send, 30_000);
   document.addEventListener("visibilitychange", () => {
     tick();
@@ -613,7 +616,9 @@ export interface VisitLogEntry {
   visitor: string | null;
   name: string | null;
   is_me: boolean;
-  places: string[];
+  /** each stop on the walk. A database that hasn't had the newer
+      palais_visit_log pasted into it sends bare names instead. */
+  places: (string | { place: string; seconds: number | null })[];
   timezone: string | null;
   landing: string | null;
   referrer_path: string | null;

@@ -110,8 +110,10 @@ begin
       'network', v.network, 'asn', v.asn, 'zone', v.zone,
       'vpn', public.palais_vpn_hint(v.network, v.asn, v.timezone, v.zone, v.tz_offset),
       'visitor', left(v.visitor, 6), 'name', n.name, 'is_me', coalesce(n.is_me, false),
+      -- each stop on the walk with how long they stood in it, so the log can
+      -- say "Awards (22s) → Projects (1m 3s)" rather than just where they went
       'places', coalesce((
-        select jsonb_agg(pp.place order by pp.created_at)
+        select jsonb_agg(jsonb_build_object('place', pp.place, 'seconds', pp.seconds) order by pp.created_at)
         from public.palais_place_visits pp where pp.session = v.session
       ), '[]'::jsonb)
     ) || jsonb_build_object(
