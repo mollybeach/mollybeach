@@ -401,6 +401,15 @@ function watchStay() {
     } catch {
       return;
     }
+    // and fill in how long they've been standing in the stop they're in, so
+    // the last page of a visit isn't left reading nothing (palais_leave_place;
+    // older databases don't have it yet, and don't have to)
+    try {
+      const sb = await db();
+      await sb.rpc("palais_leave_place", { p_session: session });
+    } catch {
+      return;
+    }
   };
   setInterval(send, 30_000);
   document.addEventListener("visibilitychange", () => {
@@ -428,7 +437,8 @@ export async function recordVisit() {
   const source = describeSource();
   const marks = tagsIn(window.location.search);
   const fromPath = referrerPath();
-  const landing = window.location.hash || "/";
+  // a Palais room is a hash, a page of the portfolio is a path
+  const landing = window.location.hash || window.location.pathname || "/";
   // tidy a ?from=… tag out of the address bar once it's been read
   try {
     const url = new URL(window.location.href);

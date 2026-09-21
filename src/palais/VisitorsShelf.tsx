@@ -36,7 +36,25 @@ const ago = (iso: string) => {
   return `${Math.floor(s / 86400)}d ago`;
 };
 
-const placeName = (p: string) => PLACE_NAMES[p as Place] ?? p;
+/** the pages of the portfolio, which are stops on the same walk as the rooms
+    (MainComponent.tsx). They are written down as "page-projects"; someone who
+    came in on one has it as a path instead. */
+const PAGE_NAMES: Record<string, string> = {
+  home: "the Palais",
+  overview: "Overview",
+  portfolio: "Overview",
+  projects: "Projects",
+  experience: "Experience",
+  education: "Education",
+  skills: "Skills",
+  awards: "Awards",
+  certifications: "Certifications",
+  resume: "Resume",
+  admin: "the visitor book",
+};
+
+const placeName = (p: string) =>
+  PLACE_NAMES[p as Place] ?? PAGE_NAMES[p.replace(/^(page-|\/)/, "")] ?? p;
 
 /** what someone did inside, read back as a sentence: "opened the catalogue ·
     characters: Molly → Ella". People they scrolled past in a row are gathered

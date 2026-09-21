@@ -1,5 +1,5 @@
 // path: src/components/MainComponent.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Overview from './Overview';
@@ -12,7 +12,28 @@ import Resume from './Resume';
 import Awards from './Awards';
 import PalaisHome from '../palais/PalaisHome';
 import { floralSrc, paletteOf, useFloral } from '../palais/florals';
+import { countPage, recordPlace, recordVisit } from '../palais/visits';
 import Admin from './Admin';
+
+/**
+ * The pages of the portfolio proper, as stops on the same walk the Palais
+ * rooms are recorded on (visits.ts). Each one is written down as it is opened,
+ * and the one before it has its seconds filled in — so the visitor book says
+ * not just who came but which pages they read and how long they stayed on
+ * each. /admin is Molly's own and is left out.
+ */
+const PAGE_STOPS: Record<string, string> = {
+  '/': 'page-home',
+  '/overview': 'page-overview',
+  '/portfolio': 'page-overview',
+  '/projects': 'page-projects',
+  '/experience': 'page-experience',
+  '/education': 'page-education',
+  '/skills': 'page-skills',
+  '/awards': 'page-awards',
+  '/certifications': 'page-certifications',
+  '/resume': 'page-resume',
+};
 
 interface MainComponentProps {
   isMobileMenuOpen: boolean;
@@ -22,7 +43,20 @@ interface MainComponentProps {
 const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) => {
   // The home page is the Palais room, which fills the whole pane edge to edge,
   // so it is rendered outside the padded wrapper the other pages sit in.
-  const isHome = useLocation().pathname === '/';
+  const { pathname } = useLocation();
+  const isHome = pathname === '/';
+  // count the visit wherever they came in: someone who lands straight on
+  // /projects and never opens the Palais was, until now, never counted at all
+  useEffect(() => {
+    void recordVisit();
+  }, []);
+  // and write down each page they read (the Palais records its own rooms)
+  useEffect(() => {
+    const stop = PAGE_STOPS[pathname];
+    if (!stop || stop === 'page-home') return;   // the Palais counts its own
+    countPage();
+    recordPlace(stop);
+  }, [pathname]);
   // every other page is papered in whichever floral the Palais footer is
   // wearing, under a cream veil so the writing still reads (florals.ts)
   const floral = useFloral('footer');

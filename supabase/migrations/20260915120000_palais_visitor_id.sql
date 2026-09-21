@@ -764,3 +764,40 @@ revoke all on function public.palais_visit_log(bigint, int, text) from public, a
 grant execute on function public.palais_visit_log(bigint, int, text) to authenticated;
 revoke all on function public.palais_visitor_profiles() from public, anon;
 grant execute on function public.palais_visitor_profiles() to authenticated;
+
+-- ---------------------------------------------- how long they're still there --
+--
+-- palais_record_place fills in the seconds of the stop someone has just LEFT,
+-- which leaves the one they're standing in reading nothing. This closes that
+-- one out. The site calls it alongside palais_touch_visit — every half minute,
+-- and again when the page is hidden or closed — so the last page of a visit
+-- counts like all the others. Calling it more than once is harmless: it just
+-- recounts from when they arrived.
+
+create or replace function public.palais_leave_place(p_session text)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  last_id bigint;
+  last_at timestamptz;
+begin
+  if p_session is null or length(p_session) > 64 then
+    return;
+  end if;
+  select id, created_at into last_id, last_at
+    from public.palais_place_visits where session = p_session
+    order by created_at desc limit 1;
+  if last_id is null then
+    return;
+  end if;
+  update public.palais_place_visits
+     set seconds = least(86400, greatest(0, extract(epoch from now() - last_at)::int))
+   where id = last_id;
+end;
+$$;
+
+revoke all on function public.palais_leave_place(text) from public;
+grant execute on function public.palais_leave_place(text) to anon, authenticated;
