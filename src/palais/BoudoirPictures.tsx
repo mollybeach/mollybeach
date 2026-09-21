@@ -3,7 +3,16 @@ import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
 import { lettersOpen, remember, remembered } from "./letters";
-import { addPortrait, PORTRAIT_TYPES, readPortraits, type Portrait } from "./portraits";
+import {
+  addPortrait,
+  dropNote,
+  PORTRAIT_TYPES,
+  postNote,
+  readNotes,
+  readPortraits,
+  type Portrait,
+  type PortraitNote,
+} from "./portraits";
 import { noteDoing } from "./visits";
 
 /**
@@ -102,6 +111,14 @@ export function BoudoirPictures() {
   const picker = useRef<HTMLInputElement>(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
+  /* what people have said about them: the whole drawer's worth, fetched once,
+     so a count can sit against the picture without asking again */
+  const [notes, setNotes] = useState<PortraitNote[]>([]);
+  const [talking, setTalking] = useState(true);       // the notes lie over the picture unless the pen puts them away
+  const [saying, setSaying] = useState("");
+  const [posting, setPosting] = useState(false);
+  const [noteTrouble, setNoteTrouble] = useState<string | null>(null);
+  const scroll = useRef<HTMLUListElement>(null);
 
   /* keep the dresser where the photograph put it, whichever photograph it is */
   useLayoutEffect(() => {
@@ -165,6 +182,10 @@ export function BoudoirPictures() {
             setAt(0);
           })
           .catch(() => setHanging([]));
+        // and what has been said about them, which is as private as they are
+        readNotes(word)
+          .then(setNotes)
+          .catch(() => setNotes([]));
       } else {
         if (typed) noteDoing("portrait-try", "the word didn't fit");
         setTrouble("That word doesn't open the dresser.");
@@ -207,10 +228,93 @@ export function BoudoirPictures() {
     [key],
   );
 
+  /* Leaving one. Nobody types a name: the database signs it with whoever the
+     visitor book says is reading, and with their name instead once Molly has
+     given them one (20260921120000_palais_portrait_notes.sql). */
+  const say = useCallback(
+    async (path: string, title: string) => {
+      if (!key || !saying.trim()) return;
+      setPosting(true);
+      setNoteTrouble(null);
+      try {
+        await postNote(key, path, saying.trim());
+        setSaying("");
+        setNotes(await readNotes(key));
+        noteDoing("portrait-note", title);     // Molly hears that one was left
+      } catch (e) {
+        setNoteTrouble(e instanceof Error ? e.message : "That note wouldn't go in.");
+      } finally {
+        setPosting(false);
+      }
+    },
+    [key, saying],
+  );
+
+  const unsay = useCallback(
+    async (id: number) => {
+      if (!key) return;
+      setNoteTrouble(null);
+      try {
+        await dropNote(key, id);
+        setNotes(await readNotes(key));
+      } catch (e) {
+        setNoteTrouble(e instanceof Error ? e.message : "That note wouldn't come back.");
+      }
+    },
+    [key],
+  );
+
+  const showingNow = hanging?.[at] ?? hanging?.[0] ?? null;
+  /* They drift by on their own, the way the comments do on a TikTok you're
+     watching back: down to the last one, a beat, then round again. Pointing
+     at them stops it, so one can be read or taken back; so does asking for
+     less motion. Nothing here touches the layout. */
+  const drifting = showingNow ? notes.filter((n) => n.path === showingNow.path).length : 0;
+  useEffect(() => {
+    const list = scroll.current;
+    if (!talking || !list || drifting < 2) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    let held = 0;
+    let stopped = false;
+    const step = () => {
+      const most = list.scrollHeight - list.clientHeight;
+      if (most > 1) {
+        if (held > 0) held -= 1;
+        else if (list.scrollTop >= most - 0.5) held = 110;   // a beat at the end
+        else if (list.scrollTop <= 0.5 && held === 0 && list.scrollTop === 0) list.scrollTop += 0.3;
+        else list.scrollTop += 0.3;
+        if (held === 1) list.scrollTop = 0;                  // and round again
+      }
+      frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    const hold = () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+    };
+    const go = () => {
+      if (!stopped) return;
+      stopped = false;
+      frame = requestAnimationFrame(step);
+    };
+    list.addEventListener("pointerenter", hold);
+    list.addEventListener("pointerleave", go);
+    return () => {
+      cancelAnimationFrame(frame);
+      list.removeEventListener("pointerenter", hold);
+      list.removeEventListener("pointerleave", go);
+    };
+    // `ready` matters: the notes only exist once the picture they lie on is
+    // up, which is after the notes themselves have arrived
+  }, [talking, drifting, at, ready]);
+
   const shut = useCallback(() => {
     setOpen(false);
     setTrouble(null);
     setSent(null);
+    setNoteTrouble(null);
+    setTalking(false);
   }, []);
   const many = hanging?.length ?? 0;
   const step = useCallback((by: number) => setAt((n) => (n + by + many) % many), [many]);
@@ -338,7 +442,8 @@ export function BoudoirPictures() {
 
   if (!here) return null;
 
-  const showing = hanging?.[at] ?? hanging?.[0] ?? null;
+  const showing = showingNow;
+  const mine = showing ? notes.filter((n) => n.path === showing.path) : [];
 
   return (
     <>
@@ -389,6 +494,41 @@ export function BoudoirPictures() {
             <button type="button" className="wm-close" onClick={shut} aria-label="Close the dresser">
               ×
             </button>
+            {/* opposite the ×: the way to put one in, once they're inside */}
+            {inside && (
+              <>
+                <input
+                  ref={picker}
+                  type="file"
+                  className="bd-picker"
+                  accept={PORTRAIT_TYPES}
+                  onChange={(e) => takeIn(e.target.files?.[0])}
+                  disabled={sending}
+                />
+                <button
+                  type="button"
+                  className="wm-close bd-add-corner"
+                  onClick={() => picker.current?.click()}
+                  disabled={sending}
+                  aria-label="Add a picture or a film"
+                  title="Add a picture or a film"
+                >
+                  {sending ? "…" : "+"}
+                </button>
+                {/* and what's been said about the one in the frame */}
+                <button
+                  type="button"
+                  className={`wm-close bd-say-corner${talking ? " is-on" : ""}`}
+                  onClick={() => setTalking((t) => !t)}
+                  aria-expanded={talking}
+                  aria-label={mine.length ? `${mine.length} notes on this one` : "Leave a note on this one"}
+                  title={mine.length ? `${mine.length} notes on this one` : "Leave a note on this one"}
+                >
+                  <span aria-hidden>✎</span>
+                  {mine.length > 0 && <span className="bd-say-tally" aria-hidden>{mine.length}</span>}
+                </button>
+              </>
+            )}
 
             {!inside ? (
               /* the dresser is locked: the same word as the letters */
@@ -446,6 +586,33 @@ export function BoudoirPictures() {
                         ) : (
                           <img src={showing.url} alt={showing.title} decoding="async" />
                         )}
+
+                        {/* The notes, lying over the corner of the picture the
+                            way they do on a TikTok you're watching back. They
+                            are out of the layout altogether, so however many
+                            there are nothing moves and the panel cannot change
+                            size. A film keeps its controls: they sit above. */}
+                        {talking && (
+                          <div className={`bd-say${showing.kind === "film" ? " bd-say--film" : ""}`}>
+                          <ul className="bd-say-list" ref={scroll}>
+                            {mine.length === 0 && <li className="bd-say-none">Nothing said about this one yet.</li>}
+                            {mine.map((n) => (
+                              <li key={n.id}>
+                                <p className="bd-say-body">{n.body}</p>
+                                <p className="bd-say-by">
+                                  <span className={n.named ? "bd-say-name" : "bd-say-id"}>{n.author}</span>
+                                  <span className="bd-say-when">{new Date(n.at).toLocaleDateString()}</span>
+                                  {n.mine && (
+                                    <button type="button" className="bd-say-drop" onClick={() => unsay(n.id)}>
+                                      take it back
+                                    </button>
+                                  )}
+                                </p>
+                              </li>
+                            ))}
+                            </ul>
+                          </div>
+                        )}
                       </figure>
                     </div>
 
@@ -479,29 +646,37 @@ export function BoudoirPictures() {
                         </button>
                       )}
                     </div>
+
                   </>
                 )}
 
                 {/* and the way to put one in, under everything, the way the
                     cookbook keeps its pen under the left page */}
                 <div className="bd-add">
-                  <input
-                    ref={picker}
-                    type="file"
-                    className="bd-picker"
-                    accept={PORTRAIT_TYPES}
-                    onChange={(e) => takeIn(e.target.files?.[0])}
-                    disabled={sending}
-                  />
-                  <button
-                    type="button"
-                    className="wm-btn bd-add-btn"
-                    onClick={() => picker.current?.click()}
-                    disabled={sending}
-                  >
-                    {sending ? "Putting it in…" : "Add a picture or a film ✿"}
-                  </button>
+                  {/* always here, so showing the notes moves nothing */}
+                  {inside && (
+                    <form
+                      className="bd-say-new"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        if (showing) say(showing.path, showing.title);
+                      }}
+                    >
+                      <input
+                        className="lt-input bd-say-what"
+                        value={saying}
+                        onChange={(e) => setSaying(e.target.value)}
+                        placeholder="say something about this one…"
+                        aria-label="What to say about this picture"
+                        maxLength={1000}
+                      />
+                      <button type="submit" className="wm-btn bd-say-post" disabled={posting || !saying.trim()}>
+                        {posting ? "…" : "Send"}
+                      </button>
+                    </form>
+                  )}
                   {sending && <Waiting say="Putting it in the dresser…" />}
+                  {noteTrouble && <p className="lt-trouble">{noteTrouble}</p>}
                   {trouble && <p className="lt-trouble">{trouble}</p>}
                   {sent && !trouble && <p className="bd-said">{sent}</p>}
                 </div>

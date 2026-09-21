@@ -80,6 +80,8 @@ function doingTrail(doings: VisitDoing[]) {
       const last = bits[bits.length - 1];
       if (last?.startsWith(word)) bits[bits.length - 1] = `${last} → ${d.detail}`;
       else bits.push(`${word}${d.detail}`);
+    } else if (d.kind === "portrait-note") {
+      bits.push(d.detail ? `left a note on ${d.detail}` : "left a note on a portrait");
     } else if (d.kind === "portrait-try") {
       bits.push(d.detail ? `tried a word on the dresser · ${d.detail}` : "tried a word on the dresser");
     } else if (d.kind === "portrait") {

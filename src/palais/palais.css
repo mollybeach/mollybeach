@@ -4409,9 +4409,12 @@
       var(--bd-pink-deep) 26px 52px
     );
   box-sizing: border-box;
-  /* the full size of the other modals — at the word, and with an empty
-     dresser, there's nothing to shrink around */
-  height: min(880px, 100%);
+  /* Always the full size, whatever is in it. `100%` here resolves against a
+     box that is itself content-sized, so it came out as `auto` and the panel
+     quietly grew and shrank with its contents — opening the notes made it
+     taller. Measured against the window instead, it is a definite height, and
+     what's inside shares it out. */
+  height: min(880px, calc(100cqh - 1.5rem));
   /* the title is hung over the top edge, so the panel is one row: what's in
      the dresser gets all of it */
   grid-template-columns: minmax(0, 1fr);
@@ -4521,8 +4524,9 @@
   position: relative;
   grid-column: 1 / -1;
   display: grid;
-  /* the picture, the rail under it, and the way to put one in */
-  grid-template-rows: minmax(0, 1fr) auto auto;
+  /* the picture, the rail under it, the notes when they're open, and the way
+     to put one in */
+  grid-template-rows: minmax(0, 1fr) auto auto auto;
   justify-items: center;
   gap: 0.5rem;
   min-height: 0;
@@ -4562,6 +4566,7 @@
 
 /* the frame itself */
 .palais .bd-frame {
+  position: relative;          /* the notes lie over the picture in it */
   display: grid;
   place-items: stretch;
   box-sizing: border-box;
@@ -4603,14 +4608,20 @@
 
 /* the way to put one in, under the rail: the picker itself is never seen,
    the button opens it */
+/* the bar along the bottom: what to say, then what to put in, side by side */
 .palais .bd-add {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.3rem;
+  justify-content: center;
+  gap: 0.45rem;
   width: 100%;
   padding-bottom: 0.1rem;
 }
+/* anything the bar has to say goes on a line of its own under the buttons */
+.palais .bd-add > .bd-wait,
+.palais .bd-add > .lt-trouble,
+.palais .bd-add > .bd-said { flex: 1 0 100%; }
 .palais .bd-picker {
   position: absolute;
   width: 1px;
@@ -4622,16 +4633,137 @@
   white-space: nowrap;
   border: 0;
 }
-.palais .bd-add-btn {
-  font-size: 0.82rem;
-  padding: 0.34rem 0.9rem;
+/* the way to put one in: the × in the other corner, wearing the same collar */
+.palais .bd-add-corner {
+  right: auto;
+  left: -1.1rem;
+  font-size: 2rem;
+  line-height: 0.9;
 }
+.palais .bd-add-corner:disabled { color: #b79a6a; cursor: progress; }
 .palais .bd-said {
   margin: 0;
   font-size: 0.76rem;
   color: #7a2a55;
   text-align: center;
 }
+
+/* ----------------------------------------- what people say about a portrait */
+
+/* the way in: the fourth corner, wearing the same collar as the × and the + */
+.palais .bd-say-corner {
+  top: auto;
+  right: -1.1rem;
+  bottom: -1.1rem;
+  font-size: 1.5rem;
+}
+.palais .bd-say-corner.is-on {
+  background: var(--wm-gold);
+  color: var(--wm-cream);
+}
+/* how many, in a little seal on its shoulder */
+.palais .bd-say-tally {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.2rem;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: #c0507e;
+  color: #fff;
+  font: 600 0.72rem/1.15rem var(--wm-serif);
+  box-shadow: 0 0 0 2px var(--wm-cream);
+}
+
+/* the notes themselves. They open INSIDE the panel: the picture above gives
+   up the room (its row is minmax(0,1fr) and the frame is measured again), so
+   the panel itself never changes size — no modal here ever does. */
+/* The notes lie over the corner of the picture, the way they do on a TikTok
+   you are watching back. Absolute, so they are out of the layout altogether:
+   however many there are, they cannot move anything or change the panel. */
+.palais .bd-say {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 4;
+  width: min(78%, 20rem);
+  max-height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;       /* a few notes sit down at the bottom */
+  pointer-events: none;            /* the picture stays clickable around them */
+}
+.palais .bd-say-list {
+  flex: 0 1 auto;
+  /* without this it can never be shorter than its notes, so it would never
+     clip and so never scroll — a flex item's floor is its content */
+  min-height: 0;
+  margin: 0;
+  padding: 0.2rem 0 0;
+  list-style: none;
+  display: grid;
+  gap: 0.3rem;
+  /* start, NOT end: content that overflows above the top of a scroller can
+     never be scrolled to. The column above does the sitting-at-the-bottom. */
+  align-content: start;
+  justify-items: start;        /* a bubble is as wide as what's in it */
+  overflow-y: auto;
+  scrollbar-width: none;
+  pointer-events: auto;        /* but the notes themselves can be scrolled */
+  /* the older ones fade out as they go up, rather than ending in a hard line */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 2.2rem);
+  mask-image: linear-gradient(to bottom, transparent, #000 2.2rem);
+}
+.palais .bd-say-list::-webkit-scrollbar { width: 0; height: 0; }
+/* a film keeps its own controls along the bottom: the notes sit above them */
+.palais .bd-say--film { bottom: 3.2rem; }
+/* the bubble: a little wider than what's said, never the width of the room */
+.palais .bd-say-list > li {
+  max-width: 100%;
+  width: fit-content;
+  padding: 0.3rem 0.65rem;
+  border-radius: 14px;
+  background: rgba(20, 12, 17, 0.72);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 6px rgba(30, 10, 20, 0.35);
+}
+.palais .bd-say-none { color: #ffc2dd; font-size: 0.74rem; }
+.palais .bd-say-body { margin: 0; font-size: 0.82rem; line-height: 1.32; color: #ffc2dd; overflow-wrap: anywhere; }
+.palais .bd-say-by {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  color: #e88ab6;
+}
+.palais .bd-say-when { color: #a86b8a; }
+.palais .bd-say-drop {
+  margin-left: auto;
+  padding: 0;
+  font: inherit;
+  font-size: 0.7rem;
+  color: #ff9ec4;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.palais .bd-say-new {
+  flex: 0 1 26rem;             /* centred under the picture, not the whole width */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem;                 /* a little air before Send */
+  align-items: center;
+}
+/* a visitor who has been given a name is written in it; one who hasn't is
+   written as the id the rest of the visitor book calls them */
+.palais .bd-say-name { font-weight: 600; color: #ffa8cf; }
+.palais .bd-say-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.68rem; }
+.palais .bd-say-new .lt-input { margin: 0; font-size: 0.8rem; padding: 0.35rem 0.5rem; }
+.palais .bd-say-post { font-size: 0.78rem; padding: 0.35rem 0.95rem; white-space: nowrap; }
 .palais .bd-add .bd-wait { margin: 0; font-size: 0.76rem; }
 
 .palais .bd-arrow {
@@ -4679,7 +4811,7 @@
 .palais .bd-count i.is-on { background: #c9a44c; box-shadow: 0 0 6px rgba(201, 164, 76, 0.8); }
 
 @media (max-width: 820px) {
-  .palais .bd-panel { height: 100%; padding: 1.9rem 0.6rem 0.7rem; }
+  .palais .bd-panel { height: calc(100cqh - 1.2rem); padding: 1.9rem 0.6rem 0.7rem; }
   .palais .bd-look { gap: 0.4rem; padding: 0; }
   .palais .bd-frame { padding: 0.5rem; }
   .palais .bd-panel .wm-bloom { display: none; }
@@ -4701,8 +4833,14 @@
   .palais .bd-tally { display: block; flex: 0 0 auto; }
   .palais .bd-foot { gap: 0.6rem; padding: 0 0.4rem 0.15rem; }
   .palais .bd-add { gap: 0.2rem; }
-  .palais .bd-add-btn { font-size: 0.74rem; padding: 0.28rem 0.7rem; }
+  .palais .bd-say { left: 0.6rem; bottom: 0.6rem; width: min(84%, 14rem); max-height: 52%; }
+  .palais .bd-say--film { bottom: 2.8rem; }
+  /* no writing on a phone: the box and its keyboard shove the panel about.
+     The notes can still be read, and taken back, just not left. */
+  .palais .bd-say-new { display: none; }
+  .palais .bd-say-body { font-size: 0.78rem; }
   .palais .bd-said { font-size: 0.7rem; }
+  .palais .bd-add-corner { left: -0.5rem; top: -1rem; }
 }
 @container palais (max-width: 820px) {
   .palais .bd-panel .wm-bloom { display: none; }

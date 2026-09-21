@@ -148,7 +148,10 @@ Deno.serve(async (req) => {
       : b.sort !== null ? 1
       : a.path.localeCompare(b.path),
     )
-    .map(({ url, title, note, kind }) => ({ url, title, note, kind }));
+    // the path goes out too: a note hangs off it (palais_portrait_notes), and
+    // the signed link changes every ten minutes so it can't name a picture.
+    // Knowing a filename opens nothing — the bucket is private.
+    .map(({ url, title, note, kind, path }) => ({ url, title, note, kind, path }));
 
   return reply({ pictures });
 });

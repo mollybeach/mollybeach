@@ -221,6 +221,7 @@ begin
     when 'portrait-seen' then 'stayed with a portrait in the boudoir' || coalesce(' · ' || new.detail, '')
     when 'portrait-film' then 'watched a film in the boudoir' || coalesce(' · ' || new.detail, '')
     when 'portrait-try' then 'tried a word on the boudoir dresser' || coalesce(' · ' || new.detail, '')
+    when 'portrait-note' then 'left a note on a portrait' || coalesce(' · ' || new.detail, '')
     else 'did something: ' || new.kind || coalesce(' · ' || new.detail, '')
   end;
 

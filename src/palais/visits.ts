@@ -374,6 +374,17 @@ let seen = 0;
 let lastTick = Date.now();
 let pagesSeen = 1;
 
+/** this browser's session for this visit, as the database knows it. Whoever is
+    reading is already written down in palais_visits under it, so anything they
+    leave behind can be signed with who they are rather than a typed name. */
+export function visitSession(): string | null {
+  try {
+    return sessionStorage.getItem(SESSION_KEY);
+  } catch {
+    return null;
+  }
+}
+
 export function countPage() {
   pagesSeen += 1;
 }
