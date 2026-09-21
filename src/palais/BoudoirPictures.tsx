@@ -519,6 +519,13 @@ export function BoudoirPictures() {
                   <span aria-hidden>✎</span>
                   {mine.length > 0 && <span className="bd-say-tally" aria-hidden>{mine.length}</span>}
                 </button>
+                {/* which one of them you're on, in the corner left over.
+                    A phone keeps its own count on the rail instead. */}
+                {many > 1 && (
+                  <span className="bd-count-corner" aria-hidden>
+                    {at + 1} / {many}
+                  </span>
+                )}
               </>
             )}
 
