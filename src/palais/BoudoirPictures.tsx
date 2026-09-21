@@ -272,7 +272,7 @@ export function BoudoirPictures() {
      is measured, then laid end to end enough times to fill the window and
      over again, so the loop has no seam to see. CSS does the moving: nothing
      here touches the layout, and pointing at them holds them still. */
-  const [reel, setReel] = useState({ copies: 2, rise: 0 });
+  const [reel, setReel] = useState({ copies: 2, rise: 0, gap: 0 });
   useEffect(() => {
     const box = window_.current;
     const one = scroll.current;
@@ -281,16 +281,17 @@ export function BoudoirPictures() {
       const run = one.getBoundingClientRect().height;
       const tall = box.getBoundingClientRect().height;
       if (run < 8) return;
-      /* Only go round when there are more notes than fit. A second run is laid
-         behind the first so the loop has no seam — and because that run is
-         always taller than the window, the copy is never on screen beside the
-         original. Repeating a short list to fill the window just reads as the
-         same note over and over, which is not a loop, it's a stutter. */
-      const loop = run > tall + 4;
-      const copies = loop ? 2 : 1;
-      const rise = loop ? run : 0;
+      /* They always go round. Two runs, with a gap between them as deep as
+         whatever the window has left over — so the second run begins exactly
+         at the bottom edge as the first starts to rise, and the whole thing
+         moves up by one run plus that gap before starting again. At any
+         moment the window holds one run's worth, part of it the tail of the
+         first and part the head of the second: a circle, never a stutter of
+         the same note twice. */
+      const gap = Math.max(12, Math.round(tall - run));
+      const rise = Math.round(run + gap);
       setReel((was) =>
-        was.copies === copies && Math.abs(was.rise - rise) < 1 ? was : { copies, rise },
+        Math.abs(was.rise - rise) < 1 && Math.abs(was.gap - gap) < 1 ? was : { copies: 2, rise, gap },
       );
     };
     fit();
@@ -594,7 +595,8 @@ export function BoudoirPictures() {
                                   reel.rise
                                     ? ({
                                         ["--bd-rise" as string]: `${reel.rise}px`,
-                                        animationDuration: `${Math.max(8, reel.rise / 24)}s`,
+                                        ["--bd-gap" as string]: `${reel.gap}px`,
+                                        animationDuration: `${Math.max(9, reel.rise / 26)}s`,
                                       } as React.CSSProperties)
                                     : undefined
                                 }
@@ -665,6 +667,10 @@ export function BoudoirPictures() {
                   {inside && (
                     <form
                       className="bd-say-new"
+                      /* exactly as wide as the picture above it, so the box
+                         starts where the picture starts and Send ends where
+                         it ends */
+                      style={frame ? { width: `${frame.w}px` } : undefined}
                       onSubmit={(e) => {
                         e.preventDefault();
                         if (showing) say(showing.path, showing.title);

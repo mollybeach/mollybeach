@@ -4703,7 +4703,7 @@
   mask-image: linear-gradient(to bottom, transparent, #000 3rem);
 }
 /* a film keeps its own controls along the bottom: the notes stop above them */
-.palais .bd-say--film { bottom: 3.95rem; }
+.palais .bd-say--film { bottom: 5.2rem; }   /* clear of a film's own controls */
 
 /* one run of them after another, moved up by exactly one run and started
    again — so there is no seam where the loop closes */
@@ -4711,8 +4711,11 @@
   display: flex;
   flex-direction: column;
 }
-/* it only travels when there are more notes than the window holds */
 .palais .bd-say-reel.is-going-round {
+  /* the run starts down at the bottom edge, and the next one is a window's
+     worth behind it, so one follows the other round with no seam */
+  padding-top: var(--bd-gap, 0px);
+  gap: var(--bd-gap, 0px);
   animation: bd-drift linear infinite;
   will-change: transform;
 }
@@ -4777,7 +4780,8 @@
   cursor: pointer;
 }
 .palais .bd-say-new {
-  flex: 0 1 26rem;             /* centred under the picture, not the whole width */
+  flex: 0 0 auto;              /* its width comes from the picture it sits under */
+  max-width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.6rem;                 /* a little air before Send */
@@ -4787,7 +4791,7 @@
    written as the id the rest of the visitor book calls them */
 .palais .bd-say-name { font-weight: 600; color: #ffa8cf; }
 .palais .bd-say-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.68rem; }
-.palais .bd-say-new .lt-input { margin: 0; font-size: 0.8rem; padding: 0.35rem 0.5rem; }
+.palais .bd-say-new .lt-input { min-width: 0; width: 100%; margin: 0; font-size: 0.8rem; padding: 0.35rem 0.5rem; }
 .palais .bd-say-post { font-size: 0.78rem; padding: 0.35rem 0.95rem; white-space: nowrap; }
 .palais .bd-add .bd-wait { margin: 0; font-size: 0.76rem; }
 
@@ -4860,7 +4864,7 @@
   .palais .bd-foot { gap: 0.6rem; padding: 0 0.4rem 0.15rem; }
   .palais .bd-add { gap: 0.2rem; }
   .palais .bd-say { left: 0.6rem; top: 0.6rem; bottom: 1.4rem; width: min(84%, 14rem); }
-  .palais .bd-say--film { bottom: 3.4rem; }
+  .palais .bd-say--film { bottom: 4.6rem; }
   /* no writing on a phone: the box and its keyboard shove the panel about.
      The notes can still be read, and taken back, just not left. */
   .palais .bd-say-new { display: none; }
