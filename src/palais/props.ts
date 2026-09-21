@@ -333,6 +333,7 @@ export const PROPS = catalogue({
   character_jerusha_sticker: { label: "Jerusha", plane: "near", metres: 0.55 },
   character_alisha_sticker: { label: "Alisha", plane: "near", metres: 0.55 },
   character_jeannette_sticker: { label: "Jeannette", plane: "near", metres: 0.6 },
+  character_chade_sticker: { label: "Chade", plane: "near", metres: 0.55 },
   road_case_vintage_mail_stack_black_sticker: { label: "A road case of old letters", plane: "near", metres: 1.1 },
 
   /* ---- the desert, from the Sunliner's stretch of it ------------------- */

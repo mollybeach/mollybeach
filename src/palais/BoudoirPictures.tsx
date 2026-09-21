@@ -137,12 +137,16 @@ export function BoudoirPictures() {
     };
   }, [here]);
 
-  /** the same word as the letters; the database checks it, not this */
-  const tryWord = useCallback(async (word: string) => {
+  /** the same word as the letters; the database checks it, not this.
+      `typed` is someone standing at the dresser having a go — a browser that
+      already knows the word walks in without one, and that isn't an attempt.
+      What they typed is never written down: only whether it fitted. */
+  const tryWord = useCallback(async (word: string, typed = false) => {
     setBusy(true);
     setTrouble(null);
     try {
       if (await lettersOpen(word)) {
+        if (typed) noteDoing("portrait-try", "and it opened");
         setInside(true);
         setKey(word);
         remember("key", word);
@@ -156,6 +160,7 @@ export function BoudoirPictures() {
           })
           .catch(() => setHanging([]));
       } else {
+        if (typed) noteDoing("portrait-try", "the word didn't fit");
         setTrouble("That word doesn't open the dresser.");
       }
     } catch {
@@ -261,6 +266,22 @@ export function BoudoirPictures() {
     };
   }, [onNow?.url, onNow?.kind, hanging, at]);
 
+  /* What they stopped on. Walking past a picture on the way to another isn't
+     worth telling Molly about, so it's only told once they've stayed with the
+     same one for a moment — and once each, however many times they come back
+     round to it. */
+  const told = useRef(new Set<string>());
+  useEffect(() => {
+    if (!inside || !onNow) return;
+    const which = `${at + 1} of ${many} · ${onNow.title}`;
+    if (told.current.has(which)) return;
+    const id = setTimeout(() => {
+      told.current.add(which);
+      noteDoing(onNow.kind === "film" ? "portrait-film" : "portrait-seen", which);
+    }, 2500);
+    return () => clearTimeout(id);
+  }, [inside, onNow, at, many]);
+
   /* The panel is always the same size — no modal in the Palais changes shape
      with what's in it. The picture is measured to the fixed area it hangs in
      instead: the biggest box of its own shape that fits, and if it somehow
@@ -351,7 +372,7 @@ export function BoudoirPictures() {
                 className="lt-gate"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  tryWord(tried.trim());
+                  tryWord(tried.trim(), true);
                 }}
               >
                 <p className="lt-gate-line">A dresser of private portraits. Enter the passphrase ;) to enter.</p>

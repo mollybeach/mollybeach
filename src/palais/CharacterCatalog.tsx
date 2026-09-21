@@ -248,6 +248,16 @@ const CAST: Character[] = [
     face: 0.14,
     sticker: "character_jeannette_sticker",
   },
+  {
+    id: "chade",
+    name: "Chade",
+    tag: "friend of the Palais",
+    blurb: "Chade in the gown of stars: midnight tulle scattered with gold and silver starbursts, flowers and flamingos embroidered round the hem, and a long sheer veil falling from her shoulder.",
+    notes: ["A midnight blue mermaid gown, sewn all over with stars", "Flowers and flamingos embroidered round the hem and the train", "A deep gold leaf-work bodice", "A long sheer veil, embroidered to match, over one shoulder"],
+    color: "#4a3f78",
+    face: 0.09,
+    sticker: "character_chade_sticker",
+  },
 ];
 
 /**
