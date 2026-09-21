@@ -4413,8 +4413,11 @@
      box that is itself content-sized, so it came out as `auto` and the panel
      quietly grew and shrank with its contents — opening the notes made it
      taller. Measured against the window instead, it is a definite height, and
-     what's inside shares it out. */
-  height: min(880px, calc(100cqh - 1.5rem));
+     what's inside shares it out.
+     The 4.5rem is the backdrop's own padding (3rem over, 1.5rem under): take
+     it off, or the panel is taller than the space it sits in and its bottom
+     goes off the screen. */
+  height: min(880px, calc(100cqh - 4.5rem));
   /* the title is hung over the top edge, so the panel is one row: what's in
      the dresser gets all of it */
   grid-template-columns: minmax(0, 1fr);
@@ -4707,6 +4710,9 @@
 .palais .bd-say-reel {
   display: flex;
   flex-direction: column;
+}
+/* it only travels when there are more notes than the window holds */
+.palais .bd-say-reel.is-going-round {
   animation: bd-drift linear infinite;
   will-change: transform;
 }
@@ -4830,7 +4836,8 @@
 .palais .bd-count i.is-on { background: #c9a44c; box-shadow: 0 0 6px rgba(201, 164, 76, 0.8); }
 
 @media (max-width: 820px) {
-  .palais .bd-panel { height: calc(100cqh - 1.2rem); padding: 1.9rem 0.6rem 0.7rem; }
+  /* and on a phone the backdrop is padded 4.6rem over and 0.6rem under */
+  .palais .bd-panel { height: calc(100cqh - 5.2rem); padding: 1.9rem 0.6rem 0.7rem; }
   .palais .bd-look { gap: 0.4rem; padding: 0; }
   .palais .bd-frame { padding: 0.5rem; }
   .palais .bd-panel .wm-bloom { display: none; }

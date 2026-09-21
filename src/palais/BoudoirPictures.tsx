@@ -281,10 +281,16 @@ export function BoudoirPictures() {
       const run = one.getBoundingClientRect().height;
       const tall = box.getBoundingClientRect().height;
       if (run < 8) return;
-      // enough runs to cover the window and one more to slide in behind it
-      const copies = Math.max(2, Math.ceil((tall + run) / run) + 1);
+      /* Only go round when there are more notes than fit. A second run is laid
+         behind the first so the loop has no seam — and because that run is
+         always taller than the window, the copy is never on screen beside the
+         original. Repeating a short list to fill the window just reads as the
+         same note over and over, which is not a loop, it's a stutter. */
+      const loop = run > tall + 4;
+      const copies = loop ? 2 : 1;
+      const rise = loop ? run : 0;
       setReel((was) =>
-        was.copies === copies && Math.abs(was.rise - run) < 1 ? was : { copies, rise: run },
+        was.copies === copies && Math.abs(was.rise - rise) < 1 ? was : { copies, rise },
       );
     };
     fit();
@@ -583,7 +589,7 @@ export function BoudoirPictures() {
                               <p className="bd-say-none">Nothing said about this one yet.</p>
                             ) : (
                               <div
-                                className="bd-say-reel"
+                                className={`bd-say-reel${reel.rise ? " is-going-round" : ""}`}
                                 style={
                                   reel.rise
                                     ? ({
