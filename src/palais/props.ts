@@ -316,7 +316,7 @@ export const PROPS = catalogue({
   character_kate_sticker: { label: "Kate", plane: "near", metres: 0.55 },
   character_leonardo_sticker: { label: "Leonardo", plane: "near", metres: 0.6 },
   character_brea_sticker: { label: "Brea", plane: "near", metres: 0.45 },
-  character_madeleine_sticker: { label: "Madeleine", plane: "near", metres: 0.5 },
+  character_madeleine_sticker: { label: "Madeleine", plane: "near", metres: 0.7 },
   character_moselle_sticker: { label: "Moselle", plane: "near", metres: 0.5 },
   character_kayenat_sticker: { label: "Kayenat", plane: "near", metres: 0.55 },
   character_ella_sticker: { label: "Ella", plane: "near", metres: 0.8 },
