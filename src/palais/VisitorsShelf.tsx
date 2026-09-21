@@ -56,6 +56,16 @@ function doingTrail(doings: VisitDoing[]) {
       bits.push("put the record on");
     } else if (d.kind === "pictures") {
       bits.push("looked through the pictures");
+    } else if (d.kind === "portrait-seen" || d.kind === "portrait-film") {
+      // the ones they stopped on, gathered into one trail like the characters
+      const word = d.kind === "portrait-film" ? "watched: " : "pictures: ";
+      const last = bits[bits.length - 1];
+      if (last?.startsWith(word)) bits[bits.length - 1] = `${last} → ${d.detail}`;
+      else bits.push(`${word}${d.detail}`);
+    } else if (d.kind === "portrait-try") {
+      bits.push(d.detail ? `tried a word on the dresser · ${d.detail}` : "tried a word on the dresser");
+    } else if (d.kind === "portrait") {
+      bits.push(d.detail ? `put ${d.detail} in the dresser` : "put something in the dresser");
     } else if (d.kind === "letters") {
       bits.push(d.detail ? `opened the letters · ${d.detail}` : "opened the letters");
     } else {

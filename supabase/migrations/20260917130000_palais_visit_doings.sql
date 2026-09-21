@@ -216,8 +216,8 @@ begin
     when 'letters' then 'opened the letters' || coalesce(' · ' || new.detail, '')
     when 'pictures' then 'looked through the pictures in the boudoir'
     when 'portrait' then 'put something in the boudoir dresser' || coalesce(' · ' || new.detail, '')
-    when 'portrait-seen' then 'stopped on ' || coalesce(new.detail, 'a portrait') || ' in the boudoir'
-    when 'portrait-film' then 'watched ' || coalesce(new.detail, 'a film') || ' in the boudoir'
+    when 'portrait-seen' then 'stayed with a portrait in the boudoir' || coalesce(' · ' || new.detail, '')
+    when 'portrait-film' then 'watched a film in the boudoir' || coalesce(' · ' || new.detail, '')
     when 'portrait-try' then 'tried a word on the boudoir dresser' || coalesce(' · ' || new.detail, '')
     else 'did something: ' || new.kind || coalesce(' · ' || new.detail, '')
   end;

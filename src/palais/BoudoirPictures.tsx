@@ -64,6 +64,12 @@ const BUNNY = {
 /** his own shape, so the width follows the height (631 x 1100) */
 const BUNNY_SHAPE = 631 / 1100;
 
+/** under this many seconds on a picture is walking past it, not looking */
+const SHORT = 3;
+/** "12s", "1m 5s", "4m" */
+const howLong = (secs: number) =>
+  secs < 60 ? `${secs}s` : `${Math.floor(secs / 60)}m${secs % 60 ? ` ${secs % 60}s` : ""}`;
+
 export function BoudoirPictures() {
   const { place } = usePlace();
   const here = place === "boudoir";
@@ -266,21 +272,39 @@ export function BoudoirPictures() {
     };
   }, [onNow?.url, onNow?.kind, hanging, at]);
 
-  /* What they stopped on. Walking past a picture on the way to another isn't
-     worth telling Molly about, so it's only told once they've stayed with the
-     same one for a moment — and once each, however many times they come back
-     round to it. */
-  const told = useRef(new Set<string>());
+  /* What they stopped on, and how long they stayed with it.
+     Each one is told when they leave it — stepping to the next, shutting the
+     dresser, putting the phone down — so the time spent can go with it.
+     Walking past on the way to another one doesn't count. */
+  const stay = useRef<{ which: string; kind: string; since: number } | null>(null);
+  const leave = useCallback(() => {
+    const was = stay.current;
+    stay.current = null;
+    if (!was) return;
+    const secs = Math.round((Date.now() - was.since) / 1000);
+    if (secs < SHORT) return;          // they only passed it
+    noteDoing(was.kind, `${was.which} · ${howLong(secs)}`);
+  }, []);
+
   useEffect(() => {
-    if (!inside || !onNow) return;
-    const which = `${at + 1} of ${many} · ${onNow.title}`;
-    if (told.current.has(which)) return;
-    const id = setTimeout(() => {
-      told.current.add(which);
-      noteDoing(onNow.kind === "film" ? "portrait-film" : "portrait-seen", which);
-    }, 2500);
-    return () => clearTimeout(id);
-  }, [inside, onNow, at, many]);
+    if (!open || !inside || !onNow) return;
+    const which = `${onNow.title} (${at + 1}/${many})`;
+    const kind = onNow.kind === "film" ? "portrait-film" : "portrait-seen";
+    const begin = () => {
+      stay.current = { which, kind, since: Date.now() };
+    };
+    begin();
+    // a phone put down or a tab left behind isn't time spent looking: the
+    // clock stops when the page is hidden and starts again when it's back
+    const watch = () => (document.hidden ? leave() : begin());
+    document.addEventListener("visibilitychange", watch);
+    window.addEventListener("pagehide", leave);
+    return () => {
+      document.removeEventListener("visibilitychange", watch);
+      window.removeEventListener("pagehide", leave);
+      leave();                          // stepping away from this one
+    };
+  }, [open, inside, onNow, at, many, leave]);
 
   /* The panel is always the same size — no modal in the Palais changes shape
      with what's in it. The picture is measured to the fixed area it hangs in
