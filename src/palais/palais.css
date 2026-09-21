@@ -4737,8 +4737,6 @@
   justify-items: start;        /* a bubble is as wide as what's in it */
   pointer-events: auto;        /* but a note can still be read or taken back */
 }
-/* a film keeps its own controls along the bottom: the notes sit above them */
-.palais .bd-say--film { bottom: 3.2rem; }
 /* the bubble: a little wider than what's said, never the width of the room */
 .palais .bd-say-list > li {
   max-width: 100%;
