@@ -4680,43 +4680,54 @@
 /* the notes themselves. They open INSIDE the panel: the picture above gives
    up the room (its row is minmax(0,1fr) and the frame is measured again), so
    the panel itself never changes size — no modal here ever does. */
-/* The notes lie over the corner of the picture, the way they do on a TikTok
-   you are watching back. Absolute, so they are out of the layout altogether:
-   however many there are, they cannot move anything or change the panel. */
+/* The notes rise up the picture and come round again, the way they do on a
+   TikTok you are watching back. Absolute and clipped, so they are out of the
+   layout altogether: however many there are, nothing moves. */
 .palais .bd-say {
   position: absolute;
   left: 1rem;
-  bottom: 1rem;
+  top: 1rem;
+  bottom: 1.75rem;             /* clear of the bottom edge of the picture */
   z-index: 4;
   width: min(78%, 20rem);
-  max-height: 60%;
+  overflow: hidden;
+  pointer-events: none;        /* the picture stays clickable around them */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;       /* a few notes sit down at the bottom */
-  pointer-events: none;            /* the picture stays clickable around them */
+  justify-content: flex-end;
+  /* they fade out as they reach the top rather than ending on a hard line */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 3rem);
+  mask-image: linear-gradient(to bottom, transparent, #000 3rem);
 }
+/* a film keeps its own controls along the bottom: the notes stop above them */
+.palais .bd-say--film { bottom: 3.95rem; }
+
+/* one run of them after another, moved up by exactly one run and started
+   again — so there is no seam where the loop closes */
+.palais .bd-say-reel {
+  display: flex;
+  flex-direction: column;
+  animation: bd-drift linear infinite;
+  will-change: transform;
+}
+@keyframes bd-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-1 * var(--bd-rise, 0px))); }
+}
+.palais .bd-say:hover .bd-say-reel { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .palais .bd-say-reel { animation: none; }
+}
+
 .palais .bd-say-list {
-  flex: 0 1 auto;
-  /* without this it can never be shorter than its notes, so it would never
-     clip and so never scroll — a flex item's floor is its content */
-  min-height: 0;
   margin: 0;
-  padding: 0.2rem 0 0;
+  padding: 0 0 0.3rem;
   list-style: none;
   display: grid;
   gap: 0.3rem;
-  /* start, NOT end: content that overflows above the top of a scroller can
-     never be scrolled to. The column above does the sitting-at-the-bottom. */
-  align-content: start;
   justify-items: start;        /* a bubble is as wide as what's in it */
-  overflow-y: auto;
-  scrollbar-width: none;
-  pointer-events: auto;        /* but the notes themselves can be scrolled */
-  /* the older ones fade out as they go up, rather than ending in a hard line */
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 2.2rem);
-  mask-image: linear-gradient(to bottom, transparent, #000 2.2rem);
+  pointer-events: auto;        /* but a note can still be read or taken back */
 }
-.palais .bd-say-list::-webkit-scrollbar { width: 0; height: 0; }
 /* a film keeps its own controls along the bottom: the notes sit above them */
 .palais .bd-say--film { bottom: 3.2rem; }
 /* the bubble: a little wider than what's said, never the width of the room */
@@ -4729,7 +4740,15 @@
   backdrop-filter: blur(2px);
   box-shadow: 0 2px 6px rgba(30, 10, 20, 0.35);
 }
-.palais .bd-say-none { color: #ffc2dd; font-size: 0.74rem; }
+.palais .bd-say-none {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0.3rem 0.65rem;
+  border-radius: 14px;
+  background: rgba(20, 12, 17, 0.72);
+  color: #ffc2dd;
+  font-size: 0.74rem;
+}
 .palais .bd-say-body { margin: 0; font-size: 0.82rem; line-height: 1.32; color: #ffc2dd; overflow-wrap: anywhere; }
 .palais .bd-say-by {
   display: flex;
@@ -4833,8 +4852,8 @@
   .palais .bd-tally { display: block; flex: 0 0 auto; }
   .palais .bd-foot { gap: 0.6rem; padding: 0 0.4rem 0.15rem; }
   .palais .bd-add { gap: 0.2rem; }
-  .palais .bd-say { left: 0.6rem; bottom: 0.6rem; width: min(84%, 14rem); max-height: 52%; }
-  .palais .bd-say--film { bottom: 2.8rem; }
+  .palais .bd-say { left: 0.6rem; top: 0.6rem; bottom: 1.4rem; width: min(84%, 14rem); }
+  .palais .bd-say--film { bottom: 3.4rem; }
   /* no writing on a phone: the box and its keyboard shove the panel about.
      The notes can still be read, and taken back, just not left. */
   .palais .bd-say-new { display: none; }

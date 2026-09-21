@@ -118,7 +118,8 @@ export function BoudoirPictures() {
   const [saying, setSaying] = useState("");
   const [posting, setPosting] = useState(false);
   const [noteTrouble, setNoteTrouble] = useState<string | null>(null);
-  const scroll = useRef<HTMLUListElement>(null);
+  const scroll = useRef<HTMLUListElement>(null);   // one run of them, to measure
+  const window_ = useRef<HTMLDivElement>(null);    // the window they run through
 
   /* keep the dresser where the photograph put it, whichever photograph it is */
   useLayoutEffect(() => {
@@ -265,48 +266,32 @@ export function BoudoirPictures() {
   );
 
   const showingNow = hanging?.[at] ?? hanging?.[0] ?? null;
-  /* They drift by on their own, the way the comments do on a TikTok you're
-     watching back: down to the last one, a beat, then round again. Pointing
-     at them stops it, so one can be read or taken back; so does asking for
-     less motion. Nothing here touches the layout. */
   const drifting = showingNow ? notes.filter((n) => n.path === showingNow.path).length : 0;
+  /* They rise up the picture, out at the top, and in again at the bottom —
+     the way the comments do on a TikTok you're watching back. One run of them
+     is measured, then laid end to end enough times to fill the window and
+     over again, so the loop has no seam to see. CSS does the moving: nothing
+     here touches the layout, and pointing at them holds them still. */
+  const [reel, setReel] = useState({ copies: 2, rise: 0 });
   useEffect(() => {
-    const list = scroll.current;
-    if (!talking || !list || drifting < 2) return;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-    let frame = 0;
-    let held = 0;
-    let stopped = false;
-    const step = () => {
-      const most = list.scrollHeight - list.clientHeight;
-      if (most > 1) {
-        if (held > 0) held -= 1;
-        else if (list.scrollTop >= most - 0.5) held = 110;   // a beat at the end
-        else if (list.scrollTop <= 0.5 && held === 0 && list.scrollTop === 0) list.scrollTop += 0.3;
-        else list.scrollTop += 0.3;
-        if (held === 1) list.scrollTop = 0;                  // and round again
-      }
-      frame = requestAnimationFrame(step);
+    const box = window_.current;
+    const one = scroll.current;
+    if (!talking || !box || !one || drifting < 1) return;
+    const fit = () => {
+      const run = one.getBoundingClientRect().height;
+      const tall = box.getBoundingClientRect().height;
+      if (run < 8) return;
+      // enough runs to cover the window and one more to slide in behind it
+      const copies = Math.max(2, Math.ceil((tall + run) / run) + 1);
+      setReel((was) =>
+        was.copies === copies && Math.abs(was.rise - run) < 1 ? was : { copies, rise: run },
+      );
     };
-    frame = requestAnimationFrame(step);
-    const hold = () => {
-      stopped = true;
-      cancelAnimationFrame(frame);
-    };
-    const go = () => {
-      if (!stopped) return;
-      stopped = false;
-      frame = requestAnimationFrame(step);
-    };
-    list.addEventListener("pointerenter", hold);
-    list.addEventListener("pointerleave", go);
-    return () => {
-      cancelAnimationFrame(frame);
-      list.removeEventListener("pointerenter", hold);
-      list.removeEventListener("pointerleave", go);
-    };
-    // `ready` matters: the notes only exist once the picture they lie on is
-    // up, which is after the notes themselves have arrived
+    fit();
+    const watch = new ResizeObserver(fit);
+    watch.observe(box);
+    watch.observe(one);
+    return () => watch.disconnect();
   }, [talking, drifting, at, ready]);
 
   const shut = useCallback(() => {
@@ -593,24 +578,41 @@ export function BoudoirPictures() {
                             there are nothing moves and the panel cannot change
                             size. A film keeps its controls: they sit above. */}
                         {talking && (
-                          <div className={`bd-say${showing.kind === "film" ? " bd-say--film" : ""}`}>
-                          <ul className="bd-say-list" ref={scroll}>
-                            {mine.length === 0 && <li className="bd-say-none">Nothing said about this one yet.</li>}
-                            {mine.map((n) => (
-                              <li key={n.id}>
-                                <p className="bd-say-body">{n.body}</p>
-                                <p className="bd-say-by">
-                                  <span className={n.named ? "bd-say-name" : "bd-say-id"}>{n.author}</span>
-                                  <span className="bd-say-when">{new Date(n.at).toLocaleDateString()}</span>
-                                  {n.mine && (
-                                    <button type="button" className="bd-say-drop" onClick={() => unsay(n.id)}>
-                                      take it back
-                                    </button>
-                                  )}
-                                </p>
-                              </li>
-                            ))}
-                            </ul>
+                          <div className={`bd-say${showing.kind === "film" ? " bd-say--film" : ""}`} ref={window_}>
+                            {mine.length === 0 ? (
+                              <p className="bd-say-none">Nothing said about this one yet.</p>
+                            ) : (
+                              <div
+                                className="bd-say-reel"
+                                style={
+                                  reel.rise
+                                    ? ({
+                                        ["--bd-rise" as string]: `${reel.rise}px`,
+                                        animationDuration: `${Math.max(8, reel.rise / 24)}s`,
+                                      } as React.CSSProperties)
+                                    : undefined
+                                }
+                              >
+                                {Array.from({ length: reel.copies }, (_, copy) => (
+                                  <ul className="bd-say-list" key={copy} ref={copy === 0 ? scroll : undefined} aria-hidden={copy > 0}>
+                                    {mine.map((n) => (
+                                      <li key={n.id}>
+                                        <p className="bd-say-body">{n.body}</p>
+                                        <p className="bd-say-by">
+                                          <span className={n.named ? "bd-say-name" : "bd-say-id"}>{n.author}</span>
+                                          <span className="bd-say-when">{new Date(n.at).toLocaleDateString()}</span>
+                                          {n.mine && copy === 0 && (
+                                            <button type="button" className="bd-say-drop" onClick={() => unsay(n.id)}>
+                                              take it back
+                                            </button>
+                                          )}
+                                        </p>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
                       </figure>
