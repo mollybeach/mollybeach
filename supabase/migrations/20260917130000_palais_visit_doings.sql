@@ -17,6 +17,7 @@ create table if not exists public.palais_visit_doings (
   visitor text,            -- the same salted hash; never the address
   kind text not null,      -- catalogue | characters | character | shelf | record | letters | pictures
                            -- | portrait | portrait-seen | portrait-film | portrait-try
+                           -- | portrait-note | dressform
   detail text              -- who they stopped on, or which shelf
 );
 create index if not exists palais_visit_doings_session on public.palais_visit_doings (session, created_at);
@@ -222,6 +223,7 @@ begin
     when 'portrait-film' then 'watched a film in the boudoir' || coalesce(' · ' || new.detail, '')
     when 'portrait-try' then 'tried a word on the boudoir dresser' || coalesce(' · ' || new.detail, '')
     when 'portrait-note' then 'left a note on a portrait' || coalesce(' · ' || new.detail, '')
+    when 'dressform' then 'stood at the dress form' || coalesce(' · ' || new.detail, '')
     else 'did something: ' || new.kind || coalesce(' · ' || new.detail, '')
   end;
 

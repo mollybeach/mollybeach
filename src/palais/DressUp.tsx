@@ -291,12 +291,20 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         </div>
 
         <div className="du-foot">
-          <span className="du-count">{on.length ? `${on.length} on` : "nothing on her yet"}</span>
+          {/* nothing on the left: it holds the column so Put it back stays
+              in the middle of the modal */}
+          <span aria-hidden />
           {/* always here, even empty, so it holds the middle of the row */}
           <span className="du-foot-mid">
             {pickedId && (
-              <button type="button" className="du-strip du-off" onClick={() => nudge(pickedId, STILL)}>
-                Put it back
+              <button
+                type="button"
+                className="du-strip du-off"
+                onClick={() => nudge(pickedId, STILL)}
+                aria-label="Put it back where it was"
+              >
+                <span className="du-long">Put it back</span>
+                <span className="du-short" aria-hidden>×</span>
               </button>
             )}
           </span>
@@ -306,7 +314,8 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
             onClick={() => setOutfit({ chosen: {}, nudged: {} })}
             disabled={!on.length}
           >
-            Take it all off
+            <span className="du-long">Take it all off</span>
+            <span className="du-short">Off</span>
           </button>
         </div>
       </div>

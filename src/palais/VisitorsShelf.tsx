@@ -51,6 +51,8 @@ const PAGE_NAMES: Record<string, string> = {
   certifications: "Certifications",
   resume: "Resume",
   admin: "the visitor book",
+  "closet/dress": "the dress form",
+  dressform: "the dress form",
 };
 
 const placeName = (p: string) =>
@@ -80,6 +82,8 @@ function doingTrail(doings: VisitDoing[]) {
       const last = bits[bits.length - 1];
       if (last?.startsWith(word)) bits[bits.length - 1] = `${last} → ${d.detail}`;
       else bits.push(`${word}${d.detail}`);
+    } else if (d.kind === "dressform") {
+      bits.push(d.detail ? `stood at the dress form · ${d.detail}` : "stood at the dress form");
     } else if (d.kind === "portrait-note") {
       bits.push(d.detail ? `left a note on ${d.detail}` : "left a note on a portrait");
     } else if (d.kind === "portrait-try") {

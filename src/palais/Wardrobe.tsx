@@ -7,6 +7,7 @@ import { useClosetMoves, useRackOrder, type PieceMove } from "./closetRacks";
 import { JewelryBox } from "./JewelryBox";
 import { DressUp } from "./DressUp";
 import { propSrc } from "./props";
+import { noteDoing } from "./visits";
 
 /* the jewellery cabinet, standing for good on the floor between the cubbies
    and the left rolling rack: its feet, middle and width, in each photograph's pixels */
@@ -14,6 +15,14 @@ const CABINET = {
   wide: { x: 470, feet: 1000, w: 128 },
   tall: { x: 184, feet: 1150, w: 76 },
 };
+
+/* Whether this visit ARRIVED on the dress form's own link, rather than finding
+   her in the closet. Read once as the page loads: by the time the form is
+   open the address says #closet/dress either way. */
+const CAME_IN_ON_THE_LINK =
+  typeof window !== "undefined" && /^dress/.test(window.location.hash.replace("#", "").split("/")[1] ?? "");
+/** told once per opening, even where React runs an effect twice over */
+let toldAt = 0;
 
 /* the dress form, standing on the tiles over on the right: her feet, middle
    and width, in each photograph's pixels. A door into the dress-up (DressUp) */
@@ -161,6 +170,15 @@ export function Wardrobe() {
       setDressing(false);
     }
   }, [place]);
+  /* Molly hears that somebody stood at the dress form — and whether they
+     clicked her in the closet or arrived on the link (visits.ts) */
+  const arrived = useRef(CAME_IN_ON_THE_LINK);
+  useEffect(() => {
+    if (!dressing || Date.now() - toldAt < 2000) return;
+    toldAt = Date.now();
+    noteDoing("dressform", arrived.current ? "came in through the door" : undefined);
+    arrived.current = false;        // only the way in counts as arriving
+  }, [dressing]);
   /* the address says whether she is being dressed, so the page can be sent to
      somebody and open where it left off */
   useEffect(() => {
