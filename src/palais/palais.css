@@ -2307,7 +2307,8 @@
   z-index: 260;
   display: grid;
   place-items: center;
-  padding: 3cqh 3cqw;
+  /* deeper above than below: the plaque stands clear over the modal */
+  padding: 8cqh 3cqw 2cqh;
   background: rgba(60, 40, 45, 0.2);
   backdrop-filter: blur(10px) saturate(1.05);
   -webkit-backdrop-filter: blur(10px) saturate(1.05);
@@ -2324,30 +2325,32 @@
   height: min(52rem, 94cqh);
   box-sizing: border-box;
   padding: 1.9rem 1.1rem 0.7rem;
-  border-radius: 26px;
-  border: 3px solid var(--wm-gold, #cfa956);
+  border-radius: 12px;
+  /* the same heavy black edge everything in here wears */
+  border: 7px solid #17121f;
   /* the leopard the whole wardrobe is papered in, as it is in the film.
      The swatch doesn't tile seamlessly, so it is laid on whole rather than
      repeated — no seam to find. */
   background: #cfc7a2 var(--du-paper, none) center / cover no-repeat;
-  box-shadow: inset 0 0 0 5px #fdf8f0, inset 0 0 0 6.5px rgba(207, 169, 86, 0.75), 0 22px 44px rgba(60, 35, 40, 0.35);
+  box-shadow: 0 22px 44px rgba(40, 25, 60, 0.45);
 }
 .palais .du-title {
   position: absolute;
-  top: -1.1rem;
+  /* well clear above the panel, not straddling its edge — it was sitting over
+     the hat row and the hat on her head */
+  top: -4rem;
   left: 50%;
   translate: -50% 0;
   z-index: 5;
-  padding: 0.25rem 1.4rem;
-  border-radius: 999px;
-  border: 3px solid var(--du-purple-edge);
+  padding: 0.3rem 1.4rem;
+  border-radius: 4px;
+  border: 3px solid #17121f;
   background: var(--du-purple);
   box-shadow:
     inset 0 2px 0 var(--du-purple-lit),
-    inset 0 -2px 0 var(--du-purple-deep),
-    0 0 0 3px #fdf8f0;
+    inset 0 -2px 0 var(--du-purple-deep);
 }
-.palais .du-title h2 { margin: 0; font: 600 1.05rem/1.3 var(--wm-serif, Georgia, serif); color: #fdf8f0; letter-spacing: 0.04em; text-shadow: 0 1px 1px rgba(40, 25, 60, 0.55); }
+.palais .du-title h2 { margin: 0; font: 600 1.05rem/1.3 var(--wm-serif, Georgia, serif); color: #17121f; letter-spacing: 0.04em; }
 .palais .du-close {
   position: absolute;
   top: -1.1rem;
@@ -2355,17 +2358,16 @@
   z-index: 7;
   width: 2.8rem;
   height: 2.8rem;
-  border-radius: 50%;
-  border: 3px solid var(--du-purple-edge);
+  border-radius: 4px;
+  border: 3px solid #17121f;
   background: var(--du-purple);
-  color: #fdf8f0;
+  color: #17121f;
   font: 600 1.8rem/1 var(--wm-serif, Georgia, serif);
   cursor: pointer;
   box-shadow:
     inset 0 2px 0 var(--du-purple-lit),
     inset 0 -2px 0 var(--du-purple-deep),
-    0 0 0 3px #fdf8f0,
-    0 6px 12px rgba(60, 35, 40, 0.3);
+    0 4px 10px rgba(40, 25, 60, 0.35);
 }
 
 /* ---- the stripes: a row for each thing she can wear, right across ------- */
@@ -2377,7 +2379,7 @@
   z-index: 1;
   display: grid;
   grid-template-rows: repeat(7, minmax(0, 1fr));
-  border-radius: 23px;
+  border-radius: 6px;
   overflow: hidden;
 }
 /* a band of colour over the leopard, faint enough to let it through */
@@ -2399,37 +2401,49 @@
   align-items: center;
   gap: 0.4rem;
   min-width: 0;
-  padding: 0.28rem 0.6rem;
-  border-radius: 999px;
+  padding: 0.4rem 0.6rem;
+  /* squared off and heavily outlined, the way the film's own panels are */
+  border: 3px solid #17121f;
+  border-radius: 4px;
   background: #8e85c9;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(40, 30, 70, 0.35), 0 2px 5px rgba(40, 25, 60, 0.3);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 0 rgba(40, 30, 70, 0.35), 0 2px 5px rgba(40, 25, 60, 0.3);
 }
 .palais .du-row-right { justify-content: flex-end; justify-self: end; }
 .palais .du-row-left { justify-self: start; }
 .palais .du-row-what {
-  font-size: 0.74rem;
+  font-size: 0.86rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: #fdf8f0;
-  text-shadow: 0 1px 1px rgba(40, 25, 60, 0.5);
+  color: #17121f;
   white-space: nowrap;
 }
 .palais .du-row-name {
-  font-size: 0.74rem;
-  color: #fdf8f0;
-  text-shadow: 0 1px 1px rgba(40, 25, 60, 0.5);
+  font-size: 0.82rem;
+  font-weight: 600;          /* as bold as the row's own name opposite it */
+  color: #17121f;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
 }
-.palais .du-row-name em { color: #e6e0ff; font-style: italic; }
-.palais .du-row-thumb { width: 1.9rem; height: 1.9rem; flex: 0 0 auto; }
-.palais .du-row-thumb img { width: 100%; height: 100%; object-fit: contain; cursor: pointer; }
+.palais .du-row-name em { color: #3b3350; font-style: italic; }
+/* square, like the pill it sits in: the piece she has on, or the kind's mark */
+.palais .du-row-thumb {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  border: 2px solid #17121f;
+  border-radius: 3px;
+  background: rgba(253, 248, 240, 0.9);
+}
+.palais .du-row-mark { font-size: 1.15rem; line-height: 1; }
+.palais .du-row-thumb img { width: 100%; height: 100%; object-fit: contain; max-width: none; cursor: pointer; }
 .palais .du-arrow {
   flex: 0 0 auto;
-  width: 2.5rem;
-  height: 1.2rem;
+  width: 2.9rem;
+  height: 1.5rem;
   padding: 0;
   border: 0;
   border-radius: 3px;
@@ -2474,7 +2488,16 @@
 .palais .du-worn {
   position: absolute;
   translate: -50% 0;
+  /* The box is set by what kind of thing it is and the picture fits inside it.
+     It hangs from the TOP of that box, not the middle: a coat's box is taller
+     than the coat, so centring it meant + and − slid it down the box instead
+     of making it bigger. Hung from the top it grows from the shoulders, the
+     way a garment does. */
   object-fit: contain;
+  object-position: center top;
+  /* the page caps every img at the width of its parent; a garment's box is
+     wider than she is, so without this + could only ever make it taller */
+  max-width: none;
   cursor: grab;
   filter: drop-shadow(0 3px 5px rgba(60, 30, 40, 0.28));
 }
@@ -2494,12 +2517,11 @@
   padding: 0.2rem 0.55rem;
   font: inherit;
   font-size: 0.85rem;
-  color: #fdf8f0;
+  color: #17121f;
   background: var(--du-purple);
-  border: 2px solid var(--du-purple-edge);
-  border-radius: 999px;
+  border: 3px solid #17121f;
+  border-radius: 4px;
   box-shadow: inset 0 2px 0 var(--du-purple-lit), inset 0 -2px 0 var(--du-purple-deep);
-  text-shadow: 0 1px 1px rgba(40, 25, 60, 0.5);
   cursor: pointer;
 }
 .palais .du-picked-name { font-size: 0.72rem; color: #7a2a55; max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -2522,25 +2544,25 @@
 .palais .du-foot > .du-strip:not(.du-off) { justify-self: end; }
 .palais .du-foot-mid { display: flex; justify-content: center; }
 .palais .du-count {
-  padding: 0.22rem 0.7rem;
-  border-radius: 999px;
-  border: 2px solid var(--du-purple-edge);
+  padding: 0.28rem 0.75rem;
+  border-radius: 4px;
+  border: 3px solid #17121f;
   background: var(--du-purple);
   box-shadow: inset 0 2px 0 var(--du-purple-lit), inset 0 -2px 0 var(--du-purple-deep);
   font-size: 0.74rem;
-  color: #fdf8f0;
-  text-shadow: 0 1px 1px rgba(40, 25, 60, 0.5);
+  font-weight: 600;
+  color: #17121f;
 }
 .palais .du-strip {
-  padding: 0.3rem 0.95rem;
+  padding: 0.34rem 0.95rem;
   font: inherit;
   font-size: 0.78rem;
-  color: #fdf8f0;
+  font-weight: 600;
+  color: #17121f;
   background: var(--du-purple);
-  border: 2px solid var(--du-purple-edge);
-  border-radius: 999px;
+  border: 3px solid #17121f;
+  border-radius: 4px;
   box-shadow: inset 0 2px 0 var(--du-purple-lit), inset 0 -2px 0 var(--du-purple-deep);
-  text-shadow: 0 1px 1px rgba(40, 25, 60, 0.5);
   cursor: pointer;
 }
 .palais .du-strip:disabled { opacity: 0.45; cursor: default; }
@@ -2550,14 +2572,18 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1.1fr) auto auto auto;
     padding: 1.9rem 0.6rem 0.7rem;
-    height: min(52rem, 92cqh);
+    height: min(52rem, 86cqh);   /* room above for the plaque to sit clear */
   }
   /* a phone has less room either side of her, so she stands narrower */
   .palais .du-panel { --du-stand: 8.5rem; }
   .palais .du-row { gap: 0.25rem; padding: 0 0.25rem; }
   .palais .du-row-left, .palais .du-row-right { padding: 0.2rem 0.3rem; gap: 0.25rem; }
-  .palais .du-row-what, .palais .du-row-name { font-size: 0.62rem; }
-  .palais .du-row-thumb { width: 1.5rem; height: 1.5rem; }
+  .palais .du-row-what, .palais .du-row-name { font-size: 0.7rem; }
+  /* "Dress Form" alone: the plaque stays one line and clear of the hat row */
+  .palais .du-the { display: none; }
+  .palais .du-title { white-space: nowrap; top: -2.7rem; }
+  .palais .du-backdrop { padding: 5cqh 3cqw 2cqh; }
+  .palais .du-row-thumb { width: 1.8rem; height: 1.8rem; }
   .palais .du-row button { width: 1.5rem; height: 1.5rem; font-size: 0.85rem; }
   .palais .du-slot-what { font-size: 0.68rem; }
   .palais .du-slot-now { font-size: 0.68rem; min-height: 2.1rem; }

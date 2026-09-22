@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Styled } from "./styled";
 import { usePortrait } from "./PortraitTerrace";
-import { usePlace } from "./place";
+import { hashExtra, usePlace } from "./place";
 import { CLOSET_BARS, CLOSET_LINES, CLOSET_PHOTOS, CLOSET_RACKS, WINDOW_MOULDING, closetSrc, garment, hookPoints, lay, type Bar, type Line, type Rack, type Spot } from "./clothes";
 import { useClosetMoves, useRackOrder, type PieceMove } from "./closetRacks";
 import { JewelryBox } from "./JewelryBox";
@@ -151,7 +151,8 @@ export function Wardrobe() {
   const spots = useMemo(() => lay(which, order), [which, order]);
   const moves = useClosetMoves(which);
   const [jewels, setJewels] = useState(false);
-  const [dressing, setDressing] = useState(false);
+  /* mollybeach.app/#closet/dress — and /dressform — walk straight in */
+  const [dressing, setDressing] = useState(() => /^dress/.test(hashExtra()));
   const closet = useRef<HTMLDivElement>(null);
   // leaving the closet closes the jewellery box
   useEffect(() => {
@@ -160,6 +161,19 @@ export function Wardrobe() {
       setDressing(false);
     }
   }, [place]);
+  /* the address says whether she is being dressed, so the page can be sent to
+     somebody and open where it left off */
+  useEffect(() => {
+    if (place !== "closet") return;
+    const want = dressing ? "#closet/dress" : "#closet";
+    if (window.location.hash !== want) window.history.replaceState(window.history.state, "", want);
+  }, [dressing, place]);
+  /* and the back button, or a link followed while it is already open */
+  useEffect(() => {
+    const onHash = () => setDressing(/^dress/.test(hashExtra()));
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
   if (!visited) return null;
   const photo = CLOSET_PHOTOS[which];
   const cab = CABINET[which];

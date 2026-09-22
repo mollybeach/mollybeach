@@ -190,10 +190,9 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         className={`du-row du-row--${s.key}${taken ? " is-taken" : ""}${picked === s.key ? " is-picked" : ""}`}
         style={{ ["--band" as string]: s.band }}
       >
+        {/* the arrow, then what the row is, then either the kind's own mark or
+            the very thing she has on */}
         <span className="du-row-left">
-          <span className="du-row-what">
-            <span aria-hidden>{s.emoji}</span> {s.label}
-          </span>
           <button
             type="button"
             className="du-arrow"
@@ -202,8 +201,13 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
             disabled={!!taken}
             aria-label={`The one before, for ${s.label}`}
           />
+          <span className="du-row-what">{s.label}</span>
           <span className="du-row-thumb" onClick={() => id && setPicked(s.key)}>
-            {!taken && g && <img src={closetSrc(id!)} alt="" decoding="async" />}
+            {!taken && g ? (
+              <img src={closetSrc(id!)} alt="" decoding="async" />
+            ) : (
+              <span className="du-row-mark" aria-hidden>{s.emoji}</span>
+            )}
           </span>
         </span>
         <span className="du-row-gap" aria-hidden />
@@ -234,7 +238,10 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         style={{ ["--du-paper" as string]: PAPER }}
       >
         <div className="du-title">
-          <h2>✿ The Dress Form ✿</h2>
+          {/* a phone drops the "The", so the plaque keeps to one line */}
+          <h2>
+            <span aria-hidden>✿</span> <span className="du-the">The </span>Dress Form <span aria-hidden>✿</span>
+          </h2>
         </div>
         <button type="button" className="du-close" onClick={onClose} aria-label="Close the dress form">
           ×
