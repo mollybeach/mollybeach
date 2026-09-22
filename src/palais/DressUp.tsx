@@ -34,7 +34,7 @@ const SLOTS = [
   { key: "top", label: "Shirt", emoji: "👚", kinds: ["top", "dress", "swim"], band: "255, 138, 0" },
   { key: "coat", label: "Coat", emoji: "🧥", kinds: ["coat"], band: "250, 214, 0" },
   { key: "bag", label: "Bag", emoji: "👜", kinds: ["bag"], band: "0, 205, 70" },
-  { key: "bottom", label: "Pants / Skirt", emoji: "🩳", kinds: ["bottom"], band: "45, 90, 230" },
+  { key: "bottom", label: "Pants / Skirt", brief: "Pants", emoji: "🩳", kinds: ["bottom"], band: "45, 90, 230" },
   { key: "shoes", label: "Shoes", emoji: "👠", kinds: ["shoes"], band: "150, 50, 220" },
 ] as const;
 
@@ -64,6 +64,9 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
   shoes: { top: 0.9, w: 0.3, h: 0.11 },
   bag: { top: 0.5, w: 0.24, h: 0.22, side: -0.3 },   // down by her hand
 };
+
+/** the first two words of a name, which is all a phone has room for */
+const inBrief = (name: string) => name.split(/\s+/).slice(0, 2).join(" ");
 
 /** her own shape, so a box measured in her height can be given a width */
 const SHE = 415 / 1400;
@@ -201,7 +204,10 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
             disabled={!!taken}
             aria-label={`The one before, for ${s.label}`}
           />
-          <span className="du-row-what">{s.label}</span>
+          <span className="du-row-what">
+            <span className="du-long">{s.label}</span>
+            <span className="du-short">{"brief" in s ? s.brief : s.label}</span>
+          </span>
           <span className="du-row-thumb" onClick={() => id && setPicked(s.key)}>
             {!taken && g ? (
               <img src={closetSrc(id!)} alt="" decoding="async" />
@@ -213,7 +219,19 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         <span className="du-row-gap" aria-hidden />
         <span className="du-row-right">
           <span className="du-row-name" onClick={() => id && setPicked(s.key)}>
-            {taken ? <em>the {wholePiece!.kind} has it</em> : g ? g.label : <em>nothing</em>}
+            {taken ? (
+              <em>
+                <span className="du-long">the {wholePiece!.kind} has it</span>
+                <span className="du-short">the {wholePiece!.kind}</span>
+              </em>
+            ) : g ? (
+              <>
+                <span className="du-long">{g.label}</span>
+                <span className="du-short">{inBrief(g.label)}</span>
+              </>
+            ) : (
+              <em>nothing</em>
+            )}
           </span>
           <button
             type="button"
@@ -279,16 +297,20 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
               );
             })}
           </div>
-          {pickedId && pickedNudge ? (
-            <div className="du-handles">
-              <button type="button" onClick={() => nudge(pickedId, { scale: Math.max(0.3, pickedNudge.scale / 1.1) })} aria-label="Smaller">−</button>
-              <span className="du-picked-name">{garment(pickedId)?.label}</span>
-              <button type="button" onClick={() => nudge(pickedId, { scale: Math.min(3, pickedNudge.scale * 1.1) })} aria-label="Bigger">+</button>
-            </div>
-          ) : (
-            <p className="du-hint">Arrow through the closet either side. Drag anything on her to sit it right.</p>
-          )}
         </div>
+
+        {/* outside the window she stands in, not inside it: a phone clips that
+            window to keep a wide coat off the rows, and these must not be
+            clipped with it */}
+        {pickedId && pickedNudge ? (
+          <div className="du-handles">
+            <button type="button" onClick={() => nudge(pickedId, { scale: Math.max(0.3, pickedNudge.scale / 1.1) })} aria-label="Smaller">−</button>
+            <span className="du-picked-name">{garment(pickedId)?.label}</span>
+            <button type="button" onClick={() => nudge(pickedId, { scale: Math.min(3, pickedNudge.scale * 1.1) })} aria-label="Bigger">+</button>
+          </div>
+        ) : (
+          <p className="du-hint">Arrow through the closet either side. Drag anything on her to sit it right.</p>
+        )}
 
         <div className="du-foot">
           {/* nothing on the left: it holds the column so Put it back stays

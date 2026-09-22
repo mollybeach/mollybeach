@@ -2408,8 +2408,11 @@
   background: #8e85c9;
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 0 rgba(40, 30, 70, 0.35), 0 2px 5px rgba(40, 25, 60, 0.3);
 }
-.palais .du-row-right { justify-content: flex-end; justify-self: end; }
-.palais .du-row-left { justify-self: start; }
+/* pulled to the ends of their columns — and held inside them. Without the
+   max-width a pill justified to an end sizes to its text and slides in
+   behind the window she stands in. */
+.palais .du-row-right { justify-content: flex-end; justify-self: end; max-width: 100%; }
+.palais .du-row-left { justify-self: start; max-width: 100%; }
 .palais .du-row-what {
   font-size: 0.86rem;
   font-weight: 600;
@@ -2418,6 +2421,7 @@
   white-space: nowrap;
 }
 .palais .du-row-name {
+  min-width: 0;              /* shrink with the pill, don't push it wider */
   font-size: 0.82rem;
   font-weight: 600;          /* as bold as the row's own name opposite it */
   color: #17121f;
@@ -2503,9 +2507,19 @@
 }
 .palais .du-worn:active { cursor: grabbing; }
 .palais .du-worn.is-picked { outline: 2px dashed rgba(184, 80, 111, 0.85); outline-offset: 3px; }
+/* the pair of them, and the line of help that stands in for them, sit just
+   under her feet — hung on the panel rather than inside her window, which a
+   phone clips */
+.palais .du-handles,
+.palais .du-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 2.42rem;
+  translate: -50% 0;
+  width: var(--du-stand, 19rem);
+  z-index: 5;
+}
 .palais .du-handles {
-  align-self: center;
-  translate: 0 12px;      /* a little clear of her feet */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2525,7 +2539,7 @@
   cursor: pointer;
 }
 .palais .du-picked-name { font-size: 0.72rem; color: #7a2a55; max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.palais .du-hint { align-self: center; translate: 0 12px; margin: 0; font-size: 0.7rem; color: #a2657f; text-align: center; }
+.palais .du-hint { margin: 0; font-size: 0.7rem; color: #a2657f; text-align: center; }
 
 .palais .du-foot {
   position: absolute;
@@ -2565,24 +2579,46 @@
     padding: 1.9rem 0.6rem 0.7rem;
     height: min(52rem, 86cqh);   /* room above for the plaque to sit clear */
   }
-  /* a phone has less room either side of her, so she stands narrower */
-  .palais .du-panel { --du-stand: 8.5rem; }
-  .palais .du-row { gap: 0.25rem; padding: 0 0.25rem; }
-  .palais .du-row-left, .palais .du-row-right { padding: 0.2rem 0.3rem; gap: 0.25rem; }
-  .palais .du-row-what, .palais .du-row-name { font-size: 0.7rem; }
+  /* a phone has less room either side of her, so she stands narrower — and
+     every tenth of a rem here is a letter of a name that fits beside her */
+  .palais .du-panel { --du-stand: 7.4rem; }
+  .palais .du-row { gap: 0.15rem; padding: 0 0.15rem; }
+  .palais .du-row-left, .palais .du-row-right { padding: 0.2rem 0.25rem; gap: 0.2rem; }
+  .palais .du-row-what { font-size: 0.66rem; }
+  /* small enough that two words fit beside the arrow in the strip of room
+     a phone leaves either side of her */
+  .palais .du-row-name { font-size: 0.64rem; letter-spacing: -0.01em; }
+  .palais .du-row .du-arrow { width: 1.9rem; height: 1.2rem; }
   /* a phone has no room for "Take it all off": it just says Off */
   .palais .du-long { display: none; }
   .palais .du-short { display: inline; }
-  /* the × wants to be square, not a word-shaped pill */
-  .palais .du-off { padding: 0.34rem 0.75rem; font-size: 0.95rem; line-height: 1; }
-  /* no room beside her for what a thing is called: the right pill is the
-     arrow alone, and the left pill's picture says what she has on */
-  .palais .du-row-name { display: none; }
+  /* no room for putting one thing back on a phone: Off takes everything off
+     and the arrows put anything else back */
+  .palais .du-off { display: none; }
+  /* the shoes sit lowest of all: another 8px of daylight under their pills */
+  .palais .du-row--shoes .du-row-left,
+  .palais .du-row--shoes .du-row-right { translate: 0 -16px; }
+  /* + and - leave her feet for the foot of the modal, one standing under
+     each edge of the cream window she stands in. They are hung off the
+     window itself, so they stay under its edges whatever its width. */
+  .palais .du-handles {
+    bottom: 0.72rem;              /* down to the same line as Off */
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    pointer-events: none;         /* only the two buttons are live */
+  }
+  .palais .du-handles button { pointer-events: auto; }
+  /* a coat is half again as wide as she is, and a phone has no room for it
+     to spill over the rows and cover what things are called. Her window
+     becomes a window: whatever leans out of it is cut off at the frame. */
+  .palais .du-stand { overflow: hidden; }
+  /* what she has hold of is already named in its own row opposite */
+  .palais .du-picked-name { display: none; }
   /* "Dress Form" alone: the plaque stays one line and clear of the hat row */
   .palais .du-the { display: none; }
   .palais .du-title { white-space: nowrap; top: -2.7rem; }
   .palais .du-backdrop { padding: 5cqh 3cqw 2cqh; }
-  .palais .du-row-thumb { width: 1.8rem; height: 1.8rem; }
+  .palais .du-row-thumb { width: 1.6rem; height: 1.6rem; }
   .palais .du-row button { width: 1.5rem; height: 1.5rem; font-size: 0.85rem; }
   .palais .du-slot-what { font-size: 0.68rem; }
   .palais .du-slot-now { font-size: 0.68rem; min-height: 2.1rem; }
