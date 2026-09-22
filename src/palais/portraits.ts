@@ -167,6 +167,21 @@ export async function addPortrait(key: string, file: File): Promise<void> {
       contentType: file.type || undefined,
     });
   if (sending) throw new Error(sending.message || "It didn't get there. Try again?");
+
+  /* and a buzz on Discord, if Molly has pointed it at one
+     (20260921130000_palais_portrait_ping.sql). It is only worth sending once
+     the file is really in the bucket, which is why it happens here and not in
+     the function that signed the link. If it doesn't go, the picture is in
+     all the same — a missed buzz is no reason to say the upload failed. */
+  try {
+    await sb.rpc("palais_portrait_ping", {
+      p_key: key,
+      p_name: file.name,
+      p_kind: FILM.test(file.name) ? "film" : "picture",
+    });
+  } catch {
+    /* it went in; nobody was told */
+  }
 }
 
 /** the sentence the function sent back, out of whatever supabase-js threw */

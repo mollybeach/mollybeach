@@ -1,25 +1,37 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "The Palais",
+  "name": "Molly Beach \u00b7 The Palais",
   "icons": [
     {
-      "src": "avi_square.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "favicon.ico",
+      "sizes": "16x16 32x32 48x48 64x64",
       "type": "image/x-icon"
     },
     {
-      "src": "avi_square.png",
+      "src": "palais-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "palais-icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "avi_square.png",
+      "src": "palais-icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "palais-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#f379b2",
+  "background_color": "#fdf8f0"
 }

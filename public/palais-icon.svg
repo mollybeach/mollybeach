@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="The Palais">
+  <title>The Palais</title>
+  <desc>An arch opening out of a papered room onto the island: the Palais, in little.</desc>
+  <defs>
+    <!-- the Boudoir's paper: the fabric the whole place is cut from -->
+    <pattern id="stripes" width="72" height="72" patternUnits="userSpaceOnUse">
+      <rect width="72" height="72" fill="#f6accd"/>
+      <rect width="36" height="72" fill="#f379b2"/>
+    </pattern>
+    <!-- daylight, coming in through the arch -->
+    <linearGradient id="day" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a9cee2"/>
+      <stop offset="0.5" stop-color="#e8f1f0"/>
+      <stop offset="1" stop-color="#f7ecdc"/>
+    </linearGradient>
+    <linearGradient id="gilt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4e6bd"/>
+      <stop offset="0.28" stop-color="#e8ce86"/>
+      <stop offset="0.5" stop-color="#c9a44c"/>
+      <stop offset="0.72" stop-color="#e8ce86"/>
+      <stop offset="1" stop-color="#8f7541"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8aa06a"/>
+      <stop offset="1" stop-color="#4e6b3e"/>
+    </linearGradient>
+    <clipPath id="tile"><rect x="12" y="12" width="488" height="488" rx="110"/></clipPath>
+    <clipPath id="doorway"><path d="M158 430 V228 a98 98 0 0 1 196 0 V430 Z"/></clipPath>
+  </defs>
+
+  <rect x="12" y="12" width="488" height="488" rx="110" fill="url(#stripes)"/>
+
+  <g clip-path="url(#tile)">
+    <!-- the world on the other side of it -->
+    <g clip-path="url(#doorway)">
+      <rect x="150" y="120" width="212" height="320" fill="url(#day)"/>
+      <circle cx="205" cy="212" r="30" fill="#fdf6e4" opacity="0.95"/>
+      <ellipse cx="256" cy="452" rx="168" ry="86" fill="url(#hill)"/>
+      <ellipse cx="186" cy="440" rx="62" ry="32" fill="#7d9460" opacity="0.9"/>
+      <ellipse cx="330" cy="446" rx="54" ry="26" fill="#41552f" opacity="0.55"/>
+    </g>
+
+    <!-- the arch, gilt, and the step it stands on -->
+    <path d="M158 430 V228 a98 98 0 0 1 196 0 V430"
+          fill="none" stroke="url(#gilt)" stroke-width="24" stroke-linecap="butt"/>
+    <rect x="128" y="422" width="256" height="26" rx="13" fill="url(#gilt)"/>
+
+    <!-- the ✿ the whole place is signed with, set in the crown -->
+    <g transform="translate(256 130)">
+      <g fill="url(#gilt)">
+        <circle cx="0" cy="-27" r="18"/>
+        <circle cx="26" cy="-8" r="18"/>
+        <circle cx="16" cy="23" r="18"/>
+        <circle cx="-16" cy="23" r="18"/>
+        <circle cx="-26" cy="-8" r="18"/>
+      </g>
+      <circle cx="0" cy="0" r="12.5" fill="#b8506f"/>
+    </g>
+  </g>
+
+  <!-- the gilt collar every frame in the place wears -->
+  <rect x="12" y="12" width="488" height="488" rx="110" fill="none" stroke="url(#gilt)" stroke-width="22"/>
+  <rect x="29" y="29" width="454" height="454" rx="96" fill="none" stroke="#fdf8f0" stroke-width="6" opacity="0.8"/>
+</svg>
