@@ -158,7 +158,7 @@ export const SHELVES: Shelf[] = [
   { key: "dogs", name: "Dogs", emoji: "🐶", items: ["dog-maggie-frisbee", "dog-charlie-kiddie-pool", "dog-frisbee", "dog-leo-dalmatian"] },
   { key: "goats", name: "Goats", emoji: "🐐", items: ["goat-bambi", "goats-pumpkin-ferdinand"] },
   { key: "birds", name: "Birds", emoji: "🦚", items: ["peacock_bird_standing_trailing_tail_sticker"] },
-  { key: "creatures", name: "Creatures", emoji: "🐌", items: ["snail_giant_african_land_shell_sticker", "snail_giant_african_land_shell_facing_left_sticker"] },
+  { key: "creatures", name: "Creatures", emoji: "🐌", items: ["snail_giant_african_land_shell_sticker", "snail_giant_african_land_shell_facing_left_sticker", "snail_giant_vicious_fanged_spiked_facing_left_sticker", "snail_giant_vicious_fanged_spiked_sticker"] },
   { key: "pillows", name: "Pillows", emoji: "🎀", items: ["pillow-floral", "pillow-lace", "pillow-bolster"] },
   {
     key: "teacups",
