@@ -335,9 +335,10 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
             className="du-strip"
             onClick={() => setOutfit({ chosen: {}, nudged: {} })}
             disabled={!on.length}
+            aria-label="Take it all off"
           >
             <span className="du-long">Take it all off</span>
-            <span className="du-short">Off</span>
+            <span className="du-short" aria-hidden>0</span>
           </button>
         </div>
       </div>

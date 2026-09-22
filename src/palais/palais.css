@@ -2592,9 +2592,17 @@
   /* a phone has no room for "Take it all off": it just says Off */
   .palais .du-long { display: none; }
   .palais .du-short { display: inline; }
-  /* no room for putting one thing back on a phone: Off takes everything off
-     and the arrows put anything else back */
+  /* no room for putting one thing back on a phone: the 0 takes everything
+     off and the arrows put anything else back */
   .palais .du-off { display: none; }
+  /* a single character, square like the + and - it sits beside, and held
+     clear of the modal's right edge */
+  .palais .du-foot > .du-strip:not(.du-off) {
+    translate: -16px 0;
+    padding: 0.34rem 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1;
+  }
   /* the shoes sit lowest of all: another 8px of daylight under their pills */
   .palais .du-row--shoes .du-row-left,
   .palais .du-row--shoes .du-row-right { translate: 0 -16px; }
