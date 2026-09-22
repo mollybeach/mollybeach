@@ -44,7 +44,6 @@ export const CLOTHES = wardrobe({
   "shein-bow-loafers": { label: "Brown bow loafers", store: "Shein", bought: "2025-11", kind: "shoes" },
   "shein-cable-set": { label: "Cable knit cardigan & crochet skirt", store: "Shein", bought: "2025-11", kind: "dress" },
   "shein-check-cami": { label: "Academia check cami", store: "Shein · ROMWE", bought: "2025-11", kind: "top" },
-  "shein-dazy-set": { label: "Army green layered tee", store: "Shein · DAZY", bought: "2025-11", kind: "top" },
   "shein-fairisle-skirt": { label: "Fair Isle sweater skirt", store: "Shein · ROMWE", bought: "2025-11", kind: "bottom" },
   "shein-fluffy-shawl": { label: "Fluffy hooded shawl", store: "Shein", bought: "2026-03", kind: "top" },
   "shein-halfzip": { label: "White half-zip pullover", store: "Shein · Livesso", bought: "2025-11", kind: "top" },
@@ -52,16 +51,12 @@ export const CLOTHES = wardrobe({
   "shein-plaid-bowskirt": { label: "Plaid bow mini skirt", store: "Shein · SHEIN ICON", bought: "2025-11", kind: "bottom" },
   "shein-plaid-tieskirt": { label: "Plaid pleated tie skirt", store: "Shein · Comfortcana", bought: "2025-11", kind: "bottom" },
   "shein-pleated-khaki": { label: "Khaki pleated skirt", store: "Shein · Comfortcana", bought: "2025-11", kind: "bottom" },
-  "shein-ribbed-top": { label: "Cream ribbed knit top", store: "Shein", bought: "2025-11", kind: "top" },
   "shein-sweaterskirt-burgundy": { label: "Burgundy sweater skirt", store: "Shein · Comfortcana", bought: "2025-11", kind: "bottom" },
   "shein-sweaterskirt-navy": { label: "Navy sweater skirt", store: "Shein · Comfortcana", bought: "2025-11", kind: "bottom" },
-  "shein-sweetheart-sweater": { label: "Sweetheart ribbed sweater", store: "Shein · Zielony", bought: "2025-11", kind: "top" },
   "temu-beach-swimsuit": { label: "Black & cream one-piece", store: "Temu", bought: "2025-05", kind: "swim" },
   "temu-bow-cami": { label: "Red bow babydoll cami", store: "Temu", bought: "2025-04", kind: "top" },
   "temu-bow-handbag": { label: "White bow handbag", store: "Temu", bought: "2023-05", kind: "bag" },
   "temu-butterfly-scarf": { label: "Butterfly crochet kerchief", store: "Temu", bought: "2023-05", kind: "accessory" },
-  "temu-cable-cardigan": { label: "Grey cable knit cardigan", store: "Temu", bought: "2025-04", kind: "top" },
-  "temu-ditsy-minidress": { label: "Pink ditsy floral dress", store: "Temu", bought: "2023-05", kind: "dress" },
   "temu-ditsy-splitdress": { label: "Ditsy floral puff-sleeve dress", store: "Temu", bought: "2023-05", kind: "dress" },
   "temu-floral-gloves": { label: "Flower fingerless gloves", store: "Temu", bought: "2023-05", kind: "accessory" },
   "temu-floral-tubedress": { label: "Floral ruffle tube dress", store: "Temu", bought: "2024-06", kind: "dress" },
@@ -335,7 +330,7 @@ export const CLOSET_PHOTOS = {
    clear. */
 const WIDE: Line[] = [
   // the narrower left bay
-  { id: "left-rail", name: "Narrow left bay · rail", ids: ["cider-jacquard-bandeau-dress", "cider-fur-trim-dress", "cider-wine-bandeau-dress", "temu-ditsy-minidress", "temu-floral-tubedress", "temu-green-bow-dress", "temu-flower-dress-pink", "temu-laceup-dress", "cider-houndstooth-dress", "romi-miranda-dress", "temu-knit-slipdress", "cider-fluffy-mesh-dress"], from: [334, 367], to: [414, 397], w: [100, 88], hang: true, z: 50 },
+  { id: "left-rail", name: "Narrow left bay · rail", ids: ["cider-jacquard-bandeau-dress", "cider-fur-trim-dress", "cider-wine-bandeau-dress", "temu-floral-tubedress", "temu-green-bow-dress", "temu-flower-dress-pink", "temu-laceup-dress", "cider-houndstooth-dress", "romi-miranda-dress", "temu-knit-slipdress", "cider-fluffy-mesh-dress"], from: [334, 367], to: [414, 397], w: [100, 88], hang: true, z: 50 },
   { id: "left-shelf", name: "Narrow left bay · shelf", ids: ["tt-satin-bow-ties", "amz-ski-gloves", "dh-leather-belt", "cider-crochet-scarf", "amz-ruffle-socks", "ivory-ribbon-hair-bow"], from: [352, 684], to: [420, 672], w: [74, 66], z: 52 },
   // the little rail over the cubbies, and the cubbies
   { id: "cubby-rail", name: "Cubbies · little rail", ids: ["tt-nidadie-set", "cider-lace-cami-dress", "temu-squareneck-dress", "temu-satin-nightdress", "temu-beach-swimsuit", "cider-satin-cami-dress", "tt-plaid-halter-dress"], from: [480, 327], to: [520, 349], w: [76, 68], hang: true, z: 40 },
@@ -345,7 +340,7 @@ const WIDE: Line[] = [
   // the very narrow column of shelves by the mirror
   { id: "mirror-shelves", name: "Little shelves by the mirror", ids: ["temu-butterfly-scarf", "temu-strawberry-bandana"], from: [1398, 360], to: [1398, 770], w: [52, 52], z: 36 },
   // the inner right bay: tops above, skirts below
-  { id: "right-top", name: "Right bay · top rail", ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "shein-dazy-set", "shein-ribbed-top", "cloud_cardigan_blue_white_knit_sticker"], from: [1598, 200], to: [1472, 280], w: [104, 92], hang: true, z: 70 },
+  { id: "right-top", name: "Right bay · top rail", ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "cloud_cardigan_blue_white_knit_sticker"], from: [1598, 200], to: [1472, 280], w: [104, 92], hang: true, z: 70 },
   { id: "right-low", name: "Right bay · lower rail", ids: ["shein-plaid-bowskirt", "ref-ren-skirt", "shein-fairisle-skirt", "shein-plaid-tieskirt", "shein-pleated-khaki", "ref-sutton-shorts"], from: [1598, 638], to: [1472, 622], w: [100, 90], hang: true, z: 72 },
   // the middle of the window seat, between the two rails
   // hooks on the moulding round the window: a row along its top, and a row down its right side, beside the mirror
@@ -371,7 +366,7 @@ const WIDE: Line[] = [
   // the second bar in the inner right bay, and the bar in the bottom of the narrow left bay
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank"], from: [1598, 404], to: [1474, 438], w: [100, 92], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [338, 714], to: [432, 694], w: [84, 76], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan"], from: [336, 245], to: [432, 281], w: [78, 70], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan"], from: [336, 245], to: [432, 281], w: [78, 70], hang: true, z: 46 },
   // the bars added to the outer bays, left empty to be filled from the Racks page
   { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: ["yellow-floral-dress", "brown-bow-dress", "maroon-corduroy-overall-dress", "lavender-flower-dress", "strawberry-print-pink-string-bikini", "black-pink-trim-string-bikini", "grape-cluster-organza-mermaid-gown", "macaw-print-gold-silk-ball-gown", "midnight-star-flamingo-embroidered-gown", "midsommar-wildflower-gown"], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
   { id: "outer-right-top", name: "Outer right bay · top bar", ids: ["black-ruffle-pleated-skirt", "black-belted-pleated-shorts", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings"], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
@@ -383,8 +378,8 @@ const WIDE: Line[] = [
    everything stays inside about 90–850 across. The tiles take up the whole
    bottom half here, so the rolling rails stand one behind the other. */
 const TALL: Line[] = [
-  { id: "left-rail", name: "Narrow left bay · rail", ids: ["temu-ditsy-minidress", "temu-floral-tubedress", "temu-green-bow-dress", "temu-flower-dress-pink", "temu-knit-slipdress", "temu-laceup-dress", "temu-squareneck-dress", "temu-satin-nightdress", "cider-houndstooth-dress", "cider-fur-trim-dress", "cider-fluffy-mesh-dress", "cider-satin-cami-dress", "cider-lace-cami-dress", "tt-nidadie-set", "tt-plaid-halter-dress"], from: [156, 580], to: [200, 605], w: [60, 54], hang: true, z: 50 },
-  { id: "right-top", name: "Right bay · top rail", ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "shein-dazy-set", "shein-ribbed-top", "black-ruffle-pleated-skirt", "black-belted-pleated-shorts"], from: [830, 470], to: [754, 520], w: [74, 64], hang: true, z: 70 },
+  { id: "left-rail", name: "Narrow left bay · rail", ids: ["temu-floral-tubedress", "temu-green-bow-dress", "temu-flower-dress-pink", "temu-knit-slipdress", "temu-laceup-dress", "temu-squareneck-dress", "temu-satin-nightdress", "cider-houndstooth-dress", "cider-fur-trim-dress", "cider-fluffy-mesh-dress", "cider-satin-cami-dress", "cider-lace-cami-dress", "tt-nidadie-set", "tt-plaid-halter-dress"], from: [156, 580], to: [200, 605], w: [60, 54], hang: true, z: 50 },
+  { id: "right-top", name: "Right bay · top rail", ids: ["temu-offshoulder-dress", "shein-cable-set", "shein-check-cami", "black-ruffle-pleated-skirt", "black-belted-pleated-shorts"], from: [830, 470], to: [754, 520], w: [74, 64], hang: true, z: 70 },
   { id: "right-low", name: "Right bay · lower rail", ids: ["shein-fairisle-skirt", "shein-plaid-bowskirt", "shein-plaid-tieskirt", "shein-pleated-khaki", "ref-sutton-shorts", "ref-ren-skirt", "strawberry-print-pink-string-bikini", "black-pink-trim-string-bikini"], from: [834, 902], to: [756, 888], w: [72, 64], hang: true, z: 72 },
   // the window seat
   { id: "seat", name: "Window seat", ids: ["temu-saddle-bag", "shein-fluffy-shawl", "temu-bow-handbag", "dh-check-tote", "dh-hobo-bag", "dh-brown-tote", "burberry-canvas-tote", "prada-blue-bag", "gucci-gg-shoulder-bag", "black-faux-fur-cuff-bracelets-pair", "white-faux-fur-cuff-bracelets-pair", "white-prada-re-edition-shoulder-bag", "louis-vuitton-denim-monogram-pochette", "louis-vuitton-damier-azur-felicie-pochette"], from: [296, 968], to: [626, 968], w: [58, 58], z: 20 },
@@ -407,7 +402,7 @@ const TALL: Line[] = [
   { id: "right-shelf", name: "Right bay · shelf", ids: ["dh-cleo-bag", "black-long-ribbon-bow", "white-cat-eye-sunglasses"], from: [822, 848], to: [754, 842], w: [54, 48], z: 66 },
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [826, 652], to: [752, 672], w: [68, 60], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "shein-sweetheart-sweater", "temu-cable-cardigan", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [158, 604], to: [206, 628], w: [46, 42], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [158, 604], to: [206, 628], w: [46, 42], hang: true, z: 46 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */

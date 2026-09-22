@@ -1,0 +1,309 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { CLOTHES, closetSrc, garment, type ClothesKind } from "./clothes";
+
+/**
+ * The dress form: an outfit, made up a slot at a time.
+ *
+ * A modal over the Wardrobe Wing, the way the jewellery box is (JewelryBox).
+ * It works like the wardrobe in Clueless: a row for each thing you can wear,
+ * and arrows to walk through everything in the closet of that kind. A dress
+ * or a gown is one piece for two rows, so choosing one takes over the skirt
+ * row and leaves it empty until you put her in a shirt again.
+ *
+ * A piece can still be dragged about on her and sized, because a photograph
+ * of a dress never sits on a mannequin quite right first time.
+ *
+ * The outfit is kept in this browser, so it is still on her tomorrow. Nothing
+ * here is saved to the database and nothing here touches the closet itself.
+ */
+
+const MANNEQUIN = `${process.env.PUBLIC_URL}/palais/mannequin.webp`;
+/** the leopard the whole wardrobe is papered in, as it is in the film */
+const PAPER = `url("${process.env.PUBLIC_URL}/palais/clueless-cheetah.webp")`;
+/** the film's own buttons, worn by every arrow in here */
+const BACK = `url("${process.env.PUBLIC_URL}/palais/clueless_left_arrow.png")`;
+const ON = `url("${process.env.PUBLIC_URL}/palais/clueless_right_arrow.png")`;
+const KEPT = "palais-dress-form";
+
+/** the rows, down the modal in the order she drew them, each with its stripe:
+    a rainbow from hot pink at the top, laid over the leopard at low opacity */
+const SLOTS = [
+  { key: "hat", label: "Hat", emoji: "👒", kinds: ["hat"], band: "255, 45, 190" },
+  { key: "extra", label: "Accessory", emoji: "🎀", kinds: ["accessory"], band: "244, 40, 40" },
+  { key: "top", label: "Shirt", emoji: "👚", kinds: ["top", "dress", "swim"], band: "255, 138, 0" },
+  { key: "coat", label: "Coat", emoji: "🧥", kinds: ["coat"], band: "250, 214, 0" },
+  { key: "bag", label: "Bag", emoji: "👜", kinds: ["bag"], band: "0, 205, 70" },
+  { key: "bottom", label: "Pants / Skirt", emoji: "🩳", kinds: ["bottom"], band: "45, 90, 230" },
+  { key: "shoes", label: "Shoes", emoji: "👠", kinds: ["shoes"], band: "150, 50, 220" },
+] as const;
+
+type SlotKey = (typeof SLOTS)[number]["key"];
+
+/** a dress is one piece for two rows: it takes the skirt row with it.
+    Gowns and robes are not offered here — they are their own occasion. */
+const HEAD_TO_TOE: ClothesKind[] = ["dress"];
+
+/**
+ * Where a piece hangs on her and how much room it gets — both as fractions of
+ * her height, measured off THIS figure: crown 0.02, chin 0.12, shoulders 0.19,
+ * waist 0.38, hip 0.45, knee 0.67, ankle 0.94, sole 1.0. Everything of a kind
+ * gets the SAME box and is fitted inside it, so one shirt is never twice the
+ * size of another just because it was photographed closer.
+ */
+const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: number }> = {
+  hat: { top: 0.0, w: 0.3, h: 0.14 },
+  accessory: { top: 0.14, w: 0.26, h: 0.13 },
+  top: { top: 0.18, w: 0.42, h: 0.28 },
+  swim: { top: 0.19, w: 0.34, h: 0.3 },
+  coat: { top: 0.16, w: 0.5, h: 0.58 },
+  robe: { top: 0.15, w: 0.54, h: 0.66 },
+  dress: { top: 0.18, w: 0.5, h: 0.56 },
+  gown: { top: 0.17, w: 0.58, h: 0.8 },
+  bottom: { top: 0.4, w: 0.4, h: 0.46 },
+  shoes: { top: 0.9, w: 0.3, h: 0.11 },
+  bag: { top: 0.5, w: 0.24, h: 0.22, side: -0.3 },   // down by her hand
+};
+
+/** her own shape, so a box measured in her height can be given a width */
+const SHE = 415 / 1400;
+
+/** How they stack. The coat sits BEHIND what she has on — hung off her
+    shoulders the way a coat is in a lookbook, so the outfit still shows. */
+const LAYER: Record<SlotKey, number> = { coat: 2, bottom: 3, top: 4, shoes: 5, bag: 6, extra: 7, hat: 8 };
+
+interface Nudge {
+  dx: number;
+  dy: number;
+  scale: number;
+}
+const STILL: Nudge = { dx: 0, dy: 0, scale: 1 };
+
+/** everything in the closet of the kinds a row takes, and "nothing" in front */
+const rackFor = (kinds: readonly string[]) => [
+  null,
+  ...Object.keys(CLOTHES).filter((id) => kinds.includes(garment(id)?.kind ?? "")),
+];
+
+type Chosen = Partial<Record<SlotKey, string | null>>;
+
+const read = (): { chosen: Chosen; nudged: Record<string, Nudge> } => {
+  try {
+    const kept = JSON.parse(localStorage.getItem(KEPT) ?? "{}");
+    const chosen: Chosen = {};
+    for (const s of SLOTS) {
+      const id = kept?.chosen?.[s.key];
+      const g = typeof id === "string" ? garment(id) : undefined;
+      // and it must still be a kind that row offers, or it is quietly dropped
+      if (g && (s.kinds as readonly string[]).includes(g.kind)) chosen[s.key] = id;
+    }
+    return { chosen, nudged: kept?.nudged && typeof kept.nudged === "object" ? kept.nudged : {} };
+  } catch {
+    return { chosen: {}, nudged: {} };
+  }
+};
+
+export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () => void }) {
+  const [{ chosen, nudged }, setOutfit] = useState(read);
+  const [picked, setPicked] = useState<SlotKey | null>(null);
+  const form = useRef<HTMLDivElement>(null);
+  const dragging = useRef<{ id: string; from: { x: number; y: number }; was: Nudge } | null>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(KEPT, JSON.stringify({ chosen, nudged }));
+    } catch {
+      /* a browser that won't remember is no reason to stop */
+    }
+  }, [chosen, nudged]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") (picked ? setPicked(null) : onClose());
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose, picked]);
+
+  /** is she in something that dresses her head to toe? */
+  const wholePiece = (() => {
+    const g = chosen.top ? garment(chosen.top) : undefined;
+    return g && HEAD_TO_TOE.includes(g.kind) ? g : null;
+  })();
+
+  /** walk a row along to the next thing of its kind */
+  const step = useCallback((slot: SlotKey, by: number) => {
+    setOutfit((was) => {
+      const row = SLOTS.find((s) => s.key === slot)!;
+      const rack = rackFor(row.kinds);
+      const at = Math.max(0, rack.indexOf(was.chosen[slot] ?? null));
+      const next = rack[(at + by + rack.length) % rack.length];
+      const chosen: Chosen = { ...was.chosen, [slot]: next };
+      // a dress takes the skirt row with it
+      const g = next ? garment(next) : undefined;
+      if (slot === "top" && g && HEAD_TO_TOE.includes(g.kind)) chosen.bottom = null;
+      return { ...was, chosen };
+    });
+    setPicked(slot);
+  }, []);
+
+  const nudge = (id: string, how: Partial<Nudge>) =>
+    setOutfit((was) => ({
+      ...was,
+      nudged: { ...was.nudged, [id]: { ...STILL, ...was.nudged[id], ...how } },
+    }));
+
+  /* dragging a piece about on her */
+  const grab = (e: React.PointerEvent, slot: SlotKey, id: string) => {
+    const box = form.current?.getBoundingClientRect();
+    if (!box) return;
+    setPicked(slot);
+    dragging.current = { id, from: { x: e.clientX, y: e.clientY }, was: nudged[id] ?? STILL };
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+  };
+  const move = (e: React.PointerEvent) => {
+    const drag = dragging.current;
+    const box = form.current?.getBoundingClientRect();
+    if (!drag || !box) return;
+    nudge(drag.id, {
+      dx: drag.was.dx + (e.clientX - drag.from.x) / box.height,
+      dy: drag.was.dy + (e.clientY - drag.from.y) / box.height,
+    });
+  };
+  const drop = () => {
+    dragging.current = null;
+  };
+
+  const on = SLOTS.map((s) => ({ slot: s, id: chosen[s.key] ?? null })).filter((w) => w.id);
+  const pickedId = picked ? chosen[picked] : null;
+  const pickedNudge = pickedId ? nudged[pickedId] ?? STILL : null;
+
+  /** one row: its name and ‹ against the left edge, what she has on and ›
+      against the right, and her standing in the gap between them */
+  const row = (s: (typeof SLOTS)[number]) => {
+    const taken = s.key === "bottom" && wholePiece;
+    const id = chosen[s.key] ?? null;
+    const g = id ? garment(id) : undefined;
+    return (
+      <div
+        key={s.key}
+        className={`du-row du-row--${s.key}${taken ? " is-taken" : ""}${picked === s.key ? " is-picked" : ""}`}
+        style={{ ["--band" as string]: s.band }}
+      >
+        <span className="du-row-left">
+          <span className="du-row-what">
+            <span aria-hidden>{s.emoji}</span> {s.label}
+          </span>
+          <button
+            type="button"
+            className="du-arrow"
+            style={{ ["--arrow" as string]: BACK }}
+            onClick={() => step(s.key, -1)}
+            disabled={!!taken}
+            aria-label={`The one before, for ${s.label}`}
+          />
+          <span className="du-row-thumb" onClick={() => id && setPicked(s.key)}>
+            {!taken && g && <img src={closetSrc(id!)} alt="" decoding="async" />}
+          </span>
+        </span>
+        <span className="du-row-gap" aria-hidden />
+        <span className="du-row-right">
+          <span className="du-row-name" onClick={() => id && setPicked(s.key)}>
+            {taken ? <em>the {wholePiece!.kind} has it</em> : g ? g.label : <em>nothing</em>}
+          </span>
+          <button
+            type="button"
+            className="du-arrow"
+            style={{ ["--arrow" as string]: ON }}
+            onClick={() => step(s.key, 1)}
+            disabled={!!taken}
+            aria-label={`The next one, for ${s.label}`}
+          />
+        </span>
+      </div>
+    );
+  };
+
+  return createPortal(
+    <div className="du-backdrop" onPointerDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div
+        className="du-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="The dress form"
+        style={{ ["--du-paper" as string]: PAPER }}
+      >
+        <div className="du-title">
+          <h2>✿ The Dress Form ✿</h2>
+        </div>
+        <button type="button" className="du-close" onClick={onClose} aria-label="Close the dress form">
+          ×
+        </button>
+
+        {/* the striped rows, right across the modal */}
+        <div className="du-rows">{SLOTS.map(row)}</div>
+
+        {/* her, standing in the gap down the middle of them */}
+        <div className="du-stand">
+          <div className="du-form" ref={form} onPointerMove={move} onPointerUp={drop} onPointerCancel={drop}>
+            <img className="du-body" src={MANNEQUIN} alt="A dress form" draggable={false} />
+            {on.map(({ slot, id }) => {
+              const g = garment(id!)!;
+              const fit = FIT[g.kind];
+              const n = nudged[id!] ?? STILL;
+              return (
+                <img
+                  key={slot.key}
+                  className={`du-worn${picked === slot.key ? " is-picked" : ""}`}
+                  src={closetSrc(id!)}
+                  alt={g.label}
+                  draggable={false}
+                  onPointerDown={(e) => grab(e, slot.key, id!)}
+                  style={{
+                    // the same box for everything of a kind; the picture is
+                    // fitted inside it rather than deciding its own size
+                    width: `${((fit.w / SHE) * n.scale * 100).toFixed(1)}%`,
+                    height: `${(fit.h * n.scale * 100).toFixed(1)}%`,
+                    top: `${((fit.top + n.dy) * 100).toFixed(1)}%`,
+                    left: `${(50 + (fit.side ?? 0) * 100 + n.dx * 100).toFixed(1)}%`,
+                    zIndex: LAYER[slot.key],
+                  }}
+                />
+              );
+            })}
+          </div>
+          {pickedId && pickedNudge ? (
+            <div className="du-handles">
+              <button type="button" onClick={() => nudge(pickedId, { scale: Math.max(0.3, pickedNudge.scale / 1.1) })} aria-label="Smaller">−</button>
+              <span className="du-picked-name">{garment(pickedId)?.label}</span>
+              <button type="button" onClick={() => nudge(pickedId, { scale: Math.min(3, pickedNudge.scale * 1.1) })} aria-label="Bigger">+</button>
+            </div>
+          ) : (
+            <p className="du-hint">Arrow through the closet either side. Drag anything on her to sit it right.</p>
+          )}
+        </div>
+
+        <div className="du-foot">
+          <span className="du-count">{on.length ? `${on.length} on` : "nothing on her yet"}</span>
+          {/* always here, even empty, so it holds the middle of the row */}
+          <span className="du-foot-mid">
+            {pickedId && (
+              <button type="button" className="du-strip du-off" onClick={() => nudge(pickedId, STILL)}>
+                Put it back
+              </button>
+            )}
+          </span>
+          <button
+            type="button"
+            className="du-strip"
+            onClick={() => setOutfit({ chosen: {}, nudged: {} })}
+            disabled={!on.length}
+          >
+            Take it all off
+          </button>
+        </div>
+      </div>
+    </div>,
+    stage,
+  );
+}

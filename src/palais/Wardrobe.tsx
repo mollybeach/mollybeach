@@ -5,6 +5,7 @@ import { usePlace } from "./place";
 import { CLOSET_BARS, CLOSET_LINES, CLOSET_PHOTOS, CLOSET_RACKS, WINDOW_MOULDING, closetSrc, garment, hookPoints, lay, type Bar, type Line, type Rack, type Spot } from "./clothes";
 import { useClosetMoves, useRackOrder, type PieceMove } from "./closetRacks";
 import { JewelryBox } from "./JewelryBox";
+import { DressUp } from "./DressUp";
 import { propSrc } from "./props";
 
 /* the jewellery cabinet, standing for good on the floor between the cubbies
@@ -12,6 +13,13 @@ import { propSrc } from "./props";
 const CABINET = {
   wide: { x: 470, feet: 1000, w: 128 },
   tall: { x: 184, feet: 1150, w: 76 },
+};
+
+/* the dress form, standing on the tiles over on the right: her feet, middle
+   and width, in each photograph's pixels. A door into the dress-up (DressUp) */
+const DRESS_FORM = {
+  wide: { x: 1596, feet: 1006, w: 140 },
+  tall: { x: 792, feet: 1160, w: 94 },
 };
 
 /** a little brass hanger, hooked over the rail */
@@ -143,14 +151,19 @@ export function Wardrobe() {
   const spots = useMemo(() => lay(which, order), [which, order]);
   const moves = useClosetMoves(which);
   const [jewels, setJewels] = useState(false);
+  const [dressing, setDressing] = useState(false);
   const closet = useRef<HTMLDivElement>(null);
   // leaving the closet closes the jewellery box
   useEffect(() => {
-    if (place !== "closet") setJewels(false);
+    if (place !== "closet") {
+      setJewels(false);
+      setDressing(false);
+    }
   }, [place]);
   if (!visited) return null;
   const photo = CLOSET_PHOTOS[which];
   const cab = CABINET[which];
+  const form = DRESS_FORM[which];
   const stage = closet.current?.closest<HTMLElement>(".palais-stage");
   return (
     <div ref={closet} className="palais-closet" aria-hidden={place !== "closet"}>
@@ -185,8 +198,24 @@ export function Wardrobe() {
         >
           <img src={propSrc("cabinet-jewelry")} alt="" draggable={false} />
         </button>
+        {/* the dress form: another door, into making an outfit up on her */}
+        <button
+          type="button"
+          className="closet-dressform"
+          style={{
+            left: `${(((form.x - form.w / 2) / photo.w) * 100).toFixed(3)}%`,
+            bottom: `${((1 - form.feet / photo.h) * 100).toFixed(3)}%`,
+            width: `${((form.w / photo.w) * 100).toFixed(3)}%`,
+          }}
+          onClick={() => setDressing(true)}
+          aria-label="Dress the dress form"
+          title="Dress the dress form"
+        >
+          <img src={`${process.env.PUBLIC_URL}/palais/mannequin.webp`} alt="" draggable={false} />
+        </button>
       </div>
       {jewels && stage && <JewelryBox stage={stage} onClose={() => setJewels(false)} />}
+      {dressing && stage && <DressUp stage={stage} onClose={() => setDressing(false)} />}
     </div>
   );
 }
