@@ -110,6 +110,7 @@ export const MORE_TRINKETS: PropId[] = [
   "snail_giant_african_land_shell_facing_left_sticker",
   "snail_giant_vicious_fanged_spiked_facing_left_sticker",
   "snail_giant_vicious_fanged_spiked_sticker",
+  "snail_giant_vicious_eating_a_man_sticker",
   "road_case_vintage_mail_stack_black_sticker",
   "dog-leo-dalmatian",
   "jackrabbit_desert_black_tailed_standing_sticker",

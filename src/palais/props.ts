@@ -340,6 +340,9 @@ export const PROPS = catalogue({
      the room takes them to four times that again. */
   snail_giant_vicious_fanged_spiked_sticker: { label: "a giant snail, all fangs and spines", plane: "near", metres: 1.05 },
   snail_giant_vicious_fanged_spiked_facing_left_sticker: { label: "a giant snail, all fangs and spines, facing left", plane: "near", metres: 1.05 },
+  /* this one has a man in its mouth, so it is sized around him: he comes out
+     about the height the cast stands at */
+  snail_giant_vicious_eating_a_man_sticker: { label: "a giant snail, making off with someone", plane: "near", metres: 3.2 },
   road_case_vintage_mail_stack_black_sticker: { label: "A road case of old letters", plane: "near", metres: 1.1 },
 
   /* ---- the desert, from the Sunliner's stretch of it ------------------- */

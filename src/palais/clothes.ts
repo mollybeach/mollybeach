@@ -14,7 +14,7 @@
  * The wide photographs and the tall one for phones are measured separately.
  */
 
-export type ClothesKind = "coat" | "robe" | "dress" | "top" | "bottom" | "swim" | "shoes" | "hat" | "bag" | "accessory";
+export type ClothesKind = "coat" | "robe" | "gown" | "dress" | "top" | "bottom" | "swim" | "shoes" | "hat" | "bag" | "accessory";
 
 export interface Garment {
   label: string;
@@ -215,23 +215,23 @@ export const CLOTHES = wardrobe({
   "pink-floral-lace-trim-head-scarf": { label: "Pink floral head scarf with lace trim", store: "Closet", bought: "", kind: "accessory" },
   "lavender-lace-head-scarf": { label: "Lavender lace head scarf", store: "Closet", bought: "", kind: "accessory" },
   "gold-lace-head-scarf": { label: "Gold lace head scarf", store: "Closet", bought: "", kind: "accessory" },
-  "navy-celestial-velvet-gown": { label: "Navy velvet gown, embroidered with stars", store: "Closet", bought: "", kind: "dress" },
-  "black-bow-glitter-tulle-gown": { label: "Black glitter tulle gown with ribbon bows", store: "Closet", bought: "", kind: "dress" },
-  "grape-cluster-organza-mermaid-gown": { label: "Blue and green organza mermaid gown, beaded with grape clusters", store: "Closet", bought: "", kind: "dress" },
-  "macaw-print-gold-silk-ball-gown": { label: "Gold silk ball gown printed with macaws, red scarf sleeves", store: "Closet", bought: "", kind: "dress" },
-  "midnight-star-flamingo-embroidered-gown": { label: "Midnight gown scattered with stars, embroidered with flowers and flamingos, with a long veil", store: "Closet", bought: "", kind: "dress" },
-  "midsommar-wildflower-gown": { label: "Midsommar gown, made entirely of wildflowers", store: "Closet", bought: "", kind: "dress" },
+  "navy-celestial-velvet-gown": { label: "Navy velvet gown, embroidered with stars", store: "Closet", bought: "", kind: "gown" },
+  "black-bow-glitter-tulle-gown": { label: "Black glitter tulle gown with ribbon bows", store: "Closet", bought: "", kind: "gown" },
+  "grape-cluster-organza-mermaid-gown": { label: "Blue and green organza mermaid gown, beaded with grape clusters", store: "Closet", bought: "", kind: "gown" },
+  "macaw-print-gold-silk-ball-gown": { label: "Gold silk ball gown printed with macaws, red scarf sleeves", store: "Closet", bought: "", kind: "gown" },
+  "midnight-star-flamingo-embroidered-gown": { label: "Midnight gown scattered with stars, embroidered with flowers and flamingos, with a long veil", store: "Closet", bought: "", kind: "gown" },
+  "midsommar-wildflower-gown": { label: "Midsommar gown, made entirely of wildflowers", store: "Closet", bought: "", kind: "gown" },
   "beige-rib-knit-pom-pom-ears-beanie": { label: "Beige rib-knit beanie with pom-pom ears", store: "Closet", bought: "", kind: "hat" },
   "navy_satin_lace_slip_dress_sticker": { label: "Navy satin lace slip dress", store: "Closet", bought: "", kind: "dress" },
   "cream_rose_floral_lace_dress_sticker": { label: "Cream rose floral ruffle dress", store: "Closet", bought: "", kind: "dress" },
   "ivory_satin_lace_slip_dress_sticker": { label: "Ivory satin lace slip dress", store: "Closet", bought: "", kind: "dress" },
   "forest_green_lace_satin_dress_sticker": { label: "Forest green lace babydoll dress", store: "Closet", bought: "", kind: "dress" },
-  "mint_green_ruffled_corset_gown_sticker": { label: "Mint green ruffled corset gown", store: "Closet", bought: "", kind: "dress" },
+  "mint_green_ruffled_corset_gown_sticker": { label: "Mint green ruffled corset gown", store: "Closet", bought: "", kind: "gown" },
   "powder_blue_scarf_maxi_dress_sticker": { label: "Powder blue maxi dress with scarf", store: "Closet", bought: "", kind: "dress" },
-  "arianna-dress": { label: "Arianna dress · dove grey tulle ball gown with opera gloves", store: "Closet", bought: "", kind: "dress" },
-  "peacock-dress": { label: "Peacock dress · beaded sheer bodice and a train of peacock feathers", store: "Closet", bought: "", kind: "dress" },
-  "rhianna-dress": { label: "Rhianna dress · marigold brocade gown trimmed in fur", store: "Closet", bought: "", kind: "dress" },
-  "yellow-ball-gown": { label: "Yellow ball gown · beaded corset and sunset organza", store: "Closet", bought: "", kind: "dress" },
+  "arianna-dress": { label: "Arianna dress · dove grey tulle ball gown with opera gloves", store: "Closet", bought: "", kind: "gown" },
+  "peacock-dress": { label: "Peacock dress · beaded sheer bodice and a train of peacock feathers", store: "Closet", bought: "", kind: "gown" },
+  "rhianna-dress": { label: "Rhianna dress · marigold brocade gown trimmed in fur", store: "Closet", bought: "", kind: "gown" },
+  "yellow-ball-gown": { label: "Yellow ball gown · beaded corset and sunset organza", store: "Closet", bought: "", kind: "gown" },
   "peacock-wings": { label: "Peacock feather wings", store: "Closet", bought: "", kind: "accessory" },
   "outfit_suit_brocade_robe_crimson_gold_regal_sticker": { label: "Crimson suit under a gold brocade robe · black gloves and jeweled brooches", store: "Closet", bought: "", kind: "robe" },
   "cape_royal_pleated_jeweled_cobalt_blue_sticker": { label: "Royal cobalt blue pleated cape · jeweled capelet trimmed in ivory fur", store: "Closet", bought: "", kind: "robe" },
@@ -269,6 +269,7 @@ export const closetSrc = (id: string) => `${process.env.PUBLIC_URL}/palais/close
 export const WARDROBE_SHELVES: { key: ClothesKind; name: string; emoji: string }[] = [
   { key: "coat", name: "Coats", emoji: "🧥" },
   { key: "robe", name: "Robes", emoji: "👘" },
+  { key: "gown", name: "Gowns", emoji: "👑" },
   { key: "dress", name: "Dresses", emoji: "👗" },
   { key: "top", name: "Tops & knits", emoji: "👚" },
   { key: "bottom", name: "Skirts & shorts", emoji: "🩳" },
