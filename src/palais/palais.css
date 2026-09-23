@@ -2564,10 +2564,15 @@
      middle of her forehead it reaches --du-brow, and it falls away towards her
      temples. Wider than her head, so the sides fade rather than cut. */
   --du-brow: 2.2%;      /* the top of the dome, over the middle of her forehead */
-  --du-brow-wide: 33%;  /* how far across her it runs — past her temples, so
+  --du-brow-wide: 36%;  /* how far across her it runs — past her temples, so
                            her hair comes through at the sides too */
-  --du-brow-deep: 20%;  /* how far below it the curve is struck from; deeper
-                           is a flatter dome, and more face either side */
+  /* How far below the brow the curve is struck from. It is the drop at the
+     sides that matters: at a given fraction of the width the dome falls by
+     this much, so a SMALLER number is a shallower dome and more forehead out
+     towards her temples. Her head reaches 0.30–0.71 across, and at 10% the
+     dome is still at 3.9% there — above her eyebrow, which is what lets a
+     hat's brim sit over her without eating her face. */
+  --du-brow-deep: 10%;
   --du-face: 12%;       /* her chin */
   --du-neck-high: 14.5%;/* the throat, drawn over everything */
   --du-neck-mid: 17%;   /* where a scarf wraps, and only a scarf */
