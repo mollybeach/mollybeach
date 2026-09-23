@@ -124,9 +124,11 @@ const LAYER: Record<SlotKey, number> = {
   glove: 9,
   bag: 10,
   neck: 11,
-  /* her face is drawn again at 12 — see .du-face */
-  glasses: 13,
-  hat: 14,
+  hat: 12,
+  /* her face is drawn again at 13 — see .du-face. The hat goes UNDER it, so
+     her head scoops the hat rather than the hat swallowing her head. Her body
+     stays at the bottom of the pile: a coat is worn over her, not behind. */
+  glasses: 14,
   bow: 15,
 };
 
