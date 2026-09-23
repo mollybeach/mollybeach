@@ -90,7 +90,9 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
   robe: { top: 0.15, w: 0.54, h: 0.66 },
   dress: { top: 0.18, w: 0.5, h: 0.56 },
   gown: { top: 0.17, w: 0.58, h: 0.8 },
-  belt: { top: 0.37, w: 0.38, h: 0.08 },             // at her waist
+  // at her waist, and no wider than she is: the height binds on a belt's long
+  // thin picture, so it is the height that sets how far across her it reaches
+  belt: { top: 0.375, w: 0.38, h: 0.056 },
   bottom: { top: 0.4, w: 0.4, h: 0.46 },
   glove: { top: 0.46, w: 0.4, h: 0.14 },             // the pair, at her hands
   sock: { top: 0.84, w: 0.28, h: 0.12 },             // ankle, under the shoe
@@ -137,8 +139,13 @@ const inBrief = (name: string) => name.split(/\s+/).slice(0, 2).join(" ");
     than left to the stylesheet to hide */
 const cut = (name: string) => (name.length > 20 ? `${name.slice(0, 20).trimEnd()}…` : name);
 
-/** where her shoulders are, down her height: below this a veil hangs behind */
-const SHOULDER = 0.19;
+/**
+ * Where a veil stops being drawn over her and starts falling behind her,
+ * down her height. It is her jaw rather than her shoulders: a veil frames the
+ * face, and from the chin down it hangs behind the head and behind whatever
+ * she has on — so anything lower than this belongs at the back.
+ */
+const BEHIND_FROM = 0.14;
 
 /**
  * For a veil or scarf that falls past her shoulders, how far down its own
@@ -153,8 +160,8 @@ const pastTheShoulder = (id: string, nudge?: Nudge): number | null => {
   const n = nudge ?? STILL;
   const top = fit.top + n.dy;
   const deep = fit.h * n.scale;
-  if (top + deep <= SHOULDER + 0.02) return null;   // it stops at her head
-  return Math.min(1, Math.max(0, (SHOULDER - top) / deep));
+  if (top + deep <= BEHIND_FROM + 0.02) return null;   // it stops at her head
+  return Math.min(1, Math.max(0, (BEHIND_FROM - top) / deep));
 };
 
 /** her own shape, so a box measured in her height can be given a width */
@@ -456,8 +463,9 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
                   style={{ ...where, zIndex: LAYER[slot.key] }}
                 />
               );
-              // a veil longer than her shoulders falls BEHIND her from there
-              // down, the way one does: over her hair, under her clothes
+              // a veil that reaches past her jaw falls BEHIND her from there
+              // down, the way one does: framing her face, then behind her hair
+              // and behind everything she has on
               const cut = pastTheShoulder(id!, nudged[id!]);
               if (cut === null) return worn;
               return (
