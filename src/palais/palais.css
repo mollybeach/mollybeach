@@ -2714,6 +2714,15 @@
   filter: drop-shadow(0 3px 5px rgba(60, 30, 40, 0.28));
 }
 .palais .du-worn:active { cursor: grabbing; }
+/* the tail of a long veil: behind her and behind everything she has on. It
+   goes below the figure itself, which is why this is a negative index — the
+   window she stands in is a stacking context, so it can go no further back
+   than that and still shows against the cream. */
+.palais .du-worn--behind {
+  z-index: -1;
+  cursor: default;
+  pointer-events: none;
+}
 .palais .du-worn.is-picked { outline: 2px dashed rgba(184, 80, 111, 0.85); outline-offset: 3px; }
 /* the pair of them sit just under her feet, hung on the panel rather than
    inside the window she stands in */

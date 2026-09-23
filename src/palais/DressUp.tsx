@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CLOTHES, closetSrc, garment, type ClothesKind } from "./clothes";
 
@@ -134,6 +134,26 @@ const inBrief = (name: string) => name.split(/\s+/).slice(0, 2).join(" ");
     name runs on under the window she stands in, so it is cut off here rather
     than left to the stylesheet to hide */
 const cut = (name: string) => (name.length > 20 ? `${name.slice(0, 20).trimEnd()}…` : name);
+
+/** where her shoulders are, down her height: below this a veil hangs behind */
+const SHOULDER = 0.19;
+
+/**
+ * For a veil or scarf that falls past her shoulders, how far down its own
+ * picture that shoulder line lies — 0 to 1. Everything below it is drawn
+ * behind her instead of over her, so a veil covers her hair and not her
+ * clothes. null for anything that stops at her head.
+ */
+const pastTheShoulder = (id: string, nudge?: Nudge): number | null => {
+  const g = garment(id);
+  if (!g || g.kind !== "hat") return null;
+  const fit = { ...FIT[g.kind], ...WEAR[id] };
+  const n = nudge ?? STILL;
+  const top = fit.top + n.dy;
+  const deep = fit.h * n.scale;
+  if (top + deep <= SHOULDER + 0.02) return null;   // it stops at her head
+  return Math.min(1, Math.max(0, (SHOULDER - top) / deep));
+};
 
 /** her own shape, so a box measured in her height can be given a width */
 const SHE = 415 / 1400;
@@ -420,19 +440,49 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         <div className="du-stand">
           <div className="du-form" ref={form} onPointerMove={move} onPointerUp={drop} onPointerCancel={drop}>
             <img className="du-body" src={MANNEQUIN} alt="A dress form" draggable={false} />
-            {on.map(({ slot, id }) =>
-              slot.key === "cardigan" && cardiUnderCoat ? null : (
-              <img
-                key={slot.key}
-                className={`du-worn${picked === slot.key ? " is-picked" : ""}`}
-                src={closetSrc(id!)}
-                alt={garment(id!)!.label}
-                draggable={false}
-                onPointerDown={(e) => grab(e, slot.key, id!)}
-                style={{ ...place(id!, nudged[id!]), zIndex: LAYER[slot.key] }}
-              />
-              ),
-            )}
+            {on.map(({ slot, id }) => {
+              if (slot.key === "cardigan" && cardiUnderCoat) return null;
+              const where = place(id!, nudged[id!]);
+              const worn = (
+                <img
+                  key={slot.key}
+                  className={`du-worn${picked === slot.key ? " is-picked" : ""}`}
+                  src={closetSrc(id!)}
+                  alt={garment(id!)!.label}
+                  draggable={false}
+                  onPointerDown={(e) => grab(e, slot.key, id!)}
+                  style={{ ...where, zIndex: LAYER[slot.key] }}
+                />
+              );
+              // a veil longer than her shoulders falls BEHIND her from there
+              // down, the way one does: over her hair, under her clothes
+              const cut = pastTheShoulder(id!, nudged[id!]);
+              if (cut === null) return worn;
+              return (
+                <Fragment key={slot.key}>
+                  <img
+                    className="du-worn du-worn--behind"
+                    src={closetSrc(id!)}
+                    alt=""
+                    aria-hidden
+                    draggable={false}
+                    style={{ ...where, clipPath: `inset(${(cut * 100).toFixed(1)}% 0 0 0)` }}
+                  />
+                  <img
+                    className={`du-worn${picked === slot.key ? " is-picked" : ""}`}
+                    src={closetSrc(id!)}
+                    alt={garment(id!)!.label}
+                    draggable={false}
+                    onPointerDown={(e) => grab(e, slot.key, id!)}
+                    style={{
+                      ...where,
+                      zIndex: LAYER[slot.key],
+                      clipPath: `inset(0 0 ${((1 - cut) * 100).toFixed(1)}% 0)`,
+                    }}
+                  />
+                </Fragment>
+              );
+            })}
             {/* the cardigan's front, over the coat: the same picture in the
                 same place, cut down to the strip a coat leaves showing. Its
                 sleeves stay behind the coat where they belong. */}
