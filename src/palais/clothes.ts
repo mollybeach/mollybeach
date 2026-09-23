@@ -138,7 +138,7 @@ export const CLOTHES = wardrobe({
   "cider-embroidered-dress": { label: "White embroidered mini dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-tie-shoulder-dress": { label: "Lime tie-shoulder dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-pearl-cardigan": { label: "Pastel pearl-button cardigan", store: "Cider", bought: "2023-02", kind: "cardigan" },
-  "cider-toile-dress": { label: "Toile de Jouy bow dress", store: "Cider", bought: "2023-02", kind: "dress" },
+  "cider-toile-dress": { label: "Green toile de Jouy tiered mini", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-corduroy-dress": { label: "Teal floral corduroy dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-lemon-dress": { label: "Lemon print ruffle dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-fur-trim-dress": { label: "Moss velvet fur-trim dress", store: "Cider", bought: "2022-11", kind: "dress" },
