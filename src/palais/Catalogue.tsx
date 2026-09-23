@@ -551,7 +551,7 @@ export function Catalogue({
             </div>
           )}
           {page === "racks" ? (
-            <RacksShelf which={which} hidden={closetHidden} />
+            <RacksShelf which={which} hidden={closetHidden} setHidden={setClosetHidden} />
           ) : page === "seasons" ? (
             <SeasonsShelf
               place={place}

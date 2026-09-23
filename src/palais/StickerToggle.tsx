@@ -10,7 +10,7 @@ import { defaultLook, hiddenFor } from "./roomLayouts";
 import { usePortrait } from "./PortraitTerrace";
 import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
-import { useClosetHiddenDefault } from "./closetRacks";
+import { closetMovesNow, publishRacks, useClosetHiddenDefault } from "./closetRacks";
 import { isPortable, resolvePortable } from "./crossDevice";
 import { noteDoing } from "./visits";
 import { JustPlaced } from "./justPlaced";
@@ -336,27 +336,46 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
 
   /* whatever sticker was last picked up in the room, and the four switches
      that work on it: bigger, smaller, out of the room, and keep it. They save
-     walking back into the catalogue for every little change. */
+     walking back into the catalogue for every little change, and they work the
+     same on a garment picked up off a rail in the Wardrobe Wing. */
   const picked = usePicked();
   const sidebarFloral = useFloral("sidebar");
   const jewel = paletteOf(sidebarFloral.now);
   const [keeping, setKeeping] = useState<"" | "busy" | "kept" | "no">("");
 
+  /** is the piece picked up a garment hanging in the closet, rather than a
+      sticker in the room? The two live in different layers and are taken out
+      into different lists, so every switch has to know which it has hold of. */
+  const pickedInCloset = () => !!picked && !!stage()?.querySelector(`.palais-closet [data-prop="${CSS.escape(picked)}"]`);
+
   const sizePicked = (factor: number) => {
     const scope = stage();
-    if (scope && picked) resizeSticker(scope, ".palais-layer [data-prop]", picked, factor);
+    if (scope && picked) {
+      resizeSticker(scope, pickedInCloset() ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]", picked, factor);
+    }
   };
   const takePickedOut = () => {
     if (!picked) return;
-    setHiddenHeld(new Set([...Array.from(hidden), picked]));
+    if (pickedInCloset()) setClosetHidden(new Set([...Array.from(closetHidden), picked]));
+    else setHiddenHeld(new Set([...Array.from(hidden), picked]));
     pickSticker(null);
   };
-  /** keep the room as it stands: this season's look on this device */
+  /** keep it as it stands: the closet's rails for a garment, and otherwise
+      this season's look on this device */
   const keepTheRoom = async () => {
     const scope = stage();
     if (!scope || !collection.editor?.canSave) return;
     setKeeping("busy");
     try {
+      if (pickedInCloset()) {
+        // the closet keeps its own arrangement, not a season's layout: the
+        // order on the rails, where each piece has been dragged and sized,
+        // and which have been taken out
+        const which = portrait ? "tall" : "wide";
+        await publishRacks(which, closetMovesNow(scope as HTMLElement), closetHidden);
+        setKeeping("kept");
+        return;
+      }
       const { stage: size, props } = capture(scope as HTMLElement, hidden);
       await saveSeasonDefault(collection.saved, {
         place,
@@ -470,8 +489,10 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
                 style={jewelled(jewel)}
                 onClick={keepTheRoom}
                 disabled={keeping === "busy"}
-                aria-label={`Keep the room as it is, as the ${season} look`}
-                title={`Keep the room as the ${season} look`}
+                aria-label={
+                  pickedInCloset() ? "Keep the closet as it is" : `Keep the room as it is, as the ${season} look`
+                }
+                title={pickedInCloset() ? "Keep the closet as it is" : `Keep the room as the ${season} look`}
               >
                 {keeping === "busy" ? "…" : keeping === "kept" ? "✓" : keeping === "no" ? "!" : "❤"}
               </button>

@@ -275,6 +275,14 @@
 .palais .rack-head .season-plus { margin-left: 0.4rem; }
 .palais .rack-hook-add { margin: 0 0 0.6rem; }
 .palais .rack-nudge .rack-off { color: #b3325a; font-weight: 700; }
+/* × takes a piece out of the closet; once it is out the same button is a +
+   that puts it back, and it fills in so the card reads as put away */
+.palais .rack-nudge .rack-out { color: #9a6b7c; font-weight: 700; }
+.palais .rack-nudge .rack-out.is-out {
+  border-color: var(--cat-hot, #d6247a);
+  background: var(--cat-hot, #d6247a);
+  color: #fff;
+}
 /* the moulding round the window's recess, and the brass hooks on it */
 .palais .closet-moulding,
 .palais .closet-moulding-corner {

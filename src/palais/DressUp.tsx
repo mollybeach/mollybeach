@@ -280,8 +280,11 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
     dragging.current = null;
   };
 
-  const on = SLOTS.map((s) => ({ slot: s, id: chosen[s.key] ?? null })).filter((w) => w.id);
-  const cardigan = chosen.cardigan ?? null;
+  /* anything whose garment has since left the wardrobe is quietly dropped: an
+     outfit is kept in the browser, so one saved before a piece was deleted
+     would otherwise bring the whole dress form down when it is opened */
+  const on = SLOTS.map((s) => ({ slot: s, id: chosen[s.key] ?? null })).filter((w) => w.id && garment(w.id));
+  const cardigan = chosen.cardigan && garment(chosen.cardigan) ? chosen.cardigan : null;
   /* with a coat on, the cardigan is ONLY its front strip: the whole picture
      is put away rather than hidden behind the coat, because a cardigan cut
      wider than the coat had its sleeves poking out either side of it */

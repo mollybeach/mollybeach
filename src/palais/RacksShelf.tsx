@@ -27,13 +27,18 @@ const ORDER = [
   "outer-right-top", "outer-right-second", "outer-right-upper", "outer-right-lower", "outer-right-bottom",
   "floor-front", "shoes",
 ];
-/** a drop-down of everything in the closet that isn't on these hooks, as little pictures, to hang one here with a tap */
-function HookPicker({ here, onPick, onClose }: { here: Set<string>; onPick: (id: string) => void; onClose: () => void }) {
+/**
+ * A drop-down of everything in the closet that isn't already on this rail, as
+ * little pictures, to put one here with a tap — no hunting for its card and
+ * dragging it across the page. Picking one takes it off whatever rail it was
+ * on and puts it on this one.
+ */
+function RackPicker({ where, here, onPick, onClose }: { where: string; here: Set<string>; onPick: (id: string) => void; onClose: () => void }) {
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const ids = Object.keys(CLOTHES).filter((id) => !here.has(id) && (!q || id.includes(q) || (garment(id)?.label ?? "").toLowerCase().includes(q)));
   return (
-    <div className="season-add rack-hook-add" role="dialog" aria-label="Hang something on the hooks">
+    <div className="season-add rack-hook-add" role="dialog" aria-label={`Put something on the ${where.toLowerCase()}`}>
       <div className="season-add-head">
         <input className="cat-input season-add-search" type="search" placeholder="Search the closet…" value={query} onChange={(e) => setQuery(e.target.value)} autoFocus />
         <button type="button" className="cat-mini" onClick={onClose}>
@@ -44,7 +49,7 @@ function HookPicker({ here, onPick, onClose }: { here: Set<string>; onPick: (id:
         <ul className="season-grid season-grid--add">
           {ids.map((id) => (
             <li key={id}>
-              <button type="button" title={`Hang ${garment(id)?.label ?? id} here`} aria-label={`Hang ${garment(id)?.label ?? id} here`} onClick={() => onPick(id)}>
+              <button type="button" title={`Put ${garment(id)?.label ?? id} here`} aria-label={`Put ${garment(id)?.label ?? id} here`} onClick={() => onPick(id)}>
                 <img src={closetSrc(id)} alt="" loading="lazy" decoding="async" />
                 <span aria-hidden className="season-add-plus">+</span>
               </button>
@@ -73,8 +78,21 @@ const rank = (id: string) => {
  * a finger scrolls the list as usual, so on a phone you tap a card to pick it
  * up, then tap where it should go: another card, to go in front of it, or a
  * rail's "+" to go last. The arrows nudge a piece one place along its rail.
+ *
+ * Each card also has an × to take that piece out of the closet, and a + to put
+ * it back. Taken out, it keeps its place on the rail and only stops being hung
+ * in the room, so putting it back never disturbs the arrangement.
  */
-export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string> }) {
+export function RacksShelf({
+  which,
+  hidden,
+  setHidden,
+}: {
+  which: Which;
+  /** the clothes taken out of the closet: still on their rail, just not shown */
+  hidden: Set<string>;
+  setHidden: (next: Set<string>) => void;
+}) {
   const order = useRackOrder(which);
   const [picked, setPicked] = useState<string | null>(null);
   const [dragging, setDragging] = useState<string | null>(null);
@@ -105,6 +123,14 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
   const lines = [...CLOSET_LINES[which]].sort((a, b) => rank(a.id) - rank(b.id));
   /** where a piece goes when it's taken off the hooks: where the closet keeps it, or else the window seat */
   const homeOf = (id: string) => lines.find((l) => !l.hooks && (l.ids as string[]).includes(id))?.id ?? "seat";
+
+  /** take a piece out of the closet, or put it back in */
+  const showOrNot = (id: string) => {
+    const next = new Set(hidden);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setHidden(next);
+  };
 
   const place = (line: string, index: number, id = picked) => {
     if (!id) return;
@@ -190,7 +216,10 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
       <p className="rack-intro">
         Drag the clothes to arrange the closet, or tap one and then tap where it goes. On each rail the first piece is at the
         front. Fold sections away to bring far-off rails closer; drop onto a folded one to put it at the back. The hooks round
-        the window have a + to hang anything there, and a − on each piece to take it down.
+        the window have a + to hang anything there, and a − on each piece to take it down. The × on any card takes that piece
+        out of the closet without losing its place on the rail; the + puts it back. The + at the end of a rail opens a list of
+        everything else in the closet, so you can put a piece here without finding its card first — it comes off whatever rail
+        it was on.
       </p>
       <div className="rack-folds">
         <button type="button" className="cat-btn cat-btn--ghost" onClick={() => fold(new Set(lines.map((l) => l.id)))}>
@@ -250,8 +279,13 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
                 </button>
               )}
             </div>
-            {hooked && adding === line.id && (
-              <HookPicker here={new Set(ids)} onClose={() => setAdding(null)} onPick={(id) => movePiece(which, id, line.id, ids.length)} />
+            {adding === line.id && (
+              <RackPicker
+                where={line.name}
+                here={new Set(ids)}
+                onClose={() => setAdding(null)}
+                onPick={(id) => movePiece(which, id, line.id, ids.length)}
+              />
             )}
             {!folded.has(line.id) && (
             <ul
@@ -327,6 +361,25 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
                           −
                         </button>
                       )}
+                      {/* out of the closet altogether: it keeps its place on
+                          the rail, so putting it back needs no rearranging */}
+                      <button
+                        type="button"
+                        className={`rack-out${hidden.has(id) ? " is-out" : ""}`}
+                        aria-pressed={hidden.has(id)}
+                        aria-label={
+                          hidden.has(id)
+                            ? `Put ${g?.label ?? id} back in the closet`
+                            : `Take ${g?.label ?? id} out of the closet`
+                        }
+                        title={hidden.has(id) ? "Put it back in the closet" : "Take it out of the closet"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          showOrNot(id);
+                        }}
+                      >
+                        {hidden.has(id) ? "+" : "×"}
+                      </button>
                     </span>
                   </li>
                 );
@@ -338,9 +391,12 @@ export function RacksShelf({ which, hidden }: { which: Which; hidden: Set<string
               >
                 <button
                   type="button"
-                  onClick={() => place(line.id, ids.length)}
-                  disabled={!picked}
-                  aria-label={`Put it at the back of ${line.name}`}
+                  aria-expanded={adding === line.id}
+                  onClick={() => (picked ? place(line.id, ids.length) : setAdding(adding === line.id ? null : line.id))}
+                  aria-label={
+                    picked ? `Put it at the back of ${line.name}` : `Put something on the ${line.name.toLowerCase()}`
+                  }
+                  title={picked ? "Put it here, at the back" : "Pick something to put here"}
                 >
                   +
                 </button>
