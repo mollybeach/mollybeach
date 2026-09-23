@@ -110,6 +110,7 @@ const WEAR: Partial<Record<string, Partial<(typeof FIT)[ClothesKind]>>> = {
   "cider-star-moon-fishnets": { top: 0.38, w: 0.3, h: 0.62 },  // waist to toe
   "cider-brown-knee-high-boots": { top: 0.66, w: 0.24, h: 0.34 },  // knee to sole
   "shein-fur-snow-boots": { top: 0.78, w: 0.3, h: 0.22 },          // mid-calf to sole
+  "amz-roller-skates": { top: 0.77, w: 0.3, h: 0.23 },             // high-top, and the wheels below her sole
   "ar-effortless-pant-black": { top: 0.4, w: 0.3, h: 0.55 },       // hip to ankle
   // a head scarf is a cap and two long tails: the hat box is a cap's worth of
   // room, so the tails would be crushed into her crown without this
