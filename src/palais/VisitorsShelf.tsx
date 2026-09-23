@@ -216,7 +216,12 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
   }, [more, logDone, log.length]);
 
   const rename = async (p: VisitorProfile) => {
-    const name = window.prompt(`Name for visitor ${p.visitor} (leave empty to remove the name)`, p.name ?? "");
+    // anyone named Molly is counted as Molly, however it is typed: her address
+    // changes often enough that she arrives as a new code every few days
+    const name = window.prompt(
+      `Name for visitor ${p.visitor} — call them Molly to hide their visits behind “Show my own visits”, or leave empty to remove the name`,
+      p.name ?? "",
+    );
     if (name === null) return;
     try {
       await nameVisitor(p.visitor, name, p.is_me);
