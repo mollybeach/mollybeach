@@ -27,10 +27,18 @@ const ON = `url("${process.env.PUBLIC_URL}/palais/clueless_right_arrow.png")`;
 const KEPT = "palais-dress-form";
 
 /** the rows, down the modal in the order she drew them, each with its stripe:
-    a rainbow from hot pink at the top, laid over the leopard at low opacity */
-const SLOTS = [
+    a rainbow from hot pink at the top, laid over the leopard at low opacity.
+ *
+ * There are two pages of them, and the switch in the corner turns from one to
+ * the other. The second page is the same seven bands of the body — head,
+ * throat, chest, over it, hands, waist, feet — holding the smaller things, so
+ * a row is always across from the part of her it belongs to. The stripes never
+ * move: only what is offered on them.
+ *
+ * Both pages dress the SAME figure. Turning the switch takes nothing off. */
+const CLOTHES_PAGE = [
   { key: "hat", label: "Hat", emoji: "👒", kinds: ["hat"], band: "255, 45, 190" },
-  { key: "extra", label: "Accessory", brief: "Accs.", emoji: "🎀", kinds: ["accessory"], band: "244, 40, 40" },
+  { key: "glasses", label: "Glasses", brief: "Specs", emoji: "🕶️", kinds: ["glasses"], band: "244, 40, 40" },
   { key: "top", label: "Shirt", emoji: "👚", kinds: ["top", "dress", "swim"], band: "255, 138, 0" },
   { key: "coat", label: "Coat", emoji: "🧥", kinds: ["coat"], band: "250, 214, 0" },
   { key: "bag", label: "Bag", emoji: "👜", kinds: ["bag"], band: "0, 205, 70" },
@@ -38,7 +46,21 @@ const SLOTS = [
   { key: "shoes", label: "Shoes", emoji: "👠", kinds: ["shoes"], band: "150, 50, 220" },
 ] as const;
 
-type SlotKey = (typeof SLOTS)[number]["key"];
+const EXTRAS_PAGE = [
+  { key: "bow", label: "Bows", emoji: "🎀", kinds: ["bow"], band: "255, 45, 190" },
+  { key: "neck", label: "Neck", emoji: "🧣", kinds: ["neck"], band: "244, 40, 40" },
+  { key: "wings", label: "Wings", emoji: "✨", kinds: ["accessory"], band: "255, 138, 0" },
+  { key: "cardigan", label: "Cardigan", brief: "Cardi", emoji: "🥼", kinds: ["cardigan"], band: "250, 214, 0" },
+  { key: "glove", label: "Gloves", emoji: "🧤", kinds: ["glove"], band: "0, 205, 70" },
+  { key: "belt", label: "Belts", emoji: "🪢", kinds: ["belt"], band: "45, 90, 230" },
+  { key: "sock", label: "Socks", emoji: "🧦", kinds: ["sock"], band: "150, 50, 220" },
+] as const;
+
+const PAGES = [CLOTHES_PAGE, EXTRAS_PAGE] as const;
+/** every row of both pages: what she is wearing is the whole of them */
+const SLOTS = [...CLOTHES_PAGE, ...EXTRAS_PAGE];
+
+type SlotKey = (typeof CLOTHES_PAGE)[number]["key"] | (typeof EXTRAS_PAGE)[number]["key"];
 
 /** a dress is one piece for two rows: it takes the skirt row with it.
     Gowns and robes are not offered here — they are their own occasion. */
@@ -52,15 +74,24 @@ const HEAD_TO_TOE: ClothesKind[] = ["dress"];
  * size of another just because it was photographed closer.
  */
 const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: number }> = {
+  bow: { top: 0.0, w: 0.22, h: 0.1 },                // in her hair, over a hat
   hat: { top: 0.0, w: 0.3, h: 0.14 },
-  accessory: { top: 0.14, w: 0.26, h: 0.13 },
+  glasses: { top: 0.14, w: 0.26, h: 0.13 },
+  // tall enough for a scarf to hang to the hip. A collar is wider than it is
+  // deep, so it still lands on the width and sits up under the chin.
+  neck: { top: 0.13, w: 0.22, h: 0.34 },
+  accessory: { top: 0.16, w: 0.62, h: 0.34 },        // wings, out past her arms
   top: { top: 0.18, w: 0.42, h: 0.28 },
   swim: { top: 0.19, w: 0.34, h: 0.3 },
+  cardigan: { top: 0.17, w: 0.46, h: 0.46 },
   coat: { top: 0.16, w: 0.5, h: 0.58 },
   robe: { top: 0.15, w: 0.54, h: 0.66 },
   dress: { top: 0.18, w: 0.5, h: 0.56 },
   gown: { top: 0.17, w: 0.58, h: 0.8 },
+  belt: { top: 0.37, w: 0.38, h: 0.08 },             // at her waist
   bottom: { top: 0.4, w: 0.4, h: 0.46 },
+  glove: { top: 0.46, w: 0.4, h: 0.14 },             // the pair, at her hands
+  sock: { top: 0.84, w: 0.28, h: 0.12 },             // ankle, under the shoe
   shoes: { top: 0.9, w: 0.3, h: 0.11 },
   bag: { top: 0.5, w: 0.24, h: 0.22, side: -0.3 },   // down by her hand
 };
@@ -68,12 +99,36 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
 /** the first two words of a name, which is all a phone has room for */
 const inBrief = (name: string) => name.split(/\s+/).slice(0, 2).join(" ");
 
+/** and twenty characters is all the strip beside her will take: past that a
+    name runs on under the window she stands in, so it is cut off here rather
+    than left to the stylesheet to hide */
+const cut = (name: string) => (name.length > 20 ? `${name.slice(0, 20).trimEnd()}…` : name);
+
 /** her own shape, so a box measured in her height can be given a width */
 const SHE = 415 / 1400;
 
-/** How they stack. The coat sits BEHIND what she has on — hung off her
-    shoulders the way a coat is in a lookbook, so the outfit still shows. */
-const LAYER: Record<SlotKey, number> = { coat: 2, bottom: 3, top: 4, shoes: 5, bag: 6, extra: 7, hat: 8 };
+/** How they stack, back to front. The coat sits BEHIND what she has on — hung
+    off her shoulders the way a coat is in a lookbook, so the outfit still
+    shows — and the cardigan between the coat and the shirt, which is the whole
+    reason for having both. Wings are behind everything; socks go under the
+    shoe and a bow on top of the hat. */
+const LAYER: Record<SlotKey, number> = {
+  wings: 1,
+  coat: 2,
+  cardigan: 3,
+  bottom: 4,
+  top: 5,
+  sock: 6,
+  shoes: 7,
+  belt: 8,
+  glove: 9,
+  bag: 10,
+  neck: 11,
+  /* her face is drawn again at 12 — see .du-face */
+  glasses: 13,
+  hat: 14,
+  bow: 15,
+};
 
 interface Nudge {
   dx: number;
@@ -109,6 +164,9 @@ const read = (): { chosen: Chosen; nudged: Record<string, Nudge> } => {
 export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () => void }) {
   const [{ chosen, nudged }, setOutfit] = useState(read);
   const [picked, setPicked] = useState<SlotKey | null>(null);
+  /** which set of rows the switch is showing. It dresses the same figure
+      either way, so nothing comes off when it turns. */
+  const [page, setPage] = useState(0);
   const form = useRef<HTMLDivElement>(null);
   const dragging = useRef<{ id: string; from: { x: number; y: number }; was: Nudge } | null>(null);
 
@@ -149,6 +207,8 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
     });
     setPicked(slot);
   }, []);
+
+  useEffect(() => setPicked(null), [page]);
 
   const nudge = (id: string, how: Partial<Nudge>) =>
     setOutfit((was) => ({
@@ -226,7 +286,7 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
               </em>
             ) : g ? (
               <>
-                <span className="du-long">{g.label}</span>
+                <span className="du-long">{cut(g.label)}</span>
                 <span className="du-short">{inBrief(g.label)}</span>
               </>
             ) : (
@@ -264,9 +324,26 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         <button type="button" className="du-close" onClick={onClose} aria-label="Close the dress form">
           ×
         </button>
+        {/* the switch: clothes on one side, the smaller things on the other.
+            It sits in the corner opposite the ×, clear of the rows, which run
+            the whole width of the panel. */}
+        <button
+          type="button"
+          className={`du-flip${page ? " is-on" : ""}`}
+          onClick={() => setPage((p) => (p + 1) % PAGES.length)}
+          aria-pressed={page === 1}
+          aria-label={page ? "Back to the clothes" : "On to the extras"}
+          title={page ? "Back to the clothes" : "On to the extras"}
+        >
+          {/* the mark is where the switch will take you, not where you are —
+              it reads with the label beside it: "on to the extras" 🎀 */}
+          <span className="du-flip-knob" aria-hidden>
+            {page ? "👗" : "🎀"}
+          </span>
+        </button>
 
         {/* the striped rows, right across the modal */}
-        <div className="du-rows">{SLOTS.map(row)}</div>
+        <div className="du-rows">{PAGES[page].map(row)}</div>
 
         {/* her, standing in the gap down the middle of them */}
         <div className="du-stand">
@@ -296,6 +373,11 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
                 />
               );
             })}
+            {/* her face again, laid over the clothes: the same picture of her
+                cut off just below the chin, so a collar or a high neckline
+                can't swallow her head. Only glasses, a hat and a bow go over
+                it, because those belong on a face. */}
+            <img className="du-face" src={MANNEQUIN} alt="" aria-hidden draggable={false} />
           </div>
         </div>
 

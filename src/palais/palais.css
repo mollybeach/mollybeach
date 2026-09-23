@@ -2370,6 +2370,50 @@
     0 4px 10px rgba(40, 25, 60, 0.35);
 }
 
+/* the switch, in the corner the × leaves free: clothes on one side of it, the
+   smaller things on the other. The rows run the full width of the panel, so
+   there is nowhere inside for it to stand. */
+.palais .du-flip {
+  --du-flip-w: 5rem;
+  --du-flip-knob: 2rem;
+  position: absolute;
+  top: -1.1rem;
+  left: -1.1rem;
+  z-index: 7;
+  width: var(--du-flip-w);
+  /* shorter than the × opposite it, though they hang from the same line: any
+     taller and its bottom corner rests on the first row's pill */
+  height: 2.4rem;
+  padding: 0;
+  border-radius: 4px;
+  border: 3px solid #17121f;
+  background: var(--du-purple);
+  cursor: pointer;
+  box-shadow:
+    inset 0 2px 0 var(--du-purple-lit),
+    inset 0 -2px 0 var(--du-purple-deep),
+    0 4px 10px rgba(40, 25, 60, 0.35);
+}
+.palais .du-flip-knob {
+  position: absolute;
+  top: 0.22rem;
+  bottom: 0.22rem;
+  left: 0.22rem;
+  width: var(--du-flip-knob);
+  display: grid;
+  place-items: center;
+  border-radius: 3px;
+  border: 2px solid #17121f;
+  background: #fdf8f0;
+  font-size: 1.05rem;
+  line-height: 1;
+  /* the 6px is the track's own two borders, which the width includes */
+  transition: translate 180ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
+}
+.palais .du-flip.is-on .du-flip-knob {
+  translate: calc(var(--du-flip-w) - var(--du-flip-knob) - 0.44rem - 6px) 0;
+}
+
 /* ---- the stripes: a row for each thing she can wear, right across ------- */
 
 /* right out to the panel's edges, so no bare leopard is left showing */
@@ -2461,7 +2505,9 @@
 /* the shoes sit at the very bottom of the modal: their pills ride a little
    higher so they aren't crowded against its edge */
 .palais .du-row--shoes .du-row-left,
-.palais .du-row--shoes .du-row-right { translate: 0 -8px; }
+.palais .du-row--shoes .du-row-right,
+.palais .du-row--sock .du-row-left,
+.palais .du-row--sock .du-row-right { translate: 0 -8px; }
 
 /* her, standing in the gap the rows leave down the middle */
 .palais .du-stand {
@@ -2489,6 +2535,22 @@
   touch-action: none;
 }
 .palais .du-body { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+/* the same picture of her laid over the clothes and cut off below the chin.
+   Measured off this figure: crown 0.02, chin 0.12, shoulders 0.19 — so 16%
+   is her face and a little of her neck, and nothing of her shoulders. */
+.palais .du-form {
+  --du-face: 16%;
+}
+.palais .du-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 12;
+  clip-path: inset(0 0 calc(100% - var(--du-face)) 0);
+  pointer-events: none;   /* it is a picture of her, not a thing to drag */
+}
 .palais .du-worn {
   position: absolute;
   translate: -50% 0;
@@ -2612,7 +2674,9 @@
   }
   /* the shoes sit lowest of all: another 8px of daylight under their pills */
   .palais .du-row--shoes .du-row-left,
-  .palais .du-row--shoes .du-row-right { translate: 0 -16px; }
+  .palais .du-row--shoes .du-row-right,
+  .palais .du-row--sock .du-row-left,
+  .palais .du-row--sock .du-row-right { translate: 0 -16px; }
   /* + and - leave her feet for the foot of the modal, one standing under
      each edge of the cream window she stands in. They are hung off the
      window itself, so they stay under its edges whatever its width. */
@@ -2633,6 +2697,9 @@
   /* "Dress Form" alone: the plaque stays one line and clear of the hat row */
   .palais .du-the { display: none; }
   .palais .du-title { white-space: nowrap; top: -2.7rem; }
+  /* the panel is nearly the width of the screen: the switch tucks in rather
+     than hanging off the corner, where it would fall off the side */
+  .palais .du-flip { --du-flip-w: 4.2rem; left: -0.5rem; top: -1.1rem; }
   .palais .du-backdrop { padding: 5cqh 3cqw 2cqh; }
   .palais .du-row-thumb { width: 1.4rem; height: 1.4rem; }
   .palais .du-row button { width: 1.5rem; height: 1.5rem; font-size: 0.85rem; }

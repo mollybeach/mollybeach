@@ -14,7 +14,26 @@
  * The wide photographs and the tall one for phones are measured separately.
  */
 
-export type ClothesKind = "coat" | "robe" | "gown" | "dress" | "top" | "bottom" | "swim" | "shoes" | "hat" | "bag" | "accessory";
+export type ClothesKind =
+  | "coat"
+  | "cardigan"
+  | "robe"
+  | "gown"
+  | "dress"
+  | "top"
+  | "bottom"
+  | "swim"
+  | "shoes"
+  | "sock"
+  | "hat"
+  | "bow"
+  | "glasses"
+  | "neck"
+  | "bag"
+  | "glove"
+  | "belt"
+  /** the catch-all: whatever has no shelf of its own yet. Today, wings. */
+  | "accessory";
 
 export interface Garment {
   label: string;
@@ -35,12 +54,12 @@ export const CLOTHES = wardrobe({
   "amz-lolita-maryjanes": { label: "Platform Mary Janes", store: "Amazon", bought: "2022-10", kind: "shoes" },
   "amz-maryjanes-kalstage": { label: "White double-strap Mary Janes", store: "Amazon", bought: "2023-05", kind: "shoes" },
   "amz-roller-skates": { label: "Light-up roller skates", store: "Amazon", bought: "2023-06", kind: "shoes" },
-  "amz-ruffle-socks": { label: "Ruffle ankle socks", store: "Amazon", bought: "2026-01", kind: "accessory" },
-  "amz-ski-gloves": { label: "Touchscreen ski gloves", store: "Amazon", bought: "2023-12", kind: "accessory" },
+  "amz-ruffle-socks": { label: "Ruffle ankle socks", store: "Amazon", bought: "2026-01", kind: "sock" },
+  "amz-ski-gloves": { label: "Touchscreen ski gloves", store: "Amazon", bought: "2023-12", kind: "glove" },
   "amz-tstrap-maryjanes": { label: "T-strap platform Mary Janes", store: "Amazon", bought: "2021-10", kind: "shoes" },
   "amz-tulle-dress-blue": { label: "Dusty blue tulle flower dress", store: "Amazon", bought: "2023-05", kind: "dress" },
   "amz-tulle-dress-green": { label: "Sage tulle flower dress", store: "Amazon", bought: "2023-05", kind: "dress" },
-  "shein-ballet-bows": { label: "Ballet streamer bows", store: "Shein", bought: "2025-11", kind: "accessory" },
+  "shein-ballet-bows": { label: "Ballet streamer bows", store: "Shein", bought: "2025-11", kind: "bow" },
   "shein-bow-loafers": { label: "Brown bow loafers", store: "Shein", bought: "2025-11", kind: "shoes" },
   "shein-cable-set": { label: "Cable knit cardigan & crochet skirt", store: "Shein", bought: "2025-11", kind: "dress" },
   "shein-check-cami": { label: "Academia check cami", store: "Shein · ROMWE", bought: "2025-11", kind: "top" },
@@ -58,7 +77,7 @@ export const CLOTHES = wardrobe({
   "temu-bow-handbag": { label: "White bow handbag", store: "Temu", bought: "2023-05", kind: "bag" },
   "temu-butterfly-scarf": { label: "Butterfly crochet kerchief", store: "Temu", bought: "2023-05", kind: "hat" },
   "temu-ditsy-splitdress": { label: "Ditsy floral puff-sleeve dress", store: "Temu", bought: "2023-05", kind: "dress" },
-  "temu-floral-gloves": { label: "Flower fingerless gloves", store: "Temu", bought: "2023-05", kind: "accessory" },
+  "temu-floral-gloves": { label: "Flower fingerless gloves", store: "Temu", bought: "2023-05", kind: "glove" },
   "temu-floral-tubedress": { label: "Floral ruffle tube dress", store: "Temu", bought: "2024-06", kind: "dress" },
   "temu-flower-dress-pink": { label: "Dusty pink ruched dress", store: "Temu", bought: "2024-06", kind: "dress" },
   "temu-fur-buckethat": { label: "Lime fluffy bucket hat", store: "Temu", bought: "2025-02", kind: "hat" },
@@ -68,7 +87,7 @@ export const CLOTHES = wardrobe({
   "temu-heart-bikini": { label: "Heart-link halter bikini", store: "Temu", bought: "2023-05", kind: "swim" },
   "temu-knit-miniskirt": { label: "White ribbed mini skirt", store: "Temu", bought: "2025-04", kind: "bottom" },
   "temu-knit-slipdress": { label: "Black & white bow slip dress", store: "Temu", bought: "2025-02", kind: "dress" },
-  "temu-lace-gloves": { label: "Pink mesh lace gloves", store: "Temu", bought: "2023-05", kind: "accessory" },
+  "temu-lace-gloves": { label: "Pink mesh lace gloves", store: "Temu", bought: "2023-05", kind: "glove" },
   "temu-laceup-dress": { label: "Lace-up backless dress", store: "Temu", bought: "2024-06", kind: "dress" },
   "temu-mantilla": { label: "Lace mantilla veil", store: "Temu", bought: "2023-05", kind: "hat" },
   "temu-offshoulder-dress": { label: "Black & white ruffle mini dress", store: "Temu", bought: "2025-05", kind: "dress" },
@@ -79,7 +98,7 @@ export const CLOTHES = wardrobe({
   "temu-satin-robe": { label: "Green satin robe", store: "Temu", bought: "2025-02", kind: "dress" },
   "temu-squareneck-dress": { label: "Black ribbon mini dress", store: "Temu", bought: "2024-06", kind: "dress" },
   "temu-strawberry-bandana": { label: "Crochet heart bandana", store: "Temu", bought: "2023-05", kind: "hat" },
-  "temu-tie-cardigan": { label: "Black tie-front cardigan", store: "Temu", bought: "2025-04", kind: "top" },
+  "temu-tie-cardigan": { label: "Black tie-front cardigan", store: "Temu", bought: "2025-04", kind: "cardigan" },
   "ref-melanie-top": { label: "Melanie Top", store: "Reformation", bought: "2025-08", kind: "top" },
   "ref-shai-dress": { label: "Shai Dress", store: "Reformation", bought: "2025-05", kind: "dress" },
   "ref-sutton-shorts": { label: "Sutton Jean Shorts", store: "Reformation", bought: "2026-05", kind: "bottom" },
@@ -92,20 +111,20 @@ export const CLOTHES = wardrobe({
   "dh-tweed-set-ivory": { label: "Ivory tweed jacket & pleated skirt", store: "DHgate", bought: "2026-03", kind: "dress" },
   "dh-tweed-set-black": { label: "Black tweed jacket & pleated skirt", store: "DHgate", bought: "2026-03", kind: "dress" },
   "dh-cc-bikini": { label: "Black string bikini", store: "DHgate", bought: "2026-03", kind: "swim" },
-  "dh-leather-belt": { label: "Black leather belt", store: "DHgate", bought: "2026-03", kind: "accessory" },
+  "dh-leather-belt": { label: "Black leather belt", store: "DHgate", bought: "2026-03", kind: "belt" },
   "dh-check-tote": { label: "Burberry check tote, red stripe", store: "DHgate", bought: "2026-03", kind: "bag" },
   "dh-rain-boots": { label: "Black rain boots", store: "DHgate", bought: "2025-12", kind: "shoes" },
   "dh-hobo-bag": { label: "Pink quilted hobo bag", store: "DHgate", bought: "2025-12", kind: "bag" },
   "dh-brown-tote": { label: "Burberry check tote", store: "DHgate", bought: "2025-05", kind: "bag" },
   "dh-cleo-bag": { label: "Mint Prada Re-Edition shoulder bag", store: "DHgate", bought: "2024-06", kind: "bag" },
   "cider-crochet-scarf": { label: "Daisy crochet kerchief", store: "Cider", bought: "2023-02", kind: "hat" },
-  "cider-rib-cardigan": { label: "Lime rib tie cardigan", store: "Cider", bought: "2023-02", kind: "top" },
+  "cider-rib-cardigan": { label: "Lime rib tie cardigan", store: "Cider", bought: "2023-02", kind: "cardigan" },
   "cider-houndstooth-dress": { label: "Houndstooth pinafore dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-ditsy-layered-dress": { label: "Blue ditsy tiered dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-jacquard-dress": { label: "White floral jacquard dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-embroidered-dress": { label: "White embroidered mini dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-tie-shoulder-dress": { label: "Lime tie-shoulder dress", store: "Cider", bought: "2023-02", kind: "dress" },
-  "cider-pearl-cardigan": { label: "Pastel pearl-button cardigan", store: "Cider", bought: "2023-02", kind: "top" },
+  "cider-pearl-cardigan": { label: "Pastel pearl-button cardigan", store: "Cider", bought: "2023-02", kind: "cardigan" },
   "cider-toile-dress": { label: "Toile de Jouy bow dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-corduroy-dress": { label: "Teal floral corduroy dress", store: "Cider", bought: "2023-02", kind: "dress" },
   "cider-lemon-dress": { label: "Lemon print ruffle dress", store: "Cider", bought: "2023-02", kind: "dress" },
@@ -125,7 +144,7 @@ export const CLOTHES = wardrobe({
   "ar-esquire-trench": { label: "The Esquire Short Trench Coat", store: "Aritzia · Babaton", bought: "2026-08", kind: "coat" },
   "nord-icon-blazer": { label: "The Icon Relaxed Blazer", store: "Nordstrom · Open Edit", bought: "2026-06", kind: "coat" },
   "ar-bloor-sweater": { label: "Bare Merino Wool Bloor Sweater", store: "Aritzia", bought: "2026-08", kind: "top" },
-  "ar-passage-cardigan": { label: "Passage Cardigan", store: "Aritzia · Babaton", bought: "2026-08", kind: "top" },
+  "ar-passage-cardigan": { label: "Passage Cardigan", store: "Aritzia · Babaton", bought: "2026-08", kind: "cardigan" },
   "ar-jewel-skort": { label: "Jewel Skort", store: "Aritzia", bought: "2026-08", kind: "bottom" },
   "cider-ruffle-skort": { label: "Chiffon ruffle hem mini skort", store: "TikTok Shop · Cider", bought: "2026-05", kind: "bottom" },
   "romi-alya-dress": { label: "Alya Maxi Dress", store: "Romi Fashion", bought: "2025-12", kind: "dress" },
@@ -138,10 +157,10 @@ export const CLOTHES = wardrobe({
   "tt-nidadie-set": { label: "Off-shoulder top & pleated skirt set", store: "TikTok Shop · NIDADIE", bought: "2025-03", kind: "dress" },
   "tt-black-slingbacks": { label: "Black patent buckle slingbacks", store: "TikTok Shop · Chic Materials", bought: "2026-06", kind: "shoes" },
   "tt-red-slingbacks": { label: "Red patent buckle slingbacks", store: "TikTok Shop · Chic Materials", bought: "2026-06", kind: "shoes" },
-  "tt-cat-eye-6pack": { label: "Retro cat eye sunglasses (6)", store: "TikTok Shop · Urban Optic", bought: "2026-09", kind: "accessory" },
-  "tt-beige-cat-eye": { label: "Cream cat eye sunglasses", store: "TikTok Shop · TAOGLASSES", bought: "2026-09", kind: "accessory" },
-  "tt-wine-oval-sunglasses": { label: "Wine oval sunglasses", store: "TikTok Shop · Chic Vizio", bought: "2026-09", kind: "accessory" },
-  "tt-satin-bow-ties": { label: "Satin bow hair ties", store: "TikTok Shop · NANYOU", bought: "2026-06", kind: "accessory" },
+  "tt-cat-eye-6pack": { label: "Retro cat eye sunglasses (6)", store: "TikTok Shop · Urban Optic", bought: "2026-09", kind: "glasses" },
+  "tt-beige-cat-eye": { label: "Cream cat eye sunglasses", store: "TikTok Shop · TAOGLASSES", bought: "2026-09", kind: "glasses" },
+  "tt-wine-oval-sunglasses": { label: "Wine oval sunglasses", store: "TikTok Shop · Chic Vizio", bought: "2026-09", kind: "glasses" },
+  "tt-satin-bow-ties": { label: "Satin bow hair ties", store: "TikTok Shop · NANYOU", bought: "2026-06", kind: "bow" },
   "tt-plaid-halter-dress": { label: "Vintage plaid halter dress with velvet bows", store: "TikTok Shop · SML Vogue", bought: "2026-09", kind: "dress" },
   "tt-plaid-blazer-set": { label: "Khaki plaid blazer & mini skirt set", store: "TikTok Shop · Chic Modern Suits", bought: "2026-08", kind: "dress" },
   "ed-keinan-shorts": { label: "Keinan Low Rise Denim Shorts", store: "TikTok Shop · Edikted", bought: "2026-03", kind: "bottom" },
@@ -150,7 +169,12 @@ export const CLOTHES = wardrobe({
   "temu-floral-lingerie-set": { label: "Floral embroidery lingerie set", store: "Temu", bought: "2024-05", kind: "swim" },
   "shein-bear-ear-bonnet": { label: "Fluffy bear-ear bonnet", store: "Shein", bought: "2024", kind: "hat" },
   "shein-black-fur-beanie": { label: "Black faux fur beanie", store: "Shein", bought: "2024", kind: "hat" },
-  "shein-sailor-collar": { label: "Rose Milk sailor collar", store: "Shein", bought: "2024", kind: "accessory" },
+  "shein-sailor-collar": { label: "Rose Milk sailor collar", store: "Shein", bought: "2024", kind: "neck" },
+  "chiffon-neck-scarf-black": { label: "Black chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
+  "chiffon-neck-scarf-yellow": { label: "Yellow chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
+  "chiffon-neck-scarf-navy": { label: "Navy chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
+  "chiffon-neck-scarf-green": { label: "Dark green chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
+  "chiffon-neck-scarf-ivory": { label: "Ivory chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
   "shein-green-organza-dress": { label: "Green dress with organza sleeves", store: "Shein", bought: "2024", kind: "dress" },
   "shein-lamb-bonnet": { label: "Lamb-ear lace bonnet", store: "Shein", bought: "2024", kind: "hat" },
   "shein-white-fur-hat": { label: "White faux fur hat", store: "Shein", bought: "2024", kind: "hat" },
@@ -169,7 +193,7 @@ export const CLOTHES = wardrobe({
   "burberry-canvas-tote": { label: "Burberry canvas tote", store: "Closet", bought: "2024", kind: "bag" },
   "prada-blue-bag": { label: "Baby blue Prada bag", store: "Closet", bought: "2024", kind: "bag" },
   "gucci-gg-shoulder-bag": { label: "Gucci GG shoulder bag", store: "Closet", bought: "2024", kind: "bag" },
-  "heart-sunglasses": { label: "Cream heart sunglasses", store: "Closet", bought: "2024", kind: "accessory" },
+  "heart-sunglasses": { label: "Cream heart sunglasses", store: "Closet", bought: "2024", kind: "glasses" },
   "pink-marabou-lingerie-set": { label: "Pink marabou robe & lilac lace set", store: "Closet", bought: "2024", kind: "swim" },
   "icelandic-white-fur-hat": { label: "Icelandic white fur hat", store: "Closet", bought: "2024", kind: "hat" },
   "rhone-utility-trench-navy": { label: "Utility trench coat, navy", store: "Rhone", bought: "", kind: "coat" },
@@ -178,15 +202,15 @@ export const CLOTHES = wardrobe({
   "blue-corset-mini-dress": { label: "Blue corset mini dress", store: "Closet", bought: "", kind: "dress" },
   "bw-bow-slingback-heels": { label: "Black-and-white bow slingback heels", store: "Closet", bought: "", kind: "shoes" },
   "sage-burgundy-bow-slingback-heels": { label: "Sage and burgundy bow slingback heels", store: "Closet", bought: "", kind: "shoes" },
-  "ivory-ribbon-hair-bow": { label: "Ivory oversized ribbon bow", store: "Closet", bought: "", kind: "accessory" },
+  "ivory-ribbon-hair-bow": { label: "Ivory oversized ribbon bow", store: "Closet", bought: "", kind: "bow" },
   "white-lace-pleated-mini-skirt": { label: "White lace pleated mini skirt", store: "Closet", bought: "", kind: "bottom" },
   "chanel-white-knit-tank-black-trim": { label: "White knit tank, black trim", store: "Closet", bought: "", kind: "top" },
   "chanel-white-pleated-knit-skirt": { label: "White pleated knit skirt, black hem", store: "Closet", bought: "", kind: "bottom" },
   "black-ruffle-pleated-skirt": { label: "Black ruffle pleated skirt", store: "Closet", bought: "", kind: "bottom" },
-  "black-long-ribbon-bow": { label: "Black long ribbon bow", store: "Closet", bought: "", kind: "accessory" },
+  "black-long-ribbon-bow": { label: "Black long ribbon bow", store: "Closet", bought: "", kind: "bow" },
   "yellow-bow-kitten-heels": { label: "Yellow bow kitten heels", store: "Closet", bought: "", kind: "shoes" },
   "black-belted-pleated-shorts": { label: "Black belted pleated shorts", store: "Closet", bought: "", kind: "bottom" },
-  "white-cat-eye-sunglasses": { label: "White cat-eye sunglasses", store: "Closet", bought: "", kind: "accessory" },
+  "white-cat-eye-sunglasses": { label: "White cat-eye sunglasses", store: "Closet", bought: "", kind: "glasses" },
   "black-beige-pleated-belted-dress": { label: "Black and beige pleated belted dress", store: "Closet", bought: "2026", kind: "dress" },
   "denim-corset-flared-dress": { label: "Denim corset flared midi dress", store: "Closet · Parker", bought: "", kind: "dress" },
   "maroon-wool-trench-coat": { label: "Maroon wool trench coat", store: "Closet", bought: "2016", kind: "coat" },
@@ -201,8 +225,8 @@ export const CLOTHES = wardrobe({
   "pink-sherpa-pom-pom-bucket-bag": { label: "Pink sherpa pom-pom bucket bag", store: "Closet", bought: "", kind: "bag" },
   "white-feather-angel-wings-halo-set": { label: "White feather angel wings & halo", store: "Closet", bought: "", kind: "accessory" },
   "black-feather-angel-wings-halo-set": { label: "Black feather angel wings & halo", store: "Closet", bought: "", kind: "accessory" },
-  "black-faux-fur-cuff-bracelets-pair": { label: "Black faux fur cuff bracelets (pair)", store: "Closet", bought: "", kind: "accessory" },
-  "white-faux-fur-cuff-bracelets-pair": { label: "White faux fur cuff bracelets (pair)", store: "Closet", bought: "", kind: "accessory" },
+  "black-faux-fur-cuff-bracelets-pair": { label: "Black faux fur cuff bracelets (pair)", store: "Closet", bought: "", kind: "glove" },
+  "white-faux-fur-cuff-bracelets-pair": { label: "White faux fur cuff bracelets (pair)", store: "Closet", bought: "", kind: "glove" },
   "white-prada-re-edition-shoulder-bag": { label: "White Prada Re-Edition shoulder bag", store: "Closet", bought: "", kind: "bag" },
   "louis-vuitton-damier-peep-toe-heels": { label: "Louis Vuitton Damier peep-toe heels", store: "Closet", bought: "", kind: "shoes" },
   "green-suede-lace-up-block-heels": { label: "Green suede lace-up block heels", store: "Closet", bought: "", kind: "shoes" },
@@ -236,7 +260,7 @@ export const CLOTHES = wardrobe({
   "outfit_suit_brocade_robe_crimson_gold_regal_sticker": { label: "Crimson suit under a gold brocade robe · black gloves and jeweled brooches", store: "Closet", bought: "", kind: "robe" },
   "cape_royal_pleated_jeweled_cobalt_blue_sticker": { label: "Royal cobalt blue pleated cape · jeweled capelet trimmed in ivory fur", store: "Closet", bought: "", kind: "robe" },
   "mughal-couture-ensemble": { label: "Mughal-inspired couture ensemble · black velvet cape painted with court scenes, over a gold-embroidered sherwani", store: "Closet", bought: "", kind: "robe" },
-  "cloud_cardigan_blue_white_knit_sticker": { label: "Blue cloud knit cardigan", store: "Closet", bought: "", kind: "top" },
+  "cloud_cardigan_blue_white_knit_sticker": { label: "Blue cloud knit cardigan", store: "Closet", bought: "", kind: "cardigan" },
   "red-faux-fur-round-hat": { label: "Red faux fur round hat", store: "Closet", bought: "", kind: "hat" },
   "pink-faux-fur-round-hat": { label: "Pink faux fur round hat", store: "Closet", bought: "", kind: "hat" },
   "green-faux-fur-round-hat": { label: "Green faux fur round hat", store: "Closet", bought: "", kind: "hat" },
@@ -268,6 +292,7 @@ export const closetSrc = (id: string) => `${process.env.PUBLIC_URL}/palais/close
 /** the catalogue's shelves in the closet, one per kind of thing */
 export const WARDROBE_SHELVES: { key: ClothesKind; name: string; emoji: string }[] = [
   { key: "coat", name: "Coats", emoji: "🧥" },
+  { key: "cardigan", name: "Cardigans", emoji: "🥼" },
   { key: "robe", name: "Robes", emoji: "👘" },
   { key: "gown", name: "Gowns", emoji: "👑" },
   { key: "dress", name: "Dresses", emoji: "👗" },
@@ -275,9 +300,15 @@ export const WARDROBE_SHELVES: { key: ClothesKind; name: string; emoji: string }
   { key: "bottom", name: "Skirts & shorts", emoji: "🩳" },
   { key: "swim", name: "Swim", emoji: "👙" },
   { key: "shoes", name: "Shoes", emoji: "👠" },
+  { key: "sock", name: "Socks & tights", emoji: "🧦" },
   { key: "hat", name: "Hats", emoji: "👒" },
+  { key: "bow", name: "Bows", emoji: "🎀" },
+  { key: "glasses", name: "Glasses", emoji: "🕶️" },
+  { key: "neck", name: "Collars & scarves", emoji: "🧣" },
   { key: "bag", name: "Bags", emoji: "👜" },
-  { key: "accessory", name: "Accessories", emoji: "🎀" },
+  { key: "glove", name: "Gloves & cuffs", emoji: "🧤" },
+  { key: "belt", name: "Belts", emoji: "🪢" },
+  { key: "accessory", name: "Accessories", emoji: "✨" },
 ];
 
 /* ---- where everything goes --------------------------------------------- */
@@ -375,7 +406,7 @@ const WIDE: Line[] = [
   // the bars added to the outer bays, left empty to be filled from the Racks page
   { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: ["yellow-floral-dress", "brown-bow-dress", "maroon-corduroy-overall-dress", "lavender-flower-dress", "strawberry-print-pink-string-bikini", "black-pink-trim-string-bikini", "grape-cluster-organza-mermaid-gown", "macaw-print-gold-silk-ball-gown", "midnight-star-flamingo-embroidered-gown", "midsommar-wildflower-gown"], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
   { id: "outer-right-top", name: "Outer right bay · top bar", ids: ["black-ruffle-pleated-skirt", "chanel-white-pleated-knit-skirt", "black-belted-pleated-shorts", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings"], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
-  { id: "outer-right-second", name: "Outer right bay · second bar", ids: ["temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
+  { id: "outer-right-second", name: "Outer right bay · second bar", ids: ["temu-floral-lingerie-set", "shein-sailor-collar", "chiffon-neck-scarf-black", "chiffon-neck-scarf-yellow", "chiffon-neck-scarf-navy", "chiffon-neck-scarf-green", "chiffon-neck-scarf-ivory", "pink-marabou-lingerie-set", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
   { id: "outer-right-bottom", name: "Outer right bay · bottom bar", ids: ["burberry-canvas-tote", "prada-blue-bag", "gucci-gg-shoulder-bag"], from: [1852, 772], to: [1662, 738], w: [92, 84], hang: true, z: 32 },
 ];
 
@@ -407,7 +438,7 @@ const TALL: Line[] = [
   { id: "right-shelf", name: "Right bay · shelf", ids: ["dh-cleo-bag", "black-long-ribbon-bow", "white-cat-eye-sunglasses"], from: [822, 848], to: [754, 842], w: [54, 48], z: 66 },
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [826, 652], to: [752, 672], w: [68, 60], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "temu-floral-lingerie-set", "shein-sailor-collar", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [158, 604], to: [206, 628], w: [46, 42], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "temu-floral-lingerie-set", "shein-sailor-collar", "chiffon-neck-scarf-black", "chiffon-neck-scarf-yellow", "chiffon-neck-scarf-navy", "chiffon-neck-scarf-green", "chiffon-neck-scarf-ivory", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [158, 604], to: [206, 628], w: [46, 42], hang: true, z: 46 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */
