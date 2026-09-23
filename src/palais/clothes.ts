@@ -122,7 +122,7 @@ export const CLOTHES = wardrobe({
   "dh-puffer-jacket": { label: "Red fur-hood parka", store: "DHgate", bought: "2026-03", kind: "coat" },
   "etsy-burgundy-velvet-hooded-coat": { label: "Burgundy velvet hooded coat", store: "Etsy", bought: "", kind: "coat", closed: true },
   "white-fur-hood-parka": { label: "White fur-hood parka", store: "Closet", bought: "", kind: "coat" },
-  "dh-fur-coat": { label: "Black faux fur coat", store: "DHgate", bought: "2026-03", kind: "coat", closed: true },
+  "dh-fur-coat": { label: "Black faux fur coat", store: "DHgate", bought: "2026-03", kind: "coat" },
   "dh-cc-bikini": { label: "Black string bikini", store: "DHgate", bought: "2026-03", kind: "swim" },
   "dh-leather-belt": { label: "Black leather belt", store: "DHgate", bought: "2026-03", kind: "belt" },
   "dh-check-tote": { label: "Burberry check tote, red stripe", store: "DHgate", bought: "2026-03", kind: "bag" },
