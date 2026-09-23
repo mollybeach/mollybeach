@@ -105,6 +105,7 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
 const WEAR: Partial<Record<string, Partial<(typeof FIT)[ClothesKind]>>> = {
   "cider-star-moon-fishnets": { top: 0.38, w: 0.3, h: 0.62 },  // waist to toe
   "cider-brown-knee-high-boots": { top: 0.66, w: 0.24, h: 0.34 },  // knee to sole
+  "ar-effortless-pant-black": { top: 0.4, w: 0.3, h: 0.55 },       // hip to ankle
 };
 
 /** the first two words of a name, which is all a phone has room for */
@@ -147,9 +148,11 @@ const LAYER: Record<SlotKey, number> = {
   /* 4 — .du-chest: a column of her, over the coat */
   /* 5 — .du-cardi-front: the cardigan's front again, over both */
   /* 6 — .du-crown: the top of her head, so a hood falls behind it */
-  bottom: 7,
-  top: 8,
-  sock: 9,
+  /* socks and tights go on first, so trousers and a skirt cover them — only
+     the shoe comes back over the top */
+  sock: 7,
+  bottom: 8,
+  top: 9,
   shoes: 10,
   belt: 11,
   glove: 12,
