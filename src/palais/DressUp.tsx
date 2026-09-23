@@ -118,6 +118,7 @@ const WEAR: Partial<Record<string, Partial<(typeof FIT)[ClothesKind]>>> = {
   "pink-floral-lace-trim-head-scarf": { top: 0.0, w: 0.32, h: 0.36 },  // crown to elbow
   "etsy-purple-veil": { top: 0.0, w: 0.32, h: 0.36 },               // crown to elbow
   "etsy-deep-blue-veil": { top: 0.0, w: 0.32, h: 0.36, side: 0.1 },
+  "etsy-copper-lace-veil": { top: 0.0, w: 0.32, h: 0.36, side: 0.17 },
   // its crown sits a third of the way across, not in the middle, so it is
   // nudged right to land on her head
   "etsy-bernadette-veil": { top: 0.0, w: 0.32, h: 0.36, side: 0.17 },
