@@ -104,6 +104,7 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
  */
 const WEAR: Partial<Record<string, Partial<(typeof FIT)[ClothesKind]>>> = {
   "cider-star-moon-fishnets": { top: 0.38, w: 0.3, h: 0.62 },  // waist to toe
+  "cider-brown-knee-high-boots": { top: 0.66, w: 0.24, h: 0.34 },  // knee to sole
 };
 
 /** the first two words of a name, which is all a phone has room for */
