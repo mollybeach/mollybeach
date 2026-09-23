@@ -111,6 +111,16 @@ const WEAR: Partial<Record<string, Partial<(typeof FIT)[ClothesKind]>>> = {
   // a head scarf is a cap and two long tails: the hat box is a cap's worth of
   // room, so the tails would be crushed into her crown without this
   "lavender-lace-head-scarf": { top: 0.0, w: 0.22, h: 0.3 },       // crown to chest
+  "etsy-green-lace-veil": { top: 0.0, w: 0.3, h: 0.32 },           // crown to shoulder
+  "light-blue-floral-lace-trim-head-scarf": { top: 0.0, w: 0.28, h: 0.34 },  // crown to shoulder
+  "etsy-floral-embroidered-veil": { top: 0.0, w: 0.3, h: 0.34 },   // crown to shoulder
+  "etsy-gold-floral-veil": { top: 0.0, w: 0.32, h: 0.38 },          // crown to elbow
+  "pink-floral-lace-trim-head-scarf": { top: 0.0, w: 0.32, h: 0.36 },  // crown to elbow
+  "etsy-purple-veil": { top: 0.0, w: 0.32, h: 0.36 },               // crown to elbow
+  // A cathedral veil. Its picture is not centred on the crown — the head sits
+  // at a seventh of the way across and the train sweeps off to the right — so
+  // it is pushed right until the crown lands on her head.
+  "etsy-black-gold-veil-long": { top: 0.0, w: 0.7, h: 0.86, side: 0.86 },
 };
 
 /** the first two words of a name, which is all a phone has room for */
