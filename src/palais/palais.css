@@ -2559,7 +2559,13 @@
   /* Where each band of her starts and stops, down her height. Measured off
      this figure: crown 0.02, hairline 0.05, chin 0.12, shoulders 0.19.
      Every one is a percentage, so they hold at any size she is drawn. */
-  --du-face-top: 6%;    /* below the hairline: where a hat stops covering her */
+  /* Where her face begins showing through a hat. Not a line across her brow —
+     a dome, struck from well below so it curves the way her skull does: at the
+     middle of her forehead it reaches --du-brow, and it falls away towards her
+     temples. Wider than her head, so the sides fade rather than cut. */
+  --du-brow: 3.5%;      /* the top of the dome, over the middle of her forehead */
+  --du-brow-wide: 28%;  /* how far across her it runs */
+  --du-brow-deep: 17%;  /* how far below it the curve is struck from */
   --du-face: 12%;       /* her chin */
   --du-neck-high: 14.5%;/* the throat, drawn over everything */
   --du-neck-mid: 17%;   /* where a scarf wraps, and only a scarf */
@@ -2671,10 +2677,20 @@
   -webkit-mask-image: var(--du-scoop);
   mask-image: var(--du-scoop);
 }
-/* her face: the hat goes under it, which is what scoops the hat */
+/* Her face: the hat goes under it, which is what scoops the hat. The clip
+   holds the bottom, at her chin; the dome holds the top. */
 .palais .du-face {
   z-index: 17;
-  clip-path: inset(var(--du-face-top) 0 calc(100% - var(--du-face)) 0);
+  --du-dome: radial-gradient(
+    ellipse var(--du-brow-wide) var(--du-brow-deep) at 50% calc(var(--du-brow) + var(--du-brow-deep)),
+    /* solid almost to the edge: a wide fade lets a hat show through her face
+       like gauze, so only the last of the curve is soft */
+    #000 91%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--du-dome);
+  mask-image: var(--du-dome);
+  clip-path: inset(0 0 calc(100% - var(--du-face)) 0);
 }
 /* her throat, over the whole pile: nothing closes over the top of her neck */
 .palais .du-neck-high {
