@@ -2507,17 +2507,15 @@
 }
 .palais .du-worn:active { cursor: grabbing; }
 .palais .du-worn.is-picked { outline: 2px dashed rgba(184, 80, 111, 0.85); outline-offset: 3px; }
-/* the pair of them, and the line of help that stands in for them, sit just
-   under her feet — hung on the panel rather than inside her window, which a
-   phone clips */
-.palais .du-handles,
-.palais .du-hint {
+/* the pair of them sit just under her feet, hung on the panel rather than
+   inside the window she stands in */
+.palais .du-handles {
   position: absolute;
   left: 50%;
   bottom: 2.42rem;
   translate: -50% 0;
   width: var(--du-stand, 19rem);
-  z-index: 5;
+  z-index: 9;               /* over her and everything she has on */
 }
 .palais .du-handles {
   display: flex;
@@ -2539,7 +2537,9 @@
   cursor: pointer;
 }
 .palais .du-picked-name { font-size: 0.72rem; color: #7a2a55; max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.palais .du-hint { margin: 0; font-size: 0.7rem; color: #a2657f; text-align: center; }
+/* the line of help rides between the two of them until something is picked */
+.palais .du-hint { flex: 1; min-width: 0; margin: 0; font-size: 0.7rem; color: #a2657f; text-align: center; }
+.palais .du-handles button:disabled { opacity: 0.4; cursor: default; }
 
 .palais .du-foot {
   position: absolute;
@@ -2581,14 +2581,21 @@
   }
   /* a phone has less room either side of her, so she stands narrower — and
      every tenth of a rem here is a letter of a name that fits beside her */
-  .palais .du-panel { --du-stand: 7.4rem; }
-  .palais .du-row { gap: 0.15rem; padding: 0 0.15rem; }
-  .palais .du-row-left, .palais .du-row-right { padding: 0.2rem 0.25rem; gap: 0.2rem; }
-  .palais .du-row-what { font-size: 0.66rem; }
-  /* small enough that two words fit beside the arrow in the strip of room
-     a phone leaves either side of her */
-  .palais .du-row-name { font-size: 0.64rem; letter-spacing: -0.01em; }
-  .palais .du-row .du-arrow { width: 1.9rem; height: 1.2rem; }
+  /* as wide as the room either side of her allows. The subtraction leaves a
+     constant strip for the pills whatever the phone's width, and the cap
+     stops her sprawling on a big one. No side padding on the row: it would
+     make the middle column narrower than the window measured against the
+     panel, and she'd sit over the pills by the difference. */
+  .palais .du-panel { --du-stand: min(12rem, calc(100% - 11.9rem)); }
+  .palais .du-row { gap: 0.15rem; padding: 0; }
+  .palais .du-row-left, .palais .du-row-right { padding: 0.2rem 0.2rem; gap: 0.15rem; }
+  .palais .du-row-what { font-size: 0.6rem; }
+  /* what a thing is called is dropped on a phone: the right pill is the
+     arrow alone, which leaves the room either side of her to the clothes */
+  .palais .du-row-name { display: none; }
+  /* every bit the left pill gives back is a bit her window gets wider, since
+     the row's middle column has to stay centred under her */
+  .palais .du-row .du-arrow { width: 1.6rem; height: 1.1rem; }
   /* a phone has no room for "Take it all off": it just says Off */
   .palais .du-long { display: none; }
   .palais .du-short { display: inline; }
@@ -2616,17 +2623,18 @@
     pointer-events: none;         /* only the two buttons are live */
   }
   .palais .du-handles button { pointer-events: auto; }
-  /* a coat is half again as wide as she is, and a phone has no room for it
-     to spill over the rows and cover what things are called. Her window
-     becomes a window: whatever leans out of it is cut off at the frame. */
-  .palais .du-stand { overflow: hidden; }
+  /* nothing is cut off at the frame: a coat wider than she is leans out over
+     the rows, which is how you see the whole of it */
+  .palais .du-stand { overflow: visible; }
+  /* and no room for the line of help — it was sprawling over her feet */
+  .palais .du-hint { display: none; }
   /* what she has hold of is already named in its own row opposite */
   .palais .du-picked-name { display: none; }
   /* "Dress Form" alone: the plaque stays one line and clear of the hat row */
   .palais .du-the { display: none; }
   .palais .du-title { white-space: nowrap; top: -2.7rem; }
   .palais .du-backdrop { padding: 5cqh 3cqw 2cqh; }
-  .palais .du-row-thumb { width: 1.6rem; height: 1.6rem; }
+  .palais .du-row-thumb { width: 1.4rem; height: 1.4rem; }
   .palais .du-row button { width: 1.5rem; height: 1.5rem; font-size: 0.85rem; }
   .palais .du-slot-what { font-size: 0.68rem; }
   .palais .du-slot-now { font-size: 0.68rem; min-height: 2.1rem; }

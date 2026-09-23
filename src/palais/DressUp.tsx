@@ -30,7 +30,7 @@ const KEPT = "palais-dress-form";
     a rainbow from hot pink at the top, laid over the leopard at low opacity */
 const SLOTS = [
   { key: "hat", label: "Hat", emoji: "👒", kinds: ["hat"], band: "255, 45, 190" },
-  { key: "extra", label: "Accessory", emoji: "🎀", kinds: ["accessory"], band: "244, 40, 40" },
+  { key: "extra", label: "Accessory", brief: "Accs.", emoji: "🎀", kinds: ["accessory"], band: "244, 40, 40" },
   { key: "top", label: "Shirt", emoji: "👚", kinds: ["top", "dress", "swim"], band: "255, 138, 0" },
   { key: "coat", label: "Coat", emoji: "🧥", kinds: ["coat"], band: "250, 214, 0" },
   { key: "bag", label: "Bag", emoji: "👜", kinds: ["bag"], band: "0, 205, 70" },
@@ -299,18 +299,32 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
           </div>
         </div>
 
-        {/* outside the window she stands in, not inside it: a phone clips that
-            window to keep a wide coat off the rows, and these must not be
-            clipped with it */}
-        {pickedId && pickedNudge ? (
-          <div className="du-handles">
-            <button type="button" onClick={() => nudge(pickedId, { scale: Math.max(0.3, pickedNudge.scale / 1.1) })} aria-label="Smaller">−</button>
+        {/* always at the foot of the modal, whether or not she has hold of
+            anything — they were disappearing the moment nothing was picked,
+            which is exactly when you go looking for them */}
+        <div className="du-handles">
+          <button
+            type="button"
+            disabled={!pickedId || !pickedNudge}
+            onClick={() => pickedId && pickedNudge && nudge(pickedId, { scale: Math.max(0.3, pickedNudge.scale / 1.1) })}
+            aria-label="Smaller"
+          >
+            −
+          </button>
+          {pickedId ? (
             <span className="du-picked-name">{garment(pickedId)?.label}</span>
-            <button type="button" onClick={() => nudge(pickedId, { scale: Math.min(3, pickedNudge.scale * 1.1) })} aria-label="Bigger">+</button>
-          </div>
-        ) : (
-          <p className="du-hint">Arrow through the closet either side. Drag anything on her to sit it right.</p>
-        )}
+          ) : (
+            <span className="du-hint">Arrow through the closet either side. Drag anything on her to sit it right.</span>
+          )}
+          <button
+            type="button"
+            disabled={!pickedId || !pickedNudge}
+            onClick={() => pickedId && pickedNudge && nudge(pickedId, { scale: Math.min(3, pickedNudge.scale * 1.1) })}
+            aria-label="Bigger"
+          >
+            +
+          </button>
+        </div>
 
         <div className="du-foot">
           {/* nothing on the left: it holds the column so Put it back stays
