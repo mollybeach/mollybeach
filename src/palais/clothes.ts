@@ -71,7 +71,7 @@ export const CLOTHES = wardrobe({
   "amz-tulle-dress-green": { label: "Sage tulle flower dress", store: "Amazon", bought: "2023-05", kind: "dress" },
   "shein-ballet-bows": { label: "Ballet streamer bows", store: "Shein", bought: "2025-11", kind: "bow" },
   "shein-bow-loafers": { label: "Brown bow loafers", store: "Shein", bought: "2025-11", kind: "shoes" },
-  "shein-cable-set": { label: "Cable knit cardigan & crochet skirt", store: "Shein", bought: "2025-11", kind: "dress" },
+  "shein-cable-set": { label: "Cable knit polo sweater & pleated skirt", store: "Shein", bought: "2025-11", kind: "dress" },
   "shein-check-cami": { label: "Academia check cami", store: "Shein · ROMWE", bought: "2025-11", kind: "top" },
   "shein-fairisle-skirt": { label: "Fair Isle sweater skirt", store: "Shein · ROMWE", bought: "2025-11", kind: "bottom" },
   "shein-fluffy-shawl": { label: "Fluffy hooded shawl", store: "Shein", bought: "2026-03", kind: "coat" },
@@ -186,6 +186,10 @@ export const CLOTHES = wardrobe({
   "tt-black-slingbacks": { label: "Black patent buckle slingbacks", store: "TikTok Shop · Chic Materials", bought: "2026-06", kind: "shoes" },
   "tt-red-slingbacks": { label: "Red patent buckle slingbacks", store: "TikTok Shop · Chic Materials", bought: "2026-06", kind: "shoes" },
   "tt-cat-eye-6pack": { label: "Retro cat eye sunglasses (6)", store: "TikTok Shop · Urban Optic", bought: "2026-09", kind: "glasses" },
+  "gold-round-pink-lens-sunglasses": { label: "Gold round sunglasses, pink lenses", store: "Closet", bought: "", kind: "glasses" },
+  "black-cat-eye-sunglasses": { label: "Black cat-eye sunglasses", store: "Closet", bought: "", kind: "glasses" },
+  "black-cat-eye-pink-lens-sunglasses": { label: "Black cat-eye sunglasses, pink lenses", store: "Closet", bought: "", kind: "glasses" },
+  "butterfly-rhinestone-sunglasses-purple": { label: "Butterfly rhinestone sunglasses, purple lenses", store: "Closet", bought: "", kind: "glasses" },
   "tt-beige-cat-eye": { label: "Cream cat eye sunglasses", store: "TikTok Shop · TAOGLASSES", bought: "2026-09", kind: "glasses" },
   "tt-wine-oval-sunglasses": { label: "Wine oval sunglasses", store: "TikTok Shop · Chic Vizio", bought: "2026-09", kind: "glasses" },
   "tt-satin-bow-ties": { label: "Satin bow hair ties", store: "TikTok Shop · NANYOU", bought: "2026-06", kind: "bow" },
@@ -432,7 +436,7 @@ const WIDE: Line[] = [
   { id: "outer-right-upper", name: "Outer right shelves · upper", ids: ["dh-check-tote", "dh-hobo-bag"], from: [1840, 546], to: [1675, 548], w: [94, 86], z: 30 },
   { id: "outer-right-lower", name: "Outer right shelves · lower", ids: ["dh-brown-tote", "dh-cleo-bag"], from: [1845, 752], to: [1680, 716], w: [98, 90], z: 32 },
   // the bottom row of cubbies: sunglasses
-  { id: "cubby-row-3", name: "Cubbies · bottom row", ids: ["tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "heart-sunglasses", "white-cat-eye-sunglasses"], from: [487, 772], to: [543, 766], w: [27, 26], z: 36 },
+  { id: "cubby-row-3", name: "Cubbies · bottom row", ids: ["tt-cat-eye-6pack", "gold-round-pink-lens-sunglasses", "black-cat-eye-sunglasses", "black-cat-eye-pink-lens-sunglasses", "butterfly-rhinestone-sunglasses-purple", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "heart-sunglasses", "white-cat-eye-sunglasses"], from: [487, 772], to: [543, 766], w: [27, 26], z: 36 },
   // the second bar in the inner right bay, and the bar in the bottom of the narrow left bay
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank"], from: [1598, 404], to: [1474, 438], w: [100, 92], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [338, 714], to: [432, 694], w: [84, 76], hang: true, z: 48 },
@@ -463,7 +467,7 @@ const TALL: Line[] = [
   // on the tiles in front
   { id: "floor-front", name: "On the floor · front", ids: ["ivory-ribbon-hair-bow"], from: [140, 1520], to: [800, 1520], w: [58, 58], z: 50 },
   { id: "cubby-left", name: "Cubbies · back left", ids: ["temu-butterfly-scarf", "temu-strawberry-bandana", "temu-lace-gloves", "temu-floral-gloves", "amz-ski-gloves", "amz-ruffle-socks", "cider-star-moon-fishnets", "dh-leather-belt"], from: [112, 968], to: [180, 1002], w: [40, 40], z: 45 },
-  { id: "cubby-right", name: "Cubbies · back right", ids: ["cider-crochet-scarf", "tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "tt-satin-bow-ties", "heart-sunglasses"], from: [648, 952], to: [716, 986], w: [40, 40], z: 45 },
+  { id: "cubby-right", name: "Cubbies · back right", ids: ["cider-crochet-scarf", "tt-cat-eye-6pack", "gold-round-pink-lens-sunglasses", "black-cat-eye-sunglasses", "black-cat-eye-pink-lens-sunglasses", "butterfly-rhinestone-sunglasses-purple", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "tt-satin-bow-ties", "heart-sunglasses"], from: [648, 952], to: [716, 986], w: [40, 40], z: 45 },
   { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks", "shein-fur-snow-boots", "bw-bow-slingback-heels", "sage-burgundy-bow-slingback-heels", "yellow-bow-kitten-heels", "black-patent-chain-platform-loafers", "black-patent-triple-strap-platform-mary-janes", "louis-vuitton-damier-peep-toe-heels", "green-suede-lace-up-block-heels", "cider-brown-knee-high-boots", "black-white-tstrap-pointed-pumps", "black-patent-gold-buckle-mary-jane-heels"], from: [120, 1650], to: [820, 1650], w: [72, 72], z: 60 },
   // the outer left bay (a phone crops some of it) and the shelf in the inner right bay
   { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "cider-brown-floral-mermaid-maxi", "ivory-strapless-full-skirt-maxi-dress", "yellow-charlotte-dress"], from: [84, 628], to: [140, 672], w: [80, 70], hang: true, z: 80 },

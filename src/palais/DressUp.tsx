@@ -76,7 +76,9 @@ const HEAD_TO_TOE: ClothesKind[] = ["dress"];
 const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: number }> = {
   bow: { top: 0.0, w: 0.22, h: 0.1 },                // in her hair, over a hat
   hat: { top: 0.0, w: 0.3, h: 0.14 },
-  glasses: { top: 0.14, w: 0.26, h: 0.13 },
+  // on her face, not her collarbone: her eyes are at 0.075 of her height and
+  // a pair of sunglasses is a little wider than her head
+  glasses: { top: 0.055, w: 0.14, h: 0.06 },
   // tall enough for a scarf to hang to the hip. A collar is wider than it is
   // deep, so it still lands on the width and sits up under the chin.
   neck: { top: 0.13, w: 0.22, h: 0.34 },
