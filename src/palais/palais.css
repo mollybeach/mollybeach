@@ -2548,21 +2548,130 @@
  *
  * Above her crown there is nothing to hide, so the band leaves it alone. */
 .palais .du-form {
-  --du-face-top: 6%;
-  /* her chin is at 12%: the band stops just under it, and no lower. Any more
-     neck than this draws over a scarf where the scarf should be wrapping
-     round her. */
-  --du-face: 13%;
+  /* Where each band of her starts and stops, down her height. Measured off
+     this figure: crown 0.02, hairline 0.05, chin 0.12, shoulders 0.19.
+     Every one is a percentage, so they hold at any size she is drawn. */
+  --du-face-top: 6%;    /* below the hairline: where a hat stops covering her */
+  --du-face: 12%;       /* her chin */
+  --du-neck-high: 14.5%;/* the throat, drawn over everything */
+  --du-neck-mid: 17%;   /* where a scarf wraps, and only a scarf */
+  /* the bottom of her neck is the one edge of these bands you actually see,
+     so it is not cut straight across: it is scooped, like a neckline */
+  --du-scoop-w: 25%;    /* how wide the scoop is */
+  --du-scoop-y: 10.5%;  /* where its curve is struck from */
+  --du-scoop-r: 6.5%;   /* and how deep it falls */
+  /* All the way down to her feet. It stops mattering below a coat's hem —
+     below that it is the same pixels the figure already draws — but running
+     it to the end is what leaves no edge to see, at any length of coat. */
+  --du-chest: 100%;
+  --du-chest-side: 36%; /* cut in from each side: a centre column, no shoulders */
+
+  /* The cardigan's front, which a coat leaves showing. Not a hard cut: a
+     rectangle taken out of a flat photograph of a cardigan shows its straight
+     edges against the coat. It is faded out towards the sides instead, so the
+     knit thins away into the coat's own fronts. */
+  --du-cardi-gone: 34%;   /* fully gone by here, in from each side */
+  --du-cardi-solid: 40%;  /* and fully there by here */
+  --du-cardi-top: 15%;    /* its own collar and shoulders fade off the top,
+                             because a coat's collar is over them */
+
+  --du-crown: 6%;       /* the top of her head, which a hood goes behind */
 }
-.palais .du-face {
+.palais .du-chest,
+.palais .du-crown,
+.palais .du-neck-mid,
+.palais .du-face,
+.palais .du-neck-high {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  z-index: 13;            /* over the hat, under the glasses and the bow */
+  pointer-events: none;   /* they are pictures of her, not things to drag */
+}
+/* Her low neck, chest and a narrow sliver straight down the middle of her —
+   and nothing of her shoulders or her arms, which is why this one is cut in
+   from the sides as well as top and bottom. A shirt or a dress is worn over
+   it; a cardigan or a coat goes behind it, so an open coat shows the length
+   of her down the gap between its fronts, the way it does on a rail. */
+.palais .du-chest {
+  z-index: 4;
+  /* faded at its edges rather than cut, for the same reason the cardigan is:
+     a hard rectangle of her shows its corners against a coat's collar the
+     moment the coat is sized up past it */
+  --du-chest-mask:
+    linear-gradient(
+      90deg,
+      transparent calc(var(--du-chest-side) - 5%),
+      #000 var(--du-chest-side),
+      #000 calc(100% - var(--du-chest-side)),
+      transparent calc(100% - var(--du-chest-side) + 5%)
+    ),
+    linear-gradient(180deg, transparent var(--du-neck-mid), #000 calc(var(--du-neck-mid) + 5%));
+  -webkit-mask-image: var(--du-chest-mask);
+  mask-image: var(--du-chest-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  clip-path: inset(0 0 calc(100% - var(--du-chest)) 0);
+}
+/* The top of her head, drawn over the coat alone. A hood is behind your head,
+   not on top of it — but a hat is on top, so this sits under the hat and over
+   the coat. It stops where the face band starts. */
+.palais .du-crown {
+  z-index: 6;
+  clip-path: inset(0 0 calc(100% - var(--du-crown)) 0);
+}
+
+/* The cardigan's own front, over the coat: the middle of it, thinning away to
+   nothing towards the sides. Its sleeves and shoulders stay behind the coat,
+   where a coat puts them. */
+.palais .du-cardi-front {
+  position: absolute;
+  translate: -50% 0;
+  object-fit: contain;
+  object-position: center top;
+  max-width: none;
+  pointer-events: none;   /* the cardigan underneath is the one you drag */
+  filter: drop-shadow(0 3px 5px rgba(60, 30, 40, 0.28));
+  --du-cardi-mask:
+    linear-gradient(
+      90deg,
+      transparent var(--du-cardi-gone),
+      #000 var(--du-cardi-solid),
+      #000 calc(100% - var(--du-cardi-solid)),
+      transparent calc(100% - var(--du-cardi-gone))
+    ),
+    linear-gradient(180deg, transparent var(--du-cardi-top), #000 calc(var(--du-cardi-top) + 7%));
+  -webkit-mask-image: var(--du-cardi-mask);
+  mask-image: var(--du-cardi-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* the middle of her neck: over everything a scarf is not, and the lowest of
+   the bands, so its bottom is the edge that shows. Scooped rather than cut:
+   deepest down the middle of her throat, rising and fading away towards her
+   shoulders, the shape of a neckline instead of a ruled line. */
+.palais .du-neck-mid {
+  z-index: 14;
+  clip-path: inset(var(--du-neck-high) 0 0 0);
+  --du-scoop: radial-gradient(
+    ellipse var(--du-scoop-w) var(--du-scoop-r) at 50% var(--du-scoop-y),
+    #000 68%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--du-scoop);
+  mask-image: var(--du-scoop);
+}
+/* her face: the hat goes under it, which is what scoops the hat */
+.palais .du-face {
+  z-index: 17;
   clip-path: inset(var(--du-face-top) 0 calc(100% - var(--du-face)) 0);
-  pointer-events: none;   /* it is a picture of her, not a thing to drag */
+}
+/* her throat, over the whole pile: nothing closes over the top of her neck */
+.palais .du-neck-high {
+  z-index: 20;
+  clip-path: inset(var(--du-face) 0 calc(100% - var(--du-neck-high)) 0);
 }
 .palais .du-worn {
   position: absolute;

@@ -83,8 +83,8 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
   accessory: { top: 0.16, w: 0.62, h: 0.34 },        // wings, out past her arms
   top: { top: 0.18, w: 0.42, h: 0.28 },
   swim: { top: 0.19, w: 0.34, h: 0.3 },
-  cardigan: { top: 0.17, w: 0.46, h: 0.46 },
-  coat: { top: 0.16, w: 0.5, h: 0.58 },
+  cardigan: { top: 0.15, w: 0.46, h: 0.46 },
+  coat: { top: 0.14, w: 0.5, h: 0.58 },
   robe: { top: 0.15, w: 0.54, h: 0.66 },
   dress: { top: 0.18, w: 0.5, h: 0.56 },
   gown: { top: 0.17, w: 0.58, h: 0.8 },
@@ -107,6 +107,20 @@ const cut = (name: string) => (name.length > 20 ? `${name.slice(0, 20).trimEnd()
 /** her own shape, so a box measured in her height can be given a width */
 const SHE = 415 / 1400;
 
+/** where a piece hangs on her: the same box for everything of a kind, with
+    the picture fitted inside it rather than deciding its own size. Kept apart
+    from the drawing so the cardigan can be drawn twice in the same place. */
+const place = (id: string, nudge?: Nudge): React.CSSProperties => {
+  const fit = FIT[garment(id)!.kind];
+  const n = nudge ?? STILL;
+  return {
+    width: `${((fit.w / SHE) * n.scale * 100).toFixed(1)}%`,
+    height: `${(fit.h * n.scale * 100).toFixed(1)}%`,
+    top: `${((fit.top + n.dy) * 100).toFixed(1)}%`,
+    left: `${(50 + (fit.side ?? 0) * 100 + n.dx * 100).toFixed(1)}%`,
+  };
+};
+
 /** How they stack, back to front. The coat sits BEHIND what she has on — hung
     off her shoulders the way a coat is in a lookbook, so the outfit still
     shows — and the cardigan between the coat and the shirt, which is the whole
@@ -114,23 +128,34 @@ const SHE = 415 / 1400;
     shoe and a bow on top of the hat. */
 const LAYER: Record<SlotKey, number> = {
   wings: 1,
-  coat: 2,
-  cardigan: 3,
-  bottom: 4,
-  top: 5,
-  sock: 6,
-  shoes: 7,
-  belt: 8,
-  glove: 9,
-  bag: 10,
-  neck: 11,
-  hat: 12,
-  /* her face is drawn again at 13 — see .du-face. The hat goes UNDER it, so
-     her head scoops the hat rather than the hat swallowing her head. Her body
-     stays at the bottom of the pile: a coat is worn over her, not behind. */
-  glasses: 14,
-  bow: 15,
+  /* the whole cardigan goes UNDER the coat, sleeves and all, the way it does
+     when you put a coat on over one. Only a strip of its front comes back
+     over the coat, at 5 — see CARDI_FRONT and .du-cardi-front. */
+  cardigan: 2,
+  coat: 3,
+  /* 4 — .du-chest: a column of her, over the coat */
+  /* 5 — .du-cardi-front: the cardigan's front again, over both */
+  /* 6 — .du-crown: the top of her head, so a hood falls behind it */
+  bottom: 7,
+  top: 8,
+  sock: 9,
+  shoes: 10,
+  belt: 11,
+  glove: 12,
+  bag: 13,
+  /* 14 — .du-neck-mid: over everything but the scarf, which wraps round it */
+  neck: 15,
+  hat: 16,
+  /* 17 — .du-face: the hat goes UNDER it, so her head scoops the hat rather
+     than the hat swallowing her head */
+  glasses: 18,
+  bow: 19,
+  /* 20 — .du-neck-high: the throat, over the whole lot */
 };
+
+/** the one garment drawn twice: once whole under the coat, once as the strip
+    of front that a coat leaves showing */
+const CARDI_FRONT = 5;
 
 interface Nudge {
   dx: number;
@@ -240,6 +265,14 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
   };
 
   const on = SLOTS.map((s) => ({ slot: s, id: chosen[s.key] ?? null })).filter((w) => w.id);
+  const cardigan = chosen.cardigan ?? null;
+  /* with a coat on, the cardigan is ONLY its front strip: the whole picture
+     is put away rather than hidden behind the coat, because a cardigan cut
+     wider than the coat had its sleeves poking out either side of it */
+  const cardiUnderCoat = !!cardigan && !!chosen.coat;
+  /* unless the coat was photographed done up, in which case there is no front
+     to see through: no strip of cardigan, and no strip of her either */
+  const coatIsOpen = !!chosen.coat && !garment(chosen.coat)?.closed;
   const pickedId = picked ? chosen[picked] : null;
   const pickedNudge = pickedId ? nudged[pickedId] ?? STILL : null;
 
@@ -351,35 +384,48 @@ export function DressUp({ stage, onClose }: { stage: HTMLElement; onClose: () =>
         <div className="du-stand">
           <div className="du-form" ref={form} onPointerMove={move} onPointerUp={drop} onPointerCancel={drop}>
             <img className="du-body" src={MANNEQUIN} alt="A dress form" draggable={false} />
-            {on.map(({ slot, id }) => {
-              const g = garment(id!)!;
-              const fit = FIT[g.kind];
-              const n = nudged[id!] ?? STILL;
-              return (
-                <img
-                  key={slot.key}
-                  className={`du-worn${picked === slot.key ? " is-picked" : ""}`}
-                  src={closetSrc(id!)}
-                  alt={g.label}
-                  draggable={false}
-                  onPointerDown={(e) => grab(e, slot.key, id!)}
-                  style={{
-                    // the same box for everything of a kind; the picture is
-                    // fitted inside it rather than deciding its own size
-                    width: `${((fit.w / SHE) * n.scale * 100).toFixed(1)}%`,
-                    height: `${(fit.h * n.scale * 100).toFixed(1)}%`,
-                    top: `${((fit.top + n.dy) * 100).toFixed(1)}%`,
-                    left: `${(50 + (fit.side ?? 0) * 100 + n.dx * 100).toFixed(1)}%`,
-                    zIndex: LAYER[slot.key],
-                  }}
-                />
-              );
-            })}
-            {/* her face again, laid over the clothes: the same picture of her
-                cut off just below the chin, so a collar or a high neckline
-                can't swallow her head. Only glasses, a hat and a bow go over
-                it, because those belong on a face. */}
+            {on.map(({ slot, id }) =>
+              slot.key === "cardigan" && cardiUnderCoat ? null : (
+              <img
+                key={slot.key}
+                className={`du-worn${picked === slot.key ? " is-picked" : ""}`}
+                src={closetSrc(id!)}
+                alt={garment(id!)!.label}
+                draggable={false}
+                onPointerDown={(e) => grab(e, slot.key, id!)}
+                style={{ ...place(id!, nudged[id!]), zIndex: LAYER[slot.key] }}
+              />
+              ),
+            )}
+            {/* the cardigan's front, over the coat: the same picture in the
+                same place, cut down to the strip a coat leaves showing. Its
+                sleeves stay behind the coat where they belong. */}
+            {cardiUnderCoat && coatIsOpen && (
+              <img
+                className="du-cardi-front"
+                src={closetSrc(cardigan)}
+                alt=""
+                aria-hidden
+                draggable={false}
+                style={{ ...place(cardigan, nudged[cardigan]), zIndex: CARDI_FRONT }}
+              />
+            )}
+            {/* Her again, four more times, each a band of the same picture cut
+                out and slipped into the pile at a different height. It is the
+                same file every time, so nothing is fetched twice.
+
+                  chest      only under a coat hanging open — over that coat
+                  low neck   — the same band, they run together
+                  mid neck   over everything but the scarf round it
+                  face       over the hat, so her head scoops it
+                  high neck  her throat, over the whole lot
+
+                Nothing here can be dragged: they are pictures of her. */}
+            {coatIsOpen && <img className="du-chest" src={MANNEQUIN} alt="" aria-hidden draggable={false} />}
+            <img className="du-crown" src={MANNEQUIN} alt="" aria-hidden draggable={false} />
+            <img className="du-neck-mid" src={MANNEQUIN} alt="" aria-hidden draggable={false} />
             <img className="du-face" src={MANNEQUIN} alt="" aria-hidden draggable={false} />
+            <img className="du-neck-high" src={MANNEQUIN} alt="" aria-hidden draggable={false} />
           </div>
         </div>
 

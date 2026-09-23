@@ -42,6 +42,15 @@ export interface Garment {
   /** year and month of the order */
   bought: string;
   kind: ClothesKind;
+  /**
+   * Coats only: photographed done up rather than hanging open.
+   *
+   * The dress form shows a strip of her — and of a cardigan — through the
+   * front of a coat, which is right for one shot open and wrong for one
+   * buttoned: there is no opening to show anything through, so the strip
+   * just cuts a window in solid cloth. Marked here, the strip is left off.
+   */
+  closed?: true;
 }
 
 const wardrobe = <T extends Record<string, Garment>>(t: T) => t;
@@ -107,7 +116,7 @@ export const CLOTHES = wardrobe({
   "dh-goose-jacket-pink": { label: "Pink fur-hood parka", store: "DHgate", bought: "2026-03", kind: "coat" },
   "dh-puffer-jacket": { label: "Red fur-hood parka", store: "DHgate", bought: "2026-03", kind: "coat" },
   "white-fur-hood-parka": { label: "White fur-hood parka", store: "Closet", bought: "", kind: "coat" },
-  "dh-fur-coat": { label: "Black faux fur coat", store: "DHgate", bought: "2026-03", kind: "coat" },
+  "dh-fur-coat": { label: "Black faux fur coat", store: "DHgate", bought: "2026-03", kind: "coat", closed: true },
   "dh-tweed-set-ivory": { label: "Ivory tweed jacket & pleated skirt", store: "DHgate", bought: "2026-03", kind: "dress" },
   "dh-tweed-set-black": { label: "Black tweed jacket & pleated skirt", store: "DHgate", bought: "2026-03", kind: "dress" },
   "dh-cc-bikini": { label: "Black string bikini", store: "DHgate", bought: "2026-03", kind: "swim" },
@@ -131,6 +140,7 @@ export const CLOTHES = wardrobe({
   "cider-fur-trim-dress": { label: "Moss velvet fur-trim dress", store: "Cider", bought: "2022-11", kind: "dress" },
   "cider-velvet-crop-blouse": { label: "Black velvet fuzzy crop top", store: "Cider", bought: "2022-11", kind: "top" },
   "cider-mesh-crop-top": { label: "Black mesh sweetheart top", store: "Cider", bought: "2022-11", kind: "top" },
+  "cider-satin-corset-blouse": { label: "Cream satin corset blouse, sheer puff sleeves", store: "Cider", bought: "", kind: "top" },
   "cider-fluffy-mesh-dress": { label: "Black fluffy-cuff mesh dress", store: "Cider", bought: "2022-10", kind: "dress" },
   "cider-satin-cami-dress": { label: "Chartreuse satin slip dress", store: "Cider", bought: "2022-10", kind: "dress" },
   "cider-geometric-knit": { label: "Green Fair Isle sweater", store: "Cider", bought: "2022-10", kind: "top" },
@@ -141,13 +151,14 @@ export const CLOTHES = wardrobe({
   "cider-ruffle-velvet-dress": { label: "Emerald ruched velvet dress", store: "Cider", bought: "2022-10", kind: "dress" },
   "cider-puff-sleeve-dress": { label: "Blue floral puff-sleeve dress", store: "Cider", bought: "2022-10", kind: "dress" },
   "cider-floral-midi-dress": { label: "Pale blue jacquard slip dress", store: "Cider", bought: "2022-10", kind: "dress" },
-  "ar-esquire-trench": { label: "The Esquire Short Trench Coat", store: "Aritzia · Babaton", bought: "2026-08", kind: "coat" },
+  "ar-esquire-trench": { label: "The Esquire Short Trench Coat", store: "Aritzia · Babaton", bought: "2026-08", kind: "coat", closed: true },
   "nord-icon-blazer": { label: "The Icon Relaxed Blazer", store: "Nordstrom · Open Edit", bought: "2026-06", kind: "coat" },
   "ar-bloor-sweater": { label: "Bare Merino Wool Bloor Sweater", store: "Aritzia", bought: "2026-08", kind: "top" },
   "ar-passage-cardigan": { label: "Passage Cardigan", store: "Aritzia · Babaton", bought: "2026-08", kind: "cardigan" },
   "ar-jewel-skort": { label: "Jewel Skort", store: "Aritzia", bought: "2026-08", kind: "bottom" },
   "cider-ruffle-skort": { label: "Chiffon ruffle hem mini skort", store: "TikTok Shop · Cider", bought: "2026-05", kind: "bottom" },
   "romi-alya-dress": { label: "Alya Maxi Dress", store: "Romi Fashion", bought: "2025-12", kind: "dress" },
+  "ivory-strapless-full-skirt-maxi-dress": { label: "Ivory strapless full-skirt maxi dress", store: "Miss Circle", bought: "", kind: "dress" },
   "romi-miranda-dress": { label: "Miranda Mini Dress", store: "Romi Fashion", bought: "2025-12", kind: "dress" },
   "yellow-charlotte-dress": { label: "Charlotte Linen Dress", store: "Yellow The Label", bought: "2025-06", kind: "dress" },
   "tt-striped-vest-set": { label: "Striped vest & straight leg pants", store: "TikTok Shop · Origin Atelier", bought: "2026-06", kind: "dress" },
@@ -175,6 +186,8 @@ export const CLOTHES = wardrobe({
   "chiffon-neck-scarf-navy": { label: "Navy chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
   "chiffon-neck-scarf-green": { label: "Dark green chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
   "chiffon-neck-scarf-ivory": { label: "Ivory chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
+  "chiffon-neck-scarf-burgundy": { label: "Burgundy chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
+  "chiffon-neck-scarf-purple": { label: "Purple chiffon neck scarf", store: "Closet", bought: "", kind: "neck" },
   "shein-green-organza-dress": { label: "Green dress with organza sleeves", store: "Shein", bought: "2024", kind: "dress" },
   "shein-lamb-bonnet": { label: "Lamb-ear lace bonnet", store: "Shein", bought: "2024", kind: "hat" },
   "shein-white-fur-hat": { label: "White faux fur hat", store: "Shein", bought: "2024", kind: "hat" },
@@ -185,7 +198,7 @@ export const CLOTHES = wardrobe({
   "shein-cable-knit-skirt": { label: "Cream cable knit pom-pom skirt", store: "Shein", bought: "2024", kind: "bottom" },
   "shein-fur-snow-boots": { label: "Tan fur-cuff snow boots", store: "Shein", bought: "2024", kind: "shoes" },
   "cream-fluffy-coat": { label: "Cream faux fur coat with pom-poms", store: "Closet", bought: "2024", kind: "coat" },
-  "brown-quilted-knit-jacket": { label: "Brown quilted vest with cable-knit sleeves", store: "Closet", bought: "2024", kind: "coat" },
+  "brown-quilted-knit-jacket": { label: "Brown quilted vest with cable-knit sleeves", store: "Closet", bought: "2024", kind: "coat", closed: true },
   "yellow-floral-dress": { label: "Yellow floral sweetheart dress", store: "Closet", bought: "2024", kind: "dress" },
   "brown-bow-dress": { label: "Brown pleated dress with a bow", store: "Closet", bought: "2024", kind: "dress" },
   "maroon-corduroy-overall-dress": { label: "Maroon corduroy pinafore dress", store: "Closet", bought: "2024", kind: "dress" },
@@ -196,8 +209,8 @@ export const CLOTHES = wardrobe({
   "heart-sunglasses": { label: "Cream heart sunglasses", store: "Closet", bought: "2024", kind: "glasses" },
   "pink-marabou-lingerie-set": { label: "Pink marabou robe & lilac lace set", store: "Closet", bought: "2024", kind: "swim" },
   "icelandic-white-fur-hat": { label: "Icelandic white fur hat", store: "Closet", bought: "2024", kind: "hat" },
-  "rhone-utility-trench-navy": { label: "Utility trench coat, navy", store: "Rhone", bought: "", kind: "coat" },
-  "zeagoo-fur-lapel-wool-coat-navy": { label: "Faux fur lapel double-breasted wool coat, navy", store: "Zeagoo", bought: "2018", kind: "coat" },
+  "rhone-utility-trench-navy": { label: "Utility trench coat, navy", store: "Rhone", bought: "", kind: "coat", closed: true },
+  "zeagoo-fur-lapel-wool-coat-navy": { label: "Faux fur lapel double-breasted wool coat, navy", store: "Zeagoo", bought: "2018", kind: "coat", closed: true },
   "wona-istanbul-chiffon-ruffle-dress-black": { label: "Istanbul black chiffon ruffled high-low dress", store: "WONA", bought: "", kind: "dress" },
   "blue-corset-mini-dress": { label: "Blue corset mini dress", store: "Closet", bought: "", kind: "dress" },
   "bw-bow-slingback-heels": { label: "Black-and-white bow slingback heels", store: "Closet", bought: "", kind: "shoes" },
@@ -213,7 +226,7 @@ export const CLOTHES = wardrobe({
   "white-cat-eye-sunglasses": { label: "White cat-eye sunglasses", store: "Closet", bought: "", kind: "glasses" },
   "black-beige-pleated-belted-dress": { label: "Black and beige pleated belted dress", store: "Closet", bought: "2026", kind: "dress" },
   "denim-corset-flared-dress": { label: "Denim corset flared midi dress", store: "Closet · Parker", bought: "", kind: "dress" },
-  "maroon-wool-trench-coat": { label: "Maroon wool trench coat", store: "Closet", bought: "2016", kind: "coat" },
+  "maroon-wool-trench-coat": { label: "Maroon wool trench coat", store: "Closet", bought: "2016", kind: "coat", closed: true },
   "green-wool-cropped-jacket-ruffle-skirt-set": { label: "Green wool cropped jacket & ruffle skirt set", store: "Closet · M&S", bought: "", kind: "dress" },
   "forever21-coca-cola-red-swimsuit": { label: "Red Coca-Cola one-piece swimsuit", store: "Forever 21", bought: "2025", kind: "swim" },
   "eollystrel-burgundy-lace-corset-top": { label: "Burgundy lace-trim corset top", store: "Closet · eollystrel", bought: "", kind: "top" },
@@ -390,10 +403,10 @@ const WIDE: Line[] = [
   // every pair of shoes, lined up on the tiles in front
   { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks", "shein-fur-snow-boots", "bw-bow-slingback-heels", "sage-burgundy-bow-slingback-heels", "yellow-bow-kitten-heels", "black-patent-chain-platform-loafers", "black-patent-triple-strap-platform-mary-janes", "louis-vuitton-damier-peep-toe-heels", "green-suede-lace-up-block-heels", "black-white-tstrap-pointed-pumps", "black-patent-gold-buckle-mary-jane-heels"], from: [560, 1030], to: [1380, 1030], w: [84, 84], z: 60 },
   // the outer left bay, which only a wide screen shows all of: more dresses below, knits above
-  { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["yellow-charlotte-dress", "romi-alya-dress", "cider-lemon-dress", "cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress"], from: [52, 292], to: [236, 348], w: [128, 110], hang: true, z: 80 },
+  { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["yellow-charlotte-dress", "romi-alya-dress", "ivory-strapless-full-skirt-maxi-dress", "cider-lemon-dress", "cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress"], from: [52, 292], to: [236, 348], w: [128, 110], hang: true, z: 80 },
   { id: "outer-left-top", name: "Outer left bay · top rail", ids: ["cider-velvet-playsuit", "cider-pastel-dress", "ar-esquire-trench", "nord-icon-blazer", "tt-plaid-blazer-set", "cream-fluffy-coat", "brown-quilted-knit-jacket"], from: [48, 98], to: [236, 198], w: [112, 96], hang: true, z: 60 },
   // the third bar, added under the two in the inner right bay: short knits
-  { id: "right-bottom", name: "Right bay · bottom bar", ids: ["cider-rib-cardigan", "cider-mesh-crop-top", "cider-geometric-knit", "chanel-white-knit-tank-black-trim", "cider-pearl-cardigan", "cider-velvet-crop-blouse", "ar-jewel-skort", "cider-ruffle-skort"], from: [1598, 786], to: [1472, 770], w: [96, 88], hang: true, z: 74 },
+  { id: "right-bottom", name: "Right bay · bottom bar", ids: ["cider-rib-cardigan", "cider-mesh-crop-top", "cider-geometric-knit", "cider-satin-corset-blouse", "chanel-white-knit-tank-black-trim", "cider-pearl-cardigan", "cider-velvet-crop-blouse", "ar-jewel-skort", "cider-ruffle-skort"], from: [1598, 786], to: [1472, 770], w: [96, 88], hang: true, z: 74 },
   // bags on the outer right bay's shelves
   { id: "outer-right-upper", name: "Outer right shelves · upper", ids: ["dh-check-tote", "dh-hobo-bag"], from: [1840, 546], to: [1675, 548], w: [94, 86], z: 30 },
   { id: "outer-right-lower", name: "Outer right shelves · lower", ids: ["dh-brown-tote", "dh-cleo-bag"], from: [1845, 752], to: [1680, 716], w: [98, 90], z: 32 },
@@ -406,7 +419,7 @@ const WIDE: Line[] = [
   // the bars added to the outer bays, left empty to be filled from the Racks page
   { id: "outer-left-bottom", name: "Outer left bay · bottom bar", ids: ["yellow-floral-dress", "brown-bow-dress", "maroon-corduroy-overall-dress", "lavender-flower-dress", "strawberry-print-pink-string-bikini", "black-pink-trim-string-bikini", "grape-cluster-organza-mermaid-gown", "macaw-print-gold-silk-ball-gown", "midnight-star-flamingo-embroidered-gown", "midsommar-wildflower-gown"], from: [58, 748], to: [282, 709], w: [92, 82], hang: true, z: 90 },
   { id: "outer-right-top", name: "Outer right bay · top bar", ids: ["black-ruffle-pleated-skirt", "chanel-white-pleated-knit-skirt", "black-belted-pleated-shorts", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings"], from: [1830, 76], to: [1664, 130], w: [84, 76], hang: true, z: 30 },
-  { id: "outer-right-second", name: "Outer right bay · second bar", ids: ["temu-floral-lingerie-set", "shein-sailor-collar", "chiffon-neck-scarf-black", "chiffon-neck-scarf-yellow", "chiffon-neck-scarf-navy", "chiffon-neck-scarf-green", "chiffon-neck-scarf-ivory", "pink-marabou-lingerie-set", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
+  { id: "outer-right-second", name: "Outer right bay · second bar", ids: ["temu-floral-lingerie-set", "shein-sailor-collar", "chiffon-neck-scarf-black", "chiffon-neck-scarf-yellow", "chiffon-neck-scarf-navy", "chiffon-neck-scarf-green", "chiffon-neck-scarf-ivory", "chiffon-neck-scarf-burgundy", "chiffon-neck-scarf-purple", "pink-marabou-lingerie-set", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [1830, 158], to: [1664, 250], w: [90, 82], hang: true, z: 30 },
   { id: "outer-right-bottom", name: "Outer right bay · bottom bar", ids: ["burberry-canvas-tote", "prada-blue-bag", "gucci-gg-shoulder-bag"], from: [1852, 772], to: [1662, 738], w: [92, 84], hang: true, z: 32 },
 ];
 
@@ -432,13 +445,13 @@ const TALL: Line[] = [
   { id: "cubby-right", name: "Cubbies · back right", ids: ["cider-crochet-scarf", "tt-cat-eye-6pack", "tt-beige-cat-eye", "tt-wine-oval-sunglasses", "tt-satin-bow-ties", "heart-sunglasses"], from: [648, 952], to: [716, 986], w: [40, 40], z: 45 },
   { id: "shoes", name: "Shoes on the floor", ids: ["shein-mint-maryjanes", "amz-coutgo-heels", "amz-lolita-maryjanes", "amz-maryjanes-kalstage", "amz-tstrap-maryjanes", "shein-bow-loafers", "amz-birkenstock-gizeh", "temu-hamster-slippers", "amz-roller-skates", "dh-rain-boots", "tt-black-slingbacks", "tt-red-slingbacks", "shein-fur-snow-boots", "bw-bow-slingback-heels", "sage-burgundy-bow-slingback-heels", "yellow-bow-kitten-heels", "black-patent-chain-platform-loafers", "black-patent-triple-strap-platform-mary-janes", "louis-vuitton-damier-peep-toe-heels", "green-suede-lace-up-block-heels", "black-white-tstrap-pointed-pumps", "black-patent-gold-buckle-mary-jane-heels"], from: [120, 1650], to: [820, 1650], w: [72, 72], z: 60 },
   // the outer left bay (a phone crops some of it) and the shelf in the inner right bay
-  { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "yellow-charlotte-dress"], from: [84, 628], to: [140, 672], w: [80, 70], hang: true, z: 80 },
+  { id: "outer-left-low", name: "Outer left bay · lower rail", ids: ["cider-ditsy-layered-dress", "cider-jacquard-dress", "cider-embroidered-dress", "cider-tie-shoulder-dress", "cider-toile-dress", "cider-corduroy-dress", "cider-lemon-dress", "cider-puff-sleeve-dress", "cider-floral-midi-dress", "romi-alya-dress", "ivory-strapless-full-skirt-maxi-dress", "yellow-charlotte-dress"], from: [84, 628], to: [140, 672], w: [80, 70], hang: true, z: 80 },
   { id: "outer-left-top", name: "Outer left bay · top rail", ids: ["cider-velvet-playsuit", "cider-pastel-dress", "ar-esquire-trench", "nord-icon-blazer", "tt-plaid-blazer-set"], from: [80, 342], to: [138, 404], w: [70, 60], hang: true, z: 60 },
-  { id: "right-bottom", name: "Right bay · bottom bar", ids: ["cider-rib-cardigan", "cider-pearl-cardigan", "cider-geometric-knit", "chanel-white-knit-tank-black-trim", "cider-velvet-crop-blouse", "cider-mesh-crop-top", "ar-jewel-skort", "cider-ruffle-skort"], from: [826, 1014], to: [752, 1000], w: [66, 58], hang: true, z: 74 },
+  { id: "right-bottom", name: "Right bay · bottom bar", ids: ["cider-rib-cardigan", "cider-pearl-cardigan", "cider-geometric-knit", "cider-satin-corset-blouse", "chanel-white-knit-tank-black-trim", "cider-velvet-crop-blouse", "cider-mesh-crop-top", "ar-jewel-skort", "cider-ruffle-skort"], from: [826, 1014], to: [752, 1000], w: [66, 58], hang: true, z: 74 },
   { id: "right-shelf", name: "Right bay · shelf", ids: ["dh-cleo-bag", "black-long-ribbon-bow", "white-cat-eye-sunglasses"], from: [822, 848], to: [754, 842], w: [54, 48], z: 66 },
   { id: "right-middle", name: "Right bay · middle bar", ids: ["ref-melanie-top", "ref-juliet-top", "temu-pearl-tank", "temu-bow-cami", "shein-bee-tank", "shein-bunny-tank", "shein-kitten-tank", "forever21-coca-cola-red-swimsuit", "eollystrel-burgundy-lace-corset-top"], from: [826, 652], to: [752, 672], w: [68, 60], hang: true, z: 68 },
   { id: "left-bottom", name: "Narrow left bay · bottom bar", ids: ["shein-sweaterskirt-burgundy", "shein-sweaterskirt-navy", "temu-knit-miniskirt", "ed-keinan-shorts", "shein-cable-knit-skirt", "white-lace-pleated-mini-skirt"], from: [160, 921], to: [216, 905], w: [52, 48], hang: true, z: 48 },
-  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "temu-floral-lingerie-set", "shein-sailor-collar", "chiffon-neck-scarf-black", "chiffon-neck-scarf-yellow", "chiffon-neck-scarf-navy", "chiffon-neck-scarf-green", "chiffon-neck-scarf-ivory", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [158, 604], to: [206, 628], w: [46, 42], hang: true, z: 46 },
+  { id: "left-top", name: "Narrow left bay · top bar", ids: ["ar-bloor-sweater", "ar-passage-cardigan", "temu-floral-lingerie-set", "shein-sailor-collar", "chiffon-neck-scarf-black", "chiffon-neck-scarf-yellow", "chiffon-neck-scarf-navy", "chiffon-neck-scarf-green", "chiffon-neck-scarf-ivory", "chiffon-neck-scarf-burgundy", "chiffon-neck-scarf-purple", "pink-marabou-lingerie-set", "white-feather-angel-wings-halo-set", "black-feather-angel-wings-halo-set", "peacock-wings", "lavender-lace-head-scarf", "gold-lace-head-scarf"], from: [158, 604], to: [206, 628], w: [46, 42], hang: true, z: 46 },
 ];
 
 /** a free-standing brass clothes rail: its bar, and where its feet stand, in photograph pixels */
@@ -510,6 +523,7 @@ const SIZE: Partial<Record<GarmentId, number>> = {
   "dh-hobo-bag": 0.8,
   "tt-striped-vest-set": 0.66,
   "romi-alya-dress": 0.78,
+  "ivory-strapless-full-skirt-maxi-dress": 0.72,
   "denim-corset-flared-dress": 0.72,
   "black-beige-pleated-belted-dress": 0.8,
   "mint_green_ruffled_corset_gown_sticker": 0.72,
