@@ -2563,9 +2563,11 @@
      a dome, struck from well below so it curves the way her skull does: at the
      middle of her forehead it reaches --du-brow, and it falls away towards her
      temples. Wider than her head, so the sides fade rather than cut. */
-  --du-brow: 3.5%;      /* the top of the dome, over the middle of her forehead */
-  --du-brow-wide: 28%;  /* how far across her it runs */
-  --du-brow-deep: 17%;  /* how far below it the curve is struck from */
+  --du-brow: 2.2%;      /* the top of the dome, over the middle of her forehead */
+  --du-brow-wide: 33%;  /* how far across her it runs — past her temples, so
+                           her hair comes through at the sides too */
+  --du-brow-deep: 20%;  /* how far below it the curve is struck from; deeper
+                           is a flatter dome, and more face either side */
   --du-face: 12%;       /* her chin */
   --du-neck-high: 14.5%;/* the throat, drawn over everything */
   --du-neck-mid: 17%;   /* where a scarf wraps, and only a scarf */
