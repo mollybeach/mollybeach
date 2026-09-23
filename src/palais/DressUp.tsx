@@ -96,6 +96,16 @@ const FIT: Record<ClothesKind, { top: number; w: number; h: number; side?: numbe
   bag: { top: 0.5, w: 0.24, h: 0.22, side: -0.3 },   // down by her hand
 };
 
+/**
+ * The odd piece whose photograph does not sit where the rest of its kind
+ * does. Tights are the case that forced it: they share the Socks row, but a
+ * pair of tights is a waistband and two legs where a sock is an ankle, and
+ * everything of a kind hangs from the same line.
+ */
+const WEAR: Partial<Record<string, Partial<(typeof FIT)[ClothesKind]>>> = {
+  "cider-star-moon-fishnets": { top: 0.38, w: 0.3, h: 0.62 },  // waist to toe
+};
+
 /** the first two words of a name, which is all a phone has room for */
 const inBrief = (name: string) => name.split(/\s+/).slice(0, 2).join(" ");
 
@@ -111,7 +121,7 @@ const SHE = 415 / 1400;
     the picture fitted inside it rather than deciding its own size. Kept apart
     from the drawing so the cardigan can be drawn twice in the same place. */
 const place = (id: string, nudge?: Nudge): React.CSSProperties => {
-  const fit = FIT[garment(id)!.kind];
+  const fit = { ...FIT[garment(id)!.kind], ...WEAR[id] };
   const n = nudge ?? STILL;
   return {
     width: `${((fit.w / SHE) * n.scale * 100).toFixed(1)}%`,
