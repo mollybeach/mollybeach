@@ -6,7 +6,7 @@ import { noteDoing } from "./visits";
 /**
  * The record player: a turntable in the corner of a room, with whatever album
  * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
- * in the Palais, Norah Jones in the Kitchen, the Growlers in the Boudoir,
+ * in the Palais, Norah Jones in the Kitchen, Марк Бернес in the Boudoir,
  * Mild High Club in the Library, and Lana Del Rey out at Sunliner Halt, in the
  * Hollow of Small Stars, the Jacaranda Quarter and the Steaming Lagoon.
  *
@@ -41,7 +41,7 @@ const RECORDS: Partial<Record<Place, Disc>> = {
   lakehouse: { video: "DRdnpKRvMwI", name: "Vulfpeck", title: "The Beautiful Game" },
   // folded away to begin with: the corner it stands in is the dresser's, and
   // the bunny sits there
-  boudoir: { video: "lNhPKvM3Hdw", name: "Widowspeak", title: "Wicked Game", folded: true },
+  boudoir: { video: "zfVXgWRK4I8", name: "Марк Бернес", title: "Тёмная Ночь", folded: true },
   reef: { video: "RofKpQWccjA", name: "The Growlers", title: "Naked Kids", folded: true },
   kitchen: { video: "9e5qNUd6gBA", name: "Norah Jones", title: "Come Away with Me", folded: true },
   sunliner: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
