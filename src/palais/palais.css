@@ -1594,6 +1594,11 @@
 
 /* the whole sticker layer, for "Hide the room" (see StickerToggle) */
 .palais .palais-layer { position: absolute; inset: 0; }
+/* the boudoir's photograph is already night; anything placed in the room
+   takes the same dark cast, and the photograph behind it does not */
+.palais [data-place="boudoir"] .palais-layer {
+  filter: brightness(0.62) saturate(0.78);
+}
 .palais .palais-layer[data-hidden] { opacity: 0; pointer-events: none; }
 /* the phone's summer photograph shows the pool higher up and further back
    than the others, so the dogs swim a little higher there */
