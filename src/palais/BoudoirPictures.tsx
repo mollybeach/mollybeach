@@ -2,6 +2,8 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
+import { currentEditor, onEditorChange, type Editor } from "./layoutsDb";
+import Livestream from "./Livestream";
 import { lettersOpen, remember, remembered } from "./letters";
 import {
   addPortrait,
@@ -90,6 +92,10 @@ export function BoudoirPictures() {
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState(() => remembered("key"));
   const [inside, setInside] = useState(false);
+  /* the dresser has two drawers now: the pictures, and her, live */
+  const [tab, setTab] = useState<"portraits" | "live">("portraits");
+  /* anyone past the word may watch; only Molly, signed in, may be watched */
+  const [editor, setEditor] = useState<Editor | null>(null);
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -272,6 +278,14 @@ export function BoudoirPictures() {
      is measured, then laid end to end enough times to fill the window and
      over again, so the loop has no seam to see. CSS does the moving: nothing
      here touches the layout, and pointing at them holds them still. */
+  useEffect(() => {
+    if (!open) return;
+    currentEditor()
+      .then(setEditor)
+      .catch(() => {});
+    return onEditorChange(setEditor);
+  }, [open]);
+
   const [reel, setReel] = useState({ copies: 2, rise: 0, gap: 0 });
   useEffect(() => {
     const box = window_.current;
@@ -471,7 +485,7 @@ export function BoudoirPictures() {
           onPointerDown={(e) => e.target === e.currentTarget && shut()}
         >
           <div
-            className="wm-panel bd-panel"
+            className={`wm-panel bd-panel${inside ? " bd-panel--tabbed" : ""}`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="bd-title"
@@ -487,7 +501,7 @@ export function BoudoirPictures() {
               ×
             </button>
             {/* opposite the ×: the way to put one in, once they're inside */}
-            {inside && (
+            {inside && tab === "portraits" && (
               <>
                 <input
                   ref={picker}
@@ -529,6 +543,22 @@ export function BoudoirPictures() {
               </>
             )}
 
+            {inside && (
+              <nav className="cat-tabs bd-tabs" aria-label="The dresser's drawers">
+                {([["portraits", "Portraits"], ["live", "Livestream"]] as const).map(([which, name]) => (
+                  <button
+                    key={which}
+                    type="button"
+                    className={`cat-tab${tab === which ? " is-on" : ""}`}
+                    onClick={() => setTab(which)}
+                    aria-pressed={tab === which}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </nav>
+            )}
+
             {!inside ? (
               /* the dresser is locked: the same word as the letters */
               <form
@@ -555,6 +585,11 @@ export function BoudoirPictures() {
                 {busy && <Waiting say="Trying the word…" />}
                 {trouble && <p className="lt-trouble">{trouble}</p>}
               </form>
+            ) : tab === "live" ? (
+              /* her camera, while she is in front of it */
+              <div className="bd-look bd-look--live">
+                <Livestream word={key} canHost={Boolean(editor?.canSave)} />
+              </div>
             ) : (
               /* one picture at a time, an arrow either side */
               <div className="bd-look">
