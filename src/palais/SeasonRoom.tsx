@@ -10,7 +10,7 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
     one for the whole year, and whether there's a tall photograph for phones
     (`<file>-portrait.webp`), or a tall one per season
     (`<file>-portrait-<season>.webp`) */
-const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons"; fixed?: (typeof SEASONS)[number] }> = {
+const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons"; fixed?: (typeof SEASONS)[number]; still?: string }> = {
   // the kitchen off the terrace, whose marble bar the terrace only shows the end of
   kitchen: { file: "kitchen", focus: "50% 55%", seasons: false, portrait: true },
   // the bathroom through the arch on the terrace's right: rose wallpaper, a ruffled shower curtain, a painted sky; one photograph for now
@@ -43,10 +43,9 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   madeleine: { file: "madeleine", focus: "50% 60%", seasons: false, portrait: true },
   // the library: carved shelves to a painted sky, a spiral of books, the desk at the window over the lake
   library: { file: "library", focus: "50% 60%", portrait: "seasons" },
-  // the boudoir stays in winter: gilt panelling, lilac swagged curtains, a
-  // chandelier, the trifold vanity and the blue tufted ottoman, and a tall
-  // winter photograph for a phone
-  boudoir: { file: "boudoir", focus: "50% 60%", portrait: "seasons", fixed: "winter" },
+  // the boudoir stays in winter. the lighter winter photograph stays in the
+  // folder; the room shows the darker one
+  boudoir: { file: "boudoir", focus: "50% 60%", fixed: "winter", still: "boudoir-winter-dark" },
   // the derailed Sunliner out in the desert, four times over, with a tall one
   // of each for a phone
   sunliner: { file: "sunliner", focus: "50% 55%", portrait: "seasons" },
@@ -65,7 +64,7 @@ export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
   // on a phone held upright, the tall photograph(s) if the room has them
   const tall = usePortrait() && !!room.portrait;
   const tallSeasons = tall && room.portrait === "seasons";
-  const still = room.fixed ? `${room.file}${tallSeasons ? "-portrait" : ""}-${room.fixed}` : room.file;
+  const still = room.still ?? (room.fixed ? `${room.file}${tallSeasons ? "-portrait" : ""}-${room.fixed}` : room.file);
   return (
     <div aria-hidden className={`palais-room palais-room--away palais-room--${place}`}>
       <div className="palais-seasons">

@@ -156,21 +156,6 @@
 .palais [data-place="library"] .palais-room--library,
 .palais [data-place="boudoir"] .palais-room--boudoir,
 .palais [data-place="sunliner"] .palais-room--sunliner { opacity: 1; }
-/* the boudoir is night: a dark cast over the photograph, the snow and the
-   furniture, under the buttons, the record and the dresser pictures */
-.palais .palais-stage[data-place="boudoir"]::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 90% 80% at 50% 42%,
-    rgba(22, 12, 28, 0.34) 0%,
-    rgba(10, 6, 16, 0.52) 62%,
-    rgba(4, 2, 8, 0.68) 100%
-  );
-}
 /* the stickers follow you into every room, each room with its own layout
    (roomLayouts.ts), as do the weather and the flyers; the terrace's pollen
    stays on the terrace */
