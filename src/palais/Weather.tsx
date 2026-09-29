@@ -80,6 +80,8 @@ const LEAF_COLOURS = ["#b83a14", "#d2691e", "#e09a24", "#9c2a12", "#c8871b", "#8
 const GREEN_LEAF_COLOURS = ["#4f8a3a", "#6aa84f", "#3f7a36", "#86b85a", "#5d9442", "#2f6b34", "#9bc46a"];
 /** rooms where green leaves fall all year and it never snows */
 const EVERGREEN = new Set(["rainwood"]);
+/** rooms that never leave one season, whatever the year is doing elsewhere */
+const FROZEN: Record<string, "winter"> = { boudoir: "winter" };
 
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
@@ -244,6 +246,13 @@ export function Weather({ layer }: { layer: Layer }) {
       evergreen = EVERGREEN.has(place);
       bloom = BLOOMS[place] ? place : undefined;
       tint = TINTS[place] ? place : undefined;
+      if (FROZEN[place] === "winter") {
+        winter = 1;
+        autumn = 0;
+        summer = 0;
+        spring = 0;
+        return;
+      }
       const op = (s: string) => {
         const el = stage.querySelector<HTMLElement>(`.palais-season--${s}`);
         return el ? Number(getComputedStyle(el).opacity) || 0 : 0;

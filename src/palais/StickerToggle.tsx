@@ -144,6 +144,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   const device = portrait ? "phone" : "desktop";
   const { place, go } = usePlace();
   const inPalace = place === "palace";
+  const frozen = place === "boudoir";
   const inCloset = place === "closet";
   const collection = useCollection();
   const switches = useRef<HTMLDivElement>(null);
@@ -397,12 +398,13 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   /* on to the next season. The header's Skip pill does this, and so does the
      season on the catalogue's own plaque */
   const skip = useCallback(() => {
+    if (place === "boudoir") return;
     const scope = switches.current?.closest(".palais-stage");
     if (!scope) return;
     skipSeason(scope, paused);
     setUpcoming(upcomingSeason(scope));
     setSeason(currentSeason(scope));
-  }, [paused]);
+  }, [paused, place]);
 
   /* When Molly, signed in, moves, resizes, puts in or takes out anything, the
      year holds still. Otherwise the season could turn before she saves, and
@@ -439,13 +441,17 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
       // also catches photographs that were swapped (turning a phone round
       // changes which set is showing) and would otherwise start playing
       holdSeasons(scope, paused);
+      if (place === "boudoir") {
+        setSeason("winter");
+        return;
+      }
       setUpcoming(upcomingSeason(scope));
       setSeason(currentSeason(scope));
     };
     tick();
     const id = setInterval(tick, 250);
     return () => clearInterval(id);
-  }, [seasons, paused]);
+  }, [seasons, paused, place]);
 
   return (
     <>
@@ -505,7 +511,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">← Palais</span>
           </button>
         )}
-        {seasons && (
+        {seasons && !frozen && (
           <button
             type="button"
             onClick={skip}
@@ -520,7 +526,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             </span>
           </button>
         )}
-        {seasons && (
+        {seasons && !frozen && (
           <button
             type="button"
             onClick={() => {
@@ -694,7 +700,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         wearing={portrait ? wearing.phone : wearing.desktop}
         onWear={tryOn}
         onPutIn={putIn}
-        onSkipSeason={seasons ? skip : undefined}
+        onSkipSeason={seasons && !frozen ? skip : undefined}
         roomClothes={wearingHere}
         onRoomClothes={setWearingHere}
       />
