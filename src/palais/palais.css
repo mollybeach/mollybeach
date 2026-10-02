@@ -5099,10 +5099,10 @@
   margin: 0;
   padding: 1rem 1.2rem;
   border-radius: 16px;
-  background: rgba(255, 253, 249, 0.86);
-  box-shadow: 0 6px 18px rgba(140, 60, 100, 0.18);
+  background: var(--bd-coal, #12100c);
+  box-shadow: 0 0 0 1px rgba(255, 246, 220, 0.14), 0 8px 20px rgba(0, 0, 0, 0.45);
   font: 600 0.9rem/1.4 var(--wm-serif, Georgia, serif);
-  color: #a33a75;
+  color: #f0d894;
   text-align: center;
 }
 .palais .bd-wait-ring {
@@ -5122,9 +5122,10 @@
   animation: bd-hop 1.6s linear infinite;
   animation-delay: calc(var(--n) * 0.2s);
 }
-/* the rabbits going round are black now, like the rest of the dresser's
-   furniture; they are drawn solid, so the fill is the whole of them */
-.palais .bd-wait-ring svg { width: 100%; height: 100%; display: block; fill: var(--bd-coal, #12100c); }
+/* The rabbits are gold, not black: the card they go round on is black now, and
+   they are drawn solid, so a black rabbit on it would be a rabbit nobody can
+   see. Gold is the only other thing in the room. */
+.palais .bd-wait-ring svg { width: 100%; height: 100%; display: block; fill: var(--wm-gold, #cfa956); }
 @keyframes bd-hop {
   0%, 70%, 100% { opacity: 0.22; scale: 0.82; }
   18% { opacity: 1; scale: 1.12; }
