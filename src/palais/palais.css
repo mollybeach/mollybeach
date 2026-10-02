@@ -5099,10 +5099,10 @@
   margin: 0;
   padding: 1rem 1.2rem;
   border-radius: 16px;
-  background: var(--bd-coal, #12100c);
-  box-shadow: 0 0 0 1px rgba(255, 246, 220, 0.14), 0 8px 20px rgba(0, 0, 0, 0.45);
+  background: rgba(255, 253, 249, 0.86);
+  box-shadow: 0 6px 18px rgba(140, 60, 100, 0.18);
   font: 600 0.9rem/1.4 var(--wm-serif, Georgia, serif);
-  color: #f0d894;
+  color: #a33a75;
   text-align: center;
 }
 .palais .bd-wait-ring {
@@ -5122,10 +5122,9 @@
   animation: bd-hop 1.6s linear infinite;
   animation-delay: calc(var(--n) * 0.2s);
 }
-/* The rabbits are gold, not black: the card they go round on is black now, and
-   they are drawn solid, so a black rabbit on it would be a rabbit nobody can
-   see. Gold is the only other thing in the room. */
-.palais .bd-wait-ring svg { width: 100%; height: 100%; display: block; fill: var(--wm-gold, #cfa956); }
+/* The rabbits are black, and the card they go round on stays pale so they can
+   be seen against it — the one pink thing left in the dresser, kept on purpose. */
+.palais .bd-wait-ring svg { width: 100%; height: 100%; display: block; fill: var(--bd-coal, #12100c); }
 @keyframes bd-hop {
   0%, 70%, 100% { opacity: 0.22; scale: 0.82; }
   18% { opacity: 1; scale: 1.12; }
@@ -5578,9 +5577,11 @@
   padding: 0;
   border: 2px solid #c9a44c;
   border-radius: 50%;
-  background: linear-gradient(160deg, #fdf3d8, #e9cf94);
-  box-shadow: 0 3px 0 #a8863c, 0 6px 14px rgba(120, 90, 30, 0.25);
-  color: #6b4f1c;
+  /* black, like the × and the + and the frame: the gold stays as the rim and
+     the chevron, so the button still reads as a button against the paper */
+  background: linear-gradient(160deg, #2a2722, var(--bd-coal, #12100c));
+  box-shadow: 0 3px 0 #000, 0 6px 14px rgba(0, 0, 0, 0.45);
+  color: #f0d894;
   font: 700 1.9rem/1 var(--wm-serif, Georgia, serif);
   cursor: pointer;
   transition: transform 160ms ease, filter 160ms ease;
@@ -5589,7 +5590,7 @@
 .palais .bd-arrow--on { right: 0.2rem; }
 .palais .bd-arrow:hover,
 .palais .bd-arrow:focus-visible { filter: brightness(1.08); outline: none; }
-.palais .bd-arrow:active { box-shadow: 0 1px 0 #a8863c; }
+.palais .bd-arrow:active { box-shadow: 0 1px 0 #000; }
 
 /* a row of little beads under the frame: which portrait of them this is.
    Nothing is written under the pictures — they speak for themselves. */
