@@ -8,12 +8,16 @@ import { lettersOpen, remember, remembered } from "./letters";
 import {
   addPortrait,
   dropNote,
+  grabFirstFrame,
+  keepPoster,
   knownShape,
   PORTRAIT_TYPES,
   postNote,
   readNotes,
   readPortraits,
+  readPosters,
   rememberShape,
+  type Poster,
   type Portrait,
   type PortraitNote,
 } from "./portraits";
@@ -170,6 +174,10 @@ export function BoudoirPictures() {
   /* what people have said about them: the whole drawer's worth, fetched once,
      so a count can sit against the picture without asking again */
   const [notes, setNotes] = useState<PortraitNote[]>([]);
+  /* each film's first frame, so the gilt frame has a face to wear at once */
+  const [posters, setPosters] = useState<Record<string, Poster>>({});
+  /* films already asked for their frame this sitting, so it is drawn once */
+  const drawn = useRef(new Set<string>());
   const [talking, setTalking] = useState(true);       // the notes lie over the picture unless the pen puts them away
   const [saying, setSaying] = useState("");
   const [posting, setPosting] = useState(false);
@@ -263,6 +271,10 @@ export function BoudoirPictures() {
         readNotes(word)
           .then(setNotes)
           .catch(() => setNotes([]));
+        // and the films' faces, which come back inline and need no signing
+        readPosters(word)
+          .then(setPosters)
+          .catch(() => setPosters({}));
       } else {
         if (typed) noteDoing("portrait-try", "the word didn't fit");
         setTrouble("That word doesn't open the dresser.");
@@ -446,7 +458,9 @@ export function BoudoirPictures() {
   useEffect(() => {
     const url = onNow?.url;
     if (!url) return;
-    const known = shapes.current.get(url) ?? (onNow?.path ? knownShape(onNow.path) : undefined);
+    const face = onNow?.path ? posters[onNow.path] : undefined;
+    const fromFace = face?.w && face?.h ? face.w / face.h : undefined;
+    const known = shapes.current.get(url) ?? (onNow?.path ? knownShape(onNow.path) : undefined) ?? fromFace;
     if (known) {
       shapes.current.set(url, known);
       setShape(known);
@@ -469,7 +483,31 @@ export function BoudoirPictures() {
       });
     }, 350);
     return () => window.clearTimeout(soon);
-  }, [onNow, at, hanging, many]);
+  }, [onNow, at, hanging, many, posters]);
+
+  /* A film with no face yet sits for its portrait: its own reel is fetched to
+     one side, a frame a moment in is drawn to a canvas and the still is sent
+     back for the next person. Whoever gets there first gives it its face and
+     it keeps it; everybody after that finds it already hanging. */
+  useEffect(() => {
+    if (!inside || !key || !onNow || onNow.kind !== "film") return;
+    const path = onNow.path;
+    if (!path || posters[path] || drawn.current.has(path)) return;
+    drawn.current.add(path);     // one reel at a time for this film, not one per render
+    void grabFirstFrame(onNow.url).then((still) => {
+      if (!still) {
+        // it wouldn't draw this time — walked away from, or too slow. Let the
+        // next person who stops on it have a go rather than leaving it faceless.
+        drawn.current.delete(path);
+        return;
+      }
+      // the face belongs to the film, not to whatever is in the frame now, so
+      // it is kept even if they have already stepped along
+      setPosters((all) => (all[path] ? all : { ...all, [path]: { poster: still.poster, w: still.w, h: still.h } }));
+      rememberShape(path, still.w / still.h);
+      void keepPoster(key, path, still.poster, still.w, still.h).catch(() => {});
+    });
+  }, [inside, key, onNow, posters]);
 
   /* A link out of the dresser is signed for ten minutes. On a slow connection
      a sitting can outlast one, and every picture goes dead at once; rather
@@ -725,6 +763,7 @@ export function BoudoirPictures() {
                             controls
                             playsInline
                             preload="metadata"
+                            poster={posters[showing.path]?.poster}
                             aria-label={showing.title}
                             onLoadedMetadata={(e) => {
                               const reel = e.currentTarget;

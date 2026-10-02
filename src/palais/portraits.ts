@@ -130,6 +130,97 @@ const said = (e: { message?: string }) => {
   return (raw || "That wouldn't go in.").replace(/^.*?:\s*/, "").replace(/^./, (c) => c.toUpperCase());
 };
 
+/* ------------------------------------------ the face of each film -------- */
+
+/** a film's first frame, kept so the frame has something to show at once */
+export interface Poster {
+  poster: string;
+  w: number | null;
+  h: number | null;
+}
+
+/**
+ * Every film's first frame, in one call with the drawer.
+ *
+ * A picture starts painting as it arrives; a film shows nothing until enough
+ * of it is down to decode a frame, which on a slow line is a long black wait.
+ * The stills are small enough to come back inline, so the frame can wear one
+ * before the film has even been asked for.
+ */
+export async function readPosters(key: string): Promise<Record<string, Poster>> {
+  const sb = await db();
+  const { data, error } = await sb.rpc("palais_portrait_posters", { p_key: key });
+  // a database that hasn't had the posters migration pasted into it yet just
+  // has no faces for its films, which is how it was before
+  if (error) return {};
+  return (data ?? {}) as Record<string, Poster>;
+}
+
+/** give a film its face, the first time anybody watches it */
+export async function keepPoster(key: string, path: string, poster: string, w: number, h: number): Promise<void> {
+  const sb = await db();
+  await sb.rpc("palais_portrait_poster_put", { p_key: key, p_path: path, p_poster: poster, p_w: w, p_h: h });
+}
+
+/** how wide a still is kept: enough for the frame, small enough to go inline */
+const STILL = 480;
+
+/**
+ * Draw a film's first frame.
+ *
+ * On its own reel, not the one in the frame: reading pixels back out of a
+ * video needs it fetched with CORS, and asking that of the film somebody is
+ * actually watching would stop it playing altogether if the bucket ever said
+ * no. A moment in rather than the very first frame, which is often black.
+ */
+export function grabFirstFrame(url: string): Promise<{ poster: string; w: number; h: number } | null> {
+  return new Promise((done) => {
+    let settled = false;
+    const reel = document.createElement("video");
+    const give = (v: { poster: string; w: number; h: number } | null) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      reel.removeAttribute("src");
+      reel.load();
+      done(v);
+    };
+    const timer = setTimeout(() => give(null), 20000);
+    const draw = () => {
+      try {
+        const w = reel.videoWidth;
+        const h = reel.videoHeight;
+        if (!w || !h) return give(null);
+        const scale = Math.min(1, STILL / Math.max(w, h));
+        const card = document.createElement("canvas");
+        card.width = Math.max(1, Math.round(w * scale));
+        card.height = Math.max(1, Math.round(h * scale));
+        const ink = card.getContext("2d");
+        if (!ink) return give(null);
+        ink.drawImage(reel, 0, 0, card.width, card.height);
+        // a bucket that sent no CORS headers taints the canvas and this throws
+        give({ poster: card.toDataURL("image/webp", 0.72), w: card.width, h: card.height });
+      } catch {
+        give(null);
+      }
+    };
+    reel.crossOrigin = "anonymous";
+    reel.muted = true;
+    reel.playsInline = true;
+    reel.preload = "auto";
+    reel.onloadeddata = () => {
+      try {
+        reel.currentTime = Math.min(0.25, (reel.duration || 1) / 10);
+      } catch {
+        draw();
+      }
+    };
+    reel.onseeked = draw;
+    reel.onerror = () => give(null);
+    reel.src = url;
+  });
+}
+
 /* ------------------------------------------- what shape each one is ------ */
 
 /**
