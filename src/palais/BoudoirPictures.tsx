@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
-import { usePlace } from "./place";
+import { hashExtra, usePlace } from "./place";
 import { currentEditor, onEditorChange, type Editor } from "./layoutsDb";
 import Livestream from "./Livestream";
 import { lettersOpen, remember, remembered } from "./letters";
@@ -75,6 +75,17 @@ const BUNNY = {
 /** his own shape, so the width follows the height (631 x 1100) */
 const BUNNY_SHAPE = 631 / 1100;
 
+/* mollybeach.app/#boudoir/portraits walks straight up to the dresser, and
+   /#boudoir/live walks up to it with the camera showing. The word is still
+   asked for: the link opens the drawer, it doesn't unlock it. */
+const WANTED = (extra: string) => /^(portraits|live)/.test(extra);
+
+/* Whether this visit ARRIVED on the dresser's own link rather than finding the
+   bunny in the room. Read once as the page loads: by the time it is open the
+   address says #boudoir/portraits either way. */
+const CAME_IN_ON_THE_LINK =
+  typeof window !== "undefined" && WANTED(window.location.hash.replace("#", "").split("/")[1] ?? "");
+
 /** under this many seconds on a picture is walking past it, not looking */
 const SHORT = 3;
 /** "12s", "1m 5s", "4m" */
@@ -89,13 +100,16 @@ export function BoudoirPictures() {
   const chips = useFloral("sidebar");
   const ribbon = useFloral("footer");
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(() => CAME_IN_ON_THE_LINK);
   const [key, setKey] = useState(() => remembered("key"));
   const [inside, setInside] = useState(false);
   /* the dresser has two drawers now: the pictures, and her, live */
-  const [tab, setTab] = useState<"portraits" | "live">("portraits");
+  const [tab, setTab] = useState<"portraits" | "live">(() =>
+    /^live/.test(hashExtra()) ? "live" : "portraits",
+  );
   /* anyone past the word may watch; only Molly, signed in, may be watched */
   const [editor, setEditor] = useState<Editor | null>(null);
+  const arrived = useRef(CAME_IN_ON_THE_LINK);
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -153,7 +167,16 @@ export function BoudoirPictures() {
         const width = height * BUNNY_SHAPE;
         rabbit.style.width = `${width}px`;
         rabbit.style.height = `${height}px`;
-        rabbit.style.left = `${box.left + box.w * sits.x - width / 2}px`;
+        /* A phone has only the wide photograph to show, so it is blown up and
+           cropped hard at the sides — and his place on the marble, a quarter
+           of the way across the room, falls clean off the left of the screen.
+           He is the only way into the dresser you can see, so he is kept on
+           the floor he stands on but brought back inside the screen. On
+           anything wide enough he is already in it and nothing moves him. */
+        const edge = Math.min(14, stage.clientWidth * 0.04);
+        const far = Math.max(edge, stage.clientWidth - width - edge);
+        const x = box.left + box.w * sits.x - width / 2;
+        rabbit.style.left = `${Math.min(Math.max(x, edge), far)}px`;
         rabbit.style.top = `${box.top + box.h * sits.base - height}px`;
       }
     };
@@ -180,7 +203,9 @@ export function BoudoirPictures() {
         setInside(true);
         setKey(word);
         remember("key", word);
-        noteDoing("pictures");          // Molly hears that someone looked (visits.ts)
+        // Molly hears that someone looked, and how they got here (visits.ts)
+        noteDoing("pictures", arrived.current ? "came in through the door" : undefined);
+        arrived.current = false;        // only the way in counts as arriving
         // the pictures themselves, signed for ten minutes at a time
         // (portraits.ts). Before the bucket exists, nothing comes back.
         readPortraits(word)
@@ -321,6 +346,27 @@ export function BoudoirPictures() {
     setSent(null);
     setNoteTrouble(null);
     setTalking(false);
+  }, []);
+  /* leaving the room shuts the dresser behind you */
+  useEffect(() => {
+    if (!here) setOpen(false);
+  }, [here]);
+  /* the address says whether the dresser is open and which drawer, so the page
+     can be sent to somebody and open where it left off */
+  useEffect(() => {
+    if (!here) return;
+    const want = open ? `#boudoir/${tab === "live" ? "live" : "portraits"}` : "#boudoir";
+    if (window.location.hash !== want) window.history.replaceState(window.history.state, "", want);
+  }, [open, tab, here]);
+  /* and the back button, or a link followed while it is already open */
+  useEffect(() => {
+    const onHash = () => {
+      const extra = hashExtra();
+      setOpen(WANTED(extra));
+      if (WANTED(extra)) setTab(/^live/.test(extra) ? "live" : "portraits");
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
   }, []);
   const many = hanging?.length ?? 0;
   const step = useCallback((by: number) => setAt((n) => (n + by + many) % many), [many]);
