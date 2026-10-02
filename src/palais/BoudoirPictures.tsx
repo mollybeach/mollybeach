@@ -404,6 +404,20 @@ export function BoudoirPictures() {
     setNoteTrouble(null);
     setTalking(false);
   }, []);
+  /* While the dresser is open the weather comes over the top of it, so the
+     snow keeps falling down the front of the pictures instead of stopping at
+     the edge of the room behind. The canvas takes no clicks, so the drawer
+     works exactly as before underneath it. */
+  useEffect(() => {
+    if (!open || !here) return;
+    const stage =
+      spot.current?.closest<HTMLElement>(".palais-stage") ??
+      document.querySelector<HTMLElement>(".palais-stage");
+    if (!stage) return;
+    stage.classList.add("palais-stage--weather-over");
+    return () => stage.classList.remove("palais-stage--weather-over");
+  }, [open, here]);
+
   /* leaving the room shuts the dresser behind you */
   useEffect(() => {
     if (!here) setOpen(false);

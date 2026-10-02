@@ -132,6 +132,11 @@
 .palais .palais-weather { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .palais .palais-weather--back { z-index: 1; }
 .palais .palais-weather--front { z-index: 3; }
+/* ...except while the Boudoir's dresser is open, when it comes over the top of
+   it (BoudoirPictures.tsx): the backdrop sits at 300, and the snow should be
+   falling down the front of the pictures rather than stopping at the edge of
+   the room behind them. It still takes no clicks. */
+.palais .palais-stage--weather-over .palais-weather--front { z-index: 320; }
 
 /* ---- the rooms (place.ts) ----------------------------------------------
    Every room is always on the page. The others sit over the terrace and
