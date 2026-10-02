@@ -817,6 +817,11 @@ export function BoudoirPictures() {
                           />
                         )}
 
+                        {/* A black blink over the swap. The frame goes
+                            black at the moment the picture changes and lifts
+                            again. Keyed to the picture, so it plays once per change. */}
+                        <span className="bd-blink" key={`blink-${showing.url}`} aria-hidden />
+
                         {/* The notes, lying over the corner of the picture the
                             way they do on a TikTok you're watching back. They
                             are out of the layout altogether, so however many

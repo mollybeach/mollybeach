@@ -5239,6 +5239,27 @@
     0 0 0 3px #0b0a09,
     inset 0 0 26px rgba(0, 0, 0, 0.26);
 }
+
+/* The blink between one picture and the next: black over the picture only,
+   never over the moulding, and gone again before you have finished moving your
+   thumb. It starts opaque in the same paint as the new picture, so there is no
+   frame in which the two are both visible. */
+.palais .bd-blink {
+  position: absolute;
+  inset: 0.85rem;
+  z-index: 1;
+  border-radius: 2px;
+  background: #000;
+  pointer-events: none;
+  animation: bd-blink var(--bd-blink, 300ms) ease-out forwards;
+}
+@keyframes bd-blink {
+  0%, 48% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .palais .bd-blink { animation-duration: 140ms; }
+}
 /* a film sits in the same frame; its own controls sit on the dark behind it */
 .palais .bd-frame video { background: #2b1f12; }
 
