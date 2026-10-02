@@ -165,6 +165,51 @@ export function nextFloral() {
   TURNS.forEach((_, place) => watch(place));
 }
 
+/* ---- the Boudoir, which doesn't join in -------------------------------- */
+
+/**
+ * The Boudoir wears one pattern and keeps it: black and gold, in every place
+ * at once — sidebar, header, footer, panels — and it does not turn while you
+ * are in there. Walk out and the turn picks up where it would have been, since
+ * it is worked out from the clock rather than kept anywhere.
+ *
+ * Which room we are in is read off the address rather than from the Palais's
+ * own context, because the sidebar and the footer are mounted OUTSIDE that
+ * provider (PalaisHome holds it) and a context would never reach them. The
+ * address is the one thing every corner of the page can see.
+ */
+const STILL_IN_THE_BOUDOIR: Floral = "black-gold";
+const STILL: Wearing = { now: STILL_IN_THE_BOUDOIR, was: null };
+
+const roomNow = () =>
+  typeof window === "undefined" ? "" : window.location.hash.replace("#", "").split("/")[0];
+
+let room = roomNow();
+const roomWatchers = new Set<() => void>();
+const roomChanged = () => {
+  const next = roomNow();
+  if (next === room) return;
+  room = next;
+  roomWatchers.forEach((l) => l());
+};
+
+function watchRoom(onChange: () => void) {
+  roomWatchers.add(onChange);
+  if (roomWatchers.size === 1) {
+    // a hash typed or followed, and the rooms' own way of moving, which uses
+    // replaceState and so fires no hashchange of its own (place.ts)
+    window.addEventListener("hashchange", roomChanged);
+    window.addEventListener("palais:place", roomChanged);
+  }
+  return () => {
+    roomWatchers.delete(onChange);
+    if (roomWatchers.size === 0) {
+      window.removeEventListener("hashchange", roomChanged);
+      window.removeEventListener("palais:place", roomChanged);
+    }
+  };
+}
+
 export function useFloral(place: FloralPlace): Wearing {
   const turn = turnFor(place);
   const subscribe = useCallback(
@@ -177,9 +222,15 @@ export function useFloral(place: FloralPlace): Wearing {
     },
     [place, turn],
   );
-  return useSyncExternalStore(
+  const turning = useSyncExternalStore(
     subscribe,
     () => turn.snap,
     () => turn.snap,
   );
+  const where = useSyncExternalStore(
+    watchRoom,
+    () => room,
+    () => "",
+  );
+  return where === "boudoir" ? STILL : turning;
 }

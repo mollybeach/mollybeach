@@ -635,11 +635,16 @@ export function BoudoirPictures() {
 
       {open && (
         <div
-          className="wm-backdrop"
+          className="wm-backdrop bd-backdrop"
+          /* The dresser's furniture is black rather than the pattern's stone:
+             the pill over the top, the ×, the +, the pen and the count. The
+             black is the one in the wallpaper's own palette, so it stays of a
+             piece with whatever the room is wearing. */
           style={{
             ["--wm-chip" as string]: `url("${floralSrc(chips.now)}")`,
-            ["--wm-jewel-side" as string]: paletteOf(chips.now).jewel,
-            ["--wm-jewel-foot" as string]: paletteOf(ribbon.now).jewel,
+            ["--bd-coal" as string]: paletteOf(chips.now).ink,
+            ["--wm-jewel-side" as string]: paletteOf(chips.now).ink,
+            ["--wm-jewel-foot" as string]: paletteOf(ribbon.now).ink,
           }}
           onPointerDown={(e) => e.target === e.currentTarget && shut()}
         >
@@ -649,8 +654,8 @@ export function BoudoirPictures() {
             aria-modal="true"
             aria-labelledby="bd-title"
           >
-            {/* no posies in here: the dresser is papered in pink stripes
-                instead (.bd-panel in palais.css) */}
+            {/* no posies in here: the dresser is papered in black and grey
+                stripes instead (.bd-panel in palais.css) */}
             <div className="wm-title">
               <h2 id="bd-title">
                 <span aria-hidden>✿</span> Portraits <span aria-hidden>✿</span>

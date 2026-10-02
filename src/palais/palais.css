@@ -4773,6 +4773,8 @@
   text-align: center;
 }
 .palais .lt-gate-line { margin: 0; font: 400 1.7rem/1.4 var(--lt-flourish); color: var(--wm-ink, #4a2f36); }
+/* the dresser's stripes are black and grey, so the line on them is light */
+.palais .bd-panel .lt-gate-line { color: #f2f2f2; }
 .palais .lt-input {
   width: min(22rem, 78vw);
   padding: 0.45rem 0.7rem;
@@ -5020,13 +5022,13 @@
   outline: none;
 }
 
-/* the dresser is papered, not flowered: pink and deeper pink stripes, the
-   width they are on the paper Molly sent (about 26px), and no posies at the
-   corners */
+/* the dresser is papered, not flowered: black and grey stripes, the same
+   step apart as the two pinks were, and the width they are on the paper
+   Molly sent (about 26px), and no posies at the corners */
 .palais .bd-panel {
   max-width: calc(100vw - 1rem);
-  --bd-pink: #f6accd;
-  --bd-pink-deep: #f379b2;
+  --bd-pink: #5e5e5e;
+  --bd-pink-deep: #383838;
   background:
     repeating-linear-gradient(
       90deg,
@@ -5120,7 +5122,9 @@
   animation: bd-hop 1.6s linear infinite;
   animation-delay: calc(var(--n) * 0.2s);
 }
-.palais .bd-wait-ring svg { width: 100%; height: 100%; display: block; fill: #e2559a; }
+/* the rabbits going round are black now, like the rest of the dresser's
+   furniture; they are drawn solid, so the fill is the whole of them */
+.palais .bd-wait-ring svg { width: 100%; height: 100%; display: block; fill: var(--bd-coal, #12100c); }
 @keyframes bd-hop {
   0%, 70%, 100% { opacity: 0.22; scale: 0.82; }
   18% { opacity: 1; scale: 1.12; }
@@ -5205,14 +5209,18 @@
   margin: 0;
   padding: 0.85rem;
   border-radius: 6px;
+  /* The frame is carved ebony rather than gilt. Same carving as the gold one
+     it replaced — the light falling across it, the rib cut round the inside,
+     the highlight on the rib's edge — just worked in blacks, so it still reads
+     as a moulding and not a black rectangle. */
   background:
-    linear-gradient(145deg, #f6e3a8 0%, #d9ae53 18%, #b78a33 38%, #efd995 52%, #b78a33 66%, #d9ae53 86%, #f3dc9c 100%);
+    linear-gradient(145deg, #55514b 0%, #2b2824 18%, #141210 38%, #5e594f 52%, #141210 66%, #2b2824 86%, #595349 100%);
   box-shadow:
-    0 0 0 1px #8a6522,                         /* the outer edge of the carving */
-    inset 0 0 0 1px rgba(255, 246, 214, 0.75),
-    inset 0 0 0 6px rgba(140, 103, 36, 0.32),  /* the carved rib */
-    inset 0 0 0 7px rgba(255, 244, 205, 0.6),
-    0 12px 22px rgba(72, 50, 20, 0.3);
+    0 0 0 1px #000,                            /* the outer edge of the carving */
+    inset 0 0 0 1px rgba(255, 248, 230, 0.16),
+    inset 0 0 0 6px rgba(0, 0, 0, 0.55),       /* the carved rib */
+    inset 0 0 0 7px rgba(255, 246, 220, 0.13),
+    0 12px 22px rgba(0, 0, 0, 0.5);
 }
 .palais .bd-frame img,
 .palais .bd-frame video {
@@ -5228,8 +5236,8 @@
   border-radius: 2px;
   /* the dark lip the picture sits behind, and the light off the glass */
   box-shadow:
-    0 0 0 3px #6f5220,
-    inset 0 0 26px rgba(60, 40, 12, 0.22);
+    0 0 0 3px #0b0a09,
+    inset 0 0 26px rgba(0, 0, 0, 0.26);
 }
 /* a film sits in the same frame; its own controls sit on the dark behind it */
 .palais .bd-frame video { background: #2b1f12; }
@@ -5303,7 +5311,7 @@
   padding: 1rem;
   border-radius: 2px;
   background: radial-gradient(120% 90% at 50% 35%, #4a3720 0%, #2b1f12 70%);
-  box-shadow: 0 0 0 3px #6f5220, inset 0 0 26px rgba(60, 40, 12, 0.22);
+  box-shadow: 0 0 0 3px #0b0a09, inset 0 0 26px rgba(0, 0, 0, 0.26);
   color: #f3e3bd;
   font: 500 0.9rem/1.45 var(--cat-round);
   text-align: center;
@@ -5415,6 +5423,19 @@
   background: var(--wm-gold);
   color: var(--wm-cream);
 }
+/* The rest of the dresser's furniture follows the × and the + to black: the
+   count in its corner, and the pen once the notes are open. Only the gold rim
+   and the pictures themselves carry any colour (BoudoirPictures.tsx sets
+   --bd-coal from the wallpaper's own palette). */
+.palais .bd-backdrop .bd-count-corner {
+  background: var(--bd-coal, #12100c);
+  color: #fffaf0;
+}
+.palais .bd-backdrop .bd-say-corner.is-on {
+  background: var(--bd-coal, #12100c);
+  color: var(--wm-gold);
+}
+
 /* how many, in a little seal on its shoulder */
 .palais .bd-say-tally {
   position: absolute;
