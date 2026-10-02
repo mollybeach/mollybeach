@@ -125,6 +125,9 @@ function Turntable({ disc }: { disc: Disc }) {
      player to exist */
   const spent = useRef(false);
   const asked = useRef(false);
+  /* a record stopped or put away by hand stays that way: the arrows may put it
+     on, but they may never put it on again over somebody's decision */
+  const byHand = useRef(false);
   /* on a phone the album stands on the shelf in the footer instead of beside
      the deck: YouTube holds its player at 200 x 200 and won't have it covered,
      which is half the room on a phone (Footer.tsx) */
@@ -206,12 +209,22 @@ function Turntable({ disc }: { disc: Disc }) {
      others, so it listens for the lot and takes whichever comes first. */
   useEffect(() => {
     const kick = (e: Event) => {
-      if (spent.current) return;
       const on = e.target as HTMLElement | null;
       if (on?.closest?.(".lake-radio, .lake-knob")) return;
+      if (byHand.current) return;
+      /* The first click anywhere puts the record on. But on a phone that click
+         is spent building YouTube's player, and by the time the player says it
+         is ready the browser no longer counts it as somebody asking for sound,
+         so nothing happens. Walking along the pictures gives us a later click
+         with the deck already out — so the arrows may try again. */
+      const arrow = Boolean(on?.closest?.(".bd-arrow"));
+      if (spent.current && !arrow) return;
       spent.current = true;
-      if (player.current) player.current.playVideo();
-      else {
+      const p = player.current;
+      if (p) {
+        // only ever on. A picture further along must never stop the music.
+        if (p.getPlayerState() !== PLAYING) p.playVideo();
+      } else {
         asked.current = true;              // no deck out yet: bring it out first
         setOpen(true);
       }
@@ -224,12 +237,18 @@ function Turntable({ disc }: { disc: Disc }) {
   const toggle = () => {
     const p = player.current;
     if (!p) return;
-    if (p.getPlayerState() === PLAYING) p.pauseVideo();
-    else p.playVideo();
+    if (p.getPlayerState() === PLAYING) {
+      byHand.current = true;          // stopped on purpose: leave it stopped
+      p.pauseVideo();
+    } else {
+      byHand.current = false;
+      p.playVideo();
+    }
   };
 
   const shut = () => {
     spent.current = true;             // put away by hand: don't start it again
+    byHand.current = true;
     asked.current = false;
     player.current?.pauseVideo();     // nothing plays out of sight; putting it
     setOpen(false);                   // away takes the player down as well
