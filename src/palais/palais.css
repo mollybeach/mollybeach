@@ -5214,6 +5214,20 @@
 /* a film sits in the same frame; its own controls sit on the dark behind it */
 .palais .bd-frame video { background: #2b1f12; }
 
+/* a picture still on its way down the wire. The frame is already up and the
+   right shape, so this is the dark behind the glass with a slow light going
+   over it — a slow connection should look like waiting, not like broken. */
+.palais .bd-frame img.is-coming {
+  background: linear-gradient(100deg, #2b1f12 32%, #4d3923 50%, #2b1f12 68%) 0 0 / 300% 100%;
+  animation: bd-coming 1.7s ease-in-out infinite;
+}
+@keyframes bd-coming {
+  to { background-position: -150% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .palais .bd-frame img.is-coming { animation: none; }
+}
+
 /* ---- the dresser's two drawers: the pictures, and her, live ------------- */
 
 /* The panel is one tall row, and the tabs need a line of their own above it:

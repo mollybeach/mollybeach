@@ -130,6 +130,53 @@ const said = (e: { message?: string }) => {
   return (raw || "That wouldn't go in.").replace(/^.*?:\s*/, "").replace(/^./, (c) => c.toUpperCase());
 };
 
+/* ------------------------------------------- what shape each one is ------ */
+
+/**
+ * The shape of each picture, remembered in this browser.
+ *
+ * The dresser can't hang a picture until it knows how tall it is, and asking
+ * the picture itself means waiting for the whole of it to come down the wire —
+ * on aeroplane wifi, a minute of rabbits before anything is seen. So the shape
+ * is written down the first time and the frame is built from memory after
+ * that, with the picture painting into it as it arrives.
+ *
+ * The names of the pictures are private, so what is written down is a number
+ * taken from the name rather than the name itself: enough to know one again,
+ * nothing anybody could read.
+ */
+const SHAPES = "palais-portrait-shapes-v1";
+
+const tag = (path: string) => {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < path.length; i += 1) {
+    h ^= path.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(36);
+};
+
+const readShapes = (): Record<string, number> => {
+  try {
+    return JSON.parse(localStorage.getItem(SHAPES) || "{}") as Record<string, number>;
+  } catch {
+    return {};
+  }
+};
+
+export const knownShape = (path: string): number | undefined => readShapes()[tag(path)];
+
+export function rememberShape(path: string, ratio: number): void {
+  if (!path || !ratio || !Number.isFinite(ratio)) return;
+  try {
+    const all = readShapes();
+    all[tag(path)] = Math.round(ratio * 1000) / 1000;
+    localStorage.setItem(SHAPES, JSON.stringify(all));
+  } catch {
+    /* no storage: the dresser measures again next time */
+  }
+}
+
 /** what the dresser will take, for the file picker and for saying no kindly */
 export const PORTRAIT_TYPES = "image/*,video/*";
 export const PORTRAIT_NAME = /\.(jpe?g|png|webp|gif|avif|mp4|webm|mov|m4v)$/i;

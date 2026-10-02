@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Follow the rabbit · the Palais</title>
+
+    <!--
+      The short way in: mollybeach.app/rabbit opens the dresser in the Boudoir,
+      the same as mollybeach.app/#boudoir/portraits. Short enough to say out
+      loud, which is the point of it.
+
+      What is in the dresser is private and stays private: this is the door,
+      not the key. Whoever follows it is still asked for the word, and nothing
+      here says anything about what is inside — the preview is read by anyone
+      the link is passed to.
+    -->
+    <meta name="description" content="A rabbit sits on the marble in front of a white dresser. He opens it to a word." />
+    <link rel="canonical" href="https://mollybeach.app/#boudoir/portraits" />
+    <!-- made to be passed around, not to be indexed: the unfurlers at X and
+         iMessage ignore this, so a sent link still shows its picture -->
+    <meta name="robots" content="noindex, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="the Palais · mollybeach.app" />
+    <meta property="og:url" content="https://mollybeach.app/rabbit" />
+    <meta property="og:title" content="Follow the rabbit · the Palais" />
+    <meta property="og:description" content="A rabbit sits on the marble in front of a white dresser. He opens it to a word." />
+    <meta property="og:image" content="https://mollybeach.app/social-preview-boudoir.jpg" />
+    <meta property="og:image:secure_url" content="https://mollybeach.app/social-preview-boudoir.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Boudoir, a room in the Palais, where the rabbit sits by the dresser." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://mollybeach.app/rabbit" />
+    <meta name="twitter:title" content="Follow the rabbit · the Palais" />
+    <meta name="twitter:description" content="A rabbit sits on the marble in front of a white dresser. He opens it to a word." />
+    <meta name="twitter:image" content="https://mollybeach.app/social-preview-boudoir.jpg" />
+    <meta name="theme-color" content="#f3e4c8" />
+
+    <!-- on to the dresser. A script and not a <meta http-equiv="refresh">,
+         which the crawlers follow — they would read the front page's tags
+         instead of these. A reader with scripts off gets the link below.
+
+         The rabbit leaves his name behind on the way past, so the visitors'
+         book can tell this link from the long one and from somebody who simply
+         found him in the room (BoudoirPictures.tsx). It is this tab only, and
+         it is read once and rubbed out. -->
+    <script>
+      try { sessionStorage.setItem("palais-door", "rabbit"); } catch (e) {}
+      location.replace("/#boudoir/portraits" + location.search);
+    </script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #f3e4c8;
+        color: #6b5320;
+        font: 500 1rem/1.5 "Iowan Old Style", Palatino, Georgia, serif;
+        text-align: center;
+      }
+      a { color: #9c7632; }
+    </style>
+  </head>
+  <body>
+    <p>
+      After the rabbit…<br />
+      <a href="/#boudoir/portraits">mollybeach.app/#boudoir/portraits</a>
+    </p>
+  </body>
+</html>

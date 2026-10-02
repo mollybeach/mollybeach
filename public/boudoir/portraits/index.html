@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The dresser · the Palais</title>
+
+    <!--
+      A door on its own address: mollybeach.app/boudoir/portraits opens the
+      dresser in the Boudoir, the same as mollybeach.app/#boudoir/portraits.
+      A hash never reaches the crawlers at X, Facebook or iMessage, so the
+      door has a page like this one instead.
+
+      What is in the dresser is private and stays private: this is the door,
+      not the key. Whoever follows it is still asked for the word. Nothing
+      here says anything about what is inside, because the preview is read by
+      anyone the link is passed to.
+    -->
+    <meta name="description" content="A white dresser in the Boudoir, and a rabbit sitting on the marble in front of it. It opens to a word." />
+    <link rel="canonical" href="https://mollybeach.app/#boudoir/portraits" />
+    <!-- the door may be shared, but it needn't be indexed: the unfurlers at X
+         and iMessage ignore this, so a sent link still shows its picture -->
+    <meta name="robots" content="noindex, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="the Palais · mollybeach.app" />
+    <meta property="og:url" content="https://mollybeach.app/boudoir/portraits" />
+    <meta property="og:title" content="The dresser · the Palais" />
+    <meta property="og:description" content="A white dresser in the Boudoir, and a rabbit sitting on the marble in front of it. It opens to a word." />
+    <meta property="og:image" content="https://mollybeach.app/social-preview-boudoir.jpg" />
+    <meta property="og:image:secure_url" content="https://mollybeach.app/social-preview-boudoir.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Boudoir, a room in the Palais, where the dresser stands." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://mollybeach.app/boudoir/portraits" />
+    <meta name="twitter:title" content="The dresser · the Palais" />
+    <meta name="twitter:description" content="A white dresser in the Boudoir, and a rabbit sitting on the marble in front of it. It opens to a word." />
+    <meta name="twitter:image" content="https://mollybeach.app/social-preview-boudoir.jpg" />
+    <meta name="theme-color" content="#f3e4c8" />
+
+    <!-- for anyone who opens it: on to the dresser. This is a script and not a
+         <meta http-equiv="refresh">, which the crawlers follow — they would
+         read the front page's tags instead of these. A reader with scripts off
+         gets the link below.
+
+         The door leaves its name behind on the way past, so the visitors' book
+         can tell a link that was passed around from somebody who found the
+         rabbit in the room (BoudoirPictures.tsx). It is this tab only, and it
+         is read once and rubbed out. -->
+    <script>
+      try { sessionStorage.setItem("palais-door", "portraits"); } catch (e) {}
+      location.replace("/#boudoir/portraits" + location.search);
+    </script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #f3e4c8;
+        color: #6b5320;
+        font: 500 1rem/1.5 "Iowan Old Style", Palatino, Georgia, serif;
+        text-align: center;
+      }
+      a { color: #9c7632; }
+    </style>
+  </head>
+  <body>
+    <p>
+      Taking you to the dresser…<br />
+      <a href="/#boudoir/portraits">mollybeach.app/#boudoir/portraits</a>
+    </p>
+  </body>
+</html>

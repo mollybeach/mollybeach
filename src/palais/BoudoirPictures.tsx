@@ -8,10 +8,12 @@ import { lettersOpen, remember, remembered } from "./letters";
 import {
   addPortrait,
   dropNote,
+  knownShape,
   PORTRAIT_TYPES,
   postNote,
   readNotes,
   readPortraits,
+  rememberShape,
   type Portrait,
   type PortraitNote,
 } from "./portraits";
@@ -86,6 +88,27 @@ const WANTED = (extra: string) => /^(portraits|live)/.test(extra);
 const CAME_IN_ON_THE_LINK =
   typeof window !== "undefined" && WANTED(window.location.hash.replace("#", "").split("/")[1] ?? "");
 
+/* Which door this visit came in by, so the visitors' book can tell a link that
+   was passed around from somebody who found the rabbit standing in the room.
+   The little landing pages — public/rabbit and public/boudoir/portraits —
+   leave their name in this tab on the way past; a plain hash link leaves none
+   and is read off the address instead. Read once as the page loads and rubbed
+   out behind us, because only the way in counts. */
+const DOOR = "palais-door";
+const CAME_IN_BY: string | undefined = (() => {
+  if (typeof window === "undefined") return undefined;
+  let door: string | null = null;
+  try {
+    door = sessionStorage.getItem(DOOR);
+    sessionStorage.removeItem(DOOR);
+  } catch {
+    /* no storage: the address still says something */
+  }
+  if (door === "rabbit") return "came in by the rabbit · /rabbit";
+  if (door === "portraits") return "came in through the door · /boudoir/portraits";
+  return CAME_IN_ON_THE_LINK ? "came in on the link · #boudoir/portraits" : undefined;
+})();
+
 /** under this many seconds on a picture is walking past it, not looking */
 const SHORT = 3;
 /** "12s", "1m 5s", "4m" */
@@ -109,7 +132,7 @@ export function BoudoirPictures() {
   );
   /* anyone past the word may watch; only Molly, signed in, may be watched */
   const [editor, setEditor] = useState<Editor | null>(null);
-  const arrived = useRef(CAME_IN_ON_THE_LINK);
+  const arrived = useRef<string | undefined>(CAME_IN_BY);
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -126,6 +149,11 @@ export function BoudoirPictures() {
      one picture it is ready to show */
   const shapes = useRef(new Map<string, number>());
   const [ready, setReady] = useState<string | null>(null);
+  /* the one that has actually arrived, so the rest can shimmer while it comes */
+  const [painted, setPainted] = useState<string | null>(null);
+  /* a signed link is good for ten minutes; a slow connection can outlive one */
+  const signedAt = useRef(0);
+  const resigning = useRef(false);
   const pit = useRef<HTMLDivElement>(null);
   /* putting one in: the file picker, and what to say while it goes */
   const picker = useRef<HTMLInputElement>(null);
@@ -198,18 +226,27 @@ export function BoudoirPictures() {
     setBusy(true);
     setTrouble(null);
     try {
+      /* A browser that already knows the word doesn't wait to be told it was
+         right before asking for the pictures: both questions go at once and
+         the pictures are thrown away if the word turns out not to fit. On a
+         connection where a round trip costs most of a second, that is half the
+         wait to the first picture gone. Somebody standing at the dresser
+         having a go is asked properly, one thing at a time. */
+      const soon = typed ? null : readPortraits(word).catch(() => null);
       if (await lettersOpen(word)) {
         if (typed) noteDoing("portrait-try", "and it opened");
         setInside(true);
         setKey(word);
         remember("key", word);
         // Molly hears that someone looked, and how they got here (visits.ts)
-        noteDoing("pictures", arrived.current ? "came in through the door" : undefined);
-        arrived.current = false;        // only the way in counts as arriving
+        noteDoing("pictures", arrived.current);
+        arrived.current = undefined;    // only the way in counts as arriving
         // the pictures themselves, signed for ten minutes at a time
         // (portraits.ts). Before the bucket exists, nothing comes back.
-        readPortraits(word)
+        (soon ?? readPortraits(word))
+          .then(async (got) => got ?? (await readPortraits(word)))
           .then((got) => {
+            signedAt.current = Date.now();
             setHanging(got);
             setAt(0);
           })
@@ -386,47 +423,58 @@ export function BoudoirPictures() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, inside, shut, step]);
 
-  /* learn a picture's shape before hanging it, and have the next one ready.
-     A film is asked the same question of its first frame: enough of it is
-     fetched to know how big it is, and no more. */
+  /* The frame is built from what this browser remembers of the picture's
+     shape, so it is standing before a byte of the picture has arrived; the
+     picture paints into it as it comes and puts the frame right on the way in
+     if the memory was wrong. Waiting for the whole file first — which is what
+     this did — meant a minute of rabbits on aeroplane wifi before anything
+     was seen at all. */
   const onNow = hanging?.[at] ?? hanging?.[0] ?? null;
   useEffect(() => {
     const url = onNow?.url;
     if (!url) return;
-    const learn = (u: string, film?: boolean, then?: (r: number) => void) => {
-      const known = shapes.current.get(u);
-      if (known) return then?.(known);
-      const take = (r: number) => {
-        shapes.current.set(u, r || 4 / 3);
-        then?.(r || 4 / 3);
-      };
-      if (film) {
-        const reel = document.createElement("video");
-        reel.preload = "metadata";
-        reel.muted = true;
-        reel.onloadedmetadata = () => take(reel.videoWidth / reel.videoHeight);
-        reel.onerror = () => take(16 / 9);
-        reel.src = u;
-        return;
-      }
-      const img = new Image();
-      img.onload = () => take(img.naturalWidth / img.naturalHeight);
-      img.onerror = () => take(4 / 3);
-      img.src = u;
-    };
-    let gone = false;
-    learn(url, onNow?.kind === "film", (r) => {
-      if (gone) return;
-      setShape(r);
-      setReady(url);
-      // the one along, so stepping to it is instant
-      const next = hanging?.[(at + 1) % (hanging.length || 1)];
-      if (next && next.url !== url) learn(next.url, next.kind === "film");
-    });
-    return () => {
-      gone = true;
-    };
-  }, [onNow?.url, onNow?.kind, hanging, at]);
+    const known = shapes.current.get(url) ?? (onNow?.path ? knownShape(onNow.path) : undefined);
+    if (known) {
+      shapes.current.set(url, known);
+      setShape(known);
+    }
+    setReady(url);
+    /* and the ones either side, fetched behind this one so that stepping on is
+       instant — at low priority, so they never hold up the one being looked at */
+    const soon = window.setTimeout(() => {
+      const near = many > 1 ? [hanging?.[(at + 1) % many], hanging?.[(at - 1 + many) % many]] : [];
+      near.forEach((p) => {
+        if (!p || p.url === url || p.kind === "film") return;
+        const img = new Image();
+        img.decoding = "async";
+        try {
+          (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "low";
+        } catch {
+          /* a browser that has never heard of it fetches it normally */
+        }
+        img.src = p.url;
+      });
+    }, 350);
+    return () => window.clearTimeout(soon);
+  }, [onNow, at, hanging, many]);
+
+  /* A link out of the dresser is signed for ten minutes. On a slow connection
+     a sitting can outlast one, and every picture goes dead at once; rather
+     than leave a broken frame, the drawer is read again and the links renewed. */
+  const reSign = useCallback(() => {
+    if (resigning.current || !key) return;
+    if (Date.now() - signedAt.current < 20000) return;   // not the link's age: a bad file
+    resigning.current = true;
+    readPortraits(key)
+      .then((got) => {
+        signedAt.current = Date.now();
+        setHanging(got);
+      })
+      .catch(() => {})
+      .finally(() => {
+        resigning.current = false;
+      });
+  }, [key]);
 
   /* What they stopped on, and how long they stayed with it.
      Each one is told when they leave it — stepping to the next, shutting the
@@ -639,7 +687,10 @@ export function BoudoirPictures() {
             ) : (
               /* one picture at a time, an arrow either side */
               <div className="bd-look">
-                {!showing || ready !== showing.url ? (
+                {/* the rabbits are for the drawer being opened, not for the
+                    picture coming down the wire: once we know there is one, the
+                    frame goes up and it paints into it */}
+                {!showing ? (
                   hanging?.length === 0 ? (
                     <p className="cat-note">Nothing hanging in here yet.</p>
                   ) : (
@@ -652,8 +703,8 @@ export function BoudoirPictures() {
                         className={`bd-frame${frame ? " is-fitted" : ""}`}
                         style={frame ? { width: `${frame.w}px`, height: `${frame.h}px` } : undefined}
                       >
-                        {/* already fetched and measured above, so it paints
-                            straight into a frame of the right shape */}
+                        {/* the frame is already the shape this browser
+                            remembers it being; what arrives corrects it */}
                         {showing.kind === "film" ? (
                           <video
                             key={showing.url}
@@ -662,9 +713,37 @@ export function BoudoirPictures() {
                             playsInline
                             preload="metadata"
                             aria-label={showing.title}
+                            onLoadedMetadata={(e) => {
+                              const reel = e.currentTarget;
+                              const r = reel.videoWidth / reel.videoHeight;
+                              if (r) {
+                                shapes.current.set(showing.url, r);
+                                rememberShape(showing.path, r);
+                                setShape(r);
+                              }
+                              setPainted(showing.url);
+                            }}
+                            onError={reSign}
                           />
                         ) : (
-                          <img src={showing.url} alt={showing.title} decoding="async" />
+                          <img
+                            key={showing.url}
+                            src={showing.url}
+                            alt={showing.title}
+                            decoding="async"
+                            className={painted === showing.url ? undefined : "is-coming"}
+                            onLoad={(e) => {
+                              const pic = e.currentTarget;
+                              const r = pic.naturalWidth / pic.naturalHeight;
+                              if (r) {
+                                shapes.current.set(showing.url, r);
+                                rememberShape(showing.path, r);
+                                setShape(r);
+                              }
+                              setPainted(showing.url);
+                            }}
+                            onError={reSign}
+                          />
                         )}
 
                         {/* The notes, lying over the corner of the picture the
