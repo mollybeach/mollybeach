@@ -5599,17 +5599,20 @@
 .palais .bd-tally {
   display: none;
   font: 700 0.85rem/1 var(--wm-serif, Georgia, serif);
-  color: #8a5c2a;
+  /* gold, not the brown it was: the paper behind it is nearly black now and
+     the brown simply could not be read against it */
+  color: #f4dda0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
   letter-spacing: 0.04em;
 }
 .palais .bd-count i {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgba(150, 120, 55, 0.35);
+  background: rgba(244, 221, 160, 0.4);
   box-shadow: inset 0 0 0 1px rgba(120, 90, 30, 0.35);
 }
-.palais .bd-count i.is-on { background: #c9a44c; box-shadow: 0 0 6px rgba(201, 164, 76, 0.8); }
+.palais .bd-count i.is-on { background: #f4dda0; box-shadow: 0 0 6px rgba(244, 221, 160, 0.85); }
 
 /* which picture you're on, in the corner the other three left over — the same
    gold collar as the ×, the + and the pen, drawn out into a plaque */
