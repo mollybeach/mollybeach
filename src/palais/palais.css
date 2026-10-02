@@ -137,7 +137,22 @@
    Every room is always on the page. The others sit over the terrace and
    fade in when you walk into one; the terrace's stickers are hidden (not
    removed) while you're away. */
-.palais .palais-room--away { opacity: 0; transition: opacity 700ms ease; background: transparent; }
+/* A room you are not in is still a full-screen photograph, and nineteen of
+   them laid out, painted and composited at once comes to the better part of a
+   gigabyte of bitmap. Hidden only by opacity they all stayed rendered, which
+   is more than an iPhone will give a tab: anything that forced a repaint —
+   tapping a field and letting iOS zoom was enough — and Safari killed it.
+   Hidden like this the room keeps its place in the page and everything it was
+   doing, but the browser stops rendering it and may let its pictures go.
+   allow-discrete holds it rendered until the fade has finished, so walking
+   between rooms still crossfades; a browser too old to know the keyword drops
+   the fade and keeps the room. */
+.palais .palais-room--away {
+  opacity: 0;
+  background: transparent;
+  content-visibility: hidden;
+  transition: opacity 700ms ease, content-visibility 700ms allow-discrete;
+}
 .palais [data-place="kitchen"] .palais-room--kitchen,
 .palais [data-place="bathroom"] .palais-room--bathroom,
 .palais [data-place="garden"] .palais-room--garden,
@@ -155,7 +170,7 @@
 .palais [data-place="madeleine"] .palais-room--madeleine,
 .palais [data-place="library"] .palais-room--library,
 .palais [data-place="boudoir"] .palais-room--boudoir,
-.palais [data-place="sunliner"] .palais-room--sunliner { opacity: 1; }
+.palais [data-place="sunliner"] .palais-room--sunliner { opacity: 1; content-visibility: visible; }
 /* the stickers follow you into every room, each room with its own layout
    (roomLayouts.ts), as do the weather and the flyers; the terrace's pollen
    stays on the terrace */

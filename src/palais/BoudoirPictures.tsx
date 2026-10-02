@@ -94,6 +94,14 @@ const CAME_IN_ON_THE_LINK =
    leave their name in this tab on the way past; a plain hash link leaves none
    and is read off the address instead. Read once as the page loads and rubbed
    out behind us, because only the way in counts. */
+/* A keyboard that opens by itself is a jolt on a phone, and iOS answers it by
+   scrolling and scaling the page about under a modal that is already the size
+   of the screen. On a touch screen the word is waited for instead. */
+const COARSE =
+  typeof window !== "undefined" && typeof window.matchMedia === "function"
+    ? window.matchMedia("(pointer: coarse)").matches
+    : false;
+
 const DOOR = "palais-door";
 const CAME_IN_BY: string | undefined = (() => {
   if (typeof window === "undefined") return undefined;
@@ -392,6 +400,11 @@ export function BoudoirPictures() {
      can be sent to somebody and open where it left off */
   useEffect(() => {
     if (!here) return;
+    /* only ever the part after #boudoir. When the address changes to another
+       room this runs once more before `place` has caught up, and without this
+       it would write #boudoir straight back over it and you could never leave
+       the room by a link. */
+    if (window.location.hash.replace("#", "").split("/")[0] !== "boudoir") return;
     const want = open ? `#boudoir/${tab === "live" ? "live" : "portraits"}` : "#boudoir";
     if (window.location.hash !== want) window.history.replaceState(window.history.state, "", want);
   }, [open, tab, here]);
@@ -671,7 +684,7 @@ export function BoudoirPictures() {
                   placeholder="the word"
                   autoComplete="off"
                   aria-label="The word that opens the dresser"
-                  autoFocus
+                  autoFocus={!COARSE}
                 />
                 <button type="submit" className="wm-btn wm-btn--visit" disabled={busy || !tried.trim()}>
                   {busy ? "Trying…" : "Open the dresser ✿"}
