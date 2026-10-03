@@ -528,11 +528,16 @@ export function BoudoirPictures() {
     }
     let live = true;
     setAccepted(null);
+    const since = Date.now();
     amIAccepted().then((ok) => {
-      if (!live) return;
-      setAccepted(ok);
-      // not a member yet: let Molly know, with their email, so she can accept
-      if (!ok) void askForReview();
+      // always show the "reviewing" card for a beat, so it never just blinks
+      const wait = Math.max(0, 1300 - (Date.now() - since));
+      setTimeout(() => {
+        if (!live) return;
+        setAccepted(ok);
+        // not a member yet: let Molly know, with their email, so she can accept
+        if (!ok) void askForReview();
+      }, wait);
     });
     return () => {
       live = false;
@@ -861,15 +866,13 @@ export function BoudoirPictures() {
                 </div>
               </div>
             ) : preview === "review" ? (
-              /* just a look at the "under review" screen — no sign-in behind it */
+              /* the default look: the "reviewing" card everyone meets first */
               <div className="bd-hello bd-hello--wait">
                 <span className="bd-hello-crest" aria-hidden>
                   <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
                 </span>
-                <h3 className="bd-hello-name">Under review</h3>
-                <p className="bd-hello-line">
-                  Please wait while your account is under review by the board. May take up to 24 hours.
-                </p>
+                <h3 className="bd-hello-name">Reviewing…</h3>
+                <p className="bd-hello-line">Reviewing your credentials…</p>
               </div>
             ) : !inside ? (
               /* the dresser is locked: the same word as the letters */
@@ -923,9 +926,13 @@ export function BoudoirPictures() {
                 {authTrouble && <p className="lt-trouble">{authTrouble}</p>}
               </div>
             ) : accepted === null ? (
-              /* just signed in; asking the board's verdict */
-              <div className="bd-look">
-                <Waiting say="One moment…" />
+              /* just signed in: the board looks you over before anything shows */
+              <div className="bd-hello bd-hello--wait">
+                <span className="bd-hello-crest" aria-hidden>
+                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                </span>
+                <h3 className="bd-hello-name">Reviewing…</h3>
+                <p className="bd-hello-line">Reviewing your credentials…</p>
               </div>
             ) : !accepted ? (
               /* signed in, but not yet let in */
