@@ -22,7 +22,7 @@ import {
   type Portrait,
   type PortraitNote,
 } from "./portraits";
-import { noteDoing, noteSigninAttempt } from "./visits";
+import { amIAccepted, askForReview, noteDoing, noteSigninAttempt } from "./visits";
 
 /**
  * The pictures kept in the Boudoir's white dresser.
@@ -154,6 +154,9 @@ export function BoudoirPictures() {
      (a provider, the password, or continuing as who you already are) and is
      cleared again when the dresser shuts. */
   const [passed, setPassed] = useState(false);
+  /* the board's verdict on this account: null while we ask, false = still under
+     review, true = in. Editors always come back true (palais_members.sql). */
+  const [accepted, setAccepted] = useState<boolean | null>(null);
   const [authBusy, setAuthBusy] = useState<string | null>(null);
   const [authTrouble, setAuthTrouble] = useState<string | null>(null);
   const arrived = useRef<string | undefined>(CAME_IN_BY);
@@ -481,6 +484,25 @@ export function BoudoirPictures() {
   useEffect(() => {
     if (editor) setPassed(true);
   }, [editor]);
+
+  /* ...and we ask the board's verdict on them. Signed out again, forget it. */
+  useEffect(() => {
+    if (!editor) {
+      setAccepted(null);
+      return;
+    }
+    let live = true;
+    setAccepted(null);
+    amIAccepted().then((ok) => {
+      if (!live) return;
+      setAccepted(ok);
+      // not a member yet: let Molly know, with their email, so she can accept
+      if (!ok) void askForReview();
+    });
+    return () => {
+      live = false;
+    };
+  }, [editor]);
   /* the address says whether the dresser is open and which drawer, so the page
      can be sent to somebody and open where it left off */
   useEffect(() => {
@@ -724,7 +746,7 @@ export function BoudoirPictures() {
               ×
             </button>
             {/* opposite the ×: the way to put one in, once they're inside */}
-            {inside && passed && tab === "portraits" && (
+            {inside && passed && accepted && tab === "portraits" && (
               <>
                 <input
                   ref={picker}
@@ -766,7 +788,7 @@ export function BoudoirPictures() {
               </>
             )}
 
-            {inside && passed && (
+            {inside && passed && accepted && (
               <nav className="cat-tabs bd-tabs" aria-label="The dresser's drawers">
                 {([["portraits", "Portraits"], ["live", "Livestream"]] as const).map(([which, name]) => (
                   <button
@@ -832,6 +854,22 @@ export function BoudoirPictures() {
                 </div>
 
                 {authTrouble && <p className="lt-trouble">{authTrouble}</p>}
+              </div>
+            ) : accepted === null ? (
+              /* just signed in; asking the board's verdict */
+              <div className="bd-look">
+                <Waiting say="One moment…" />
+              </div>
+            ) : !accepted ? (
+              /* signed in, but not yet let in */
+              <div className="bd-hello bd-hello--wait">
+                <span className="bd-hello-crest" aria-hidden>
+                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                </span>
+                <h3 className="bd-hello-name">Under review</h3>
+                <p className="bd-hello-line">
+                  Please wait while your account is under review by the board. May take up to 24 hours.
+                </p>
               </div>
             ) : tab === "live" ? (
               /* her camera, while she is in front of it */

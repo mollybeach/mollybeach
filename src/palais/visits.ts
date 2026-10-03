@@ -761,6 +761,8 @@ export interface Account {
   created_at: string;
   last_sign_in_at: string | null;
   confirmed: boolean;
+  /** whether the board has accepted them */
+  accepted: boolean;
 }
 
 /** everyone who has signed in to the dresser, newest first (editors only; the
@@ -785,4 +787,40 @@ export async function noteSigninAttempt(provider: string): Promise<void> {
   } catch {
     /* a ping that doesn't go through never gets in the way of signing in */
   }
+}
+
+
+/* --------------------------------------------- the board's approval -------- */
+
+/** whether THIS signed-in account may see the dresser (editors always may).
+    Needs 20260928150000_palais_members.sql. */
+export async function amIAccepted(): Promise<boolean> {
+  try {
+    const sb = await db();
+    const { data, error } = await sb.rpc("palais_i_am_accepted");
+    if (error) return false;
+    return data === true;
+  } catch {
+    return false;
+  }
+}
+
+/** ask the board to accept this signed-in account — buzzes "Please Accept
+    <email>" (once per 12h, non-editors only). Live site only, like the pings.
+    Needs 20260928160000_palais_review_ping.sql. */
+export async function askForReview(): Promise<void> {
+  if (!dbConfigured || process.env.NODE_ENV !== "production") return;
+  try {
+    const sb = await db();
+    await sb.rpc("palais_review_ping");
+  } catch {
+    /* a ping that doesn't go through never blocks anything */
+  }
+}
+
+/** accept or un-accept an account (editors only) */
+export async function setAccepted(id: string, accepted: boolean): Promise<void> {
+  const sb = await db();
+  const { error } = await sb.rpc("palais_set_accepted", { p_id: id, p_accepted: accepted });
+  if (error) throw new Error(error.message);
 }

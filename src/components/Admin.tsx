@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { VisitorsShelf } from '../palais/VisitorsShelf';
 import { SignIn } from '../palais/LayoutsShelf';
 import { useCollection, messageOf } from '../palais/useCollection';
-import { githubStats, listAccounts, visitStats, type Account, type GithubStats, type VisitStats } from '../palais/visits';
+import { githubStats, listAccounts, setAccepted, visitStats, type Account, type GithubStats, type VisitStats } from '../palais/visits';
 import { paletteOf, useFloral } from '../palais/florals';
 import '../palais/palais.css';
 
@@ -68,6 +68,19 @@ export default function Admin() {
   const [githubError, setGithubError] = useState('');
   const [accounts, setAccounts] = useState<Account[] | null>(null);
   const [accountsError, setAccountsError] = useState('');
+  const [deciding, setDeciding] = useState<string | null>(null);
+
+  const decide = async (id: string, accept: boolean) => {
+    setDeciding(id);
+    try {
+      await setAccepted(id, accept);
+      setAccounts((list) => (list ? list.map((a) => (a.id === id ? { ...a, accepted: accept } : a)) : list));
+    } catch (e) {
+      setAccountsError(messageOf(e));
+    } finally {
+      setDeciding(null);
+    }
+  };
   const signedIn = Boolean(collection.editor?.canSave);
 
   useEffect(() => {
@@ -247,7 +260,7 @@ export default function Admin() {
           <div className="adm-table-wrap">
             <table className="adm-table">
               <thead>
-                <tr><th>Who</th><th>Via</th><th>Joined</th><th>Last seen</th></tr>
+                <tr><th>Who</th><th>Via</th><th>Joined</th><th>Last seen</th><th>Board</th></tr>
               </thead>
               <tbody>
                 {accounts.map((a) => (
@@ -262,6 +275,19 @@ export default function Admin() {
                     <td><span className={`adm-via adm-via--${a.provider}`}>{a.provider}</span></td>
                     <td>{new Date(a.created_at).toLocaleDateString()}</td>
                     <td>{a.last_sign_in_at ? new Date(a.last_sign_in_at).toLocaleDateString() : '—'}</td>
+                    <td className="adm-decide">
+                      <span className={`adm-stat adm-stat--${a.accepted ? 'in' : 'wait'}`}>
+                        {a.accepted ? 'Accepted' : 'Under review'}
+                      </span>
+                      <button
+                        type="button"
+                        className={`adm-approve${a.accepted ? ' is-in' : ''}`}
+                        onClick={() => decide(a.id, !a.accepted)}
+                        disabled={deciding === a.id}
+                      >
+                        {deciding === a.id ? '…' : a.accepted ? 'Revoke' : 'Accept'}
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
