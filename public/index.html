@@ -65,6 +65,7 @@
     <div id="root"></div>
     <!-- ✿ brat code loading screen — shows site-wide before the app mounts ✿ -->
     <div id="bratload" aria-hidden="true">
+      <div class="bl-banner">DIGITAL FABRIC OF MY LIFE</div>
       <div class="bl-scatter" id="bl-scatter"></div>
       <div class="bl-stage">
         <div class="bl-ring" id="bl-ring"></div>
@@ -96,6 +97,15 @@
         display: inline-block; font-size: 17px; line-height: 1; color: #ff1f93;
         text-shadow: 1.5px 1.5px 0 #fff, 3px 3px 0 #8a1358;
       }
+      .bl-banner {
+        position: absolute; top: 4.5%; left: 50%; transform: translateX(-50%);
+        z-index: 4; max-width: 96vw; white-space: nowrap; text-align: center;
+        font-family: "Press Start 2P", ui-monospace, monospace;
+        font-size: clamp(9px, 2.4vw, 20px); letter-spacing: 2px;
+        color: #c77dff;
+        text-shadow: 2px 2px 0 #39106b, 4px 4px 0 #1c0640, 0 0 12px rgba(168, 92, 255, 0.55);
+      }
+      @media (max-width: 440px) { .bl-banner { letter-spacing: 1px; white-space: normal; line-height: 1.6; } }
       .bl-ch svg { display: block; }
       .bl-ch.bl-bolt svg { width: 17px; filter: drop-shadow(1.2px 1.2px 0 #8a1358); }
       .bl-ch.bl-deco-ring svg { width: 22px; }
@@ -235,12 +245,11 @@
 
         /* and more of them scattered across the background */
         var spots = [
-          [8,14,22],[86,10,16],[16,66,16],[90,60,20],[6,40,13],[93,32,15],
-          [20,86,18],[80,84,22],[46,6,15],[60,86,14],[33,22,12],[70,20,13],
-          [3,78,16],[93,80,15],[12,30,12],[88,44,13],[40,88,12],[66,8,12],
-          [4,24,14],[10,54,12],[7,66,16],[14,84,13],[3,88,12],[18,40,11],
-          [93,22,13],[90,34,12],[93,54,14],[92,72,13],[85,66,12],[93,40,11],
-          [24,8,12],[74,86,13],[30,88,11],[54,4,12]
+          [16,66,16],[90,60,20],[6,40,13],[93,32,15],[20,86,18],[80,84,22],
+          [60,86,14],[33,22,12],[70,20,13],[3,78,16],[93,80,15],[12,30,12],
+          [88,44,13],[40,88,12],[4,24,14],[10,54,12],[7,66,16],[14,84,13],
+          [3,88,12],[18,40,11],[93,22,13],[90,34,12],[93,54,14],[92,72,13],
+          [85,66,12],[93,40,11],[74,86,13],[30,88,11]
         ];
         var scatter = root.querySelector(".bl-scatter");
         spots.forEach(function (p, i) {
@@ -269,8 +278,8 @@
         /* brown cut coconuts — the full five on wide screens, three on a phone
            (fewer and bigger, so the small screen isn't crowded) */
         coco(vw < 620
-          ? [[9,46,112],[85,44,112],[48,88,104]]
-          : [[8,45,96],[86,43,96],[13,73,82],[81,71,82],[48,88,90]], cocoSvg);
+          ? [[9,46,112],[85,44,112],[48,92,104]]
+          : [[8,45,96],[86,43,96],[13,73,82],[81,71,82],[48,92,90]], cocoSvg);
         /* green coconut drinks — across the top of the page */
         coco([[13,15,96],[85,15,96]], cocoGreenSvg, "bl-coco-green");
 
@@ -281,6 +290,7 @@
           var el = document.createElement("div");
           el.id = "bratload"; el.setAttribute("aria-hidden", "true");
           el.innerHTML =
+            '<div class="bl-banner">DIGITAL FABRIC OF MY LIFE</div>' +
             '<div class="bl-scatter"></div>' +
             '<div class="bl-stage"><div class="bl-ring"></div>' +
             '<img class="bl-logo" src="/bratcode.webp" alt="" /></div>' +

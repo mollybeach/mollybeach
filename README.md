@@ -8,6 +8,8 @@ My portfolio has two sides. The sidebar is a conventional résumé: experience, 
 
 It's React, TypeScript and CSS, with no game engine and no canvas library. It all runs in the browser, with an optional Supabase backend.
 
+*Digital fabric of my life.*
+
 ---
 
 ## ✨ The Palais
