@@ -75,7 +75,7 @@
     <style>
       #bratload {
         position: fixed; inset: 0; z-index: 2147483647;
-        display: grid; place-items: center; gap: 14px; grid-auto-rows: min-content;
+        display: grid; place-content: center; justify-items: center; gap: 14px; grid-auto-rows: min-content;
         background:
           radial-gradient(130% 130% at 50% 38%, #e2f85a 0%, #cdef3f 52%, #aedc2e 100%);
         font-family: "Press Start 2P", ui-monospace, "Courier New", monospace;
@@ -134,11 +134,9 @@
           var a = (360 / n) * i;
           var slot = document.createElement("span"); slot.className = "bl-slot";
           slot.style.transform = "rotate(" + a + "deg) translateY(-" + R + "px)";
-          var cs = document.createElement("span"); cs.className = "bl-cs";
           var g = document.createElement("span"); g.className = "bl-ch";
-          g.style.transform = "rotate(" + (-a) + "deg)";
           g.textContent = ch === " " ? " " : ch;
-          cs.appendChild(g); slot.appendChild(cs); ring.appendChild(slot);
+          slot.appendChild(g); ring.appendChild(slot);
         });
 
         /* pixel heart and sparkle, drawn from little bitmaps so they stay blocky */
