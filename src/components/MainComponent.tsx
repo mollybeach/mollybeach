@@ -57,6 +57,14 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
     countPage();
     recordPlace(stop);
   }, [pathname]);
+  // the brat-code loader flashes between pages (the sidebar). Islands flash
+  // from the Palais's own "palais:place" event (see public/index.html). The
+  // first render is the real page load, which already showed the loader.
+  const firstNav = React.useRef(true);
+  useEffect(() => {
+    if (firstNav.current) { firstNav.current = false; return; }
+    (window as unknown as { bratFlash?: () => void }).bratFlash?.();
+  }, [pathname]);
   // every other page is papered in whichever floral the Palais footer is
   // wearing, under a cream veil so the writing still reads (florals.ts)
   const floral = useFloral('footer');

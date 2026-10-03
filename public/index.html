@@ -125,8 +125,7 @@
     </style>
     <script>
       (function () {
-        var load = document.getElementById("bratload");
-        if (!load) return;
+        function draw(root) {
         // the floating bits shrink on narrower screens so they never crowd the badge
         var vw = window.innerWidth || document.documentElement.clientWidth || 900;
         var dScale = vw < 560 ? 0.58 : vw < 820 ? 0.78 : vw > 1500 ? 1.15 : 1;
@@ -200,7 +199,7 @@
         /* the ring: letters sit tangent to the circle and spin around it. Letters
            of a word are close together; the gaps between words are filled with
            hearts, stars and (around POWERED) lightning, so each word reads clear. */
-        var ring = document.getElementById("bl-ring");
+        var ring = root.querySelector(".bl-ring");
         var BOLT = "⚡";
         var words = [
           [BOLT, "P", "O", "W", "E", "R", "E", "D", BOLT],
@@ -243,7 +242,7 @@
           [93,22,13],[90,34,12],[93,54,14],[92,72,13],[85,66,12],[93,40,11],
           [24,8,12],[74,86,13],[30,88,11],[54,4,12]
         ];
-        var scatter = document.getElementById("bl-scatter");
+        var scatter = root.querySelector(".bl-scatter");
         spots.forEach(function (p, i) {
           var d = document.createElement("span"); d.className = "bl-deco";
           d.style.left = p[0] + "%"; d.style.top = p[1] + "%";
@@ -267,22 +266,56 @@
         /* green coconut drinks — across the top of the page */
         coco([[14,16,62],[82,16,62]], cocoGreenSvg, "bl-coco-green");
 
-        /* gone once the app has painted, but shown long enough to be seen */
-        var start = Date.now(), MIN = 1500, done = false;
-        function hide() {
-          if (done) return; done = true;
-          load.classList.add("bl-gone");
-          setTimeout(function () { load && load.parentNode && load.parentNode.removeChild(load); }, 650);
         }
-        function tick() {
-          if (done) return;
-          var root = document.getElementById("root");
-          var up = root && root.children.length > 0;
-          if (up && Date.now() - start >= MIN) return hide();
-          setTimeout(tick, 120);
+
+        /* a fresh overlay, for the flash between pages and islands */
+        function overlay() {
+          var el = document.createElement("div");
+          el.id = "bratload"; el.setAttribute("aria-hidden", "true");
+          el.innerHTML =
+            '<div class="bl-scatter"></div>' +
+            '<div class="bl-stage"><div class="bl-ring"></div>' +
+            '<img class="bl-logo" src="/bratcode.webp" alt="" /></div>' +
+            '<div class="bl-bar"><i></i></div>';
+          return el;
         }
-        tick();
-        setTimeout(hide, 8000);   /* a hard ceiling, so it can never hang the site */
+        /* flash the loader, held long enough to read POWERED BY BRATCODE */
+        var flashing = false;
+        window.bratFlash = function (ms) {
+          if (flashing) return;           // don't stack flashes on quick clicks
+          flashing = true;
+          ms = ms || 1400;
+          var el = overlay();
+          document.body.appendChild(el);
+          draw(el);
+          setTimeout(function () {
+            el.classList.add("bl-gone");
+            setTimeout(function () { el.parentNode && el.parentNode.removeChild(el); flashing = false; }, 650);
+          }, ms);
+        };
+        /* between islands: the Palais fires this when the room changes (place.ts) */
+        window.addEventListener("palais:place", function () { window.bratFlash(); });
+
+        /* the first paint: use the overlay already in the page, gone once ready */
+        var load = document.getElementById("bratload");
+        if (load) {
+          draw(load);
+          var start = Date.now(), MIN = 1500, done = false;
+          function hide() {
+            if (done) return; done = true;
+            load.classList.add("bl-gone");
+            setTimeout(function () { load && load.parentNode && load.parentNode.removeChild(load); }, 650);
+          }
+          function tick() {
+            if (done) return;
+            var root = document.getElementById("root");
+            var up = root && root.children.length > 0;
+            if (up && Date.now() - start >= MIN) return hide();
+            setTimeout(tick, 120);
+          }
+          tick();
+          setTimeout(hide, 8000);
+        }
       })();
     </script>
     <!--
