@@ -75,15 +75,15 @@
     <style>
       #bratload {
         position: fixed; inset: 0; z-index: 2147483647;
-        display: grid; place-content: center; justify-items: center; gap: 14px; grid-auto-rows: min-content;
+        display: grid; place-content: center; justify-items: center; gap: 24px; grid-auto-rows: min-content;
         background:
-          radial-gradient(130% 130% at 50% 38%, #e2f85a 0%, #cdef3f 52%, #aedc2e 100%);
+          radial-gradient(130% 130% at 50% 40%, #1a1a24 0%, #000 72%);
         font-family: "Press Start 2P", ui-monospace, "Courier New", monospace;
         overflow: hidden;
         transition: opacity .55s ease, visibility .55s ease;
       }
       #bratload.bl-gone { opacity: 0; visibility: hidden; pointer-events: none; }
-      .bl-stage { position: relative; width: 360px; height: 330px; display: grid; place-items: center; }
+      .bl-stage { position: relative; width: 370px; height: 348px; display: grid; place-items: center; }
       .bl-logo {
         width: 188px; height: 188px; object-fit: cover; border-radius: 14px;
         image-rendering: pixelated;
@@ -96,6 +96,9 @@
         display: inline-block; font-size: 14px; line-height: 1; color: #ff1f93;
         text-shadow: 1.5px 1.5px 0 #fff, 3px 3px 0 #8a1358;
       }
+      .bl-ch svg { display: block; }
+      .bl-ch.bl-bolt svg { width: 14px; filter: drop-shadow(1.2px 1.2px 0 #8a1358); }
+      .bl-ch.bl-deco-ring svg { width: 18px; }
       @keyframes bl-spin { to { transform: rotate(360deg); } }
       @keyframes bl-rev  { to { transform: rotate(-360deg); } }
       .bl-scatter { position: absolute; inset: 0; pointer-events: none; }
@@ -108,83 +111,161 @@
       }
       .bl-bar i {
         display: block; height: 100%; width: 40%; border-radius: 6px;
-        background: repeating-linear-gradient(90deg, #ff57b6 0 8px, #ff9ad6 8px 16px);
+        background: repeating-linear-gradient(90deg, #ff57b6 0 8px, #79d41c 8px 16px);
         animation: bl-load 1.1s ease-in-out infinite;
       }
       @keyframes bl-load { 0% { margin-left: -42%; } 100% { margin-left: 102%; } }
       @media (prefers-reduced-motion: reduce) {
         .bl-ring, .bl-cs, .bl-deco, .bl-bar i { animation: none; }
       }
-      @media (max-width: 480px) {
-        .bl-stage { transform: scale(.82); }
-      }
+      @media (max-width: 860px) { .bl-stage { transform: scale(.9); } }
+      @media (max-width: 620px) { .bl-stage { transform: scale(.74); } }
+      @media (max-width: 440px) { .bl-stage { transform: scale(.62); } }
+      @media (max-height: 560px) { .bl-stage { transform: scale(.7); } .bl-bar { margin-top: -6px; } }
     </style>
     <script>
       (function () {
         var load = document.getElementById("bratload");
         if (!load) return;
+        // the floating bits shrink on narrower screens so they never crowd the badge
+        var vw = window.innerWidth || document.documentElement.clientWidth || 900;
+        var dScale = vw < 560 ? 0.58 : vw < 820 ? 0.78 : vw > 1500 ? 1.15 : 1;
 
-        /* the letters orbit the logo, each one staying upright: the ring spins,
-           a counter-spin cancels it on every glyph, so they circle but never tilt */
-        var ring = document.getElementById("bl-ring");
-        var text = "POWERED BY BRATCODE ✦ ";
-        var chars = Array.prototype.slice.call(text);
-        var R = 162, n = chars.length;
-        chars.forEach(function (ch, i) {
-          var a = (360 / n) * i;
-          var slot = document.createElement("span"); slot.className = "bl-slot";
-          slot.style.transform = "rotate(" + a + "deg) translateY(-" + R + "px)";
-          var g = document.createElement("span"); g.className = "bl-ch";
-          g.textContent = ch === " " ? " " : ch;
-          slot.appendChild(g); ring.appendChild(slot);
-        });
-
-        /* pixel heart and sparkle, drawn from little bitmaps so they stay blocky */
-        function sprite(bits, w, cells) {
-          var u = 3, H = bits.length;
-          var s = '<svg width="' + (w) + '" height="' + (w * H / bits[0].length) + '" viewBox="0 0 ' +
-            bits[0].length * u + ' ' + H * u + '" shape-rendering="crispEdges">';
+        /* pixel sprites, drawn from little bitmaps so they stay blocky */
+        function sprite(bits, cells) {
+          var u = 3, H = bits.length, Wc = bits[0].length;
+          var s = '<svg viewBox="0 0 ' + Wc * u + ' ' + H * u + '" shape-rendering="crispEdges">';
           for (var y = 0; y < H; y++) for (var x = 0; x < bits[y].length; x++) {
             var c = bits[y][x]; if (c === " ") continue;
             s += '<rect x="' + x * u + '" y="' + y * u + '" width="' + u + '" height="' + u + '" fill="' + cells[c] + '"/>';
           }
           return s + "</svg>";
         }
-        var HEART = [
-          " PP  PP ",
-          "PHHPPPPP",
-          "PHHPPPPP",
-          "PPPPPPPP",
-          " PPPPPP ",
-          "  PPPP  ",
-          "   PP   "
+        var HEARTBITS = [" PP  PP ", "PHHPPPPP", "PHHPPPPP", "PPPPPPPP", " PPPPPP ", "  PPPP  ", "   PP   "];
+        var heartSvg = sprite(HEARTBITS, { P: "#1fff3f", H: "#bcff93" });
+        var forestSvg = sprite(HEARTBITS, { P: "#1f7a2e", H: "#49b85f" });
+        var starSvg = sprite(
+          ["   G   ", "   W   ", "  WWW  ", "GWWWWWG", "  WWW  ", "   W   ", "   G   "],
+          { W: "#fff3a6", G: "#ffcf1a" });
+        var boltSvg = sprite(
+          ["  LL", " LL ", "LLLL", " LL ", "LL  "],
+          { L: "#ffd21a" });
+        /* a coconut pina colada — brat code was made in the coconut era */
+        /* a cut coconut — dark brown husk, white flesh (ref image) */
+        /* a cut coconut, traced from the reference image — dark brown
+           husk, white rim, cream flesh */
+        var cocoSvg = sprite(
+          [
+            "......BBBBBBBB...",
+            ".....BBWWWWWWBB..",
+            "....BWWccccWWWBB.",
+            "...BWWWccccccWBB.",
+            "..BWcccccccccWBBB",
+            ".BWWWccccccccWBBB",
+            "BBWccccccccccWBBB",
+            "BWcWccccccccWBBBB",
+            "BWccccccccccWBBBB",
+            "BWcWcccccccWBBBBB",
+            "BBWccccccWWBBBBBB",
+            "BBBWWWWWWBBBBBBB.",
+            ".BBBBBBBBBBBBBBB.",
+            "..BBBBBBBBBBBBd..",
+            "...ccBBBBBBBBc...",
+            ".....BBBBBBBB...."
+          ],
+          { B: "#4e2b12", d: "#331c0a", W: "#f8f1e7", c: "#d9c5ac" });
+
+        /* a green coconut drink — straw and little umbrella (ref image) */
+        var cocoGreenSvg = sprite(
+          [
+            "........OOO..",
+            ".W.....OOOOO.",
+            ".W....OOOOOOO",
+            "..W....OsO...",
+            "..W.....s....",
+            "...WW...s....",
+            "..gGGGWWGGGg.",
+            ".gGGGGWWGGGGg",
+            "gGGGGGGGGGGGg",
+            "gGGGGGGGGGGGg",
+            "gGGGGGGGGGGGg",
+            "gGGGGGGGGGGGg",
+            ".gGGGGGGGGGg.",
+            "..gGGGGGGGg..",
+            "...gGGGGGg...",
+            ".....ggg....."
+          ],
+          { G: "#357a24", g: "#214e14", W: "#ffffff", O: "#ff7a2e", s: "#e7e7e7" });
+
+        /* the ring: letters sit tangent to the circle and spin around it. Letters
+           of a word are close together; the gaps between words are filled with
+           hearts, stars and (around POWERED) lightning, so each word reads clear. */
+        var ring = document.getElementById("bl-ring");
+        var BOLT = "⚡";
+        var words = [
+          [BOLT, "P", "O", "W", "E", "R", "E", "D", BOLT],
+          ["B", "Y"],
+          ["B", "R", "A", "T", "C", "O", "D", "E"]
         ];
-        var STAR = [
-          "   G   ",
-          "   W   ",
-          "  WWW  ",
-          "GWWWWWG",
-          "  WWW  ",
-          "   W   ",
-          "   G   "
-        ];
-        var heartSvg = sprite(HEART, 0, { P: "#ff4fa6", H: "#ffd3ec" });
-        var starSvg  = sprite(STAR,  0, { W: "#ffffff", G: "#ffe14d" });
-        /* dotted around the edges, clear of the middle */
+        var R = 162, letterStep = 7.5, decosPerGap = 4;
+        var L = 0; words.forEach(function (w) { L += w.length; });
+        var gapAngle = (360 - L * letterStep) / words.length;
+        var cursor = -((words[0].length - 1) * letterStep) / 2;   // centre POWERED at the top
+        var decoN = 0;
+
+        function place(html, a, cls) {
+          var slot = document.createElement("span"); slot.className = "bl-slot";
+          slot.style.transform = "rotate(" + a + "deg) translateY(-" + R + "px)";
+          var g = document.createElement("span"); g.className = "bl-ch" + (cls ? " " + cls : "");
+          if (html.node) g.appendChild(html.node); else if (html.svg) g.innerHTML = html.svg; else g.textContent = html.ch;
+          slot.appendChild(g); ring.appendChild(slot);
+        }
+
+        words.forEach(function (w) {
+          w.forEach(function (ch) {
+            if (ch === BOLT) place({ svg: boltSvg }, cursor, "bl-bolt");
+            else place({ ch: ch }, cursor);
+            cursor += letterStep;
+          });
+          for (var k = 1; k <= decosPerGap; k++) {
+            var a = cursor + (gapAngle * k) / (decosPerGap + 1);
+            place({ svg: [heartSvg, starSvg, forestSvg][decoN++ % 3] }, a, "bl-deco-ring");
+          }
+          cursor += gapAngle;
+        });
+
+        /* and more of them scattered across the background */
         var spots = [
           [8,14,22],[86,10,16],[16,66,16],[90,60,20],[6,40,13],[93,32,15],
-          [20,88,18],[80,86,22],[46,6,15],[60,90,14],[33,22,12],[70,20,13],
-          [3,78,16],[96,80,15]
+          [20,86,18],[80,84,22],[46,6,15],[60,86,14],[33,22,12],[70,20,13],
+          [3,78,16],[93,80,15],[12,30,12],[88,44,13],[40,88,12],[66,8,12],
+          [4,24,14],[10,54,12],[7,66,16],[14,84,13],[3,88,12],[18,40,11],
+          [93,22,13],[90,34,12],[93,54,14],[92,72,13],[85,66,12],[93,40,11],
+          [24,8,12],[74,86,13],[30,88,11],[54,4,12]
         ];
         var scatter = document.getElementById("bl-scatter");
         spots.forEach(function (p, i) {
           var d = document.createElement("span"); d.className = "bl-deco";
           d.style.left = p[0] + "%"; d.style.top = p[1] + "%";
-          d.style.width = p[2] + "px";
+          d.style.width = Math.round(p[2] * 1.7 * dScale) + "px";
           d.style.animationDelay = (i * 0.17) + "s";
-          d.innerHTML = (i % 2 ? starSvg : heartSvg).replace('width="0"', 'width="' + p[2] + '"');
+          d.innerHTML = [heartSvg, starSvg, forestSvg][i % 3];
           scatter.appendChild(d);
         });
+        function coco(list, svg, cls) {
+          list.forEach(function (p, i) {
+            var d = document.createElement("span"); d.className = "bl-deco bl-coco" + (cls ? " " + cls : "");
+            d.style.left = p[0] + "%"; d.style.top = p[1] + "%";
+            d.style.width = Math.round(p[2] * dScale) + "px";
+            d.style.animationDelay = (i * 0.4) + "s";
+            d.innerHTML = svg;
+            scatter.appendChild(d);
+          });
+        }
+        /* brown cut coconuts — the original five spots */
+        coco([[9,45,72],[83,43,72],[15,74,58],[79,72,58],[48,86,64]], cocoSvg);
+        /* green coconut drinks — across the top of the page */
+        coco([[14,16,62],[82,16,62]], cocoGreenSvg, "bl-coco-green");
 
         /* gone once the app has painted, but shown long enough to be seen */
         var start = Date.now(), MIN = 1500, done = false;
@@ -197,13 +278,11 @@
           if (done) return;
           var root = document.getElementById("root");
           var up = root && root.children.length > 0;
-          var waited = Date.now() - start;
-          if (up && waited >= MIN) return hide();
+          if (up && Date.now() - start >= MIN) return hide();
           setTimeout(tick, 120);
         }
         tick();
-        /* a hard ceiling, so it can never hang the site */
-        setTimeout(hide, 8000);
+        setTimeout(hide, 8000);   /* a hard ceiling, so it can never hang the site */
       })();
     </script>
     <!--
