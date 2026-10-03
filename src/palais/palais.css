@@ -1905,6 +1905,23 @@
 .palais .palais-flyer--monarch .palais-flyer-body { width: clamp(42px, 4cqw, 70px); filter: drop-shadow(0 10px 6px rgba(20, 30, 20, 0.22)); }
 .palais .palais-flyer--glasswing .palais-flyer-body { width: clamp(38px, 3.6cqw, 62px); filter: drop-shadow(0 8px 5px rgba(20, 30, 20, 0.18)); }
 .palais .palais-flyer--bee .palais-flyer-body { width: clamp(22px, 2.1cqw, 36px); filter: drop-shadow(0 6px 4px rgba(20, 20, 10, 0.25)); }
+/* the Boudoir's Christmas sparkle-fairy: tiny, and all glow */
+.palais .palais-flyer--fairy .palais-flyer-body {
+  width: clamp(46px, 4.8cqw, 80px);
+  filter: drop-shadow(0 0 12px rgba(255, 224, 140, 0.85)) drop-shadow(0 0 26px rgba(255, 206, 120, 0.5));
+}
+.palais .palais-fairy-star { transform-box: view-box; transform-origin: 32px 32px; animation: palais-fairy-twinkle 1.05s ease-in-out infinite; }
+@keyframes palais-fairy-twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(0.68) rotate(20deg); opacity: 0.82; }
+}
+.palais .palais-fairy-halo { transform-box: view-box; transform-origin: 32px 32px; animation: palais-fairy-halo 1.05s ease-in-out infinite; }
+@keyframes palais-fairy-halo {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.84); }
+}
+.palais .palais-fairy-wings { transform-box: view-box; transform-origin: 32px 30px; animation: palais-fairy-flutter 200ms ease-in-out infinite alternate; }
+@keyframes palais-fairy-flutter { from { transform: scaleX(1); } to { transform: scaleX(0.68); } }
 /* a butterfly's wings fold up over its back and open again */
 .palais .palais-bf-wing { transform-box: view-box; transform-origin: 54px 50px; animation: palais-bf-flap 260ms ease-in-out infinite alternate; }
 @keyframes palais-bf-flap { from { transform: scaleY(1); } to { transform: scaleY(0.18); } }

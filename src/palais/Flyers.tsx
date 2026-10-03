@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Bee, Butterfly, Dragonfly, Hummingbird } from "./Critters";
+import { Bee, Butterfly, Dragonfly, Fairy, Hummingbird } from "./Critters";
 import { usePlace } from "./place";
 import { ARRIVAL, INTRO_EMPTY } from "./conjureSchedule";
 
 /**
- * Now and then a hummingbird or a dragonfly crosses the terrace. In the
- * Rainwood the air is busier: butterflies (a blue morpho, a monarch, a
- * glasswing) and a bumblebee as well, all of them coming back often.
+ * In the Rainwood the air is busy: butterflies (a blue morpho, a monarch, a
+ * glasswing) and a bumblebee, all of them coming back often. In the Boudoir a
+ * tiny Christmas fairy flits about, read mostly as a Tinkerbell sparkle. (The
+ * hummingbird and dragonfly that once crossed the terrace are kept in GROUNDED,
+ * drawn but no longer launched.)
  *
  * They fly the way the real ones do, which is nothing like a tween:
  *
@@ -25,7 +27,7 @@ import { ARRIVAL, INTRO_EMPTY } from "./conjureSchedule";
  * leave off the edge of the stage, which hides them by overflow.
  */
 
-type Kind = "hummingbird" | "dragonfly" | "butterfly" | "monarch" | "glasswing" | "bee";
+type Kind = "hummingbird" | "dragonfly" | "butterfly" | "monarch" | "glasswing" | "bee" | "fairy";
 type Pt = { x: number; y: number };
 type Leg = { to: Pt; dur: number; move: "dart" | "hover" | "dash" | "flutter"; arc?: number };
 
@@ -134,6 +136,27 @@ function beeRoute(): { start: Pt; legs: Leg[] } {
   return { start, legs };
 }
 
+function fairyRoute(): { start: Pt; legs: Leg[] } {
+  // she flits in from an edge, wanders the room in little darts with a pause
+  // at each turn, then slips back out — mostly staying in view so the sparkle
+  // can be followed
+  const fromLeft = Math.random() < 0.5;
+  const start = { x: fromLeft ? -0.08 : 1.08, y: rand(0.18, 0.72) };
+  const legs: Leg[] = [];
+  let at = start;
+  const dartTo = (to: Pt) => {
+    const dist = Math.hypot(to.x - at.x, to.y - at.y);
+    legs.push({ to, move: "dart", dur: clamp(0.4 + dist * 1.6, 0.35, 1.8), arc: rand(-0.12, 0.12) });
+    at = to;
+  };
+  for (let i = randInt(4, 7); i > 0; i--) {
+    dartTo({ x: clamp(at.x + rand(-0.35, 0.35), 0.08, 0.92), y: clamp(at.y + rand(-0.3, 0.3), 0.1, 0.82) });
+    legs.push({ to: at, move: "hover", dur: rand(0.4, 1.4) });
+  }
+  dartTo({ x: Math.random() < 0.5 ? -0.12 : 1.12, y: rand(0.08, 0.6) });
+  return { start, legs };
+}
+
 const easeFlutter = (t: number) => 0.5 - Math.cos(Math.PI * t) / 2;
 
 const easeDart = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -156,7 +179,15 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
     if (!el || !inner || !stage) return;
 
     const { start, legs } =
-      kind === "hummingbird" ? hummingbirdRoute() : kind === "dragonfly" ? dragonflyRoute() : kind === "bee" ? beeRoute() : butterflyRoute();
+      kind === "hummingbird"
+        ? hummingbirdRoute()
+        : kind === "dragonfly"
+          ? dragonflyRoute()
+          : kind === "bee"
+            ? beeRoute()
+            : kind === "fairy"
+              ? fairyRoute()
+              : butterflyRoute();
     const seed = rand(0, 100);
     let leg = 0;
     let legT = 0;
@@ -216,6 +247,10 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
       if (kind === "hummingbird") {
         x += (Math.sin(c * 6.3) * 0.05 + Math.sin(c * 2.1) * 0.07) * size;
         y += (Math.sin(c * 8.7) * 0.04 + Math.sin(c * 1.6) * 0.09) * size;
+      } else if (kind === "fairy") {
+        // a sparkle never holds still: a quick shiver over a slow drift
+        x += (Math.sin(c * 5.1) * 0.07 + Math.sin(c * 1.7) * 0.1) * size;
+        y += (Math.sin(c * 6.4) * 0.06 + Math.sin(c * 1.3) * 0.12) * size;
       } else if (isButterfly(kind)) {
         // each wingbeat lifts it a little, and it wanders off its line
         if (L.move !== "hover") {
@@ -245,6 +280,9 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
         const climb = speed > size ? clamp((Math.atan2(vy, Math.abs(vx)) * 180) / Math.PI, -35, 35) : 0;
         pitch = turnToward(pitch, going * (14 + climb * 0.6), k);
         inner.style.transform = `translate(-50%, -50%) scale(${(depth * facing).toFixed(3)}, ${depth.toFixed(3)}) rotate(${pitch.toFixed(2)}deg)`;
+      } else if (kind === "fairy") {
+        // a point of light has no heading to turn — just ride the glow in
+        inner.style.transform = `translate(-50%, -50%) scale(${depth.toFixed(3)})`;
       } else {
         if (L.move !== "hover" && speed > size * (kind === "dragonfly" ? 1.5 : 0.4))
           heading = turnToward(heading, (Math.atan2(vy, vx) * 180) / Math.PI, k);
@@ -270,6 +308,8 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
           <Dragonfly />
         ) : kind === "bee" ? (
           <Bee />
+        ) : kind === "fairy" ? (
+          <Fairy />
         ) : (
           <Butterfly tone={kind === "butterfly" ? "morpho" : kind} />
         )}
@@ -280,18 +320,23 @@ function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
 
 /* seconds: when each first shows up after the room has arrived, and the wait
    between visits after that */
-const TIMING: Record<Kind, { first: [number, number]; gap: [number, number]; rainwood: [number, number]; rainwoodOnly?: true }> = {
+const TIMING: Record<Kind, { first: [number, number]; gap: [number, number]; rainwood: [number, number]; rainwoodOnly?: true; boudoirOnly?: true }> = {
   hummingbird: { first: [3, 7], gap: [14, 32], rainwood: [3, 9] },
   dragonfly: { first: [11, 18], gap: [10, 26], rainwood: [2, 7] },
   butterfly: { first: [1, 4], gap: [0, 0], rainwood: [1, 5], rainwoodOnly: true },
   monarch: { first: [2, 6], gap: [0, 0], rainwood: [2, 6], rainwoodOnly: true },
   glasswing: { first: [3, 8], gap: [0, 0], rainwood: [2, 7], rainwoodOnly: true },
   bee: { first: [2, 5], gap: [0, 0], rainwood: [1, 4], rainwoodOnly: true },
+  // the Christmas sparkle-fairy: only ever in the Boudoir, and nearly always about
+  fairy: { first: [1, 3], gap: [3, 8], rainwood: [3, 8], boudoirOnly: true },
 };
-const KINDS = Object.keys(TIMING) as Kind[];
+// the hummingbird and dragonfly are retired from the terrace by request; the
+// rest only ever visit the Rainwood
+const GROUNDED: Kind[] = ["hummingbird", "dragonfly"];
+const KINDS = (Object.keys(TIMING) as Kind[]).filter((k) => !GROUNDED.includes(k));
 
 export function Flyers() {
-  const [flying, setFlying] = useState<Record<Kind, number>>({ hummingbird: 0, dragonfly: 0, butterfly: 0, monarch: 0, glasswing: 0, bee: 0 });
+  const [flying, setFlying] = useState<Record<Kind, number>>({ hummingbird: 0, dragonfly: 0, butterfly: 0, monarch: 0, glasswing: 0, bee: 0, fairy: 0 });
   const timers = useRef<Partial<Record<Kind, ReturnType<typeof setTimeout>>>>({});
   const [still, setStill] = useState(false);
   // the Rainwood is busier (see TIMING); read through a ref so timers see where you are now
@@ -300,8 +345,10 @@ export function Flyers() {
   here.current = place;
 
   const launch = (kind: Kind) => {
-    // a Rainwood creature waits, checking back, until you're in the Rainwood
-    if (TIMING[kind].rainwoodOnly && here.current !== "rainwood") {
+    // a creature tied to one room waits, checking back, until you're in it:
+    // the butterflies and bee for the Rainwood, the sparkle-fairy for the Boudoir
+    const needs = TIMING[kind].rainwoodOnly ? "rainwood" : TIMING[kind].boudoirOnly ? "boudoir" : null;
+    if (needs && here.current !== needs) {
       timers.current[kind] = setTimeout(() => launch(kind), 2500);
       return;
     }
@@ -316,7 +363,8 @@ export function Flyers() {
     const all = timers.current;
     KINDS.forEach((kind) => {
       const [a, b] = TIMING[kind].first;
-      const wait = TIMING[kind].rainwoodOnly ? rand(a, b) : INTRO_EMPTY + ARRIVAL + rand(a, b);
+      const roomBound = TIMING[kind].rainwoodOnly || TIMING[kind].boudoirOnly;
+      const wait = roomBound ? rand(a, b) : INTRO_EMPTY + ARRIVAL + rand(a, b);
       all[kind] = setTimeout(() => launch(kind), wait * 1000);
     });
     return () => KINDS.forEach((kind) => clearTimeout(all[kind]));

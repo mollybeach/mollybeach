@@ -233,6 +233,53 @@ export function Butterfly({ tone = "morpho" }: { tone?: "morpho" | "monarch" | "
   );
 }
 
+/**
+ * A tiny Christmas fairy — but mostly what you see is the sparkle she rides in,
+ * the way Tinkerbell reads as a darting point of light before you catch the
+ * figure inside it. A warm gold-white halo, a four-point star that twinkles,
+ * and the faintest hint of wings. Drawn small and symmetric, so it needs no
+ * facing (see Flyers.tsx: it only ever visits the Boudoir).
+ */
+export function Fairy() {
+  return (
+    <svg viewBox="0 0 64 64" className="palais-critter-svg palais-fairy-svg" aria-hidden>
+      <defs>
+        <radialGradient id="fairyGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stopColor="rgba(255,255,238,0.95)" />
+          <stop offset="34%" stopColor="rgba(255,242,176,0.6)" />
+          <stop offset="68%" stopColor="rgba(255,214,120,0.18)" />
+          <stop offset="100%" stopColor="rgba(255,214,120,0)" />
+        </radialGradient>
+        <radialGradient id="fairyCore" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="55%" stopColor="#fff6cf" />
+          <stop offset="100%" stopColor="rgba(255,236,160,0)" />
+        </radialGradient>
+      </defs>
+
+      {/* the soft halo of light she's wrapped in */}
+      <circle cx="32" cy="32" r="31" fill="url(#fairyGlow)" className="palais-fairy-halo" />
+
+      {/* the faintest fairy inside: a pair of wings and a wisp of a dress */}
+      <g className="palais-fairy-wings" opacity="0.45">
+        <ellipse cx="26.5" cy="30" rx="6" ry="9.5" fill="rgba(206,244,255,0.55)" transform="rotate(-18 26.5 30)" />
+        <ellipse cx="37.5" cy="30" rx="6" ry="9.5" fill="rgba(255,224,246,0.55)" transform="rotate(18 37.5 30)" />
+      </g>
+
+      {/* the sparkle: a long four-point star crossed with a shorter one */}
+      <g className="palais-fairy-star">
+        <path d="M32,2 L34,32 L32,62 L30,32 Z" fill="url(#fairyCore)" />
+        <path d="M2,32 L32,30 L62,32 L32,34 Z" fill="url(#fairyCore)" />
+        <g transform="rotate(45 32 32)">
+          <path d="M32,13 L33.3,32 L32,51 L30.7,32 Z" fill="url(#fairyCore)" />
+          <path d="M13,32 L32,30.7 L51,32 L32,33.3 Z" fill="url(#fairyCore)" />
+        </g>
+        <circle cx="32" cy="32" r="4.6" fill="#fffef4" />
+      </g>
+    </svg>
+  );
+}
+
 /** a bumblebee, seen from above, heading right, its wings a shimmer */
 export function Bee() {
   return (
