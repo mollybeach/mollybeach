@@ -42,9 +42,18 @@ export interface RoomLook {
 }
 
 export function defaultLook(saved: SavedLayout[], place: Place, season: Season, device: Device): RoomLook {
-  // a saved layout measured on no room at all (a 1 × 1 stage) is a broken save: skip it
+  // a saved layout measured on no room at all (a 1 × 1 stage) is a broken save: skip it.
+  // And the palace is never meant to stand empty, so a default that hides every
+  // sticker (e.g. "Hide" caught in a save) is broken too — fall back to the code's
+  // layout rather than show a bare terrace. (Other rooms may legitimately be empty.)
   const mine = saved.find(
-    (l) => (l.place ?? "palace") === place && l.season === season && l.device === device && l.is_default && l.stage.w > 1,
+    (l) =>
+      (l.place ?? "palace") === place &&
+      l.season === season &&
+      l.device === device &&
+      l.is_default &&
+      l.stage.w > 1 &&
+      (place !== "palace" || Object.values(l.props).some((p) => p.shown)),
   );
   if (mine) return { layout: mine, source: "saved", saved: mine };
   const inCode = ROOM_LAYOUTS[place]?.[device]?.[season];
