@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { hashExtra, usePlace } from "./place";
-import { currentEditor, onEditorChange, signIn, signInWith, type Editor, type Provider } from "./layoutsDb";
+import { currentEditor, onEditorChange, signInWith, type Editor, type Provider } from "./layoutsDb";
 import Livestream from "./Livestream";
 import { lettersOpen, remember, remembered } from "./letters";
 import {
@@ -153,9 +153,6 @@ export function BoudoirPictures() {
      (a provider, the password, or continuing as who you already are) and is
      cleared again when the dresser shuts. */
   const [passed, setPassed] = useState(false);
-  const [pwOpen, setPwOpen] = useState(false);
-  const [pwEmail, setPwEmail] = useState("");
-  const [pwPass, setPwPass] = useState("");
   const [authBusy, setAuthBusy] = useState<string | null>(null);
   const [authTrouble, setAuthTrouble] = useState<string | null>(null);
   const arrived = useRef<string | undefined>(CAME_IN_BY);
@@ -271,20 +268,6 @@ export function BoudoirPictures() {
     }
   }, []);
 
-  const goPassword = useCallback(async () => {
-    setAuthTrouble(null);
-    setAuthBusy("password");
-    try {
-      await signIn(pwEmail.trim(), pwPass);
-      setPwPass("");
-      setPassed(true);
-      // signed in: onEditorChange sets editor, and the gate takes over
-    } catch (e) {
-      setAuthTrouble(e instanceof Error ? e.message : "That didn't sign you in.");
-    } finally {
-      setAuthBusy(null);
-    }
-  }, [pwEmail, pwPass]);
 
   const tryWord = useCallback(async (word: string, typed = false) => {
     setBusy(true);
@@ -474,6 +457,11 @@ export function BoudoirPictures() {
   useEffect(() => {
     if (!open) setPassed(false);
   }, [open]);
+  /* a completed sign-in advances past the greeting on its own (the job the
+     old "continue as…" link did) */
+  useEffect(() => {
+    if (editor) setPassed(true);
+  }, [editor]);
   /* the address says whether the dresser is open and which drawer, so the page
      can be sent to somebody and open where it left off */
   useEffect(() => {
@@ -814,18 +802,6 @@ export function BoudoirPictures() {
                 <p className="bd-hello-line">please sign in to continue</p>
 
                 <div className="bd-hello-ways">
-                  <button type="button" className="bd-way bd-way--google" onClick={() => void goProvider("google")} disabled={Boolean(authBusy)}>
-                    <span className="bd-way-mark" aria-hidden>
-                      <svg viewBox="0 0 48 48" width="20" height="20">
-                        <path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8c-.5 2.8-2 5.1-4.4 6.7v5.5h7.1c4.1-3.8 6.6-9.4 6.6-16.2z"/>
-                        <path fill="#34A853" d="M24 46c6 0 11-2 14.6-5.4l-7.1-5.5c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.7-3.9-12.4-9.1H4.3v5.7C7.9 41.1 15.4 46 24 46z"/>
-                        <path fill="#FBBC05" d="M11.6 28.1c-.4-1.3-.7-2.7-.7-4.1s.3-2.8.7-4.1v-5.7H4.3C2.8 17.1 2 20.4 2 24s.8 6.9 2.3 9.8l7.3-5.7z"/>
-                        <path fill="#EA4335" d="M24 10.8c3.3 0 6.2 1.1 8.5 3.3l6.3-6.3C35 4.1 30 2 24 2 15.4 2 7.9 6.9 4.3 14.2l7.3 5.7c1.7-5.2 6.6-9.1 12.4-9.1z"/>
-                      </svg>
-                    </span>
-                    {authBusy === "google" ? "Taking you to Google…" : "Sign in with Google"}
-                  </button>
-
                   <button type="button" className="bd-way bd-way--apple" onClick={() => void goProvider("apple")} disabled={Boolean(authBusy)}>
                     <span className="bd-way-mark" aria-hidden>
                       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -834,51 +810,9 @@ export function BoudoirPictures() {
                     </span>
                     {authBusy === "apple" ? "Taking you to Apple…" : "Sign in with Apple"}
                   </button>
-
-                  {!pwOpen ? (
-                    <button type="button" className="bd-way bd-way--pw" onClick={() => setPwOpen(true)} disabled={Boolean(authBusy)}>
-                      Sign in with Password
-                    </button>
-                  ) : (
-                    <form
-                      className="bd-pw"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        void goPassword();
-                      }}
-                    >
-                      <input
-                        type="email"
-                        className="lt-input"
-                        value={pwEmail}
-                        onChange={(e) => setPwEmail(e.target.value)}
-                        placeholder="email"
-                        autoComplete="email"
-                        aria-label="Email"
-                        autoFocus={!COARSE}
-                      />
-                      <input
-                        type="password"
-                        className="lt-input"
-                        value={pwPass}
-                        onChange={(e) => setPwPass(e.target.value)}
-                        placeholder="password"
-                        autoComplete="current-password"
-                        aria-label="Password"
-                      />
-                      <button type="submit" className="bd-way bd-way--pw" disabled={authBusy === "password" || !pwEmail.trim() || !pwPass}>
-                        {authBusy === "password" ? "Signing in…" : "Sign in"}
-                      </button>
-                    </form>
-                  )}
                 </div>
 
                 {authTrouble && <p className="lt-trouble">{authTrouble}</p>}
-                {editor && (
-                  <button type="button" className="bd-hello-skip" onClick={() => setPassed(true)} disabled={Boolean(authBusy)}>
-                    continue as {editor.email || "you"}
-                  </button>
-                )}
               </div>
             ) : tab === "live" ? (
               /* her camera, while she is in front of it */
