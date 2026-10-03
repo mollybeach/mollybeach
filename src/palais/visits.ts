@@ -771,3 +771,18 @@ export async function listAccounts(): Promise<Account[]> {
   if (error) throw new Error(error.message);
   return (data ?? []) as Account[];
 }
+
+/* --------------------------------------------- a buzz on a sign-in attempt - */
+
+/** record that someone went to sign in, and buzz the visit ping (ntfy/Discord).
+    Fire-and-forget; needs 20260928140000_palais_signin_ping.sql and a ping set
+    up. Live site only, like the rest of the book. */
+export async function noteSigninAttempt(provider: string): Promise<void> {
+  if (!dbConfigured || process.env.NODE_ENV !== "production") return;
+  try {
+    const sb = await db();
+    await sb.rpc("palais_signin_attempt", { p_session: visitSession(), p_provider: provider });
+  } catch {
+    /* a ping that doesn't go through never gets in the way of signing in */
+  }
+}

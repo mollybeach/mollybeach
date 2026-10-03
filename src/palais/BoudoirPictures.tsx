@@ -21,7 +21,7 @@ import {
   type Portrait,
   type PortraitNote,
 } from "./portraits";
-import { noteDoing } from "./visits";
+import { noteDoing, noteSigninAttempt } from "./visits";
 
 /**
  * The pictures kept in the Boudoir's white dresser.
@@ -255,6 +255,8 @@ export function BoudoirPictures() {
   const goProvider = useCallback(async (provider: Provider) => {
     setAuthTrouble(null);
     setAuthBusy(provider);
+    // let Molly know someone's at the door before we hand off to the provider
+    void noteSigninAttempt(provider);
     try {
       await signInWith(provider, window.location.href);
       // the page is navigating away to the provider; nothing after this runs
