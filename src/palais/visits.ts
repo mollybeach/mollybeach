@@ -824,3 +824,11 @@ export async function setAccepted(id: string, accepted: boolean): Promise<void> 
   const { error } = await sb.rpc("palais_set_accepted", { p_id: id, p_accepted: accepted });
   if (error) throw new Error(error.message);
 }
+
+/** deny an account — deletes it for good (editors only). Needs
+    20260928170000_palais_delete_account.sql. */
+export async function denyAccount(id: string): Promise<void> {
+  const sb = await db();
+  const { error } = await sb.rpc("palais_delete_account", { p_id: id });
+  if (error) throw new Error(error.message);
+}

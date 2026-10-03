@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { VisitorsShelf } from '../palais/VisitorsShelf';
 import { SignIn } from '../palais/LayoutsShelf';
 import { useCollection, messageOf } from '../palais/useCollection';
-import { githubStats, listAccounts, setAccepted, visitStats, type Account, type GithubStats, type VisitStats } from '../palais/visits';
+import { denyAccount, githubStats, listAccounts, setAccepted, visitStats, type Account, type GithubStats, type VisitStats } from '../palais/visits';
 import { paletteOf, useFloral } from '../palais/florals';
 import '../palais/palais.css';
 
@@ -75,6 +75,20 @@ export default function Admin() {
     try {
       await setAccepted(id, accept);
       setAccounts((list) => (list ? list.map((a) => (a.id === id ? { ...a, accepted: accept } : a)) : list));
+    } catch (e) {
+      setAccountsError(messageOf(e));
+    } finally {
+      setDeciding(null);
+    }
+  };
+
+  const deny = async (a: Account) => {
+    const who = a.name || a.email || 'this account';
+    if (!window.confirm(`Deny and permanently delete ${who}? This can\u2019t be undone.`)) return;
+    setDeciding(a.id);
+    try {
+      await denyAccount(a.id);
+      setAccounts((list) => (list ? list.filter((x) => x.id !== a.id) : list));
     } catch (e) {
       setAccountsError(messageOf(e));
     } finally {
@@ -279,13 +293,33 @@ export default function Admin() {
                       <span className={`adm-stat adm-stat--${a.accepted ? 'in' : 'wait'}`}>
                         {a.accepted ? 'Accepted' : 'Under review'}
                       </span>
+                      {!a.accepted && (
+                        <button
+                          type="button"
+                          className="adm-approve"
+                          onClick={() => decide(a.id, true)}
+                          disabled={deciding === a.id}
+                        >
+                          {deciding === a.id ? '…' : 'Accept'}
+                        </button>
+                      )}
+                      {a.accepted && (
+                        <button
+                          type="button"
+                          className="adm-approve is-in"
+                          onClick={() => decide(a.id, false)}
+                          disabled={deciding === a.id}
+                        >
+                          Revoke
+                        </button>
+                      )}
                       <button
                         type="button"
-                        className={`adm-approve${a.accepted ? ' is-in' : ''}`}
-                        onClick={() => decide(a.id, !a.accepted)}
+                        className="adm-deny"
+                        onClick={() => deny(a)}
                         disabled={deciding === a.id}
                       >
-                        {deciding === a.id ? '…' : a.accepted ? 'Revoke' : 'Accept'}
+                        Deny
                       </button>
                     </td>
                   </tr>

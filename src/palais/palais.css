@@ -3095,6 +3095,13 @@
 .palais.adm .adm-approve:hover { filter: brightness(1.06); }
 .palais.adm .adm-approve:disabled { opacity: 0.6; cursor: progress; }
 .palais.adm .adm-approve.is-in { background: transparent; color: var(--cat-ink-side, #8a6a22); }
+.palais.adm .adm-deny {
+  padding: 0.3rem 0.7rem; border-radius: 8px; cursor: pointer;
+  border: 1.5px solid #c0392b; background: transparent; color: #c0392b;
+  font: 700 0.76rem/1 var(--cat-round, inherit);
+}
+.palais.adm .adm-deny:hover { background: #c0392b; color: #fff; }
+.palais.adm .adm-deny:disabled { opacity: 0.5; cursor: progress; }
 
 
 .palais.adm h1 { margin: 0; font: 900 1.6rem/1.2 var(--cat-round); color: var(--cat-deep); }
