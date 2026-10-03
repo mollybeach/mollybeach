@@ -54,6 +54,7 @@ const RECORDS: Partial<Record<Place, Disc>> = {
 type YTPlayer = {
   playVideo(): void;
   pauseVideo(): void;
+  seekTo(seconds: number, allowSeekAhead: boolean): void;
   getPlayerState(): number;
   destroy(): void;
 };
@@ -99,6 +100,7 @@ function youtube(): Promise<YTApi> {
 }
 
 const PLAYING = 1;
+const ENDED = 0;
 
 /** the sleeve, either where it stands in the room or over on the footer's shelf */
 const sleeve = (it: JSX.Element, shelf: HTMLElement | null) => (shelf ? createPortal(it, shelf) : it);
@@ -191,6 +193,12 @@ function Turntable({ disc }: { disc: Disc }) {
             setPlaying(e.data === PLAYING);
             // worth knowing that someone put the record on (visits.ts)
             if (e.data === PLAYING) noteDoing("record", disc.name);
+            // the record repeats: when it reaches the end, drop the needle back
+            // at the start and play it again
+            if (e.data === ENDED) {
+              player.current?.seekTo(0, true);
+              player.current?.playVideo();
+            }
           },
         },
       });
