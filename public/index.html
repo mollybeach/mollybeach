@@ -75,7 +75,7 @@
     <style>
       #bratload {
         position: fixed; inset: 0; z-index: 2147483647;
-        display: grid; place-content: center; justify-items: center; gap: 24px; grid-auto-rows: min-content;
+        display: grid; place-content: center; justify-items: center; gap: 30px; grid-auto-rows: min-content;
         background:
           radial-gradient(130% 130% at 50% 40%, #1a1a24 0%, #000 72%);
         font-family: "Press Start 2P", ui-monospace, "Courier New", monospace;
@@ -83,9 +83,9 @@
         transition: opacity .55s ease, visibility .55s ease;
       }
       #bratload.bl-gone { opacity: 0; visibility: hidden; pointer-events: none; }
-      .bl-stage { position: relative; width: 370px; height: 348px; display: grid; place-items: center; }
+      .bl-stage { position: relative; width: 462px; height: 434px; display: grid; place-items: center; }
       .bl-logo {
-        width: 188px; height: 188px; object-fit: cover; border-radius: 14px;
+        width: 236px; height: 236px; object-fit: cover; border-radius: 16px;
         image-rendering: pixelated;
         box-shadow: 0 0 0 4px #ff57b6, 0 0 0 8px #fff, 0 0 0 11px #ff9ad6, 0 10px 26px rgba(90,20,70,.35);
       }
@@ -93,12 +93,12 @@
       .bl-slot { position: absolute; left: 0; top: 0; }
       .bl-cs { display: inline-block; animation: bl-rev 9s linear infinite; }
       .bl-ch {
-        display: inline-block; font-size: 14px; line-height: 1; color: #ff1f93;
+        display: inline-block; font-size: 17px; line-height: 1; color: #ff1f93;
         text-shadow: 1.5px 1.5px 0 #fff, 3px 3px 0 #8a1358;
       }
       .bl-ch svg { display: block; }
-      .bl-ch.bl-bolt svg { width: 14px; filter: drop-shadow(1.2px 1.2px 0 #8a1358); }
-      .bl-ch.bl-deco-ring svg { width: 18px; }
+      .bl-ch.bl-bolt svg { width: 17px; filter: drop-shadow(1.2px 1.2px 0 #8a1358); }
+      .bl-ch.bl-deco-ring svg { width: 22px; }
       @keyframes bl-spin { to { transform: rotate(360deg); } }
       @keyframes bl-rev  { to { transform: rotate(-360deg); } }
       .bl-scatter { position: absolute; inset: 0; pointer-events: none; }
@@ -106,7 +106,7 @@
       .bl-deco svg { display: block; image-rendering: pixelated; }
       @keyframes bl-tw { 0%,100% { opacity: .55; transform: scale(.9) rotate(0deg); } 50% { opacity: 1; transform: scale(1.18) rotate(6deg); } }
       .bl-bar {
-        width: 240px; height: 16px; border: 3px solid #8a1358; border-radius: 10px;
+        width: min(300px, 82vw); height: 20px; border: 3px solid #8a1358; border-radius: 12px;
         background: #fff; overflow: hidden; box-shadow: 0 3px 0 #8a1358;
       }
       .bl-bar i {
@@ -118,9 +118,9 @@
       @media (prefers-reduced-motion: reduce) {
         .bl-ring, .bl-cs, .bl-deco, .bl-bar i { animation: none; }
       }
-      @media (max-width: 860px) { .bl-stage { transform: scale(.9); } }
-      @media (max-width: 620px) { .bl-stage { transform: scale(.74); } }
-      @media (max-width: 440px) { .bl-stage { transform: scale(.62); } }
+      @media (max-width: 860px) { .bl-stage { transform: scale(.94); } }
+      @media (max-width: 620px) { .bl-stage { transform: scale(.86); } }
+      @media (max-width: 440px) { .bl-stage { transform: scale(.78); } }
       @media (max-height: 560px) { .bl-stage { transform: scale(.7); } .bl-bar { margin-top: -6px; } }
     </style>
     <script>
@@ -128,7 +128,7 @@
         function draw(root) {
         // the floating bits shrink on narrower screens so they never crowd the badge
         var vw = window.innerWidth || document.documentElement.clientWidth || 900;
-        var dScale = vw < 560 ? 0.58 : vw < 820 ? 0.78 : vw > 1500 ? 1.15 : 1;
+        var dScale = vw < 560 ? 0.78 : vw < 820 ? 0.9 : vw > 1500 ? 1.15 : 1;
 
         /* pixel sprites, drawn from little bitmaps so they stay blocky */
         function sprite(bits, cells) {
@@ -206,7 +206,7 @@
           ["B", "Y"],
           ["B", "R", "A", "T", "C", "O", "D", "E"]
         ];
-        var R = 162, letterStep = 7.5, decosPerGap = 4;
+        var R = 202, letterStep = 7.5, decosPerGap = 4;
         var L = 0; words.forEach(function (w) { L += w.length; });
         var gapAngle = (360 - L * letterStep) / words.length;
         var cursor = -((words[0].length - 1) * letterStep) / 2;   // centre POWERED at the top
@@ -246,25 +246,33 @@
         spots.forEach(function (p, i) {
           var d = document.createElement("span"); d.className = "bl-deco";
           d.style.left = p[0] + "%"; d.style.top = p[1] + "%";
-          d.style.width = Math.round(p[2] * 1.7 * dScale) + "px";
+          d.style.width = Math.round(p[2] * 2.1 * dScale) + "px";
           d.style.animationDelay = (i * 0.17) + "s";
           d.innerHTML = [heartSvg, starSvg, forestSvg][i % 3];
           scatter.appendChild(d);
         });
         function coco(list, svg, cls) {
+          var vwpx = window.innerWidth || 900, vhpx = window.innerHeight || 600;
           list.forEach(function (p, i) {
             var d = document.createElement("span"); d.className = "bl-deco bl-coco" + (cls ? " " + cls : "");
-            d.style.left = p[0] + "%"; d.style.top = p[1] + "%";
-            d.style.width = Math.round(p[2] * dScale) + "px";
+            var w = Math.round(p[2] * dScale), h = Math.round(w * 1.25);
+            // place by the sprite's CENTRE, then keep it fully on screen
+            var lx = Math.max(6, Math.min(p[0] / 100 * vwpx - w / 2, vwpx - w - 6));
+            var ty = Math.max(6, Math.min(p[1] / 100 * vhpx - h / 2, vhpx - h - 6));
+            d.style.left = lx + "px"; d.style.top = ty + "px";
+            d.style.width = w + "px";
             d.style.animationDelay = (i * 0.4) + "s";
             d.innerHTML = svg;
             scatter.appendChild(d);
           });
         }
-        /* brown cut coconuts — the original five spots */
-        coco([[9,45,72],[83,43,72],[15,74,58],[79,72,58],[48,86,64]], cocoSvg);
+        /* brown cut coconuts — the full five on wide screens, three on a phone
+           (fewer and bigger, so the small screen isn't crowded) */
+        coco(vw < 620
+          ? [[9,46,112],[85,44,112],[48,88,104]]
+          : [[8,45,96],[86,43,96],[13,73,82],[81,71,82],[48,88,90]], cocoSvg);
         /* green coconut drinks — across the top of the page */
-        coco([[14,16,62],[82,16,62]], cocoGreenSvg, "bl-coco-green");
+        coco([[13,15,96],[85,15,96]], cocoGreenSvg, "bl-coco-green");
 
         }
 
