@@ -168,7 +168,7 @@ const turnToward = (from: number, to: number, k: number) => {
   return from + d * k;
 };
 
-function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
+export function Flight({ kind, onDone }: { kind: Kind; onDone: () => void }) {
   const outer = useRef<HTMLDivElement>(null);
   const body = useRef<HTMLDivElement>(null);
 
@@ -385,6 +385,42 @@ export function Flyers() {
     <div className="palais-flyers" aria-hidden>
       {KINDS.map((kind) =>
         flying[kind] > 0 ? <Flight key={`${kind}-${flying[kind]}`} kind={kind} onDone={() => land(kind)} /> : null,
+      )}
+    </div>
+  );
+}
+
+/**
+ * The sparkle-fairy, kept flitting over whatever this is dropped into — used
+ * inside the Boudoir dresser, where the terrace's own Flyers sit behind the
+ * modal. It flies in, loops out, waits a beat, and comes back, for as long as
+ * it's mounted. The container (.palais-flyers--over) is sized to its parent.
+ */
+export function FairyOver() {
+  const [flight, setFlight] = useState(1);     // bump to send a fresh one in
+  const [resting, setResting] = useState(false);
+  const [still, setStill] = useState(false);
+  const gap = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setStill(true);
+    return () => clearTimeout(gap.current);
+  }, []);
+  if (still) return null;
+  return (
+    <div className="palais-flyers palais-flyers--over" aria-hidden>
+      {!resting && (
+        <Flight
+          key={flight}
+          kind="fairy"
+          onDone={() => {
+            // it has flown out — wait a short beat, then send a new one in
+            setResting(true);
+            gap.current = setTimeout(() => {
+              setFlight((n) => n + 1);
+              setResting(false);
+            }, rand(2.5, 6) * 1000);
+          }}
+        />
       )}
     </div>
   );

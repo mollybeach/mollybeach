@@ -1890,6 +1890,10 @@
    ========================================================================== */
 
 .palais .palais-flyers { position: absolute; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; }
+/* the same flyer layer, but laid over the Boudoir dresser modal so the
+   sparkle-fairy passes in front of the portraits (the terrace's own Flyers are
+   behind the modal). Clipped to the panel's rounded frame. */
+.palais .palais-flyers--over { position: absolute; inset: 0; z-index: 20; pointer-events: none; overflow: hidden; border-radius: 26px; }
 .palais .palais-flyer { position: absolute; left: 0; top: 0; will-change: transform; }
 .palais .palais-flyer-body { will-change: transform; }
 .palais .palais-flyer--hummingbird .palais-flyer-body {

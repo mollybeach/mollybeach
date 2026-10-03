@@ -5,6 +5,7 @@ import { floralSrc, paletteOf, useFloral } from "./florals";
 import { hashExtra, usePlace } from "./place";
 import { currentEditor, onEditorChange, signInWith, signOut, type Editor, type Provider } from "./layoutsDb";
 import Livestream from "./Livestream";
+import { FairyOver } from "./Flyers";
 import { lettersOpen, remember, remembered } from "./letters";
 import {
   addPortrait,
@@ -1135,6 +1136,9 @@ export function BoudoirPictures() {
                 </div>
               </div>
             )}
+            {/* the Boudoir's sparkle-fairy, flitting in front of the portraits —
+                the terrace's own Flyers are hidden behind this modal */}
+            <FairyOver />
           </div>
         </div>
       )}
