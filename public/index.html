@@ -98,14 +98,14 @@
         text-shadow: 1.5px 1.5px 0 #fff, 3px 3px 0 #8a1358;
       }
       .bl-banner {
-        position: absolute; top: 4.5%; left: 50%; transform: translateX(-50%);
+        position: absolute; top: calc(4.5% + 6px); left: 50%; transform: translateX(-50%);
         z-index: 4; max-width: 96vw; white-space: nowrap; text-align: center;
         font-family: "Press Start 2P", ui-monospace, monospace;
-        font-size: clamp(9px, 2.4vw, 20px); letter-spacing: 2px;
+        font-size: clamp(12px, 2.8vw, 34px); letter-spacing: 2px;
         color: #c77dff;
         text-shadow: 2px 2px 0 #39106b, 4px 4px 0 #1c0640, 0 0 12px rgba(168, 92, 255, 0.55);
       }
-      @media (max-width: 440px) { .bl-banner { font-size: clamp(14px, 5vw, 22px); letter-spacing: 1px; white-space: normal; line-height: 1.5; } }
+      @media (max-width: 440px) { .bl-banner { top: 4.5%; font-size: clamp(14px, 5vw, 22px); letter-spacing: 1px; white-space: normal; line-height: 1.5; } }
       .bl-ch svg { display: block; }
       .bl-ch.bl-bolt svg { width: 17px; filter: drop-shadow(1.2px 1.2px 0 #8a1358); }
       .bl-ch.bl-deco-ring svg { width: 22px; }
