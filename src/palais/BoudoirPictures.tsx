@@ -85,7 +85,13 @@ const BUNNY_SHAPE = 631 / 1100;
 /* mollybeach.app/#boudoir/portraits walks straight up to the dresser, and
    /#boudoir/live walks up to it with the camera showing. The word is still
    asked for: the link opens the drawer, it doesn't unlock it. */
-const WANTED = (extra: string) => /^(portraits|live)/.test(extra);
+const WANTED = (extra: string) => /^(portraits|live|review|apple)/.test(extra);
+/* #boudoir/review and #boudoir/apple (the /review and /apple links) just show a
+   screen to look at — the "under review" card, or the sign-in chooser — with
+   nothing behind them: no sign-in, no pictures, the buttons do nothing. */
+type Preview = "review" | "apple" | null;
+const PREVIEW = (extra: string): Preview =>
+  /^apple/.test(extra) ? "apple" : /^review/.test(extra) ? "review" : null;
 
 /* Whether this visit ARRIVED on the dresser's own link rather than finding the
    bunny in the room. Read once as the page loads: by the time it is open the
@@ -137,6 +143,7 @@ export function BoudoirPictures() {
   const ribbon = useFloral("footer");
 
   const [open, setOpen] = useState(() => CAME_IN_ON_THE_LINK);
+  const [preview, setPreview] = useState<Preview>(() => PREVIEW(hashExtra()));
   const [key, setKey] = useState(() => remembered("key"));
   const [inside, setInside] = useState(false);
   /* the dresser has two drawers now: the pictures, and her, live */
@@ -512,15 +519,17 @@ export function BoudoirPictures() {
        it would write #boudoir straight back over it and you could never leave
        the room by a link. */
     if (window.location.hash.replace("#", "").split("/")[0] !== "boudoir") return;
+    if (preview) return;
     const want = open ? `#boudoir/${tab === "live" ? "live" : "portraits"}` : "#boudoir";
     if (window.location.hash !== want) window.history.replaceState(window.history.state, "", want);
-  }, [open, tab, here]);
+  }, [open, tab, here, preview]);
   /* and the back button, or a link followed while it is already open */
   useEffect(() => {
     const onHash = () => {
       const extra = hashExtra();
       setOpen(WANTED(extra));
-      if (WANTED(extra)) setTab(/^live/.test(extra) ? "live" : "portraits");
+      setPreview(PREVIEW(extra));
+      if (WANTED(extra) && !PREVIEW(extra)) setTab(/^live/.test(extra) ? "live" : "portraits");
     };
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
@@ -804,7 +813,37 @@ export function BoudoirPictures() {
               </nav>
             )}
 
-            {!inside ? (
+            {preview === "apple" ? (
+              /* just a look at the sign-in chooser — the button does nothing */
+              <div className="bd-hello">
+                <span className="bd-hello-crest" aria-hidden>
+                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                </span>
+                <h3 className="bd-hello-name">The Boudoir</h3>
+                <p className="bd-hello-line">please sign in to continue</p>
+                <div className="bd-hello-ways">
+                  <button type="button" className="bd-way bd-way--apple" onClick={() => {}}>
+                    <span className="bd-way-mark" aria-hidden>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M16.4 1.9c0 1.1-.4 2.1-1.2 3-.9 1-2 1.6-3.1 1.5-.1-1.1.4-2.2 1.2-3 .8-.9 2.1-1.5 3.1-1.5zM20 17.1c-.5 1.2-.8 1.7-1.5 2.8-1 1.5-2.3 3.3-4 3.3-1.5 0-1.9-1-4-1-2 0-2.5 1-4 1-1.6 0-2.9-1.7-3.9-3.1-2.7-4-3-8.6-1.3-11.1 1.2-1.7 3-2.7 4.8-2.7 1.8 0 2.9 1 4.4 1 1.4 0 2.3-1 4.4-1 1.6 0 3.2.9 4.4 2.4-3.9 2.1-3.3 7.6.7 9.4z"/>
+                      </svg>
+                    </span>
+                    Sign in with Apple
+                  </button>
+                </div>
+              </div>
+            ) : preview === "review" ? (
+              /* just a look at the "under review" screen — no sign-in behind it */
+              <div className="bd-hello bd-hello--wait">
+                <span className="bd-hello-crest" aria-hidden>
+                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                </span>
+                <h3 className="bd-hello-name">Under review</h3>
+                <p className="bd-hello-line">
+                  Please wait while your account is under review by the board. May take up to 24 hours.
+                </p>
+              </div>
+            ) : !inside ? (
               /* the dresser is locked: the same word as the letters */
               <form
                 className="lt-gate"
