@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { VisitorsShelf } from '../palais/VisitorsShelf';
 import { SignIn } from '../palais/LayoutsShelf';
 import { useCollection, messageOf } from '../palais/useCollection';
-import { githubStats, visitStats, type GithubStats, type VisitStats } from '../palais/visits';
+import { githubStats, listAccounts, visitStats, type Account, type GithubStats, type VisitStats } from '../palais/visits';
 import { paletteOf, useFloral } from '../palais/florals';
 import '../palais/palais.css';
 
@@ -66,6 +66,8 @@ export default function Admin() {
   const [github, setGithub] = useState<GithubStats | null>(null);
   const [error, setError] = useState('');
   const [githubError, setGithubError] = useState('');
+  const [accounts, setAccounts] = useState<Account[] | null>(null);
+  const [accountsError, setAccountsError] = useState('');
   const signedIn = Boolean(collection.editor?.canSave);
 
   useEffect(() => {
@@ -77,6 +79,9 @@ export default function Admin() {
     githubStats(days)
       .then((g) => live && setGithub(g))
       .catch((e) => live && setGithubError(messageOf(e)));
+    listAccounts()
+      .then((a) => live && setAccounts(a))
+      .catch((e) => live && setAccountsError(messageOf(e)));
     return () => {
       live = false;
     };
@@ -224,6 +229,46 @@ export default function Admin() {
           )}
         </section>
       </div>
+
+      {/* everyone who has signed in to the dresser (palais_users) */}
+      <section className="adm-users">
+        <h2>Accounts <small>{accounts ? accounts.length : ''}</small></h2>
+        {accountsError ? (
+          <p className="cat-note">
+            {/does not exist|Could not find/i.test(accountsError)
+              ? 'Run supabase/migrations/20260928130000_palais_users.sql to see who has signed in.'
+              : accountsError}
+          </p>
+        ) : !accounts ? (
+          <p className="cat-note">Reading the accounts…</p>
+        ) : accounts.length === 0 ? (
+          <p className="cat-note">Nobody has signed in yet.</p>
+        ) : (
+          <div className="adm-table-wrap">
+            <table className="adm-table">
+              <thead>
+                <tr><th>Who</th><th>Via</th><th>Joined</th><th>Last seen</th></tr>
+              </thead>
+              <tbody>
+                {accounts.map((a) => (
+                  <tr key={a.id}>
+                    <td className="adm-who">
+                      {a.avatar && <img src={a.avatar} alt="" className="adm-avatar" referrerPolicy="no-referrer" />}
+                      <span className="adm-who-text">
+                        <b>{a.name || a.email || 'Someone'}</b>
+                        {a.name && a.email && <small>{a.email}</small>}
+                      </span>
+                    </td>
+                    <td><span className={`adm-via adm-via--${a.provider}`}>{a.provider}</span></td>
+                    <td>{new Date(a.created_at).toLocaleDateString()}</td>
+                    <td>{a.last_sign_in_at ? new Date(a.last_sign_in_at).toLocaleDateString() : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
 
       {/* the same visitor book as the catalogue's ☆ Visitors page */}
       <VisitorsShelf forDays={days} />

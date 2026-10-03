@@ -162,3 +162,27 @@ export async function signOut(): Promise<void> {
   const sb = await db();
   await sb.auth.signOut();
 }
+
+/**
+ * Sign in through a provider (Google, Apple). The password never touches this
+ * site: the browser is handed off to the provider's own page and comes back
+ * with a session, which onAuthStateChange picks up. `back` is where to return
+ * to — the dresser's own address, so the sign-in lands where it started.
+ *
+ * This needs the provider turned on in the Supabase dashboard (Auth →
+ * Providers) with its client id and secret, and this site's address in the
+ * allowed redirect list. Until then the provider's button says it isn't set up
+ * rather than failing silently.
+ */
+export type Provider = "google" | "apple";
+
+export async function signInWith(provider: Provider, back?: string): Promise<void> {
+  const sb = await db();
+  const { error } = await sb.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: back ?? (typeof window !== "undefined" ? window.location.href : undefined),
+    },
+  });
+  if (error) throw new Error(error.message);
+}

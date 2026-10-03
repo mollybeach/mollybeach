@@ -748,3 +748,26 @@ export async function visitStats(days = 30): Promise<VisitStats> {
   if (error) throw new Error(error.message);
   return data as VisitStats;
 }
+
+/* ------------------------------------------------ who has signed in -------- */
+
+export interface Account {
+  id: string;
+  email: string | null;
+  name: string | null;
+  avatar: string | null;
+  /** 'email' (password), 'google' or 'apple' */
+  provider: string;
+  created_at: string;
+  last_sign_in_at: string | null;
+  confirmed: boolean;
+}
+
+/** everyone who has signed in to the dresser, newest first (editors only; the
+    database refuses anyone else). Needs 20260928130000_palais_users.sql. */
+export async function listAccounts(): Promise<Account[]> {
+  const sb = await db();
+  const { data, error } = await sb.rpc("palais_users");
+  if (error) throw new Error(error.message);
+  return (data ?? []) as Account[];
+}
