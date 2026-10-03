@@ -298,17 +298,26 @@
           return el;
         }
         /* flash the loader, held long enough to read POWERED BY BRATCODE */
-        var flashing = false;
+        var flashEl = null, flashHide = null, flashKill = null;
         window.bratFlash = function (ms) {
-          if (flashing) return;           // don't stack flashes on quick clicks
-          flashing = true;
           ms = ms || 1400;
-          var el = overlay();
-          document.body.appendChild(el);
-          draw(el);
-          setTimeout(function () {
+          // a quick second click shouldn't be swallowed: reuse the overlay
+          // that's already up and just restart its clock, so every tab flashes
+          clearTimeout(flashHide); clearTimeout(flashKill);
+          if (!flashEl) {
+            flashEl = overlay();
+            document.body.appendChild(flashEl);
+            draw(flashEl);
+          } else {
+            flashEl.classList.remove("bl-gone");   // was fading out — bring it back
+          }
+          var el = flashEl;
+          flashHide = setTimeout(function () {
             el.classList.add("bl-gone");
-            setTimeout(function () { el.parentNode && el.parentNode.removeChild(el); flashing = false; }, 650);
+            flashKill = setTimeout(function () {
+              if (el.parentNode) el.parentNode.removeChild(el);
+              if (flashEl === el) flashEl = null;
+            }, 650);
           }, ms);
         };
         /* between islands: the Palais fires this when the room changes (place.ts) */

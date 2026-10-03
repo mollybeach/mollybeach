@@ -221,12 +221,14 @@ function Turntable({ disc }: { disc: Disc }) {
       if (spent.current && !arrow) return;
       spent.current = true;
       const p = player.current;
-      if (p) {
+      // the deck may be out but the player not yet ready — its methods aren't
+      // attached until onReady, so a click in that gap must wait, not throw
+      if (p && typeof p.getPlayerState === "function") {
         // only ever on. A picture further along must never stop the music.
         if (p.getPlayerState() !== PLAYING) p.playVideo();
       } else {
-        asked.current = true;              // no deck out yet: bring it out first
-        setOpen(true);
+        asked.current = true;              // play the moment the player is ready
+        if (!p) setOpen(true);             // no deck out yet: bring it out first
       }
     };
     const kinds = ["pointerdown", "touchend", "click"] as const;
@@ -236,7 +238,7 @@ function Turntable({ disc }: { disc: Disc }) {
 
   const toggle = () => {
     const p = player.current;
-    if (!p) return;
+    if (!p || typeof p.getPlayerState !== "function") return;
     if (p.getPlayerState() === PLAYING) {
       byHand.current = true;          // stopped on purpose: leave it stopped
       p.pauseVideo();
