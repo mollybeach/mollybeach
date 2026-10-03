@@ -5193,9 +5193,9 @@
 .palais .bd-hello-crest {
   display: grid;
   place-items: center;
-  width: 8rem;
-  height: 8rem;
-  margin-bottom: 0.55rem;
+  width: 10.5rem;
+  height: 10.5rem;
+  margin-bottom: 0.6rem;
   border-radius: 50%;
   border: 1px solid rgba(240, 216, 148, 0.4);
   background: radial-gradient(120% 120% at 50% 30%, #2a2722, #12100c 75%);
