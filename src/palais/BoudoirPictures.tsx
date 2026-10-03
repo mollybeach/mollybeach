@@ -284,8 +284,17 @@ export function BoudoirPictures() {
     setAuthBusy(provider);
     // let Molly know someone's at the door before we hand off to the provider
     void noteSigninAttempt(provider);
+    // Come back to a clean URL with NO hash: the provider appends its auth
+    // code as ?code=…, and that can't be read when it lands after a #fragment,
+    // so the session would never be picked up. We remember the dresser and
+    // reopen it once signed in (the effect below).
     try {
-      await signInWith(provider, window.location.href);
+      sessionStorage.setItem("palais-after-signin", "#boudoir/portraits");
+    } catch {
+      /* no storage: they land on the home room and open the dresser themselves */
+    }
+    try {
+      await signInWith(provider, window.location.origin + window.location.pathname);
       // the page is navigating away to the provider; nothing after this runs
     } catch {
       setAuthBusy(null);
@@ -490,6 +499,21 @@ export function BoudoirPictures() {
      old "continue as…" link did) */
   useEffect(() => {
     if (editor) setPassed(true);
+  }, [editor]);
+
+  /* back from the provider, signed in: reopen the dresser where they left it.
+     The redirect lands on a clean URL (see goProvider), so the hash is set
+     here instead, which opens the modal and runs the verdict check. */
+  useEffect(() => {
+    if (!editor) return;
+    let intent: string | null = null;
+    try {
+      intent = sessionStorage.getItem("palais-after-signin");
+      if (intent) sessionStorage.removeItem("palais-after-signin");
+    } catch {
+      /* no storage */
+    }
+    if (intent && window.location.hash !== intent) window.location.hash = intent;
   }, [editor]);
 
   /* ...and we ask the board's verdict on them. Signed out again, forget it. */
