@@ -429,13 +429,16 @@ export function BoudoirPictures() {
      is measured, then laid end to end enough times to fill the window and
      over again, so the loop has no seam to see. CSS does the moving: nothing
      here touches the layout, and pointing at them holds them still. */
+  /* Watch who's signed in at ALL times, not only while the dresser is open:
+     after an Apple round-trip the browser lands back on the home room with the
+     dresser closed, and this is what notices the new session so the reopen
+     effect can carry them on to the review screen or the pictures. */
   useEffect(() => {
-    if (!open) return;
     currentEditor()
       .then(setEditor)
       .catch(() => {});
     return onEditorChange(setEditor);
-  }, [open]);
+  }, []);
 
   const [reel, setReel] = useState({ copies: 2, rise: 0, gap: 0 });
   useEffect(() => {
