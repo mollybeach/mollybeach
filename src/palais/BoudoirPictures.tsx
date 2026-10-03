@@ -124,6 +124,7 @@ const CAME_IN_BY: string | undefined = (() => {
     /* no storage: the address still says something */
   }
   if (door === "rabbit") return "came in by the rabbit · /rabbit";
+  if (door === "bunny") return "came in by the bunny · /bunny";
   if (door === "portraits") return "came in through the door · /boudoir/portraits";
   return CAME_IN_ON_THE_LINK ? "came in on the link · #boudoir/portraits" : undefined;
 })();
