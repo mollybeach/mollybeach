@@ -4641,6 +4641,35 @@
 /* the album, propped on the footer's flowers when the room hasn't space for it
    (a phone). Empty, there is nothing there at all. */
 .palais .lake-shelf:empty { display: none; }
+
+/* the dresser's "sign out", riding in the footer while someone is signed in.
+   Empty the rest of the time, so it takes no room. */
+.palais .palais-footer-actions {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+}
+.palais .palais-footer-actions:empty { display: none; }
+.palais .bd-signout {
+  display: inline-flex;
+  align-items: center;
+  max-width: 60vw;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(240, 216, 148, 0.5);
+  background: rgba(18, 16, 12, 0.82);
+  color: #f0d894;
+  font: 600 0.8rem/1.2 var(--wm-serif, Georgia, serif);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+}
+.palais .bd-signout:hover { filter: brightness(1.15); border-color: rgba(240, 216, 148, 0.8); }
+
 .palais .lake-shelf {
   position: absolute;
   left: 50%;

@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { hashExtra, usePlace } from "./place";
-import { currentEditor, onEditorChange, signInWith, type Editor, type Provider } from "./layoutsDb";
+import { currentEditor, onEditorChange, signInWith, signOut, type Editor, type Provider } from "./layoutsDb";
 import Livestream from "./Livestream";
 import { lettersOpen, remember, remembered } from "./letters";
 import {
@@ -252,6 +253,22 @@ export function BoudoirPictures() {
   /* a provider button: hand off to Google or Apple's own page and come back
      signed in. onEditorChange then sees the session and the dresser moves on
      to the word on its own. */
+  /* the footer's slot, where the "sign out" rides while someone is signed in */
+  const [footSlot, setFootSlot] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    setFootSlot(open ? document.getElementById("palais-footer-actions") : null);
+  }, [open]);
+
+  /* leave the dresser's sign-in: back to the greeting, and the account dropped */
+  const goSignOut = useCallback(async () => {
+    try {
+      await signOut();
+    } catch {
+      /* nothing to do: onEditorChange will settle the state either way */
+    }
+    setPassed(false);
+  }, []);
+
   const goProvider = useCallback(async (provider: Provider) => {
     setAuthTrouble(null);
     setAuthBusy(provider);
@@ -1009,6 +1026,16 @@ export function BoudoirPictures() {
           </div>
         </div>
       )}
+
+      {/* the way out of the sign-in: in the page footer, only while someone is
+          signed in and inside the dresser (portaled out of this modal) */}
+      {open && inside && passed && editor && footSlot &&
+        createPortal(
+          <button type="button" className="bd-signout" onClick={() => void goSignOut()}>
+            Sign out{editor.email ? ` · ${editor.email}` : ""}
+          </button>,
+          footSlot,
+        )}
     </>
   );
 }

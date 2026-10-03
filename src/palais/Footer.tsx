@@ -27,6 +27,8 @@ export function Footer() {
         <div aria-hidden className="palais-footer-light" />
         {/* the album stands on the flowers themselves */}
         <div className="lake-shelf" id="palais-record-shelf" />
+        {/* the dresser portals its "sign out" here when someone is signed in */}
+        <div className="palais-footer-actions" id="palais-footer-actions" />
       </div>
     </footer>
   );
