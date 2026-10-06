@@ -2,13 +2,13 @@
 
 **Live at [mollybeach.app](https://mollybeach.app)**
 
-![The Palais: the home page of the portfolio](public/social-preview-palais-v2.jpg)
+### *A digital fabric of my life.*
+
+![The Palais: the home page of the portfolio](docs/readme-palais.jpg)
 
 My portfolio has two sides. The sidebar is a conventional résumé: experience, projects, skills, education, awards and certifications. The home page is **the Palais**: a Versailles-style palace terrace you can play with, full of hand-made stickers of my cats, dogs and goats and my furniture. It changes through the four seasons and opens onto **Area M**, a world map of rooms, each built from places I've travelled.
 
-It's React, TypeScript and CSS, with no game engine and no canvas library. It all runs in the browser, with an optional Supabase backend.
-
-*Digital fabric of my life.*
+It's React, TypeScript and CSS, with no game engine and no canvas library. It all runs in the browser.
 
 ---
 
@@ -47,7 +47,7 @@ A cute, video-game-style level select. Honeysuckle hops along a dotted path betw
 
 Rooms keep their place in the address (`mollybeach.app/#lagoon`), so a refresh or a shared link opens the same room. All rooms turn through the seasons together.
 
-### Saved looks (Supabase)
+### Saved Looks
 Signed in, I can save the room as a named look, file it under a season, make it that season's default, and keep older looks to go back to. Everyone can read looks, but only editors can change them, and row-level security enforces that in the database, not in the UI.
 
 ---
@@ -68,57 +68,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 - **Supabase** (Postgres, row-level security, auth, SQL functions), loaded lazily so the room never waits on it
 - **Image pipeline:** background removal (rembg), OpenCV feature matching (SIFT and homography) to align the season photographs, WebP export
 - **Hosting:** Vercel
-
-## 📂 Project structure
-
-```
-portfolio/
-├── public/
-│   ├── palais/              # room photographs (per season) and sticker cut-outs
-│   └── social-preview-palais-v2.jpg
-├── src/
-│   ├── components/          # résumé pages: Sidebar, Experience, Projects, Skills…
-│   └── palais/              # the Palais
-│       ├── PalaisHome.tsx   # the terrace and everything placed in it
-│       ├── Room.tsx         # season photographs for the terrace
-│       ├── SeasonRoom.tsx   # the other rooms off the map
-│       ├── WorldMap.tsx     # Area M, the level-select map
-│       ├── place.ts         # which room you're in (#hash routing)
-│       ├── seasons.ts       # skip / pause via the Web Animations API
-│       ├── Weather.tsx      # snow, leaves, fluff
-│       ├── Flyers.tsx       # hummingbirds and dragonflies
-│       ├── Draggable.tsx    # drag, stack, resize
-│       ├── Catalogue.tsx    # the sticker catalogue
-│       ├── arrangement.ts   # default positions, per-season layouts
-│       ├── layouts/         # spring / summer / autumn / winter layouts (JSON)
-│       └── LayoutsShelf.tsx # saved looks (Supabase)
-└── supabase/migrations/     # tables, row-level security and SQL functions
-```
-
-## 🚀 Running it locally
-
-```bash
-git clone https://github.com/mollybeach/portfolio.git
-cd portfolio
-npm install
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-The site works fully without a backend. To turn on saved looks:
-
-1. Create a Supabase project and run the SQL files in `supabase/migrations/` in order, in the SQL Editor.
-2. Add your project's URL and publishable (anon) key to `.env.local`:
-   ```
-   REACT_APP_SUPABASE_URL=https://<your-project>.supabase.co
-   REACT_APP_SUPABASE_ANON_KEY=<publishable key>
-   ```
-3. Create a user in Supabase Auth and add it to `palais_editors`. The steps are in `supabase/README.md`.
-
-## 🌐 Deployment
-
-The site is hosted on **Vercel**, which builds from GitHub on every push. The Supabase variables above are set in the Vercel project's environment variables.
 
 ## 📞 Contact
 
