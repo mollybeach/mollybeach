@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import MainComponent from './components/MainComponent';
 import GiltDivider from './components/GiltDivider';
+import InAppBrowserNotice from './components/InAppBrowserNotice';
 import './index.css';
 
 const App: React.FC = () => {
@@ -11,6 +12,8 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      {/* only ever visible inside Instagram's / Facebook's in-app browser */}
+      <InAppBrowserNotice />
       <div className="flex h-screen bg-gray-50 overflow-hidden">
         <Sidebar 
           isMobileMenuOpen={isMobileMenuOpen}
