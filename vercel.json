@@ -3,6 +3,7 @@
   "redirects": [
     { "source": "/x", "destination": "/?from=x", "permanent": false },
     { "source": "/ig", "destination": "/?from=instagram", "permanent": false },
+    { "source": "/fb", "destination": "/?from=facebook", "permanent": false },
     { "source": "/li", "destination": "/?from=linkedin", "permanent": false },
     { "source": "/tt", "destination": "/?from=tiktok", "permanent": false },
     { "source": "/dc", "destination": "/?from=discord", "permanent": false },
