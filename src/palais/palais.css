@@ -1585,6 +1585,7 @@
 /* the visit log keeps going as far back as you scroll */
 .palais .vis-list--recent { max-height: none; overflow: visible; }
 .palais .vis-more { justify-content: center !important; color: #b5708f !important; font-size: 0.75rem !important; padding: 0.4rem 0; }
+.palais .vis-more--load { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: center; }
 .palais .vis-me span { color: var(--cat-deep); }
 .palais .vis-name { color: var(--cat-deep) !important; }
 .palais .vis-name.is-me { color: var(--cat-hot) !important; }

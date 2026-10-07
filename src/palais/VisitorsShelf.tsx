@@ -250,6 +250,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
   const [log, setLog] = useState<VisitLogEntry[]>([]);
   const [logDone, setLogDone] = useState(false);
   const [logError, setLogError] = useState("");
+  const [loadingAll, setLoadingAll] = useState(false);
   const loading = useRef(false);
   const more = useCallback(
     (reset = false) => {
@@ -289,6 +290,29 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
     return () => io.disconnect();
   }, [more, logDone, log.length]);
 
+  // "Load all": page all the way to the end in one go, rather than scrolling
+  const loadAll = useCallback(async () => {
+    if (loading.current || loadingAll) return;
+    setLoadingAll(true);
+    loading.current = true; // hold off the scroll loader while this runs
+    try {
+      let before = log[log.length - 1]?.id;
+      for (let guard = 0; guard < 500; guard++) {
+        const page = await visitLog(before, only);
+        if (page.length) setLog((l) => [...l, ...page]);
+        before = page[page.length - 1]?.id;
+        if (page.length < 50) break; // a short page is the last page
+      }
+      setLogDone(true);
+      setLogError("");
+    } catch (e) {
+      setLogError(messageOf(e));
+    } finally {
+      loading.current = false;
+      setLoadingAll(false);
+    }
+  }, [log, only, loadingAll]);
+
   const rename = async (p: VisitorProfile) => {
     // anyone named Molly is counted as Molly, however it is typed: her address
     // changes often enough that she arrives as a new code every few days
@@ -326,6 +350,44 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
   const feed = hideMe && !only ? log.filter((v) => !v.is_me) : log;
   // visitors you've named the same are folded into one card (see mergeByName)
   const folk = people ? mergeByName(people) : null;
+
+  /* The server only sends the busiest handful of countries and cities. Once
+     "Load all" has pulled every visit into the log, fold the FULL lists from
+     it instead, so nowhere a visitor came from is left off. */
+  const logCountries =
+    logDone && log.length
+      ? (() => {
+          const m = new Map<string, { country: string; code: string | null; who: Set<string>; visits: number }>();
+          for (const v of log) {
+            const key = v.country ?? "Unknown";
+            const cur = m.get(key) ?? { country: key, code: v.code, who: new Set<string>(), visits: 0 };
+            cur.visits += 1;
+            if (v.visitor) cur.who.add(v.visitor);
+            if (!cur.code && v.code) cur.code = v.code;
+            m.set(key, cur);
+          }
+          return Array.from(m.values())
+            .map((c) => ({ country: c.country, code: c.code, unique: c.who.size || c.visits }))
+            .sort((a, b) => b.unique - a.unique);
+        })()
+      : null;
+  const logCities =
+    logDone && log.length
+      ? (() => {
+          const m = new Map<string, { city: string; region: string | null; code: string | null; who: Set<string>; visits: number }>();
+          for (const v of log) {
+            if (!v.city) continue;
+            const key = `${v.city}|${v.code ?? ""}`;
+            const cur = m.get(key) ?? { city: v.city, region: v.region, code: v.code, who: new Set<string>(), visits: 0 };
+            cur.visits += 1;
+            if (v.visitor) cur.who.add(v.visitor);
+            m.set(key, cur);
+          }
+          return Array.from(m.values())
+            .map((c) => ({ city: c.city, region: c.region, code: c.code, unique: c.who.size || c.visits }))
+            .sort((a, b) => b.unique - a.unique);
+        })()
+      : null;
   const max = Math.max(1, ...(stats?.by_day.map((d) => d.visits) ?? [1]));
   const period = RANGES.find((r) => r.days === days)?.label ?? "";
 
@@ -653,10 +715,10 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
 
           <div className="vis-cols">
             <section className="vis-card">
-              <h3>🌍 Countries</h3>
-              {stats.countries.length ? (
+              <h3>🌍 Countries{logCountries ? ` · ${logCountries.length}` : ""}</h3>
+              {(logCountries ?? stats.countries).length ? (
                 <ul className="vis-list">
-                  {stats.countries.map((c) => (
+                  {(logCountries ?? stats.countries).map((c) => (
                     <li key={c.country}>
                       <span>
                         {flag(c.code)} {c.country}
@@ -668,12 +730,20 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
               ) : (
                 <p className="cat-note">No visits yet.</p>
               )}
+              {!logCountries && (
+                <p className="vis-hint vis-more--load">
+                  <span>Top {stats.countries.length}.</span>
+                  <button type="button" className="cat-mini" onClick={loadAll} disabled={loadingAll}>
+                    {loadingAll ? "Loading…" : "Show every country"}
+                  </button>
+                </p>
+              )}
             </section>
             <section className="vis-card">
-              <h3>📍 Cities</h3>
-              {stats.cities.length ? (
+              <h3>📍 Cities{logCities ? ` · ${logCities.length}` : ""}</h3>
+              {(logCities ?? stats.cities).length ? (
                 <ul className="vis-list">
-                  {stats.cities.map((c) => (
+                  {(logCities ?? stats.cities).map((c) => (
                     <li key={`${c.city}-${c.code}`}>
                       <span>
                         {flag(c.code)} {c.city}
@@ -685,6 +755,14 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                 </ul>
               ) : (
                 <p className="cat-note">No cities yet.</p>
+              )}
+              {!logCities && (stats.cities_total ?? 0) > stats.cities.length && (
+                <p className="vis-hint vis-more--load">
+                  <span>Top {stats.cities.length} of {stats.cities_total}.</span>
+                  <button type="button" className="cat-mini" onClick={loadAll} disabled={loadingAll}>
+                    {loadingAll ? "Loading…" : "Show every city"}
+                  </button>
+                </p>
               )}
             </section>
           </div>
@@ -839,8 +917,17 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                 </li>
               ))}
               {!logDone && !logError && (
-                <li ref={end} className="vis-more">
-                  <span>Loading more visits…</span>
+                <li ref={end} className="vis-more vis-more--load">
+                  {loadingAll ? (
+                    <span>Loading all visits…</span>
+                  ) : (
+                    <>
+                      <span>More below as you scroll</span>
+                      <button type="button" className="cat-mini" onClick={loadAll}>
+                        Load all visits
+                      </button>
+                    </>
+                  )}
                 </li>
               )}
               {logDone && feed.length > 0 && (
