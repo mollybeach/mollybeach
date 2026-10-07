@@ -313,6 +313,13 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
     }
   }, [log, only, loadingAll]);
 
+  // the admin page is meant to show the whole picture, so once the first page
+  // is in, pull the rest on its own — Countries, Cities and the feed come out
+  // complete with no tapping. (The buttons stay as a manual nudge just in case.)
+  useEffect(() => {
+    if (log.length && !logDone && !loadingAll && !loading.current) void loadAll();
+  }, [log.length, logDone, loadingAll, loadAll]);
+
   const rename = async (p: VisitorProfile) => {
     // anyone named Molly is counted as Molly, however it is typed: her address
     // changes often enough that she arrives as a new code every few days
