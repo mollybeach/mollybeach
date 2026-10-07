@@ -14,6 +14,7 @@ import PalaisHome from '../palais/PalaisHome';
 import { floralSrc, paletteOf, useFloral } from '../palais/florals';
 import { countPage, recordPlace, recordVisit } from '../palais/visits';
 import Admin from './Admin';
+import Profiles from '../components/Profiles';
 
 /**
  * The pages of the portfolio proper, as stops on the same walk the Palais
@@ -109,6 +110,8 @@ const MainComponent: React.FC<MainComponentProps> = ({ setIsMobileMenuOpen }) =>
         <Route path="/resume" element={<Resume />} />
         {/* Molly's own: the visitor book, behind the catalogue's sign-in */}
         <Route path="/admin" element={<Admin />} />
+        {/* and a profile for one visitor at a time, behind the same sign-in */}
+        <Route path="/admin/profiles" element={<Profiles />} />
       </Routes>
       </div>
       )}

@@ -142,6 +142,80 @@ function frequency(p: VisitorProfile) {
 
 const who = (name: string | null, visitor: string | null, isMe = false) => (isMe ? `${name ?? "Molly"} (me)` : name ?? (visitor ? `visitor ${visitor}` : "someone"));
 
+/** Two visitors you've given the same name are the same person (their code
+    changes as their address does), so fold their profiles into one card that
+    lists every id they've come in under and adds up what they did. Unnamed
+    visitors are left on their own. */
+export type MergedProfile = VisitorProfile & { ids: string[] };
+
+const foldPeople = (g: VisitorProfile[]): MergedProfile => {
+  const lead = g.reduce((a, b) => (b.visits > a.visits ? b : a));
+  const uniq = (xs: (string | null)[]) => Array.from(new Set(xs.filter(Boolean) as string[]));
+  const tally = <T,>(items: T[], id: (t: T) => string, n: (t: T) => number, make: (t: T, v: number) => T): T[] => {
+    const m = new Map<string, { t: T; v: number }>();
+    for (const it of items) {
+      const k = id(it);
+      const cur = m.get(k);
+      if (cur) cur.v += n(it);
+      else m.set(k, { t: it, v: n(it) });
+    }
+    return Array.from(m.values())
+      .sort((a, b) => b.v - a.v)
+      .map(({ t, v }) => make(t, v));
+  };
+  const mapPlaces = (() => {
+    const m = new Map<string, { place: string; visits: number; seconds: number }>();
+    for (const x of g.flatMap((p) => p.map_places)) {
+      const cur = m.get(x.place);
+      if (cur) { cur.visits += x.visits; cur.seconds += x.seconds; }
+      else m.set(x.place, { ...x });
+    }
+    return Array.from(m.values()).sort((a, b) => b.visits - a.visits);
+  })();
+  return {
+    ...lead,
+    ids: g.map((p) => p.visitor),
+    is_me: g.some((p) => p.is_me),
+    visits: g.reduce((s, p) => s + p.visits, 0),
+    days_active: g.reduce((s, p) => s + p.days_active, 0),
+    first_at: g.reduce((m, p) => (p.first_at < m ? p.first_at : m), g[0].first_at),
+    last_at: g.reduce((m, p) => (p.last_at > m ? p.last_at : m), g[0].last_at),
+    last_7: g.reduce((s, p) => s + p.last_7, 0),
+    last_30: g.reduce((s, p) => s + p.last_30, 0),
+    note: g.map((p) => p.note).find(Boolean) ?? null,
+    total_seconds: g.reduce((s, p) => s + p.total_seconds, 0),
+    longest_seconds: g.reduce((m, p) => Math.max(m, p.longest_seconds), 0),
+    busiest_hour: lead.busiest_hour,
+    timezone: uniq(g.map((p) => p.timezone)).join(", ") || null,
+    language: uniq(g.map((p) => p.language)).join(", ") || null,
+    network: uniq(g.map((p) => p.network)).join(", ") || null,
+    vpn_visits: g.reduce((s, p) => s + p.vpn_visits, 0),
+    sources: tally(g.flatMap((p) => p.sources), (s) => s.name, (s) => s.visits, (s, v) => ({ ...s, visits: v })),
+    places: tally(g.flatMap((p) => p.places), (x) => `${x.name}|${x.code ?? ""}`, (x) => x.visits, (x, v) => ({ ...x, visits: v })),
+    map_places: mapPlaces,
+    devices: tally(
+      g.flatMap((p) => p.devices),
+      (d) => `${d.device}|${d.brand}|${d.model}|${d.os}|${d.browser}|${d.screen}`,
+      (d) => d.visits,
+      (d, v) => ({ ...d, visits: v }),
+    ),
+  };
+};
+
+export const mergeByName = (people: VisitorProfile[]): MergedProfile[] => {
+  const groups = new Map<string, VisitorProfile[]>();
+  for (const p of people) {
+    const named = p.name?.trim();
+    const key = named ? `name:${named.toLowerCase()}` : `id:${p.visitor}`;
+    const g = groups.get(key);
+    if (g) g.push(p);
+    else groups.set(key, [p]);
+  }
+  return Array.from(groups.values())
+    .map((g) => (g.length === 1 ? { ...g[0], ids: [g[0].visitor] } : foldPeople(g)))
+    .sort((a, b) => b.visits - a.visits);
+};
+
 const where = (v: { city: string | null; region: string | null; country: string | null }) => {
   const parts = [v.city, v.region, v.country].filter(Boolean) as string[];
   return parts.filter((x, i) => parts.indexOf(x) === i).join(", ") || "Somewhere";
@@ -250,6 +324,8 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
 
   /* everybody else's visits, unless the button says otherwise */
   const feed = hideMe && !only ? log.filter((v) => !v.is_me) : log;
+  // visitors you've named the same are folded into one card (see mergeByName)
+  const folk = people ? mergeByName(people) : null;
   const max = Math.max(1, ...(stats?.by_day.map((d) => d.visits) ?? [1]));
   const period = RANGES.find((r) => r.days === days)?.label ?? "";
 
@@ -617,22 +693,25 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
               rather than a wall of visits */}
           <details className="vis-card vis-fold">
             <summary>
-              <h3>👥 Visitors{people?.length ? ` · ${people.length}` : ""}</h3>
+              <h3>👥 Visitors{folk?.length ? ` · ${folk.length}` : ""}</h3>
             </summary>
             {peopleError && (
               <p className="cat-error" role="alert">
                 {needsMigration(peopleError) ? "Visitor profiles aren't set up yet: run supabase/migrations/20260915120000_palais_visitor_id.sql." : peopleError}
               </p>
             )}
-            {people && !people.length && <p className="cat-note">No visitors yet.</p>}
-            {people && people.length > 0 && (
+            {folk && !folk.length && <p className="cat-note">No visitors yet.</p>}
+            {folk && folk.length > 0 && (
               <ul className="vis-people">
-                {people.map((p) => (
+                {folk.map((p) => (
                   <li key={p.visitor} className={`vis-person${p.is_me ? " is-me" : ""}${only === p.visitor ? " is-on" : ""}`}>
                     <div className="vis-person-head">
                       <strong>{who(p.name, p.visitor, p.is_me)}</strong>
                       <span className="vis-freq">{frequency(p)}</span>
                     </div>
+                    {p.ids.length > 1 && (
+                      <p className="vis-ids">🔖 {p.ids.length} ids · {p.ids.join(" · ")}</p>
+                    )}
                     <p>
                       <b>{p.visits}</b> visit{p.visits === 1 ? "" : "s"} on {p.days_active} day{p.days_active === 1 ? "" : "s"} · {p.last_30} in the last 30 days
                     </p>

@@ -107,7 +107,8 @@ begin
     'by_hour', coalesce((
       select jsonb_agg(jsonb_build_object('hour', h, 'visits', v) order by h)
       from (
-        select extract(hour from created_at)::int as h, count(*) as v
+        -- the hour of day in each visitor's OWN local time, not UTC
+        select extract(hour from created_at at time zone coalesce(nullif(timezone, ''), 'UTC'))::int as h, count(*) as v
         from public.palais_visits where created_at >= since group by 1
       ) t
     ), '[]'::jsonb),
@@ -218,7 +219,7 @@ begin
         select coalesce(country, 'Unknown') as country, max(country_code) as country_code,
                count(*) as v, count(distinct visitor) as u
         from public.palais_visits where created_at >= since group by 1
-        order by u desc, v desc limit 15
+        order by u desc, v desc limit 250
       ) t
     ), '[]'::jsonb),
     'landings', coalesce((

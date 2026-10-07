@@ -1,5 +1,6 @@
 // path: src/components/Admin.tsx
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { VisitorsShelf } from '../palais/VisitorsShelf';
 import { SignIn } from '../palais/LayoutsShelf';
 import { useCollection, messageOf } from '../palais/useCollection';
@@ -35,13 +36,13 @@ function Hours({ hours }: { hours: { hour: number; visits: number }[] }) {
   const by = new Map(hours.map((h) => [h.hour, h.visits]));
   const most = Math.max(1, ...hours.map((h) => h.visits));
   return (
-    <div className="adm-hours" role="img" aria-label="Visits by hour of the day">
+    <div className="adm-hours adm-hours--all" role="img" aria-label="Visits by hour of the day">
       {Array.from({ length: 24 }, (_, h) => {
         const n = by.get(h) ?? 0;
         return (
           <span key={h} title={`${when(h)}: ${n} visit${n === 1 ? '' : 's'}`}>
             <i style={{ height: `${Math.max(3, (n / most) * 100)}%` }} />
-            <small>{h % 6 === 0 ? when(h) : ''}</small>
+            <small>{when(h)}</small>
           </span>
         );
       })}
@@ -148,6 +149,10 @@ export default function Admin() {
     <div className="palais adm" style={stones}>
       <header className="adm-head">
         <h1>♡ Visitors</h1>
+        {/* over to one visitor at a time, same sign-in */}
+        <Link to="/admin/profiles" className="cat-mini">
+          ✦ Visitor profiles
+        </Link>
         <nav className="cat-seasons" aria-label="Time range">
           {RANGES.map((r) => (
             <button

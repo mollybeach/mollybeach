@@ -729,7 +729,9 @@ begin
                count(*) filter (where created_at >= now() - interval '30 days') as last_30,
                coalesce(sum(seconds), 0)::int as total_seconds,
                coalesce(max(seconds), 0)::int as longest_seconds,
-               mode() within group (order by extract(hour from created_at)::int) as busiest_hour,
+               -- the hour they usually come, in THEIR local time (not UTC):
+               -- each visit carries the browser's IANA zone; fall back to UTC
+               mode() within group (order by extract(hour from created_at at time zone coalesce(nullif(timezone, ''), 'UTC'))::int) as busiest_hour,
                mode() within group (order by timezone) as timezone,
                mode() within group (order by language) as language,
                mode() within group (order by network) as network,
