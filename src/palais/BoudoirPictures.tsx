@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { hashExtra, usePlace } from "./place";
-import { currentEditor, onEditorChange, signInWith, signOut, type Editor, type Provider } from "./layoutsDb";
+import { currentEditor, onEditorChange, signOut, type Editor } from "./layoutsDb";
 import Livestream from "./Livestream";
 import { FairyOver } from "./Flyers";
 import { lettersOpen, remember, remembered } from "./letters";
@@ -23,7 +23,7 @@ import {
   type Portrait,
   type PortraitNote,
 } from "./portraits";
-import { amIAccepted, askForReview, noteDoing, noteSigninAttempt } from "./visits";
+import { askBoudoirAdmit, boudoirAccepted, noteDoing } from "./visits";
 
 /**
  * The pictures kept in the Boudoir's white dresser.
@@ -86,13 +86,11 @@ const BUNNY_SHAPE = 631 / 1100;
 /* mollybeach.app/#boudoir/portraits walks straight up to the dresser, and
    /#boudoir/live walks up to it with the camera showing. The word is still
    asked for: the link opens the drawer, it doesn't unlock it. */
-const WANTED = (extra: string) => /^(portraits|live|review|apple)/.test(extra);
-/* #boudoir/review and #boudoir/apple (the /review and /apple links) just show a
-   screen to look at — the "under review" card, or the sign-in chooser — with
-   nothing behind them: no sign-in, no pictures, the buttons do nothing. */
-type Preview = "review" | "apple" | null;
-const PREVIEW = (extra: string): Preview =>
-  /^apple/.test(extra) ? "apple" : /^review/.test(extra) ? "review" : null;
+const WANTED = (extra: string) => /^(portraits|live|review)/.test(extra);
+/* #boudoir/review (the /review link) just shows the "under review" card to look
+   at, with nothing behind it: no pictures. */
+type Preview = "review" | null;
+const PREVIEW = (extra: string): Preview => (/^review/.test(extra) ? "review" : null);
 
 /* Whether this visit ARRIVED on the dresser's own link rather than finding the
    bunny in the room. Read once as the page loads: by the time it is open the
@@ -166,8 +164,6 @@ export function BoudoirPictures() {
   /* the board's verdict on this account: null while we ask, false = still under
      review, true = in. Editors always come back true (palais_members.sql). */
   const [accepted, setAccepted] = useState<boolean | null>(null);
-  const [authBusy, setAuthBusy] = useState<string | null>(null);
-  const [authTrouble, setAuthTrouble] = useState<string | null>(null);
   const arrived = useRef<string | undefined>(CAME_IN_BY);
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
@@ -262,9 +258,6 @@ export function BoudoirPictures() {
       `typed` is someone standing at the dresser having a go — a browser that
       already knows the word walks in without one, and that isn't an attempt.
       What they typed is never written down: only whether it fitted. */
-  /* a provider button: hand off to Google or Apple's own page and come back
-     signed in. onEditorChange then sees the session and the dresser moves on
-     to the word on its own. */
   /* the footer's slot, where the "sign out" rides while someone is signed in */
   const [footSlot, setFootSlot] = useState<HTMLElement | null>(null);
   useEffect(() => {
@@ -280,34 +273,6 @@ export function BoudoirPictures() {
     }
     setPassed(false);
   }, []);
-
-  const goProvider = useCallback(async (provider: Provider) => {
-    setAuthTrouble(null);
-    setAuthBusy(provider);
-    // let Molly know someone's at the door before we hand off to the provider
-    void noteSigninAttempt(provider);
-    // Come back to a clean URL with NO hash: the provider appends its auth
-    // code as ?code=…, and that can't be read when it lands after a #fragment,
-    // so the session would never be picked up. We remember the dresser and
-    // reopen it once signed in (the effect below).
-    try {
-      sessionStorage.setItem("palais-after-signin", "#boudoir/portraits");
-    } catch {
-      /* no storage: they land on the home room and open the dresser themselves */
-    }
-    try {
-      await signInWith(provider, window.location.origin + window.location.pathname);
-      // the page is navigating away to the provider; nothing after this runs
-    } catch {
-      setAuthBusy(null);
-      setAuthTrouble(
-        provider === "apple"
-          ? "Apple sign-in isn't switched on yet."
-          : "Google sign-in isn't switched on yet.",
-      );
-    }
-  }, []);
-
 
   const tryWord = useCallback(async (word: string, typed = false) => {
     setBusy(true);
@@ -500,50 +465,37 @@ export function BoudoirPictures() {
   useEffect(() => {
     if (!open) setPassed(false);
   }, [open]);
-  /* a completed sign-in advances past the greeting on its own (the job the
-     old "continue as…" link did) */
+  /* with no sign-in, the right word is the whole greeting: once the dresser is
+     unlocked, move straight on to the board's verdict */
   useEffect(() => {
-    if (editor) setPassed(true);
-  }, [editor]);
+    if (inside) setPassed(true);
+  }, [inside]);
 
-  /* back from the provider, signed in: reopen the dresser where they left it.
-     The redirect lands on a clean URL (see goProvider), so the hash is set
-     here instead, which opens the modal and runs the verdict check. */
+  /* the board's verdict on this visitor, by their IP-tied code (not an account
+     any more). Editors always come back true. Re-asked whenever the dresser
+     opens or Molly's own sign-in changes. */
   useEffect(() => {
-    if (!editor) return;
-    let intent: string | null = null;
-    try {
-      intent = sessionStorage.getItem("palais-after-signin");
-      if (intent) sessionStorage.removeItem("palais-after-signin");
-    } catch {
-      /* no storage */
-    }
-    if (intent && window.location.hash !== intent) window.location.hash = intent;
-  }, [editor]);
-
-  /* ...and we ask the board's verdict on them. Signed out again, forget it. */
-  useEffect(() => {
-    if (!editor) {
+    if (!open || !inside) {
       setAccepted(null);
       return;
     }
     let live = true;
     setAccepted(null);
     const since = Date.now();
-    amIAccepted().then((ok) => {
+    boudoirAccepted().then((ok) => {
       // always show the "reviewing" card for a beat, so it never just blinks
       const wait = Math.max(0, 1300 - (Date.now() - since));
       setTimeout(() => {
         if (!live) return;
         setAccepted(ok);
-        // not a member yet: let Molly know, with their email, so she can accept
-        if (!ok) void askForReview();
+        // not let in yet: buzz Molly with their code so she can admit them
+        if (!ok) void askBoudoirAdmit();
       }, wait);
     });
     return () => {
       live = false;
     };
-  }, [editor]);
+  }, [open, inside, editor]);
   /* the address says whether the dresser is open and which drawer, so the page
      can be sent to somebody and open where it left off */
   useEffect(() => {
@@ -847,26 +799,7 @@ export function BoudoirPictures() {
               </nav>
             )}
 
-            {preview === "apple" ? (
-              /* just a look at the sign-in chooser — the button does nothing */
-              <div className="bd-hello">
-                <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
-                </span>
-                <h3 className="bd-hello-name">The Boudoir</h3>
-                <p className="bd-hello-line">please sign in to continue</p>
-                <div className="bd-hello-ways">
-                  <button type="button" className="bd-way bd-way--apple" onClick={() => {}}>
-                    <span className="bd-way-mark" aria-hidden>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M16.4 1.9c0 1.1-.4 2.1-1.2 3-.9 1-2 1.6-3.1 1.5-.1-1.1.4-2.2 1.2-3 .8-.9 2.1-1.5 3.1-1.5zM20 17.1c-.5 1.2-.8 1.7-1.5 2.8-1 1.5-2.3 3.3-4 3.3-1.5 0-1.9-1-4-1-2 0-2.5 1-4 1-1.6 0-2.9-1.7-3.9-3.1-2.7-4-3-8.6-1.3-11.1 1.2-1.7 3-2.7 4.8-2.7 1.8 0 2.9 1 4.4 1 1.4 0 2.3-1 4.4-1 1.6 0 3.2.9 4.4 2.4-3.9 2.1-3.3 7.6.7 9.4z"/>
-                      </svg>
-                    </span>
-                    Sign in with Apple
-                  </button>
-                </div>
-              </div>
-            ) : preview === "review" ? (
+            {preview === "review" ? (
               /* the default look: the "reviewing" card everyone meets first */
               <div className="bd-hello bd-hello--wait">
                 <span className="bd-hello-crest" aria-hidden>
@@ -901,31 +834,6 @@ export function BoudoirPictures() {
                 {busy && <Waiting say="Trying the word…" />}
                 {trouble && <p className="lt-trouble">{trouble}</p>}
               </form>
-            ) : !passed ? (
-              /* the word is right; now a choice of sign-in before the
-                 pictures show — a name to put to the visit. The buttons hand
-                 off to the provider's own page (layoutsDb.ts). The dresser is
-                 already unlocked, so coming in with just the word skips it. */
-              <div className="bd-hello">
-                <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
-                </span>
-                <h3 className="bd-hello-name">The Boudoir</h3>
-                <p className="bd-hello-line">please sign in to continue</p>
-
-                <div className="bd-hello-ways">
-                  <button type="button" className="bd-way bd-way--apple" onClick={() => void goProvider("apple")} disabled={Boolean(authBusy)}>
-                    <span className="bd-way-mark" aria-hidden>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M16.4 1.9c0 1.1-.4 2.1-1.2 3-.9 1-2 1.6-3.1 1.5-.1-1.1.4-2.2 1.2-3 .8-.9 2.1-1.5 3.1-1.5zM20 17.1c-.5 1.2-.8 1.7-1.5 2.8-1 1.5-2.3 3.3-4 3.3-1.5 0-1.9-1-4-1-2 0-2.5 1-4 1-1.6 0-2.9-1.7-3.9-3.1-2.7-4-3-8.6-1.3-11.1 1.2-1.7 3-2.7 4.8-2.7 1.8 0 2.9 1 4.4 1 1.4 0 2.3-1 4.4-1 1.6 0 3.2.9 4.4 2.4-3.9 2.1-3.3 7.6.7 9.4z"/>
-                      </svg>
-                    </span>
-                    {authBusy === "apple" ? "Taking you to Apple…" : "Sign in with Apple"}
-                  </button>
-                </div>
-
-                {authTrouble && <p className="lt-trouble">{authTrouble}</p>}
-              </div>
             ) : accepted === null ? (
               /* just signed in: the board looks you over before anything shows */
               <div className="bd-hello bd-hello--wait">

@@ -832,3 +832,55 @@ export async function denyAccount(id: string): Promise<void> {
   const { error } = await sb.rpc("palais_delete_account", { p_id: id });
   if (error) throw new Error(error.message);
 }
+
+/* ----------------------------------- the Boudoir, admitted by IP/visitor --- */
+/* No sign-in: once the passphrase is right, a visitor is let past the
+   "Under review" card only once Molly admits their visitor code (which is tied
+   to their IP). Needs 20261012120000_palais_boudoir_ip.sql. */
+
+export interface BoudoirMember {
+  visitor: string;
+  admitted: boolean;
+  city: string | null;
+  added_at: string;
+}
+
+/** is THIS visitor (by their session) admitted to the Boudoir? editors always. */
+export async function boudoirAccepted(): Promise<boolean> {
+  if (!dbConfigured) return false;
+  try {
+    const sb = await db();
+    const { data, error } = await sb.rpc("palais_boudoir_accepted", { p_session: visitSession() });
+    if (error) return false;
+    return data === true;
+  } catch {
+    return false;
+  }
+}
+
+/** ask Molly to admit this visitor — buzzes "Please admit visitor <code> (<city>)"
+    once per 12h. Fire-and-forget; live site only. */
+export async function askBoudoirAdmit(): Promise<void> {
+  if (!dbConfigured || process.env.NODE_ENV !== "production") return;
+  try {
+    const sb = await db();
+    await sb.rpc("palais_boudoir_ask", { p_session: visitSession() });
+  } catch {
+    /* a ping that doesn't go through never blocks anything */
+  }
+}
+
+/** admit or revoke a visitor's access to the Boudoir (editors only) */
+export async function admitVisitor(visitor: string, ok: boolean): Promise<void> {
+  const sb = await db();
+  const { error } = await sb.rpc("palais_boudoir_admit", { p_visitor: visitor, p_ok: ok });
+  if (error) throw new Error(error.message);
+}
+
+/** everyone admitted to / waiting for the Boudoir (editors only) */
+export async function boudoirMembers(): Promise<BoudoirMember[]> {
+  const sb = await db();
+  const { data, error } = await sb.rpc("palais_boudoir_members_list");
+  if (error) throw new Error(error.message);
+  return (data ?? []) as BoudoirMember[];
+}

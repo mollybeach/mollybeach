@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PLACE_NAMES, type Place } from "./place";
 import { VisitorMap } from "./VisitorMap";
-import { nameVisitor, visitLog, visitorProfiles, visitStats, type VisitDoing, type VisitLogEntry, type VisitorProfile, type VisitStats } from "./visits";
+import { admitVisitor, boudoirMembers, nameVisitor, visitLog, visitorProfiles, visitStats, type VisitDoing, type VisitLogEntry, type VisitorProfile, type VisitStats } from "./visits";
 import { messageOf } from "./useCollection";
 
 /**
@@ -241,6 +241,34 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
       .catch((e) => setPeopleError(messageOf(e)));
   }, []);
   useEffect(loadPeople, [loadPeople]);
+
+  /* who's been let into the Boudoir (by visitor code / IP). An "Admit" switch
+     on each visitor flips it, so the dresser is opened to a person, not an
+     account. */
+  const [admitted, setAdmitted] = useState<Set<string>>(new Set());
+  const [admitting, setAdmitting] = useState<string | null>(null);
+  useEffect(() => {
+    boudoirMembers()
+      .then((ms) => setAdmitted(new Set(ms.filter((m) => m.admitted).map((m) => m.visitor))))
+      .catch(() => {
+        /* the migration may not be run yet — the switch just starts "Admit" */
+      });
+  }, []);
+  const toggleAdmit = useCallback(async (ids: string[], on: boolean) => {
+    setAdmitting(ids[0]);
+    try {
+      for (const id of ids) await admitVisitor(id, on);
+      setAdmitted((was) => {
+        const next = new Set(was);
+        ids.forEach((id) => (on ? next.add(id) : next.delete(id)));
+        return next;
+      });
+    } catch (e) {
+      setPeopleError(messageOf(e));
+    } finally {
+      setAdmitting(null);
+    }
+  }, []);
 
   // the visit log: every visit, a page at a time, as far back as you scroll
   const [only, setOnly] = useState<string | null>(null);
@@ -840,6 +868,20 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                       <button type="button" className="cat-mini" onClick={() => rename(p)}>
                         {p.name ? "Rename" : "Name"}
                       </button>
+                      {(() => {
+                        const isIn = p.ids.some((id) => admitted.has(id));
+                        return (
+                          <button
+                            type="button"
+                            className={`cat-mini${isIn ? " is-in" : ""}`}
+                            onClick={() => toggleAdmit(p.ids, !isIn)}
+                            disabled={admitting === p.ids[0]}
+                            title={isIn ? "Let into the Boudoir" : "Admit to the Boudoir"}
+                          >
+                            {admitting === p.ids[0] ? "…" : isIn ? "✓ In the Boudoir" : "Admit to Boudoir 🔒"}
+                          </button>
+                        );
+                      })()}
                     </div>
                   </li>
                 ))}

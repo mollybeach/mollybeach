@@ -1476,6 +1476,9 @@
 }
 .palais .cat-mini:hover { background: var(--cat-soft); }
 .palais .cat-mini--hot { border-color: var(--cat-hot); color: var(--cat-hot); }
+/* a visitor who's been let into the Boudoir */
+.palais .cat-mini.is-in { background: var(--cat-deep, #d6247a); color: #fffaf0; border-color: var(--cat-deep, #d6247a); }
+.palais .cat-mini.is-in:hover { background: var(--cat-hot, #ff4fa3); }
 .palais .cat-mini--strong {
   border-color: var(--cat-hot);
   background: linear-gradient(180deg, #ffd9e7, #ffc2d9);
