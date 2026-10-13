@@ -87,35 +87,38 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   </a>
 </p>
 
-<p align="center">
+<img align="left" height="470" src="./assets/gene.gif" alt="gene"/>
+
+<p>
   <img height="85" src="./assets/binaryTree.gif" alt="binaryTree"/>
   <img height="85" src="./assets/butterfree.gif" alt="butterfree"/>
   <img height="85" src="./assets/chikorita.gif" alt="chikorita"/>
   <img height="85" src="./assets/eevee.gif" alt="eevee"/>
   <img height="85" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
+</p>
+<p>
   <img height="120" src="./assets/flower.gif" alt="flower"/>
   <img height="85" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
-</p>
-
-<p align="center">
-  <img height="85" src="./assets/gene.gif" alt="gene"/>
   <img height="120" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
   <img height="85" src="./assets/growlithe.gif" alt="growlithe"/>
   <img height="85" src="./assets/heart.gif" alt="heart"/>
+</p>
+<p>
   <img height="85" src="./assets/horseSea.gif" alt="horseSea"/>
   <img height="85" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
   <img height="85" src="./assets/milkers.gif" alt="milkers"/>
-</p>
-
-<p align="center">
   <img height="85" src="./assets/owl.gif" alt="owl"/>
   <img height="85" src="./assets/poke.gif" alt="poke"/>
+</p>
+<p>
   <img height="85" src="./assets/purugly.gif" alt="purugly"/>
   <img height="85" src="./assets/rattata.gif" alt="rattata"/>
   <img height="85" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
   <img height="120" src="./assets/virus.gif" alt="virus"/>
   <img height="85" src="./assets/zap.gif" alt="zap"/>
 </p>
+
+<br clear="all"/>
 
 <table><tr><td valign="top" width="50%">
         <h2 align="center"> 💼 Languages and Tools</h2>
