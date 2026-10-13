@@ -89,7 +89,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 <img align="left" height="310" src="./assets/gene.gif" alt="gene"/>
 
-<p>
+<p style="padding-bottom: 0px;">
   <img height="115" src="./assets/butterfree.gif" alt="butterfree"/>
   <img height="115" src="./assets/chikorita.gif" alt="chikorita"/>
   <img height="115" src="./assets/eevee.gif" alt="eevee"/>
