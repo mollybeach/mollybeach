@@ -90,34 +90,31 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 <div align="center">
 <table>
   <tr>
-    <td align="center"><img width="100" src="./assets/all.gif" alt="all"/></td>
-    <td align="center"><img width="100" src="./assets/binaryTree.gif" alt="binaryTree"/></td>
-    <td align="center"><img width="100" src="./assets/butterfree.gif" alt="butterfree"/></td>
-    <td align="center"><img width="100" src="./assets/chikorita.gif" alt="chikorita"/></td>
-    <td align="center"><img width="100" src="./assets/eevee.gif" alt="eevee"/></td>
-    <td align="center"><img width="100" src="./assets/fidgetToy.gif" alt="fidgetToy"/></td>
+    <td align="center"><img width="85" src="./assets/binaryTree.gif" alt="binaryTree"/></td>
+    <td align="center"><img width="85" src="./assets/butterfree.gif" alt="butterfree"/></td>
+    <td align="center"><img width="85" src="./assets/chikorita.gif" alt="chikorita"/></td>
+    <td align="center"><img width="85" src="./assets/eevee.gif" alt="eevee"/></td>
+    <td align="center"><img width="85" src="./assets/fidgetToy.gif" alt="fidgetToy"/></td>
+    <td align="center"><img width="85" src="./assets/flower.gif" alt="flower"/></td>
+    <td align="center"><img width="85" src="./assets/flowerGarden.gif" alt="flowerGarden"/></td>
   </tr>
   <tr>
-    <td align="center"><img width="100" src="./assets/flower.gif" alt="flower"/></td>
-    <td align="center"><img width="100" src="./assets/flowerGarden.gif" alt="flowerGarden"/></td>
-    <td align="center"><img width="100" src="./assets/gene.gif" alt="gene"/></td>
-    <td align="center"><img width="100" src="./assets/grimLeaper.gif" alt="grimLeaper"/></td>
-    <td align="center"><img width="100" src="./assets/growlithe.gif" alt="growlithe"/></td>
-    <td align="center"><img width="100" src="./assets/heart.gif" alt="heart"/></td>
+    <td align="center"><img width="85" src="./assets/gene.gif" alt="gene"/></td>
+    <td align="center"><img width="85" src="./assets/grimLeaper.gif" alt="grimLeaper"/></td>
+    <td align="center"><img width="85" src="./assets/growlithe.gif" alt="growlithe"/></td>
+    <td align="center"><img width="85" src="./assets/heart.gif" alt="heart"/></td>
+    <td align="center"><img width="85" src="./assets/horseSea.gif" alt="horseSea"/></td>
+    <td align="center"><img width="85" src="./assets/mandelbrot.gif" alt="mandelbrot"/></td>
+    <td align="center"><img width="85" src="./assets/milkers.gif" alt="milkers"/></td>
   </tr>
   <tr>
-    <td align="center"><img width="100" src="./assets/horseSea.gif" alt="horseSea"/></td>
-    <td align="center"><img width="100" src="./assets/mandelbrot.gif" alt="mandelbrot"/></td>
-    <td align="center"><img width="100" src="./assets/milkers.gif" alt="milkers"/></td>
-    <td align="center"><img width="100" src="./assets/owl.gif" alt="owl"/></td>
-    <td align="center"><img width="100" src="./assets/poke.gif" alt="poke"/></td>
-    <td align="center"><img width="100" src="./assets/purugly.gif" alt="purugly"/></td>
-  </tr>
-  <tr>
-    <td align="center"><img width="100" src="./assets/rattata.gif" alt="rattata"/></td>
-    <td align="center"><img width="100" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/></td>
-    <td align="center"><img width="100" src="./assets/virus.gif" alt="virus"/></td>
-    <td align="center"><img width="100" src="./assets/zap.gif" alt="zap"/></td>
+    <td align="center"><img width="85" src="./assets/owl.gif" alt="owl"/></td>
+    <td align="center"><img width="85" src="./assets/poke.gif" alt="poke"/></td>
+    <td align="center"><img width="85" src="./assets/purugly.gif" alt="purugly"/></td>
+    <td align="center"><img width="85" src="./assets/rattata.gif" alt="rattata"/></td>
+    <td align="center"><img width="85" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/></td>
+    <td align="center"><img width="85" src="./assets/virus.gif" alt="virus"/></td>
+    <td align="center"><img width="85" src="./assets/zap.gif" alt="zap"/></td>
   </tr>
 </table>
 </div>
