@@ -114,9 +114,8 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   
   <!-- Next line -->
   <img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
-  <img height="150" src="./assets/virus.gif" alt="virus"/>
   <img height="150" src="./assets/zap.gif" alt="zap"/>
-  <img height="150" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
+  <img height="150" src="./assets/virus.gif" alt="virus"/>
 </div>
 
 <br clear="all"/>
