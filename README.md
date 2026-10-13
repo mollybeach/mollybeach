@@ -30,12 +30,12 @@
   <a href="https://mollybeach.app/overview?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-overview.svg" alt="Overview"/></a>
   <a href="https://mollybeach.app/projects?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-projects.svg" alt="Projects"/></a>
   <a href="https://mollybeach.app/experience?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-experience.svg" alt="Experience"/></a>
-    <a href="https://mollybeach.app/education?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-education.svg" alt="Education"/></a>
+    <a href="https://mollybeach.app/resume?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-resume.svg" alt="Resume"/></a>
   <br/>
   <a href="https://mollybeach.app/skills?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-skills.svg" alt="Skills"/></a>
   <a href="https://mollybeach.app/awards?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-awards.svg" alt="Awards"/></a>
   <a href="https://mollybeach.app/certifications?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-certifications.svg" alt="Certifications"/></a>
-  <a href="https://mollybeach.app/resume?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-resume.svg" alt="Resume"/></a>
+  <a href="https://mollybeach.app/education?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-education.svg" alt="Education"/></a>
 </div>
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img align="right" height="240" src="./assets/binaryTree.gif" alt="binaryTree"/></a>
