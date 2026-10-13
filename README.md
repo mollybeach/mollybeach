@@ -87,31 +87,35 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   </a>
 </p>
 
-<img align="left" height="520" src="./assets/gene.gif" alt="gene"/>
+<img align="left" height="310" src="./assets/gene.gif" alt="gene"/>
 
 <p>
-  <img height="115" src="./assets/binaryTree.gif" alt="binaryTree"/>
   <img height="115" src="./assets/butterfree.gif" alt="butterfree"/>
   <img height="115" src="./assets/chikorita.gif" alt="chikorita"/>
   <img height="115" src="./assets/eevee.gif" alt="eevee"/>
   <img height="115" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
+  <img height="150" src="./assets/flower.gif" alt="flower"/>
 </p>
 <p>
-  <img height="150" src="./assets/flower.gif" alt="flower"/>
   <img height="115" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
   <img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
   <img height="115" src="./assets/growlithe.gif" alt="growlithe"/>
   <img height="115" src="./assets/heart.gif" alt="heart"/>
-</p>
-<p>
   <img height="115" src="./assets/horseSea.gif" alt="horseSea"/>
+</p>
+
+<br clear="all"/>
+
+<img align="left" height="290" src="./assets/binaryTree.gif" alt="binaryTree"/>
+
+<p>
   <img height="115" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
   <img height="115" src="./assets/milkers.gif" alt="milkers"/>
   <img height="115" src="./assets/owl.gif" alt="owl"/>
   <img height="115" src="./assets/poke.gif" alt="poke"/>
+  <img height="115" src="./assets/purugly.gif" alt="purugly"/>
 </p>
 <p>
-  <img height="115" src="./assets/purugly.gif" alt="purugly"/>
   <img height="115" src="./assets/rattata.gif" alt="rattata"/>
   <img height="115" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
   <img height="150" src="./assets/virus.gif" alt="virus"/>
