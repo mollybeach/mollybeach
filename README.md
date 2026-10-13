@@ -100,6 +100,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://mollybeach.app/overview?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-overview.svg" alt="Overview"/></a>
   <a href="https://mollybeach.app/projects?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-projects.svg" alt="Projects"/></a>
   <a href="https://mollybeach.app/experience?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-experience.svg" alt="Experience"/></a>
+    <a href="https://mollybeach.app/education?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-education.svg" alt="Education"/></a>
   <br/>
   <a href="https://mollybeach.app/skills?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-skills.svg" alt="Skills"/></a>
   <a href="https://mollybeach.app/awards?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-awards.svg" alt="Awards"/></a>
