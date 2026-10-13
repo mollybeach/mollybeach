@@ -3,9 +3,9 @@
 
 <p>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="199" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="210" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="210" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="235" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="180" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link&amp;w=300&amp;h=140"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="180" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors&amp;w=300&amp;h=140"/></a>
 </p>
 
 <br clear="all"/>
@@ -16,7 +16,11 @@
   </a>
 </p>
 
-**Conventional résumé**: experience, projects, skills, education, awards & certifs. **the Palais**: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons **Atlas Map** explorable world of rooms.
+<p align="center">
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
+    <img width="860" src="./assets/about-terminal.svg" alt="Conventional résumé: experience, projects, skills, education, awards &amp; certifs. The Palais: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons. Atlas Map: explorable world of rooms."/>
+  </a>
+</p>
 
 <details>
 <summary><b>✨ More Palais </b></summary>

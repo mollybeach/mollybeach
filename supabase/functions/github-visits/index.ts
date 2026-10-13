@@ -18,6 +18,7 @@
  *   …/github-visits?badge=palais     a counter of its own, for another repo
  *   …/github-visits?style=plain      just the number
  *   …/github-visits?floral=maroon    hold it to one pattern
+ *   …/github-visits?w=300&h=140      a narrower, taller button or counter
  *   …/github-visits?peek=1           the total without counting the view
  */
 
@@ -33,21 +34,35 @@ const digits = (n: number) => n.toLocaleString("en-US");
 const stone = (f: Floral) => ({ jewel: JEWELS[f.key] ?? "#1a8f8a", gold: f.gold, pattern: f.uri, ink: f.ink });
 
 /** the counter, in the same frame the portfolio's page titles wear */
-const card = (count: number, label: string, f: Floral) =>
+const card = (count: number, label: string, f: Floral, size?: Size) =>
   plaque({
     lines: [`✿ ${label.toUpperCase()} ${digits(count)} ✿`],
     label: `${label}: ${digits(count)}`,
-    width: Math.max(360, 250 + digits(count).length * 16 + label.length * 12),
+    width: size?.width ?? Math.max(360, 250 + digits(count).length * 16 + label.length * 12),
+    height: size?.height,
     ...stone(f),
   });
 
 /** the button through to the site */
-const link = (f: Floral) =>
+const link = (f: Floral, size?: Size) =>
   plaque({
     lines: ["✿ mollybeach.app ✿", "PORTFOLIO &amp; THE PALAIS"],
     label: "Visit mollybeach.app",
+    ...size,
     ...stone(f),
   });
+
+/** ?w= and ?h= draw the button or counter at another size; taller than 96 is
+    the narrow, tall plaque */
+type Size = { width?: number; height?: number };
+const sized = (url: URL): Size | undefined => {
+  const n = (k: string, lo: number, hi: number) => {
+    const v = Number(url.searchParams.get(k));
+    return Number.isFinite(v) && v > 0 ? Math.round(Math.min(hi, Math.max(lo, v))) : undefined;
+  };
+  const width = n("w", 220, 600), height = n("h", 96, 200);
+  return width || height ? { width, height } : undefined;
+};
 
 /** just the number, for tucking into a line of text */
 const plain = (count: number, label: string, f: Floral) => {
@@ -92,7 +107,7 @@ Deno.serve(async (req) => {
 
   // the button counts nothing; it only goes to the site
   if (url.searchParams.get("art") === "link") {
-    return picture(link(asked ?? floralFor(Math.random() * FLORALS.length)));
+    return picture(link(asked ?? floralFor(Math.random() * FLORALS.length), sized(url)));
   }
 
   let count = 0;
@@ -122,5 +137,5 @@ Deno.serve(async (req) => {
 
   // the count picks the pattern, so every view moves it along one
   const wearing = asked ?? floralFor(count);
-  return picture(style === "plain" ? plain(count, label, wearing) : card(count, label, wearing));
+  return picture(style === "plain" ? plain(count, label, wearing) : card(count, label, wearing, sized(url)));
 });

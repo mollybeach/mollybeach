@@ -54,11 +54,21 @@ export interface Plaque {
   gold: string;
   label: string;
   width?: number;
+  /** taller than 96 draws the narrow, tall plaque: posies in two corners
+      instead of at the ends, so the writing has the width to itself */
+  height?: number;
 }
 
-export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360 }: Plaque): string {
-  const h = 96, box = 66, pad = 30;
-  const px = pad, py = 18, pw = width - pad * 2, ph = h - 36, r = ph / 2, mid = width / 2;
+export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360, height = 96 }: Plaque): string {
+  const h = height, tall = h > 96, box = tall ? 58 : 66, pad = tall ? 18 : 30;
+  const px = pad, py = 18, pw = width - pad * 2, ph = h - 36, r = tall ? 26 : ph / 2, mid = width / 2;
+  /* monospace runs about 0.6em to the character; a line that would run into
+     the rim is pinned to the room there is */
+  const fit = (text: string, size: number) => {
+    const room = pw - 28;
+    const chars = text.replace(/&amp;/g, "&").length;
+    return chars * size * 0.6 > room ? ` textLength="${room}" lengthAdjust="spacingAndGlyphs"` : "";
+  };
   /* the floral is laid across the whole picture rather than only inside the
      plaque: with nothing transparent left, GitHub has no bare corners to paint
      its own background into. The plaque itself stays a solid panel of the
@@ -68,8 +78,12 @@ export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360 }:
     : "";
 
 
-  const writing =
-    lines.length === 1
+  const writing = tall
+    ? lines.length === 1
+      ? `<text x="${mid}" y="${py + ph / 2 + 9}" text-anchor="middle" font-family="${FONT}" font-size="26" font-weight="700" fill="${CREAM}" filter="url(#under)"${fit(lines[0], 26)}>${lines[0]}</text>`
+      : `<text x="${mid}" y="${py + ph / 2 - 1}" text-anchor="middle" font-family="${FONT}" font-size="22" font-weight="700" fill="${CREAM}" filter="url(#under)"${fit(lines[0], 22)}>${lines[0]}</text>
+    <text x="${mid}" y="${py + ph / 2 + 21}" text-anchor="middle" font-family="${FONT}" font-size="11" font-weight="600" letter-spacing="1.4" fill="${CREAM}" filter="url(#under)">${lines[1]}</text>`
+    : lines.length === 1
       ? `<text x="${mid}" y="${py + ph / 2 + 7}" text-anchor="middle" font-family="${FONT}" font-size="21" font-weight="700" fill="${CREAM}" filter="url(#under)">${lines[0]}</text>`
       : `<text x="${mid}" y="${py + ph / 2 - 2}" text-anchor="middle" font-family="${FONT}" font-size="19" font-weight="700" fill="${CREAM}" filter="url(#under)">${lines[0]}</text>
     <text x="${mid}" y="${py + ph / 2 + 16}" text-anchor="middle" font-family="${FONT}" font-size="9" font-weight="600" letter-spacing="1.4" fill="${CREAM}" filter="url(#under)">${lines[1]}</text>`;
@@ -92,8 +106,11 @@ export function plaque({ lines, jewel, gold, label, pattern, ink, width = 360 }:
     <rect x="${px + 1.5}" y="${py + 1.5}" width="${pw - 3}" height="${ph - 3}" rx="${r - 1.5}" fill="none" stroke="${gold}" stroke-width="3"/>
     <rect x="${px + 4.5}" y="${py + 4.5}" width="${pw - 9}" height="${ph - 9}" rx="${r - 4.5}" fill="none" stroke="${CREAM}" stroke-opacity=".5" stroke-width="3"/>
   </g>
-  <use xlink:href="#posy" x="0" y="${(h - box) / 2}"/>
-  <g transform="translate(${width} 0) scale(-1 1)"><use xlink:href="#posy" x="0" y="${(h - box) / 2}"/></g>
+  ${tall
+    ? `<use xlink:href="#posy" x="-6" y="-6"/>
+  <g transform="translate(${width} 0) scale(-1 1)"><use xlink:href="#posy" x="-6" y="${h - box + 6}"/></g>`
+    : `<use xlink:href="#posy" x="0" y="${(h - box) / 2}"/>
+  <g transform="translate(${width} 0) scale(-1 1)"><use xlink:href="#posy" x="0" y="${(h - box) / 2}"/></g>`}
   ${writing}
 </svg>`;
 }
