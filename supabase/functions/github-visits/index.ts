@@ -19,11 +19,12 @@
  *   …/github-visits?style=plain      just the number
  *   …/github-visits?floral=maroon    hold it to one pattern
  *   …/github-visits?w=300&h=140      a narrower, taller button or counter
+ *   …/github-visits?style=swap       button and counter, taking turns with about.txt
  *   …/github-visits?peek=1           the total without counting the view
  */
 
 import { FLORALS, floralFor, floralNamed, type Floral } from "./florals.ts";
-import { JEWELS, note, plaque } from "./plaque.ts";
+import { JEWELS, note, plaque, swap } from "./plaque.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -137,5 +138,11 @@ Deno.serve(async (req) => {
 
   // the count picks the pattern, so every view moves it along one
   const wearing = asked ?? floralFor(count);
+  if (style === "swap") {
+    // the button and the counter in one spot, taking turns with about.txt
+    const size = { width: 300, height: 140 };
+    const other = floralFor(count + 3);
+    return picture(swap({ top: link(other, size), bottom: card(count, label, wearing, size) }));
+  }
   return picture(style === "plain" ? plain(count, label, wearing) : card(count, label, wearing, sized(url)));
 });

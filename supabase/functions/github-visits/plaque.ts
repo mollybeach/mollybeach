@@ -160,3 +160,68 @@ export function note({
   <text x="${width / 2}" y="${py + ph / 2 + size * 0.36}" text-anchor="middle" font-family="${FONT}" font-size="${size.toFixed(1)}" font-weight="700" fill="${CREAM}" filter="url(#noteInk)"${fit}>${safe}</text>
 </svg>`;
 }
+
+/**
+ * The button, the counter and about.txt sharing one spot: the two plaques
+ * stacked, then a little green terminal fading in over them to show what's
+ * inside, a part at a time, then back to the plaques. GitHub draws README
+ * images without scripts, so the turning is SMIL, inside the picture.
+ */
+export function swap({ top, bottom, width = 300, gap = 10 }: { top: string; bottom: string; width?: number; gap?: number }): string {
+  const tall = (svg: string) => Number(/height="(\d+(?:\.\d+)?)"/.exec(svg)?.[1] ?? 140);
+  const ht = tall(top), hb = tall(bottom), h = ht + gap + hb;
+  // the plaques come in as whole pictures: sit each one inside this one
+  const nest = (svg: string, y: number, hh: number) =>
+    svg.replace(/^<svg ([^>]*?)width="[^"]*" height="[^"]*"/, `<svg $1x="0" y="${y}" width="${width}" height="${hh}"`);
+
+  const T = 18; // seconds round
+  const fade = (keys: string, values: string) =>
+    `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" keyTimes="${keys}" values="${values}"/>`;
+
+  const GREEN = "#3dff7a", BRIGHT = "#c8ffd4", DIM = "#1f9e48";
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const size = 18.5, lead = 25, x = 20;
+  const screen = (title: string, lines: string[]) =>
+    `<text x="${x}" y="${82}" font-weight="700" fill="${BRIGHT}">&gt; ${esc(title)}</text>` +
+    lines.map((l, i) => `<text x="${x + 22}" y="${82 + lead * (i + 1)}" fill="${GREEN}">${esc(l)}</text>`).join("");
+  const parts = [
+    screen("Conventional", ["résumé:", "experience,", "projects, skills,", "education, awards", "&amp; certifs."].map((l) => l.replace("&amp;", "&"))),
+    screen("the Palais:", ["interactive,", "Versailles-style", "palace terrace of", "hand-made stickers", "in all 4 seasons."]),
+    screen("Atlas Map:", ["an explorable", "world of rooms,", "room by room."]),
+  ];
+  // where each part shows, as a fraction of the round: the plaques hold the
+  // first third, then the three parts take turns
+  const at = [[0.34, 0.55], [0.55, 0.77], [0.77, 0.96]];
+  const f = (n: number) => n.toFixed(3);
+  const shown = (a: number, b: number) =>
+    fade(`0;${f(a)};${f(a + 0.02)};${f(b)};${f(Math.min(b + 0.02, 0.999))};1`, "0;0;1;1;0;0");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="Visit mollybeach.app. About: a conventional résumé, the Palais, and the Atlas Map.">
+  <defs>
+    <filter id="phosphor" x="-5%" y="-20%" width="110%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".28"/></pattern>
+    <radialGradient id="glass" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#0d2414"/><stop offset="1" stop-color="#050c07"/></radialGradient>
+  </defs>
+  <g>
+    ${fade("0;0.31;0.34;0.97;1", "1;1;0;0;1")}
+    ${nest(top, 0, ht)}
+    ${nest(bottom, ht + gap, hb)}
+  </g>
+  <g opacity="0">
+    ${fade("0;0.31;0.34;0.97;1", "0;0;1;1;0")}
+    <rect x="1.5" y="1.5" width="${width - 3}" height="${h - 3}" rx="26" fill="url(#glass)" stroke="${DIM}" stroke-width="3"/>
+    <rect x="9" y="9" width="${width - 18}" height="${h - 18}" rx="20" fill="none" stroke="${GREEN}" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <g font-family="${FONT}" font-size="${size}" filter="url(#phosphor)" xml:space="preserve">
+      <text x="${x}" y="44" fill="${DIM}" font-weight="700">$ <tspan fill="${GREEN}" font-weight="500">cat about.txt</tspan></text>
+      ${parts.map((p, i) => `<g opacity="0">${shown(at[i][0], at[i][1])}${p}</g>`).join("\n      ")}
+      <rect x="${x}" y="${h - 46}" width="11" height="20" fill="${GREEN}">
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.5;.5;1" dur="1.1s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    <rect x="3" y="3" width="${width - 6}" height="${h - 6}" rx="24" fill="url(#scan)"/>
+  </g>
+</svg>`;
+}
