@@ -77,7 +77,7 @@
 </details>
 
 <details>
-<summary><b>✨ More Palais </b></summary>
+<summary><b>✨ More Palais README.md</b></summary>
 <br>
 
 ## ✨ The Palais
