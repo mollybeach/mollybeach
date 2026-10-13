@@ -12,7 +12,7 @@
 
 <br clear="all"/>
 
-Two sided Portfolio. Conventional résumé: experience, projects, skills, education, awards & certifs. **the Palais**: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons **Atlas Map** explorable world of rooms.
+**Conventional résumé**: experience, projects, skills, education, awards & certifs. **the Palais**: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons **Atlas Map** explorable world of rooms.
 
 <details>
 <summary><b>✨ More Palais </b></summary>
