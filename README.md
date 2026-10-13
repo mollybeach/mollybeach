@@ -96,7 +96,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <img height="115" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
   <img height="115" src="./assets/flower.gif" alt="flower"/>
   <img height="115" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
-  <img height="115" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
+  <img height="125" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
   <img height="115" src="./assets/growlithe.gif" alt="growlithe"/>
   <img height="115" src="./assets/heart.gif" alt="heart"/>
   <img height="115" src="./assets/horseSea.gif" alt="horseSea"/>
@@ -108,7 +108,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 <p>
   <img height="115" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
-  <img height="115" src="./assets/milkers.gif" alt="milkers"/>
+  <img height="125" src="./assets/milkers.gif" alt="milkers"/>
   <img height="115" src="./assets/owl.gif" alt="owl"/>
   <img height="115" src="./assets/poke.gif" alt="poke"/>
   <img height="115" src="./assets/purugly.gif" alt="purugly"/>
