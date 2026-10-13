@@ -1,8 +1,6 @@
 ## Molly Beach : Portfolio
 
-**Live at [mollybeach.app](https://mollybeach.app)**
-### *A digital fabric of my life.*
-
+### *A digital fabric of my life.* **Live at [mollybeach.app](https://mollybeach.app)**
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
     <img width="860" height="96" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
