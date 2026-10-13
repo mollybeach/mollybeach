@@ -4,14 +4,11 @@
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="235" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="180" alt="Visit mollybeach.app — portfolio &amp; the Palais. Visitors, and about.txt." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors&amp;style=swap"/></a>
 </p>
-
-<br clear="all"/>
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
     <img width="860" height="64" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note&amp;h=64"/>
   </a>
 </p>
-
 <details>
 <summary><b>✨ More Palais </b></summary>
 <br>
