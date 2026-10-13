@@ -146,7 +146,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/dnaCircle.gif" alt="dnaCircle"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/doubleHelix.gif" alt="doubleHelix"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/final.gif" alt="final"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/objColoring.gif" alt="objColoring"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/comb.gif" alt="comb"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/spinPair.gif" alt="spinPair"/></a>
