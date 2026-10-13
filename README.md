@@ -14,8 +14,8 @@
 <!-- ROW ONE -->
 <div>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/butterfree.gif" alt="butterfree"/></a>
+   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/milkers.gif" alt="milkers"/></a>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/chikorita.gif" alt="chikorita"/></a>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/eevee.gif" alt="eevee"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/rafflesia.gif" alt="rafflesia"/></a>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/owl.gif" alt="owl"/></a>
   <!-- ROW TWO -->
@@ -23,7 +23,8 @@
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/growlithe.gif" alt="growlithe"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/purugly.gif" alt="purugly"/></a>
    <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/macbook.gif" alt="macbook"/>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/milkers.gif" alt="milkers"/></a>
+   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/eevee.gif" alt="eevee"/></a>
+ 
 </div>
 <br clear="all"/>
 <div align="left">
