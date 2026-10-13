@@ -9,11 +9,9 @@
     <img width="860" height="64" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note&amp;h=64"/>
   </a>
 </p>
-
 <div>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img align="left" height="300" src="./assets/gene.gif" alt="gene"/></a>
 </div> 
-
 <div>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/butterfree.gif" alt="butterfree"/></a>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/chikorita.gif" alt="chikorita"/></a>
@@ -25,7 +23,6 @@
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/growlithe.gif" alt="growlithe"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/purugly.gif" alt="purugly"/></a>
 </div>
-
 <br clear="all"/>
 <div align="left">
   <a href="https://mollybeach.app/overview?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-overview.svg" alt="Overview"/></a>
@@ -38,7 +35,6 @@
   <a href="https://mollybeach.app/certifications?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-certifications.svg" alt="Certifications"/></a>
   <a href="https://mollybeach.app/resume?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-resume.svg" alt="Resume"/></a>
 </div>
-
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img align="right" height="300" src="./assets/binaryTree.gif" alt="binaryTree"/></a>
 </div>
