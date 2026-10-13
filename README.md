@@ -53,6 +53,7 @@
      <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/powerpuffGirls.gif" alt="powerpuffGirls"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/virus.gif" alt="virus"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/giraffe.gif" alt="giraffe"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/lime.gif" alt="lime"/></a>
 </div>
 <br clear="all"/>
 <details>
