@@ -87,20 +87,20 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   </a>
 </p>
 
-<img align="left" height="310" src="./assets/gene.gif" alt="gene"/>
+<img align="left" height="300" src="./assets/gene.gif" alt="gene"/>
 
 <div>
-  <img height="115" src="./assets/butterfree.gif" alt="butterfree"/>
-  <img height="115" src="./assets/chikorita.gif" alt="chikorita"/>
-  <img height="115" src="./assets/eevee.gif" alt="eevee"/>
-  <img height="115" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
-  <img height="115" src="./assets/flower.gif" alt="flower"/>
-  <img height="115" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
-  <img height="115" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
-  <img height="115" src="./assets/growlithe.gif" alt="growlithe"/>
-  <img height="115" src="./assets/heart.gif" alt="heart"/>
-  <img height="115" src="./assets/horseSea.gif" alt="horseSea"/>
-  <img height="115" src="./assets/milkers.gif" alt="milkers"/>
+  <img height="150" src="./assets/butterfree.gif" alt="butterfree"/>
+  <img height="150" src="./assets/chikorita.gif" alt="chikorita"/>
+  <img height="150" src="./assets/eevee.gif" alt="eevee"/>
+  <img height="150" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
+  <img height="150" src="./assets/flower.gif" alt="flower"/>
+  <img height="150" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
+  <img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
+  <img height="150" src="./assets/growlithe.gif" alt="growlithe"/>
+  <img height="150" src="./assets/heart.gif" alt="heart"/>
+  <img height="150" src="./assets/horseSea.gif" alt="horseSea"/>
+  <img height="150" src="./assets/milkers.gif" alt="milkers"/>
 </div>
 
 <br clear="all"/>
@@ -108,15 +108,15 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 <img align="right" height="250" src="./assets/binaryTree.gif" alt="binaryTree"/>
 
 <div>
-  <img height="115" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
-  <img height="115" src="./assets/milkers.gif" alt="milkers"/>
-  <img height="115" src="./assets/owl.gif" alt="owl"/>
-  <img height="115" src="./assets/poke.gif" alt="poke"/>
-  <img height="115" src="./assets/purugly.gif" alt="purugly"/>
-  <img height="115" src="./assets/rattata.gif" alt="rattata"/>
-  <img height="115" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
-  <img height="115" src="./assets/virus.gif" alt="virus"/>
-  <img height="115" src="./assets/zap.gif" alt="zap"/>
+  <img height="150" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
+  <img height="150" src="./assets/milkers.gif" alt="milkers"/>
+  <img height="150" src="./assets/owl.gif" alt="owl"/>
+  <img height="150" src="./assets/poke.gif" alt="poke"/>
+  <img height="150" src="./assets/purugly.gif" alt="purugly"/>
+  <img height="150" src="./assets/rattata.gif" alt="rattata"/>
+  <img height="150" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
+  <img height="150" src="./assets/virus.gif" alt="virus"/>
+  <img height="150" src="./assets/zap.gif" alt="zap"/>
 </div>
 
 <br clear="all"/>
