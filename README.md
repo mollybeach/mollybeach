@@ -12,6 +12,10 @@ It's React, TypeScript and CSS, with no game engine and no canvas library. It al
 
 ---
 
+<details>
+<summary><b>📖 More — how the Palais works, the rooms &amp; the tech stack</b></summary>
+<br>
+
 ## ✨ The Palais
 
 ### A room that lives through the year
@@ -68,6 +72,10 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 - **Supabase** (Postgres, row-level security, auth, SQL functions), loaded lazily so the room never waits on it
 - **Image pipeline:** background removal (rembg), OpenCV feature matching (SIFT and homography) to align the season photographs, WebP export
 - **Hosting:** Vercel
+
+</details>
+
+---
 
 ## 📞 Contact
 
