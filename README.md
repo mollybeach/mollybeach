@@ -100,7 +100,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <img height="115" src="./assets/growlithe.gif" alt="growlithe"/>
   <img height="115" src="./assets/heart.gif" alt="heart"/>
   <img height="115" src="./assets/horseSea.gif" alt="horseSea"/>
-  <img height="115" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
   <img height="115" src="./assets/milkers.gif" alt="milkers"/>
 </p>
 
