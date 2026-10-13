@@ -4306,6 +4306,54 @@
   cursor: pointer;
 }
 
+/* the GIF maker wants most of the screen, so its window opens wider and
+   taller than the others, just under the menu bar */
+.palais .imac-window--wide { left: 3%; right: 3%; top: 2.2em; bottom: 4%; }
+.palais .gifm { display: grid; gap: 0.5em; justify-items: start; }
+.palais .gifm p { margin: 0; }
+.palais .gifm-video,
+.palais .gifm-made {
+  display: block;
+  max-width: 100%;
+  max-height: 9em;
+  border-radius: 4px;
+  background: #1d1d1d;
+  justify-self: center;
+}
+.palais .gifm-made { max-height: 11em; background: repeating-conic-gradient(#eee 0 25%, #fff 0 50%) 0 0 / 12px 12px; }
+.palais .gifm-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4em; width: 100%; }
+.palais .gifm-grid label { display: grid; gap: 0.15em; font-weight: 600; }
+.palais .gifm-grid input,
+.palais .gifm-grid select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.15em 0.25em;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  background: #fff;
+  font: inherit;
+  font-weight: 500;
+}
+.palais .gifm-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; }
+.palais .imac-window-body .gifm-go,
+.palais .gifm-plain {
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.palais .imac-window-body .gifm-go { border: 1px solid #2f6b2a; background: linear-gradient(#7fc25a, #4d9a35); color: #fffdf4; }
+.palais .gifm-plain { border: 1px solid rgba(0, 0, 0, 0.25); background: #fff; color: #3a2f1c; }
+.palais .gifm-go:disabled,
+.palais .gifm-plain:disabled { opacity: 0.55; cursor: default; }
+.palais .gifm-pick { position: relative; overflow: hidden; }
+.palais .gifm-pick input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.palais .gifm-progress { width: 100%; height: 0.6em; accent-color: #4d9a35; }
+.palais .gifm-note { opacity: 0.75; }
+.palais .gifm-trouble { color: #a3261b; }
+
 /* the globe: the island's own colours, wrapped onto a world that turns */
 .palais .wm-globe { display: block; width: 100%; height: auto; max-height: calc(100cqh - 9rem); cursor: grab; touch-action: none; }
 .palais .wm-globe:active { cursor: grabbing; }

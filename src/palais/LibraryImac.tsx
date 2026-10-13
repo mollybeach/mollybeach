@@ -5,6 +5,7 @@ import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { propSrc } from "./props";
 import { usePlace } from "./place";
+import { GifMaker } from "./GifMaker";
 
 /**
  * The iMac on the library desk.
@@ -27,7 +28,9 @@ const SCREEN = { x: 0.22, y: 0.115, w: 0.52, h: 0.475 };
 const ON_DESK = "computer_imac_g3_lime_green_keyboard_mouse_sticker" as const;
 const UP_CLOSE = "computer_imac_g3_lime_green_front_facing_sticker" as const;
 
-type App = "readme" | "rooms" | null;
+type App = "readme" | "rooms" | "gifs" | null;
+
+const TITLES = { readme: "Read me", rooms: "The rooms", gifs: "GIF maker" } as const;
 
 export function LibraryImac() {
   const { place, go } = usePlace();
@@ -154,16 +157,22 @@ export function LibraryImac() {
                     <span aria-hidden>🗂</span>
                     The rooms
                   </button>
+                  <button type="button" className="imac-icon" onClick={() => setApp("gifs")}>
+                    <span aria-hidden>🎞</span>
+                    GIF maker
+                  </button>
                 </div>
 
                 {app && (
-                  <div className="imac-window">
+                  <div className={app === "gifs" ? "imac-window imac-window--wide" : "imac-window"}>
                     <div className="imac-window-bar">
                       <button type="button" className="imac-window-shut" onClick={() => setApp(null)} aria-label="Close the window" />
-                      <span>{app === "readme" ? "Read me" : "The rooms"}</span>
+                      <span>{TITLES[app]}</span>
                     </div>
                     <div className="imac-window-body">
-                      {app === "readme" ? (
+                      {app === "gifs" ? (
+                        <GifMaker />
+                      ) : app === "readme" ? (
                         <p>
                           Molly's iMac, on the desk in the library. Nothing much is installed yet — the point is that
                           there's a screen here now, so there's somewhere for things to go.
