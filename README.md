@@ -5,10 +5,9 @@
 
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="860" height="96" alt="*A digital fabric of my life.*." src=""/>
+    <img width="860" height="96" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
   </a>
 </p>
-
 
 <img align="left" width="400" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/>
 
