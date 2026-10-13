@@ -106,7 +106,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img align="right" height="300" src="./assets/binaryTree.gif" alt="binaryTree"/></a>
 </div>
-
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/flower.gif" alt="flower"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/horseSea.gif" alt="horseSea"/></a>
@@ -117,7 +116,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/rattata.gif" alt="rattata"/></a>
   <!-- Next line -->
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/zap.gif" alt="zap"/></a>
+    <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/macbook.gif" alt="macbook"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/virus.gif" alt="virus"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/giraffe.gif" alt="giraffe"/></a>
 </div>
@@ -125,7 +124,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 <details>
 <summary><b>✨ More shaders</b></summary>
 <br>
-
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/flamingo.gif" alt="flamingo"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
@@ -135,7 +133,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/poodleMoth.gif" alt="poodleMoth"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoli.gif" alt="romanescoBroccoli"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/dragonFly.gif" alt="dragonFly"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/macbook.gif" alt="macbook"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/zap.gif" alt="zap"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/rafflesia.gif" alt="rafflesia"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/palm.gif" alt="palm"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/rainbowDNA.gif" alt="rainbowDNA"/></a>
@@ -144,5 +142,4 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/forest.gif" alt="forest"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
 </div>
-
 </details>
