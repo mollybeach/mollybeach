@@ -87,38 +87,35 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   </a>
 </p>
 
-<div align="center">
-<table>
-  <tr>
-    <td align="center"><img width="85" src="./assets/binaryTree.gif" alt="binaryTree"/></td>
-    <td align="center"><img width="85" src="./assets/butterfree.gif" alt="butterfree"/></td>
-    <td align="center"><img width="85" src="./assets/chikorita.gif" alt="chikorita"/></td>
-    <td align="center"><img width="85" src="./assets/eevee.gif" alt="eevee"/></td>
-    <td align="center"><img width="85" src="./assets/fidgetToy.gif" alt="fidgetToy"/></td>
-    <td align="center"><img width="85" src="./assets/flower.gif" alt="flower"/></td>
-    <td align="center"><img width="85" src="./assets/flowerGarden.gif" alt="flowerGarden"/></td>
-  </tr>
-  <tr>
-    <td align="center"><img width="85" src="./assets/gene.gif" alt="gene"/></td>
-    <td align="center"><img width="85" src="./assets/grimLeaper.gif" alt="grimLeaper"/></td>
-    <td align="center"><img width="85" src="./assets/growlithe.gif" alt="growlithe"/></td>
-    <td align="center"><img width="85" src="./assets/heart.gif" alt="heart"/></td>
-    <td align="center"><img width="85" src="./assets/horseSea.gif" alt="horseSea"/></td>
-    <td align="center"><img width="85" src="./assets/mandelbrot.gif" alt="mandelbrot"/></td>
-    <td align="center"><img width="85" src="./assets/milkers.gif" alt="milkers"/></td>
-  </tr>
-  <tr>
-    <td align="center"><img width="85" src="./assets/owl.gif" alt="owl"/></td>
-    <td align="center"><img width="85" src="./assets/poke.gif" alt="poke"/></td>
-    <td align="center"><img width="85" src="./assets/purugly.gif" alt="purugly"/></td>
-    <td align="center"><img width="85" src="./assets/rattata.gif" alt="rattata"/></td>
-    <td align="center"><img width="85" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/></td>
-    <td align="center"><img width="85" src="./assets/virus.gif" alt="virus"/></td>
-    <td align="center"><img width="85" src="./assets/zap.gif" alt="zap"/></td>
-  </tr>
-</table>
-</div>
+<p align="center">
+  <img width="85" src="./assets/binaryTree.gif" alt="binaryTree"/>
+  <img width="85" src="./assets/butterfree.gif" alt="butterfree"/>
+  <img width="85" src="./assets/chikorita.gif" alt="chikorita"/>
+  <img width="85" src="./assets/eevee.gif" alt="eevee"/>
+  <img width="85" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
+  <img width="85" src="./assets/flower.gif" alt="flower"/>
+  <img width="85" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
+</p>
 
+<p align="center">
+  <img width="85" src="./assets/gene.gif" alt="gene"/>
+  <img width="85" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
+  <img width="85" src="./assets/growlithe.gif" alt="growlithe"/>
+  <img width="85" src="./assets/heart.gif" alt="heart"/>
+  <img width="85" src="./assets/horseSea.gif" alt="horseSea"/>
+  <img width="85" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
+  <img width="85" src="./assets/milkers.gif" alt="milkers"/>
+</p>
+
+<p align="center">
+  <img width="85" src="./assets/owl.gif" alt="owl"/>
+  <img width="85" src="./assets/poke.gif" alt="poke"/>
+  <img width="85" src="./assets/purugly.gif" alt="purugly"/>
+  <img width="85" src="./assets/rattata.gif" alt="rattata"/>
+  <img width="85" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
+  <img width="85" src="./assets/virus.gif" alt="virus"/>
+  <img width="85" src="./assets/zap.gif" alt="zap"/>
+</p>
 
 <table><tr><td valign="top" width="50%">
         <h2 align="center"> 💼 Languages and Tools</h2>
