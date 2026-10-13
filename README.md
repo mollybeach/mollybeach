@@ -1,5 +1,5 @@
 # Molly Beach : Portfolio
-### *A digital fabric of my life.*  
+<img width="720" src="./assets/digital-fabric.svg" alt="A digital fabric of my life"/>
 
 <p align="center">
   <img width="320" src="./assets/bratcode.svg" alt="Powered by BratCode"/>
