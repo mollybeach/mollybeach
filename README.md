@@ -118,6 +118,18 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 <br clear="all"/>
 
+<p align="center">
+  <a href="https://mollybeach.app/overview?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-overview.svg" alt="Overview"/></a>
+  <a href="https://mollybeach.app/projects?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-projects.svg" alt="Projects"/></a>
+  <a href="https://mollybeach.app/experience?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-experience.svg" alt="Experience"/></a>
+  <a href="https://mollybeach.app/education?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-education.svg" alt="Education"/></a>
+  <br/>
+  <a href="https://mollybeach.app/skills?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-skills.svg" alt="Skills"/></a>
+  <a href="https://mollybeach.app/awards?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-awards.svg" alt="Awards"/></a>
+  <a href="https://mollybeach.app/certifications?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-certifications.svg" alt="Certifications"/></a>
+  <a href="https://mollybeach.app/resume?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-resume.svg" alt="Resume"/></a>
+</p>
+
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/flamingo.gif" alt="flamingo"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
