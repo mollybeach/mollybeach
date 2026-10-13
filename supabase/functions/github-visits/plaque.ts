@@ -135,16 +135,17 @@ export function note({
   height?: number;
   label?: string;
 }): string {
-  const px = 10, py = 12, pw = width - px * 2, ph = height - py * 2, r = ph / 2;
+  // the padding and the writing shrink with the ribbon, so a short one stays neat
+  const px = 10, py = Math.max(5, Math.round(height * 0.14)), pw = width - px * 2, ph = height - py * 2, r = ph / 2;
   const safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   /* monospace runs about 0.6em to the character, so the line is set to the
      largest size that still leaves a margin inside the panel */
   const room = pw - 64;
   const wide = room / (safe.length * 0.6);
-  const size = Math.max(11, Math.min(21, wide));
+  const size = Math.max(10, Math.min(21, wide, ph * 0.42));
   /* a long line is pinned to the panel's width, so it fits whatever monospace
      the reader's machine draws it in rather than whatever this one guessed */
-  const fit = wide < 21 ? ` textLength="${room}" lengthAdjust="spacingAndGlyphs"` : "";
+  const fit = wide <= size ? ` textLength="${room}" lengthAdjust="spacingAndGlyphs"` : "";
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${label ?? safe}">
   <defs>
     <clipPath id="sheet"><rect width="${width}" height="${height}" rx="${height / 2}"/></clipPath>
