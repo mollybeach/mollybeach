@@ -92,18 +92,18 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 </div> 
 
 <div>
-  <img height="150" src="./assets/butterfree.gif" alt="butterfree"/>
-  <img height="150" src="./assets/chikorita.gif" alt="chikorita"/>
-  <img height="150" src="./assets/eevee.gif" alt="eevee"/>
-  <img height="150" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
+  <img height="140" src="./assets/butterfree.gif" alt="butterfree"/>
+  <img height="140" src="./assets/chikorita.gif" alt="chikorita"/>
+  <img height="140" src="./assets/eevee.gif" alt="eevee"/>
+  <img height="140" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
   
   <!-- Next line -->
-  <img height="150" src="./assets/owl.gif" alt="owl"/>
-  <img height="150" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
+  <img height="140" src="./assets/owl.gif" alt="owl"/>
+  <img height="140" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
   <img height="140" src="./assets/growlithe.gif" alt="growlithe"/>
-   <img height="150" src="./assets/flower.gif" alt="flower"/>
-  <img height="150" src="./assets/purugly.gif" alt="purugly"/>
-  <img height="150" src="./assets/horseSea.gif" alt="horseSea"/>
+   <img height="140" src="./assets/flower.gif" alt="flower"/>
+  <img height="140" src="./assets/purugly.gif" alt="purugly"/>
+  <img height="140" src="./assets/horseSea.gif" alt="horseSea"/>
  
 </div>
 
@@ -114,17 +114,17 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 </div>
 
 <div>
-  <img height="150" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
-  <img height="150" src="./assets/milkers.gif" alt="milkers"/>
-  <img height="150" src="./assets/poke.gif" alt="poke"/>
+  <img height="140" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
+  <img height="140" src="./assets/milkers.gif" alt="milkers"/>
+  <img height="140" src="./assets/poke.gif" alt="poke"/>
   <img height="140" src="./assets/heart.gif" alt="heart"/>
-  <img height="150" src="./assets/rattata.gif" alt="rattata"/>
+  <img height="140" src="./assets/rattata.gif" alt="rattata"/>
   
   <!-- Next line -->
-  <img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
-  <img height="150" src="./assets/virus.gif" alt="virus"/>
-  <img height="150" src="./assets/zap.gif" alt="zap"/>
-  <img height="150" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
+  <img height="140" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
+  <img height="140" src="./assets/virus.gif" alt="virus"/>
+  <img height="140" src="./assets/zap.gif" alt="zap"/>
+  <img height="140" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
 </div>
 
 <br clear="all"/>
