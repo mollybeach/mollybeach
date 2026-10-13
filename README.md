@@ -1,5 +1,4 @@
-# Molly Beach : Portfolio
-<img width="720" src="./assets/digital-fabric.svg" alt="A digital fabric of my life"/>
+<a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="720" src="./assets/title.svg" alt="Molly Beach : Portfolio. A digital fabric of my life."/></a>
 
 <p>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.webp" alt="The Palais: the home page of the portfolio, turning through all four seasons"/></a>
