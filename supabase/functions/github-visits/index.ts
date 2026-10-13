@@ -14,7 +14,7 @@
  *
  *   …/github-visits                  the counter
  *   …/github-visits?art=link         the button through to the site
- *   …/github-visits?art=note         a line of writing in the dotted ribbon
+ *   …/github-visits?art=note         a line of writing in the dotted ribbon (&h=64 for a shorter one)
  *   …/github-visits?badge=palais     a counter of its own, for another repo
  *   …/github-visits?style=plain      just the number
  *   …/github-visits?floral=maroon    hold it to one pattern
@@ -84,7 +84,10 @@ Deno.serve(async (req) => {
     const f = asked ?? floralFor(Math.floor(Math.random() * FLORALS.length));
     const said = url.searchParams.get("text")?.slice(0, 160) ??
       "mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room.";
-    return picture(note({ text: said, ink: f.ink, pattern: f.uri }));
+    // ?h= draws a shorter ribbon at the same width (48–96, 96 by default)
+    const tall = Number(url.searchParams.get("h"));
+    const height = Number.isFinite(tall) && tall > 0 ? Math.round(Math.min(96, Math.max(48, tall))) : 96;
+    return picture(note({ text: said, ink: f.ink, pattern: f.uri, height }));
   }
 
   // the button counts nothing; it only goes to the site

@@ -2,8 +2,8 @@
 <img width="720" src="./assets/digital-fabric.svg" alt="A digital fabric of my life"/>
 
 <p>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="300" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="168" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="199" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="210" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="210" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
 </p>
@@ -12,7 +12,7 @@
 
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="860" height="96" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
+    <img width="860" height="64" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note&amp;h=64"/>
   </a>
 </p>
 
