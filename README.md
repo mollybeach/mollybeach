@@ -62,18 +62,14 @@
 <br>
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/flamingo.gif" alt="flamingo"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/powerpuffGirls.gif" alt="powerpuffGirls"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/winxClub.gif" alt="winxClub"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/tinkerbell.gif" alt="tinkerbell"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/poodleMoth.gif" alt="poodleMoth"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/poke.gif" alt="poke"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/dragonFly.gif" alt="dragonFly"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/zap.gif" alt="zap"/></a>
     <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/fidgetToy.gif" alt="fidgetToy"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/palm.gif" alt="palm"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/rainbowDNA.gif" alt="rainbowDNA"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/lime.gif" alt="lime"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/blush.gif" alt="blush"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/forest.gif" alt="forest"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
