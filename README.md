@@ -1,7 +1,6 @@
-# Molly Beach — Portfolio
+## Molly Beach : Portfolio
 
 **Live at [mollybeach.app](https://mollybeach.app)**
-
 ### *A digital fabric of my life.*
 
 <img align="left" width="400" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/>
@@ -10,10 +9,8 @@
 
 <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="360" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
 
-<br clear="all"/>
 
 **Conventional résumé**: experience, projects, skills, education, awards & certifs. **the Palais**: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons **Atlas Map** explorable world of rooms.
-
 <details>
 <summary><b>✨ More Palais </b></summary>
 <br>
