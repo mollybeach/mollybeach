@@ -87,7 +87,9 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   </a>
 </p>
 
-<img align="left" height="300" src="./assets/gene.gif" alt="gene"/>
+<div>
+  <img align="left" height="300" src="./assets/gene.gif" alt="gene"/>
+</div> 
 
 <div>
   <img height="150" src="./assets/butterfree.gif" alt="butterfree"/>
@@ -105,7 +107,9 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 <br clear="all"/>
 
-<img align="right" height="250" src="./assets/binaryTree.gif" alt="binaryTree"/>
+<div>
+  <img align="right" height="250" src="./assets/binaryTree.gif" alt="binaryTree"/>
+</div>
 
 <div>
   <img height="150" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
