@@ -87,47 +87,40 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   </a>
 </p>
 
-<img         align=""       width="15%"    height="100%" src="./assets/purugly.gif"/>
-        <img align="left"   width="10%"    height="75px" src="./assets/cowpic.png"/>
-        <img align="left"   width="35%"    height="75px" src= "./assets/contribution.svg"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/grimLeaper.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/rattata.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/poke.gif"/>
-       <img align="left"    width="15%"    height="100%" src="./assets/owl.gif"/> 
-        <img align="left"   width="10%"    height="100%" src="./assets/milkers.gif"/> 
-        <img align="right"  width="12.5%"  height="75px" src="./assets/purugly.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/fidgetToy.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/heart.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/mandelbrot.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/butterfree.gif"/>
-       <img align="right"  width="12.5%"  height="75px" src="./assets/flowerGarden.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/growlithe.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/owl.gif"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/zap.gif"/>
-        <img align="left"   width="12.5%"  height="75px" src="./assets/bordercollie.png"/>
-        <img align="left"   width="12.5%"  height="75px" src="./assets/goat.png"/>
-        <img align="left"   width="12.5%"  height="75px" src="./assets/trees.png"/>
-        <img align="left"   width="12.5%"  height="75px" src="./assets/moon.png"/>
-        <img align="right"  width="12.5%"  height="75px" src="./assets/horseSea.gif"/>
-        <img align="right"  width="8.5%"   height="75px" src="./assets/gene.gif"/>
-        <img align="right"  width="16.5%"  height="75px" src="./assets/milkers.gif"/>
-        <img align="left"   width="5%"     height="75px"    src="./assets/spacer.png"/>
-        <img align="left"   width="20px"   height="20px"
-            src="https://raw.githubusercontent.com/github/explore/5c058a388828bb5fde0bcafd4bc867b5bb3f26f3/topics/graphql/graphql.png"></img> 
-        <img align="left"   width="20px"   height="20px"
-             src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png"></img>   
-        <img align="left"   width="20px"   height="20px"
-             src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/cpp/cpp.png"></img> 
-        <img align="left"   width="20px"   height="20px"
-             src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"> </img> 
-        <img align="left"   width="20px"   height="20px"
-             src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mysql/mysql.png"></img>     
-        <img align="left"   width="20px"   height="20px"                                                                        
-           src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png"></img>
-        <img align="left"   width="20px"   height="20px"
-           src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></img>
-
-<br clear="all" />
+<div align="center">
+<table>
+  <tr>
+    <td align="center"><img width="100" src="./assets/all.gif" alt="all"/></td>
+    <td align="center"><img width="100" src="./assets/binaryTree.gif" alt="binaryTree"/></td>
+    <td align="center"><img width="100" src="./assets/butterfree.gif" alt="butterfree"/></td>
+    <td align="center"><img width="100" src="./assets/chikorita.gif" alt="chikorita"/></td>
+    <td align="center"><img width="100" src="./assets/eevee.gif" alt="eevee"/></td>
+    <td align="center"><img width="100" src="./assets/fidgetToy.gif" alt="fidgetToy"/></td>
+  </tr>
+  <tr>
+    <td align="center"><img width="100" src="./assets/flower.gif" alt="flower"/></td>
+    <td align="center"><img width="100" src="./assets/flowerGarden.gif" alt="flowerGarden"/></td>
+    <td align="center"><img width="100" src="./assets/gene.gif" alt="gene"/></td>
+    <td align="center"><img width="100" src="./assets/grimLeaper.gif" alt="grimLeaper"/></td>
+    <td align="center"><img width="100" src="./assets/growlithe.gif" alt="growlithe"/></td>
+    <td align="center"><img width="100" src="./assets/heart.gif" alt="heart"/></td>
+  </tr>
+  <tr>
+    <td align="center"><img width="100" src="./assets/horseSea.gif" alt="horseSea"/></td>
+    <td align="center"><img width="100" src="./assets/mandelbrot.gif" alt="mandelbrot"/></td>
+    <td align="center"><img width="100" src="./assets/milkers.gif" alt="milkers"/></td>
+    <td align="center"><img width="100" src="./assets/owl.gif" alt="owl"/></td>
+    <td align="center"><img width="100" src="./assets/poke.gif" alt="poke"/></td>
+    <td align="center"><img width="100" src="./assets/purugly.gif" alt="purugly"/></td>
+  </tr>
+  <tr>
+    <td align="center"><img width="100" src="./assets/rattata.gif" alt="rattata"/></td>
+    <td align="center"><img width="100" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/></td>
+    <td align="center"><img width="100" src="./assets/virus.gif" alt="virus"/></td>
+    <td align="center"><img width="100" src="./assets/zap.gif" alt="zap"/></td>
+  </tr>
+</table>
+</div>
 
 
 <table><tr><td valign="top" width="50%">
