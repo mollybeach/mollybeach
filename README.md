@@ -10,18 +10,18 @@
   </a>
 </p>
 <div>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img align="left" height="300" src="./assets/gene.gif" alt="gene"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img align="left" height="280" src="./assets/gene.gif" alt="gene"/></a>
 </div> 
 <div>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/butterfree.gif" alt="butterfree"/></a>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/chikorita.gif" alt="chikorita"/></a>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/eevee.gif" alt="eevee"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/rafflesia.gif" alt="rafflesia"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/butterfree.gif" alt="butterfree"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/chikorita.gif" alt="chikorita"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/eevee.gif" alt="eevee"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/rafflesia.gif" alt="rafflesia"/></a>
   <!-- Next line -->
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/owl.gif" alt="owl"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoli.gif" alt="romanescoBroccoli"/></a>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/growlithe.gif" alt="growlithe"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/purugly.gif" alt="purugly"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/owl.gif" alt="owl"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/romanescoBroccoli.gif" alt="romanescoBroccoli"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/growlithe.gif" alt="growlithe"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/purugly.gif" alt="purugly"/></a>
 </div>
 <br clear="all"/>
 <div align="left">
@@ -36,43 +36,43 @@
   <a href="https://mollybeach.app/resume?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-resume.svg" alt="Resume"/></a>
 </div>
 <div>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img align="right" height="300" src="./assets/binaryTree.gif" alt="binaryTree"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img align="right" height="260" src="./assets/binaryTree.gif" alt="binaryTree"/></a>
 </div>
 <div>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/flower.gif" alt="flower"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/horseSea.gif" alt="horseSea"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/mandelbrot.gif" alt="mandelbrot"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/milkers.gif" alt="milkers"/></a>
-  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/heart.gif" alt="heart"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/rattata.gif" alt="rattata"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/flower.gif" alt="flower"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/horseSea.gif" alt="horseSea"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/mandelbrot.gif" alt="mandelbrot"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/milkers.gif" alt="milkers"/></a>
+  <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/heart.gif" alt="heart"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/rattata.gif" alt="rattata"/></a>
   <!-- Next line -->
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/></a>
-    <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/macbook.gif" alt="macbook"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/virus.gif" alt="virus"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/giraffe.gif" alt="giraffe"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/grimLeaper.gif" alt="grimLeaper"/></a>
+    <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/macbook.gif" alt="macbook"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/virus.gif" alt="virus"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/giraffe.gif" alt="giraffe"/></a>
 </div>
 <br clear="all"/>
 <details>
 <summary><b>✨ More shaders</b></summary>
 <br>
 <div>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/flamingo.gif" alt="flamingo"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/powerpuffGirls.gif" alt="powerpuffGirls"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/winxClub.gif" alt="winxClub"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/tinkerbell.gif" alt="tinkerbell"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/poodleMoth.gif" alt="poodleMoth"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/poke.gif" alt="poke"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/dragonFly.gif" alt="dragonFly"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/zap.gif" alt="zap"/></a>
-    <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="150" src="./assets/fidgetToy.gif" alt="fidgetToy"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/palm.gif" alt="palm"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/rainbowDNA.gif" alt="rainbowDNA"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/lime.gif" alt="lime"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/blush.gif" alt="blush"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/forest.gif" alt="forest"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/flamingo.gif" alt="flamingo"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/powerpuffGirls.gif" alt="powerpuffGirls"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/winxClub.gif" alt="winxClub"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/tinkerbell.gif" alt="tinkerbell"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/poodleMoth.gif" alt="poodleMoth"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/poke.gif" alt="poke"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/dragonFly.gif" alt="dragonFly"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/zap.gif" alt="zap"/></a>
+    <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="140" src="./assets/fidgetToy.gif" alt="fidgetToy"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/palm.gif" alt="palm"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/rainbowDNA.gif" alt="rainbowDNA"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/lime.gif" alt="lime"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/blush.gif" alt="blush"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/forest.gif" alt="forest"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="140" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
 </div>
 </details>
 
