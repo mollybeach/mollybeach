@@ -12,7 +12,7 @@
 
 <br clear="all"/>
 
-This portfolio has two sides. The sidebar is a conventional résumé — experience, projects, skills, education, awards and certifications. The home page is **the Palais**: an interactive, Versailles-style palace terrace, built entirely from hundreds of hand-made stickers of my animals, plants and furniture, and rendered across all four seasons. Opens onto **the Atlas**, an explorable world of rooms.
+This portfolio has two sides. A conventional résumé : experience, projects, skills, education, awards and certifications. **the Palais**: an interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all four seasons. Opens onto **the Atlas**, an explorable world of rooms.
 
 <details>
 <summary><b>✨ More Palais </b></summary>
