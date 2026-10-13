@@ -89,7 +89,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 <img align="left" height="310" src="./assets/gene.gif" alt="gene"/>
 
-<p style="padding-bottom: 0px;">
+<div>
   <img height="115" src="./assets/butterfree.gif" alt="butterfree"/>
   <img height="115" src="./assets/chikorita.gif" alt="chikorita"/>
   <img height="115" src="./assets/eevee.gif" alt="eevee"/>
@@ -101,13 +101,13 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <img height="115" src="./assets/heart.gif" alt="heart"/>
   <img height="115" src="./assets/horseSea.gif" alt="horseSea"/>
   <img height="115" src="./assets/milkers.gif" alt="milkers"/>
-</p>
+</div>
 
 <br clear="all"/>
 
 <img align="right" height="250" src="./assets/binaryTree.gif" alt="binaryTree"/>
 
-<p>
+<div>
   <img height="115" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
   <img height="115" src="./assets/milkers.gif" alt="milkers"/>
   <img height="115" src="./assets/owl.gif" alt="owl"/>
@@ -117,6 +117,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <img height="115" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
   <img height="115" src="./assets/virus.gif" alt="virus"/>
   <img height="115" src="./assets/zap.gif" alt="zap"/>
-</p>
+</div>
 
 <br clear="all"/>
