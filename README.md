@@ -54,6 +54,7 @@
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/virus.gif" alt="virus"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/giraffe.gif" alt="giraffe"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/lime.gif" alt="lime"/></a>
+      <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
 </div>
 <br clear="all"/>
 <details>
