@@ -99,10 +99,9 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <img height="150" src="./assets/flower.gif" alt="flower"/>
   <img height="150" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
   <img height="150" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
-  <img height="150" src="./assets/growlithe.gif" alt="growlithe"/>
-  <img height="150" src="./assets/heart.gif" alt="heart"/>
+  <img height="140" src="./assets/growlithe.gif" alt="growlithe"/>
+  <img height="140" src="./assets/heart.gif" alt="heart"/>
   <img height="150" src="./assets/horseSea.gif" alt="horseSea"/>
-  <img height="150" src="./assets/milkers.gif" alt="milkers"/>
 </div>
 
 <br clear="all"/>
