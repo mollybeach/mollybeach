@@ -6,22 +6,23 @@
 </p>
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="860" height="44" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note&amp;h=44"/>
-  </a>
+    <img width="860" height="44" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note&amp;h=44"/></a>
 </p>
 <div>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img align="left" height="260" src="./assets/gene.gif" alt="gene"/></a>
-</div> 
+</div>
+<!-- ROW ONE -->
 <div>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/butterfree.gif" alt="butterfree"/></a>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/chikorita.gif" alt="chikorita"/></a>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/eevee.gif" alt="eevee"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/rafflesia.gif" alt="rafflesia"/></a>
-  <!-- Next line -->
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/owl.gif" alt="owl"/></a>
+  <!-- ROW TWO -->
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/romanescoBroccoli.gif" alt="romanescoBroccoli"/></a>
   <a href="https://mollybeach.app/closet" target="_blank" rel="noopener"><img height="130" src="./assets/growlithe.gif" alt="growlithe"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/purugly.gif" alt="purugly"/></a>
+   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/macbook.gif" alt="macbook"/>
 </div>
 <br clear="all"/>
 <div align="left">
@@ -38,7 +39,7 @@
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img align="right" height="240" src="./assets/binaryTree.gif" alt="binaryTree"/></a>
 </div>
-<div>
+<div> <!-- ROW THREE -->
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/flower.gif" alt="flower"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/horseSea.gif" alt="horseSea"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/mandelbrot.gif" alt="mandelbrot"/></a>
@@ -48,7 +49,7 @@
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/rattata.gif" alt="rattata"/></a>
   <!-- Next line -->
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/grimLeaper.gif" alt="grimLeaper"/></a>
-    <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/macbook.gif" alt="macbook"/></a>
+     <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/powerpuffGirls.gif" alt="powerpuffGirls"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/virus.gif" alt="virus"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="130" src="./assets/giraffe.gif" alt="giraffe"/></a>
 </div>
