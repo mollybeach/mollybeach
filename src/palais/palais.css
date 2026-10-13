@@ -4201,6 +4201,22 @@
 .palais .wm-panel--imac .imac-close-up { filter: drop-shadow(0 10px 22px rgba(30, 40, 20, 0.35)); }
 
 .palais .imac-close-up { position: relative; width: 100%; }
+.palais .imac-monitor { position: relative; }
+
+/* on a phone the keyboard comes off and sits under the machine: it's wider
+   than the monitor, so with it out of the way the monitor (and the screen on
+   it) can take the whole width. The pair sits in the middle of the card, and
+   the screen's writing grows to suit the bigger screen. */
+.palais .wm-panel--imac .imac-close-up--tall { width: 100%; display: grid; gap: 1rem; }
+.palais .imac-keys { display: block; width: 100%; height: auto; }
+.palais .imac-close-up--tall .imac-desk { flex-direction: row; justify-content: flex-end; gap: 0.35em; }
+.palais .imac-close-up--tall .imac-menu,
+.palais .imac-close-up--tall .imac-icon,
+.palais .imac-close-up--tall .imac-window-bar,
+.palais .imac-close-up--tall .imac-window-body { font-size: clamp(9px, 2.9cqw, 13px); }
+@container palais (max-width: 820px) {
+  .palais .wm-panel--imac { grid-template-rows: minmax(0, 1fr); align-items: center; padding: 2.2rem 0.8rem 1rem; }
+}
 .palais .imac-body { display: block; width: 100%; height: auto; }
 
 /* the lit screen, laid over the photograph of the machine */

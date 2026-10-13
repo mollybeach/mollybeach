@@ -6,6 +6,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// mollybeach.app/mac opens the iMac in the library (vercel.json redirects it;
+// this catches it wherever the redirect doesn't run, like the dev server)
+if (window.location.pathname.replace(/\/$/, '') === '/mac') {
+  window.history.replaceState(null, '', '/#library/mac');
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

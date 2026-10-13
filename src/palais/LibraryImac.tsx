@@ -4,7 +4,8 @@ import { Blossoms } from "./WorldMap";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { propSrc } from "./props";
-import { usePlace } from "./place";
+import { hashExtra, usePlace } from "./place";
+import { usePortrait } from "./PortraitTerrace";
 import { GifMaker } from "./GifMaker";
 
 /**
@@ -23,10 +24,20 @@ const ON_THE_DESK = { x: 0.44, base: 0.58, w: 0.092 };
 /** the lit part of the screen, as a fraction of the sticker */
 const SCREEN = { x: 0.22, y: 0.115, w: 0.52, h: 0.475 };
 
+/** on a phone the keyboard comes away from the machine and sits underneath,
+    so the monitor alone can fill the width; this is its screen, as a fraction
+    of the monitor on its own */
+const SCREEN_ALONE = { x: 0.152, y: 0.132, w: 0.694, h: 0.602 };
+
 /** the one on the desk is the three-quarter view, with its keyboard and mouse;
     the close-up is the one facing you, as if you had sat down at it */
 const ON_DESK = "computer_imac_g3_lime_green_keyboard_mouse_sticker" as const;
 const UP_CLOSE = "computer_imac_g3_lime_green_front_facing_sticker" as const;
+const MONITOR = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_green_monitor.webp`;
+const KEYBOARD = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_green_keyboard_mouse.webp`;
+
+/* mollybeach.app/mac (and #library/mac) sits you straight down at it */
+const AT_THE_MAC = () => /^mac/.test(hashExtra());
 
 type App = "readme" | "rooms" | "gifs" | null;
 
@@ -36,7 +47,9 @@ export function LibraryImac() {
   const { place, go } = usePlace();
   const here = place === "library";
   const mac = useRef<HTMLButtonElement>(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(() => here && AT_THE_MAC());
+  const tall = usePortrait();
+  const screen = tall ? SCREEN_ALONE : SCREEN;
   const [app, setApp] = useState<App>(null);
   const chips = useFloral("sidebar");
   const ribbon = useFloral("footer");
@@ -68,6 +81,18 @@ export function LibraryImac() {
       clearInterval(id);
     };
   }, [here]);
+
+  /* the address says whether you're at the iMac, so it can be sent to someone */
+  useEffect(() => {
+    if (!here) return setOpen(false);
+    const want = open ? "#library/mac" : "#library";
+    if (window.location.hash !== want) window.history.replaceState(window.history.state, "", want);
+  }, [open, here]);
+  useEffect(() => {
+    const onHash = () => AT_THE_MAC() && setOpen(true);
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -128,81 +153,84 @@ export function LibraryImac() {
               ×
             </button>
 
-            <div className="imac-close-up">
-              <img className="imac-body" src={propSrc(UP_CLOSE)} alt="A lime green iMac" />
-              <div
-                className="imac-screen"
-                style={{
-                  left: `${SCREEN.x * 100}%`,
-                  top: `${SCREEN.y * 100}%`,
-                  width: `${SCREEN.w * 100}%`,
-                  height: `${SCREEN.h * 100}%`,
-                }}
-              >
-                <div className="imac-menu">
-                  <span aria-hidden>✿</span>
-                  <b>Palais</b>
-                  <span>File</span>
-                  <span>Edit</span>
-                  <span>View</span>
-                  <span className="imac-menu-clock">{new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>
-                </div>
-
-                <div className="imac-desk">
-                  <button type="button" className="imac-icon" onClick={() => setApp("readme")}>
-                    <span aria-hidden>📄</span>
-                    Read me
-                  </button>
-                  <button type="button" className="imac-icon" onClick={() => setApp("rooms")}>
-                    <span aria-hidden>🗂</span>
-                    The rooms
-                  </button>
-                  <button type="button" className="imac-icon" onClick={() => setApp("gifs")}>
-                    <span aria-hidden>🎞</span>
-                    GIF maker
-                  </button>
-                </div>
-
-                {app && (
-                  <div className={app === "gifs" ? "imac-window imac-window--wide" : "imac-window"}>
-                    <div className="imac-window-bar">
-                      <button type="button" className="imac-window-shut" onClick={() => setApp(null)} aria-label="Close the window" />
-                      <span>{TITLES[app]}</span>
-                    </div>
-                    <div className="imac-window-body">
-                      {app === "gifs" ? (
-                        <GifMaker />
-                      ) : app === "readme" ? (
-                        <p>
-                          Molly's iMac, on the desk in the library. Nothing much is installed yet — the point is that
-                          there's a screen here now, so there's somewhere for things to go.
-                        </p>
-                      ) : (
-                        <ul>
-                          {(["palace", "kitchen", "lakehouse", "lagoon", "sunliner"] as const).map((room) => (
-                            <li key={room}>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  go(room);
-                                  close();
-                                }}
-                              >
-                                {room === "palace" ? "The Palais" : room === "sunliner" ? "Sunliner Halt" : room[0].toUpperCase() + room.slice(1)}
-                              </button>
-                            </li>
-                          ))}
-                          <li>
-                            <Link to="/projects" onClick={close}>
-                              Molly's projects
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
-                    </div>
+            <div className={tall ? "imac-close-up imac-close-up--tall" : "imac-close-up"}>
+              <div className="imac-monitor">
+                <img className="imac-body" src={tall ? MONITOR : propSrc(UP_CLOSE)} alt="A lime green iMac" />
+                <div
+                  className="imac-screen"
+                  style={{
+                    left: `${screen.x * 100}%`,
+                    top: `${screen.y * 100}%`,
+                    width: `${screen.w * 100}%`,
+                    height: `${screen.h * 100}%`,
+                  }}
+                >
+                  <div className="imac-menu">
+                    <span aria-hidden>✿</span>
+                    <b>Palais</b>
+                    <span>File</span>
+                    <span>Edit</span>
+                    <span>View</span>
+                    <span className="imac-menu-clock">{new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>
                   </div>
-                )}
+
+                  <div className="imac-desk">
+                    <button type="button" className="imac-icon" onClick={() => setApp("readme")}>
+                      <span aria-hidden>📄</span>
+                      Read me
+                    </button>
+                    <button type="button" className="imac-icon" onClick={() => setApp("rooms")}>
+                      <span aria-hidden>🗂</span>
+                      The rooms
+                    </button>
+                    <button type="button" className="imac-icon" onClick={() => setApp("gifs")}>
+                      <span aria-hidden>🎞</span>
+                      GIF maker
+                    </button>
+                  </div>
+
+                  {app && (
+                    <div className={app === "gifs" ? "imac-window imac-window--wide" : "imac-window"}>
+                      <div className="imac-window-bar">
+                        <button type="button" className="imac-window-shut" onClick={() => setApp(null)} aria-label="Close the window" />
+                        <span>{TITLES[app]}</span>
+                      </div>
+                      <div className="imac-window-body">
+                        {app === "gifs" ? (
+                          <GifMaker />
+                        ) : app === "readme" ? (
+                          <p>
+                            Molly's iMac, on the desk in the library. Nothing much is installed yet — the point is that
+                            there's a screen here now, so there's somewhere for things to go.
+                          </p>
+                        ) : (
+                          <ul>
+                            {(["palace", "kitchen", "lakehouse", "lagoon", "sunliner"] as const).map((room) => (
+                              <li key={room}>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    go(room);
+                                    close();
+                                  }}
+                                >
+                                  {room === "palace" ? "The Palais" : room === "sunliner" ? "Sunliner Halt" : room[0].toUpperCase() + room.slice(1)}
+                                </button>
+                              </li>
+                            ))}
+                            <li>
+                              <Link to="/projects" onClick={close}>
+                                Molly's projects
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
+              {tall && <img className="imac-keys" src={KEYBOARD} alt="" />}
             </div>
           </div>
         </div>
