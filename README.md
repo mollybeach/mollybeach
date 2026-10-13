@@ -6,7 +6,7 @@
 
 ![The Palais: the home page of the portfolio](docs/readme-palais.jpg)
 
-My portfolio has two sides. The sidebar is a conventional résumé: experience, projects, skills, education, awards and certifications. The home page is **the Palais**: a Versailles-style palace terrace you can play with, full of hand-made stickers of my cats, dogs and goats and my furniture. It changes through the four seasons and opens onto **Area M**, a world map of rooms, each built from places I've travelled.
+This portfolio has two sides. The sidebar is a conventional résumé — experience, projects, skills, education, awards and certifications. The home page is **the Palais**: an interactive, Versailles-style palace terrace, built entirely from hundreds of hand-made stickers of my animals, plants and furniture, and rendered across all four seasons. From there it opens onto **the Atlas**, an explorable world of rooms, each modeled on places I've travelled.
 
 It's React, TypeScript and CSS, with no game engine and no canvas library. It all runs in the browser.
 
@@ -76,15 +76,9 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 </details>
 
 <p align="center">
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="360" height="96" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/>
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="362" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/>
-  </a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="360" height="96" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/></a>
+  &nbsp;
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="362" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
 </p>
 
 <p align="center">
