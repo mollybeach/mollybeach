@@ -1,4 +1,4 @@
-<a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="720" src="./assets/title.svg" alt="Molly Beach : Portfolio. A digital fabric of my life."/></a>
+<a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="812" src="./assets/title.svg" alt="Molly Beach : Portfolio. A digital fabric of my life."/></a>
 
 <p>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.webp" alt="The Palais: the home page of the portfolio, turning through all four seasons"/></a>
@@ -138,3 +138,15 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 </div>
 
 <br clear="all"/>
+
+<p align="center">
+  <a href="https://mollybeach.app/overview?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-overview.svg" alt="Overview"/></a>
+  <a href="https://mollybeach.app/projects?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-projects.svg" alt="Projects"/></a>
+  <a href="https://mollybeach.app/experience?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-experience.svg" alt="Experience"/></a>
+  <a href="https://mollybeach.app/education?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-education.svg" alt="Education"/></a>
+  <br/>
+  <a href="https://mollybeach.app/skills?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-skills.svg" alt="Skills"/></a>
+  <a href="https://mollybeach.app/awards?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-awards.svg" alt="Awards"/></a>
+  <a href="https://mollybeach.app/certifications?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-certifications.svg" alt="Certifications"/></a>
+  <a href="https://mollybeach.app/resume?from=githubreadme" target="_blank" rel="noopener"><img height="34" src="./assets/buttons/btn-resume.svg" alt="Resume"/></a>
+</p>
