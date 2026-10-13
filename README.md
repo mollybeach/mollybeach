@@ -1,6 +1,6 @@
 # Molly Beach : Portfolio
 
-## *A digital fabric of my life.*  ### **Live at [mollybeach.app](https://mollybeach.app)**
+## *A digital fabric of my life.*  
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
     <img width="860" height="96" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
@@ -20,6 +20,8 @@
 <br>
 
 ## ✨ The Palais
+
+### **Live at [mollybeach.app](https://mollybeach.app)**
 
 ### A room that lives through the year
 - **Four seasons on an 80-second year.** Spring, summer, autumn and winter photographs crossfade on a CSS animation timeline. **Skip** jumps ahead by driving the animations directly through the Web Animations API (`currentTime`, `playbackRate`), and **Pause** freezes the whole year, every room at once.
