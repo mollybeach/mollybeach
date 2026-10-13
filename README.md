@@ -16,11 +16,6 @@
 <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="360" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
 
 **Conventional résumé**: experience, projects, skills, education, awards & certifs. **the Palais**: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons **Atlas Map** explorable world of rooms.
-<p align="center">
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="860" height="96" alt="mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
-  </a>
-</p>
 
 <details>
 <summary><b>✨ More Palais </b></summary>
@@ -84,12 +79,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 - **Hosting:** Vercel
 
 </details>
-
-<p align="center">
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="860" height="96" alt="mollybeach.app is the Palais: a dollhouse portfolio you can rearrange, room by room." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
-  </a>
-</p>
 
 <div>
   <img align="left" height="300" src="./assets/gene.gif" alt="gene"/>
