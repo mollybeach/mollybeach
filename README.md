@@ -1,5 +1,4 @@
 <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="812" src="./assets/title.svg" alt="Molly Beach : Portfolio. A digital fabric of my life."/></a>
-
 <p>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.webp" alt="The Palais: the home page of the portfolio, turning through all four seasons"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="235" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
@@ -7,7 +6,6 @@
 </p>
 
 <br clear="all"/>
-
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
     <img width="860" height="64" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note&amp;h=64"/>
