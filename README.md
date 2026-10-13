@@ -88,33 +88,33 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 </p>
 
 <p align="center">
-  <img width="85" src="./assets/binaryTree.gif" alt="binaryTree"/>
-  <img width="85" src="./assets/butterfree.gif" alt="butterfree"/>
-  <img width="85" src="./assets/chikorita.gif" alt="chikorita"/>
-  <img width="85" src="./assets/eevee.gif" alt="eevee"/>
-  <img width="85" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
-  <img width="85" src="./assets/flower.gif" alt="flower"/>
-  <img width="85" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
+  <img height="85" src="./assets/binaryTree.gif" alt="binaryTree"/>
+  <img height="85" src="./assets/butterfree.gif" alt="butterfree"/>
+  <img height="85" src="./assets/chikorita.gif" alt="chikorita"/>
+  <img height="85" src="./assets/eevee.gif" alt="eevee"/>
+  <img height="85" src="./assets/fidgetToy.gif" alt="fidgetToy"/>
+  <img height="85" src="./assets/flower.gif" alt="flower"/>
+  <img height="85" src="./assets/flowerGarden.gif" alt="flowerGarden"/>
 </p>
 
 <p align="center">
-  <img width="85" src="./assets/gene.gif" alt="gene"/>
-  <img width="85" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
-  <img width="85" src="./assets/growlithe.gif" alt="growlithe"/>
-  <img width="85" src="./assets/heart.gif" alt="heart"/>
-  <img width="85" src="./assets/horseSea.gif" alt="horseSea"/>
-  <img width="85" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
-  <img width="85" src="./assets/milkers.gif" alt="milkers"/>
+  <img height="85" src="./assets/gene.gif" alt="gene"/>
+  <img height="85" src="./assets/grimLeaper.gif" alt="grimLeaper"/>
+  <img height="85" src="./assets/growlithe.gif" alt="growlithe"/>
+  <img height="85" src="./assets/heart.gif" alt="heart"/>
+  <img height="85" src="./assets/horseSea.gif" alt="horseSea"/>
+  <img height="85" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
+  <img height="85" src="./assets/milkers.gif" alt="milkers"/>
 </p>
 
 <p align="center">
-  <img width="85" src="./assets/owl.gif" alt="owl"/>
-  <img width="85" src="./assets/poke.gif" alt="poke"/>
-  <img width="85" src="./assets/purugly.gif" alt="purugly"/>
-  <img width="85" src="./assets/rattata.gif" alt="rattata"/>
-  <img width="85" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
-  <img width="85" src="./assets/virus.gif" alt="virus"/>
-  <img width="85" src="./assets/zap.gif" alt="zap"/>
+  <img height="85" src="./assets/owl.gif" alt="owl"/>
+  <img height="85" src="./assets/poke.gif" alt="poke"/>
+  <img height="85" src="./assets/purugly.gif" alt="purugly"/>
+  <img height="85" src="./assets/rattata.gif" alt="rattata"/>
+  <img height="85" src="./assets/rgbToVec3Colors.gif" alt="rgbToVec3Colors"/>
+  <img height="85" src="./assets/virus.gif" alt="virus"/>
+  <img height="85" src="./assets/zap.gif" alt="zap"/>
 </p>
 
 <table><tr><td valign="top" width="50%">
