@@ -104,7 +104,7 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 <br clear="all"/>
 
-<img align="right" height="290" src="./assets/binaryTree.gif" alt="binaryTree"/>
+<img align="right" height="250" src="./assets/binaryTree.gif" alt="binaryTree"/>
 
 <p>
   <img height="115" src="./assets/mandelbrot.gif" alt="mandelbrot"/>
