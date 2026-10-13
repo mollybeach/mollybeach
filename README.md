@@ -139,23 +139,18 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/blush.gif" alt="blush"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/forest.gif" alt="forest"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/chainflower.gif" alt="chainflower"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/capsule.gif" alt="capsule"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/nightDna.gif" alt="nightDna"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bolb.gif" alt="bolb"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bolb2.gif" alt="bolb2"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/heart2.gif" alt="heart2"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/swirly.gif" alt="swirly"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/dnaCircle.gif" alt="dnaCircle"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/graph.gif" alt="graph"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/doubleHelix.gif" alt="doubleHelix"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/final.gif" alt="final"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/objColoring.gif" alt="objColoring"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/comb.gif" alt="comb"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/spinPair.gif" alt="spinPair"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/snpCute.gif" alt="snpCute"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/leapfly.gif" alt="leapfly"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bigBaby.gif" alt="bigBaby"/></a>
 </div>
 
 <br clear="all"/>
