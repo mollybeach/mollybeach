@@ -12,14 +12,10 @@
 
 <br clear="all"/>
 
-This portfolio has two sides. The sidebar is a conventional résumé — experience, projects, skills, education, awards and certifications. The home page is **the Palais**: an interactive, Versailles-style palace terrace, built entirely from hundreds of hand-made stickers of my animals, plants and furniture, and rendered across all four seasons. From there it opens onto **the Atlas**, an explorable world of rooms, each modeled on places I've travelled.
-
-It's React, TypeScript and CSS, with no game engine and no canvas library. It all runs in the browser.
-
----
+This portfolio has two sides. The sidebar is a conventional résumé — experience, projects, skills, education, awards and certifications. The home page is **the Palais**: an interactive, Versailles-style palace terrace, built entirely from hundreds of hand-made stickers of my animals, plants and furniture, and rendered across all four seasons. Opens onto **the Atlas**, an explorable world of rooms.
 
 <details>
-<summary><b>📖 More — how the Palais works, the rooms &amp; the tech stack</b></summary>
+<summary><b>✨ More Palais </b></summary>
 <br>
 
 ## ✨ The Palais
