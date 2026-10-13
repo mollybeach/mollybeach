@@ -163,9 +163,9 @@ export function note({
 
 /**
  * The button, the counter and about.txt sharing one spot: the two plaques
- * stacked, then a little green terminal fading in over them to show what's
- * inside, a part at a time, then back to the plaques. GitHub draws README
- * images without scripts, so the turning is SMIL, inside the picture.
+ * stacked, then a little green terminal fading in over them and typing out
+ * what's inside, a part at a time, then back to the plaques. GitHub draws
+ * README images without scripts, so all of it is SMIL, inside the picture.
  */
 export function swap({ top, bottom, width = 300, gap = 10 }: { top: string; bottom: string; width?: number; gap?: number }): string {
   const tall = (svg: string) => Number(/height="(\d+(?:\.\d+)?)"/.exec(svg)?.[1] ?? 140);
@@ -174,54 +174,99 @@ export function swap({ top, bottom, width = 300, gap = 10 }: { top: string; bott
   const nest = (svg: string, y: number, hh: number) =>
     svg.replace(/^<svg ([^>]*?)width="[^"]*" height="[^"]*"/, `<svg $1x="0" y="${y}" width="${width}" height="${hh}"`);
 
-  const T = 18; // seconds round
-  const fade = (keys: string, values: string) =>
-    `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" keyTimes="${keys}" values="${values}"/>`;
-
-  const GREEN = "#3dff7a", BRIGHT = "#c8ffd4", DIM = "#1f9e48";
+  const GREEN = "#4dff88", BRIGHT = "#d8ffe2", DIM = "#2bb35a";
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-  const size = 18.5, lead = 25, x = 20;
-  const screen = (title: string, lines: string[]) =>
-    `<text x="${x}" y="${82}" font-weight="700" fill="${BRIGHT}">&gt; ${esc(title)}</text>` +
-    lines.map((l, i) => `<text x="${x + 22}" y="${82 + lead * (i + 1)}" fill="${GREEN}">${esc(l)}</text>`).join("");
-  const parts = [
-    screen("Conventional", ["résumé:", "experience,", "projects, skills,", "education, awards", "&amp; certifs."].map((l) => l.replace("&amp;", "&"))),
-    screen("the Palais:", ["interactive,", "Versailles-style", "palace terrace of", "hand-made stickers", "in all 4 seasons."]),
-    screen("Atlas Map:", ["an explorable", "world of rooms,", "room by room."]),
-  ];
-  // where each part shows, as a fraction of the round: the plaques hold the
-  // first third, then the three parts take turns
-  const at = [[0.34, 0.55], [0.55, 0.77], [0.77, 0.96]];
-  const f = (n: number) => n.toFixed(3);
-  const shown = (a: number, b: number) =>
-    fade(`0;${f(a)};${f(a + 0.02)};${f(b)};${f(Math.min(b + 0.02, 0.999))};1`, "0;0;1;1;0;0");
+  const size = 21, cw = size * 0.6, lead = 29, x0 = 18;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="Visit mollybeach.app. About: a conventional résumé, the Palais, and the Atlas Map.">
+  /* what gets typed: [indent in characters, text, bright?] per line, a screen
+     at a time, under the prompt that is typed once */
+  const prompt: [number, string, boolean] = [2, "cat about.txt", false];
+  const screens: [number, string, boolean][][] = [
+    [[0, "> Conventional", true], [2, "résumé:", true], [2, "experience,", false], [2, "projects, skills,", false], [2, "education, awards", false], [2, "& certifs.", false]],
+    [[0, "> the Palais:", true], [2, "interactive,", false], [2, "Versailles-style", false], [2, "palace terrace of", false], [2, "hand-made stickers", false], [2, "in all 4 seasons.", false]],
+    [[0, "> Atlas Map:", true], [2, "an explorable", false], [2, "world of rooms,", false], [2, "room by room.", false]],
+  ];
+
+  /* the clock, in seconds: plaques first, then the terminal types */
+  const SHOW = 6, PER = 0.042, LINE = 0.16, HOLD = 1.8;
+  type Typed = { x: number; y: number; text: string; bright: boolean; start: number; end: number };
+  const typed: Typed[] = [];
+  const cursor: [number, number, number][] = []; // [time, x, y]
+  let t = SHOW + 0.7;
+  const yPrompt = 76, yBody = 116;
+  const type = (line: [number, string, boolean], y: number) => {
+    const [indent, text, bright] = line;
+    const x = x0 + indent * cw;
+    for (let k = 0; k <= text.length; k++) cursor.push([t + k * PER, x + k * cw, y]);
+    const item = { x, y, text, bright, start: t, end: 0 };
+    typed.push(item);
+    t += text.length * PER + LINE;
+    return item;
+  };
+  const typedPrompt = type(prompt, yPrompt);
+  t += 0.35;
+  for (const screen of screens) {
+    const shown = screen.map((line, i) => type(line, yBody + i * lead));
+    const clear = t + HOLD;
+    for (const item of shown) item.end = clear;
+    t = clear + 0.25;
+  }
+  const T = t + 0.6;
+  typedPrompt.end = T - 0.45;
+
+  const f = (n: number) => (n / T).toFixed(4);
+  const steps = (item: Typed) => {
+    // the clip widens a character at a time, then shuts when the screen clears
+    const keys = ["0"], vals = ["0"];
+    for (let k = 1; k <= item.text.length; k++) { keys.push(f(item.start + k * PER)); vals.push((k * cw + 2).toFixed(1)); }
+    keys.push(f(item.end)); vals.push("0");
+    return `<animate attributeName="width" dur="${T.toFixed(2)}s" repeatCount="indefinite" calcMode="discrete" keyTimes="${keys.join(";")}" values="${vals.join(";")}"/>`;
+  };
+  const clips = typed.map((it, i) => `<clipPath id="ty${i}"><rect x="${it.x - 1}" y="${it.y - size}" height="${size + 8}" width="0">${steps(it)}</rect></clipPath>`).join("");
+  const lines = (glow: boolean) => typed.map((it, i) =>
+    `<text x="${it.x}" y="${it.y}" clip-path="url(#ty${i})" textLength="${(it.text.length * cw).toFixed(1)}" lengthAdjust="spacingAndGlyphs" fill="${glow ? GREEN : it.bright ? BRIGHT : GREEN}" font-weight="${it.bright ? 700 : 500}">${esc(it.text)}</text>`).join("");
+
+  // the cursor follows the typing, and waits under the last line
+  const ck = ["0"], cx = [String(x0 + 2 * cw)], cy = [String(yPrompt)];
+  for (const [ct, x, y] of cursor) { ck.push(f(ct)); cx.push(x.toFixed(1)); cy.push(String(y)); }
+  const curAnim = (attr: string, vals: string[], dy = 0) =>
+    `<animate attributeName="${attr}" dur="${T.toFixed(2)}s" repeatCount="indefinite" calcMode="discrete" keyTimes="${ck.join(";")}" values="${vals.map((v) => (Number(v) + dy).toFixed(1)).join(";")}"/>`;
+
+  const swapKeys = `0;${f(SHOW)};${f(SHOW + 0.4)};${f(T - 0.45)};1`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="Visit mollybeach.app. about.txt: a conventional résumé; the Palais, an interactive palace terrace of hand-made stickers in all four seasons; and the Atlas Map, an explorable world of rooms.">
   <defs>
-    <filter id="phosphor" x="-5%" y="-20%" width="110%" height="140%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <pattern id="scan" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".28"/></pattern>
-    <radialGradient id="glass" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#0d2414"/><stop offset="1" stop-color="#050c07"/></radialGradient>
+    <filter id="phosphor" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <radialGradient id="glass" cx="50%" cy="40%" r="80%"><stop offset="0" stop-color="#0f2a17"/><stop offset=".7" stop-color="#07150b"/><stop offset="1" stop-color="#030805"/></radialGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3a24"/><stop offset="1" stop-color="#11261a"/></linearGradient>
+    <pattern id="scan" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="1" fill="#000" opacity=".22"/></pattern>
+    <clipPath id="screen"><rect x="3" y="3" width="${width - 6}" height="${h - 6}" rx="22"/></clipPath>
+    ${clips}
   </defs>
   <g>
-    ${fade("0;0.31;0.34;0.97;1", "1;1;0;0;1")}
+    <animate attributeName="opacity" dur="${T.toFixed(2)}s" repeatCount="indefinite" keyTimes="${swapKeys}" values="1;1;0;0;1"/>
     ${nest(top, 0, ht)}
     ${nest(bottom, ht + gap, hb)}
   </g>
   <g opacity="0">
-    ${fade("0;0.31;0.34;0.97;1", "0;0;1;1;0")}
-    <rect x="1.5" y="1.5" width="${width - 3}" height="${h - 3}" rx="26" fill="url(#glass)" stroke="${DIM}" stroke-width="3"/>
-    <rect x="9" y="9" width="${width - 18}" height="${h - 18}" rx="20" fill="none" stroke="${GREEN}" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="7 5"/>
-    <g font-family="${FONT}" font-size="${size}" filter="url(#phosphor)" xml:space="preserve">
-      <text x="${x}" y="44" fill="${DIM}" font-weight="700">$ <tspan fill="${GREEN}" font-weight="500">cat about.txt</tspan></text>
-      ${parts.map((p, i) => `<g opacity="0">${shown(at[i][0], at[i][1])}${p}</g>`).join("\n      ")}
-      <rect x="${x}" y="${h - 46}" width="11" height="20" fill="${GREEN}">
-        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.5;.5;1" dur="1.1s" repeatCount="indefinite"/>
-      </rect>
+    <animate attributeName="opacity" dur="${T.toFixed(2)}s" repeatCount="indefinite" keyTimes="${swapKeys}" values="0;0;1;1;0"/>
+    <rect x="1.5" y="1.5" width="${width - 3}" height="${h - 3}" rx="24" fill="url(#glass)" stroke="${DIM}" stroke-width="3"/>
+    <g clip-path="url(#screen)">
+      <rect x="0" y="0" width="${width}" height="40" fill="url(#bar)"/>
+      <line x1="0" y1="40" x2="${width}" y2="40" stroke="${DIM}" stroke-opacity=".6"/>
+      <circle cx="26" cy="21" r="5.5" fill="#ff5f57"/><circle cx="44" cy="21" r="5.5" fill="#febc2e"/><circle cx="62" cy="21" r="5.5" fill="#28c840"/>
+      <text x="${width / 2 + 14}" y="26" text-anchor="middle" font-family="${FONT}" font-size="13" fill="${DIM}">about.txt — zsh</text>
+      <g font-family="${FONT}" font-size="${size}" xml:space="preserve">
+        <text x="${x0}" y="${yPrompt}" fill="${DIM}" font-weight="700">$</text>
+        <g filter="url(#phosphor)" opacity=".55">${lines(true)}</g>
+        ${lines(false)}
+        <rect width="${(cw - 1).toFixed(1)}" height="${size + 2}" fill="${GREEN}" x="${x0 + 2 * cw}" y="${yPrompt - size + 2}">
+          ${curAnim("x", cx)}
+          ${curAnim("y", cy, -size + 2)}
+          <animate attributeName="opacity" values="1;1;.15;.15" keyTimes="0;.5;.5;1" dur="1s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <rect x="0" y="40" width="${width}" height="${h - 40}" fill="url(#scan)"/>
     </g>
-    <rect x="3" y="3" width="${width - 6}" height="${h - 6}" rx="24" fill="url(#scan)"/>
   </g>
 </svg>`;
 }

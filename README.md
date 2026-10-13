@@ -2,7 +2,7 @@
 <img width="720" src="./assets/digital-fabric.svg" alt="A digital fabric of my life"/>
 
 <p>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.webp" alt="The Palais: the home page of the portfolio, turning through all four seasons"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="235" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="180" alt="Visit mollybeach.app — portfolio &amp; the Palais. Visitors, and about.txt." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors&amp;style=swap"/></a>
 </p>
@@ -126,6 +126,68 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/tinkerbell.gif" alt="tinkerbell"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/poodleMoth.gif" alt="poodleMoth"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoli.gif" alt="romanescoBroccoli"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/dragonFly.gif" alt="dragonFly"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/macbook.gif" alt="macbook"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rafflesia.gif" alt="rafflesia"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/giraffe.gif" alt="giraffe"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/fear.gif" alt="fear"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/mandelbulbJavascript.gif" alt="mandelbulbJavascript"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/palm.gif" alt="palm"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rainbowDNA.gif" alt="rainbowDNA"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/nyanCat.gif" alt="nyanCat"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/lime.gif" alt="lime"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/blush.gif" alt="blush"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/forest.gif" alt="forest"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/greenFlame.gif" alt="greenFlame"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/chainflower.gif" alt="chainflower"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/capsule.gif" alt="capsule"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/nightcow.gif" alt="nightcow"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/nightDna.gif" alt="nightDna"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/julia.gif" alt="julia"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bolb.gif" alt="bolb"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bolb2.gif" alt="bolb2"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/mandelbulb.gif" alt="mandelbulb"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/lessThanThree.gif" alt="lessThanThree"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/heart2.gif" alt="heart2"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/swirly.gif" alt="swirly"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/dnaCircle.gif" alt="dnaCircle"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/graph.gif" alt="graph"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/doubleHelix.gif" alt="doubleHelix"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/final.gif" alt="final"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/objColoring.gif" alt="objColoring"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/comb.gif" alt="comb"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/spinPair.gif" alt="spinPair"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/snpCute.gif" alt="snpCute"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/leapfly.gif" alt="leapfly"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bigBaby.gif" alt="bigBaby"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/moonShader.gif" alt="moonShader"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/watermelon.gif" alt="watermelon"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bud.gif" alt="bud"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/prettyBlock.gif" alt="prettyBlock"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rubik89.gif" alt="rubik89"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rubixBox3.gif" alt="rubixBox3"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/nineBox.gif" alt="nineBox"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rubikCube36.gif" alt="rubikCube36"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/boxxx.gif" alt="boxxx"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/boxy.gif" alt="boxy"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/boat.gif" alt="boat"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/chameleonColorChanging.gif" alt="chameleonColorChanging"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/shapeShiftingBunny.gif" alt="shapeShiftingBunny"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/treeShader.gif" alt="treeShader"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/horizontalTorso.gif" alt="horizontalTorso"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/teenyTinyLand.gif" alt="teenyTinyLand"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/dancingGarden.gif" alt="dancingGarden"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/celeste.gif" alt="celeste"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/tomNook.gif" alt="tomNook"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/isabelle.gif" alt="isabelle"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/peter.gif" alt="peter"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/torinSWorkshopI.gif" alt="torinSWorkshopI"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/flwr.gif" alt="flwr"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/pikachu.gif" alt="pikachu"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/mug.gif" alt="mug"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bubbleyum.gif" alt="bubbleyum"/></a>
+  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/minnows.gif" alt="minnows"/></a>
 </div>
 
 <br clear="all"/>
