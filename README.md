@@ -1,21 +1,20 @@
 # Molly Beach : Portfolio
 <img width="720" src="./assets/digital-fabric.svg" alt="A digital fabric of my life"/>
 
-<p align="center">
-  <img width="320" src="./assets/bratcode.svg" alt="Powered by BratCode"/>
+<p>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="300" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="168" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="210" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/></a>
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="210" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
 </p>
+
+<br clear="all"/>
 
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
     <img width="860" height="96" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
   </a>
 </p>
-
-<img align="left" width="400" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/>
-
-<a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="360" height="96" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/></a>
-
-<a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="360" height="96" alt="Visitors" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors"/></a>
 
 **Conventional résumé**: experience, projects, skills, education, awards & certifs. **the Palais**: interactive, Versailles-style palace terrace, built entirely from hand-made stickers rendered across all 4 seasons **Atlas Map** explorable world of rooms.
 
