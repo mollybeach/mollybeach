@@ -127,6 +127,10 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/giraffe.gif" alt="giraffe"/></a>
 </div>
 <br clear="all"/>
+<details>
+<summary><b>✨ More shaders</b></summary>
+<br>
+
 <div>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/flamingo.gif" alt="flamingo"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/sailorMoon.gif" alt="sailorMoon"/></a>
@@ -145,3 +149,5 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/forest.gif" alt="forest"/></a>
   <a href="https://mollybeach.app/?from=githubreadme#caves" target="_blank" rel="noopener"><img height="150" src="./assets/romanescoBroccoliBall.gif" alt="romanescoBroccoliBall"/></a>
 </div>
+
+</details>
