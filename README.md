@@ -3,6 +3,13 @@
 **Live at [mollybeach.app](https://mollybeach.app)**
 ### *A digital fabric of my life.*
 
+<p align="center">
+  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
+    <img width="860" height="96" alt="*A digital fabric of my life.*." src=""/>
+  </a>
+</p>
+
+
 <img align="left" width="400" src="docs/readme-palais.jpg" alt="The Palais: the home page of the portfolio"/>
 
 <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="360" height="96" alt="Visit mollybeach.app — portfolio &amp; the Palais" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=link"/></a>
