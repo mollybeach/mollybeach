@@ -167,16 +167,12 @@ export function note({
  * what's inside, a part at a time, then back to the plaques. GitHub draws
  * README images without scripts, so all of it is SMIL, inside the picture.
  */
-export function swap({ top, bottom, width = 300, gap = 10 }: { top: string; bottom: string; width?: number; gap?: number }): string {
-  const tall = (svg: string) => Number(/height="(\d+(?:\.\d+)?)"/.exec(svg)?.[1] ?? 140);
-  const ht = tall(top), hb = tall(bottom), h = ht + gap + hb;
-  // the plaques come in as whole pictures: sit each one inside this one
-  const nest = (svg: string, y: number, hh: number) =>
-    svg.replace(/^<svg ([^>]*?)width="[^"]*" height="[^"]*"/, `<svg $1x="0" y="${y}" width="${width}" height="${hh}"`);
+export function swap({ count, flowers, rose = "#a8244f", gold = "#c9a44c", width = 300, height = 350 }: { count: string; flowers: string; rose?: string; gold?: string; width?: number; height?: number }): string {
+  const h = height;
 
   const GREEN = "#4dff88", BRIGHT = "#d8ffe2", DIM = "#2bb35a";
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-  const size = 21, cw = size * 0.6, lead = 29, x0 = 18;
+  const size = 21, cw = size * 0.6, lead = 31, x0 = 18;
 
   /* what gets typed: [indent in characters, text, bright?] per line, a screen
      at a time, under the prompt that is typed once */
@@ -193,7 +189,7 @@ export function swap({ top, bottom, width = 300, gap = 10 }: { top: string; bott
   const typed: Typed[] = [];
   const cursor: [number, number, number][] = []; // [time, x, y]
   let t = SHOW + 0.7;
-  const yPrompt = 76, yBody = 116;
+  const yPrompt = 80, yBody = 124;
   const type = (line: [number, string, boolean], y: number) => {
     const [indent, text, bright] = line;
     const x = x0 + indent * cw;
@@ -232,20 +228,34 @@ export function swap({ top, bottom, width = 300, gap = 10 }: { top: string; bott
   const curAnim = (attr: string, vals: string[], dy = 0) =>
     `<animate attributeName="${attr}" dur="${T.toFixed(2)}s" repeatCount="indefinite" calcMode="discrete" keyTimes="${ck.join(";")}" values="${vals.map((v) => (Number(v) + dy).toFixed(1)).join(";")}"/>`;
 
+  /* the plaque sits low, with the bouquet rising out from behind it */
+  const pw = 244, ph = 186, px = (width - pw) / 2, py = h - ph - 12;
   const swapKeys = `0;${f(SHOW)};${f(SHOW + 0.4)};${f(T - 0.45)};1`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="Visit mollybeach.app. about.txt: a conventional résumé; the Palais, an interactive palace terrace of hand-made stickers in all four seasons; and the Atlas Map, an explorable world of rooms.">
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${h}" viewBox="0 0 ${width} ${h}" role="img" aria-label="Visit mollybeach.app, ${count} visitors. about.txt: a conventional résumé; the Palais, an interactive palace terrace of hand-made stickers in all four seasons; and the Atlas Map, an explorable world of rooms.">
   <defs>
     <filter id="phosphor" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="2.4"/></filter>
     <radialGradient id="glass" cx="50%" cy="40%" r="80%"><stop offset="0" stop-color="#0f2a17"/><stop offset=".7" stop-color="#07150b"/><stop offset="1" stop-color="#030805"/></radialGradient>
     <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3a24"/><stop offset="1" stop-color="#11261a"/></linearGradient>
     <pattern id="scan" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="1" fill="#000" opacity=".22"/></pattern>
+    <filter id="lift" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#3a1020" flood-opacity=".28"/></filter>
     <clipPath id="screen"><rect x="3" y="3" width="${width - 6}" height="${h - 6}" rx="22"/></clipPath>
     ${clips}
   </defs>
   <g>
     <animate attributeName="opacity" dur="${T.toFixed(2)}s" repeatCount="indefinite" keyTimes="${swapKeys}" values="1;1;0;0;1"/>
-    ${nest(top, 0, ht)}
-    ${nest(bottom, ht + gap, hb)}
+    <image x="0" y="0" width="${width}" height="${h}" href="${flowers}" xlink:href="${flowers}"/>
+    <g filter="url(#lift)">
+      <rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="22" fill="${CREAM}" fill-opacity=".94"/>
+      <rect x="${px + 6}" y="${py + 6}" width="${pw - 12}" height="${ph - 12}" rx="17" fill="none" stroke="${gold}" stroke-width="2.5"/>
+      <rect x="${px + 11}" y="${py + 11}" width="${pw - 22}" height="${ph - 22}" rx="13" fill="none" stroke="${rose}" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="5 4"/>
+    </g>
+    <g font-family="${FONT}" text-anchor="middle" fill="${rose}">
+      <text x="${width / 2}" y="${py + 52}" font-size="13" letter-spacing="3" fill="${gold}" font-weight="700">✿ VISIT ✿</text>
+      <text x="${width / 2}" y="${py + 86}" font-size="25" font-weight="800">mollybeach.app</text>
+      <text x="${width / 2}" y="${py + 108}" font-size="10.5" font-weight="700" letter-spacing="1.6" fill-opacity=".8">PORTFOLIO &amp; THE PALAIS</text>
+      <line x1="${width / 2 - 52}" y1="${py + 126}" x2="${width / 2 + 52}" y2="${py + 126}" stroke="${gold}" stroke-width="1.5"/>
+      <text x="${width / 2}" y="${py + 154}" font-size="17" font-weight="700">♡ ${count} visitors</text>
+    </g>
   </g>
   <g opacity="0">
     <animate attributeName="opacity" dur="${T.toFixed(2)}s" repeatCount="indefinite" keyTimes="${swapKeys}" values="0;0;1;1;0"/>

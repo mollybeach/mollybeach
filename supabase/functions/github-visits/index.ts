@@ -25,6 +25,7 @@
 
 import { FLORALS, floralFor, floralNamed, type Floral } from "./florals.ts";
 import { JEWELS, note, plaque, swap } from "./plaque.ts";
+import { FLOWERS } from "./flowers.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -140,9 +141,7 @@ Deno.serve(async (req) => {
   const wearing = asked ?? floralFor(count);
   if (style === "swap") {
     // the button and the counter in one spot, taking turns with about.txt
-    const size = { width: 300, height: 140 };
-    const other = floralFor(count + 3);
-    return picture(swap({ top: link(other, size), bottom: card(count, label, wearing, size) }));
+    return picture(swap({ count: digits(count), flowers: FLOWERS }));
   }
   return picture(style === "plain" ? plain(count, label, wearing) : card(count, label, wearing, sized(url)));
 });

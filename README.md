@@ -165,11 +165,6 @@ Signed in, I can save the room as a named look, file it under a season, make it 
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/watermelon.gif" alt="watermelon"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/bud.gif" alt="bud"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/prettyBlock.gif" alt="prettyBlock"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rubik89.gif" alt="rubik89"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rubixBox3.gif" alt="rubixBox3"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/nineBox.gif" alt="nineBox"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/rubikCube36.gif" alt="rubikCube36"/></a>
-  <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/boxxx.gif" alt="boxxx"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/boxy.gif" alt="boxy"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/boat.gif" alt="boat"/></a>
   <a href="https://shaderpark.com/user/alltrollsgotoheaven" target="_blank" rel="noopener"><img height="150" src="./assets/chameleonColorChanging.gif" alt="chameleonColorChanging"/></a>
