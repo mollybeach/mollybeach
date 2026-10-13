@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener">
-    <img width="860" height="96" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
+    <img width="860" height="86" alt="Digital Fabric of My Life" src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?art=note"/>
   </a>
 </p>
 
