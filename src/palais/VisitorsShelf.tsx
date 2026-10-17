@@ -18,6 +18,7 @@ export const VISIT_RANGES = [
 ];
 
 const RANGES = VISIT_RANGES;
+const ALL_TIME = 3650;
 
 const flag = (code: string | null) =>
   code && /^[A-Z]{2}$/i.test(code)
@@ -382,6 +383,21 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
       live = false;
     };
   }, [days]);
+
+  /* The map pins every city anyone has ever come from, the same as the
+     Cities list beside it, whatever stretch of time the picker is on. */
+  const [everywhere, setEverywhere] = useState<VisitStats | null>(null);
+  useEffect(() => {
+    if (days === ALL_TIME) return;
+    let live = true;
+    visitStats(ALL_TIME)
+      .then((s) => live && setEverywhere(s))
+      .catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [days]);
+  const mapStats = days === ALL_TIME ? stats : everywhere ?? stats;
 
   /* everybody else's visits, unless the button says otherwise */
   const feed = hideMe && !only ? log.filter((v) => !v.is_me) : log;
@@ -928,6 +944,14 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
                       {" · "}
                       {deviceIcon(v.device)} {machineOf(v) || deviceName(v.device)}
                       {v.source ? ` · via ${v.source}` : v.referrer ? ` · from ${v.referrer}` : ""}
+                      {/* a link you tagged (?from=ig) vs. one that just opened inside the app:
+                          both say "via Instagram", only the tagged one came through your link */}
+                      {v.tag ? (
+                        <>
+                          {" · "}
+                          <b className="vis-tag">🔗 your ?from={v.tag} link</b>
+                        </>
+                      ) : null}
                     </small>
                     {(v.network || v.vpn) && (
                       <small>
@@ -992,7 +1016,7 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
 
           <section className="vis-card">
             <h3>🌍 Where in the world</h3>
-            <VisitorMap cities={stats.cities} total={stats.cities_total} />
+            <VisitorMap cities={mapStats?.cities ?? stats.cities} total={mapStats?.cities_total ?? stats.cities_total} />
           </section>
           <p className="cat-signin-line">
             IP addresses aren't stored; each visitor is a scrambled code. Visits from localhost aren't counted.
