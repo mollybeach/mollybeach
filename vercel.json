@@ -9,6 +9,8 @@
     { "source": "/dc", "destination": "/?from=discord", "permanent": false },
     { "source": "/im", "destination": "/?from=im", "permanent": false },
     { "source": "/gh", "destination": "/?from=githubreadme", "permanent": false },
+    { "source": "/gm", "destination": "/?from=gmail-signature", "permanent": false },
+    { "source": "/gm/resume", "destination": "/resume?from=gmail-signature", "permanent": false },
     { "source": "/mac", "destination": "/#library/mac", "permanent": false },
     { "source": "/go/:tag", "destination": "/?from=:tag", "permanent": false }
   ]
