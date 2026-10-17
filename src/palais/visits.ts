@@ -669,11 +669,18 @@ export interface VisitLogEntry {
   doings: VisitDoing[];
 }
 
+/* Anyone named Molly is Molly, the same rule palais_name_visitor keeps
+   (20260922120000_palais_every_molly_is_me.sql) — applied here too, so her
+   visits stay behind "Show my own visits" even where a database's is_me
+   marks haven't caught up with the names. */
+const mollyIsMe = <T extends { name: string | null; is_me: boolean }>(v: T): T =>
+  !v.is_me && v.name?.trim().toLowerCase() === "molly" ? { ...v, is_me: true } : v;
+
 export async function visitLog(before?: number, visitor?: string | null, limit = 50): Promise<VisitLogEntry[]> {
   const sb = await db();
   const { data, error } = await sb.rpc("palais_visit_log", { p_before: before ?? null, p_limit: limit, p_visitor: visitor ?? null });
   if (error) throw new Error(error.message);
-  return (data ?? []) as VisitLogEntry[];
+  return ((data ?? []) as VisitLogEntry[]).map(mollyIsMe);
 }
 
 export interface VisitorProfile {
@@ -714,7 +721,7 @@ export async function visitorProfiles(): Promise<VisitorProfile[]> {
   const sb = await db();
   const { data, error } = await sb.rpc("palais_visitor_profiles");
   if (error) throw new Error(error.message);
-  return (data ?? []) as VisitorProfile[];
+  return ((data ?? []) as VisitorProfile[]).map(mollyIsMe);
 }
 
 export async function nameVisitor(visitor: string, name: string, isMe = false, note?: string | null) {

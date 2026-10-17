@@ -1585,6 +1585,9 @@
 .palais .vis-list b { color: var(--cat-hot); font-variant-numeric: tabular-nums; }
 .palais .vis-list small { display: block; font-weight: 600; color: #b5708f; font-size: 0.7rem; }
 .palais .vis-list time { flex: none; font-size: 0.72rem; color: #b5708f; }
+/* the words side may shrink below its longest line, so a long device name or
+   a row of screen sizes wraps inside the card instead of running off a phone */
+.palais .vis-list li > span { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
 /* the visit log keeps going as far back as you scroll */
 .palais .vis-list--recent { max-height: none; overflow: visible; }
 .palais .vis-more { justify-content: center !important; color: #b5708f !important; font-size: 0.75rem !important; padding: 0.4rem 0; }

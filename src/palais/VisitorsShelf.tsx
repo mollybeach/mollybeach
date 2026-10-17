@@ -140,6 +140,8 @@ function frequency(p: VisitorProfile) {
   return "Now and then";
 }
 
+const byVisits = <T extends { visits: number }>(xs: T[]) => [...xs].sort((a, b) => b.visits - a.visits);
+
 const who = (name: string | null, visitor: string | null, isMe = false) => (isMe ? `${name ?? "Molly"} (me)` : name ?? (visitor ? `visitor ${visitor}` : "someone"));
 
 /** Two visitors you've given the same name are the same person (their code
@@ -386,41 +388,38 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
   // visitors you've named the same are folded into one card (see mergeByName)
   const folk = people ? mergeByName(people) : null;
 
-  /* The server only sends the busiest handful of countries and cities. Once
+  /* Countries and cities are counted in visits, not visitors: someone who
+     comes back ten times counts ten times. The server only sends the busiest
+     handful of countries and cities (ranked by visitors, so they're re-sorted
+     here). Once
      "Load all" has pulled every visit into the log, fold the FULL lists from
      it instead, so nowhere a visitor came from is left off. */
   const logCountries =
     logDone && log.length
       ? (() => {
-          const m = new Map<string, { country: string; code: string | null; who: Set<string>; visits: number }>();
+          const m = new Map<string, { country: string; code: string | null; visits: number }>();
           for (const v of log) {
             const key = v.country ?? "Unknown";
-            const cur = m.get(key) ?? { country: key, code: v.code, who: new Set<string>(), visits: 0 };
+            const cur = m.get(key) ?? { country: key, code: v.code, visits: 0 };
             cur.visits += 1;
-            if (v.visitor) cur.who.add(v.visitor);
             if (!cur.code && v.code) cur.code = v.code;
             m.set(key, cur);
           }
-          return Array.from(m.values())
-            .map((c) => ({ country: c.country, code: c.code, unique: c.who.size || c.visits }))
-            .sort((a, b) => b.unique - a.unique);
+          return Array.from(m.values()).sort((a, b) => b.visits - a.visits);
         })()
       : null;
   const logCities =
     logDone && log.length
       ? (() => {
-          const m = new Map<string, { city: string; region: string | null; code: string | null; who: Set<string>; visits: number }>();
+          const m = new Map<string, { city: string; region: string | null; country: string | null; code: string | null; visits: number }>();
           for (const v of log) {
             if (!v.city) continue;
             const key = `${v.city}|${v.code ?? ""}`;
-            const cur = m.get(key) ?? { city: v.city, region: v.region, code: v.code, who: new Set<string>(), visits: 0 };
+            const cur = m.get(key) ?? { city: v.city, region: v.region, country: v.country, code: v.code, visits: 0 };
             cur.visits += 1;
-            if (v.visitor) cur.who.add(v.visitor);
             m.set(key, cur);
           }
-          return Array.from(m.values())
-            .map((c) => ({ city: c.city, region: c.region, code: c.code, unique: c.who.size || c.visits }))
-            .sort((a, b) => b.unique - a.unique);
+          return Array.from(m.values()).sort((a, b) => b.visits - a.visits);
         })()
       : null;
   const max = Math.max(1, ...(stats?.by_day.map((d) => d.visits) ?? [1]));
@@ -753,12 +752,12 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
               <h3>🌍 Countries{logCountries ? ` · ${logCountries.length}` : ""}</h3>
               {(logCountries ?? stats.countries).length ? (
                 <ul className="vis-list">
-                  {(logCountries ?? stats.countries).map((c) => (
+                  {(logCountries ?? byVisits(stats.countries)).map((c) => (
                     <li key={c.country}>
                       <span>
                         {flag(c.code)} {c.country}
                       </span>
-                      <b>{c.unique}</b>
+                      <b>{c.visits}</b>
                     </li>
                   ))}
                 </ul>
@@ -778,13 +777,12 @@ export function VisitorsShelf({ forDays }: { forDays?: number } = {}) {
               <h3>📍 Cities{logCities ? ` · ${logCities.length}` : ""}</h3>
               {(logCities ?? stats.cities).length ? (
                 <ul className="vis-list">
-                  {(logCities ?? stats.cities).map((c) => (
+                  {(logCities ?? byVisits(stats.cities)).map((c) => (
                     <li key={`${c.city}-${c.code}`}>
                       <span>
-                        {flag(c.code)} {c.city}
-                        {c.region ? `, ${c.region}` : ""}
+                        {flag(c.code)} {where(c)}
                       </span>
-                      <b>{c.unique}</b>
+                      <b>{c.visits}</b>
                     </li>
                   ))}
                 </ul>
