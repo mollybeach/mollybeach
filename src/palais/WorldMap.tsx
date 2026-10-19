@@ -174,7 +174,7 @@ const STOPS: Stop[] = [
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
-    at: [851, 169],
+    at: [896, 194],
     patch: [52, 58],
     seed: 103,
     room: "jacaranda",
