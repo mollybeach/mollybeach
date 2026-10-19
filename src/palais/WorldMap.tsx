@@ -970,7 +970,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is a painting (public/palais/map/island-one.webp),
                 with every room's frame and name already painted in; the stops
                 on it are just the places to press */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=87`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=92`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
 
             {/* the stops: a round gilt frame with the place inside */}
             {STOPS.map((s, i) => {
