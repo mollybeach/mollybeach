@@ -4061,6 +4061,14 @@
   gap: 0.3em;
   line-height: 1.25rem;
 }
+/* on a desktop the tabs along the top are bigger, easier to see and to hit */
+@container palais (min-width: 900px) {
+  .palais .palais-pill {
+    padding: 0.75rem 1.8rem;
+    font-size: 1.45rem;
+    line-height: 2rem;
+  }
+}
 
 /* the visitor book's two long lists fold up, so the page opens as a summary
    rather than a wall of visits */
