@@ -969,7 +969,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is a painting (public/palais/map/island-one.webp),
                 with every room's frame and name already painted in; the stops
                 on it are just the places to press */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=113`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=114`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
 
             {/* the Boudoir's white dresser and black rabbit (the room's own
                 stickers), standing up behind its circle, over the ones painted
@@ -983,6 +983,10 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                 </g>
               );
             })()}
+
+            {/* the Closet's mannequin, standing in the flower beds below its
+                pavilion */}
+            <image href={`${process.env.PUBLIC_URL}/palais/mannequin.webp`} x={657} y={266} width={29.8} height={100} aria-hidden pointerEvents="none" />
 
             {/* two big saguaro stickers in the desert below the train, between
                 the Train and Lagoon circles */}
