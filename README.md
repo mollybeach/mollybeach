@@ -101,6 +101,9 @@
 ### Area M: the world map
 A cute, video-game-style level select. Honeysuckle hops along a dotted path between stops on an island inside a shimmering rainbow wall. Each stop is a region blended from real trips, and many of them are rooms you can walk into:
 
+<a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img src="docs/readme-map.webp" alt="Area M: the world map, a painted island with a coloured circle for each room" width="100%"/></a>
+
+
 | Room | |
 |---|---|
 | 🏛 The Palais | home, the terrace |
