@@ -5,6 +5,7 @@ import { usePlace, type Place } from "./place";
 import { Globe } from "./Globe";
 import { currentSeason, type Season } from "./seasons";
 import { usePortrait } from "./PortraitTerrace";
+import { SCENERY, Scenery, sceneMiddle, sceneReach } from "./MapScenery";
 
 /**
  * The map, like the level select in a storybook game: an
@@ -56,7 +57,7 @@ const STOPS: Stop[] = [
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
-    at: [500, 345],
+    at: [518, 386],
     patch: [58, 42],
     seed: 7,
     room: "palace",
@@ -69,7 +70,7 @@ const STOPS: Stop[] = [
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
     color: "#ffb3d6",
-    at: [612, 240],
+    at: [622, 286],
     patch: [46, 38],
     seed: 23,
     room: "closet",
@@ -82,7 +83,7 @@ const STOPS: Stop[] = [
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
     finds: ["A clawfoot tub", "Glass-block windows", "Pink towels and jars of bath salts"],
     color: "#f3c6d8",
-    at: [681, 385],
+    at: [722, 400],
     patch: [48, 36],
     seed: 29,
     room: "bathroom",
@@ -95,7 +96,7 @@ const STOPS: Stop[] = [
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
     finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
     color: "#f7b7a3",
-    at: [455, 502],
+    at: [511, 521],
     patch: [52, 38],
     seed: 23,
     room: "kitchen",
@@ -108,10 +109,23 @@ const STOPS: Stop[] = [
     blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
     finds: ["A spiral staircase made of books", "A globe and a rolling ladder", "Roses round the window over the lake"],
     color: "#d9a066",
-    at: [319, 385],
+    at: [675, 549],
     patch: [48, 36],
     seed: 167,
     room: "library",
+  },
+  {
+    id: "lagoon",
+    earth: [64.1, -21.8],
+    name: "Lagoon",
+    tag: "fire under snow",
+    blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
+    finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
+    color: "#cdeefa",
+    at: [328, 400],
+    patch: [104, 56],
+    seed: 37,
+    room: "lagoon",
   },
   {
     id: "boudoir",
@@ -121,7 +135,7 @@ const STOPS: Stop[] = [
     blurb: "A gilded dressing room: lilac curtains swagged over tall windows, a chandelier over a marble floor, and a trifold mirror on the vanity with the roses outside coming in.",
     finds: ["A trifold mirror and a walnut vanity", "A blue tufted ottoman in the middle", "Candles on gilt sconces all round"],
     color: "#e6c2e0",
-    at: [388, 240],
+    at: [417, 278],
     patch: [46, 34],
     seed: 173,
     room: "boudoir",
@@ -134,7 +148,7 @@ const STOPS: Stop[] = [
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
     finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
     color: "#8fcbe8",
-    at: [500, 120],
+    at: [741, 132],
     patch: [80, 58],
     seed: 11,
     room: "lakehouse",
@@ -147,7 +161,7 @@ const STOPS: Stop[] = [
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
     color: "#a9b8ff",
-    at: [766, 205],
+    at: [325, 162],
     patch: [92, 60],
     seed: 71,
     room: "caves",
@@ -160,7 +174,7 @@ const STOPS: Stop[] = [
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
-    at: [831, 395],
+    at: [848, 284],
     patch: [52, 58],
     seed: 103,
     room: "jacaranda",
@@ -173,7 +187,7 @@ const STOPS: Stop[] = [
     blurb: "A gilded classroom under a crystal chandelier, with lime iBooks on every desk, cherry blossom out the windows and the syllabus chalked up on the board. Molly teaches girls to code here: press the chalkboard for the courses.",
     finds: ["The syllabus on the chalkboard", "Bratz busts along the shelves", "An iBook on every desk"],
     color: "#ff9ccf",
-    at: [648, 548],
+    at: [519, 142],
     patch: [56, 40],
     seed: 181,
     room: "school",
@@ -186,7 +200,7 @@ const STOPS: Stop[] = [
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
     finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
     color: "#ffb99b",
-    at: [300, 540],
+    at: [261, 535],
     patch: [98, 66],
     seed: 97,
     room: "domes",
@@ -200,23 +214,10 @@ const STOPS: Stop[] = [
     finds: ["Car 31025, still on its wheels", "Ocotillo in flower along the rails", "A rainbow over the mountains at sundown"],
     color: "#f0a14e",
     seasons: true,
-    at: [169, 395],
+    at: [153, 390],
     patch: [86, 54],
     seed: 41,
     room: "sunliner",
-  },
-  {
-    id: "lagoon",
-    earth: [64.1, -21.8],
-    name: "Lagoon",
-    tag: "fire under snow",
-    blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
-    finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
-    color: "#cdeefa",
-    at: [234, 205],
-    patch: [104, 56],
-    seed: 37,
-    room: "lagoon",
   },
   /* ---- the second island, down the map: the Glasshouse, the Rainwood,
      Madeleine, the Amphitheatre and the Strand, with the Lantern Isles and the Glass Reef
@@ -404,6 +405,27 @@ const isleOf = (s: Stop) => (s.isle === 2 ? 1 : 0);
 const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library", "boudoir"]);
 
 const FRAME = 44;
+/** on the painted first island, each room's frame is drawn over the one in
+    the painting: how big that one is, and where its name sits from its middle */
+const PAINTED: Record<string, { r: number; label: [number, number] }> = {
+  caves: { r: 59, label: [-12, 59] },
+  school: { r: 59, label: [0, 59] },
+  lakehouse: { r: 59, label: [-7, 59] },
+  boudoir: { r: 59, label: [0, 62] },
+  closet: { r: 59, label: [0, 59] },
+  jacaranda: { r: 59, label: [-4, 59] },
+  palace: { r: 59, label: [0, 53] },
+  sunliner: { r: 59, label: [0, 59] },
+  bathroom: { r: 59, label: [3, 59] },
+  domes: { r: 59, label: [25, 66] },
+  kitchen: { r: 59, label: [-3, 59] },
+  library: { r: 59, label: [-7, 59] },
+  lagoon: { r: 59, label: [0, 59] },
+};
+/** a little cartoon house, the size of a stop's round frame: a pitched roof
+    over a square front, for Home */
+const HOUSE = (f: number) =>
+  `M${-f * 0.95},${-f * 0.12} L0,${-f * 1.08} L${f * 0.95},${-f * 0.12} L${f * 0.78},${-f * 0.12} L${f * 0.78},${f * 0.92} L${-f * 0.78},${f * 0.92} L${-f * 0.78},${-f * 0.12} Z`;
 const labelOf = (s: Stop) => s.name;
 const labelWidth = (s: Stop) => labelOf(s).length * 8.6 + 30;
 
@@ -587,13 +609,22 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       };
     });
     const meadows = STOPS.map((s) => blob(spot(s)[0], spot(s)[1], s.patch[0] + 16, s.patch[1] + 12, s.seed, 0.18, 48));
-    // the path runs from stop to stop on each island; it doesn't swim
+    // the path runs from stop to stop on each island; it doesn't swim. The
+    // legs in and out of the Train are railway track instead of footpath.
     const trails = STOPS.slice(0, -1)
-      .map((s, i) => (isleOf(s) === isleOf(STOPS[i + 1]) ? trail(spot(s), spot(STOPS[i + 1]), i) : null))
-      .filter((d): d is string => Boolean(d));
+      .map((s, i) =>
+        isleOf(s) === isleOf(STOPS[i + 1])
+          ? { d: trail(spot(s), spot(STOPS[i + 1]), i), rail: s.id === "sunliner" || STOPS[i + 1].id === "sunliner" }
+          : null,
+      )
+      .filter((t): t is { d: string; rail: boolean } => Boolean(t));
 
     // keep trees, flowers and mountains off the pictures and their names
     const clear = (x: number, y: number, pad: number) =>
+      SCENERY.every((sc) => {
+        const [sx, sy] = sceneMiddle(sc, ISLE_DROP);
+        return Math.hypot(x - sx, y - sy) > sceneReach(sc) + pad;
+      }) &&
       STOPS.every((s) => {
         const [sx, sy] = spot(s);
         if (Math.hypot(x - sx, y - sy) < FRAME + 10 + pad) return false;
@@ -792,6 +823,9 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               <clipPath id="wm-frame">
                 <circle r={FRAME} />
               </clipPath>
+              <clipPath id="wm-house">
+                <path d={HOUSE(FRAME)} />
+              </clipPath>
             </defs>
 
             {/* everything below slides as one, up to show the second island */}
@@ -801,19 +835,15 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {art.waves.map((w, i) => (
               <path key={i} d={`M${w.x.toFixed(0)},${w.y.toFixed(0)} q7,-5 14,0 t14,0`} fill="none" stroke="#e8f8ff" strokeOpacity={0.7} strokeWidth={1.8} strokeLinecap="round" />
             ))}
-            {art.seaRocks.map(([x, y, r], i) => (
+            {art.seaRocks.filter(([, y]) => y > ISLE_DROP).map(([x, y, r], i) => (
               <g key={i}>
                 <ellipse cx={x} cy={y + 3} rx={r * 1.6} ry={r * 0.6} fill="#e8f8ff" opacity={0.6} />
                 <path d={`M${x - r},${y + 2} Q${x - r * 0.6},${y - r} ${x},${y - r} Q${x + r * 0.8},${y - r * 0.6} ${x + r},${y + 2} Z`} fill="#8a8f98" stroke="#5f656e" strokeWidth={1} />
               </g>
             ))}
 
-            {/* sailboats */}
-            {[
-              [215, 100],
-              [915, 455],
-              [835, 640],
-            ].map(([x, y], i) => (
+            {/* sailboats (the first island's painting has its own) */}
+            {([] as number[][]).map(([x, y], i) => (
               <g key={i} transform={`translate(${x} ${y})`}>
                 <path d="M-12,4 L12,4 L8,10 L-8,10 Z" fill="#8a5a3c" />
                 <path d="M0,-22 L0,4 L13,4 Z" fill="#fffdf6" stroke="#c9c0b0" strokeWidth={0.8} />
@@ -822,12 +852,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               </g>
             ))}
 
-            {/* seagulls */}
-            {[
-              [120, 390],
-              [140, 405],
-              [104, 412],
-            ].map(([x, y], i) => (
+            {/* seagulls (the painting has its own) */}
+            {([] as number[][]).map(([x, y], i) => (
               <path key={i} d={`M${x - 7},${y} q4,-5 7,0 q3,-5 7,0`} fill="none" stroke="#fff" strokeWidth={1.8} strokeLinecap="round" />
             ))}
 
@@ -841,55 +867,72 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             ))}
 
             {/* the island: turquoise shallows, a ring of sand and surf, then grass */}
-            <path d={art.shallows} fill="#5d8ae6" opacity={0.85} />
-            <path d={art.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
-            <path d={art.island} fill="url(#wm-grass)" />
+            {/* the first island is painted (below), so its drawn coast, grass,
+                rocks and trees are left out: they peeped out round the
+                painting's edges as a white line of beach */}
             {/* the second island, the same way */}
             <path d={art.shallows2} fill="#5d8ae6" opacity={0.85} />
             <path d={art.beach2} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
             <path d={art.island2} fill="url(#wm-grass)" />
             <g clipPath="url(#wm-island2)">
               {STOPS.map((s, i) => (s.islet || s.isle !== 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
-              {/* a stream through the wood to the sea */}
-              <path d={`M520,${ISLE_DROP + 150} C560,${ISLE_DROP + 260} 520,${ISLE_DROP + 380} 600,${ISLE_DROP + 560}`} fill="none" stroke="#5fc0e0" strokeWidth={6} strokeLinecap="round" />
               {art.flowers2.map((f, i) => (
                 <circle key={i} cx={f.x} cy={f.y} r={2.4} fill={f.c} />
               ))}
             </g>
-            <g clipPath="url(#wm-island)">
+            <g clipPath="url(#wm-island)" display="none">
               {STOPS.map((s, i) => (s.islet || s.isle === 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
-              {/* a lake by the lakehouse, and a river down to the sea */}
-              <path d="M470,190 C440,240 470,268 440,292" fill="none" stroke="#5fc0e0" strokeWidth={6} strokeLinecap="round" />
-              <path d="M470,372 C520,410 600,470 640,500 C720,560 820,590 930,640" fill="none" stroke="#5fc0e0" strokeWidth={7} strokeLinecap="round" />
               {art.flowers.map((f, i) => (
                 <circle key={i} cx={f.x} cy={f.y} r={2.4} fill={f.c} />
               ))}
             </g>
-            {art.rocks.map((r, i) => (
+            {art.rocks.filter(() => false).map((r, i) => (
               <path key={i} d={`M${r.x - r.r},${r.y + r.r * 0.4} Q${r.x - r.r * 0.5},${r.y - r.r} ${r.x + r.r * 0.2},${r.y - r.r * 0.8} Q${r.x + r.r},${r.y - r.r * 0.3} ${r.x + r.r},${r.y + r.r * 0.4} Z`} fill="#9a9aa0" stroke="#6f7078" strokeWidth={1} />
             ))}
 
             {/* snowy peaks */}
-            {art.peaks.map(([x, y, h], i) => (
+            {art.peaks.filter(() => false).map(([x, y, h], i) => (
               <g key={i}>
                 <path d={`M${x - h},${y + h * 0.35} L${x},${y - h} L${x + h},${y + h * 0.35} Z`} fill="#8e99a8" />
                 <path d={`M${x},${y - h} L${x + h},${y + h * 0.35} L${x + h * 0.15},${y + h * 0.35} Z`} fill="#6f7a8a" />
                 <path d={`M${x - h * 0.32},${y - h * 0.36} L${x},${y - h} L${x + h * 0.32},${y - h * 0.36} L${x + h * 0.1},${y - h * 0.46} L${x - h * 0.08},${y - h * 0.3} Z`} fill="#fbfdff" />
               </g>
             ))}
-            {art.trees.map(tree)}
+            {art.trees.filter((t) => t.y > ISLE_DROP).map(tree)}
+
+            {/* what's in each room, painted beside it (MapScenery.tsx) */}
+            <Scenery drop={ISLE_DROP} />
 
             {/* the dotted path between the stops */}
-            {art.trails.map((d, i) => (
-              <path key={i} d={d} fill="none" stroke="#fffdf6" strokeWidth={4.5} strokeDasharray="0.1 11" strokeLinecap="round" />
-            ))}
+            {art.trails.map((t, i) =>
+              t.rail ? (
+                <g key={i}>
+                  {/* two rails: a wide stroke with its middle masked out */}
+                  <mask id={`wm-rails-${i}`} maskUnits="userSpaceOnUse" x={0} y={0} width={1000} height={680 + ISLE_DROP}>
+                    <path d={t.d} fill="none" stroke="#fff" strokeWidth={16} />
+                    <path d={t.d} fill="none" stroke="#000" strokeWidth={8} />
+                  </mask>
+                  {/* the sleepers under them */}
+                  <path d={t.d} fill="none" stroke="#4a2c12" strokeWidth={23} strokeDasharray="4 6" />
+                  <path d={t.d} fill="none" stroke="#2e1a08" strokeWidth={16} mask={`url(#wm-rails-${i})`} />
+                  <path d={t.d} fill="none" stroke="#9a6430" strokeWidth={13.5} mask={`url(#wm-rails-${i})`} />
+                </g>
+              ) : (
+                <path key={i} d={t.d} fill="none" stroke="#fffdf6" strokeWidth={4.5} strokeDasharray="0.1 11" strokeLinecap="round" />
+              ),
+            )}
 
-            {/* a compass rose, top left */}
-            <g transform="translate(108 96)" aria-hidden>
+            {/* a compass rose, top left (the painting has its own, so it's hidden) */}
+            <g transform="translate(108 96)" aria-hidden display="none">
               <circle r={26} fill="none" stroke="#f7e3a6" strokeWidth={1.5} opacity={0.9} />
               <path d="M0,-40 L5,-5 L40,0 L5,5 L0,40 L-5,5 L-40,0 L-5,-5 Z" fill="#fbeec1" stroke="#b98f3e" strokeWidth={1} />
               <path d="M0,-24 L3,-3 L24,0 L3,3 L0,24 L-3,3 L-24,0 L-3,-3 Z" fill="#d9b25a" transform="rotate(45)" opacity={0.85} />
             </g>
+
+            {/* the first island is a painting (public/palais/map/island-one.webp),
+                with every room's frame and name already painted in; the stops
+                on it are just the places to press */}
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=10`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
 
             {/* the stops: a round gilt frame with the place inside */}
             {STOPS.map((s, i) => {
@@ -911,23 +954,52 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                     }
                   }}
                 >
+                  <g transform={PAINTED[s.id] && isleOf(s) === 0 ? `scale(${(PAINTED[s.id].r + 1) / (FRAME + 5)})` : undefined}>
                   <g className="wm-cameo">
                     {on && <circle className="wm-halo" r={FRAME + 24} fill="url(#wm-halo)" />}
                     <ellipse cy={FRAME - 2} rx={FRAME * 0.9} ry={10} fill="#2f3a2a" opacity={0.28} />
-                    <circle r={FRAME + 1} fill="#fffaf0" />
-                    <image
-                      href={picture(s, season)}
-                      x={-FRAME * 1.4}
-                      y={-FRAME}
-                      width={FRAME * 2.8}
-                      height={FRAME * 2}
-                      preserveAspectRatio="xMidYMid slice"
-                      clipPath="url(#wm-frame)"
-                    />
-                    <circle r={FRAME + 2} fill="none" stroke="var(--wm-jewel-side, #c9a44c)" strokeWidth={5} />
-                    <circle r={FRAME + 5} fill="none" stroke="#fffaf0" strokeWidth={1.2} opacity={0.9} />
+                    {s.id === "palace" ? (
+                      /* home is drawn as a little cartoon house, chimney and all */
+                      <>
+                        <rect x={FRAME * 0.42} y={-FRAME * 1.12} width={FRAME * 0.26} height={FRAME * 0.5} fill="var(--wm-jewel-side, #c9a44c)" stroke="#fffaf0" strokeWidth={1.2} />
+                        <path d={HOUSE(FRAME + 1)} fill="#fffaf0" />
+                        <image
+                          href={picture(s, season)}
+                          x={-FRAME * 1.4}
+                          y={-FRAME * 1.1}
+                          width={FRAME * 2.8}
+                          height={FRAME * 2.1}
+                          preserveAspectRatio="xMidYMid slice"
+                          clipPath="url(#wm-house)"
+                        />
+                        <path d={HOUSE(FRAME + 2)} fill="none" stroke="var(--wm-jewel-side, #c9a44c)" strokeWidth={5} strokeLinejoin="round" />
+                        <path d={HOUSE(FRAME + 5)} fill="none" stroke="#fffaf0" strokeWidth={1.2} strokeLinejoin="round" opacity={0.9} />
+                      </>
+                    ) : (
+                      <>
+                        <circle r={FRAME + 1} fill="#fffaf0" />
+                        <image
+                          href={picture(s, season)}
+                          x={-FRAME * 1.4}
+                          y={-FRAME}
+                          width={FRAME * 2.8}
+                          height={FRAME * 2}
+                          preserveAspectRatio="xMidYMid slice"
+                          clipPath="url(#wm-frame)"
+                        />
+                        <circle r={FRAME + 2} fill="none" stroke="var(--wm-jewel-side, #c9a44c)" strokeWidth={5} />
+                        <circle r={FRAME + 5} fill="none" stroke="#fffaf0" strokeWidth={1.2} opacity={0.9} />
+                      </>
+                    )}
                   </g>
-                  <g transform={`translate(0 ${FRAME + 22})`}>
+                  </g>
+                  <g
+                    transform={
+                      PAINTED[s.id] && isleOf(s) === 0
+                        ? `translate(${PAINTED[s.id].label[0]} ${PAINTED[s.id].label[1]})`
+                        : `translate(0 ${FRAME + 22})`
+                    }
+                  >
                     <rect
                       x={-w / 2}
                       y={-15}

@@ -7066,7 +7066,7 @@
   box-shadow: 0 3px 0 rgba(122, 90, 30, 0.35), 0 6px 16px rgba(10, 30, 70, 0.3);
   animation: wm-isle-bob 2.4s ease-in-out infinite;
 }
-.palais .wm-isle-arrow--down { bottom: 0.7rem; }
+.palais .wm-isle-arrow--down { top: 0.7rem; }
 .palais .wm-isle-arrow--up { top: 0.7rem; right: auto; left: 0.7rem; }
 .palais .wm-isle-arrow:hover { background: #fbe3ea; }
 @keyframes wm-isle-bob { 50% { transform: translateY(3px); } }
@@ -7079,3 +7079,11 @@
    hotspot near the edge, the map's island arrow), which slid the whole room
    sideways. "clip" hides the same and can't be scrolled at all. */
 .palais .palais-stage { overflow: clip; }
+
+/* the glowworms in the map's cave, twinkling */
+.palais .wm-glowworm { animation: wm-glowworm 2.6s ease-in-out infinite; }
+@keyframes wm-glowworm { 50% { opacity: 0.3; } }
+@media (prefers-reduced-motion: reduce) { .palais .wm-glowworm { animation: none; } }
+
+/* the ring of light round the picked room on the painted first island */
+.palais .wm-painted-ring { filter: drop-shadow(0 0 6px rgba(255, 230, 160, 0.95)); }
