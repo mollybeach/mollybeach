@@ -180,7 +180,7 @@ const STOPS: Stop[] = [
   {
     id: "caves",
     earth: [-38.3, 175.1],
-    name: "Hollow of Small Stars",
+    name: "Blue Cave",
     tag: "under the hills",
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],

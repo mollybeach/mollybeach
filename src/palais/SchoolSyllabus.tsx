@@ -444,22 +444,31 @@ export function SchoolSyllabus() {
                     <ol className="sc-how">
                       {HOW.map((h, i) => (
                         <li key={h.title}>
-                          <span className="sc-how-emoji" aria-hidden>
-                            {h.emoji}
-                          </span>
-                          <b>
-                            {i + 1}. {h.title}
-                          </b>
-                          <span>{h.text}</span>
+                          {/* a little window, like the brat code logo's: three
+                              dots in a pink title bar over mint-green grid */}
+                          <div className="sc-win-bar" aria-hidden>
+                            <i />
+                            <i />
+                            <i />
+                          </div>
+                          <div className="sc-win-body">
+                            <span className="sc-how-emoji" aria-hidden>
+                              {h.emoji}
+                            </span>
+                            <b>
+                              {i + 1}. {h.title}
+                            </b>
+                            <span>{h.text}</span>
+                          </div>
                         </li>
                       ))}
                     </ol>
                     <div className="sc-start">
                       <button type="button" className="sc-big" onClick={() => goTo("setup")}>
-                        💻 Set up my computer
+                        <Sprite name="heart" className="sc-big-heart" /> Set up my computer
                       </button>
                       <button type="button" className="sc-big sc-big--alt" onClick={() => goTo("path")}>
-                        🗺️ See the path
+                        <Sprite name="pinkHeart" className="sc-big-heart" /> See the path
                       </button>
                     </div>
                     <p className="sc-outro">

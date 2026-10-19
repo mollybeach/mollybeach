@@ -8,7 +8,7 @@ import { noteDoing } from "./visits";
  * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
  * in the Palais, Norah Jones in the Kitchen, Марк Бернес in the Boudoir,
  * Mild High Club in the Library, Charli xcx's brat at Brat Academy, and Lana
- * Del Rey out at Sunliner Halt, in the Hollow of Small Stars, the Jacaranda
+ * Del Rey out at Sunliner Halt, in the Blue Cave, the Jacaranda
  * Quarter and the Steaming Lagoon.
  *
  * The record spins while the album plays and stops when it's paused, and the

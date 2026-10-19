@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
  * a couple of rooms blossom instead of fluff: purple jacaranda petals in the
  * Jacaranda Quarter, and teeny pink cherry petals at the Lakehouse, through
  * spring and summer (and pink cherry petals at the Lantern Isles and Brat
- * Academy). In the Hollow of Small Stars the fluff glows blue, like
+ * Academy). In the Blue Cave the fluff glows blue, like
  * the glowworms, and drifts through spring and summer. On the Palais terrace
  * pink petals fall instead of cottonwood. The Rainwood never gets snow or
  * fluff: green leaves come down all year, turning to autumn colours in autumn.
