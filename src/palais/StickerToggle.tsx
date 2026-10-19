@@ -570,6 +570,9 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">Characters</span>
           <span className="palais-pill-short">Cast</span>
         </button>
+        {/* who you are: sign in or out with Google */}
+        <AccountPill />
+        {/* the settings, last, furthest right */}
         <button
           type="button"
           onClick={() => setSettings((v) => !v)}
@@ -581,8 +584,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         >
           <span aria-hidden className="palais-gear">⚙</span>
         </button>
-        {/* who you are: sign in or out with Google */}
-        <AccountPill />
       </div>
 
       {/* the settings drawer, sliding in from the right */}
