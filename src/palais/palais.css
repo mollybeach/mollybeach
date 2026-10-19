@@ -814,7 +814,9 @@
 }
 .palais .wm-panel {
   position: relative;
-  width: min(1120px, 100%);
+  /* as big as the window allows: the map (3:2) as tall as it can be, plus the
+     card beside it */
+  width: min(1900px, 100%, calc((100cqh - 9rem) * 1.5 + 22.5rem));
   /* never taller than the window: the card's words scroll inside it instead,
      so the Visit button is always in reach */
   max-height: calc(100cqh - 1.5rem);
