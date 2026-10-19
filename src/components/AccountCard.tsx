@@ -15,7 +15,7 @@ import { currentEditor, dbConfigured, onEditorChange, signInWith, signOut, type 
  * once you're in.
  */
 
-const GoogleG: React.FC<{ className?: string }> = ({ className }) => (
+export const GoogleG: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 48 48" className={className} aria-hidden>
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
     <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
@@ -24,12 +24,9 @@ const GoogleG: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-interface Props {
-  collapsed: boolean;
-  ink: string;
-}
-
-const AccountCard: React.FC<Props> = ({ collapsed, ink }) => {
+/** who's signed in, and the way in and out: shared by the sidebar's card and
+    the profile button in the Palais's top bar (Palais AccountPill) */
+export function useAccount() {
   const [me, setMe] = useState<Editor | null>(null);
   const [busy, setBusy] = useState(false);
   const [trouble, setTrouble] = useState('');
@@ -43,8 +40,6 @@ const AccountCard: React.FC<Props> = ({ collapsed, ink }) => {
       setBusy(false);
     });
   }, []);
-
-  if (!dbConfigured) return null;
 
   const signIn = async () => {
     setBusy(true);
@@ -65,6 +60,18 @@ const AccountCard: React.FC<Props> = ({ collapsed, ink }) => {
   };
 
   const first = me?.name?.split(' ')[0] || me?.email.split('@')[0] || '';
+  return { me, busy, trouble, signIn, leave, first, available: dbConfigured };
+}
+
+interface Props {
+  collapsed: boolean;
+  ink: string;
+}
+
+const AccountCard: React.FC<Props> = ({ collapsed, ink }) => {
+  const { me, busy, trouble, signIn, leave, first, available } = useAccount();
+  if (!available) return null;
+
   const face = me?.avatar ? (
     <img src={me.avatar} alt="" referrerPolicy="no-referrer" className="h-8 w-8 rounded-full object-cover ring-2 ring-white shadow" />
   ) : (

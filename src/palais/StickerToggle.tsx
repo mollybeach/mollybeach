@@ -18,6 +18,7 @@ import { RoomClothes } from "./RoomClothes";
 import { pickSticker, resizeSticker, usePicked, zoomOf } from "./Draggable";
 import { capture } from "./arrangement";
 import { saveSeasonDefault } from "./layoutsDb";
+import { AccountPill } from "./AccountPill";
 
 const EMPTY: string[] = [];
 
@@ -333,6 +334,15 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
 
   // pauses the year, and the furniture taking turns to vanish (Conjure)
   const [paused, setPaused] = useState(false);
+  // Skip, the seasons, the pattern and Hide live in a drawer on the right,
+  // behind the gear, so the bar along the top keeps to the places to go
+  const [settings, setSettings] = useState(false);
+  useEffect(() => {
+    if (!settings) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setSettings(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [settings]);
   const stage = () => switches.current?.closest(".palais-stage") ?? null;
 
   /* whatever sticker was last picked up in the room, and the four switches
@@ -511,39 +521,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             <span className="palais-pill-short">← Palais</span>
           </button>
         )}
-        {seasons && !frozen && (
-          <button
-            type="button"
-            onClick={skip}
-            aria-label={`Skip to ${upcoming}`}
-            className="palais-pill palais-pill--action"
-          >
-            <span className="palais-pill-long">
-              <SeasonMark season={upcoming} /> Skip
-            </span>
-            <span className="palais-pill-short">
-              <SeasonMark season={upcoming} />
-            </span>
-          </button>
-        )}
-        {seasons && !frozen && (
-          <button
-            type="button"
-            onClick={() => {
-              const next = !paused;
-              setPaused(next);
-              const scope = stage();
-              if (scope) holdSeasons(scope, next);
-            }}
-            aria-pressed={paused}
-            aria-label={paused ? "Play the seasons" : "Pause the seasons"}
-            title={paused ? "Let the year carry on" : `Stay in ${season}`}
-            className="palais-pill palais-pill--action"
-          >
-            <span className="palais-pill-long">{paused ? "▶ Seasons" : "❚❚ Seasons"}</span>
-            <span className="palais-pill-short" aria-hidden>{paused ? "▶" : "❚❚"}</span>
-          </button>
-        )}
         <button
           type="button"
           onClick={() => {
@@ -601,36 +578,77 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
-          onClick={() => nextFloral()}
-          aria-label="Change the floral patterns"
-          title="Change the floral patterns"
-          className="palais-pill palais-pill--floral"
+          onClick={() => setSettings((v) => !v)}
+          aria-expanded={settings}
+          aria-controls="palais-settings"
+          aria-label="Settings"
+          title="Settings"
+          className="palais-pill palais-pill--settings"
         >
-          <span className="palais-pill-long">
-            <span className="palais-floral-mark" aria-hidden>
-              ✿
-            </span>{" "}
-            Pattern
-          </span>
-          <span className="palais-pill-short" aria-hidden>
-            ✿
+          <span aria-hidden className="palais-gear">⚙</span>
+          <span className="palais-pill-long">Settings</span>
+        </button>
+        {/* who you are: sign in or out with Google */}
+        <AccountPill />
+      </div>
+
+      {/* the settings drawer, sliding in from the right */}
+      {settings && <div className="palais-settings-veil" onPointerDown={() => setSettings(false)} aria-hidden />}
+      <aside id="palais-settings" className={`palais-settings${settings ? " is-open" : ""}`} aria-label="Settings" aria-hidden={!settings}>
+        <div className="palais-settings-head">
+          <h2>✿ Settings</h2>
+          <button type="button" className="palais-settings-shut" onClick={() => setSettings(false)} aria-label="Close settings" tabIndex={settings ? 0 : -1}>
+            ×
+          </button>
+        </div>
+        {seasons && !frozen && (
+          <>
+            <button type="button" className="palais-setting" onClick={skip} tabIndex={settings ? 0 : -1}>
+              <span className="palais-setting-icon">
+                <SeasonMark season={upcoming} />
+              </span>
+              <span>
+                <b>Skip to {upcoming}</b>
+                <small>Turn every room on to the next season</small>
+              </span>
+            </button>
+            <button
+              type="button"
+              className="palais-setting"
+              aria-pressed={paused}
+              tabIndex={settings ? 0 : -1}
+              onClick={() => {
+                const next = !paused;
+                setPaused(next);
+                const scope = stage();
+                if (scope) holdSeasons(scope, next);
+              }}
+            >
+              <span className="palais-setting-icon" aria-hidden>{paused ? "▶" : "❚❚"}</span>
+              <span>
+                <b>{paused ? "Play the seasons" : "Pause the seasons"}</b>
+                <small>{paused ? "Let the year carry on" : `Stay in ${season}`}</small>
+              </span>
+            </button>
+          </>
+        )}
+        <button type="button" className="palais-setting" onClick={() => nextFloral()} tabIndex={settings ? 0 : -1}>
+          <span className="palais-setting-icon" aria-hidden>✿</span>
+          <span>
+            <b>Change the pattern</b>
+            <small>The florals on the sidebar, the buttons and the footer</small>
           </span>
         </button>
-        <button
-          type="button"
-          onClick={() => setRoom((v) => !v)}
-          aria-pressed={room}
-          aria-label={room ? "Hide the items" : "Show the items"}
-          className="palais-pill"
-        >
-          <span className="palais-pill-long">
-            <ChairMark /> {room ? "Hide" : "Show"}
-          </span>
-          <span className="palais-pill-short">
+        <button type="button" className="palais-setting" aria-pressed={!room} onClick={() => setRoom((v) => !v)} tabIndex={settings ? 0 : -1}>
+          <span className="palais-setting-icon">
             <ChairMark />
           </span>
+          <span>
+            <b>{room ? "Hide the items" : "Show the items"}</b>
+            <small>{room ? "Just the room, with nothing in it" : "Bring the furniture and stickers back"}</small>
+          </span>
         </button>
-      </div>
+      </aside>
 
       {/* the sticker layer: empty on arrival, then everything materialises */}
       <div
