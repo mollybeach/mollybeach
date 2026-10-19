@@ -220,7 +220,7 @@ const STOPS: Stop[] = [
     room: "sunliner",
   },
   /* ---- the second island, down the map: the Glasshouse, the Rainwood,
-     Madeleine, the Amphitheatre and the Strand, with the Lantern Isles and the Glass Reef
+     Madeleine, the Amphitheatre and the Shore, with the Lantern Isles and the Glass Reef
      on islets of their own ---- */
   {
     id: "garden",
@@ -312,7 +312,7 @@ const STOPS: Stop[] = [
   {
     id: "shore",
     earth: [36.4, 25.4],
-    name: "Strand",
+    name: "Shore",
     tag: "every beach at once",
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
@@ -908,7 +908,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                 painting's edges as a white line of beach */}
             {/* the second island is a painting too (public/palais/map/island-two.webp),
                 built from its rooms: the glasshouse, the Rainwood's falls, the
-                amphitheatre stage, the Strand's loggia, the lantern island and
+                amphitheatre stage, the Shore's loggia, the lantern island and
                 the reef pavilion under the sea */}
             <image href={`${process.env.PUBLIC_URL}/palais/map/island-two.webp?v=1`} x={25} y={25 + ISLE_DROP} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
             <g clipPath="url(#wm-island2)" display="none">
