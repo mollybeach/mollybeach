@@ -32,6 +32,9 @@ interface Stop {
   seed: number;
   /** out at sea, on its own island */
   islet?: boolean;
+  /** on the second island, down the map from the first; its `at` is measured
+      on that island the same way the first island's are */
+  isle?: 2;
   /** where it would be on Earth, if the island were the world */
   earth: [number, number];
   /** the room of the Palais you can walk into from here, if there is one yet */
@@ -53,36 +56,10 @@ const STOPS: Stop[] = [
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
-    at: [564, 424],
+    at: [500, 345],
     patch: [58, 42],
     seed: 7,
     room: "palace",
-  },
-  {
-    id: "kitchen",
-    earth: [46.97, -121.98],
-    name: "Kitchen",
-    tag: "just off the terrace",
-    blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
-    finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
-    color: "#f7b7a3",
-    at: [402, 418],
-    patch: [52, 38],
-    seed: 23,
-    room: "kitchen",
-  },
-  {
-    id: "lakehouse",
-    earth: [47.66, -122.26],
-    name: "Lakehouse",
-    tag: "where it began",
-    blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
-    finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
-    color: "#8fcbe8",
-    at: [598, 81],
-    patch: [80, 58],
-    seed: 11,
-    room: "lakehouse",
   },
   {
     id: "closet",
@@ -92,50 +69,10 @@ const STOPS: Stop[] = [
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
     color: "#ffb3d6",
-    at: [551, 215],
+    at: [612, 240],
     patch: [46, 38],
     seed: 23,
     room: "closet",
-  },
-  {
-    id: "domes",
-    earth: [41.0, 29.0],
-    name: "City of Domes",
-    tag: "the old city",
-    blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
-    finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
-    color: "#ffb99b",
-    at: [751, 189],
-    patch: [98, 66],
-    seed: 97,
-    room: "domes",
-  },
-  {
-    id: "lanterns",
-    earth: [34.9, 135.8],
-    name: "Lantern Isles",
-    tag: "by ferry",
-    blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
-    finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
-    color: "#ffab9e",
-    at: [866, 134],
-    patch: [56, 40],
-    seed: 131,
-    room: "lanterns",
-    islet: true,
-  },
-  {
-    id: "jacaranda",
-    earth: [-34.6, -58.4],
-    name: "Jacaranda Quarter",
-    tag: "night streets",
-    blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
-    finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
-    color: "#c9b3ff",
-    at: [861, 374],
-    patch: [52, 58],
-    seed: 103,
-    room: "jacaranda",
   },
   {
     id: "bathroom",
@@ -145,117 +82,23 @@ const STOPS: Stop[] = [
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
     finds: ["A clawfoot tub", "Glass-block windows", "Pink towels and jars of bath salts"],
     color: "#f3c6d8",
-    at: [698, 336],
+    at: [681, 385],
     patch: [48, 36],
     seed: 29,
     room: "bathroom",
   },
   {
-    id: "sunliner",
-    earth: [34.1, -116.3],
-    name: "Sunliner Halt",
-    tag: "where the desert kept the train",
-    blurb: "A journey that stopped short: the Sunliner came off the rails out in the desert past the city in 2023, and the desert kept it. The carriages have gone gold in the late sun, with ocotillo and prickly pear growing up through the ties.",
-    finds: ["Car 31025, still on its wheels", "Ocotillo in flower along the rails", "A rainbow over the mountains at sundown"],
-    color: "#f0a14e",
-    seasons: true,
-    at: [826, 494],
-    patch: [86, 54],
-    seed: 41,
-    room: "sunliner",
-  },
-  {
-    id: "school",
-    earth: [40.73, -73.99],
-    name: "Brat Academy",
-    tag: "where girls learn to code",
-    blurb: "A gilded classroom under a crystal chandelier, with lime iBooks on every desk, cherry blossom out the windows and the syllabus chalked up on the board. Molly teaches girls to code here: press the chalkboard for the courses.",
-    finds: ["The syllabus on the chalkboard", "Bratz busts along the shelves", "An iBook on every desk"],
-    color: "#ff9ccf",
-    at: [692, 530],
-    patch: [56, 40],
-    seed: 181,
-    room: "school",
-  },
-  {
-    id: "caves",
-    earth: [-38.3, 175.1],
-    name: "Blue Cave",
-    tag: "under the hills",
-    blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
-    finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
-    color: "#a9b8ff",
-    at: [460, 564],
-    patch: [92, 60],
-    seed: 71,
-    room: "caves",
-  },
-  {
-    id: "gorge",
-    earth: [37.6, 22.9],
-    name: "Amphitheatre",
-    tag: "the festival",
-    blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
-    finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
-    color: "#ffc978",
-    at: [318, 498],
-    patch: [92, 64],
-    seed: 83,
-    room: "gorge",
-  },
-  {
-    id: "reef",
-    earth: [-18.3, 147.7],
-    name: "Glass Reef",
-    tag: "out at sea",
-    blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
-    finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
-    color: "#6fd3e6",
-    at: [148, 556],
-    patch: [70, 36],
-    seed: 67,
-    room: "reef",
-    islet: true,
-  },
-  {
-    id: "shore",
-    earth: [36.4, 25.4],
-    name: "Strand",
-    tag: "every beach at once",
-    blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
-    finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
-    color: "#7fdccf",
-    at: [203, 447],
-    patch: [80, 100],
-    seed: 53,
-    room: "shore",
-  },
-  {
-    id: "garden",
-    earth: [46.4, -121.0],
-    name: "Glasshouse",
-    tag: "a garden conservatory",
-    blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
-    finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
-    color: "#b5dca8",
-    at: [227, 301],
-    patch: [56, 42],
-    seed: 31,
-    room: "garden",
-    seasons: true,
-  },
-  {
-    id: "rainwood",
-    earth: [10.3, -84.8],
-    name: "Rainwood",
-    tag: "moss & mist",
-    blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
-    finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
-    color: "#9fd88f",
-    at: [300, 380],
-    patch: [86, 70],
-    seed: 41,
-    room: "rainwood",
+    id: "kitchen",
+    earth: [46.97, -121.98],
+    name: "Kitchen",
+    tag: "just off the terrace",
+    blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
+    finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
+    color: "#f7b7a3",
+    at: [500, 475],
+    patch: [52, 38],
+    seed: 23,
+    room: "kitchen",
   },
   {
     id: "lagoon",
@@ -265,36 +108,10 @@ const STOPS: Stop[] = [
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
-    at: [227, 155],
+    at: [319, 385],
     patch: [104, 56],
     seed: 37,
     room: "lagoon",
-  },
-  {
-    id: "madeleine",
-    earth: [46.68, -121.98],
-    name: "Madeleine",
-    tag: "upstairs, facing the sea",
-    blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
-    finds: ["A mosaic floor of blue flowers", "Bougainvillea over the balcony", "The sunset path across the water"],
-    color: "#ffc2cf",
-    at: [394, 271],
-    patch: [48, 36],
-    seed: 151,
-    room: "madeleine",
-  },
-  {
-    id: "library",
-    earth: [43.65, -79.38],
-    name: "Library",
-    tag: "up the book stairs",
-    blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
-    finds: ["A spiral staircase made of books", "A globe and a rolling ladder", "Roses round the window over the lake"],
-    color: "#d9a066",
-    at: [97, 297],
-    patch: [48, 36],
-    seed: 167,
-    room: "library",
   },
   {
     id: "boudoir",
@@ -304,10 +121,206 @@ const STOPS: Stop[] = [
     blurb: "A gilded dressing room: lilac curtains swagged over tall windows, a chandelier over a marble floor, and a trifold mirror on the vanity with the roses outside coming in.",
     finds: ["A trifold mirror and a walnut vanity", "A blue tufted ottoman in the middle", "Candles on gilt sconces all round"],
     color: "#e6c2e0",
-    at: [402, 83],
+    at: [388, 240],
     patch: [46, 34],
     seed: 173,
     room: "boudoir",
+  },
+  {
+    id: "lakehouse",
+    earth: [47.66, -122.26],
+    name: "Lakehouse",
+    tag: "where it began",
+    blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
+    finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
+    color: "#8fcbe8",
+    at: [500, 120],
+    patch: [80, 58],
+    seed: 11,
+    room: "lakehouse",
+  },
+  {
+    id: "caves",
+    earth: [-38.3, 175.1],
+    name: "Blue Caves",
+    tag: "under the hills",
+    blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
+    finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
+    color: "#a9b8ff",
+    at: [766, 205],
+    patch: [92, 60],
+    seed: 71,
+    room: "caves",
+  },
+  {
+    id: "jacaranda",
+    earth: [-34.6, -58.4],
+    name: "Jacaranda Quarter",
+    tag: "night streets",
+    blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
+    finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
+    color: "#c9b3ff",
+    at: [831, 395],
+    patch: [52, 58],
+    seed: 103,
+    room: "jacaranda",
+  },
+  {
+    id: "school",
+    earth: [40.73, -73.99],
+    name: "Brat Academy",
+    tag: "where girls learn to code",
+    blurb: "A gilded classroom under a crystal chandelier, with lime iBooks on every desk, cherry blossom out the windows and the syllabus chalked up on the board. Molly teaches girls to code here: press the chalkboard for the courses.",
+    finds: ["The syllabus on the chalkboard", "Bratz busts along the shelves", "An iBook on every desk"],
+    color: "#ff9ccf",
+    at: [648, 548],
+    patch: [56, 40],
+    seed: 181,
+    room: "school",
+  },
+  {
+    id: "domes",
+    earth: [41.0, 29.0],
+    name: "City of Domes",
+    tag: "the old city",
+    blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
+    finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
+    color: "#ffb99b",
+    at: [352, 548],
+    patch: [98, 66],
+    seed: 97,
+    room: "domes",
+  },
+  {
+    id: "sunliner",
+    earth: [34.1, -116.3],
+    name: "Sunliner Train",
+    tag: "where the desert kept the train",
+    blurb: "A journey that stopped short: the Sunliner came off the rails out in the desert past the city in 2023, and the desert kept it. The carriages have gone gold in the late sun, with ocotillo and prickly pear growing up through the ties.",
+    finds: ["Car 31025, still on its wheels", "Ocotillo in flower along the rails", "A rainbow over the mountains at sundown"],
+    color: "#f0a14e",
+    seasons: true,
+    at: [169, 395],
+    patch: [86, 54],
+    seed: 41,
+    room: "sunliner",
+  },
+  {
+    id: "library",
+    earth: [43.65, -79.38],
+    name: "Library",
+    tag: "up the book stairs",
+    blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
+    finds: ["A spiral staircase made of books", "A globe and a rolling ladder", "Roses round the window over the lake"],
+    color: "#d9a066",
+    at: [234, 205],
+    patch: [48, 36],
+    seed: 167,
+    room: "library",
+  },
+  /* ---- the second island, down the map: the Glasshouse, the Rainwood,
+     Madeleine, the Amphitheatre and the Strand, with the Lantern Isles and the Glass Reef
+     on islets of their own ---- */
+  {
+    id: "garden",
+    earth: [46.4, -121.0],
+    name: "Glasshouse",
+    tag: "a garden conservatory",
+    blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
+    finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
+    color: "#b5dca8",
+    at: [195, 430],
+    patch: [56, 42],
+    seed: 31,
+    room: "garden",
+    seasons: true,
+    isle: 2,
+  },
+  {
+    id: "rainwood",
+    earth: [10.3, -84.8],
+    name: "Rainwood",
+    tag: "moss & mist",
+    blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
+    finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
+    color: "#9fd88f",
+    at: [300, 260],
+    patch: [86, 70],
+    seed: 41,
+    room: "rainwood",
+    isle: 2,
+  },
+  {
+    id: "madeleine",
+    earth: [46.68, -121.98],
+    name: "Madeleine",
+    tag: "upstairs, facing the sea",
+    blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
+    finds: ["A mosaic floor of blue flowers", "Bougainvillea over the balcony", "The sunset path across the water"],
+    color: "#ffc2cf",
+    at: [520, 140],
+    patch: [48, 36],
+    seed: 151,
+    room: "madeleine",
+    isle: 2,
+  },
+  {
+    id: "lanterns",
+    earth: [34.9, 135.8],
+    name: "Lantern Isles",
+    tag: "by ferry",
+    blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
+    finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
+    color: "#ffab9e",
+    at: [870, 150],
+    patch: [56, 40],
+    seed: 131,
+    room: "lanterns",
+    islet: true,
+    isle: 2,
+  },
+  {
+    id: "gorge",
+    earth: [37.6, 22.9],
+    name: "Amphitheatre",
+    tag: "the festival",
+    blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
+    finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
+    color: "#ffc978",
+    at: [680, 300],
+    patch: [92, 64],
+    seed: 83,
+    room: "gorge",
+    isle: 2,
+  },
+  {
+    id: "reef",
+    earth: [-18.3, 147.7],
+    name: "Glass Reef",
+    tag: "out at sea",
+    blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
+    finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
+    color: "#6fd3e6",
+    at: [905, 560],
+    patch: [70, 36],
+    seed: 67,
+    room: "reef",
+    islet: true,
+    isle: 2,
+  },
+  {
+    id: "shore",
+    earth: [36.4, 25.4],
+    name: "Strand",
+    tag: "every beach at once",
+    blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
+    finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
+    color: "#7fdccf",
+    at: [450, 470],
+    patch: [80, 100],
+    seed: 53,
+    room: "shore",
+    isle: 2,
   },
 ];
 
@@ -369,6 +382,22 @@ const inland = (x: number, y: number) => {
   const dy = (y - ISLAND.cy) / ISLAND.ry;
   return Math.hypot(dx, dy) / islandEdge(Math.atan2(dy, dx));
 };
+
+/** the second island, a whole map's height further down: the map slides down
+    to it and back. It's nearly as big as the first, with plenty of open
+    ground for rooms still to come: give a new stop `isle: 2` and an `at` on
+    it, measured the same way as the first island's */
+const ISLE_DROP = 680;
+const ISLAND2 = { cx: 500, cy: 345, rx: 410, ry: 268, seed: 9, amp: 0.08 };
+const island2Edge = wobble(ISLAND2.seed, ISLAND2.amp);
+const inland2 = (x: number, y: number) => {
+  const dx = (x - ISLAND2.cx) / ISLAND2.rx;
+  const dy = (y - ISLAND2.cy) / ISLAND2.ry;
+  return Math.hypot(dx, dy) / island2Edge(Math.atan2(dy, dx));
+};
+/** where a stop is on the whole, two-island map */
+const spot = (s: Stop): [number, number] => [s.at[0], s.at[1] + (s.isle === 2 ? ISLE_DROP : 0)];
+const isleOf = (s: Stop) => (s.isle === 2 ? 1 : 0);
 
 /** each stop's picture, in a round gilt frame */
 /** the rooms that are inside the Palais rather than places of their own */
@@ -481,6 +510,10 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   const [hover, setHover] = useState<number | null>(null);
   // the island, or the same places on a world that turns
   const [globe, setGlobe] = useState(false);
+  // which island is in view: the map slides down to the second one when
+  // Honeysuckle hops there, or when the arrow is pressed
+  const isle = isleOf(STOPS[here] ?? STOPS[0]);
+  const crossTo = (to: 0 | 1) => setHere(STOPS.findIndex((s) => isleOf(s) === to));
   const spots = useMemo(
     () =>
       STOPS.map((s) => ({
@@ -508,16 +541,18 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     const m = svg?.getScreenCTM();
     if (!svg || !m) return null;
     const pt = new DOMPoint(clientX, clientY).matrixTransform(m.inverse());
-    let best = 0;
+    let best = -1;
     let bestD = Infinity;
     STOPS.forEach((st, i) => {
-      const d = Math.hypot(st.at[0] - pt.x, st.at[1] - pt.y);
+      if (isleOf(st) !== isle) return;
+      const [sx, sy] = spot(st);
+      const d = Math.hypot(sx - pt.x, sy - (pt.y + isle * ISLE_DROP));
       if (d < bestD) {
         bestD = d;
         best = i;
       }
     });
-    return best;
+    return best < 0 ? null : best;
   };
 
   /** click anywhere: Honeysuckle hops to the nearest place; click the place
@@ -537,22 +572,33 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     const island = blob(I.cx, I.cy, I.rx, I.ry, I.seed, I.amp, 140);
     const beach = blob(I.cx, I.cy + 5, I.rx + 14, I.ry + 13, I.seed, I.amp, 140);
     const shallows = blob(I.cx, I.cy + 2, I.rx + 22, I.ry + 22, I.seed, I.amp, 140);
-    const islets = STOPS.filter((s) => s.islet).map((s) => ({
-      id: s.id,
-      at: s.at,
-      shallows: blob(s.at[0], s.at[1] + 6, FRAME + 58, FRAME + 44, s.seed + 1, 0.14, 48),
-      beach: blob(s.at[0], s.at[1] + 5, FRAME + 40, FRAME + 30, s.seed + 1, 0.14, 48),
-      land: blob(s.at[0], s.at[1] + 2, FRAME + 30, FRAME + 20, s.seed + 1, 0.14, 48),
-    }));
-    const meadows = STOPS.map((s) => blob(s.at[0], s.at[1], s.patch[0] + 16, s.patch[1] + 12, s.seed, 0.18, 48));
-    const trails = STOPS.slice(0, -1).map((s, i) => trail(s.at, STOPS[i + 1].at, i));
+    const J = ISLAND2;
+    const D = ISLE_DROP;
+    const island2 = blob(J.cx, J.cy + D, J.rx, J.ry, J.seed, J.amp, 120);
+    const beach2 = blob(J.cx, J.cy + D + 5, J.rx + 14, J.ry + 13, J.seed, J.amp, 120);
+    const shallows2 = blob(J.cx, J.cy + D + 2, J.rx + 22, J.ry + 22, J.seed, J.amp, 120);
+    const islets = STOPS.filter((s) => s.islet).map((s) => {
+      const [x, y] = spot(s);
+      return {
+        id: s.id,
+        shallows: blob(x, y + 6, FRAME + 58, FRAME + 44, s.seed + 1, 0.14, 48),
+        beach: blob(x, y + 5, FRAME + 40, FRAME + 30, s.seed + 1, 0.14, 48),
+        land: blob(x, y + 2, FRAME + 30, FRAME + 20, s.seed + 1, 0.14, 48),
+      };
+    });
+    const meadows = STOPS.map((s) => blob(spot(s)[0], spot(s)[1], s.patch[0] + 16, s.patch[1] + 12, s.seed, 0.18, 48));
+    // the path runs from stop to stop on each island; it doesn't swim
+    const trails = STOPS.slice(0, -1)
+      .map((s, i) => (isleOf(s) === isleOf(STOPS[i + 1]) ? trail(spot(s), spot(STOPS[i + 1]), i) : null))
+      .filter((d): d is string => Boolean(d));
 
     // keep trees, flowers and mountains off the pictures and their names
     const clear = (x: number, y: number, pad: number) =>
       STOPS.every((s) => {
-        if (Math.hypot(x - s.at[0], y - s.at[1]) < FRAME + 10 + pad) return false;
-        const ly = s.at[1] + FRAME + 22;
-        return !(Math.abs(x - s.at[0]) < labelWidth(s) / 2 + 8 + pad && Math.abs(y - ly) < 16 + pad);
+        const [sx, sy] = spot(s);
+        if (Math.hypot(x - sx, y - sy) < FRAME + 10 + pad) return false;
+        const ly = sy + FRAME + 22;
+        return !(Math.abs(x - sx) < labelWidth(s) / 2 + 8 + pad && Math.abs(y - ly) < 16 + pad);
       });
 
     const rand = rng(4242);
@@ -565,6 +611,15 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       if (trees.some((t) => Math.hypot(t.x - x, t.y - y) < 13)) continue;
       trees.push({ x, y, r: 6 + rand() * 4, kind: rand() < 0.45 ? 1 : 0, tone: rand() });
     }
+    // and a wood over the second island
+    for (let n = 0, made = 0; n < 4000 && made < 120; n++) {
+      const x = 100 + rand() * 800;
+      const y = 90 + rand() * 520;
+      if (inland2(x, y) > 0.88 || !clear(x, y + D, 6)) continue;
+      if (trees.some((t) => Math.hypot(t.x - x, t.y - (y + D)) < 13)) continue;
+      trees.push({ x, y: y + D, r: 6 + rand() * 4, kind: rand() < 0.45 ? 1 : 0, tone: rand() });
+      made++;
+    }
     trees.sort((a, b) => a.y - b.y);
 
     const flowers: { x: number; y: number; c: string }[] = [];
@@ -574,6 +629,13 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       const y = 85 + rand() * 545;
       if (inland(x, y) > 0.88 || !clear(x, y, 2)) continue;
       flowers.push({ x, y, c: PETALS[Math.floor(rand() * PETALS.length)] });
+    }
+    const flowers2: { x: number; y: number; c: string }[] = [];
+    for (let n = 0; n < 3000 && flowers2.length < 150; n++) {
+      const x = 100 + rand() * 800;
+      const y = 90 + rand() * 520;
+      if (inland2(x, y) > 0.86 || !clear(x, y + D, 2)) continue;
+      flowers2.push({ x, y: y + D, c: PETALS[Math.floor(rand() * PETALS.length)] });
     }
 
     // a range of snowy peaks in the north, and cliffs round the coast
@@ -597,10 +659,12 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       [610, 655, 9],
       [960, 560, 7],
     ];
-    const waves = Array.from({ length: 40 }, () => ({ x: 20 + rand() * 960, y: 16 + rand() * 650 })).filter(
-      (w) => ((w.x - I.cx) / (I.rx + 70)) ** 2 + ((w.y - I.cy) / (I.ry + 64)) ** 2 > 1,
+    const waves = Array.from({ length: 80 }, () => ({ x: 20 + rand() * 960, y: 16 + rand() * (650 + D) })).filter(
+      (w) =>
+        ((w.x - I.cx) / (I.rx + 70)) ** 2 + ((w.y - I.cy) / (I.ry + 64)) ** 2 > 1 &&
+        ((w.x - J.cx) / (J.rx + 70)) ** 2 + ((w.y - J.cy - D) / (J.ry + 64)) ** 2 > 1,
     );
-    return { island, beach, shallows, islets, meadows, trails, trees, flowers, peaks, rocks, seaRocks, waves };
+    return { island, beach, shallows, island2, beach2, shallows2, islets, meadows, trails, trees, flowers, flowers2, peaks, rocks, seaRocks, waves };
   }, []);
 
   useEffect(() => {
@@ -660,11 +724,6 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         /* the same cream paper over a floral as the catalogue */
         style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
       >
-        <Blossoms className="wm-bloom wm-bloom--tl" posy="tl" />
-        <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
-        <Blossoms className="wm-bloom wm-bloom--tr" posy="tr" />
-        <Blossoms className="wm-bloom wm-bloom--br" posy="br" />
-
         <div className="wm-title">
           <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
           <h2 id="wm-title">
@@ -727,13 +786,18 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               <clipPath id="wm-island">
                 <path d={art.island} />
               </clipPath>
+              <clipPath id="wm-island2">
+                <path d={art.island2} />
+              </clipPath>
               <clipPath id="wm-frame">
                 <circle r={FRAME} />
               </clipPath>
             </defs>
 
+            {/* everything below slides as one, up to show the second island */}
+            <g className="wm-world" style={{ transform: `translateY(${-isle * ISLE_DROP}px)` }}>
             {/* the sea */}
-            <rect x={0} y={0} width={1000} height={680} fill="url(#wm-sea)" />
+            <rect x={0} y={0} width={1000} height={680 + ISLE_DROP} fill="url(#wm-sea)" />
             {art.waves.map((w, i) => (
               <path key={i} d={`M${w.x.toFixed(0)},${w.y.toFixed(0)} q7,-5 14,0 t14,0`} fill="none" stroke="#e8f8ff" strokeOpacity={0.7} strokeWidth={1.8} strokeLinecap="round" />
             ))}
@@ -780,8 +844,20 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             <path d={art.shallows} fill="#5d8ae6" opacity={0.85} />
             <path d={art.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
             <path d={art.island} fill="url(#wm-grass)" />
+            {/* the second island, the same way */}
+            <path d={art.shallows2} fill="#5d8ae6" opacity={0.85} />
+            <path d={art.beach2} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
+            <path d={art.island2} fill="url(#wm-grass)" />
+            <g clipPath="url(#wm-island2)">
+              {STOPS.map((s, i) => (s.islet || s.isle !== 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
+              {/* a stream through the wood to the sea */}
+              <path d={`M520,${ISLE_DROP + 150} C560,${ISLE_DROP + 260} 520,${ISLE_DROP + 380} 600,${ISLE_DROP + 560}`} fill="none" stroke="#5fc0e0" strokeWidth={6} strokeLinecap="round" />
+              {art.flowers2.map((f, i) => (
+                <circle key={i} cx={f.x} cy={f.y} r={2.4} fill={f.c} />
+              ))}
+            </g>
             <g clipPath="url(#wm-island)">
-              {STOPS.map((s, i) => (s.islet ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
+              {STOPS.map((s, i) => (s.islet || s.isle === 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
               {/* a lake by the lakehouse, and a river down to the sea */}
               <path d="M470,190 C440,240 470,268 440,292" fill="none" stroke="#5fc0e0" strokeWidth={6} strokeLinecap="round" />
               <path d="M470,372 C520,410 600,470 640,500 C720,560 820,590 930,640" fill="none" stroke="#5fc0e0" strokeWidth={7} strokeLinecap="round" />
@@ -823,7 +899,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                 <g
                   key={s.id}
                   className={`wm-stop${on ? " is-on" : ""}${hover === i && !on ? " is-hover" : ""}`}
-                  transform={`translate(${s.at[0]} ${s.at[1]})`}
+                  transform={`translate(${spot(s)[0]} ${spot(s)[1]})`}
                   role="button"
                   tabIndex={0}
                   aria-label={s.name}
@@ -873,14 +949,26 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* Honeysuckle, hopping from stop to stop */}
             <g
               className="wm-player"
-              style={{ transform: `translate(${stop.at[0] + FRAME + 4}px, ${Math.max(stop.at[1] + 10, 146)}px)` }}
+              style={{ transform: `translate(${spot(stop)[0] + FRAME + 4}px, ${Math.max(spot(stop)[1] + 10, 146 + isle * ISLE_DROP)}px)` }}
             >
               <g className="wm-player-hop" key={here}>
                 <image href={propSrc("cat-honeysuckle")} x={-41} y={-104} width={82} height={104} />
               </g>
             </g>
+            </g>
           </svg>
           )}
+          {/* the way to the other island */}
+          {!globe &&
+            (isle === 0 ? (
+              <button type="button" className="wm-isle-arrow wm-isle-arrow--down" onClick={() => crossTo(1)}>
+                <span aria-hidden>▼</span> To the next island
+              </button>
+            ) : (
+              <button type="button" className="wm-isle-arrow wm-isle-arrow--up" onClick={() => crossTo(0)}>
+                <span aria-hidden>▲</span> Back to the Palais
+              </button>
+            ))}
         </div>
 
         <div

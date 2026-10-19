@@ -6812,7 +6812,7 @@
 /* ---------------------------------------------- the settings drawer ----
    Skip, the seasons, the pattern and Hide, behind the gear in the top bar:
    a cream panel in gilt that slides in from the right of the room. */
-.palais .palais-gear { display: inline-block; font-size: 1.1em; line-height: 1; transition: transform 400ms ease; }
+.palais .palais-gear { display: inline-block; font-size: 1.4em; line-height: 1; transition: transform 400ms ease; }
 .palais .palais-pill--settings[aria-expanded="true"] .palais-gear { transform: rotate(90deg); }
 .palais .palais-settings-veil {
   position: fixed;
@@ -6994,8 +6994,11 @@
   font-size: 0.75rem;
 }
 .palais .palais-me-face--blank { box-shadow: none; }
-.palais .palais-me-veil { position: fixed; inset: 0; z-index: 115; }
+/* the top bar lets clicks through everywhere but its pills, and the card and
+   its veil live inside it, so they take clicks back */
+.palais .palais-me-veil { position: fixed; inset: 0; z-index: 115; pointer-events: auto; }
 .palais .palais-me-card {
+  pointer-events: auto;
   position: fixed;
   top: 4.2rem;
   right: 1rem;
@@ -7040,3 +7043,39 @@
 .palais .palais-me-action:hover { background: #f6ecd6; }
 .palais .palais-me-action:disabled { opacity: 0.6; cursor: default; }
 .palais .palais-me-g { width: 1.2rem; height: 1.2rem; }
+
+/* ---- the map's two islands: the whole map slides up to show the second one,
+   and an arrow in the corner of the map goes between them */
+.palais .wm-stage { position: relative; }
+.palais .wm-world { transition: transform 750ms cubic-bezier(0.65, 0, 0.25, 1); }
+@media (prefers-reduced-motion: reduce) { .palais .wm-world { transition: none; } }
+.palais .wm-isle-arrow {
+  position: absolute;
+  right: 0.7rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 2px solid var(--wm-gold, #cfa956);
+  background: rgba(255, 250, 240, 0.95);
+  color: #4a2f36;
+  font: 700 0.85rem / 1.2 "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(122, 90, 30, 0.35), 0 6px 16px rgba(10, 30, 70, 0.3);
+  animation: wm-isle-bob 2.4s ease-in-out infinite;
+}
+.palais .wm-isle-arrow--down { bottom: 0.7rem; }
+.palais .wm-isle-arrow--up { top: 0.7rem; right: auto; left: 0.7rem; }
+.palais .wm-isle-arrow:hover { background: #fbe3ea; }
+@keyframes wm-isle-bob { 50% { transform: translateY(3px); } }
+.palais .wm-isle-arrow--up { animation-name: wm-isle-bob-up; }
+@keyframes wm-isle-bob-up { 50% { transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .palais .wm-isle-arrow { animation: none; } }
+
+/* The room never scrolls. It hides what spills past its edges, but "hidden"
+   still lets the browser scroll it to bring a focused button into view (a
+   hotspot near the edge, the map's island arrow), which slid the whole room
+   sideways. "clip" hides the same and can't be scrolled at all. */
+.palais .palais-stage { overflow: clip; }

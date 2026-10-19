@@ -223,7 +223,7 @@ export function LibraryImac({ room = "library" }: { room?: "library" | "school" 
                                     close();
                                   }}
                                 >
-                                  {room === "palace" ? "The Palais" : room === "sunliner" ? "Sunliner Halt" : room[0].toUpperCase() + room.slice(1)}
+                                  {room === "palace" ? "The Palais" : room === "sunliner" ? "Sunliner Train" : room[0].toUpperCase() + room.slice(1)}
                                 </button>
                               </li>
                             ))}

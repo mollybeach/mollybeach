@@ -515,6 +515,31 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
             )}
           </span>
         )}
+        {/* the map first, furthest left */}
+        <button
+          type="button"
+          onClick={() => setMap(true)}
+          aria-haspopup="dialog"
+          aria-label="Open the world map"
+          className="palais-pill palais-pill--map"
+        >
+          <svg
+            className="palais-map-icon"
+            viewBox="0 0 24 24"
+            aria-hidden
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.7}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3.4 6.6 9 4.2l6 2.4 5.6-2.4v13.2L15 19.8l-6-2.4-5.6 2.4Z" />
+            <path d="M9 4.2v13.2M15 6.6v13.2" />
+            <path d="M10.9 10.9l2.2 2.2m0-2.2-2.2 2.2" />
+          </svg>
+          <span className="palais-pill-long">Map</span>
+          <span className="palais-pill-short">Map</span>
+        </button>
         {!inPalace && (
           <button type="button" onClick={() => go("palace")} className="palais-pill palais-pill--home" aria-label="Back to the Palais">
             <span className="palais-pill-long">← Palais</span>
@@ -540,30 +565,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         </button>
         <button
           type="button"
-          onClick={() => setMap(true)}
-          aria-haspopup="dialog"
-          aria-label="Open the world map"
-          className="palais-pill palais-pill--map"
-        >
-          <svg
-            className="palais-map-icon"
-            viewBox="0 0 24 24"
-            aria-hidden
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.7}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M3.4 6.6 9 4.2l6 2.4 5.6-2.4v13.2L15 19.8l-6-2.4-5.6 2.4Z" />
-            <path d="M9 4.2v13.2M15 6.6v13.2" />
-            <path d="M10.9 10.9l2.2 2.2m0-2.2-2.2 2.2" />
-          </svg>
-          <span className="palais-pill-long">Map</span>
-          <span className="palais-pill-short">Map</span>
-        </button>
-        <button
-          type="button"
           onClick={() => {
             setCast(true);
             noteDoing("characters");
@@ -586,7 +587,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           className="palais-pill palais-pill--settings"
         >
           <span aria-hidden className="palais-gear">⚙</span>
-          <span className="palais-pill-long">Settings</span>
         </button>
         {/* who you are: sign in or out with Google */}
         <AccountPill />
