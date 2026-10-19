@@ -258,8 +258,9 @@ export function SchoolSyllabus() {
   const prof = useRef<HTMLButtonElement>(null);
   const apple = useRef<HTMLButtonElement>(null);
   const badge = useRef<HTMLButtonElement>(null);
-  // the professor only comes in when someone presses the apple on her desk
-  const [called, setCalled] = useState(false);
+  // the professor is in her classroom to begin with; the apple on her desk
+  // sends her away, and calls her back
+  const [called, setCalled] = useState(true);
   const body = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("welcome");
@@ -355,7 +356,7 @@ export function SchoolSyllabus() {
         title="Professor Beach Babe"
         onClick={() => setOpen(true)}
       >
-        <Sprite name="professor" />
+        <img src={`${process.env.PUBLIC_URL}/palais/professor.webp`} alt="" draggable={false} />
       </button>
       <span ref={sig} aria-hidden className="palais-chalk-sig">
         – Professor Beach Babe

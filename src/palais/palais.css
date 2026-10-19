@@ -4242,9 +4242,9 @@
   outline-offset: 3px;
 }
 
-/* Professor Beach Babe herself, a pixel doll by the lamp. She's only there
-   once the apple on her desk has been pressed (and goes again when it's
-   pressed again); she sways a little, and pressing her opens the syllabus */
+/* Professor Beach Babe herself, by the lamp. She's there to begin with, and
+   the apple on her desk sends her away (and calls her back); she sways a
+   little, and pressing her opens the syllabus */
 .palais .palais-professor {
   position: absolute;
   z-index: 6;
@@ -4267,6 +4267,7 @@
 @keyframes prof-in { from { opacity: 0; transform: translateY(18%) scale(0.6); } }
 .palais .palais-professor .sc-sprite { display: block; width: 100%; height: 100%; }
 .palais .palais-professor .sc-sprite svg { width: 100%; height: 100%; }
+.palais .palais-professor img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
 @keyframes prof-sway { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg) translateY(-2px); } }
 @media (hover: hover) {
   .palais .palais-professor:hover { animation-play-state: paused; transform: scale(1.06); }
