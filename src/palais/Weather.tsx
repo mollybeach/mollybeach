@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
  * Snow in winter, falling leaves in autumn, cottonwood fluff in summer, and in
  * a couple of rooms blossom instead of fluff: purple jacaranda petals in the
  * Jacaranda Quarter, and teeny pink cherry petals at the Lakehouse, through
- * spring and summer (and pink cherry petals at the Lantern Isles). In the Hollow of Small Stars the fluff glows blue, like
+ * spring and summer (and pink cherry petals at the Lantern Isles and Brat
+ * Academy). In the Hollow of Small Stars the fluff glows blue, like
  * the glowworms, and drifts through spring and summer. On the Palais terrace
  * pink petals fall instead of cottonwood. The Rainwood never gets snow or
  * fluff: green leaves come down all year, turning to autumn colours in autumn.
@@ -74,6 +75,8 @@ const BLOOMS: Record<string, { colours: string[]; size: [number, number]; count:
   lanterns: { colours: ["#f7b8cf", "#fbcadb", "#f19bbb", "#fde3ec", "#f4a8c4"], size: [3.2, 5.6], count: 1.1 },
   // cherry blossom: teeny pale-pink petals
   lakehouse: { colours: ["#f4b3c9", "#f8c9d9", "#ee9fbc", "#fbd6e3", "#f2a9c3"], size: [2.8, 4.8], count: 1.5 },
+  // Brat Academy: cherry blossom in from the windows, a brighter Bratz pink
+  school: { colours: ["#ffb3d6", "#ff9ccf", "#ffc8e2", "#f78bbf", "#ffd9ea"], size: [3.2, 5.6], count: 1.1 },
 };
 
 const LEAF_COLOURS = ["#b83a14", "#d2691e", "#e09a24", "#9c2a12", "#c8871b", "#8a4a1c", "#e3b23c"];

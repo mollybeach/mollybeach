@@ -12,15 +12,19 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * opens the same room.
  */
 
-export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner"] as const;
+export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner", "school"] as const;
 export type Place = (typeof PLACES)[number];
 
 /** what comes after the room in the address: #closet/dress opens the dress
     form in the Wardrobe Wing. Rooms that have nothing to open ignore it. */
 export const hashExtra = () => window.location.hash.replace("#", "").split("/")[1] ?? "";
 
+/** other names a room answers to in the address: #bratz is Brat Academy */
+const ALSO: Record<string, Place> = { bratz: "school" };
+
 const fromHash = (): Place => {
   const h = window.location.hash.replace("#", "").split("/")[0];
+  if (ALSO[h]) return ALSO[h];
   return (PLACES as readonly string[]).includes(h) ? (h as Place) : "palace";
 };
 
@@ -72,4 +76,5 @@ export const PLACE_NAMES: Record<Place, string> = {
   library: "The Library",
   boudoir: "The Boudoir",
   sunliner: "Sunliner Halt",
+  school: "Brat Academy",
 };

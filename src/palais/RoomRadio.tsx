@@ -7,8 +7,9 @@ import { noteDoing } from "./visits";
  * The record player: a turntable in the corner of a room, with whatever album
  * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
  * in the Palais, Norah Jones in the Kitchen, Марк Бернес in the Boudoir,
- * Mild High Club in the Library, and Lana Del Rey out at Sunliner Halt, in the
- * Hollow of Small Stars, the Jacaranda Quarter and the Steaming Lagoon.
+ * Mild High Club in the Library, Charli xcx's brat at Brat Academy, and Lana
+ * Del Rey out at Sunliner Halt, in the Hollow of Small Stars, the Jacaranda
+ * Quarter and the Steaming Lagoon.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Browsers won't start
@@ -31,6 +32,8 @@ interface Disc {
   video: string;
   name: string;
   title: string;
+  /** a YouTube playlist to play on from the video, the whole album in order */
+  list?: string;
   /** stands as the little brass knob until it's tapped, even on a wide screen */
   folded?: boolean;
 }
@@ -49,6 +52,8 @@ const RECORDS: Partial<Record<Place, Disc>> = {
   jacaranda: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
   lagoon: { video: "iMlYVT0Rwco", name: "Lana Del Rey", title: "Born to Die", folded: true },
   library: { video: "RDNymaNBy2I", name: "Mild High Club", title: "Skiptracing", folded: true },
+  // brat, from 360 on through the album
+  school: { video: "nI6GP8wKJ6o", list: "PLsiiNfmWVgnmemtL64pU3eXP3It4jNplw", name: "Charli xcx", title: "brat", folded: true },
 };
 
 type YTPlayer = {
@@ -66,7 +71,7 @@ type YTApi = {
       host: string;
       width: number;
       height: number;
-      playerVars: Record<string, number>;
+      playerVars: Record<string, number | string>;
       events: { onReady?: () => void; onStateChange: (e: { data: number }) => void };
     },
   ) => YTPlayer;
@@ -182,7 +187,9 @@ function Turntable({ disc }: { disc: Disc }) {
         host: "https://www.youtube-nocookie.com",
         width: 200,
         height: 200,
-        playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
+        // an album with a playlist plays on through it and starts over at the
+        // end by itself
+        playerVars: { rel: 0, playsinline: 1, modestbranding: 1, ...(disc.list ? { listType: "playlist", list: disc.list, loop: 1 } : {}) },
         events: {
           onReady: () => {
             if (!asked.current) return;     // the page was clicked while it was folded
@@ -194,8 +201,9 @@ function Turntable({ disc }: { disc: Disc }) {
             // worth knowing that someone put the record on (visits.ts)
             if (e.data === PLAYING) noteDoing("record", disc.name);
             // the record repeats: when it reaches the end, drop the needle back
-            // at the start and play it again
-            if (e.data === ENDED) {
+            // at the start and play it again (a playlist loops by itself, and
+            // ends each track on its way to the next)
+            if (e.data === ENDED && !disc.list) {
               player.current?.seekTo(0, true);
               player.current?.playVideo();
             }
@@ -209,7 +217,7 @@ function Turntable({ disc }: { disc: Disc }) {
       player.current = null;
       setPlaying(false);
     };
-  }, [open, shelf, disc.video, disc.name]);
+  }, [open, shelf, disc.video, disc.list, disc.name]);
 
   /* any click — or, on a phone, any tap — puts the record on, once. Touches on
      the deck itself are its own business: that's how it gets stopped.

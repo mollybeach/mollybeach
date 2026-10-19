@@ -117,6 +117,9 @@ export async function saveSeasonDefault(
 
 export interface Editor {
   email: string;
+  /** what Google (or Apple) calls them, and their picture, if it says */
+  name?: string;
+  avatar?: string;
   /** listed in palais_editors, so the database will accept saves */
   canSave: boolean;
 }
@@ -124,7 +127,13 @@ export interface Editor {
 async function editorOf(sb: SupabaseClient, session: Session | null): Promise<Editor | null> {
   if (!session) return null;
   const { data } = await sb.rpc("palais_is_editor");
-  return { email: session.user.email ?? "", canSave: data === true };
+  const meta = session.user.user_metadata ?? {};
+  return {
+    email: session.user.email ?? "",
+    name: meta.full_name ?? meta.name ?? undefined,
+    avatar: meta.avatar_url ?? meta.picture ?? undefined,
+    canSave: data === true,
+  };
 }
 
 export async function currentEditor(): Promise<Editor | null> {

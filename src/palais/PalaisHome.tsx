@@ -19,6 +19,7 @@ import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
 import { GlobeEgg } from "./GlobeEgg";
+import { SchoolSyllabus } from "./SchoolSyllabus";
 import { LibraryImac } from "./LibraryImac";
 import { RoomRadio } from "./RoomRadio";
 import { LettersDrawer, LibraryLetters } from "./LibraryLetters";
@@ -176,6 +177,7 @@ export default function PalaisHome() {
           <SeasonRoom place="library" />
           <SeasonRoom place="boudoir" />
           <SeasonRoom place="sunliner" />
+          <SeasonRoom place="school" />
           {/* the clothes in the Wardrobe Wing */}
           <Wardrobe />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
@@ -361,8 +363,12 @@ export default function PalaisHome() {
           <Draggable />
           {/* the globe in the library, for anyone who thinks to click it */}
           <GlobeEgg />
+          {/* the chalkboard at Brat Academy opens the syllabus */}
+          <SchoolSyllabus />
           {/* and the iMac on its desk, which opens when you click it */}
           <LibraryImac />
+          {/* the iBook on the teacher's desk at Brat Academy opens the same desktop */}
+          <LibraryImac room="school" />
           {/* and a record player in several rooms, each with its own album
               (RoomRadio) */}
           <RoomRadio />

@@ -49,6 +49,9 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // the derailed Sunliner out in the desert, four times over, with a tall one
   // of each for a phone
   sunliner: { file: "sunliner", focus: "50% 55%", portrait: "seasons" },
+  // Brat Academy: the classroom where Molly tutors girls to code, four times
+  // over, with a tall one of each for a phone
+  school: { file: "school", focus: "50% 55%", portrait: "seasons" },
 };
 
 /**

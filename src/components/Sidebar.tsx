@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { floralSrc, paletteOf, useFloral } from '../palais/florals';
 import { NavLink, useLocation } from 'react-router-dom';
+import AccountCard from './AccountCard';
 import {
   HomeIcon,
   UserCircleIcon,
@@ -221,6 +222,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
           </NavLink>
         ))}
       </nav>
+
+      {/* signing in and out with Google, on every page */}
+      <AccountCard collapsed={collapsed} ink={palette.ink} />
 
       {/* fold or open the sidebar (wide screens) */}
       <button

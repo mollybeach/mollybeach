@@ -7,6 +7,7 @@ import { propSrc } from "./props";
 import { hashExtra, usePlace } from "./place";
 import { usePortrait } from "./PortraitTerrace";
 import { GifMaker } from "./GifMaker";
+import { placeOver, schoolSpot } from "./schoolSpots";
 
 /**
  * The iMac on the library desk.
@@ -16,6 +17,10 @@ import { GifMaker } from "./GifMaker";
  * it comes up close, with a screen you can actually use — a menu bar, icons,
  * and little windows that open on it. There's not much on it yet; the point is
  * that there's somewhere for things to go.
+ *
+ * The lime iBook on the teacher's desk at Brat Academy opens the very same
+ * desktop. That one is already in the photograph, so it gets a glow to point
+ * at rather than a sticker.
  */
 
 /** where the iMac stands on the desk, as a fraction of the library photograph */
@@ -36,16 +41,16 @@ const UP_CLOSE = "computer_imac_g3_lime_green_front_facing_sticker" as const;
 const MONITOR = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_green_monitor.webp`;
 const KEYBOARD = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_green_keyboard_mouse.webp`;
 
-/* mollybeach.app/mac (and #library/mac) sits you straight down at it */
+/* mollybeach.app/mac (and #library/mac, or #school/mac) sits you straight down at it */
 const AT_THE_MAC = () => /^mac/.test(hashExtra());
 
 type App = "readme" | "rooms" | "gifs" | null;
 
 const TITLES = { readme: "Read me", rooms: "The rooms", gifs: "GIF maker" } as const;
 
-export function LibraryImac() {
+export function LibraryImac({ room = "library" }: { room?: "library" | "school" }) {
   const { place, go } = usePlace();
-  const here = place === "library";
+  const here = place === room;
   const mac = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(() => here && AT_THE_MAC());
   const tall = usePortrait();
@@ -60,11 +65,15 @@ export function LibraryImac() {
     const stage = el?.closest<HTMLElement>(".palais-stage");
     if (!el || !stage || !here) return;
     const fit = () => {
-      const img = Array.from(stage.querySelectorAll<HTMLImageElement>(".palais-room--library img"))
+      const img = Array.from(stage.querySelectorAll<HTMLImageElement>(`.palais-room--${room} img`))
         .filter((i) => i.naturalWidth)
         .sort((a, b) => (parseFloat(getComputedStyle(b).opacity) || 0) - (parseFloat(getComputedStyle(a).opacity) || 0))[0];
       if (!img) return;
       const box = coverBox(img, stage);
+      if (room === "school") {
+        placeOver(el, box, schoolSpot(img, "ibook"), stage);
+        return;
+      }
       const w = box.w * ON_THE_DESK.w;
       const h = w * 0.839; // the sticker's own shape
       el.style.width = `${w}px`;
@@ -80,14 +89,14 @@ export function LibraryImac() {
       watch.disconnect();
       clearInterval(id);
     };
-  }, [here]);
+  }, [here, room]);
 
   /* the address says whether you're at the iMac, so it can be sent to someone */
   useEffect(() => {
     if (!here) return setOpen(false);
-    const want = open ? "#library/mac" : "#library";
+    const want = open ? `#${room}/mac` : `#${room}`;
     if (window.location.hash !== want) window.history.replaceState(window.history.state, "", want);
-  }, [open, here]);
+  }, [open, here, room]);
   useEffect(() => {
     const onHash = () => AT_THE_MAC() && setOpen(true);
     window.addEventListener("hashchange", onHash);
@@ -112,12 +121,12 @@ export function LibraryImac() {
       <button
         ref={mac}
         type="button"
-        className="palais-imac-spot"
-        aria-label="The iMac on the desk"
-        title="The iMac"
+        className={room === "school" ? "palais-imac-spot palais-imac-spot--photo" : "palais-imac-spot"}
+        aria-label={room === "school" ? "The iBook on the teacher's desk" : "The iMac on the desk"}
+        title={room === "school" ? "The iBook" : "The iMac"}
         onClick={() => setOpen(true)}
       >
-        <img src={propSrc(ON_DESK)} alt="" />
+        {room === "library" && <img src={propSrc(ON_DESK)} alt="" />}
       </button>
 
       {open && (
@@ -200,7 +209,7 @@ export function LibraryImac() {
                           <GifMaker />
                         ) : app === "readme" ? (
                           <p>
-                            Molly's iMac, on the desk in the library. Nothing much is installed yet — the point is that
+                            Molly's iMac, on the desk in the {room === "school" ? "classroom" : "library"}. Nothing much is installed yet — the point is that
                             there's a screen here now, so there's somewhere for things to go.
                           </p>
                         ) : (

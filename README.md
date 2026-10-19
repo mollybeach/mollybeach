@@ -1,7 +1,7 @@
 <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="812" src="./assets/title.svg" alt="Molly Beach : Portfolio. A digital fabric of my life."/></a>
 <p>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="355" src="docs/readme-palais.webp" alt="The Palais: the home page of the portfolio, turning through all four seasons"/></a>
-  <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="235" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
+  <a href="https://mollybeach.app/bratz?from=githubreadme" target="_blank" rel="noopener"><img align="left" width="235" src="./assets/bratcode.svg" alt="Powered by BratCode"/></a>
   <a href="https://mollybeach.app/?from=githubreadme" target="_blank" rel="noopener"><img width="180" alt="Visit mollybeach.app — portfolio &amp; the Palais. Visitors, and about.txt." src="https://qducnvdzikeyitzjcpmp.supabase.co/functions/v1/github-visits?badge=profile&amp;label=visitors&amp;style=swap"/></a>
 </p>
 <p align="center">
