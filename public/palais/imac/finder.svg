@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="l" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9f5ff"/>
+      <stop offset="1" stop-color="#b9dcf7"/>
+    </linearGradient>
+    <linearGradient id="r" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#43a8f5"/>
+      <stop offset="1" stop-color="#1366d6"/>
+    </linearGradient>
+    <clipPath id="tile"><rect x="16" y="16" width="480" height="480" rx="108"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect x="16" y="16" width="480" height="480" fill="url(#r)"/>
+    <!-- the light half, its edge the profile of the face -->
+    <path d="M16 16H262C250 80 236 140 228 200C222 244 236 262 262 268C244 300 236 344 240 400C242 440 250 470 258 496H16Z" fill="url(#l)"/>
+  </g>
+  <g fill="none" stroke="#11233b" stroke-width="22" stroke-linecap="round">
+    <path d="M168 152V210"/>
+    <path d="M344 152V210"/>
+    <path d="M140 340C200 384 312 384 372 340"/>
+  </g>
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="4"/>
+</svg>

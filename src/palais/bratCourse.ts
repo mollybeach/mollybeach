@@ -282,6 +282,12 @@ export const RANKS: { at: number; name: string; note: string }[] = [
   { at: 1, name: "Brat Academy Graduate", note: "You did the whole thing. Go get that tech bag." },
 ];
 
+/** school materials from elsewhere on the web, each with its site's own icon:
+    in the binder's Cheat Sheets, and the School folder on the iMac */
+export const MATERIALS: { name: string; href: string; icon: string }[] = [
+  { name: "JavaScript cheat sheet", href: "https://htmlcheatsheet.com/js/", icon: `${process.env.PUBLIC_URL}/palais/imac/htmlcheatsheet-js.png` },
+];
+
 /** the brainbook's study guides, by shelf */
 export const SHEETS: { shelf: string; emoji: string; items: { name: string; href: string }[] }[] = [
   {

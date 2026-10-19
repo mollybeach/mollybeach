@@ -4,7 +4,7 @@ import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
 import { placeOver, schoolSpot } from "./schoolSpots";
 import { GUIDES, type Guide } from "./setupGuides";
-import { COURSES, RANKS, SHEETS, UNITS, type Unit } from "./bratCourse";
+import { COURSES, MATERIALS, RANKS, SHEETS, UNITS, type Unit } from "./bratCourse";
 import { SPRITES, type SpriteName } from "./bratSprites";
 
 /**
@@ -539,6 +539,14 @@ export function SchoolSyllabus() {
                         All of it on GitHub ↗
                       </a>
                     </p>
+                    <div className="sc-materials">
+                      {MATERIALS.map((m) => (
+                        <a key={m.href} className="sc-material" href={m.href} target="_blank" rel="noreferrer">
+                          <img src={m.icon} alt="" />
+                          <span>{m.name} ↗</span>
+                        </a>
+                      ))}
+                    </div>
                     <div className="sc-shelves">
                       {SHEETS.map((shelf) => (
                         <section key={shelf.shelf} className="sc-shelf">

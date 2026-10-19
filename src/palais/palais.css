@@ -4852,8 +4852,11 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75), 0 0 4px rgba(0, 0, 0, 0.4);
   transition: transform 160ms ease;
 }
-.palais .imac-dock-app img { width: 3.6em; height: 3.6em; display: block; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); }
+.palais .imac-dock-app img { width: 3.6em; height: 3.6em; min-width: 3.6em; aspect-ratio: 1; display: block; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); }
 .palais .imac-dock-app { padding: 0; border: none; background: none; font: inherit; cursor: pointer; }
+.palais .imac-dock-app > span:last-child { white-space: nowrap; }
+.palais .imac-dock-app img.imac-dock-pixel { image-rendering: pixelated; object-fit: contain; padding: 0.35em; box-sizing: border-box; border-radius: 0.8em; background: rgba(255, 255, 255, 0.85); }
+.palais .imac-dock-emoji--film { background: linear-gradient(160deg, #fff4d6, #f2c96b); }
 .palais .imac-dock-emoji--thread { background: linear-gradient(160deg, #ffe0ec, #f6a9c6); }
 .palais .imac-dock-emoji {
   display: grid;
@@ -4912,6 +4915,49 @@
 .palais .split-copy:hover { background: #eef6e8; }
 .palais .split-copy.is-done { background: #4d9a35; color: #fffdf4; }
 
+/* the projects: a grid of app icons down the left of the desktop, clear of
+   the column of icons on the right and the dock at the foot */
+.palais .imac-apps {
+  position: absolute;
+  top: 2.4em;
+  left: 0.7em;
+  right: 0.7em;
+  bottom: 6.2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4.7em, 1fr));
+  align-content: start;
+  gap: 0.3em 0.2em;
+  overflow: auto;
+  font: 600 clamp(6px, 1.5cqw, 11px) var(--cat-round, inherit);
+}
+.palais .imac-app {
+  display: grid;
+  justify-items: center;
+  gap: 0.2em;
+  padding: 0.2em;
+  border-radius: 6px;
+  color: #fffdf4;
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.palais .imac-app--readme { border: none; background: none; font: inherit; cursor: pointer; }
+.palais .imac-app-emoji { display: grid; place-items: center; width: 1.4em; height: 1.4em; font-size: 2.05em; line-height: 1; }
+.palais .imac-app img {
+  width: 2.9em;
+  height: 2.9em;
+  object-fit: cover;
+  object-position: top left;
+  border-radius: 0.8em;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: #fffdf4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+/* an app's own icon is shown whole */
+.palais .imac-app img.is-own { object-fit: contain; object-position: center; border: none; background: none; box-shadow: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); }
+.palais .imac-app span { max-width: 100%; text-align: center; line-height: 1.15; white-space: pre-line; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+@media (hover: hover) {
+  .palais .imac-app:hover { background: rgba(255, 255, 255, 0.22); }
+}
 .palais .imac-desk {
   display: flex;
   flex-direction: column;
@@ -4933,6 +4979,79 @@
   cursor: pointer;
 }
 .palais .imac-icon span { font-size: 1.9em; line-height: 1; }
+.palais a.imac-icon { text-decoration: none; }
+.palais .imac-icon-img { width: 2.6em; height: 2.6em; display: block; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
+
+/* the README on the desktop (public/palais/imac/readme.html): GitHub's
+   layout, rebuilt as grids so it fits the Mac's screen at any size */
+.palais .imac-readme { display: grid; gap: 0.8em; line-height: 1.5; overflow-wrap: anywhere; }
+.palais .imac-readme img { display: block; max-width: 100%; height: auto; }
+.palais .imac-readme a { text-decoration: none; }
+.palais .imac-readme .rm-title img { width: 100%; }
+.palais .imac-readme .rm-hero { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 0.7em; align-items: center; }
+.palais .imac-readme .rm-hero img { width: 100%; }
+.palais .imac-readme .rm-banner img { width: 100%; }
+.palais .imac-readme .rm-gifs { display: grid; grid-template-columns: repeat(auto-fill, minmax(7em, 1fr)); gap: 0.4em; align-items: center; }
+.palais .imac-readme .rm-gifs img { width: 100%; aspect-ratio: 1; object-fit: contain; }
+.palais .imac-readme .rm-buttons { display: flex; flex-wrap: wrap; gap: 0.4em; }
+.palais .imac-readme .rm-buttons img { height: 2.4em; width: auto; }
+.palais .imac-readme details { border-top: 1px solid #e3ddcc; padding-top: 0.5em; }
+.palais .imac-readme summary { cursor: pointer; font-weight: 700; color: #2b2214; }
+.palais .imac-readme details[open] summary { margin-bottom: 0.6em; }
+.palais .imac-readme .rm-text h2, .palais .imac-readme .rm-text h3 { margin: 0.9em 0 0.35em; line-height: 1.2; color: #2b2214; }
+.palais .imac-readme .rm-text h2 { font-size: 1.35em; } .palais .imac-readme .rm-text h3 { font-size: 1.12em; }
+.palais .imac-readme .rm-text p, .palais .imac-readme .rm-text ul, .palais .imac-readme .rm-text table { margin: 0.4em 0; }
+.palais .imac-readme .rm-text ul { padding-left: 1.3em; list-style: disc; display: block; }
+.palais .imac-readme .rm-text a { color: #1a5fb4; text-decoration: underline; }
+.palais .imac-readme .rm-text img { width: 100%; border-radius: 6px; }
+.palais .imac-readme table { border-collapse: collapse; }
+.palais .imac-readme th, .palais .imac-readme td { padding: 0.2em 0.5em; border: 1px solid #e3ddcc; text-align: left; }
+.palais .imac-readme code { padding: 0.05em 0.3em; border-radius: 4px; background: #f1ece0; font-size: 0.92em; }
+
+/* the Finder: folders, and the icons kept in them to download */
+.palais .finder { display: grid; gap: 0.6em; }
+.palais .finder-path { display: flex; align-items: center; gap: 0.5em; padding-bottom: 0.4em; border-bottom: 1px solid #e3ddcc; }
+.palais .finder-path span { color: #7a6f5a; font-weight: 500; }
+.palais .finder-back { padding: 0 0.45em; border: 1px solid #cbc3ad; border-radius: 4px; background: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.palais .finder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5em, 1fr)); gap: 0.7em 0.4em; }
+.palais .imac-window-body .finder-item {
+  display: grid;
+  justify-items: center;
+  gap: 0.25em;
+  padding: 0.35em;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: #3a2f1c;
+  font: inherit;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+.palais .finder-item:hover { background: #e9f2fd; }
+.palais .finder-folder { font-size: 2.6em; line-height: 1; }
+.palais .finder-item img.finder-apple,
+.palais .imac-icon-img--pixel { image-rendering: pixelated; object-fit: contain; border-radius: 0; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
+.palais .finder-item img[src$="htmlcheatsheet-js.png"],
+.palais .sc-material img { image-rendering: auto; object-fit: contain; }
+
+/* school materials from the web, at the top of the binder's Cheat Sheets */
+.palais .sc-materials { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.4rem 0 0.9rem; }
+.palais .sc-material {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.55rem;
+  border: 2px solid #8ace00;
+  border-radius: 12px;
+  background: #fbfff2;
+  color: #24400a;
+  font-weight: 700;
+  text-decoration: none;
+}
+.palais .sc-material:hover { background: #effbd6; }
+.palais .sc-material img { width: 1.6rem; height: 2.2rem; }
+.palais .finder-item img { width: 3.2em; height: 3.2em; object-fit: contain; border-radius: 0.6em; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2)); }
 @media (hover: hover) {
   .palais .imac-icon:hover { background: rgba(255, 255, 255, 0.3); }
 }
@@ -4955,21 +5074,34 @@
   display: flex;
   align-items: center;
   gap: 0.5em;
-  padding: 0.2em 0.5em;
+  padding: 0.35em 0.6em;
   background: linear-gradient(#f4f4f4, #dcdcdc);
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   font: 600 clamp(6px, 1.5cqw, 11px) var(--cat-round, inherit);
   color: #333;
 }
 .palais .imac-window-shut {
-  width: 0.9em;
-  height: 0.9em;
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
   padding: 0;
   border: 1px solid #a33;
   border-radius: 50%;
   background: #ff6b6b;
+  color: #6b1010;
+  font: 700 0.95em/1 system-ui, sans-serif;
   cursor: pointer;
 }
+/* the × shows, and a wider ring round it still counts as the button */
+.palais .imac-window-shut::before { content: "×"; }
+.palais .imac-window-shut::after { content: ""; position: absolute; inset: -0.5em; border-radius: 50%; }
+.palais .imac-window-shut:hover { background: #ff4f4f; }
+/* while an app is open, the desktop behind it can't be clicked */
+.palais .imac-scrim { position: absolute; inset: 0; z-index: 4; background: rgba(0, 0, 0, 0.12); }
+.palais .imac-window { z-index: 5; }
 .palais .imac-window-body {
   flex: 1;
   min-height: 0;
@@ -7204,3 +7336,14 @@
   .palais .wm-isle-long { display: none; }
   .palais .wm-isle-short { display: inline; }
 }
+
+/* the iMac on the Projects page (ProjectsImac.tsx): the desktop on its own,
+   sized to the page rather than the room */
+.palais.imac-showcase {
+  container: palais / inline-size;
+  width: min(100%, 860px);
+  margin: 0 auto;
+  background: none;
+  overflow: visible;
+}
+.palais.imac-showcase .imac-close-up { filter: drop-shadow(0 10px 22px rgba(30, 40, 20, 0.3)); }

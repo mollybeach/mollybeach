@@ -325,6 +325,14 @@ const STOPS: Stop[] = [
   },
 ];
 
+/** every room you can walk into, with its island sticker, for the iMac's
+    Palais folder */
+export const ROOM_LIST = STOPS.filter((st): st is Stop & { room: Place } => !!st.room).map((st) => ({
+  room: st.room,
+  name: st.name,
+  icon: `${process.env.PUBLIC_URL}/palais/map/islands/${st.id}.webp`,
+}));
+
 function rng(seed: number) {
   let a = seed >>> 0;
   return () => {

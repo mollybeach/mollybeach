@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Memorizwift: a stack of flash cards, on Swift's orange -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9a4a"/>
+      <stop offset="1" stop-color="#f05138"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bg)"/>
+  <!-- the cards underneath, fanned out -->
+  <rect x="120" y="150" width="272" height="196" rx="26" fill="#ffe2cf" transform="rotate(-12 256 248)"/>
+  <rect x="120" y="150" width="272" height="196" rx="26" fill="#fff1e7" transform="rotate(-5 256 248)"/>
+  <!-- the card on top, with a question waiting to be turned over -->
+  <rect x="120" y="164" width="272" height="196" rx="26" fill="#ffffff"/>
+  <rect x="120" y="164" width="272" height="196" rx="26" fill="none" stroke="rgba(120,40,10,0.12)" stroke-width="4"/>
+  <text x="256" y="300" text-anchor="middle" font-family="-apple-system, 'SF Pro Rounded', 'Helvetica Neue', Arial, sans-serif" font-size="150" font-weight="800" fill="#f05138">?</text>
+  <!-- a turn-over arrow, bottom right -->
+  <path d="M336 396a54 54 0 0 0 58-52" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <path d="M374 344l20-22 20 24" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- the Icons folder: a little set of app icons, two by two -->
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8ac4"/><stop offset="1" stop-color="#ff4fa3"/></linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe0ff"/><stop offset="1" stop-color="#3b9cf0"/></linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c6f36a"/><stop offset="1" stop-color="#6cc93a"/></linearGradient>
+    <linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36b"/><stop offset="1" stop-color="#ff9b3d"/></linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-opacity="0.25"/></filter>
+  </defs>
+  <g filter="url(#s)">
+    <rect x="40" y="40" width="200" height="200" rx="52" fill="url(#a)"/>
+    <rect x="272" y="40" width="200" height="200" rx="52" fill="url(#b)"/>
+    <rect x="40" y="272" width="200" height="200" rx="52" fill="url(#c)"/>
+    <rect x="272" y="272" width="200" height="200" rx="52" fill="url(#d)"/>
+  </g>
+  <!-- a heart, a star, a leaf-green smile and a sun, one on each -->
+  <path d="M140 200c-40-30-62-50-62-76 0-18 14-32 32-32 13 0 23 7 30 18 7-11 17-18 30-18 18 0 32 14 32 32 0 26-22 46-62 76z" fill="#fff"/>
+  <path d="M372 82l20 41 45 6-33 31 8 45-40-21-40 21 8-45-33-31 45-6z" fill="#fff"/>
+  <circle cx="110" cy="350" r="13" fill="#fff"/><circle cx="170" cy="350" r="13" fill="#fff"/>
+  <path d="M96 392c26 26 62 26 88 0" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="372" cy="372" r="38" fill="#fff"/>
+  <g stroke="#fff" stroke-width="14" stroke-linecap="round">
+    <path d="M372 300v14M372 430v14M300 372h14M430 372h14M321 321l10 10M413 413l10 10M423 321l-10 10M331 413l-10 10"/>
+  </g>
+</svg>

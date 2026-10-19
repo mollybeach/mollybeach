@@ -21,7 +21,7 @@ interface ExperienceItem {
   }[];
 }
 
-const experiences: ExperienceItem[] = [
+export const experiences: ExperienceItem[] = [
   {
     company: "DTCC DIGITAL ASSETS",
     logo: `${process.env.PUBLIC_URL}/images/dtcc.svg`,
