@@ -405,31 +405,32 @@ const isleOf = (s: Stop) => (s.isle === 2 ? 1 : 0);
 const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library", "boudoir"]);
 
 const FRAME = 44;
-/** where each room is on the globe: the world is all ocean, and every room
-    stands on it as its own little 3-D island (public/palais/map/islands),
-    spread evenly round it in two staggered rings of ten */
-const GLOBE_PAINTED = new Set<string>();
+/** where each room is on the globe. The globe is a flat world map wrapped
+    round the ball (public/palais/map/globe-world4.webp, 2:1), with every room
+    painted on it as its own island: each sits on its island, worked out from
+    where that island is in the map (1500 × 750) */
+const GLOBE_PAINTED = new Set(["palace", "caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "bathroom", "domes", "kitchen", "library", "garden", "rainwood", "madeleine", "gorge", "shore", "lanterns", "reef"]);
 const GLOBE_AT: Record<string, [number, number]> = {
-  palace: [24, -180],
-  caves: [-24, -162],
-  school: [24, -144],
-  lakehouse: [-24, -126],
-  boudoir: [24, -108],
-  closet: [-24, -90],
-  jacaranda: [24, -72],
-  sunliner: [-24, -54],
-  lagoon: [24, -36],
-  bathroom: [-24, -18],
-  domes: [24, 0],
-  kitchen: [-24, 18],
-  library: [24, 36],
-  garden: [-24, 54],
-  rainwood: [24, 72],
-  madeleine: [-24, 90],
-  gorge: [24, 108],
-  shore: [-24, 126],
-  lanterns: [24, 144],
-  reef: [-24, 162],
+  palace: [51.6, -139.2],
+  caves: [54.0, -69.6],
+  school: [54.0, -14.4],
+  lakehouse: [51.6, 40.8],
+  boudoir: [58.8, 105.6],
+  closet: [49.2, 153.6],
+  jacaranda: [13.2, -148.8],
+  sunliner: [18.0, -79.2],
+  lagoon: [10.8, -21.6],
+  bathroom: [10.8, 38.4],
+  domes: [15.6, 93.6],
+  kitchen: [6.0, 151.2],
+  library: [-22.8, -146.4],
+  garden: [-18.0, -79.2],
+  rainwood: [-30.0, -16.8],
+  madeleine: [-25.2, 28.8],
+  gorge: [-32.4, 93.6],
+  shore: [-39.6, 146.4],
+  lanterns: [-54.0, -100.8],
+  reef: [-61.2, 45.6],
 };
 /** the rooms with a little 3-D island of their own, for the globe */
 const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef", "library", "garden", "shore"]);

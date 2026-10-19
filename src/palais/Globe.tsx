@@ -52,7 +52,7 @@ const R0 = 230;
 
 /* ---- the wrapped world ------------------------------------------------------ */
 
-const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-sea.webp?v=2`;
+const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-world4.webp?v=1`;
 /** where each island's painting lies on the world, in degrees: between them
     they cover it all, the first over the western half and the second over the
     eastern, blending at the two seams; `side` is how much of each map image is
@@ -405,6 +405,13 @@ export function Globe({
               <title>{s.name}</title>
               <circle cx={p.x} cy={p.y} r={hr} fill="transparent" />
               <circle className="wm-globe-glow" cx={p.x} cy={p.y} r={hr} />
+              {/* the map has no names on it, so its pill goes under the island */}
+              <g transform={`translate(${lab.x.toFixed(1)} ${lab.y.toFixed(1)}) scale(${(0.45 + 0.55 * p.face).toFixed(3)})`} opacity={p.face > 0.3 ? 1 : 0}>
+                <rect x={-pw / 2} y={-fs * 0.95} width={pw} height={fs * 1.9} rx={fs * 0.95} fill={on ? "#fbe3ea" : "#fffaf0"} stroke={on ? "#d27a98" : "#c9a14e"} strokeWidth={Math.max(1, fs * 0.12)} />
+                <text className="wm-globe-name" y={fs * 0.36} textAnchor="middle" style={{ fontSize: fs }}>
+                  {s.name}
+                </text>
+              </g>
             </g>
           );
         }
