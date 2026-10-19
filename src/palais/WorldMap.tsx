@@ -580,7 +580,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         // as big as its circle on the flat map, in degrees (640 map units are 156°)
         size: ((isleOf(s) === 0 && PAINTED[s.id] ? PAINTED[s.id].r + 1 : FRAME + 5) * 156) / 640,
         label: ((isleOf(s) === 0 && PAINTED[s.id] ? PAINTED[s.id].label[1] : FRAME + 22) * 156) / 640,
-        island: ISLANDS.has(s.id) ? `${process.env.PUBLIC_URL}/palais/map/islands/${s.id}.webp?v=13` : undefined,
+        island: ISLANDS.has(s.id) ? `${process.env.PUBLIC_URL}/palais/map/islands/${s.id}.webp?v=14` : undefined,
         picture: picture(s, season, false),
         color: s.color,
         inside: INSIDE.has(s.id),
@@ -969,7 +969,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is a painting (public/palais/map/island-one.webp),
                 with every room's frame and name already painted in; the stops
                 on it are just the places to press */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=116`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=117`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
 
             {/* the Boudoir's white dresser and black rabbit (the room's own
                 stickers), standing up behind its circle, over the ones painted
