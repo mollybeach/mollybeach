@@ -52,7 +52,7 @@ const R0 = 230;
 
 /* ---- the wrapped world ------------------------------------------------------ */
 
-const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-world4.webp?v=1`;
+const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-world4.webp?v=4`;
 /** where each island's painting lies on the world, in degrees: between them
     they cover it all, the first over the western half and the second over the
     eastern, blending at the two seams; `side` is how much of each map image is
