@@ -42,13 +42,17 @@ export interface Spot {
   /** a little 3-D island of the room (public/palais/map/islands), standing on
       the world in place of the flat circle */
   island?: string;
+  /** its island picture has its name painted on already, so no pill is added */
+  named?: boolean;
+  /** painted on the big island already, with its name: only a place to press */
+  painted?: boolean;
 }
 
 const R0 = 230;
 
 /* ---- the wrapped world ------------------------------------------------------ */
 
-const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-sea.webp?v=1`;
+const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-sea.webp?v=2`;
 /** where each island's painting lies on the world, in degrees: between them
     they cover it all, the first over the western half and the second over the
     eastern, blending at the two seams; `side` is how much of each map image is
@@ -386,6 +390,24 @@ export function Globe({
         const on = i === here;
         const fs = Math.max(7, rr * 0.3);
         const pw = s.name.length * fs * 0.62 + fs * 1.4;
+        if (s.painted) {
+          // the building is on the painting, name and all: just a soft ring of
+          // light round it when it's picked or pointed at
+          const hr = Math.max(14, rr * 1.15) * (0.4 + 0.6 * p.face);
+          return (
+            <g
+              key={s.id}
+              className={`wm-globe-stop wm-globe-painted${on ? " is-on" : ""}`}
+              tabIndex={0}
+              onClick={() => onPick(i)}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onPick(i)}
+            >
+              <title>{s.name}</title>
+              <circle cx={p.x} cy={p.y} r={hr} fill="transparent" />
+              <circle className="wm-globe-glow" cx={p.x} cy={p.y} r={hr} />
+            </g>
+          );
+        }
         if (s.island) {
           // the island stands up off the ball, its foot on its spot, growing
           // as it comes round to face us
@@ -404,7 +426,7 @@ export function Globe({
               <title>{s.name}</title>
               <ellipse cx={p.x} cy={p.y + iw * 0.02} rx={iw * 0.46} ry={iw * 0.1} fill="rgba(5,20,50,0.45)" />
               <image href={s.island} x={p.x - iw / 2} y={p.y - iw * 0.82} width={iw} height={iw * 0.86} preserveAspectRatio="xMidYMax meet" />
-              <g transform={`translate(${p.x.toFixed(1)} ${(p.y + lf * 1.4).toFixed(1)})`} opacity={p.face > 0.35 ? 1 : 0}>
+              <g transform={`translate(${p.x.toFixed(1)} ${(p.y + lf * 1.4).toFixed(1)})`} opacity={p.face > 0.35 && !s.named ? 1 : 0}>
                 <rect x={-lw / 2} y={-lf * 0.95} width={lw} height={lf * 1.9} rx={lf * 0.95} fill={on ? "#fbe3ea" : "#fffaf0"} stroke={on ? "#d27a98" : "#c9a14e"} strokeWidth={Math.max(1, lf * 0.12)} />
                 <text className="wm-globe-name" y={lf * 0.36} textAnchor="middle" style={{ fontSize: lf }}>
                   {s.name}

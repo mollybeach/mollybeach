@@ -405,8 +405,34 @@ const isleOf = (s: Stop) => (s.isle === 2 ? 1 : 0);
 const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library", "boudoir"]);
 
 const FRAME = 44;
+/** where each room is on the globe: the world is all ocean, and every room
+    stands on it as its own little 3-D island (public/palais/map/islands),
+    spread evenly round it in two staggered rings of ten */
+const GLOBE_PAINTED = new Set<string>();
+const GLOBE_AT: Record<string, [number, number]> = {
+  palace: [24, -180],
+  caves: [-24, -162],
+  school: [24, -144],
+  lakehouse: [-24, -126],
+  boudoir: [24, -108],
+  closet: [-24, -90],
+  jacaranda: [24, -72],
+  sunliner: [-24, -54],
+  lagoon: [24, -36],
+  bathroom: [-24, -18],
+  domes: [24, 0],
+  kitchen: [-24, 18],
+  library: [24, 36],
+  garden: [-24, 54],
+  rainwood: [24, 72],
+  madeleine: [-24, 90],
+  gorge: [24, 108],
+  shore: [-24, 126],
+  lanterns: [24, 144],
+  reef: [-24, 162],
+};
 /** the rooms with a little 3-D island of their own, for the globe */
-const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef"]);
+const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef", "library", "garden", "shore"]);
 /** on the painted first island, each room's frame is drawn over the one in
     the painting: how big that one is, and where its name sits from its middle */
 const PAINTED: Record<string, { r: number; label: [number, number] }> = {
@@ -543,12 +569,14 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       STOPS.map((s) => ({
         id: s.id,
         name: s.name,
-        // on the globe, each stop stands on its own spot in its island's painting
-        earth: onWorld(isleOf(s) as 0 | 1, (s.at[0] - 25) / 960, (s.at[1] - 25) / 640),
+        // on the globe: the rooms painted on its big island sit on their own
+        // buildings there; the rest stand round the world as little islands
+        earth: GLOBE_AT[s.id] ?? onWorld(isleOf(s) as 0 | 1, (s.at[0] - 25) / 960, (s.at[1] - 25) / 640),
+        painted: GLOBE_PAINTED.has(s.id),
         // as big as its circle on the flat map, in degrees (640 map units are 156°)
         size: ((isleOf(s) === 0 && PAINTED[s.id] ? PAINTED[s.id].r + 1 : FRAME + 5) * 156) / 640,
         label: ((isleOf(s) === 0 && PAINTED[s.id] ? PAINTED[s.id].label[1] : FRAME + 22) * 156) / 640,
-        island: ISLANDS.has(s.id) ? `${process.env.PUBLIC_URL}/palais/map/islands/${s.id}.webp` : undefined,
+        island: ISLANDS.has(s.id) ? `${process.env.PUBLIC_URL}/palais/map/islands/${s.id}.webp?v=13` : undefined,
         picture: picture(s, season, false),
         color: s.color,
         inside: INSIDE.has(s.id),

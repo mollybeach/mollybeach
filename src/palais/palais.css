@@ -7091,3 +7091,8 @@
 /* the room names on the globe, on pills like the flat map's */
 .palais .wm-globe-name { font-family: "Roboto Mono", ui-monospace, monospace; font-weight: 700; fill: #3a2b10; }
 .palais .wm-globe-stop:hover .wm-globe-ring { stroke: var(--wm-rose-deep, #b0436a); }
+
+/* the rooms painted on the globe's big island: a ring of light when picked */
+.palais .wm-globe-glow { fill: rgba(255, 240, 200, 0.08); stroke: #fff4cf; stroke-width: 3; opacity: 0; filter: drop-shadow(0 0 6px rgba(255, 220, 140, 0.95)); transition: opacity 200ms ease; }
+.palais .wm-globe-painted:hover .wm-globe-glow { opacity: 0.6; }
+.palais .wm-globe-painted.is-on .wm-globe-glow { opacity: 1; }
