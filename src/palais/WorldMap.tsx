@@ -439,6 +439,25 @@ const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "j
 /** the first island's circles on the flat map are drawn this much smaller
     than their painted frames, so the painting shows round them */
 const SHRINK = 0.9;
+/** rooms that wear their own colour on the map: the ring round the circle and
+    the name tag (the Boudoir's gone emo, the Jacaranda Quarter is in bloom) */
+const TINT: Record<string, { ring: string; ink: string; edge?: string; edgeW?: number }> = {
+  boudoir: { ring: "#141014", ink: "#fffaf0" },
+  jacaranda: { ring: "#7b4fc4", ink: "#fffaf0" },
+  school: { ring: "#8ace00", ink: "#000000" },
+  caves: { ring: "#1565d8", ink: "#fffaf0" },
+  lagoon: { ring: "url(#wm-aurora)", ink: "#fffaf0" },
+  sunliner: { ring: "#d9772b", ink: "#fffaf0" },
+  library: { ring: "#6b4226", ink: "#fffaf0" },
+  lakehouse: { ring: "#9e2a22", ink: "#fffaf0" },
+  closet: { ring: "#f0d24a", ink: "#3a2f1c" },
+  kitchen: { ring: "#a6dcbd", ink: "#24402f" },
+  // Lisbon: an ochre-yellow wall, edged in azulejo blue
+  domes: { ring: "#ffc61a", ink: "#1a3a96", edge: "#1a3a96" },
+  bathroom: { ring: "#b9a08f", ink: "#3f2f26", edge: "#f4bccb", edgeW: 5 },
+  // Home: cherry blossom pink, edged in wisteria
+  palace: { ring: "#f7a8c4", ink: "#5b3a8c", edge: "#a67fd6", edgeW: 4 },
+};
 const PAINTED: Record<string, { r: number; label: [number, number] }> = {
   caves: { r: 56, label: [0, 47] },
   school: { r: 56, label: [0, 43] },
@@ -845,6 +864,11 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                 <stop offset="0.45" stopColor="#d9b25a" />
                 <stop offset="1" stopColor="#9c7632" />
               </linearGradient>
+              {/* the Lagoon's northern lights, purple into green, for its ring and tag */}
+              <linearGradient id="wm-aurora" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#8e4fd6" />
+                <stop offset="1" stopColor="#2fd39a" />
+              </linearGradient>
               <radialGradient id="wm-halo">
                 <stop offset="0.6" stopColor="#fff7dc" stopOpacity={0.95} />
                 <stop offset="1" stopColor="#fff7dc" stopOpacity={0} />
@@ -1022,7 +1046,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                     {s.id === "palace" ? (
                       /* home is drawn as a little cartoon house, chimney and all */
                       <>
-                        <rect x={FRAME * 0.42} y={-FRAME * 1.12} width={FRAME * 0.26} height={FRAME * 0.5} fill="var(--wm-jewel-side, #c9a44c)" stroke="#fffaf0" strokeWidth={1.2} />
+                        <rect x={FRAME * 0.42} y={-FRAME * 1.12} width={FRAME * 0.26} height={FRAME * 0.5} fill={TINT[s.id]?.ring ?? "var(--wm-jewel-side, #c9a44c)"} stroke={TINT[s.id]?.edge ?? "#fffaf0"} strokeWidth={1.2} />
                         <path d={HOUSE(FRAME + 1)} fill="#fffaf0" />
                         <image
                           href={picture(s, season)}
@@ -1033,8 +1057,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                           preserveAspectRatio="xMidYMid slice"
                           clipPath="url(#wm-house)"
                         />
-                        <path d={HOUSE(FRAME + 2)} fill="none" stroke="var(--wm-jewel-side, #c9a44c)" strokeWidth={5} strokeLinejoin="round" />
-                        <path d={HOUSE(FRAME + 5)} fill="none" stroke="#fffaf0" strokeWidth={1.2} strokeLinejoin="round" opacity={0.9} />
+                        <path d={HOUSE(FRAME + 2)} fill="none" stroke={TINT[s.id]?.ring ?? "var(--wm-jewel-side, #c9a44c)"} strokeWidth={5} strokeLinejoin="round" />
+                        <path d={HOUSE(FRAME + 5)} fill="none" stroke={TINT[s.id]?.edge ?? "#fffaf0"} strokeWidth={TINT[s.id]?.edge ? TINT[s.id].edgeW ?? 2.6 : 1.2} strokeLinejoin="round" opacity={0.9} />
                       </>
                     ) : (
                       <>
@@ -1048,8 +1072,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                           preserveAspectRatio="xMidYMid slice"
                           clipPath="url(#wm-frame)"
                         />
-                        <circle r={FRAME + 2} fill="none" stroke="var(--wm-jewel-side, #c9a44c)" strokeWidth={5} />
-                        <circle r={FRAME + 5} fill="none" stroke="#fffaf0" strokeWidth={1.2} opacity={0.9} />
+                        <circle r={FRAME + 2} fill="none" stroke={TINT[s.id]?.ring ?? "var(--wm-jewel-side, #c9a44c)"} strokeWidth={5} />
+                        <circle r={FRAME + 5} fill="none" stroke={TINT[s.id]?.edge ?? "#fffaf0"} strokeWidth={TINT[s.id]?.edge ? TINT[s.id].edgeW ?? 2.6 : 1.2} opacity={0.9} />
                       </>
                     )}
                   </g>
@@ -1067,11 +1091,11 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                       width={w}
                       height={30}
                       rx={15}
-                      fill={on ? "#fbe3ea" : "#fffaf0"}
-                      stroke={on ? "#d27a98" : "#c9a14e"}
-                      strokeWidth={2}
+                      fill={TINT[s.id]?.ring ?? (on ? "#fbe3ea" : "#fffaf0")}
+                      stroke={on ? "#d27a98" : TINT[s.id]?.edge ?? TINT[s.id]?.ring ?? "#c9a14e"}
+                      strokeWidth={TINT[s.id]?.edgeW ? 3.5 : 2}
                     />
-                    <text className="wm-stop-name" y={6} textAnchor="middle">
+                    <text className="wm-stop-name" y={6} textAnchor="middle" style={TINT[s.id] ? { fill: TINT[s.id].ink } : undefined}>
                       {labelOf(s)}
                     </text>
                   </g>
