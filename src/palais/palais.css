@@ -872,6 +872,9 @@
 .palais .wm-bloom--title-l,
 .palais .wm-bloom--title-r { position: relative; inset: auto; width: 6rem; height: 6rem; margin: 0 -2.2rem; z-index: 6; }
 .palais .wm-bloom--title-r { transform: scaleX(-1); }
+/* the map's own pill is smaller, with no flowers */
+.palais .wm-title--map { top: -1.6rem; }
+.palais .wm-title--map h2 { padding: 0.22rem 1.7rem 0.26rem; font-size: clamp(1.3rem, 2.6vw, 1.9rem); }
 
 .palais .wm-close {
   position: absolute;

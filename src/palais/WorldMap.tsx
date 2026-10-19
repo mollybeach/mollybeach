@@ -794,12 +794,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
         /* the same cream paper over a floral as the catalogue */
         style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.965), rgba(250, 243, 229, 0.975)), url("${floralSrc(paper.now)}")` }}
       >
-        <div className="wm-title">
-          <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
-          <h2 id="wm-title">
-            <span aria-hidden>✿</span> Map <span aria-hidden>✿</span>
-          </h2>
-          <Blossoms className="wm-bloom wm-bloom--title-r" posy="title-r" />
+        <div className="wm-title wm-title--map">
+          <h2 id="wm-title wm-title--map">Map</h2>
         </div>
         <button
           type="button"
