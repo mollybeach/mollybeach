@@ -57,7 +57,7 @@ const STOPS: Stop[] = [
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
-    at: [521, 413],
+    at: [522, 428],
     patch: [58, 42],
     seed: 7,
     room: "palace",
@@ -70,7 +70,7 @@ const STOPS: Stop[] = [
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
     color: "#ffb3d6",
-    at: [636, 285],
+    at: [743, 318],
     patch: [46, 38],
     seed: 23,
     room: "closet",
@@ -83,7 +83,7 @@ const STOPS: Stop[] = [
     blurb: "The bathroom you glimpse through the arch on the terrace: a clawfoot tub, rose wallpaper, a glass-block window and cabinets of pretty jars, all in blush and white.",
     finds: ["A clawfoot tub", "Glass-block windows", "Pink towels and jars of bath salts"],
     color: "#f3c6d8",
-    at: [718, 416],
+    at: [840, 448],
     patch: [48, 36],
     seed: 29,
     room: "bathroom",
@@ -96,7 +96,7 @@ const STOPS: Stop[] = [
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
     finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
     color: "#f7b7a3",
-    at: [508, 541],
+    at: [400, 579],
     patch: [52, 38],
     seed: 23,
     room: "kitchen",
@@ -109,7 +109,7 @@ const STOPS: Stop[] = [
     blurb: "Carved walnut shelves climb to a painted sky with a golden sun, a staircase of books spirals up the wall, and the desk sits at an arched window over the lake at sunset.",
     finds: ["A spiral staircase made of books", "A globe and a rolling ladder", "Roses round the window over the lake"],
     color: "#d9a066",
-    at: [711, 542],
+    at: [649, 570],
     patch: [48, 36],
     seed: 167,
     room: "library",
@@ -122,7 +122,7 @@ const STOPS: Stop[] = [
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],
     color: "#cdeefa",
-    at: [347, 404],
+    at: [292, 409],
     patch: [104, 56],
     seed: 37,
     room: "lagoon",
@@ -135,7 +135,7 @@ const STOPS: Stop[] = [
     blurb: "A gilded dressing room: lilac curtains swagged over tall windows, a chandelier over a marble floor, and a trifold mirror on the vanity with the roses outside coming in.",
     finds: ["A trifold mirror and a walnut vanity", "A blue tufted ottoman in the middle", "Candles on gilt sconces all round"],
     color: "#e6c2e0",
-    at: [414, 284],
+    at: [309, 281],
     patch: [46, 34],
     seed: 173,
     room: "boudoir",
@@ -148,7 +148,7 @@ const STOPS: Stop[] = [
     blurb: "A glass house at the edge of a still lake, with a fire going and the mountain glowing across the water. The Shimmer started here and spread out to everything else.",
     finds: ["A red bridge over the Japanese garden", "A boathouse and a long dock", "Sunrise over the mountain"],
     color: "#8fcbe8",
-    at: [704, 154],
+    at: [637, 102],
     patch: [80, 58],
     seed: 11,
     room: "lakehouse",
@@ -161,7 +161,7 @@ const STOPS: Stop[] = [
     blurb: "A cosy grotto under a ceiling of glowworms, with lantern-lit steps down to a rowboat on a misty river, hobbit doors in the hills and a snowy mountain at dusk.",
     finds: ["Glowworms like a galaxy overhead", "Round doors in the green hills", "Hot springs steaming down the terraces"],
     color: "#a9b8ff",
-    at: [332, 159],
+    at: [95, 164],
     patch: [92, 60],
     seed: 71,
     room: "caves",
@@ -174,7 +174,7 @@ const STOPS: Stop[] = [
     blurb: "French doors open onto an iron balcony over a cobbled street of purple jacaranda trees, gas lamps and a waterfront glowing pink at dusk.",
     finds: ["Purple petals on the balcony floor", "A little jazz stage with a double bass", "Neon lights on the water past the palms"],
     color: "#c9b3ff",
-    at: [846, 280],
+    at: [851, 169],
     patch: [52, 58],
     seed: 103,
     room: "jacaranda",
@@ -187,7 +187,7 @@ const STOPS: Stop[] = [
     blurb: "A gilded classroom under a crystal chandelier, with lime iBooks on every desk, cherry blossom out the windows and the syllabus chalked up on the board. Molly teaches girls to code here: press the chalkboard for the courses.",
     finds: ["The syllabus on the chalkboard", "Bratz busts along the shelves", "An iBook on every desk"],
     color: "#ff9ccf",
-    at: [516, 156],
+    at: [278, 114],
     patch: [56, 40],
     seed: 181,
     room: "school",
@@ -200,7 +200,7 @@ const STOPS: Stop[] = [
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
     finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
     color: "#ffb99b",
-    at: [291, 539],
+    at: [205, 504],
     patch: [98, 66],
     seed: 97,
     room: "domes",
@@ -214,7 +214,7 @@ const STOPS: Stop[] = [
     finds: ["Car 31025, still on its wheels", "Ocotillo in flower along the rails", "A rainbow over the mountains at sundown"],
     color: "#f0a14e",
     seasons: true,
-    at: [160, 391],
+    at: [133, 390],
     patch: [86, 54],
     seed: 41,
     room: "sunliner",
@@ -436,6 +436,9 @@ const GLOBE_AT: Record<string, [number, number]> = {
 const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef", "library", "garden", "shore"]);
 /** on the painted first island, each room's frame is drawn over the one in
     the painting: how big that one is, and where its name sits from its middle */
+/** the first island's circles on the flat map are drawn this much smaller
+    than their painted frames, so the painting shows round them */
+const SHRINK = 0.9;
 const PAINTED: Record<string, { r: number; label: [number, number] }> = {
   caves: { r: 56, label: [0, 47] },
   school: { r: 56, label: [0, 43] },
@@ -970,7 +973,27 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is a painting (public/palais/map/island-one.webp),
                 with every room's frame and name already painted in; the stops
                 on it are just the places to press */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=108`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=111`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+
+            {/* the Boudoir's white dresser and black rabbit (the room's own
+                stickers), standing up behind its circle, over the ones painted
+                there */}
+            {(() => {
+              const [bx, by] = spot(STOPS.find((st) => st.id === "boudoir")!);
+              return (
+                <g aria-hidden pointerEvents="none">
+                  <image href={`${process.env.PUBLIC_URL}/palais/props/dresser.webp`} x={bx - 22} y={by - 110} width={52} height={70.8} />
+                  <image href={`${process.env.PUBLIC_URL}/palais/boudoir-bunny.webp`} x={bx - 18} y={by - 100} width={34} height={59.3} />
+                </g>
+              );
+            })()}
+
+            {/* two big saguaro stickers in the desert below the train, between
+                the Train and Lagoon circles */}
+            <g aria-hidden pointerEvents="none">
+              <image href={`${process.env.PUBLIC_URL}/palais/props/cactus_saguaro_cholla_desert_cluster_sticker.webp`} x={180} y={344} width={44} height={56.3} />
+              <image href={`${process.env.PUBLIC_URL}/palais/props/cactus_saguaro_cholla_desert_cluster_sticker.webp`} x={-246} y={408} width={38} height={48.6} transform="scale(-1 1)" />
+            </g>
 
             {/* the stops: a round gilt frame with the place inside */}
             {STOPS.map((s, i) => {
@@ -992,7 +1015,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                     }
                   }}
                 >
-                  <g transform={PAINTED[s.id] && isleOf(s) === 0 ? `scale(${(PAINTED[s.id].r + 1) / (FRAME + 5)})` : undefined}>
+                  <g transform={PAINTED[s.id] && isleOf(s) === 0 ? `scale(${(SHRINK * (PAINTED[s.id].r + 1)) / (FRAME + 5)})` : undefined}>
                   <g className="wm-cameo">
                     {on && <circle className="wm-halo" r={FRAME + 24} fill="url(#wm-halo)" />}
                     <ellipse cy={FRAME - 2} rx={FRAME * 0.9} ry={10} fill="#2f3a2a" opacity={0.28} />
@@ -1034,7 +1057,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                   <g
                     transform={
                       PAINTED[s.id] && isleOf(s) === 0
-                        ? `translate(${PAINTED[s.id].label[0]} ${PAINTED[s.id].label[1]})`
+                        ? `translate(${PAINTED[s.id].label[0]} ${SHRINK * PAINTED[s.id].label[1]})`
                         : `translate(0 ${FRAME + 22})`
                     }
                   >

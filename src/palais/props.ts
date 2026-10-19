@@ -344,6 +344,7 @@ export const PROPS = catalogue({
      about the height the cast stands at */
   snail_giant_vicious_eating_a_man_sticker: { label: "a giant snail, making off with someone", plane: "near", metres: 3.2 },
   road_case_vintage_mail_stack_black_sticker: { label: "A road case of old letters", plane: "near", metres: 1.1 },
+  rabbit_black_bow_tie_sitting_sticker: { label: "the Boudoir's black rabbit, in his bow tie", plane: "near", metres: 0.35 },
 
   /* ---- the desert, from the Sunliner's stretch of it ------------------- */
   jackrabbit_desert_black_tailed_standing_sticker: { label: "a jackrabbit, all ears", plane: "near", metres: 0.6 },
