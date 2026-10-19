@@ -1071,12 +1071,12 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           {/* the way to the other island */}
           {!globe &&
             (isle === 0 ? (
-              <button type="button" className="wm-isle-arrow wm-isle-arrow--down" onClick={() => crossTo(1)}>
-                <span aria-hidden>▼</span> To the next island
+              <button type="button" className="wm-isle-arrow wm-isle-arrow--down" onClick={() => crossTo(1)} aria-label="To the next island">
+                <span aria-hidden>▼</span> Next 🌴
               </button>
             ) : (
               <button type="button" className="wm-isle-arrow wm-isle-arrow--up" onClick={() => crossTo(0)}>
-                <span aria-hidden>▲</span> Back home
+                <span aria-hidden>▲</span> <span className="wm-isle-long">Back home 🏠</span><span className="wm-isle-short">Back 🏠</span>
               </button>
             ))}
         </div>

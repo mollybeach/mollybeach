@@ -7068,7 +7068,7 @@
   animation: wm-isle-bob 2.4s ease-in-out infinite;
 }
 .palais .wm-isle-arrow--down { bottom: 0.7rem; }
-.palais .wm-isle-arrow--up { top: 0.7rem; right: auto; left: 0.7rem; }
+.palais .wm-isle-arrow--up { bottom: 0.7rem; }
 .palais .wm-isle-arrow:hover { background: #fbe3ea; }
 @keyframes wm-isle-bob { 50% { transform: translateY(3px); } }
 .palais .wm-isle-arrow--up { animation-name: wm-isle-bob-up; }
@@ -7097,3 +7097,10 @@
 .palais .wm-globe-glow { fill: rgba(255, 240, 200, 0.08); stroke: #fff4cf; stroke-width: 3; opacity: 0; filter: drop-shadow(0 0 6px rgba(255, 220, 140, 0.95)); transition: opacity 200ms ease; }
 .palais .wm-globe-painted:hover .wm-globe-glow { opacity: 0.6; }
 .palais .wm-globe-painted.is-on .wm-globe-glow { opacity: 1; }
+
+/* on a phone the next-island button is just "Next 🌴" */
+.palais .wm-isle-short { display: none; }
+@media (max-width: 640px) {
+  .palais .wm-isle-long { display: none; }
+  .palais .wm-isle-short { display: inline; }
+}
