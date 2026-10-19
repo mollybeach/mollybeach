@@ -230,7 +230,7 @@ const STOPS: Stop[] = [
     blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
     finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
     color: "#b5dca8",
-    at: [450, 470],
+    at: [296, 133],
     patch: [56, 42],
     seed: 31,
     room: "garden",
@@ -245,7 +245,7 @@ const STOPS: Stop[] = [
     blurb: "A glass conservatory grown over with ferns, looking out on mossy giant trees, a misty river and a glowing bubble dome.",
     finds: ["A glass bubble dome in the trees", "A cabin with a hot tub on the water", "Sunbeams through the mist"],
     color: "#9fd88f",
-    at: [300, 260],
+    at: [335, 304],
     patch: [86, 70],
     seed: 41,
     room: "rainwood",
@@ -259,7 +259,7 @@ const STOPS: Stop[] = [
     blurb: "A round pink room with gilt shells on the walls and a painted sky on the ceiling, where lace curtains open onto a balcony of roses and the sun going down into the sea.",
     finds: ["A mosaic floor of blue flowers", "Bougainvillea over the balcony", "The sunset path across the water"],
     color: "#ffc2cf",
-    at: [520, 140],
+    at: [800, 259],
     patch: [48, 36],
     seed: 151,
     room: "madeleine",
@@ -273,7 +273,7 @@ const STOPS: Stop[] = [
     blurb: "A red lacquered pavilion hung with glowing lanterns, looking across the water to a temple island lit up at dusk, with cranes painted on the ceiling.",
     finds: ["Temples stepping up a cliff to a glowing tower", "A lantern boat on the water", "Cherry blossom and red maples"],
     color: "#ffab9e",
-    at: [870, 150],
+    at: [701, 98],
     patch: [56, 40],
     seed: 131,
     room: "lanterns",
@@ -288,7 +288,7 @@ const STOPS: Stop[] = [
     blurb: "Grass terraces on a canyon rim, a river far below, and the sun going down into the sea behind the stage.",
     finds: ["A stage lit up on the canyon rim", "A marina of yachts below the cliffs", "String lights through the arches"],
     color: "#ffc978",
-    at: [680, 300],
+    at: [550, 187],
     patch: [92, 64],
     seed: 83,
     room: "gorge",
@@ -302,7 +302,7 @@ const STOPS: Stop[] = [
     blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
     finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
     color: "#6fd3e6",
-    at: [905, 560],
+    at: [655, 507],
     patch: [70, 36],
     seed: 67,
     room: "reef",
@@ -317,7 +317,7 @@ const STOPS: Stop[] = [
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
     color: "#7fdccf",
-    at: [195, 430],
+    at: [278, 463],
     patch: [80, 100],
     seed: 53,
     room: "shore",
@@ -613,7 +613,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     // legs in and out of the Train are railway track instead of footpath.
     const trails = STOPS.slice(0, -1)
       .map((s, i) =>
-        isleOf(s) === isleOf(STOPS[i + 1])
+        isleOf(s) === isleOf(STOPS[i + 1]) && isleOf(s) === 0
           ? { d: trail(spot(s), spot(STOPS[i + 1]), i), rail: s.id === "sunliner" || STOPS[i + 1].id === "sunliner" }
           : null,
       )
@@ -835,7 +835,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {art.waves.map((w, i) => (
               <path key={i} d={`M${w.x.toFixed(0)},${w.y.toFixed(0)} q7,-5 14,0 t14,0`} fill="none" stroke="#e8f8ff" strokeOpacity={0.7} strokeWidth={1.8} strokeLinecap="round" />
             ))}
-            {art.seaRocks.filter(([, y]) => y > ISLE_DROP).map(([x, y, r], i) => (
+            {art.seaRocks.filter(() => false).map(([x, y, r], i) => (
               <g key={i}>
                 <ellipse cx={x} cy={y + 3} rx={r * 1.6} ry={r * 0.6} fill="#e8f8ff" opacity={0.6} />
                 <path d={`M${x - r},${y + 2} Q${x - r * 0.6},${y - r} ${x},${y - r} Q${x + r * 0.8},${y - r * 0.6} ${x + r},${y + 2} Z`} fill="#8a8f98" stroke="#5f656e" strokeWidth={1} />
@@ -858,7 +858,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             ))}
 
             {/* islets out at sea */}
-            {art.islets.map((s) => (
+            {/* (both islands are paintings now, so the drawn islets are left out) */}
+            {art.islets.filter(() => false).map((s) => (
               <g key={s.id}>
                 <path d={s.shallows} fill="#5d8ae6" opacity={0.8} />
                 <path d={s.beach} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={2} />
@@ -870,11 +871,12 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is painted (below), so its drawn coast, grass,
                 rocks and trees are left out: they peeped out round the
                 painting's edges as a white line of beach */}
-            {/* the second island, the same way */}
-            <path d={art.shallows2} fill="#5d8ae6" opacity={0.85} />
-            <path d={art.beach2} fill="#f4e3b6" stroke="#fffaf0" strokeWidth={3} />
-            <path d={art.island2} fill="url(#wm-grass)" />
-            <g clipPath="url(#wm-island2)">
+            {/* the second island is a painting too (public/palais/map/island-two.webp),
+                built from its rooms: the glasshouse, the Rainwood's falls, the
+                amphitheatre stage, the Strand's loggia, the lantern island and
+                the reef pavilion under the sea */}
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-two.webp?v=1`} x={25} y={25 + ISLE_DROP} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <g clipPath="url(#wm-island2)" display="none">
               {STOPS.map((s, i) => (s.islet || s.isle !== 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
               {art.flowers2.map((f, i) => (
                 <circle key={i} cx={f.x} cy={f.y} r={2.4} fill={f.c} />
@@ -898,7 +900,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                 <path d={`M${x - h * 0.32},${y - h * 0.36} L${x},${y - h} L${x + h * 0.32},${y - h * 0.36} L${x + h * 0.1},${y - h * 0.46} L${x - h * 0.08},${y - h * 0.3} Z`} fill="#fbfdff" />
               </g>
             ))}
-            {art.trees.filter((t) => t.y > ISLE_DROP).map(tree)}
+            {art.trees.filter(() => false).map(tree)}
 
             {/* what's in each room, painted beside it (MapScenery.tsx) */}
             <Scenery drop={ISLE_DROP} />
