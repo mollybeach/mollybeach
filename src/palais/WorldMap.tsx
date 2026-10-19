@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { propSrc } from "./props";
 import { usePlace, type Place } from "./place";
-import { Globe } from "./Globe";
+import { Globe, onWorld } from "./Globe";
 import { currentSeason, type Season } from "./seasons";
 import { usePortrait } from "./PortraitTerrace";
 import { SCENERY, Scenery, sceneMiddle, sceneReach } from "./MapScenery";
@@ -405,6 +405,8 @@ const isleOf = (s: Stop) => (s.isle === 2 ? 1 : 0);
 const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", "library", "boudoir"]);
 
 const FRAME = 44;
+/** the rooms with a little 3-D island of their own, for the globe */
+const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef"]);
 /** on the painted first island, each room's frame is drawn over the one in
     the painting: how big that one is, and where its name sits from its middle */
 const PAINTED: Record<string, { r: number; label: [number, number] }> = {
@@ -541,7 +543,12 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
       STOPS.map((s) => ({
         id: s.id,
         name: s.name,
-        earth: s.earth,
+        // on the globe, each stop stands on its own spot in its island's painting
+        earth: onWorld(isleOf(s) as 0 | 1, (s.at[0] - 25) / 960, (s.at[1] - 25) / 640),
+        // as big as its circle on the flat map, in degrees (640 map units are 156°)
+        size: ((isleOf(s) === 0 && PAINTED[s.id] ? PAINTED[s.id].r + 1 : FRAME + 5) * 156) / 640,
+        label: ((isleOf(s) === 0 && PAINTED[s.id] ? PAINTED[s.id].label[1] : FRAME + 22) * 156) / 640,
+        island: ISLANDS.has(s.id) ? `${process.env.PUBLIC_URL}/palais/map/islands/${s.id}.webp` : undefined,
         picture: picture(s, season, false),
         color: s.color,
         inside: INSIDE.has(s.id),

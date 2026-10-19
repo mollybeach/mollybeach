@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { LANDS } from "./VisitorMap";
 
 /**
  * The world map, as a world.
+ *
+ * The world is all ocean (public/palais/map/globe-sea.webp), and every room
+ * stands on it as a little 3-D island of its own (public/palais/map/islands),
+ * where the room is on the flat map: the first island's rooms over the
+ * western half of the world, the second's over the eastern. The sphere is painted
+ * pixel by pixel onto a canvas each time it turns: for every point of the
+ * disc, the latitude and longitude under it (the orthographic projection run
+ * backwards), and the colour of the world there, shaded towards the edge so it
+ * reads as a ball. Every stop sits on its own spot in its island's painting.
  *
  * The island's own cartoon ground — shaded grass, a ring of sand, pale
  * shallows, little round trees — wrapped onto a globe that turns slowly and
@@ -26,9 +34,108 @@ export interface Spot {
   color: string;
   /** a room of the house rather than a place of its own */
   inside?: boolean;
+  /** how big its circle is on the world, and how far below its middle its
+      name sits, both in degrees of latitude: the size of the frame painted
+      under it, so the real circle covers the painted one exactly */
+  size: number;
+  label: number;
+  /** a little 3-D island of the room (public/palais/map/islands), standing on
+      the world in place of the flat circle */
+  island?: string;
 }
 
 const R0 = 230;
+
+/* ---- the wrapped world ------------------------------------------------------ */
+
+const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-sea.webp?v=1`;
+/** where each island's painting lies on the world, in degrees: between them
+    they cover it all, the first over the western half and the second over the
+    eastern, blending at the two seams; `side` is how much of each map image is
+    the plain sea added to its sides, which the globe leaves off */
+export const ISLE_BOUNDS = [
+  { lon0: -188.8, lon1: 8.8, lat0: 78, lat1: -78, side: 98 / 1637 },
+  { lon0: -8.8, lon1: 188.8, lat0: 78, lat1: -78, side: 124 / 1665 },
+];
+/** a point of an island's map image (0..1 across and down) as a place on the world */
+export const onWorld = (isle: 0 | 1, u: number, v: number): [number, number] => {
+  const b = ISLE_BOUNDS[isle];
+  const uc = (u - b.side) / (1 - 2 * b.side);
+  return [b.lat0 + (b.lat1 - b.lat0) * v, b.lon0 + (b.lon1 - b.lon0) * uc];
+};
+
+let worldPixels: Promise<ImageData> | null = null;
+function loadWorld() {
+  if (!worldPixels)
+    worldPixels = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement("canvas");
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        const g = c.getContext("2d");
+        if (!g) return reject(new Error("no canvas"));
+        g.drawImage(img, 0, 0);
+        resolve(g.getImageData(0, 0, c.width, c.height));
+      };
+      img.onerror = reject;
+      img.src = WORLD_SRC;
+    });
+  return worldPixels;
+}
+
+/** the sphere, painted onto the canvas as the world turns */
+function paintWorld(canvas: HTMLCanvasElement, world: ImageData, spin: number, tilt: number, R: number) {
+  const g = canvas.getContext("2d");
+  if (!g) return;
+  const S = canvas.width; // the canvas covers the whole 600-wide view
+  const k = S / 600;
+  const out = g.createImageData(S, S);
+  const o = out.data;
+  const w = world.data;
+  const TW = world.width;
+  const TH = world.height;
+  const φ0 = rad(tilt);
+  const sφ0 = Math.sin(φ0);
+  const cφ0 = Math.cos(φ0);
+  const λ0 = rad(spin);
+  const cx = CX * k;
+  const cy = CY * k;
+  const Rk = R * k;
+  const y0 = Math.max(0, Math.floor(cy - Rk));
+  const y1 = Math.min(S, Math.ceil(cy + Rk));
+  const x0 = Math.max(0, Math.floor(cx - Rk));
+  const x1 = Math.min(S, Math.ceil(cx + Rk));
+  for (let y = y0; y < y1; y++) {
+    const py = (cy - y) / Rk;
+    for (let x = x0; x < x1; x++) {
+      const px = (x - cx) / Rk;
+      const ρ2 = px * px + py * py;
+      if (ρ2 >= 1) continue;
+      const cosc = Math.sqrt(1 - ρ2);
+      // the orthographic projection, backwards: sin c = ρ, cos c = √(1 − ρ²)
+      const lat = Math.asin(cosc * sφ0 + py * cφ0);
+      const lon = λ0 + Math.atan2(px, cosc * cφ0 - py * sφ0);
+      let u = (lon / (2 * Math.PI) + 0.5) % 1;
+      if (u < 0) u += 1;
+      const v = 0.5 - lat / Math.PI;
+      const ti = ((Math.min(TH - 1, (v * TH) | 0) * TW + ((u * TW) | 0)) << 2);
+      // lit from the upper left: the sphere's own normal is (px, py, cosc),
+      // so it darkens towards the rim and the far side, with a glossy
+      // highlight where the light glances off it
+      const nl = -px * 0.42 + py * 0.5 + cosc * 0.76;
+      const shade = 0.3 + 0.82 * Math.max(0, nl);
+      const spec = Math.pow(Math.max(0, nl), 24) * 70;
+      const rim = Math.pow(1 - cosc, 3) * 90; // a blue haze of atmosphere at the edge
+      const oi = (y * S + x) << 2;
+      o[oi] = w[ti] * shade + spec + rim * 0.35;
+      o[oi + 1] = w[ti + 1] * shade + spec + rim * 0.6;
+      o[oi + 2] = w[ti + 2] * shade + spec + rim;
+      o[oi + 3] = 255;
+    }
+  }
+  g.putImageData(out, 0, 0);
+}
 const CX = 300;
 const CY = 322;
 const rad = (d: number) => (d * Math.PI) / 180;
@@ -47,88 +154,6 @@ function project(lat: number, lon: number, spin: number, tilt: number, R: number
     face: Math.max(0, cosc),
   };
 }
-
-/** a coastline, cut into the runs of it that are facing us */
-function runs(pts: [number, number][], spin: number, tilt: number, R: number) {
-  const out: string[] = [];
-  let run: string[] = [];
-  const flush = () => {
-    if (run.length > 2) out.push(`M${run.join("L")}Z`);
-    run = [];
-  };
-  for (const [lon, lat] of pts) {
-    const p = project(lat, lon, spin, tilt, R);
-    if (p.front) run.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
-    else flush();
-  }
-  flush();
-  return out;
-}
-
-/** the lines of latitude and longitude, drawn only where they face us */
-function graticule(spin: number, tilt: number, R: number) {
-  const lines: string[] = [];
-  const add = (pts: [number, number][]) => {
-    let run: string[] = [];
-    for (const [lat, lon] of pts) {
-      const p = project(lat, lon, spin, tilt, R);
-      if (p.front) run.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
-      else {
-        if (run.length > 1) lines.push(`M${run.join("L")}`);
-        run = [];
-      }
-    }
-    if (run.length > 1) lines.push(`M${run.join("L")}`);
-  };
-  for (let lon = -180; lon < 180; lon += 30) add(Array.from({ length: 46 }, (_, i) => [-90 + i * 4, lon] as [number, number]));
-  for (let lat = -60; lat <= 60; lat += 30) add(Array.from({ length: 91 }, (_, i) => [lat, -180 + i * 4] as [number, number]));
-  return lines;
-}
-
-/* ---- the trees -------------------------------------------------------------
-   Little round trees scattered over the land, the same as on the island. They
-   are placed once, at fixed points of the world, so they turn with it. */
-
-const inside = (lon: number, lat: number, pts: [number, number][]) => {
-  let hit = false;
-  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
-    const [xi, yi] = pts[i];
-    const [xj, yj] = pts[j];
-    if ((yi > lat) !== (yj > lat) && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) hit = !hit;
-  }
-  return hit;
-};
-
-/** a steady scatter, so the trees are in the same places every time */
-const scatter = (seed: number) => {
-  let s = seed;
-  return () => {
-    s = (s * 16807) % 2147483647;
-    return s / 2147483647;
-  };
-};
-
-const TREES: { lat: number; lon: number; tone: number; size: number }[] = (() => {
-  const out: { lat: number; lon: number; tone: number; size: number }[] = [];
-  LANDS.forEach((land, n) => {
-    const lons = land.pts.map((p) => p[0]);
-    const lats = land.pts.map((p) => p[1]);
-    const [x0, x1, y0, y1] = [Math.min(...lons), Math.max(...lons), Math.min(...lats), Math.max(...lats)];
-    const area = (x1 - x0) * (y1 - y0);
-    const want = Math.min(160, Math.max(2, Math.round(area / 55)));
-    const rnd = scatter(1234 + n * 97);
-    for (let tries = 0, got = 0; tries < want * 6 && got < want; tries++) {
-      const lon = x0 + rnd() * (x1 - x0);
-      const lat = y0 + rnd() * (y1 - y0);
-      if (lat > 72 || !inside(lon, lat, land.pts)) continue;
-      out.push({ lat, lon, tone: Math.floor(rnd() * 3), size: 0.8 + rnd() * 0.6 });
-      got++;
-    }
-  });
-  return out;
-})();
-
-const TREE_GREENS = ["#2f6b34", "#3d7d3a", "#4f8f3f"];
 
 /* ---- the castle on top ------------------------------------------------------ */
 
@@ -180,7 +205,6 @@ function Castle({ x, y, s }: { x: number; y: number; s: number }) {
   );
 }
 
-const FRAME = 30;
 
 export function Globe({
   spots,
@@ -245,59 +269,45 @@ export function Globe({
   };
   const onWheel = (e: React.WheelEvent) => setZoom((z) => Math.min(14, Math.max(1, z * (e.deltaY > 0 ? 0.86 : 1.16))));
 
-  const lines = graticule(spin, tilt, R);
-  const coasts = LANDS.flatMap((l) => runs(l.pts, spin, tilt, R).map((d, i) => ({ key: `${l.name}-${i}`, d })));
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const [world, setWorld] = useState<ImageData | null>(null);
+  useEffect(() => {
+    let live = true;
+    loadWorld()
+      .then((w) => live && setWorld(w))
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, []);
+  useEffect(() => {
+    if (world && canvas.current) paintWorld(canvas.current, world, spin, tilt, R);
+  }, [world, spin, tilt, R]);
 
   /* every stop facing us. Stops close enough to sit on top of each other are
      gathered, and each gathering is fanned out in a ring round the spot they
      share, with a thread from each cameo back to where it really is */
-  const facing = spots
-    .map((s, i) => ({ s, i, p: project(s.earth[0], s.earth[1], spin, tilt, R) }))
-    .filter(({ p }) => p.front);
-  const groups: (typeof facing)[] = [];
-  for (const it of facing) {
-    // a gathering is only the places genuinely at the same spot: measured from
-    // where the gathering started, not from its middle, so it can't creep out
-    // and take in a neighbour a region away
-    const near = groups.find((g) => Math.hypot(it.p.x - g[0].p.x, it.p.y - g[0].p.y) < FRAME * 1.2);
-    if (near) near.push(it);
-    else groups.push([it]);
-  }
-  const cameos = groups.flatMap((g, group) => {
-    if (g.length === 1) return [{ ...g[0], at: { x: g[0].p.x, y: g[0].p.y }, k: 0.6 + 0.4 * g[0].p.face, fanned: false, group }];
-    const cx = g.reduce((a, b) => a + b.p.x, 0) / g.length;
-    const cy = g.reduce((a, b) => a + b.p.y, 0) / g.length;
-    const k = 0.62;
-    const ring = Math.max(FRAME * 1.5, (FRAME * k * 1.28) / Math.sin(Math.PI / g.length));
-    return g.map((it, n) => {
-      const a = -Math.PI / 2 + (2 * Math.PI * n) / g.length;
-      return { ...it, at: { x: cx + ring * Math.cos(a), y: cy + ring * Math.sin(a) }, k, fanned: true, group };
-    });
-  });
-  /* a place of its own always stays exactly where it is on the world; if a
-     ring of gathered places would land on it, the whole ring steps aside
-     (its threads still run back to the real spots) */
-  const radius = (c: { k: number; i: number }) => FRAME * c.k * (c.i === here ? 1.15 : 1) + 3;
-  for (let round = 0; round < 10; round++) {
-    let moved = false;
-    for (const c of cameos) {
-      if (c.fanned) continue;
-      const hit = cameos.find((o) => o.fanned && Math.hypot(o.at.x - c.at.x, o.at.y - c.at.y) < radius(o) + radius(c));
-      if (!hit) continue;
-      const dx = hit.at.x - c.at.x;
-      const dy = hit.at.y - c.at.y;
-      const d = Math.hypot(dx, dy) || 1;
-      const push = radius(hit) + radius(c) - d + 1;
-      for (const o of cameos) {
-        if (o.group === hit.group) o.at = { x: o.at.x + (dx / d) * push, y: o.at.y + (dy / d) * push };
-      }
-      moved = true;
-    }
-    if (!moved) break;
-  }
-
-  // the picked one last, so it sits over its neighbours
-  cameos.sort((a, b) => (a.i === here ? 1 : b.i === here ? -1 : a.p.face - b.p.face));
+  /* every stop facing us, drawn the way the flat map draws them: the room's
+     picture in a jewelled ring, with its name on a pill underneath. Each is
+     as big as the frame painted under it on the world, foreshortened as the
+     world turns, so it sits over that frame exactly */
+  const cameos = spots
+    .map((s, i) => {
+      const [lat, lon] = s.earth;
+      const p = project(lat, lon, spin, tilt, R);
+      const up = project(lat + s.size, lon, spin, tilt, R);
+      const side = project(lat, lon + s.size / Math.max(0.2, Math.cos(rad(lat))), spin, tilt, R);
+      // the circle lies flat on the ball: its across and up directions are
+      // where the world carries them, so it squashes as it turns away
+      const A = { x: side.x - p.x, y: side.y - p.y };
+      const B = { x: p.x - up.x, y: p.y - up.y };
+      const rr = Math.hypot(B.x, B.y);
+      const lab = project(lat - s.label, lon, spin, tilt, R);
+      return { s, i, p, rr, A, B, lab };
+    })
+    .filter(({ p }) => p.front && p.face > 0.08)
+    // the picked one last, so it sits over its neighbours
+    .sort((a, b) => (a.s.island && b.s.island ? a.p.face - b.p.face : a.i === here ? 1 : b.i === here ? -1 : a.p.face - b.p.face));
 
   // the castle stands on the top of the world, whichever way it's turned
   const castle = { x: CX, y: CY - R + 8, s: Math.min(1, 0.9 + 0.1 * zoom) };
@@ -331,6 +341,14 @@ export function Globe({
           <stop offset="82%" stopColor="#fffdf6" stopOpacity="0" />
           <stop offset="100%" stopColor="#fffdf6" stopOpacity="0.55" />
         </radialGradient>
+        <radialGradient id="wm-globe-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0.8" stopColor="#bfe4ff" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#bfe4ff" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id="wm-globe-shadow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stopColor="#0a1530" stopOpacity="0.45" />
+          <stop offset="1" stopColor="#0a1530" stopOpacity="0" />
+        </radialGradient>
         <clipPath id="wm-globe-disc">
           <circle cx={CX} cy={CY} r={R} />
         </clipPath>
@@ -338,43 +356,13 @@ export function Globe({
 
       <circle cx={CX} cy={CY} r={R} fill="url(#wm-globe-sea)" />
 
-      <g clipPath="url(#wm-globe-disc)">
-        <g className="wm-globe-grid">
-          {lines.map((d, i) => (
-            <path key={i} d={d} />
-          ))}
-        </g>
-        {/* the ground as the island draws it: pale shallows, a ring of sand, then grass */}
-        <g className="wm-globe-shallows">
-          {coasts.map(({ key, d }) => (
-            <path key={key} d={d} />
-          ))}
-        </g>
-        <g className="wm-globe-sand">
-          {coasts.map(({ key, d }) => (
-            <path key={key} d={d} />
-          ))}
-        </g>
-        <g className="wm-globe-land">
-          {coasts.map(({ key, d }) => (
-            <path key={key} d={d} fill="url(#wm-globe-grass)" />
-          ))}
-        </g>
-        <g className="wm-globe-trees">
-          {TREES.map((t, i) => {
-            const p = project(t.lat, t.lon, spin, tilt, R);
-            if (!p.front || p.face < 0.08) return null;
-            const r = (2.2 + zoom * 0.35) * t.size * (0.5 + 0.5 * p.face);
-            return (
-              <g key={i} transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`}>
-                <circle cx={r * 0.25} cy={r * 0.35} r={r} fill="rgba(20,50,25,0.35)" />
-                <circle r={r} fill={TREE_GREENS[t.tone]} />
-                <circle cx={-r * 0.3} cy={-r * 0.3} r={r * 0.4} fill="rgba(255,255,255,0.18)" />
-              </g>
-            );
-          })}
-        </g>
-      </g>
+      {/* its shadow, and the glow of its air */}
+      <ellipse cx={CX + R * 0.12} cy={CY + R * 1.02} rx={R * 0.85} ry={R * 0.16} fill="url(#wm-globe-shadow)" />
+      <circle cx={CX} cy={CY} r={R * 1.08} fill="url(#wm-globe-glow)" />
+      {/* both islands' paintings, wrapped round the world */}
+      <foreignObject x={0} y={0} width={600} height={600} pointerEvents="none">
+        <canvas ref={canvas} width={720} height={720} style={{ width: "100%", height: "100%", display: "block" }} />
+      </foreignObject>
 
       {/* the light on the glass */}
       <circle cx={CX} cy={CY} r={R} fill="url(#wm-globe-sky)" pointerEvents="none" />
@@ -394,46 +382,64 @@ export function Globe({
         </g>
       </g>
 
-      {/* the threads from a fanned-out cameo back to its real spot */}
-      <g className="wm-globe-threads">
-        {cameos
-          .filter((c) => c.fanned)
-          .map((c) => (
-            <g key={c.s.id}>
-              <line x1={c.p.x} y1={c.p.y} x2={c.at.x} y2={c.at.y} />
-              <circle cx={c.p.x} cy={c.p.y} r={2.6} />
-            </g>
-          ))}
-      </g>
-
-      {cameos.map(({ s, i, p, at, k }) => {
+      {cameos.map(({ s, i, p, rr, A, B, lab }) => {
         const on = i === here;
+        const fs = Math.max(7, rr * 0.3);
+        const pw = s.name.length * fs * 0.62 + fs * 1.4;
+        if (s.island) {
+          // the island stands up off the ball, its foot on its spot, growing
+          // as it comes round to face us
+          const iw = rr * 3 * (0.35 + 0.65 * p.face) * (on ? 1.12 : 1);
+          const lf = Math.max(7, iw * 0.085);
+          const lw = s.name.length * lf * 0.62 + lf * 1.4;
+          return (
+            <g
+              key={s.id}
+              className={`wm-globe-stop wm-globe-isle${on ? " is-on" : ""}`}
+              opacity={Math.min(1, 0.15 + 1.4 * p.face)}
+              tabIndex={0}
+              onClick={() => onPick(i)}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onPick(i)}
+            >
+              <title>{s.name}</title>
+              <ellipse cx={p.x} cy={p.y + iw * 0.02} rx={iw * 0.46} ry={iw * 0.1} fill="rgba(5,20,50,0.45)" />
+              <image href={s.island} x={p.x - iw / 2} y={p.y - iw * 0.82} width={iw} height={iw * 0.86} preserveAspectRatio="xMidYMax meet" />
+              <g transform={`translate(${p.x.toFixed(1)} ${(p.y + lf * 1.4).toFixed(1)})`} opacity={p.face > 0.35 ? 1 : 0}>
+                <rect x={-lw / 2} y={-lf * 0.95} width={lw} height={lf * 1.9} rx={lf * 0.95} fill={on ? "#fbe3ea" : "#fffaf0"} stroke={on ? "#d27a98" : "#c9a14e"} strokeWidth={Math.max(1, lf * 0.12)} />
+                <text className="wm-globe-name" y={lf * 0.36} textAnchor="middle" style={{ fontSize: lf }}>
+                  {s.name}
+                </text>
+              </g>
+            </g>
+          );
+        }
         return (
           <g
             key={s.id}
             className={`wm-globe-stop${on ? " is-on" : ""}`}
-            transform={`translate(${at.x.toFixed(1)} ${at.y.toFixed(1)}) scale(${(k * (on ? 1.15 : 1)).toFixed(3)})`}
-            opacity={0.4 + 0.6 * p.face}
+            opacity={Math.min(1, 0.25 + 1.2 * p.face)}
             tabIndex={0}
             onClick={() => onPick(i)}
             onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onPick(i)}
           >
             <title>{s.name}</title>
-            <circle className="wm-globe-halo" r={FRAME + 6} fill={s.color} />
-            <clipPath id={`wm-globe-clip-${s.id}`}>
-              <circle r={FRAME} />
-            </clipPath>
-            <image
-              href={s.picture}
-              x={-FRAME}
-              y={-FRAME}
-              width={FRAME * 2}
-              height={FRAME * 2}
-              preserveAspectRatio="xMidYMid slice"
-              clipPath={`url(#wm-globe-clip-${s.id})`}
-            />
-            <circle className="wm-globe-ring" r={FRAME + 1} />
-            {on && <text y={FRAME + 18}>{s.name}</text>}
+            {/* drawn 100 across, then laid onto the ball */}
+            <g transform={`matrix(${(A.x / 100).toFixed(4)} ${(A.y / 100).toFixed(4)} ${(B.x / 100).toFixed(4)} ${(B.y / 100).toFixed(4)} ${p.x.toFixed(1)} ${p.y.toFixed(1)})`}>
+              <circle r={106} fill="rgba(20,20,40,0.35)" transform="translate(4 8)" />
+              <clipPath id={`wm-globe-clip-${s.id}`}>
+                <circle r={100} />
+              </clipPath>
+              <circle r={100} fill="#fffaf0" />
+              <image href={s.picture} x={-140} y={-100} width={280} height={200} preserveAspectRatio="xMidYMid slice" clipPath={`url(#wm-globe-clip-${s.id})`} />
+              <circle className="wm-globe-ring" r={102} style={{ strokeWidth: 10 }} />
+              <circle r={109} fill="none" stroke="#fffaf0" strokeWidth={3} opacity={0.9} />
+            </g>
+            <g transform={`translate(${lab.x.toFixed(1)} ${lab.y.toFixed(1)}) scale(${(0.45 + 0.55 * p.face).toFixed(3)})`} opacity={p.face > 0.3 ? 1 : 0}>
+              <rect x={-pw / 2} y={-fs * 0.95} width={pw} height={fs * 1.9} rx={fs * 0.95} fill={on ? "#fbe3ea" : "#fffaf0"} stroke={on ? "#d27a98" : "#c9a14e"} strokeWidth={Math.max(1, fs * 0.12)} />
+              <text className="wm-globe-name" y={fs * 0.36} textAnchor="middle" style={{ fontSize: fs }}>
+                {s.name}
+              </text>
+            </g>
           </g>
         );
       })}

@@ -7087,3 +7087,7 @@
 
 /* the ring of light round the picked room on the painted first island */
 .palais .wm-painted-ring { filter: drop-shadow(0 0 6px rgba(255, 230, 160, 0.95)); }
+
+/* the room names on the globe, on pills like the flat map's */
+.palais .wm-globe-name { font-family: "Roboto Mono", ui-monospace, monospace; font-weight: 700; fill: #3a2b10; }
+.palais .wm-globe-stop:hover .wm-globe-ring { stroke: var(--wm-rose-deep, #b0436a); }
