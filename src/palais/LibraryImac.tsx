@@ -181,6 +181,11 @@ function Readme() {
 /** Molly's favourite websites, kept like bookmarks in My favs */
 const FAVS: { name: string; href: string; icon?: string; emoji?: string }[] = [
   { name: "LunaPic", href: "https://www2.lunapic.com/editor/?action=quick-upload", emoji: "🌙" },
+  { name: "Mentimeter", href: "https://www.mentimeter.com/", icon: `${process.env.PUBLIC_URL}/palais/imac/fav-menti.png` },
+  { name: "Glitch blog", href: "https://blog.glitch.com/", icon: `${process.env.PUBLIC_URL}/palais/imac/fav-glitch.png` },
+  { name: "Mural", href: "https://app.mural.co/", icon: `${process.env.PUBLIC_URL}/palais/imac/fav-mural.png` },
+  { name: "Quizlet", href: "https://quizlet.com/", icon: `${process.env.PUBLIC_URL}/palais/imac/fav-quizlet.png` },
+  { name: "Linear", href: "https://linear.app/", icon: `${process.env.PUBLIC_URL}/palais/imac/fav-linear.png` },
 ];
 /** Molly's avatars, and her desktop backgrounds, each one a click to download */
 const AVATARS = [
@@ -193,6 +198,16 @@ const FOLDER_EMOJI: Partial<Record<Folder, string>> = { avatar: "👤", backgrou
 
 /** the pixel pink heart, My favs' icon */
 const HEART = `data:image/svg+xml;utf8,${encodeURIComponent(SPRITES.pinkHeart)}`;
+
+/** courses kept in the Academy folder on the Mac (only there, not in the
+    binder's Cheat Sheets) */
+const COURSES_ON_MAC: { name: string; href: string; icon: string }[] = [
+  {
+    name: "Udemy: Blockchain Developer",
+    href: "https://www.udemy.com/course/blockchain-developer/learn/lecture/33861892?components=add_to_cart%2Cavailable_coupons%2Cbase_purchase_section%2Cbuy_button%2Cbuy_for_team%2Ccacheable_buy_button%2Ccacheable_deal_badge%2Ccacheable_discount_expiration%2Ccacheable_price_text%2Ccacheable_purchase_text%2Ccurated_for_ufb_notice_context%2Ccurriculum_context%2Cdeal_badge%2Cdiscount_expiration%2Cgift_this_course%2Cincentives%2Cinstructor_links%2Clifetime_access_context%2Cmoney_back_guarantee%2Cprice_text%2Cpurchase_tabs_context%2Cpurchase%2Crecommendation%2Credeem_coupon%2Csidebar_container%2Cpurchase_body_container%2Cone_click_checkout#overview",
+    icon: `${process.env.PUBLIC_URL}/palais/imac/udemy.png`,
+  },
+];
 
 /** the apple off the teacher's desk, the School folder's icon */
 const APPLE = `data:image/svg+xml;utf8,${encodeURIComponent(SPRITES.apple)}`;
@@ -249,7 +264,7 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
             </a>
           ))}
         {at === "school" &&
-          MATERIALS.map((m) => (
+          [...MATERIALS, ...COURSES_ON_MAC].map((m) => (
             <a key={m.href} className="finder-item" href={m.href} target="_blank" rel="noopener noreferrer" title={m.href}>
               <img src={m.icon} alt="" />
               <span>{m.name}</span>
