@@ -9,7 +9,7 @@ import { noteDoing } from "./visits";
  * in the Palais, Norah Jones in the Kitchen, Марк Бернес in the Boudoir,
  * Mild High Club in the Library, Charli xcx's brat at Brat Academy, and Lana
  * Del Rey out at Sunliner Halt, in the Blue Cave, the Jacaranda
- * Quarter and the Steaming Lagoon.
+ * Quarter and the Lagoon.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Browsers won't start

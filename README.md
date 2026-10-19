@@ -109,7 +109,7 @@ A cute, video-game-style level select. Honeysuckle hops along a dotted path betw
 | 🌿 The Glasshouse | an iron-and-glass garden conservatory |
 | 🏠 The Lakehouse | a glass lake house with a red bridge and a boathouse, in four seasons |
 | 👗 The Wardrobe Wing | a pink closet with lemon wallpaper and a waterfall, in four seasons |
-| ♨️ The Steaming Lagoon | a blue lagoon under the northern lights, in four seasons |
+| ♨️ The Lagoon | a blue lagoon under the northern lights, in four seasons |
 | 🌲 The Rainwood | a fern-covered conservatory in a rainforest |
 | 🎵 The Amphitheatre | a festival stage on a canyon rim at sunset |
 | 🕌 The City of Domes | a marble bath above domes, trams and gondolas |

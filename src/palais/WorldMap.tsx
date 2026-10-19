@@ -87,7 +87,7 @@ const STOPS: Stop[] = [
   {
     id: "closet",
     earth: [47.02, -121.52],
-    name: "Wardrobe Wing",
+    name: "Closet",
     tag: "inside the Lakehouse",
     blurb: "Every dress you ever loved, hanging in the order you wore it somewhere beautiful.",
     finds: ["Mirrors that show your best days", "A staircase made of Mary Janes", "Rails and rails of hanging dresses"],
@@ -260,7 +260,7 @@ const STOPS: Stop[] = [
   {
     id: "lagoon",
     earth: [64.1, -21.8],
-    name: "Steaming Lagoon",
+    name: "Lagoon",
     tag: "fire under snow",
     blurb: "Milky blue water steaming in the snow under the northern lights, with a geyser, a waterfall and a volcano glowing on the horizon.",
     finds: ["A little bridge over the warm blue water", "Sea stacks off a black-sand beach", "A lodge lit up on the ski slope"],

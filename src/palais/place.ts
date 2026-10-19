@@ -3,8 +3,8 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 /**
  * Which room of the Palais you're standing in.
  *
- * The palace terrace is home. The closet (the Wardrobe Wing on the world map)
- * the Lakehouse, the Steaming Lagoon, the Rainwood, the Amphitheatre, the City of Domes, the Jacaranda Quarter, the Glass Reef, the Lantern Isles, the Strand and the Blue Cave are rooms you can walk into. Every room stays on the page
+ * The palace terrace is home. The closet (the Closet on the world map)
+ * the Lakehouse, the Lagoon, the Rainwood, the Amphitheatre, the City of Domes, the Jacaranda Quarter, the Glass Reef, the Lantern Isles, the Strand and the Blue Cave are rooms you can walk into. Every room stays on the page
  * the whole time, and only the one you're in shows, so the seasons keep turning together
  * and a room you come back to is exactly as you left it.
  *
@@ -61,9 +61,9 @@ export const PLACE_NAMES: Record<Place, string> = {
   kitchen: "The Kitchen",
   bathroom: "The Bathroom",
   garden: "The Glasshouse",
-  closet: "The Wardrobe Wing",
+  closet: "The Closet",
   lakehouse: "The Lakehouse",
-  lagoon: "The Steaming Lagoon",
+  lagoon: "The Lagoon",
   rainwood: "The Rainwood",
   gorge: "The Amphitheatre",
   domes: "The City of Domes",
