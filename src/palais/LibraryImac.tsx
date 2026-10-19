@@ -96,17 +96,19 @@ const ICON: Record<string, string> = {
 const APPS = projects.map((p) => ({ name: SHORT[p.title] ?? p.title, title: p.title, href: p.demoUrl ?? p.link, icon: ICON[p.title] ?? p.microlink, own: !!ICON[p.title] }));
 
 /** the folders in the Finder, and the icons kept in them to download */
-type Folder = "home" | "favs" | "school" | "rooms" | "icons" | "project-icons" | "job-icons";
+type Folder = "home" | "favs" | "school" | "avatar" | "backgrounds" | "rooms" | "icons" | "project-icons" | "job-icons";
 const FOLDER_NAME: Record<Folder, string> = {
   home: "Macintosh HD",
   favs: "My favs",
+  avatar: "Avatar",
+  backgrounds: "Backgrounds",
   school: "Academy",
   rooms: "Palais",
   icons: "Icons",
   "project-icons": "Project icons",
   "job-icons": "Job icons",
 };
-const UP: Partial<Record<Folder, Folder>> = { favs: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", "job-icons": "icons" };
+const UP: Partial<Record<Folder, Folder>> = { favs: "home", avatar: "home", backgrounds: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", "job-icons": "icons" };
 /** the Palais's own icon, for its folder of rooms */
 const PALAIS_ICON = `${process.env.PUBLIC_URL}/palais-icon.svg`;
 /** rooms with an icon of their own in the Palais folder, in place of their
@@ -180,6 +182,15 @@ function Readme() {
 const FAVS: { name: string; href: string; icon?: string; emoji?: string }[] = [
   { name: "LunaPic", href: "https://www2.lunapic.com/editor/?action=quick-upload", emoji: "🌙" },
 ];
+/** Molly's avatars, and her desktop backgrounds, each one a click to download */
+const AVATARS = [
+  { name: "Lavender", src: `${process.env.PUBLIC_URL}/palais/imac/avatar/avi_lavendar.png` },
+  { name: "Passport", src: `${process.env.PUBLIC_URL}/palais/imac/avatar/avi_passport.jpg` },
+];
+const BACKGROUNDS = [{ name: "Sailor Moon", src: `${process.env.PUBLIC_URL}/palais/imac/backgrounds/sailormoon-background.png` }];
+/** folders whose icon is an emoji */
+const FOLDER_EMOJI: Partial<Record<Folder, string>> = { avatar: "👤", backgrounds: "🌄" };
+
 /** the pixel pink heart, My favs' icon */
 const HEART = `data:image/svg+xml;utf8,${encodeURIComponent(SPRITES.pinkHeart)}`;
 
@@ -196,7 +207,7 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
         <img className="finder-apple" src={to === "favs" ? HEART : APPLE} alt="" />
       ) : (
         <span className="finder-folder" aria-hidden>
-          📁
+          {FOLDER_EMOJI[to] ?? "📁"}
         </span>
       )}
       <span>{FOLDER_NAME[to]}</span>
@@ -218,10 +229,12 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
           </button>
         )}
         <b>{FOLDER_NAME[at]}</b>
-        {(at === "project-icons" || at === "job-icons") && <span>click an icon to download it</span>}
+        {(at === "project-icons" || at === "job-icons" || at === "avatar" || at === "backgrounds") && <span>click one to download it</span>}
       </div>
       <div className="finder-grid">
-        {at === "home" && [folder("rooms"), folder("favs"), folder("school"), folder("icons")]}
+        {at === "home" && [folder("rooms"), folder("favs"), folder("school"), folder("avatar"), folder("backgrounds"), folder("icons")]}
+        {at === "avatar" && icons(AVATARS)}
+        {at === "backgrounds" && icons(BACKGROUNDS)}
         {at === "favs" &&
           FAVS.map((f) => (
             <a key={f.href} className="finder-item" href={f.href} target="_blank" rel="noopener noreferrer" title={f.href}>

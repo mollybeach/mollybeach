@@ -5051,6 +5051,8 @@
 }
 .palais .sc-material:hover { background: #effbd6; }
 .palais .sc-material img { width: 1.6rem; height: 2.2rem; }
+.palais .finder-item img[src*="/imac/avatar/"] { object-fit: cover; border-radius: 50%; }
+.palais .finder-item img[src*="/imac/backgrounds/"] { width: 4.8em; object-fit: cover; border-radius: 4px; }
 .palais .finder-item img { width: 3.2em; height: 3.2em; object-fit: contain; border-radius: 0.6em; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2)); }
 @media (hover: hover) {
   .palais .imac-icon:hover { background: rgba(255, 255, 255, 0.3); }
