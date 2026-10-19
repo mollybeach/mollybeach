@@ -51,8 +51,8 @@ const STOPS: Stop[] = [
   {
     id: "palace",
     earth: [46.85, -121.76],
-    name: "Palais",
-    tag: "home",
+    name: "Home",
+    tag: "the Palais",
     blurb: "The gilded terrace where everyone lives: cats, cake and cameos, with the mountain through the arches and the pool out back, all through the four seasons.",
     finds: ["A painted ceiling full of cherubs", "Honeysuckle riding his tricycle", "A pool out back for the dogs in summer"],
     color: "#ffd88a",
@@ -95,7 +95,7 @@ const STOPS: Stop[] = [
     blurb: "The marble bar you can see from the terrace is only the end of it: a whole kitchen of pink tile, mint stools and brass, with the garden through the windows and something always baking.",
     finds: ["The mint bar stools", "A copper kettle on the range", "Cakes cooling for the cats' birthdays"],
     color: "#f7b7a3",
-    at: [500, 475],
+    at: [455, 502],
     patch: [52, 38],
     seed: 23,
     room: "kitchen",
@@ -181,12 +181,12 @@ const STOPS: Stop[] = [
   {
     id: "domes",
     earth: [41.0, 29.0],
-    name: "City of Domes",
+    name: "Riviera",
     tag: "the old city",
     blurb: "A steaming marble bath under blue-and-white tiles, looking out over domes and minarets, a yellow tram, gondolas on the canal and a volcano at sunset.",
     finds: ["A warm pool with a fountain", "A little yellow tram up the hill", "Gondolas below the palace on the river"],
     color: "#ffb99b",
-    at: [352, 548],
+    at: [300, 540],
     patch: [98, 66],
     seed: 97,
     room: "domes",
@@ -966,7 +966,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               </button>
             ) : (
               <button type="button" className="wm-isle-arrow wm-isle-arrow--up" onClick={() => crossTo(0)}>
-                <span aria-hidden>▲</span> Back to the Palais
+                <span aria-hidden>▲</span> Back home
               </button>
             ))}
         </div>

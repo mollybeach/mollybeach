@@ -143,8 +143,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
   // on a phone the room has its own layouts (phoneLayout.ts)
   const portrait = usePortrait();
   const device = portrait ? "phone" : "desktop";
-  const { place, go } = usePlace();
-  const inPalace = place === "palace";
+  const { place } = usePlace();
   const frozen = place === "boudoir";
   const inCloset = place === "closet";
   const collection = useCollection();
@@ -540,12 +539,6 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
           <span className="palais-pill-long">Map</span>
           <span className="palais-pill-short">Map</span>
         </button>
-        {!inPalace && (
-          <button type="button" onClick={() => go("palace")} className="palais-pill palais-pill--home" aria-label="Back to the Palais">
-            <span className="palais-pill-long">← Palais</span>
-            <span className="palais-pill-short">← Palais</span>
-          </button>
-        )}
         <button
           type="button"
           onClick={() => {

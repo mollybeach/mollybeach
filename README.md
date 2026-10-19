@@ -112,7 +112,7 @@ A cute, video-game-style level select. Honeysuckle hops along a dotted path betw
 | ♨️ The Lagoon | a blue lagoon under the northern lights, in four seasons |
 | 🌲 The Rainwood | a fern-covered conservatory in a rainforest |
 | 🎵 The Amphitheatre | a festival stage on a canyon rim at sunset |
-| 🕌 The City of Domes | a marble bath above domes, trams and gondolas |
+| 🕌 The Riviera | a marble bath above domes, trams and gondolas |
 | 💜 The Jacaranda Quarter | a balcony over a purple jacaranda street at dusk |
 | 🐢 The Glass Reef | a seashell pavilion half under the sea |
 
