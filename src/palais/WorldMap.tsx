@@ -230,7 +230,7 @@ const STOPS: Stop[] = [
     blurb: "An iron-and-glass conservatory built over the garden, full of magnolia, wisteria and hydrangea, with the rain on the roof and the mountain beyond the panes.",
     finds: ["A vaulted glass roof", "Wisteria grown right over the ironwork", "Orchids, ferns and a fountain"],
     color: "#b5dca8",
-    at: [195, 430],
+    at: [450, 470],
     patch: [56, 42],
     seed: 31,
     room: "garden",
@@ -317,7 +317,7 @@ const STOPS: Stop[] = [
     blurb: "A white loggia draped in bougainvillea, with every beach at once through the arches: white cliff houses with blue domes, a sea stack at sunset and a seaside promenade.",
     finds: ["Blue domes on a white cliff", "A yacht below the sea stack at sunset", "Striped umbrellas along the promenade"],
     color: "#7fdccf",
-    at: [450, 470],
+    at: [195, 430],
     patch: [80, 100],
     seed: 53,
     room: "shore",
@@ -932,7 +932,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is a painting (public/palais/map/island-one.webp),
                 with every room's frame and name already painted in; the stops
                 on it are just the places to press */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=68`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=72`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
 
             {/* the stops: a round gilt frame with the place inside */}
             {STOPS.map((s, i) => {
