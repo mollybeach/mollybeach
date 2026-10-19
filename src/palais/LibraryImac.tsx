@@ -7,6 +7,8 @@ import { propSrc } from "./props";
 import { hashExtra, usePlace } from "./place";
 import { usePortrait } from "./PortraitTerrace";
 import { GifMaker } from "./GifMaker";
+import { useAccount } from "../components/AccountCard";
+import { OneLine, StringSplitter } from "./StringSplitter";
 import { placeOver, schoolSpot } from "./schoolSpots";
 
 /**
@@ -44,9 +46,17 @@ const KEYBOARD = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_g
 /* mollybeach.app/mac (and #library/mac, or #school/mac) sits you straight down at it */
 const AT_THE_MAC = () => /^mac/.test(hashExtra());
 
-type App = "readme" | "rooms" | "gifs" | null;
+type App = "readme" | "rooms" | "gifs" | "split" | "oneline" | null;
 
-const TITLES = { readme: "Read me", rooms: "The rooms", gifs: "GIF maker" } as const;
+const TITLES = { readme: "Read me", rooms: "The rooms", gifs: "GIF maker", split: "🎱 Splitter", oneline: "🧵 One line" } as const;
+
+/** the apps in the dock along the bottom of the screen, with their own icons:
+    Molly's own, there only for someone signed in with Google (nothing asks
+    them to; they have to have done it themselves) */
+const DOCK = [
+  { name: "ilovework", href: "https://ilovework.app", icon: `${process.env.PUBLIC_URL}/palais/imac/ilovework.webp` },
+  { name: "ghostMind", href: "https://ghostmind.io", icon: `${process.env.PUBLIC_URL}/palais/imac/ghostmind.webp` },
+];
 
 export function LibraryImac({ room = "library" }: { room?: "library" | "school" }) {
   const { place, go } = usePlace();
@@ -57,6 +67,7 @@ export function LibraryImac({ room = "library" }: { room?: "library" | "school" 
   const screen = tall ? SCREEN_ALONE : SCREEN;
   const [app, setApp] = useState<App>(null);
   const chips = useFloral("sidebar");
+  const { me } = useAccount();
   const ribbon = useFloral("footer");
 
   /* keep it standing on the desk, wherever the photograph has landed */
@@ -146,11 +157,6 @@ export function LibraryImac({ room = "library" }: { room?: "library" | "school" 
             aria-labelledby="imac-title"
             style={{ backgroundImage: `linear-gradient(rgba(253, 248, 238, 0.28), rgba(250, 243, 229, 0.34)), url("${floralSrc("green")}")` }}
           >
-            <Blossoms className="wm-bloom wm-bloom--tl" posy="tl" />
-            <Blossoms className="wm-bloom wm-bloom--bl" posy="bl" />
-            <Blossoms className="wm-bloom wm-bloom--tr" posy="tr" />
-            <Blossoms className="wm-bloom wm-bloom--br" posy="br" />
-
             <div className="wm-title">
               <Blossoms className="wm-bloom wm-bloom--title-l" posy="title-l" />
               <h2 id="imac-title">
@@ -196,10 +202,36 @@ export function LibraryImac({ room = "library" }: { room?: "library" | "school" 
                       <span aria-hidden>🎞</span>
                       GIF maker
                     </button>
+                    <button type="button" className="imac-icon" onClick={() => setApp("oneline")}>
+                      <span aria-hidden>🧵</span>
+                      One line
+                    </button>
                   </div>
 
+                  {/* the dock: Molly's own apps, each opening its site */}
+                  <nav className="imac-dock" aria-label="Apps">
+                    <button type="button" className="imac-dock-app" onClick={() => setApp("split")} title="Splitter">
+                      <span className="imac-dock-emoji" aria-hidden>
+                        🎱
+                      </span>
+                      <span>Splitter</span>
+                    </button>
+                    <button type="button" className="imac-dock-app" onClick={() => setApp("oneline")} title="One line">
+                      <span className="imac-dock-emoji imac-dock-emoji--thread" aria-hidden>
+                        🧵
+                      </span>
+                      <span>One line</span>
+                    </button>
+                    {me?.google && DOCK.map((d) => (
+                      <a key={d.name} className="imac-dock-app" href={d.href} target="_blank" rel="noopener noreferrer" title={d.name}>
+                        <img src={d.icon} alt="" />
+                        <span>{d.name}</span>
+                      </a>
+                    ))}
+                  </nav>
+
                   {app && (
-                    <div className={app === "gifs" ? "imac-window imac-window--wide" : "imac-window"}>
+                    <div className={app === "gifs" || app === "split" || app === "oneline" ? "imac-window imac-window--wide" : "imac-window"}>
                       <div className="imac-window-bar">
                         <button type="button" className="imac-window-shut" onClick={() => setApp(null)} aria-label="Close the window" />
                         <span>{TITLES[app]}</span>
@@ -207,6 +239,10 @@ export function LibraryImac({ room = "library" }: { room?: "library" | "school" 
                       <div className="imac-window-body">
                         {app === "gifs" ? (
                           <GifMaker />
+                        ) : app === "split" ? (
+                          <StringSplitter />
+                        ) : app === "oneline" ? (
+                          <OneLine />
                         ) : app === "readme" ? (
                           <p>
                             Molly's iMac, on the desk in the {room === "school" ? "classroom" : "library"}. Nothing much is installed yet — the point is that

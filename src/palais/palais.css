@@ -4769,7 +4769,8 @@
 }
 
 .palais .wm-panel--imac {
-  width: min(820px, 100%);
+  /* as big as the window allows, with the whole machine still in view */
+  width: min(1400px, 100%, calc((100cqh - 6rem) * 1.45));
   grid-template-columns: minmax(0, 1fr);
   padding: 2.2rem 1.4rem 1.4rem;
 }
@@ -4824,6 +4825,92 @@
   color: #222;
 }
 .palais .imac-menu-clock { margin-left: auto; }
+
+/* the dock, along the bottom of the screen */
+.palais .imac-dock {
+  position: absolute;
+  left: 50%;
+  bottom: 0.45em;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6em;
+  padding: 0.35em 0.6em;
+  border-radius: 0.8em;
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  font-size: clamp(8px, 1.6cqw, 13px);
+  font-weight: 700;
+}
+.palais .imac-dock-app {
+  display: grid;
+  justify-items: center;
+  gap: 0.15em;
+  color: #fffdf4;
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75), 0 0 4px rgba(0, 0, 0, 0.4);
+  transition: transform 160ms ease;
+}
+.palais .imac-dock-app img { width: 3.6em; height: 3.6em; display: block; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); }
+.palais .imac-dock-app { padding: 0; border: none; background: none; font: inherit; cursor: pointer; }
+.palais .imac-dock-emoji--thread { background: linear-gradient(160deg, #ffe0ec, #f6a9c6); }
+.palais .imac-dock-emoji {
+  display: grid;
+  place-items: center;
+  width: 1.55em;
+  height: 1.55em;
+  border-radius: 0.36em;
+  background: linear-gradient(160deg, #3b2a5c, #120c1e);
+  font-size: 2.3em;
+  line-height: 1;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+@media (hover: hover) {
+  .palais .imac-dock-app:hover { transform: translateY(-0.4em) scale(1.08); }
+}
+
+/* the 🎱 splitter: paste a long text, get it back in parts to copy */
+.palais .split { display: grid; gap: 0.55em; }
+.palais .split-controls { display: flex; flex-wrap: wrap; gap: 0.8em; }
+.palais .split-controls label { display: grid; gap: 0.15em; font-weight: 700; color: #1d4f3a; }
+.palais .split-controls select,
+.palais .split-controls input { font: inherit; padding: 0.2em 0.35em; border: 1px solid #b9c7a7; border-radius: 4px; background: #fff; min-width: 7em; }
+.palais .split-label { display: flex; flex-wrap: wrap; gap: 0.5em; align-items: baseline; margin-top: 0.3em; font-weight: 700; color: #1d4f3a; }
+.palais .split-label span { font-weight: 500; color: #6b6150; }
+.palais .split-source,
+.palais .split-part textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5em;
+  border: 1px solid #cfd6c3;
+  border-radius: 5px;
+  background: #fff;
+  font: 0.95em/1.5 "Courier New", ui-monospace, monospace;
+  color: #1c1c1c;
+  resize: vertical;
+}
+.palais .split-source { min-height: 8em; }
+.palais .split-source--short { min-height: 4em; }
+.palais .split-part textarea { background: #f8faf4; }
+.palais .split-parts { display: grid; gap: 0.5em; }
+.palais .split-part { display: grid; gap: 0.3em; padding: 0.5em; border: 1px solid #e1e6d6; border-radius: 6px; background: #fffef9; }
+.palais .split-part-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; }
+.palais .split-part-head span { color: #6b6150; }
+.palais .split-copy {
+  margin-left: auto;
+  padding: 0.2em 0.6em;
+  border: 1px solid #2f6b2a;
+  border-radius: 4px;
+  background: #fff;
+  color: #2f6b2a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.palais .split-copy:hover { background: #eef6e8; }
+.palais .split-copy.is-done { background: #4d9a35; color: #fffdf4; }
 
 .palais .imac-desk {
   display: flex;

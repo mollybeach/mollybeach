@@ -122,6 +122,8 @@ export interface Editor {
   avatar?: string;
   /** listed in palais_editors, so the database will accept saves */
   canSave: boolean;
+  /** signed in with Google (not Apple) */
+  google: boolean;
 }
 
 async function editorOf(sb: SupabaseClient, session: Session | null): Promise<Editor | null> {
@@ -133,6 +135,7 @@ async function editorOf(sb: SupabaseClient, session: Session | null): Promise<Ed
     name: meta.full_name ?? meta.name ?? undefined,
     avatar: meta.avatar_url ?? meta.picture ?? undefined,
     canSave: data === true,
+    google: (session.user.app_metadata?.providers ?? [session.user.app_metadata?.provider]).includes("google"),
   };
 }
 
