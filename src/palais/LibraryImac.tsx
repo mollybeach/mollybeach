@@ -125,6 +125,7 @@ const fileName = (name: string, src: string) =>
 const PROJECT_ICONS = [
   ...projects.filter((p) => ICON[p.title]).map((p) => ({ name: SHORT[p.title]?.replace("\n", "") ?? p.title, src: ICON[p.title] })),
   // icons kept here that aren't a project on the page
+  { name: "Brat Code", src: `${process.env.PUBLIC_URL}/palais/imac/bratcode.jpg` },
   { name: "Other", src: `${process.env.PUBLIC_URL}/palais/imac/other.png` },
 ];
 /** projects' preview pictures, in Project icons › Previews */
