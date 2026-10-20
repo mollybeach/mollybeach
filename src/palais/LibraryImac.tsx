@@ -96,7 +96,7 @@ const ICON: Record<string, string> = {
 const APPS = projects.map((p) => ({ name: SHORT[p.title] ?? p.title, title: p.title, href: p.demoUrl ?? p.link, icon: ICON[p.title] ?? p.microlink, own: !!ICON[p.title] }));
 
 /** the folders in the Finder, and the icons kept in them to download */
-type Folder = "home" | "favs" | "school" | "avatar" | "backgrounds" | "rooms" | "icons" | "project-icons" | "job-icons";
+type Folder = "home" | "favs" | "school" | "avatar" | "backgrounds" | "rooms" | "icons" | "project-icons" | "previews" | "job-icons";
 const FOLDER_NAME: Record<Folder, string> = {
   home: "Macintosh HD",
   favs: "My favs",
@@ -106,9 +106,10 @@ const FOLDER_NAME: Record<Folder, string> = {
   rooms: "Palais",
   icons: "Icons",
   "project-icons": "Project icons",
+  previews: "Previews",
   "job-icons": "Job icons",
 };
-const UP: Partial<Record<Folder, Folder>> = { favs: "home", avatar: "home", backgrounds: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", "job-icons": "icons" };
+const UP: Partial<Record<Folder, Folder>> = { favs: "home", avatar: "home", backgrounds: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", previews: "project-icons", "job-icons": "icons" };
 /** the Palais's own icon, for its folder of rooms */
 const PALAIS_ICON = `${process.env.PUBLIC_URL}/palais-icon.svg`;
 /** rooms with an icon of their own in the Palais folder, in place of their
@@ -121,14 +122,30 @@ const ROOM_ICON: Partial<Record<Place, string>> = {
 const fileName = (name: string, src: string) =>
   `${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.${(src.split("?")[0].split(".").pop() || "png").toLowerCase()}`;
 /** each project's own icon; the jobs' are the logos on the résumé, one each */
-const PROJECT_ICONS = projects.filter((p) => ICON[p.title]).map((p) => ({ name: SHORT[p.title]?.replace("\n", "") ?? p.title, src: ICON[p.title] }));
+const PROJECT_ICONS = [
+  ...projects.filter((p) => ICON[p.title]).map((p) => ({ name: SHORT[p.title]?.replace("\n", "") ?? p.title, src: ICON[p.title] })),
+  // icons kept here that aren't a project on the page
+  { name: "Other", src: `${process.env.PUBLIC_URL}/palais/imac/other.png` },
+];
+/** projects' preview pictures, in Project icons › Previews */
+const PREVIEWS = [
+  { name: "HedgePod", src: `${process.env.PUBLIC_URL}/palais/imac/previews/hedgepod_preview.jpg` },
+  { name: "Praxos", src: `${process.env.PUBLIC_URL}/palais/imac/previews/praxos_preview.jpg` },
+  {
+    name: "Praxos flowchart",
+    src: `${process.env.PUBLIC_URL}/palais/imac/previews/praxos_flowchart.pdf`,
+    thumb: `${process.env.PUBLIC_URL}/palais/imac/previews/praxos_flowchart_thumb.jpg`,
+  },
+];
 const JOB_ICONS = experiences
   .filter((e, i, all) => all.findIndex((o) => o.logo === e.logo) === i)
   .map((e) => ({
     // "CARD SWAPPER" reads Card Swapper, but acronyms stay as they are
     name: e.company.replace(/\w+/g, (w) => (["DTCC", "BRKT"].includes(w) ? w : w[0] + w.slice(1).toLowerCase())),
     src: e.logo,
-  }));
+  }))
+  // hackathons, alongside the jobs
+  .concat([{ name: "ETHGlobal Buenos Aires", src: `${process.env.PUBLIC_URL}/images/ethglobal_world_coin_hackathon_buenos_aires.png` }]);
 
 /** the README on the desktop: its own file (public/palais/imac/readme.html),
     the GitHub README laid out to fit this screen, fetched once a visit */
@@ -191,6 +208,8 @@ const FAVS: { name: string; href: string; icon?: string; emoji?: string }[] = [
 const AVATARS = [
   { name: "Lavender", src: `${process.env.PUBLIC_URL}/palais/imac/avatar/avi_lavendar.png` },
   { name: "Passport", src: `${process.env.PUBLIC_URL}/palais/imac/avatar/avi_passport.jpg` },
+  { name: "Purple", src: `${process.env.PUBLIC_URL}/palais/imac/avatar/avi_purple.jpg` },
+  { name: "Circle", src: `${process.env.PUBLIC_URL}/palais/imac/avatar/avi_circle.png` },
 ];
 const BACKGROUNDS = [{ name: "Sailor Moon", src: `${process.env.PUBLIC_URL}/palais/imac/backgrounds/sailormoon-background.png` }];
 /** folders whose icon is an emoji */
@@ -228,10 +247,10 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
       <span>{FOLDER_NAME[to]}</span>
     </button>
   );
-  const icons = (list: { name: string; src: string }[]) =>
+  const icons = (list: { name: string; src: string; thumb?: string }[]) =>
     list.map((f) => (
       <a key={f.src} className="finder-item" href={f.src} download={fileName(f.name, f.src)} title={`Download ${fileName(f.name, f.src)}`}>
-        <img src={f.src} alt="" />
+        <img src={f.thumb ?? f.src} alt="" />
         <span>{f.name}</span>
       </a>
     ));
@@ -244,7 +263,7 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
           </button>
         )}
         <b>{FOLDER_NAME[at]}</b>
-        {(at === "project-icons" || at === "job-icons" || at === "avatar" || at === "backgrounds") && <span>click one to download it</span>}
+        {(at === "project-icons" || at === "previews" || at === "job-icons" || at === "avatar" || at === "backgrounds") && <span>click one to download it</span>}
       </div>
       <div className="finder-grid">
         {at === "home" && [folder("rooms"), folder("favs"), folder("school"), folder("avatar"), folder("backgrounds"), folder("icons")]}
@@ -271,7 +290,8 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
             </a>
           ))}
         {at === "icons" && [folder("project-icons"), folder("job-icons")]}
-        {at === "project-icons" && icons(PROJECT_ICONS)}
+        {at === "project-icons" && [folder("previews"), ...icons(PROJECT_ICONS)]}
+        {at === "previews" && icons(PREVIEWS)}
         {at === "job-icons" && icons(JOB_ICONS)}
         {at === "rooms" && (
           <>
