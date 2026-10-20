@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { VisitorsShelf } from '../palais/VisitorsShelf';
 import { SignIn } from '../palais/LayoutsShelf';
+import { signInWith } from '../palais/layoutsDb';
+import { GoogleG } from './AccountCard';
 import { useCollection, messageOf } from '../palais/useCollection';
 import { denyAccount, githubStats, listAccounts, setAccepted, visitStats, type Account, type GithubStats, type VisitStats } from '../palais/visits';
 import { paletteOf, useFloral } from '../palais/florals';
@@ -47,6 +49,35 @@ function Hours({ hours }: { hours: { hour: number; visits: number }[] }) {
         );
       })}
     </div>
+  );
+}
+
+/** the sign-in on Molly's admin pages: her Google account (mollyjbeach@gmail.com),
+    which lands straight back on the page she was on. Once signed in, it shows
+    who and a way out, the same as before. */
+export function AdminSignIn({ editor, onError }: { editor: ReturnType<typeof useCollection>['editor']; onError: (m: string) => void }) {
+  const [busy, setBusy] = useState(false);
+  if (editor) return <SignIn editor={editor} onError={onError} label="Sign in" />;
+  return (
+    <p className="cat-signin-line">
+      <button
+        type="button"
+        className="cat-btn adm-google"
+        disabled={busy}
+        onClick={async () => {
+          setBusy(true);
+          onError('');
+          try {
+            await signInWith('google', window.location.href);
+          } catch (e) {
+            setBusy(false);
+            onError(messageOf(e));
+          }
+        }}
+      >
+        <GoogleG className="adm-google-g" /> {busy ? 'Opening Google…' : 'Sign in with Google'}
+      </button>
+    </p>
   );
 }
 
@@ -134,7 +165,7 @@ export default function Admin() {
               ? 'Signed in, but this account isn’t an editor, so the visitor book stays shut.'
               : 'Molly’s corner. Sign in to see who’s been by.'}
           </p>
-          <SignIn editor={collection.editor} onError={setError} label="Sign in" />
+          <AdminSignIn editor={collection.editor} onError={setError} />
           {error && (
             <p className="cat-error" role="alert">
               {error}

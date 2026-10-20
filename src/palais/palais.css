@@ -3168,6 +3168,8 @@
 }
 .palais.adm .adm-gate h1 { font-size: 1.3rem; }
 .palais.adm .adm-gate .cat-signin { justify-content: center; }
+.palais.adm .adm-google { display: inline-flex; align-items: center; gap: 0.5em; }
+.palais.adm .adm-google-g { width: 1.1em; height: 1.1em; }
 .palais .adm-hours { display: flex; align-items: flex-end; gap: 3px; height: 6.5rem; }
 .palais .adm-hours span { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 2px; }
 .palais .adm-hours i { width: 100%; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #7ad4cf, #bdeae6); }

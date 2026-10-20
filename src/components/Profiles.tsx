@@ -1,7 +1,7 @@
 // path: src/components/Profiles.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SignIn } from '../palais/LayoutsShelf';
+import { AdminSignIn } from './Admin';
 import { useCollection, messageOf } from '../palais/useCollection';
 import { mergeByName, type MergedProfile } from '../palais/VisitorsShelf';
 import { nameVisitor, visitLog, visitorProfiles, type VisitLogEntry, type VisitorProfile } from '../palais/visits';
@@ -313,7 +313,7 @@ export default function Profiles() {
               ? 'Signed in, but this account isn’t an editor, so the profiles stay shut.'
               : 'Molly’s corner. Sign in to read a visitor’s profile.'}
           </p>
-          <SignIn editor={collection.editor} onError={setPeopleError} label="Sign in" />
+          <AdminSignIn editor={collection.editor} onError={setPeopleError} />
           {peopleError && (
             <p className="cat-error" role="alert">
               {peopleError}
