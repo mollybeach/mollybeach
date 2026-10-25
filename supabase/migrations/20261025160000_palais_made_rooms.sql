@@ -108,14 +108,14 @@ on conflict (id) do update
 -- room's island is on each, by the plot's number. The newest map is the open
 -- one: members put their rooms' islands on its empty plots, and dress it with
 -- scenery (`decor`, islandScenery.ts) while it's filling. When its last plot
--- is taken it's `full`, and the function opens the next one on a fresh copy
+-- is taken it's full (`is_full`), and the function opens the next one on a fresh copy
 -- of the template.
 create table if not exists public.palais_island_maps (
   n int primary key check (n >= 1),
   template text not null default 'sunset' check (template ~ '^[a-z0-9-]{1,32}$'),
   plots jsonb not null default '{}'::jsonb,
   decor jsonb not null default '[]'::jsonb,
-  full boolean not null default false,
+  is_full boolean not null default false,
   created_at timestamptz not null default now(),
   filled_at timestamptz
 );

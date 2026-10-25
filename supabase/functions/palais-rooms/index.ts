@@ -564,11 +564,11 @@ interface MapRow {
 
 /** the open map: the newest, unless it's full (then a fresh one is opened) */
 async function openMap(sb: SupabaseClient): Promise<MapRow> {
-  const { data } = await sb.from("palais_island_maps").select("n, template, plots, decor, full").order("n", { ascending: false }).limit(1).maybeSingle();
+  const { data } = await sb.from("palais_island_maps").select("n, template, plots, decor, full:is_full").order("n", { ascending: false }).limit(1).maybeSingle();
   const last = data as MapRow | null;
   if (last && !last.full) return last;
   const n = (last?.n ?? 0) + 1;
-  const { data: made, error } = await sb.from("palais_island_maps").insert({ n, template: MAPS_TEMPLATE }).select("n, template, plots, decor, full").single();
+  const { data: made, error } = await sb.from("palais_island_maps").insert({ n, template: MAPS_TEMPLATE }).select("n, template, plots, decor, full:is_full").single();
   if (error) throw new Error(error.message);
   return made as MapRow;
 }
@@ -583,7 +583,7 @@ async function place(sb: SupabaseClient, who: Member, body: { room?: string; plo
   if (!ALL.every((k) => room.pictures[k])) return reply({ error: "Finish the room and its island first." }, 409);
 
   // already on a full map: that one's finished, and it stays where it is
-  const { data: full } = await sb.from("palais_island_maps").select("n").eq("full", true).contains("plots", {});
+  const { data: full } = await sb.from("palais_island_maps").select("n").eq("is_full", true).contains("plots", {});
   for (const m of (full ?? []) as { n: number }[]) {
     const { data: on } = await sb.from("palais_island_maps").select("plots").eq("n", m.n).single();
     if (Object.values((on as { plots: Record<string, string> }).plots).includes(room.id)) return reply({ error: "That room's island is on a finished map already." }, 409);
@@ -601,10 +601,10 @@ async function place(sb: SupabaseClient, who: Member, body: { room?: string; plo
   const isFull = Object.keys(plots).length >= count;
   const { data, error } = await sb
     .from("palais_island_maps")
-    .update({ plots, full: isFull, filled_at: isFull ? new Date().toISOString() : null })
+    .update({ plots, is_full: isFull, filled_at: isFull ? new Date().toISOString() : null })
     .eq("n", map.n)
-    .eq("full", false)
-    .select("n, template, plots, decor, full")
+    .eq("is_full", false)
+    .select("n, template, plots, decor, full:is_full")
     .single();
   if (error) return reply({ error: error.message }, 500);
   // on the map, it's made: anyone can walk into it now
@@ -625,7 +625,7 @@ async function dress(sb: SupabaseClient, body: { map?: number; decor?: unknown[]
     if (!/^[a-z0-9_]{1,60}$/.test(id)) return [];
     return [{ n: clamp(x.n, 0, 1e6) | 0, id, x: clamp(x.x, 0, 1), y: clamp(x.y, 0, 1), s: clamp(x.s, 0.3, 3), ...(x.flip ? { flip: true } : {}) }];
   });
-  const { data, error } = await sb.from("palais_island_maps").update({ decor }).eq("n", map.n).eq("full", false).select("n, template, plots, decor, full").single();
+  const { data, error } = await sb.from("palais_island_maps").update({ decor }).eq("n", map.n).eq("is_full", false).select("n, template, plots, decor, full:is_full").single();
   if (error) return reply({ error: error.message }, 500);
   return reply({ map: data });
 }

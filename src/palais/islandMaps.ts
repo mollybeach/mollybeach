@@ -93,7 +93,7 @@ export function loadMaps(again = false) {
   loading = (async () => {
     try {
       const sb = await db();
-      const { data } = await sb.from("palais_island_maps").select("n, template, plots, decor, full").order("n");
+      const { data } = await sb.from("palais_island_maps").select("n, template, plots, decor, full:is_full").order("n");
       maps = (data as MapRow[] | null) ?? [];
       changed();
     } catch {
