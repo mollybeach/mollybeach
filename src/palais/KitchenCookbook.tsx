@@ -259,7 +259,7 @@ export function KitchenCookbook() {
             </button>
 
             <div className="ck-book">
-              <img className="ck-spread" src={`${process.env.PUBLIC_URL}/palais/modal_content/kitchen_cookbook_art/cookbook-open.webp`} alt="" decoding="async" />
+              <img className="ck-spread" src={`${process.env.PUBLIC_URL}/palais_assets/modal_content/kitchen_cookbook_art/cookbook-open.webp`} alt="" decoding="async" />
 
               <button
                 type="button"

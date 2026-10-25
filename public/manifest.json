@@ -8,23 +8,23 @@
       "type": "image/x-icon"
     },
     {
-      "src": "favicons/palais-icon.svg",
+      "src": "palais_assets/favicons/palais-icon.svg",
       "type": "image/svg+xml",
       "sizes": "any",
       "purpose": "any"
     },
     {
-      "src": "favicons/palais-icon-192.png",
+      "src": "palais_assets/favicons/palais-icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "favicons/palais-icon-512.png",
+      "src": "palais_assets/favicons/palais-icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "favicons/palais-icon-512.png",
+      "src": "palais_assets/favicons/palais-icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"

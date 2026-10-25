@@ -147,11 +147,11 @@ function Shire({ id }: { id: string }) {
 }
 
 const SCENES: Record<string, (key: string) => JSX.Element> = {
-  // the UW campus across the lake, painted (public/palais/world_map/scenery/uw.webp), with
+  // the UW campus across the lake, painted (public/palais_assets/world_map_imgs/scenery/uw.webp), with
   // the lakehouse garden's red bridge on the water in front
   lakehouse: () => (
     <>
-      <image href={`${process.env.PUBLIC_URL}/palais/world_map/scenery/uw.webp?v=2`} x={-92} y={-67} width={184} height={67.2} />
+      <image href={`${process.env.PUBLIC_URL}/palais_assets/world_map_imgs/scenery/uw.webp?v=2`} x={-92} y={-67} width={184} height={67.2} />
       <g transform="translate(40 -6) scale(0.62)">
         <path d="M-26,0 Q0,-16 26,0" fill="none" stroke="#7a1e14" strokeWidth={4.4} strokeLinecap="round" />
         <path d="M-26,0 Q0,-16 26,0" fill="none" stroke="#c8352a" strokeWidth={3} strokeLinecap="round" />

@@ -19,7 +19,7 @@ interface Award {
 const awards: Award[] = [
   {
     hackathon: "RAYLS HACKATHON",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/rayls_hackathon.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/rayls_hackathon.png`,
     date: "NOV 18-19, 2025",
     location: "BUENOS AIRES, ARGENTINA",
     project: "PRAXOS",
@@ -34,7 +34,7 @@ const awards: Award[] = [
   },
   {
     hackathon: "ETHGLOBAL CANNES",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/ethglobal_cannes.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/ethglobal_cannes.png`,
     date: "JUL 4-6, 2025",
     location: "CANNES, FRANCE",
     project: "LIVESTAKES",
@@ -49,7 +49,7 @@ const awards: Award[] = [
   },
   {
     hackathon: "ETHGLOBAL BUENOS AIRES",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/ethglobal_world_coin_hackathon_buenos_aires.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/ethglobal_world_coin_hackathon_buenos_aires.png`,
     date: "NOV 21-23, 2025",
     location: "BUENOS AIRES, ARGENTINA",
     project: "HEDGEPOD",

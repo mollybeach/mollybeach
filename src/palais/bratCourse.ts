@@ -285,7 +285,7 @@ export const RANKS: { at: number; name: string; note: string }[] = [
 /** school materials from elsewhere on the web, each with its site's own icon:
     in the binder's Cheat Sheets, and the School folder on the iMac */
 export const MATERIALS: { name: string; href: string; icon: string }[] = [
-  { name: "JavaScript cheat sheet", href: "https://htmlcheatsheet.com/js/", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/htmlcheatsheet-js.png` },
+  { name: "JavaScript cheat sheet", href: "https://htmlcheatsheet.com/js/", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/htmlcheatsheet-js.png` },
 ];
 
 /** the brainbook's study guides, by shelf */

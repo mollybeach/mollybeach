@@ -74,24 +74,24 @@ const SHORT: Record<string, string> = {
 };
 /** projects with a real app icon of their own, in place of the preview picture */
 const ICON: Record<string, string> = {
-  HedgePod: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/hedgepod.webp`,
-  Praxos: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/praxos.svg`,
-  "🍐 Pear Pay": `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/pearpay.webp`,
-  "wyd?": `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/wyd.webp`,
-  LiveStakes: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/livestakes.webp`,
-  Spectra: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/spectra.webp`,
-  BRKT: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/brkt.webp`,
-  ihaehada: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/ihaehada.webp`,
-  InstaDemo: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/instademo.webp`,
-  petitmot: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/petitmot.svg`,
-  genaigraphics: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/genaigraphics.webp`,
-  CryptoGene: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/cryptogene.webp`,
-  "token-gating-discord-bot-api": `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/tokengate.webp`,
-  omnipedia: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/omnipedia.svg`,
-  Memorizwift: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/memorizwift.svg`,
-  Hookt: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/hookt.webp`,
-  TwinAI: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/twinai.webp`,
-  "Python-Django-Appointment-Calendar-Salon": `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/salon.webp`,
+  HedgePod: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/hedgepod.webp`,
+  Praxos: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/praxos.svg`,
+  "🍐 Pear Pay": `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/pearpay.webp`,
+  "wyd?": `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/wyd.webp`,
+  LiveStakes: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/livestakes.webp`,
+  Spectra: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/spectra.webp`,
+  BRKT: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/brkt.webp`,
+  ihaehada: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/ihaehada.webp`,
+  InstaDemo: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/instademo.webp`,
+  petitmot: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/petitmot.svg`,
+  genaigraphics: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/genaigraphics.webp`,
+  CryptoGene: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/cryptogene.webp`,
+  "token-gating-discord-bot-api": `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/tokengate.webp`,
+  omnipedia: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/omnipedia.svg`,
+  Memorizwift: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/memorizwift.svg`,
+  Hookt: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/hookt.webp`,
+  TwinAI: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/twinai.webp`,
+  "Python-Django-Appointment-Calendar-Salon": `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/salon.webp`,
 };
 const APPS = projects.map((p) => ({ name: SHORT[p.title] ?? p.title, title: p.title, href: p.demoUrl ?? p.link, icon: ICON[p.title] ?? p.microlink, own: !!ICON[p.title] }));
 
@@ -111,12 +111,12 @@ const FOLDER_NAME: Record<Folder, string> = {
 };
 const UP: Partial<Record<Folder, Folder>> = { favs: "home", avatar: "home", backgrounds: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", previews: "project-icons", "job-icons": "icons" };
 /** the Palais's own icon, for its folder of rooms */
-const PALAIS_ICON = `${process.env.PUBLIC_URL}/favicons/palais-icon.svg`;
+const PALAIS_ICON = `${process.env.PUBLIC_URL}/palais_assets/favicons/palais-icon.svg`;
 /** rooms with an icon of their own in the Palais folder, in place of their
     island: the Boudoir's black rabbit, and Brat Academy's own logo */
 const ROOM_ICON: Partial<Record<Place, string>> = {
   boudoir: modalButton("boudoir-bunny"),
-  school: `${process.env.PUBLIC_URL}/palais/loading-screen/bratcode.webp`,
+  school: `${process.env.PUBLIC_URL}/palais_assets/loading-screen/bratcode.webp`,
 };
 /** a file's name to save it under: the name, in lower case, with its own ending */
 const fileName = (name: string, src: string) =>
@@ -125,17 +125,17 @@ const fileName = (name: string, src: string) =>
 const PROJECT_ICONS = [
   ...projects.filter((p) => ICON[p.title]).map((p) => ({ name: SHORT[p.title]?.replace("\n", "") ?? p.title, src: ICON[p.title] })),
   // icons kept here that aren't a project on the page
-  { name: "Brat Code", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/bratcode.jpg` },
-  { name: "Other", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/other.png` },
+  { name: "Brat Code", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/bratcode.jpg` },
+  { name: "Other", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/other.png` },
 ];
 /** projects' preview pictures, in Project icons › Previews */
 const PREVIEWS = [
-  { name: "HedgePod", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/previews/hedgepod_preview.jpg` },
-  { name: "Praxos", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/previews/praxos_preview.jpg` },
+  { name: "HedgePod", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/previews/hedgepod_preview.jpg` },
+  { name: "Praxos", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/previews/praxos_preview.jpg` },
   {
     name: "Praxos flowchart",
-    src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/previews/praxos_flowchart.pdf`,
-    thumb: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/previews/praxos_flowchart_thumb.jpg`,
+    src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/previews/praxos_flowchart.pdf`,
+    thumb: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/previews/praxos_flowchart_thumb.jpg`,
   },
 ];
 const JOB_ICONS = experiences
@@ -146,14 +146,14 @@ const JOB_ICONS = experiences
     src: e.logo,
   }))
   // hackathons, alongside the jobs
-  .concat([{ name: "ETHGlobal Buenos Aires", src: `${process.env.PUBLIC_URL}/portfolio/images/icons/ethglobal_world_coin_hackathon_buenos_aires.png` }]);
+  .concat([{ name: "ETHGlobal Buenos Aires", src: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/ethglobal_world_coin_hackathon_buenos_aires.png` }]);
 
-/** the README on the desktop: its own file (public/palais/modal_content/imac_desktop/readme.html),
+/** the README on the desktop: its own file (public/palais_assets/modal_content/imac_desktop/readme.html),
     the GitHub README laid out to fit this screen, fetched once a visit */
 const REPO = "mollybeach/mollybeach";
 let readmeHtml: Promise<string> | null = null;
 function loadReadme() {
-  readmeHtml ??= fetch(`${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/readme.html`)
+  readmeHtml ??= fetch(`${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/readme.html`)
     .then((r) => (r.ok ? r.text() : Promise.reject(new Error(String(r.status)))))
     .then((html) => {
       // every link opens in a new tab, off the Mac
@@ -199,20 +199,20 @@ function Readme() {
 /** Molly's favourite websites, kept like bookmarks in My favs */
 const FAVS: { name: string; href: string; icon?: string; emoji?: string }[] = [
   { name: "LunaPic", href: "https://www2.lunapic.com/editor/?action=quick-upload", emoji: "🌙" },
-  { name: "Mentimeter", href: "https://www.mentimeter.com/", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/fav-menti.png` },
-  { name: "Glitch blog", href: "https://blog.glitch.com/", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/fav-glitch.png` },
-  { name: "Mural", href: "https://app.mural.co/", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/fav-mural.png` },
-  { name: "Quizlet", href: "https://quizlet.com/", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/fav-quizlet.png` },
-  { name: "Linear", href: "https://linear.app/", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/fav-linear.png` },
+  { name: "Mentimeter", href: "https://www.mentimeter.com/", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/fav-menti.png` },
+  { name: "Glitch blog", href: "https://blog.glitch.com/", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/fav-glitch.png` },
+  { name: "Mural", href: "https://app.mural.co/", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/fav-mural.png` },
+  { name: "Quizlet", href: "https://quizlet.com/", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/fav-quizlet.png` },
+  { name: "Linear", href: "https://linear.app/", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/fav-linear.png` },
 ];
 /** Molly's avatars, and her desktop backgrounds, each one a click to download */
 const AVATARS = [
-  { name: "Lavender", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/avatar/avi_lavendar.png` },
-  { name: "Passport", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/avatar/avi_passport.jpg` },
-  { name: "Purple", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/avatar/avi_purple.jpg` },
-  { name: "Circle", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/avatar/avi_circle.png` },
+  { name: "Lavender", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/avatar/avi_lavendar.png` },
+  { name: "Passport", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/avatar/avi_passport.jpg` },
+  { name: "Purple", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/avatar/avi_purple.jpg` },
+  { name: "Circle", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/avatar/avi_circle.png` },
 ];
-const BACKGROUNDS = [{ name: "Sailor Moon", src: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/backgrounds/sailormoon-background.png` }];
+const BACKGROUNDS = [{ name: "Sailor Moon", src: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/backgrounds/sailormoon-background.png` }];
 /** folders whose icon is an emoji */
 const FOLDER_EMOJI: Partial<Record<Folder, string>> = { avatar: "👤", backgrounds: "🌄" };
 
@@ -225,7 +225,7 @@ const COURSES_ON_MAC: { name: string; href: string; icon: string }[] = [
   {
     name: "Udemy: Blockchain Developer",
     href: "https://www.udemy.com/course/blockchain-developer/learn/lecture/33861892?components=add_to_cart%2Cavailable_coupons%2Cbase_purchase_section%2Cbuy_button%2Cbuy_for_team%2Ccacheable_buy_button%2Ccacheable_deal_badge%2Ccacheable_discount_expiration%2Ccacheable_price_text%2Ccacheable_purchase_text%2Ccurated_for_ufb_notice_context%2Ccurriculum_context%2Cdeal_badge%2Cdiscount_expiration%2Cgift_this_course%2Cincentives%2Cinstructor_links%2Clifetime_access_context%2Cmoney_back_guarantee%2Cprice_text%2Cpurchase_tabs_context%2Cpurchase%2Crecommendation%2Credeem_coupon%2Csidebar_container%2Cpurchase_body_container%2Cone_click_checkout#overview",
-    icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/udemy.png`,
+    icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/udemy.png`,
   },
 ];
 
@@ -237,7 +237,7 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
   const folder = (to: Folder) => (
     <button key={to} type="button" className="finder-item" onDoubleClick={() => setAt(to)} onClick={() => setAt(to)}>
       {to === "rooms" || to === "icons" ? (
-        <img src={to === "rooms" ? PALAIS_ICON : `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/icons-folder.svg`} alt="" />
+        <img src={to === "rooms" ? PALAIS_ICON : `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/icons-folder.svg`} alt="" />
       ) : to === "school" || to === "favs" ? (
         <img className="finder-apple" src={to === "favs" ? HEART : APPLE} alt="" />
       ) : (
@@ -313,8 +313,8 @@ function Finder({ start = "home", onRoom }: { start?: Folder; onRoom: (r: Place)
     Molly's own, there only for someone signed in with Google (nothing asks
     them to; they have to have done it themselves) */
 const DOCK = [
-  { name: "ilovework", href: "https://ilovework.app", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/ilovework.webp` },
-  { name: "ghostMind", href: "https://ghostmind.io", icon: `${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/ghostmind.webp` },
+  { name: "ilovework", href: "https://ilovework.app", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/ilovework.webp` },
+  { name: "ghostMind", href: "https://ghostmind.io", icon: `${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/ghostmind.webp` },
 ];
 
 /** the Mac's screen, up close: the desktop, its dock and the windows that
@@ -375,7 +375,7 @@ export function ImacScreen({
             <nav className="imac-dock" aria-label="Apps">
               {/* the Finder, first in the dock, as on a Mac */}
               <button type="button" className="imac-dock-app" onClick={() => setApp("finder")} title="Finder">
-                <img src={`${process.env.PUBLIC_URL}/palais/modal_content/imac_desktop/finder.svg`} alt="" />
+                <img src={`${process.env.PUBLIC_URL}/palais_assets/modal_content/imac_desktop/finder.svg`} alt="" />
                 <span>Finder</span>
               </button>
               {folders && (

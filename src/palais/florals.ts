@@ -33,7 +33,7 @@ export const INSTEAD_OF_PURPLE = "blue-toile";
 
 export type Floral = (typeof FLORALS)[number] | typeof INSTEAD_OF_PURPLE;
 
-export const floralSrc = (key: Floral) => `${process.env.PUBLIC_URL}/palais/ui_elements_gucci_floral_backgrounds/${key}.webp`;
+export const floralSrc = (key: Floral) => `${process.env.PUBLIC_URL}/palais_assets/ui_elems_floral_gucci_bgs/${key}.webp`;
 
 /**
  * What each pattern lends to the rest of the furniture: a jewel colour picked

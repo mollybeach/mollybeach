@@ -16,7 +16,7 @@ export interface Rig {
   over?: ReactNode;
 }
 
-const layer = (name: string) => `${process.env.PUBLIC_URL}/palais/catalogue_stickers/moving-parts/${name}.webp`;
+const layer = (name: string) => `${process.env.PUBLIC_URL}/palais_assets/catalogue_stickers/moving-parts/${name}.webp`;
 
 /* ---- Honeysuckle's bicycle ------------------------------------------------ */
 

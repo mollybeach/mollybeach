@@ -24,7 +24,7 @@ interface ExperienceItem {
 export const experiences: ExperienceItem[] = [
   {
     company: "DTCC DIGITAL ASSETS",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/dtcc.svg`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/dtcc.svg`,
     roles: [
       {
         title: "ASSOCIATE DIRECTOR OF BLOCKCHAIN ENGINEERING | RUST, STELLAR, SOLANA",
@@ -64,7 +64,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "BLOCKMEDIA",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/blockmedia.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/blockmedia.png`,
     roles: [
       {
         title: "PRINCIPAL FULL-STACK SOFTWARE ENGINEER | GO, RUST, PYTHON",
@@ -85,7 +85,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "BRKT",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/brkt.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/brkt.png`,
     roles: [
       {
         title: "SENIOR FULL-STACK SOFTWARE ENGINEER",
@@ -122,7 +122,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "PARADES",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/paradessquare.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/paradessquare.png`,
     roles: [
       {
         title: "SENIOR FULL-STACK SOFTWARE ENGINEER",
@@ -156,7 +156,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "ACCENTURE",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/accenture.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/accenture.png`,
     roles: [
       {
         title: "SOFTWARE ENGINEER FULL-STACK | METAVERSE, BLOCKCHAIN",
@@ -245,7 +245,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "PARADES",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/paradessquare.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/paradessquare.png`,
     roles: [
       {
         title: "SOFTWARE ENGINEER FULL-STACK",
@@ -290,7 +290,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "TREASURE",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/treasureicon.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/treasureicon.png`,
     roles: [
       {
         title: "SOFTWARE ENGINEER FULL-STACK",
@@ -334,7 +334,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: "CARD SWAPPER",
-    logo: `${process.env.PUBLIC_URL}/portfolio/images/icons/cardswappersquare.png`,
+    logo: `${process.env.PUBLIC_URL}/portfolio_assets/images/icons/cardswappersquare.png`,
     roles: [
       {
         title: "WEB DEVELOPMENT INTERNSHIP",

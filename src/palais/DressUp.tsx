@@ -21,10 +21,10 @@ import { CLOTHES, closetSrc, garment, type ClothesKind } from "./clothes";
 
 const MANNEQUIN = modalButton("mannequin");
 /** the leopard the whole wardrobe is papered in, as it is in the film */
-const PAPER = `url("${process.env.PUBLIC_URL}/palais/modal_content/closet_dress_up_art/clueless-cheetah.webp")`;
+const PAPER = `url("${process.env.PUBLIC_URL}/palais_assets/modal_content/closet_dress_up_art/clueless-cheetah.webp")`;
 /** the film's own buttons, worn by every arrow in here */
-const BACK = `url("${process.env.PUBLIC_URL}/palais/modal_content/closet_dress_up_art/clueless_left_arrow.png")`;
-const ON = `url("${process.env.PUBLIC_URL}/palais/modal_content/closet_dress_up_art/clueless_right_arrow.png")`;
+const BACK = `url("${process.env.PUBLIC_URL}/palais_assets/modal_content/closet_dress_up_art/clueless_left_arrow.png")`;
+const ON = `url("${process.env.PUBLIC_URL}/palais_assets/modal_content/closet_dress_up_art/clueless_right_arrow.png")`;
 const KEPT = "palais-dress-form";
 
 /** the rows, down the modal in the order she drew them, each with its stripe:

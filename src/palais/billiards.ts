@@ -88,7 +88,7 @@ export async function makeRig(vols: Record<TrackId, number>): Promise<Rig> {
       g.connect(ctx.destination);
       gains[key] = g;
       try {
-        const res = await fetch(`${process.env.PUBLIC_URL}/palais/modal_content/pool_table_sounds/${SAMPLES[key]}`);
+        const res = await fetch(`${process.env.PUBLIC_URL}/palais_assets/modal_content/pool_table_sounds/${SAMPLES[key]}`);
         buffers[key] = await ctx.decodeAudioData(await res.arrayBuffer());
       } catch {
         buffers[key] = null;     // that track stays quiet on samples; the synth still plays it

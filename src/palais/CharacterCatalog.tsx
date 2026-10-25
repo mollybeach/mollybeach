@@ -15,8 +15,8 @@ import { floralSrc, paletteOf, useFloral } from "./florals";
  * the card can put them into the room you're in, where they stand and can be
  * dragged about like anything else, and take them out again.
  *
- * Each one is a cut-out in /public/palais/characters, with the same picture as
- * a sticker in /public/palais/catalogue_stickers. Adding someone is one more entry below,
+ * Each one is a cut-out in /public/palais_assets/characters, with the same picture as
+ * a sticker in /public/palais_assets/catalogue_stickers. Adding someone is one more entry below,
  * plus the sticker.
  */
 
@@ -310,7 +310,7 @@ function saveLine(line: Character[] | null) {
 /** the one the catalogue opens on */
 const startOf = (line: Character[]) => Math.max(0, line.findIndex((c) => c.id === "molly"));
 
-const src = (c: Character) => `${process.env.PUBLIC_URL}/palais/cast_characters/${c.id}.webp`;
+const src = (c: Character) => `${process.env.PUBLIC_URL}/palais_assets/cast_characters/${c.id}.webp`;
 
 export function CharacterCatalog({
   open,

@@ -4995,7 +4995,7 @@
 .palais a.imac-icon { text-decoration: none; }
 .palais .imac-icon-img { width: 2.6em; height: 2.6em; display: block; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
 
-/* the README on the desktop (public/palais/modal_content/imac_desktop/readme.html): GitHub's
+/* the README on the desktop (public/palais_assets/modal_content/imac_desktop/readme.html): GitHub's
    layout, rebuilt as grids so it fits the Mac's screen at any size */
 .palais .imac-readme { display: grid; gap: 0.8em; line-height: 1.5; overflow-wrap: anywhere; }
 .palais .imac-readme img { display: block; max-width: 100%; height: auto; }

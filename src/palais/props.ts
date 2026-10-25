@@ -1,7 +1,7 @@
 /**
  * The furnishings.
  *
- * Every entry is a transparent WebP in /public/palais/stickers, in a folder
+ * Every entry is a transparent WebP in /public/palais_assets/stickers, in a folder
  * for its catalogue shelf, imported from Molly's sticker set. A new one goes
  * in a shelf's folder and gets a line in stickerFolders.json saying which.
  * `label` is the alt text and the caption shown on hover.
@@ -494,7 +494,7 @@ export type PropId = keyof typeof PROPS;
 
 /* a sticker made at Brat Academy (madeStickers.ts) lives in Supabase, not here */
 /* each sticker's picture is kept in the folder for the catalogue shelf it was
-   on when the stickers were sorted (stickerFolders.json; public/palais/catalogue_stickers) */
+   on when the stickers were sorted (stickerFolders.json; public/palais_assets/catalogue_stickers) */
 const folderOf = (id: string) => (STICKER_FOLDERS as Record<string, string>)[id] ?? "trinkets";
-export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais/catalogue_stickers/${folderOf(id)}/${id}.webp`;
+export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais_assets/catalogue_stickers/${folderOf(id)}/${id}.webp`;
 export const propSpec = (id: PropId): PropSpec => PROPS[id] ?? madeSpec(id) ?? { label: String(id).replace(/_sticker.*$/, "").replace(/[-_]+/g, " ") };
