@@ -232,6 +232,7 @@ export const MORE_TRINKETS: PropId[] = [
   "mandarins_cuties_organic_mesh_bag_sticker",
   "mandarins_halos_mesh_bag_sticker",
   "synthesizer_keyboard_yamaha_cream_sticker",
+  "book_no_one_belongs_here_more_than_you_miranda_july_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */

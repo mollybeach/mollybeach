@@ -175,6 +175,11 @@ export const PROPS = catalogue({
     plane: "near",
     metres: 0.42,
   },
+  book_no_one_belongs_here_more_than_you_miranda_july_sticker: {
+    label: "No one belongs here more than you, stories by Miranda July",
+    plane: "near",
+    metres: 0.14,
+  },
   book_everybodys_story_loyal_rue_hardcover_sticker: {
     label: "Everybody's Story, in its dust jacket",
     plane: "near",

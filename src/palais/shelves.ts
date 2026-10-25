@@ -241,6 +241,7 @@ export const SHELVES: Shelf[] = [
       "book_hundred_years_war_on_palestine_rashid_khalidi_sticker",
       "book_grc_engineering_for_aws_aj_yawn_sticker",
       "book_madeleine_ludwig_bemelmans_hardcover_sticker",
+      "book_no_one_belongs_here_more_than_you_miranda_july_sticker",
     ],
   },
   {
