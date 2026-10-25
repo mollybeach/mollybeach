@@ -155,6 +155,10 @@ public/
 │   │                                résumé side's headings)
 │   │   ├── kitchen_cookbook_art/    the cookbook, open
 │   │   ├── brat_sticker_maker_art/  the sticker maker's title
+│   │   ├── island_maker/            the island maker: its globe, the empty
+│   │                                island the rooms go on, and room_templates/,
+│   │                                the empty rooms made rooms are painted on
+│   │                                (IslandMaker.tsx, palais-rooms)
 │   │   ├── boudoir_pictures_art/    the dresser's crest
 │   │   ├── closet_dress_up_art/     Clueless cheetah paper and arrows
 │   │   └── modal_buttons/           what you press in a room to open one: the

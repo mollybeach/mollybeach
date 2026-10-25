@@ -17,10 +17,12 @@ import { SummerYard } from "./SummerYard";
 import { LOOSE } from "./decor";
 import { useMadeStickers } from "./madeStickers";
 import { StickerMaker } from "./StickerMaker";
+import { IslandMaker } from "./IslandMaker";
 import type { PropId } from "./props";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
+import { MadeRoom } from "./MadeRoom";
 import { GlobeEgg } from "./GlobeEgg";
 import { SchoolSyllabus } from "./SchoolSyllabus";
 import { CrystalPool } from "./CrystalPool";
@@ -184,6 +186,8 @@ export default function PalaisHome() {
           <SeasonRoom place="sunliner" />
           <SeasonRoom place="school" />
           <SeasonRoom place="crystal" />
+          {/* and whichever room made at the island maker you've walked into */}
+          <MadeRoom />
           {/* the clothes in the Wardrobe Wing */}
           <Wardrobe />
           {/* snow and falling leaves, with the seasons: behind the furniture, and past the camera */}
@@ -381,6 +385,8 @@ export default function PalaisHome() {
           <LibraryImac room="school" />
           {/* the sticker maker on the teacher's desk at Brat Academy */}
           <StickerMaker />
+          {/* and the island maker beside it, a globe that opens on its stand */}
+          <IslandMaker />
           {/* the pool table in the Crystal Ballroom, a drum machine in billiard balls */}
           <CrystalPool />
           {/* and the spellbook on its stage, with a story in it */}

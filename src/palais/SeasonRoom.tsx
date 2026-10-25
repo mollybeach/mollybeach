@@ -12,7 +12,7 @@ const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
     one for the whole year, and whether there's a tall photograph for phones
     (`<file>-portrait.webp`), or a tall one per season
     (`<file>-portrait-<season>.webp`) */
-const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons"; fixed?: (typeof SEASONS)[number]; still?: string }> = {
+const ROOMS: Record<Exclude<Place, "palace" | "made">, { file: string; focus: string; seasons?: false; portrait?: true | "seasons"; fixed?: (typeof SEASONS)[number]; still?: string }> = {
   // the kitchen off the terrace, whose marble bar the terrace only shows the end of
   kitchen: { file: "kitchen", focus: "50% 55%", seasons: false, portrait: true },
   // the bathroom through the arch on the terrace's right: rose wallpaper, a ruffled shower curtain, a painted sky; one photograph for now
@@ -69,7 +69,7 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
  * "Skip" and "Pause" move every room at once. It's always on the page, and
  * only shows while you're in it (see place.ts).
  */
-export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
+export function SeasonRoom({ place }: { place: Exclude<Place, "palace" | "made"> }) {
   const room = ROOMS[place];
   // on a phone held upright, the tall photograph(s) if the room has them
   const tall = usePortrait() && !!room.portrait;

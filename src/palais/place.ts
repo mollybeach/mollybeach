@@ -12,7 +12,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * opens the same room.
  */
 
-export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner", "school", "crystal"] as const;
+export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner", "school", "crystal", "made"] as const;
 export type Place = (typeof PLACES)[number];
 
 /** what comes after the room in the address: #closet/dress opens the dress
@@ -86,4 +86,6 @@ export const PLACE_NAMES: Record<Place, string> = {
   sunliner: "Sunliner Train",
   school: "Brat Academy",
   crystal: "The Crystal Ballroom",
+  // a room made at Brat Academy's island maker, at #made/<id> (MadeRoom.tsx)
+  made: "A made room",
 };
