@@ -7502,7 +7502,16 @@
   animation-delay: -1.7s;
   pointer-events: none;
 }
-.palais .palais-spellbook-hint span { color: #fff6dc; }
+.palais .palais-spellbook-hint span span { color: #fff6dc; }
+/* and under it, on a second line, what's in it */
+.palais .palais-spellbook-hint { top: auto; bottom: 84%; flex-direction: column; gap: 0.2em; border-radius: 1.1em; padding: 0.4em 0.95em 0.45em; }
+.palais .palais-spellbook-hint small {
+  font: italic 400 0.82em/1.1 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: #f3dc9a;
+}
+.palais .palais-spellbook-hint .palais-spellbook-by { font-size: 0.7em; font-style: normal; letter-spacing: 0.08em; color: #e6d3ff; }
 @media (prefers-reduced-motion: reduce) { .palais .palais-spellbook-hint { animation: none; } }
 
 /* the reader: the book lies open on a night sky of the cover's own purples,

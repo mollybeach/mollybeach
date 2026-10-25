@@ -301,7 +301,9 @@ export function CrystalSpellbook() {
       >
         <img src={`${process.env.PUBLIC_URL}/palais/props/book_witchy_moon_phases_purple_galaxy_clasp_sticker.webp`} alt="" decoding="async" />
         <span className="palais-spellbook-hint" aria-hidden>
-          ☾ <span>Read me</span>
+          <span>☾ <span>Read me</span></span>
+          <small>{TITLE}</small>
+          <small className="palais-spellbook-by">by {AUTHOR}</small>
         </span>
       </button>
 
