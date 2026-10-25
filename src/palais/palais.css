@@ -7417,6 +7417,307 @@
 }
 @media (prefers-reduced-motion: reduce) { .palais .palais-pooltable-hint { animation: none; } }
 
+/* ---- the Crystal Ballroom's lasers (CrystalLasers.tsx) ------------------ */
+/* a fan of beams from the top of the stage, each swinging on its own and
+   flickering now and then; screened onto the photograph so they light it */
+.palais .palais-lasers {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+.palais .palais-laser {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 2px;
+  height: var(--reach, 120vmax);
+  transform-origin: 50% 0;
+  transform: rotate(var(--a));
+  background: linear-gradient(to bottom, #fff 0%, var(--color) 4%, color-mix(in srgb, var(--color) 55%, transparent) 45%, transparent 85%);
+  box-shadow: 0 0 6px 1px var(--color), 0 0 18px 4px color-mix(in srgb, var(--color) 35%, transparent);
+  border-radius: 1px;
+  opacity: 0.85;
+  animation-name: palais-laser-sweep, palais-laser-flicker;
+  animation-timing-function: ease-in-out, steps(1, end);
+  animation-iteration-count: infinite, infinite;
+  animation-direction: alternate, normal;
+}
+@keyframes palais-laser-sweep {
+  from { transform: rotate(calc(var(--a) - var(--sweep))); }
+  to { transform: rotate(calc(var(--a) + var(--sweep))); }
+}
+@keyframes palais-laser-flicker {
+  0%, 62%, 70%, 100% { opacity: 0.85; }
+  64% { opacity: 0.15; }
+  67% { opacity: 0.7; }
+}
+@media (prefers-reduced-motion: reduce) { .palais .palais-laser { animation: none; } }
+
+/* ---- the Crystal Ballroom's spellbook (CrystalSpellbook.tsx) ------------ */
+/* the book on the floor: it lifts and glows violet when you point at it,
+   with a pill on its cover so you know it opens */
+.palais .palais-spellbook {
+  position: absolute;
+  z-index: 29;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: 50% 100%;
+  transition: transform 240ms ease, filter 240ms ease;
+  filter: drop-shadow(0 8px 10px rgba(10, 4, 24, 0.55)) drop-shadow(0 0 10px rgba(170, 110, 255, 0.35));
+}
+.palais .palais-spellbook img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.palais .palais-spellbook:hover,
+.palais .palais-spellbook:focus-visible {
+  outline: none;
+  transform: translateY(-4px) rotate(-2deg) scale(1.05);
+  filter: drop-shadow(0 14px 18px rgba(10, 4, 24, 0.6)) drop-shadow(0 0 22px rgba(180, 120, 255, 0.85));
+}
+.palais .palais-spellbook:active { transform: translateY(-1px) scale(0.99); transition-duration: 90ms; }
+.palais .palais-spellbook-hint {
+  position: absolute;
+  left: 50%;
+  top: -14%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  white-space: nowrap;
+  padding: 0.35em 0.85em;
+  border-radius: 999px;
+  border: 2px solid #e8c77a;
+  background: linear-gradient(135deg, #6a3fd6, #3a1f8a);
+  color: #f3dc9a;
+  font: 700 clamp(0.62rem, 0.95cqw, 0.88rem) / 1.1 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 3px 0 #221056, 0 8px 18px rgba(10, 4, 40, 0.45), 0 0 16px rgba(170, 120, 255, 0.6);
+  transform: translateX(-50%) rotate(3deg);
+  animation: bl-hint 3.8s ease-in-out infinite;
+  animation-delay: -1.7s;
+  pointer-events: none;
+}
+.palais .palais-spellbook-hint span { color: #fff6dc; }
+@media (prefers-reduced-motion: reduce) { .palais .palais-spellbook-hint { animation: none; } }
+
+/* the reader: the book lies open on a night sky of the cover's own purples,
+   in a frame of old brass */
+.palais .sb-backdrop { background: rgba(20, 8, 48, 0.45); }
+.palais .sb-panel {
+  --sb-brass: #d8b566;
+  --sb-brass-deep: #8f6a2c;
+  --sb-ink: #3b2416;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.9rem;
+  width: min(1040px, 100%);
+  padding: 2.6rem 1.4rem 1.1rem;
+  border-color: var(--sb-brass);
+  /* the pool table's star cloth, with the stars set further apart */
+  --sb-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Crect width='128' height='128' fill='%2330238f'/%3E%3Cg fill='%23f6cc4f'%3E%3Cpath transform='translate(8.4 3.6)' d='M14 6l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.8 2.7 1-5.3-4-3.7 5.4-.6z'/%3E%3Cpath transform='translate(31.2 2.4)' d='M52 4l1.6 3.3 3.6.4-2.7 2.5.8 3.6-3.3-1.8-3.2 1.8.7-3.6-2.7-2.5 3.6-.4z'/%3E%3Cpath transform='translate(40.8 20.4)' d='M68 34l2 4.2 4.6.5-3.4 3.1.9 4.5-4.1-2.3-4 2.3.9-4.5-3.4-3.1 4.6-.5z'/%3E%3Cpath transform='translate(19.2 22.8)' d='M32 38l2.8 5.8 6.3.7-4.7 4.3 1.3 6.2-5.7-3.2-5.6 3.2 1.3-6.2-4.7-4.3 6.3-.7z'/%3E%3Cpath transform='translate(6.0 34.8)' d='M10 58l1.6 3.3 3.6.4-2.7 2.5.8 3.6-3.3-1.8-3.2 1.8.7-3.6-2.7-2.5 3.6-.4z'/%3E%3Cpath transform='translate(33.6 37.2)' d='M56 62l2.2 4.5 5 .5-3.7 3.4 1 4.9-4.5-2.5-4.4 2.5 1-4.9-3.7-3.4 5-.5z'/%3E%3C/g%3E%3C/svg%3E");
+  background: var(--sb-stars) 0 0 / 128px 128px, #30238f;
+  box-shadow:
+    inset 0 0 0 5px #1b0d45,
+    inset 0 0 0 6.5px rgba(216, 181, 102, 0.75),
+    0 0 60px rgba(150, 90, 255, 0.35),
+    0 24px 60px rgba(10, 4, 30, 0.55);
+  color: var(--sb-ink);
+}
+.palais .sb-title h2 {
+  border-color: var(--sb-brass);
+  background: linear-gradient(180deg, #8a5cf0, #5a2fc2 55%, #45219c);
+  box-shadow: inset 0 0 0 3px rgba(240, 225, 255, 0.35), 0 0 0 4px #1b0d45, 0 0 0 5.5px rgba(216, 181, 102, 0.85), 0 8px 16px rgba(20, 6, 60, 0.45), 0 0 26px rgba(170, 120, 255, 0.6);
+  font: 400 clamp(2rem, 4cqw, 2.9rem) / 1.05 Parisienne, "Dancing Script", cursive;
+  letter-spacing: 0.01em;
+  color: #fff3d6;
+  text-shadow: 0 2px 0 rgba(30, 10, 80, 0.55);
+}
+.palais .sb-title h2 span { color: #f3dc9a; }
+.palais .sb-close { border-color: var(--sb-brass); background: #f3e6c8; }
+
+.palais .sb-reader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 0;
+}
+
+/* the open book: two pages of old paper, darkened at the edges and down the
+   gutter, on a cover of the same purple */
+.palais .sb-book {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: min(64cqh, 600px);
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #3a1f8a, #4b2aa8 48%, #2a1466 50%, #4b2aa8 52%, #3a1f8a);
+  box-shadow: 0 0 0 2px var(--sb-brass-deep), 0 18px 40px rgba(5, 2, 20, 0.6);
+  perspective: 1600px;
+}
+.palais .sb-book--one { grid-template-columns: 1fr; }
+.palais .sb-page {
+  position: relative;
+  overflow-y: auto;
+  padding: clamp(1.2rem, 3cqw, 2.6rem) clamp(1.1rem, 3cqw, 2.8rem) 2.6rem;
+  background:
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(120, 70, 20, 0.28)),
+    radial-gradient(40% 30% at 85% 90%, rgba(140, 80, 20, 0.16), transparent 70%),
+    radial-gradient(35% 25% at 12% 10%, rgba(140, 80, 20, 0.12), transparent 70%),
+    linear-gradient(180deg, #f6e8c6, #efdcb0);
+  font: 400 clamp(1.05rem, 1.5cqw, 1.3rem) / 1.6 "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  color: var(--sb-ink);
+  scrollbar-width: thin;
+}
+.palais .sb-page--left { border-radius: 6px 2px 2px 6px; box-shadow: inset -22px 0 26px -18px rgba(70, 35, 10, 0.55); }
+.palais .sb-page--right { border-radius: 2px 6px 6px 2px; box-shadow: inset 22px 0 26px -18px rgba(70, 35, 10, 0.55); }
+.palais .sb-book--one .sb-page { border-radius: 6px; box-shadow: inset 0 0 30px rgba(70, 35, 10, 0.25); }
+.palais .sb-page p { margin: 0 0 0.9em; text-wrap: pretty; }
+.palais .sb-heading {
+  margin: 0 0 0.6em;
+  text-align: center;
+  font: 400 clamp(2rem, 3.4cqw, 2.8rem) / 1 Parisienne, "Dancing Script", cursive;
+  color: #4b2aa8;
+}
+.palais .sb-heading::after {
+  content: "☾ ✦ ☽";
+  display: block;
+  margin-top: 0.35em;
+  font: 400 0.42em/1 Georgia, serif;
+  letter-spacing: 0.5em;
+  color: var(--sb-brass-deep);
+}
+/* the first letter of a chapter, in violet, kept inside its own paragraph
+   however short that is */
+.palais .sb-first { display: flow-root; }
+.palais .sb-first::first-letter {
+  float: left;
+  margin: 0.06em 0.1em 0 0;
+  font: 400 3.4em/0.8 Parisienne, "Dancing Script", cursive;
+  color: #5a2fc2;
+}
+.palais .sb-folio {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font: italic 0.9rem/1 Georgia, serif;
+  color: rgba(59, 36, 22, 0.6);
+}
+
+/* turning the page: the paper swings in from the side it was turned to */
+.palais .sb-book--on .sb-page { animation: sb-turn-on 420ms cubic-bezier(0.2, 0.8, 0.3, 1); transform-origin: 0 50%; }
+.palais .sb-book--back .sb-page { animation: sb-turn-back 420ms cubic-bezier(0.2, 0.8, 0.3, 1); transform-origin: 100% 50%; }
+@keyframes sb-turn-on { from { opacity: 0.2; transform: rotateY(-28deg); } }
+@keyframes sb-turn-back { from { opacity: 0.2; transform: rotateY(28deg); } }
+
+/* the crescents either side turn the page */
+.palais .sb-turn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid var(--sb-brass);
+  background: radial-gradient(circle at 35% 30%, #7b4fe6, #3a1f8a);
+  color: #f3dc9a;
+  font: 1.6rem/1 Georgia, serif;
+  cursor: pointer;
+  /* a ring of the night under it, so it reads clear of the star cloth */
+  box-shadow: 0 0 0 6px #1c1460, 0 0 0 7.5px rgba(216, 181, 102, 0.6), 0 0 18px 8px rgba(170, 120, 255, 0.45), 0 4px 12px rgba(5, 2, 20, 0.6);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.palais .sb-turn:hover:not(:disabled) { transform: scale(1.08); box-shadow: 0 0 0 6px #1c1460, 0 0 0 7.5px rgba(216, 181, 102, 0.8), 0 0 24px 10px rgba(190, 140, 255, 0.7), 0 4px 12px rgba(5, 2, 20, 0.6); }
+/* the end of the book: the crescent dims, but its ring stays, so it doesn't
+   melt into the stars */
+.palais .sb-turn:disabled { cursor: default; color: rgba(243, 220, 154, 0.35); background: #2a1a70; }
+.palais .sb-turn:focus-visible,
+.palais .sb-moon:focus-visible { outline: 2px solid #f3dc9a; outline-offset: 3px; }
+
+/* the moons underneath: one to a spread, waxing as you read */
+/* on a band of the night, edged in brass, so they read clear of the star cloth */
+.palais .sb-moons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-self: center;
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(216, 181, 102, 0.7);
+  background: #1c1460;
+  box-shadow: 0 4px 12px rgba(5, 2, 20, 0.5);
+}
+.palais .sb-moon {
+  padding: 0.15rem;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.45;
+  filter: grayscale(0.6);
+  transition: opacity 200ms ease, transform 200ms ease, filter 200ms ease;
+}
+.palais .sb-moon.is-read { opacity: 0.75; filter: none; }
+.palais .sb-moon.is-now { opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 240, 200, 0.9)); transform: scale(1.25); }
+
+.palais .sb-probe { position: absolute; visibility: hidden; pointer-events: none; overflow: hidden; left: -9999px; top: 0; }
+.palais .sb-reader { position: relative; }
+/* the title page: the moons again, the title in script, who wrote it */
+.palais .sb-page--title { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.palais .sb-title-moons { font-size: 1.1rem; letter-spacing: 0.25em; opacity: 0.85; }
+.palais .sb-book-title {
+  margin: 0.6em 0 0.3em;
+  font: 400 clamp(2.4rem, 4.6cqw, 3.6rem) / 1.1 Parisienne, "Dancing Script", cursive;
+  color: #4b2aa8;
+  text-wrap: balance;
+}
+.palais .sb-byline { margin: 0; font: italic 1.15em/1.2 "Cormorant Garamond", Georgia, serif; letter-spacing: 0.08em; color: var(--sb-brass-deep); }
+/* the contents: each chapter a line of dots to its page, pressed to go there */
+.palais .sb-contents { margin: 0; padding: 0; list-style: none; counter-reset: sb-ch; }
+.palais .sb-contents li { counter-increment: sb-ch; }
+.palais .sb-contents button {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.45em 0.2em;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.palais .sb-contents button::before { content: counter(sb-ch) "."; color: #5a2fc2; min-width: 1.3em; }
+.palais .sb-contents button i { flex: 1; border-bottom: 2px dotted rgba(90, 47, 194, 0.35); transform: translateY(-0.25em); }
+.palais .sb-contents button:hover { background: rgba(120, 70, 230, 0.08); color: #4b2aa8; }
+.palais .sb-contents button:focus-visible { outline: 2px solid #5a2fc2; outline-offset: 1px; }
+/* a break in the scene, and the song coming through the story */
+.palais .sb-break { text-align: center; color: var(--sb-brass-deep); letter-spacing: 0.4em; margin: 0.4em 0 1em; }
+.palais .sb-song { font-style: italic; color: #5a2fc2; padding-left: 1.2em; margin-bottom: 0.5em; }
+.palais .sb-tally { margin-left: 0.6rem; align-self: center; font: italic 0.95rem/1 Georgia, serif; color: #e9d9ff; opacity: 0.8; }
+
+@media (max-width: 760px) {
+  .palais .sb-panel { padding: 2.4rem 0.7rem 0.8rem; }
+  .palais .sb-reader { gap: 0.35rem; }
+  .palais .sb-turn { width: 2.3rem; height: 2.3rem; font-size: 1.2rem; }
+  .palais .sb-book { height: min(66cqh, 560px); padding: 6px; }
+  .palais .sb-title { width: calc(100% - 3rem); }
+  .palais .sb-title h2 { white-space: normal; text-align: center; padding: 0.3rem 1rem; font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .palais .sb-book .sb-page { animation: none; } }
+
 /* the game: green felt inside a frame of Ringlers' purple star cloth */
 .palais .bl-panel {
   --bl-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='%2330238f'/%3E%3Cg fill='%23f6cc4f'%3E%3Cpath d='M14 6l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.8 2.7 1-5.3-4-3.7 5.4-.6z'/%3E%3Cpath d='M52 4l1.6 3.3 3.6.4-2.7 2.5.8 3.6-3.3-1.8-3.2 1.8.7-3.6-2.7-2.5 3.6-.4z'/%3E%3Cpath d='M68 34l2 4.2 4.6.5-3.4 3.1.9 4.5-4.1-2.3-4 2.3.9-4.5-3.4-3.1 4.6-.5z'/%3E%3Cpath d='M32 38l2.8 5.8 6.3.7-4.7 4.3 1.3 6.2-5.7-3.2-5.6 3.2 1.3-6.2-4.7-4.3 6.3-.7z'/%3E%3Cpath d='M10 58l1.6 3.3 3.6.4-2.7 2.5.8 3.6-3.3-1.8-3.2 1.8.7-3.6-2.7-2.5 3.6-.4z'/%3E%3Cpath d='M56 62l2.2 4.5 5 .5-3.7 3.4 1 4.9-4.5-2.5-4.4 2.5 1-4.9-3.7-3.4 5-.5z'/%3E%3C/g%3E%3C/svg%3E");

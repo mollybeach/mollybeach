@@ -21,6 +21,7 @@ import { SeasonRoom } from "./SeasonRoom";
 import { GlobeEgg } from "./GlobeEgg";
 import { SchoolSyllabus } from "./SchoolSyllabus";
 import { CrystalPool } from "./CrystalPool";
+import { CrystalSpellbook } from "./CrystalSpellbook";
 import { LibraryImac } from "./LibraryImac";
 import { RoomRadio } from "./RoomRadio";
 import { LettersDrawer, LibraryLetters } from "./LibraryLetters";
@@ -373,6 +374,8 @@ export default function PalaisHome() {
           <LibraryImac room="school" />
           {/* the pool table in the Crystal Ballroom, a drum machine in billiard balls */}
           <CrystalPool />
+          {/* and the spellbook on its stage, with a story in it */}
+          <CrystalSpellbook />
           {/* and a record player in several rooms, each with its own album
               (RoomRadio) */}
           <RoomRadio />

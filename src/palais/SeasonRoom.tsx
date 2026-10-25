@@ -1,6 +1,7 @@
 import type { Place } from "./place";
 import { usePortrait } from "./PortraitTerrace";
 import { LivingPhoto } from "./LivingPhoto";
+import { CrystalLasers } from "./CrystalLasers";
 
 /* every room turns through the same four seasons as the terrace */
 const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
@@ -101,6 +102,8 @@ export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
         {/* the clouds drift and the water ripples (LivingPhoto.tsx); keyed so it
             starts afresh when a phone turns and the photographs change */}
         <LivingPhoto key={tall ? "tall" : "wide"} room={place} />
+        {/* and the lasers sweep the Crystal Ballroom's dance floor */}
+        {place === "crystal" && <CrystalLasers tall={tall} />}
       </div>
     </div>
   );
