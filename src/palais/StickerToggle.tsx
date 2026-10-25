@@ -267,7 +267,16 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     [place],
   );
 
+  /* and once something has been put in, the whole sticker layer comes forward,
+     in front of the room's own people and things (Brat Academy's professor,
+     the pool table, the sticker maker…), which otherwise stand over every
+     sticker, so what was just put in can't end up behind one. It goes back
+     when you walk into another room, as the things put in stop being held in
+     the middle (below) */
+  const [inFront, setInFront] = useState(false);
+
   const putIn = useCallback((ids: string[]) => {
+    if (ids.length) setInFront(true);
     setHidden((h) => {
       const next = new Set(h);
       ids.forEach((id) => next.delete(id));
@@ -331,6 +340,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
      put. After that they're wherever the layout, or a hand, has left them. */
   useEffect(() => {
     setJustPlaced(new Map());
+    setInFront(false);
     pickSticker(null);
   }, [place]);
 
@@ -685,6 +695,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         data-conjure-paused={paused ? "" : undefined}
         data-season={seasons ? season : undefined}
         data-rearranging={rearranging ? "" : undefined}
+        data-front={inFront ? "" : undefined}
       >
         {/* the arrival animates the layer's own opacity, which would override
             an opacity set on it here, so hiding happens one level in */}

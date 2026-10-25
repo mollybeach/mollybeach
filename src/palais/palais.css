@@ -1814,6 +1814,11 @@
   z-index: 2;
   animation: palais-arrive var(--arrive-dur, 1.5s) cubic-bezier(0.2, 0.6, 0.2, 1) var(--arrive-delay, 2.25s) both;
 }
+/* something's just been put in from the catalogue: the stickers stand in
+   front of the room's own people and things (the professor, the pool table,
+   the sticker maker…), under the record player and the top buttons
+   (StickerToggle.tsx) */
+.palais .palais-arrive[data-front] { z-index: 35; }
 
 /* ==========================================================================
    CONJURING — the furniture and trellises take turns vanishing
