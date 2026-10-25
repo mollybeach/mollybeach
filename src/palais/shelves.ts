@@ -218,6 +218,8 @@ export const SHELVES: Shelf[] = [
       "espresso_machine_smeg_retro_cream_sticker",
       "microwave_insignia_retro_mint_teal_sticker",
       "stove_range_smeg_victoria_lavender_sticker",
+      "mandarins_cuties_organic_mesh_bag_sticker",
+      "mandarins_halos_mesh_bag_sticker",
     ],
   },
   {
@@ -329,6 +331,8 @@ export const SHELVES: Shelf[] = [
     emoji: "🍾",
     items: [
       "flask-horseshoe",
+      "wine_la_boheme_act_one_yarra_valley_white_bottle_sticker",
+      "wine_la_boheme_act_two_yarra_valley_rose_bottle_sticker",
       "bottle_glass_jar_embossed_aqua_vintage_sticker",
       "bottle_glass_gin_sealed_green_vintage_sticker",
       "bottle_glass_embossed_medallion_dusty_rose_pink_sticker",

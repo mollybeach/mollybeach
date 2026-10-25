@@ -133,6 +133,28 @@ export const PROPS = catalogue({
     plane: "near",
     metres: 0.2,
   },
+  wine_la_boheme_act_one_yarra_valley_white_bottle_sticker: {
+    label: "La Bohème Act One, a Yarra Valley white, in its Art Nouveau label",
+    glass: true,
+    plane: "near",
+    metres: 0.08,
+  },
+  wine_la_boheme_act_two_yarra_valley_rose_bottle_sticker: {
+    label: "La Bohème Act Two, a Yarra Valley rosé, in its Art Nouveau label",
+    glass: true,
+    plane: "near",
+    metres: 0.08,
+  },
+  mandarins_cuties_organic_mesh_bag_sticker: {
+    label: "a 2lb bag of organic Cuties mandarins",
+    plane: "near",
+    metres: 0.25,
+  },
+  mandarins_halos_mesh_bag_sticker: {
+    label: "a 5lb bag of Halos mandarins",
+    plane: "near",
+    metres: 0.32,
+  },
   pool_table_retro_walnut_green_felt_sticker: {
     label: "a retro pool table, walnut and green felt, racked up",
     plane: "near",

@@ -226,6 +226,11 @@ export const MORE_TRINKETS: PropId[] = [
   "book_everybodys_story_loyal_rue_lying_down_sticker",
   "poster_lillebaeltsbroen_bridge_denmark_vintage_sticker",
   "poster_danish_composer_pianist_portrait_vintage_sticker",
+  "pool_table_retro_walnut_green_felt_sticker",
+  "wine_la_boheme_act_one_yarra_valley_white_bottle_sticker",
+  "wine_la_boheme_act_two_yarra_valley_rose_bottle_sticker",
+  "mandarins_cuties_organic_mesh_bag_sticker",
+  "mandarins_halos_mesh_bag_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */
