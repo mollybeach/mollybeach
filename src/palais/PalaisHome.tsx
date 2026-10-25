@@ -15,6 +15,9 @@ import { Draggable } from "./Draggable";
 import { Scene } from "./FittedScene";
 import { SummerYard } from "./SummerYard";
 import { LOOSE } from "./decor";
+import { useMadeStickers } from "./madeStickers";
+import { StickerMaker } from "./StickerMaker";
+import type { PropId } from "./props";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
 import { SeasonRoom } from "./SeasonRoom";
@@ -354,6 +357,10 @@ export default function PalaisHome() {
             />
           ))}
 
+          {/* and the stickers made at Brat Academy (madeStickers.ts), set out
+              the same way, out of the room until the catalogue puts one in */}
+          <MadeProps />
+
           {/* these two live on things rather than on the tiles */}
           <Prop set="settee" id="cat-blueberry-party" w={w(0.5, 0.84)} left="20%" ground={`calc(${SETTEE_SEAT} + 0.6cqw)`} tilt={-2} motion="bob" dur={12} rise={3} z={53} className={sm} />
           <Prop id="cat-blueberry-monstera" w={w(0.72, 0.96)} right="2.5%" ground={`calc(${at(0.96).ground} + 1.4cqw)`} tilt={1} motion="bob" dur={15} rise={3} z={68} />
@@ -372,6 +379,8 @@ export default function PalaisHome() {
           <LibraryImac />
           {/* the iBook on the teacher's desk at Brat Academy opens the same desktop */}
           <LibraryImac room="school" />
+          {/* the sticker maker on the teacher's desk at Brat Academy */}
+          <StickerMaker />
           {/* the pool table in the Crystal Ballroom, a drum machine in billiard balls */}
           <CrystalPool />
           {/* and the spellbook on its stage, with a story in it */}
@@ -399,5 +408,29 @@ export default function PalaisHome() {
       </div>
     </>
     </PlaceNow.Provider>
+  );
+}
+
+/** the stickers made at Brat Academy, along the front of the terrace like the
+    room decor, each to its real size */
+function MadeProps() {
+  const { stickers } = useMadeStickers();
+  return (
+    <>
+      {stickers.map((s, n) => (
+        <Prop
+          key={s.id}
+          id={s.id as PropId}
+          w={w(s.metres ?? 0.32, 0.93)}
+          left={`${(5 + ((n * 37) % 86)).toFixed(1)}%`}
+          ground={at(0.93 - (n % 3) * 0.03).ground}
+          tilt={0}
+          motion="bob"
+          dur={10 + (n % 5)}
+          rise={2}
+          z={78}
+        />
+      ))}
+    </>
   );
 }

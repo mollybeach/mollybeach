@@ -15,6 +15,8 @@
  *   fore — cropped by the viewport, oversized, a little out of focus
  */
 
+import { madeSpec, madeSrc } from "./madeStickers";
+
 export type Plane = "haze" | "far" | "mid" | "near" | "fore";
 
 export interface PropSpec {
@@ -154,6 +156,11 @@ export const PROPS = catalogue({
     label: "a 5lb bag of Halos mandarins",
     plane: "near",
     metres: 0.32,
+  },
+  sticker_maker_create_a_sticker_mini_pink_lime_sticker: {
+    label: "a Create-A-Sticker Mini, lime and pink, a sheet of stickers coming out",
+    plane: "near",
+    metres: 0.2,
   },
   synthesizer_keyboard_yamaha_cream_sticker: {
     label: "a cream Yamaha synthesizer keyboard",
@@ -483,5 +490,6 @@ export const PROPS = catalogue({
 
 export type PropId = keyof typeof PROPS;
 
-export const propSrc = (id: PropId) => `${process.env.PUBLIC_URL}/palais/props/${id}.webp`;
-export const propSpec = (id: PropId): PropSpec => PROPS[id];
+/* a sticker made at Brat Academy (madeStickers.ts) lives in Supabase, not here */
+export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais/props/${id}.webp`;
+export const propSpec = (id: PropId): PropSpec => PROPS[id] ?? madeSpec(id) ?? { label: String(id).replace(/_sticker.*$/, "").replace(/[-_]+/g, " ") };

@@ -3,6 +3,8 @@ import { Prop } from "./Prop";
 import { Pendant } from "./Pendant";
 import { InPhoneRoom } from "./arrangement";
 import { PHONE_EXTRAS, PHONE_EXTRA_PENDANTS } from "./phoneLayout";
+import { useMadeStickers } from "./madeStickers";
+import type { PropId } from "./props";
 
 /**
  * The terrace on a phone: its own photograph, and its own arrangement.
@@ -93,6 +95,7 @@ const CABINET_TOP = surface(CABINET_M, CABINET_Y, 1.329, 0.93);
 const ARMCHAIR_SEAT = surface(ARMCHAIR_M, ARMCHAIR_Y, 1.28, 0.36);
 
 export function PortraitTerrace() {
+  const { stickers: made } = useMadeStickers();
   return (
     <InPhoneRoom.Provider value={true}>
     <div className="palais-frame">
@@ -162,6 +165,19 @@ export function PortraitTerrace() {
           <Prop key={e.id} id={e.id} w={`${e.w}cqw`} left={`${e.left}%`} ground={`${e.ground}%`} motion="none" z={60} />
         ),
       )}
+      {/* and the stickers made at Brat Academy (madeStickers.ts), the same way,
+          to scale: about 28% of the photo a metre, as phoneLayout.ts has it */}
+      {made.map((s, n) => (
+        <Prop
+          key={s.id}
+          id={s.id as PropId}
+          w={`${s.metres ? Math.min(85, Math.max(6, Math.round(s.metres * 28))) : 11}cqw`}
+          left={`${8 + ((n * 17) % 74)}%`}
+          ground={`${10 + (n % 3) * 3}%`}
+          motion="none"
+          z={60}
+        />
+      ))}
       {PHONE_EXTRA_PENDANTS.map((id, n) => (
         <Pendant key={id} id={id} x={`${20 + n * 45}%`} w="14cqw" tilt={0} arc={1.3} dur={12 + n} />
       ))}

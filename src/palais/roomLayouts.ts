@@ -5,6 +5,7 @@ import { BUNDLED_LAYOUTS, hiddenOf, type SeasonLayout } from "./arrangement";
 import { PHONE_LAYOUTS } from "./phoneLayout";
 import { PROPS } from "./props";
 import { DECOR_SET } from "./decor";
+import { madeIds } from "./madeStickers";
 import type { Device, SavedLayout } from "./layoutsDb";
 import type { Place } from "./place";
 import type { Season } from "./seasons";
@@ -72,9 +73,11 @@ export function hiddenFor(layout: SeasonLayout, place: Place): string[] {
   if (place === "palace") {
     // the room decor came later than the code's layouts: out unless a layout puts it in
     const decorOut = Array.from(DECOR_SET).filter((id) => !layout.props[id]);
-    return [...hiddenOf(layout), ...decorOut];
+    // and so are the stickers made at Brat Academy (madeStickers.ts)
+    const madeOut = madeIds().filter((id) => !layout.props[id]);
+    return [...hiddenOf(layout), ...decorOut, ...madeOut];
   }
-  return ALL_STICKERS.filter((id) => !layout.props[id]?.shown);
+  return [...ALL_STICKERS, ...madeIds()].filter((id) => !layout.props[id]?.shown);
 }
 
 /** the stickers a layout puts in a room */

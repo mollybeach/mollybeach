@@ -19,6 +19,7 @@ import { pickSticker, resizeSticker, usePicked, zoomOf } from "./Draggable";
 import { capture } from "./arrangement";
 import { saveSeasonDefault } from "./layoutsDb";
 import { AccountPill } from "./AccountPill";
+import { madeIds, useMadeStickers } from "./madeStickers";
 
 const EMPTY: string[] = [];
 
@@ -228,6 +229,22 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     setRearranging(animate);
     if (animate) glide.current = setTimeout(() => setRearranging(false), 1800);
   }, []);
+  /* the stickers made at Brat Academy come in from Supabase after the room
+     has opened: each one starts out of the room, like everything else the
+     look doesn't put in, until it's put in from the catalogue */
+  const made = useMadeStickers();
+  const seenMade = useRef(new Set<string>());
+  useEffect(() => {
+    const fresh = madeIds().filter((id) => !seenMade.current.has(id));
+    if (!fresh.length) return;
+    fresh.forEach((id) => seenMade.current.add(id));
+    const look = now.current.portrait ? worn.current.phone : worn.current.desktop;
+    setHidden((was) => {
+      const next = new Set(was);
+      fresh.forEach((id) => !look.props[id]?.shown && next.add(id));
+      return next;
+    });
+  }, [made.version]);
   /** try a look on from the catalogue, on whichever device this is */
   const tryOn = useCallback(
     (layout: SeasonLayout) => wear(now.current.portrait ? { phone: layout } : { desktop: layout }),
