@@ -25,6 +25,9 @@ import { noteDoing } from "./visits";
  * privacy-enhanced youtube-nocookie.com player, driven through YouTube's
  * IFrame API so the turntable knows when the music is playing. Leaving the
  * room takes the turntable away, and the music with it.
+ *
+ * While the pool table's drum machine is playing (CrystalPool.tsx) the record
+ * is turned down to a quarter, so the beat can be heard over it (duckRecord).
  */
 
 /** an album on a deck: the video it plays, and what the label reads */
@@ -63,6 +66,8 @@ type YTPlayer = {
   pauseVideo(): void;
   seekTo(seconds: number, allowSeekAhead: boolean): void;
   getPlayerState(): number;
+  getVolume(): number;
+  setVolume(volume: number): void;
   destroy(): void;
 };
 type YTApi = {
@@ -108,6 +113,21 @@ function youtube(): Promise<YTApi> {
 
 const PLAYING = 1;
 const ENDED = 0;
+
+/* turning the record down under the drum machine: how far, how long the fade
+   takes, and whether it's turned down now (so a player built in the meantime
+   starts down too) */
+const DUCKED = 0.25;
+const FADE_MS = 400;
+const DUCK = "palais-duck-record";
+let ducked = false;
+
+/** turn whatever record is playing down to a quarter (true), or back up */
+export function duckRecord(on: boolean) {
+  if (on === ducked) return;
+  ducked = on;
+  window.dispatchEvent(new Event(DUCK));
+}
 
 /** the sleeve, either where it stands in the room or over on the footer's shelf */
 const sleeve = (it: JSX.Element, shelf: HTMLElement | null) => (shelf ? createPortal(it, shelf) : it);
@@ -177,6 +197,38 @@ function Turntable({ disc }: { disc: Disc }) {
     setShelf((was) => (was && was === now && document.contains(was) ? was : now));
   }, [open]);
 
+  /* the record's own volume, kept while it's turned down so it comes back
+     up to where it was, and the fade between them */
+  const full = useRef<number | null>(null);
+  const fading = useRef<ReturnType<typeof setInterval> | null>(null);
+  const fadeTo = useCallback((share: number) => {
+    const p = player.current;
+    if (!p || typeof p.getVolume !== "function") return;
+    if (fading.current) clearInterval(fading.current);
+    if (full.current === null) full.current = p.getVolume();
+    const from = p.getVolume();
+    const to = Math.round(full.current * share);
+    if (share === 1) full.current = null;
+    let n = 0;
+    const steps = 10;
+    fading.current = setInterval(() => {
+      n++;
+      player.current?.setVolume(Math.round(from + ((to - from) * n) / steps));
+      if (n >= steps && fading.current) {
+        clearInterval(fading.current);
+        fading.current = null;
+      }
+    }, FADE_MS / steps);
+  }, []);
+  useEffect(() => {
+    const on = () => fadeTo(ducked ? DUCKED : 1);
+    window.addEventListener(DUCK, on);
+    return () => {
+      window.removeEventListener(DUCK, on);
+      if (fading.current) clearInterval(fading.current);
+    };
+  }, [fadeTo]);
+
   /* the player is built when the turntable is out, and taken down when it is
      put away — the div it is built on goes with it, so it can't be kept */
   useEffect(() => {
@@ -194,6 +246,7 @@ function Turntable({ disc }: { disc: Disc }) {
         playerVars: { rel: 0, playsinline: 1, modestbranding: 1, ...(disc.list ? { listType: "playlist", list: disc.list, loop: 1 } : {}) },
         events: {
           onReady: () => {
+            if (ducked) fadeTo(DUCKED);
             if (!asked.current) return;     // the page was clicked while it was folded
             asked.current = false;
             player.current?.playVideo();
@@ -219,7 +272,7 @@ function Turntable({ disc }: { disc: Disc }) {
       player.current = null;
       setPlaying(false);
     };
-  }, [open, shelf, disc.video, disc.list, disc.name]);
+  }, [open, shelf, disc.video, disc.list, disc.name, fadeTo]);
 
   /* any click — or, on a phone, any tap — puts the record on, once. Touches on
      the deck itself are its own business: that's how it gets stopped.

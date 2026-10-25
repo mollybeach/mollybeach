@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { coverBox } from "./GlobeEgg";
 import { usePlace } from "./place";
 import { noteDoing } from "./visits";
+import { duckRecord } from "./RoomRadio";
 import {
   DEFAULT_PATTERN,
   STEPS,
@@ -28,7 +29,8 @@ import {
  * (coverBox, as the cookbook does). Press it and it opens the Billiards Master Sequencer: a rack of
  * balls that counts the beat, and five rows of sixteen balls to arm, played
  * from real billiards samples or a little synth (billiards.ts). Space starts
- * and stops it while it's open; shutting it stops the music.
+ * and stops it while it's open; shutting it stops the music. While it plays,
+ * the record player is turned down to a quarter (duckRecord, RoomRadio.tsx).
  */
 
 /** where the sticker stands on the wide pictures, as a fraction of them:
@@ -136,6 +138,8 @@ export function CrystalPool() {
     if (rig.current.ctx.state === "suspended") await rig.current.ctx.resume();
     now.current.step = 1;
     setStep(1);
+    // the first ball plays as play is pressed; the beat goes on from the second
+    for (const key of TRACK_IDS) if (now.current.tracks[key][0]) hit(rig.current, key, now.current.synth);
     setRunning(true);
   }, [running, vols]);
 
@@ -158,6 +162,12 @@ export function CrystalPool() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, shut, playPause]);
+
+  // the record turns down while the band plays, and back up when it stops
+  useEffect(() => {
+    duckRecord(running);
+    return () => duckRecord(false);
+  }, [running]);
 
   // leaving the room stops the band
   useEffect(() => {
