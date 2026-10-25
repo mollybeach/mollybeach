@@ -7,9 +7,9 @@ import { noteDoing } from "./visits";
  * The record player: a turntable in the corner of a room, with whatever album
  * that room keeps on it (RECORDS below): Vulfpeck in the Lakehouse, Widowspeak
  * in the Palais, Norah Jones in the Kitchen, Марк Бернес in the Boudoir,
- * Mild High Club in the Library, Charli xcx's brat at Brat Academy, and Lana
- * Del Rey out at Sunliner Train, in the Blue Caves, the Jacaranda
- * Quarter and the Lagoon.
+ * Mild High Club in the Library, Charli xcx's brat at Brat Academy, Angel
+ * Olsen in the Crystal Ballroom, and Lana Del Rey out at Sunliner Train, in
+ * the Blue Caves, the Jacaranda Quarter and the Lagoon.
  *
  * The record spins while the album plays and stops when it's paused, and the
  * tone arm swings onto the record and back off again. Browsers won't start
@@ -54,6 +54,8 @@ const RECORDS: Partial<Record<Place, Disc>> = {
   library: { video: "RDNymaNBy2I", name: "Mild High Club", title: "Skiptracing", folded: true },
   // brat, from 360 on through the album
   school: { video: "nI6GP8wKJ6o", list: "PLsiiNfmWVgnmemtL64pU3eXP3It4jNplw", name: "Charli xcx", title: "brat", folded: true },
+  // My Woman, from Intern on through the album
+  crystal: { video: "m8MHUzkbAkc", list: "PL7ghKCRa1bE-hBtt5k6GQtw6XztEu2QhX", name: "Angel Olsen", title: "My Woman", folded: true },
 };
 
 type YTPlayer = {

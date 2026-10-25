@@ -33,7 +33,7 @@ import {
 
 /** where the sticker stands on the wide pictures, as a fraction of them:
     down on the floor to the left */
-const ON_THE_FLOOR = { x: 0.27, base: 0.985, w: 0.3 };
+const ON_THE_FLOOR = { x: 0.3, base: 0.88, w: 0.24 };
 /** the table painted into the tall pictures, felt to feet, as fractions of
     them (all four seasons have it in the same place) */
 const PAINTED = { left: 0.72, top: 0.605, right: 1, bottom: 0.83 };
