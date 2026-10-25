@@ -9,7 +9,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 
-const BLOOMS = "/Users/beachmolly/Documents/git/portfolio/public/palais/blooms";
+const BLOOMS = "/Users/beachmolly/Documents/git/mollybeach/public/palais/flower_decorations";
 const b64 = (name) =>
   "data:image/webp;base64," + readFileSync(`${BLOOMS}/${name}.webp`).toString("base64");
 

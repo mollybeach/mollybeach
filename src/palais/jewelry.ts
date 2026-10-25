@@ -55,8 +55,8 @@ export const JEWELRY = box({
 
 export type JewelId = keyof typeof JEWELRY;
 
-export const jewelSrc = (id: string) => `${process.env.PUBLIC_URL}/palais/jewelry/${id}.webp`;
-export const JEWELRY_BOX_SRC = `${process.env.PUBLIC_URL}/palais/jewelry/jewelry-box-open.webp`;
+export const jewelSrc = (id: string) => `${process.env.PUBLIC_URL}/palais/modal_content/jewelry_box/${id}.webp`;
+export const JEWELRY_BOX_SRC = `${process.env.PUBLIC_URL}/palais/modal_content/jewelry_box/jewelry-box-open.webp`;
 
 export const JEWELRY_SHELVES: { key: JewelryKind; name: string; emoji: string }[] = [
   { key: "ring", name: "Rings", emoji: "💍" },

@@ -494,7 +494,7 @@ export type PropId = keyof typeof PROPS;
 
 /* a sticker made at Brat Academy (madeStickers.ts) lives in Supabase, not here */
 /* each sticker's picture is kept in the folder for the catalogue shelf it was
-   on when the stickers were sorted (stickerFolders.json; public/palais/stickers) */
+   on when the stickers were sorted (stickerFolders.json; public/palais/catalogue_stickers) */
 const folderOf = (id: string) => (STICKER_FOLDERS as Record<string, string>)[id] ?? "trinkets";
-export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais/stickers/${folderOf(id)}/${id}.webp`;
+export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais/catalogue_stickers/${folderOf(id)}/${id}.webp`;
 export const propSpec = (id: PropId): PropSpec => PROPS[id] ?? madeSpec(id) ?? { label: String(id).replace(/_sticker.*$/, "").replace(/[-_]+/g, " ") };

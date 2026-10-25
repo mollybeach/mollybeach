@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { modalButton } from "./modalButtons";
 import { coverBox } from "./GlobeEgg";
 import { floralSrc, paletteOf, useFloral } from "./florals";
 import { usePlace } from "./place";
@@ -356,7 +357,7 @@ export function SchoolSyllabus() {
         title="Professor Beach Babe"
         onClick={() => setOpen(true)}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/ui/professor.webp`} alt="" draggable={false} />
+        <img src={modalButton("professor")} alt="" draggable={false} />
       </button>
       <span ref={sig} aria-hidden className="palais-chalk-sig">
         – Professor Beach Babe

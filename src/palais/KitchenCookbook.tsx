@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { modalButton } from "./modalButtons";
 import { coverBox } from "./GlobeEgg";
 import { usePlace } from "./place";
 import { floralSrc, paletteOf, useFloral } from "./florals";
@@ -227,7 +228,7 @@ export function KitchenCookbook() {
           noteDoing("recipes");       // Molly hears that someone opened it (visits.ts)
         }}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/stickers/books/cookbook_recipes_red_gilt_closed_sticker.webp`} alt="" decoding="async" />
+        <img src={modalButton("cookbook_recipes_red_gilt_closed_sticker")} alt="" decoding="async" />
       </button>
 
       {open && (
@@ -258,7 +259,7 @@ export function KitchenCookbook() {
             </button>
 
             <div className="ck-book">
-              <img className="ck-spread" src={`${process.env.PUBLIC_URL}/palais/ui/cookbook-open.webp`} alt="" decoding="async" />
+              <img className="ck-spread" src={`${process.env.PUBLIC_URL}/palais/modal_content/kitchen_cookbook_art/cookbook-open.webp`} alt="" decoding="async" />
 
               <button
                 type="button"

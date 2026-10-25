@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/Beach_Molly_Resume.pdf",
+      "destination": "/portfolio/Beach_Molly_Resume.pdf",
+      "permanent": true
+    },
+    {
       "source": "/x",
       "destination": "/?from=x",
       "permanent": false

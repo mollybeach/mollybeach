@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 /**
  * The world map, as a world.
  *
- * The world is all ocean (public/palais/map/globe/globe-sea.webp), and every room
- * stands on it as a little 3-D island of its own (public/palais/map/islands),
+ * The world is all ocean (public/palais/world_map/globe/globe-sea.webp), and every room
+ * stands on it as a little 3-D island of its own (public/palais/world_map/globe_islands),
  * where the room is on the flat map: the first island's rooms over the
  * western half of the world, the second's over the eastern. The sphere is painted
  * pixel by pixel onto a canvas each time it turns: for every point of the
@@ -39,7 +39,7 @@ export interface Spot {
       under it, so the real circle covers the painted one exactly */
   size: number;
   label: number;
-  /** a little 3-D island of the room (public/palais/map/islands), standing on
+  /** a little 3-D island of the room (public/palais/world_map/globe_islands), standing on
       the world in place of the flat circle */
   island?: string;
   /** its island picture has its name painted on already, so no pill is added */
@@ -52,7 +52,7 @@ const R0 = 230;
 
 /* ---- the wrapped world ------------------------------------------------------ */
 
-const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe/globe-world4.webp?v=4`;
+const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/world_map/globe/globe-world4.webp?v=4`;
 /** where each island's painting lies on the world, in degrees: between them
     they cover it all, the first over the western half and the second over the
     eastern, blending at the two seams; `side` is how much of each map image is

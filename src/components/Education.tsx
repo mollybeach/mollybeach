@@ -15,7 +15,7 @@ const Education: React.FC = () => {
   const education = [
     {
       school: "BRAINSTATION",
-      logo: `${process.env.PUBLIC_URL}/images/brainstationicon.png`,
+      logo: `${process.env.PUBLIC_URL}/portfolio/images/brainstationicon.png`,
       degree: "WEB DEVELOPMENT DIPLOMA",
       date: "JAN 2020 - APR 2020",
       location: "ONTARIO, CA",
@@ -26,7 +26,7 @@ const Education: React.FC = () => {
     },
     {
       school: "UNIVERSITY OF WASHINGTON",
-      logo: `${process.env.PUBLIC_URL}/images/uwcrestsquare.png`,
+      logo: `${process.env.PUBLIC_URL}/portfolio/images/uwcrestsquare.png`,
       degree: "BACHELORS OF SCIENCE",
       date: "SEP 2014 - AUG 2017",
       location: "SEATTLE, WA",

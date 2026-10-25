@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { modalButton } from "./modalButtons";
 import { coverBox } from "./GlobeEgg";
 import { usePlace } from "./place";
-import { propSrc } from "./props";
 import { shelvesToFileOn } from "./shelves";
 import { fileSticker, makeSticker, useMadeStickers, type Draft } from "./madeStickers";
 import { finishSticker, shrinkPhoto, type Finished } from "./stickerCut";
@@ -126,7 +126,7 @@ export function StickerMaker() {
           noteDoing("sticker-maker");
         }}
       >
-        <img src={propSrc(MACHINE)} alt="" decoding="async" />
+        <img src={modalButton(MACHINE)} alt="" decoding="async" />
         <span className="palais-stickermaker-hint" aria-hidden>
           <span>✂ Make a sticker</span>
           <small>to add to the catalogue</small>
@@ -251,7 +251,7 @@ function Machine({ onClose }: { onClose: () => void }) {
         <Doodles />
         <div className="sm-lid">
           <h2 id="sm-title">
-            <img src={`${process.env.PUBLIC_URL}/palais/ui/sticker-maker-title.webp`} alt="Create-A-Sticker Mini" />
+            <img src={`${process.env.PUBLIC_URL}/palais/modal_content/brat_academy_sticker_maker_art/sticker-maker-title.webp`} alt="Create-A-Sticker Mini" />
           </h2>
           <small>at Brat Academy ✂</small>
         </div>

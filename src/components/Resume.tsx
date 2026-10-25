@@ -7,7 +7,7 @@ import { ArrowDownTrayIcon, DocumentTextIcon } from '@heroicons/react/24/outline
 
 const Resume: React.FC = () => {
   const floral = useFloral('footer');
-  const resumePath = `${process.env.PUBLIC_URL}/Beach_Molly_Resume.pdf`;
+  const resumePath = `${process.env.PUBLIC_URL}/portfolio/Beach_Molly_Resume.pdf`;
 
   return (
     <>
@@ -20,14 +20,14 @@ const Resume: React.FC = () => {
         <meta property="og:url" content="https://mollybeach.app/resume" />
         <meta property="og:title" content="Resume - Molly Beach | Full-Stack Software Engineer" />
         <meta property="og:description" content="Download my resume - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems." />
-        <meta property="og:image" content="https://mollybeach.app/palais/rooms/terrace/social-preview/social-preview-palais-v2.jpg" />
+        <meta property="og:image" content="https://mollybeach.app/palais/room_backgrounds/terrace/social-preview/social-preview-palais-v2.jpg" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://mollybeach.app/resume" />
         <meta property="twitter:title" content="Resume - Molly Beach | Full-Stack Software Engineer" />
         <meta property="twitter:description" content="Download my resume - Senior Full-Stack Engineer specializing in blockchain, AI & Web3 systems." />
-        <meta property="twitter:image" content="https://mollybeach.app/palais/rooms/terrace/social-preview/social-preview-palais-v2.jpg" />
+        <meta property="twitter:image" content="https://mollybeach.app/palais/room_backgrounds/terrace/social-preview/social-preview-palais-v2.jpg" />
       </Helmet>
       
       <section className="max-w-5xl mx-auto">

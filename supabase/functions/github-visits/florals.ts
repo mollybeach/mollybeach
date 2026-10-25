@@ -6,7 +6,7 @@
  * inside the picture. Each view wears the next one along, so the badge and the
  * button on the profile keep changing.
  *
- * They come from portfolio/public/palais/florals/.
+ * They come from portfolio/public/palais/ui_elements_gucci_floral_backgrounds/.
  */
 
 export interface Floral {

@@ -128,24 +128,40 @@ Signed in, I can save the room as a named look, file it under a season, make it 
 
 ```
 public/
-├── palais/
-│   ├── rooms/<room>/            one folder per room, named as on the map
-│   │   ├── desktop/             the computer's wide photographs, by season
-│   │   ├── mobile/              the phone's tall ones
-│   │   ├── sky-water-masks/     where the clouds drift and the water ripples
-│   │   └── social-preview/      the picture a shared link shows
-│   ├── stickers/<shelf>/        the catalogue, a folder per shelf
-│   │                            (stickerFolders.json says which)
-│   ├── wardrobe/<kind>/         the clothes, a folder per kind of thing
-│   │                            (wardrobeFolders.json says which)
-│   ├── map/                     room-pictures, islands, worlds, globe, scenery
-│   ├── characters/ jewelry/ florals/ blooms/ imac/ billiards/
-│   └── ui/                      buttons, modal art, the professor
-├── share-links/<room>/          the pages behind mollybeach.app/<room>
-│                                (vercel.json points the short links here)
-├── icons/                       the tab, home-screen and app icons
-├── loading-screen/              the Brat Code loading screen
-└── images/                      the résumé side's pictures
+├── palais/                          the Palais
+│   ├── room_backgrounds/<room>/     each room, named as on the map
+│   │   ├── desktop/                 the computer's wide backgrounds, by season
+│   │   ├── mobile/                  the phone's tall ones
+│   │   ├── sky-water-masks/         where the clouds drift and the water ripples
+│   │   ├── social-preview/          the picture a shared link shows
+│   │   └── stop_card/               the picture on its card on the world map
+│   ├── catalogue_stickers/<shelf>/  every sticker, a folder per catalogue shelf
+│   │                                (stickerFolders.json says which)
+│   ├── closet_clothes/<kind>/       the Wardrobe Wing, a folder per kind of thing
+│   │                                (wardrobeFolders.json says which)
+│   ├── cast_characters/             the Characters catalogue
+│   ├── world_map/                   the map: globe_islands, flat_world_maps,
+│   │                                globe, scenery
+│   ├── modal_content/               what the modals open onto
+│   │   ├── imac_desktop/            the iMac's app icons, previews and README
+│   │   ├── pool_table_sounds/       the Billiards Master Sequencer's samples
+│   │   ├── jewelry_box/             the jewelry box and the pieces in it
+│   │   ├── kitchen_cookbook_art/    the cookbook, open
+│   │   ├── brat_academy_sticker_maker_art/  the sticker maker's title
+│   │   ├── boudoir_pictures_art/    the dresser's crest
+│   │   ├── closet_dress_up_art/     Clueless cheetah paper and arrows
+│   │   └── modal_buttons/           what you press in a room to open one: the
+│   │                                pool table, the spellbook, the iMac, the
+│   │                                mannequin, the professor… (modalButtons.ts)
+│   ├── ui_elements_gucci_floral_backgrounds/
+│   │                                the Gucci floral papers the sidebar, footer
+│   │                                and buttons wear, turning through the day
+│   └── flower_decorations/          the flowers round the map and the résumé headings
+├── portfolio/                       the résumé side: its images and the PDF
+├── share-links/<room>/              the pages behind mollybeach.app/<room>
+│                                    (vercel.json points the short links here)
+├── icons/                           the tab, home-screen and app icons
+└── loading-screen/                  the Brat Code loading screen
 ```
 
 ---

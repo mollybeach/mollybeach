@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { modalButton } from "./modalButtons";
 import type { Styled } from "./styled";
 import { usePortrait } from "./PortraitTerrace";
 import { hashExtra, usePlace } from "./place";
@@ -6,7 +7,6 @@ import { CLOSET_BARS, CLOSET_LINES, CLOSET_PHOTOS, CLOSET_RACKS, WINDOW_MOULDING
 import { useClosetMoves, useRackOrder, type PieceMove } from "./closetRacks";
 import { JewelryBox } from "./JewelryBox";
 import { DressUp } from "./DressUp";
-import { propSrc } from "./props";
 import { noteDoing } from "./visits";
 
 /* the jewellery cabinet, standing for good on the floor between the cubbies
@@ -228,7 +228,7 @@ export function Wardrobe() {
           aria-label="Open the jewelry box"
           title="Open the jewelry box"
         >
-          <img src={propSrc("cabinet-jewelry")} alt="" draggable={false} />
+          <img src={modalButton("cabinet-jewelry")} alt="" draggable={false} />
         </button>
         {/* the dress form: another door, into making an outfit up on her */}
         <button
@@ -243,7 +243,7 @@ export function Wardrobe() {
           aria-label="Dress the dress form"
           title="Dress the dress form"
         >
-          <img src={`${process.env.PUBLIC_URL}/palais/ui/mannequin.webp`} alt="" draggable={false} />
+          <img src={modalButton("mannequin")} alt="" draggable={false} />
         </button>
       </div>
       {jewels && stage && <JewelryBox stage={stage} onClose={() => setJewels(false)} />}

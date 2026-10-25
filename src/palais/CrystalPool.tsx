@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { modalButton } from "./modalButtons";
 import { coverBox } from "./GlobeEgg";
 import { usePlace } from "./place";
 import { noteDoing } from "./visits";
@@ -213,7 +214,7 @@ export function CrystalPool() {
           noteDoing("billiards");       // Molly hears that someone racked up (visits.ts)
         }}
       >
-        {!painted && <img src={`${process.env.PUBLIC_URL}/palais/stickers/games/pool_table_retro_walnut_green_felt_sticker.webp`} alt="" decoding="async" />}
+        {!painted && <img src={modalButton("pool_table_retro_walnut_green_felt_sticker")} alt="" decoding="async" />}
         <span className="palais-pooltable-hint" aria-hidden>
           🎱 <span>Rack 'em up</span>
         </span>

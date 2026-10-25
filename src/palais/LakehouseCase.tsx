@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
+import { modalButton } from "./modalButtons";
 import { coverBox } from "./GlobeEgg";
-import { propSrc } from "./props";
 import { usePlace } from "./place";
 import { useLetters } from "./LibraryLetters";
 
@@ -70,7 +70,7 @@ export function LakehouseCase() {
       aria-label="The road case of letters"
       title="Letters"
     >
-      <img src={propSrc(CASE)} alt="" decoding="async" />
+      <img src={modalButton(CASE)} alt="" decoding="async" />
       <span className="lake-case-glow" aria-hidden />
       <span className="lake-case-tag" aria-hidden>✉ Letters</span>
     </button>

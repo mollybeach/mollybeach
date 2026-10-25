@@ -128,7 +128,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
       {/* Profile Section: on a card so it reads over the flowers */}
       <div className={folded('text-center rounded-2xl bg-[#fffdf6] px-4 pt-5 pb-1 shadow-md ring-1 ring-[#c9a44c]/60', 'lg:px-1.5 lg:pt-1.5 lg:pb-1.5')}>
         <img
-          src={`${process.env.PUBLIC_URL}/images/avi_square.png`}
+          src={`${process.env.PUBLIC_URL}/portfolio/images/avi_square.png`}
           alt="Molly Beach"
           title={collapsed ? 'Molly Beach' : undefined}
           className={folded('w-32 h-32 rounded-full mx-auto mb-4 border-2 border-gray-200 shadow-lg object-cover transition-all duration-300', 'lg:w-14 lg:h-14 lg:mb-0')}
@@ -146,7 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
             className="transition-transform hover:scale-110"
           >
             <img 
-              src={`${process.env.PUBLIC_URL}/images/github-mark.png`}
+              src={`${process.env.PUBLIC_URL}/portfolio/images/github-mark.png`}
               alt="GitHub"
               className="w-8 h-8 rounded shadow-sm hover:shadow-md"
             />
@@ -158,7 +158,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen
             className="transition-transform hover:scale-110"
           >
             <img 
-              src={`${process.env.PUBLIC_URL}/images/linkedin-icon.png`}
+              src={`${process.env.PUBLIC_URL}/portfolio/images/linkedin-icon.png`}
               alt="LinkedIn"
               className="w-8 h-8 rounded shadow-sm hover:shadow-md"
             />

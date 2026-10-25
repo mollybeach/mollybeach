@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { modalButton } from "./modalButtons";
 import { coverBox } from "./GlobeEgg";
 import { usePlace } from "./place";
 import { noteDoing } from "./visits";
@@ -299,7 +300,7 @@ export function CrystalSpellbook() {
           noteDoing("spellbook");       // Molly hears that someone opened it (visits.ts)
         }}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/stickers/books/book_witchy_moon_phases_purple_galaxy_clasp_sticker.webp`} alt="" decoding="async" />
+        <img src={modalButton("book_witchy_moon_phases_purple_galaxy_clasp_sticker")} alt="" decoding="async" />
         <span className="palais-spellbook-hint" aria-hidden>
           <span>☾ <span>Read me</span></span>
           <small>{TITLE}</small>

@@ -197,6 +197,11 @@
   transition: opacity 700ms ease, visibility 0s linear 700ms;
 }
 .palais [data-place="closet"] .palais-closet { opacity: 1; visibility: visible; transition: opacity 700ms ease; }
+/* "Hide the items" (StickerToggle.tsx) takes the clothes off too, for a look
+   at the room itself; nothing is taken out, so showing them again puts every
+   piece back where it was */
+.palais .palais-stage:has(.palais-layer[data-hidden]) .palais-closet { opacity: 0; pointer-events: none; }
+.palais .palais-stage:has(.palais-layer[data-hidden]) .palais-closet * { pointer-events: none !important; }
 .palais .palais-closet-frame { position: absolute; }
 .palais .palais-closet-frame--wide {
   width: max(100cqw, 100cqh * 1930 / 1086);
@@ -4990,7 +4995,7 @@
 .palais a.imac-icon { text-decoration: none; }
 .palais .imac-icon-img { width: 2.6em; height: 2.6em; display: block; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }
 
-/* the README on the desktop (public/palais/imac/readme.html): GitHub's
+/* the README on the desktop (public/palais/modal_content/imac_desktop/readme.html): GitHub's
    layout, rebuilt as grids so it fits the Mac's screen at any size */
 .palais .imac-readme { display: grid; gap: 0.8em; line-height: 1.5; overflow-wrap: anywhere; }
 .palais .imac-readme img { display: block; max-width: 100%; height: auto; }
