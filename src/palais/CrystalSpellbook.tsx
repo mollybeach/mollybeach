@@ -10,8 +10,9 @@ import { AUTHOR, BREAK, CHAPTERS, TITLE, chapterStarts, pagesOf, paragraphsOf, t
  * The book (the moon-phase sticker, brass clasp and all) lies on the front of
  * the stage, lined up with the picture however the room has cropped it
  * (coverBox, as the pool table is). Press it and it opens on a night sky: an
- * open book of old paper, two pages to a spread (one on a phone), turned with
- * the crescents either side, the arrow keys, or the row of moons underneath,
+ * open book of old paper, two pages to a spread (one on a phone). A page turns
+ * as a page does, one leaf lifting at the spine and laid over to the other
+ * side, turned with the crescents either side, the arrow keys, or the row of moons underneath,
  * one to a chapter, which wax as you read.
  *
  * The story is Jessica Chase's "Portland on the Cusp of Spring", kept in
@@ -183,8 +184,8 @@ export function CrystalSpellbook() {
   const starts = useMemo(() => chapterStarts(pages), [pages]);
   const spreads = Math.max(1, Math.ceil(pages.length / per));
   const [at, setAt] = useState(0);
-  // the way the page turned, so the paper turns the same way
-  const [turn, setTurn] = useState<"on" | "back">("on");
+  // a page being turned: the spread it's turned from, and which way
+  const [flip, setFlip] = useState<{ from: number; dir: "on" | "back" } | null>(null);
   const spread = Math.min(at, spreads - 1);
 
   /* keep the book where the picture put it */
@@ -220,7 +221,8 @@ export function CrystalSpellbook() {
     (to: number) => {
       const next = Math.max(0, Math.min(spreads - 1, to));
       if (next === spread) return;
-      setTurn(next > spread ? "on" : "back");
+      const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setFlip(still ? null : { from: spread, dir: next > spread ? "on" : "back" });
       setAt(next);
     },
     [spread, spreads],
@@ -272,6 +274,12 @@ export function CrystalSpellbook() {
   if (!here) return null;
 
   const first = spread * per;
+  const goTo = (n: number) => go(Math.floor(n / per));
+  const page = (i: number, side: "left" | "right") => <Page page={pages[i]} n={i + 1} side={side} starts={starts} goTo={goTo} />;
+  // while a page turns, the spread it left stays under it until it lands
+  const was = flip ? Math.min(flip.from, spreads - 1) * per : first;
+  const on = flip?.dir === "on";
+  const back = flip?.dir === "back";
   // a moon for the cover and one for each chapter, waxing as you read; the
   // one you're in is the last that starts at or before this spread
   const marks = [{ label: "The cover", page: 0 }, ...CHAPTERS.map((ch, i) => ({ label: ch.title, page: starts[i] }))];
@@ -316,9 +324,36 @@ export function CrystalSpellbook() {
                 ☾
               </button>
 
-              <div key={`${spread}-${per}`} className={`sb-book sb-book--${turn}${narrow ? " sb-book--one" : ""}`} aria-live="polite">
-                <Page page={pages[first]} n={first + 1} side="left" starts={starts} goTo={(n) => go(Math.floor(n / per))} />
-                {!narrow && <Page page={pages[first + 1]} n={first + 2} side="right" starts={starts} goTo={(n) => go(Math.floor(n / per))} />}
+              <div className={`sb-book${narrow ? " sb-book--one" : ""}`} aria-live="polite">
+                {narrow ? (
+                  // one page: the old one turns away to the left, or the one
+                  // before comes back over from the left
+                  page(back ? was : first, "left")
+                ) : (
+                  <>
+                    {page(on ? was : first, "left")}
+                    {page(back ? was + 1 : first + 1, "right")}
+                  </>
+                )}
+                {flip && (
+                  /* the leaf being turned: the page it was on its front, the
+                     page it lands as on its back */
+                  <div
+                    key={`${flip.from}-${spread}`}
+                    className={`sb-leaf sb-leaf--${narrow ? (on ? "away" : "over") : flip.dir}`}
+                    onAnimationEnd={(e) => e.target === e.currentTarget && setFlip(null)}
+                    aria-hidden
+                  >
+                    {narrow ? (
+                      <div className="sb-leaf-face">{page(on ? was : first, "left")}</div>
+                    ) : (
+                      <>
+                        <div className="sb-leaf-face">{on ? page(was + 1, "right") : page(was, "left")}</div>
+                        <div className="sb-leaf-face sb-leaf-face--back">{on ? page(first, "left") : page(first + 1, "right")}</div>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
 
               <button type="button" className="sb-turn sb-turn--on" onClick={() => go(spread + 1)} disabled={spread >= spreads - 1} aria-label="The next page">
