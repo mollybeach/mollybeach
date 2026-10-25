@@ -155,6 +155,11 @@ export const PROPS = catalogue({
     plane: "near",
     metres: 0.32,
   },
+  synthesizer_keyboard_yamaha_cream_sticker: {
+    label: "a cream Yamaha synthesizer keyboard",
+    plane: "near",
+    metres: 0.7,
+  },
   pool_table_retro_walnut_green_felt_sticker: {
     label: "a retro pool table, walnut and green felt, racked up",
     plane: "near",

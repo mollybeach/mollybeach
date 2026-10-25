@@ -231,6 +231,7 @@ export const MORE_TRINKETS: PropId[] = [
   "wine_la_boheme_act_two_yarra_valley_rose_bottle_sticker",
   "mandarins_cuties_organic_mesh_bag_sticker",
   "mandarins_halos_mesh_bag_sticker",
+  "synthesizer_keyboard_yamaha_cream_sticker",
 ];
 
 /** everything that starts out of the rooms and is set out along the terrace's front */
