@@ -44,6 +44,9 @@ const ON_THE_DESK: Record<string, { x: number; base: number; w: number }> = {
     the same row of desks under the windows until it's in view, and clear of
     the record player in the corner (RoomRadio.tsx) */
 const EDGE = 110;
+/** and a little further right than its spot on the desk, in pixels, clear of
+    the turntable's open sleeve */
+const NUDGE = 75;
 const deskOf = (img: HTMLImageElement) => {
   const tall = /school-portrait-(\w+)\.webp$/.exec(img.src);
   return ON_THE_DESK[tall ? `portrait-${tall[1]}` : "wide"] ?? ON_THE_DESK.wide;
@@ -82,7 +85,7 @@ export function StickerMaker() {
       const h = w * SHAPE;
       // its pill is wider than it is, and has to fit on screen too
       const pill = el.querySelector<HTMLElement>(".palais-stickermaker-hint")?.offsetWidth ?? 0;
-      const cx = Math.max(box.left + box.w * on.x, EDGE + Math.max(w, pill) / 2);
+      const cx = Math.max(box.left + box.w * on.x, EDGE + Math.max(w, pill) / 2) + NUDGE;
       const base = box.top + box.h * on.base;
       el.style.width = `${w}px`;
       el.style.height = `${h}px`;
