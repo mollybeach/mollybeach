@@ -16,6 +16,7 @@ import { defaultLook } from "./roomLayouts";
 import { PLACE_NAMES, type Place } from "./place";
 import { differs } from "./roomLayouts";
 import { messageOf, type Collection } from "./useCollection";
+import { addedBy, isLocked, withoutOthers } from "./placements";
 
 const EMPTY_LIST: string[] = [];
 
@@ -220,7 +221,10 @@ export function Catalogue({
   /* what the buttons at the bottom work on: the search's matches, or the lot */
   const onPage = words.length ? shelves.flatMap((s) => s.items) : inRoom;
 
-  const setMany = (ids: string[], show: boolean) => {
+  const setMany = (all: string[], show: boolean) => {
+    // what's Molly's is hers to move, and signed out nothing moves (placements.ts)
+    const ids = clothesPage ? all : all.filter((id) => !isLocked(id));
+    if (!ids.length) return;
     const next = new Set(out);
     for (const id of ids) {
       if (show) next.delete(id);
@@ -235,6 +239,7 @@ export function Catalogue({
 
   /** make a piece in the room (or the closet) bigger or smaller, like its size handle */
   const nudge = (id: string, factor: number) => {
+    if (!clothesPage && isLocked(id)) return;
     const stage = stageOf();
     if (stage) resizeSticker(stage, clothesPage && !dressingRoom ? ".palais-closet [data-prop]" : ".palais-layer [data-prop]", id, factor);
   };
@@ -259,7 +264,8 @@ export function Catalogue({
   const roomNow = () => {
     const stage = stageOf();
     if (!stage) throw new Error("Couldn't find the room");
-    return capture(stage, hidden);
+    // what other people have put in stays theirs (placements.ts)
+    return withoutOthers(capture(stage, hidden));
   };
 
   /** save the room as it is into one of its season layouts, for this device */
@@ -641,6 +647,9 @@ export function Catalogue({
                       const inIt = !out.has(id);
                       const g = clothesPage ? garment(id) : undefined;
                       const name = g ? g.label : nice(id);
+                      // who put it in the room, and whether it's theirs to keep (placements.ts)
+                      const by = clothesPage || !inIt ? null : addedBy(id);
+                      const locked = !clothesPage && isLocked(id);
                       return (
                         <li key={id}>
                           <div className={`cat-card${inIt ? " is-on" : ""}`}>
@@ -649,14 +658,15 @@ export function Catalogue({
                               className={`cat-heart cat-heart--card${inIt ? " is-on" : ""}`}
                               aria-pressed={inIt}
                               aria-label={`${inIt ? "Take out" : "Put in"} ${name}`}
-                              title={inIt ? "Take it out" : "Put it in"}
+                              title={locked ? (by === "mollybeach" ? "Molly put this here" : "Sign in to put things in the rooms") : inIt ? "Take it out" : "Put it in"}
+                              disabled={locked}
                               onClick={() => setMany([id], !inIt)}
                             />
                             <span className="cat-size" role="group" aria-label={`Size of ${name}`}>
-                              <button type="button" disabled={!inIt} aria-label={`Make ${name} smaller`} title="Smaller" onClick={() => nudge(id, 1 / 1.12)}>
+                              <button type="button" disabled={!inIt || locked} aria-label={`Make ${name} smaller`} title="Smaller" onClick={() => nudge(id, 1 / 1.12)}>
                                 −
                               </button>
-                              <button type="button" disabled={!inIt} aria-label={`Make ${name} bigger`} title="Bigger" onClick={() => nudge(id, 1.12)}>
+                              <button type="button" disabled={!inIt || locked} aria-label={`Make ${name} bigger`} title="Bigger" onClick={() => nudge(id, 1.12)}>
                                 +
                               </button>
                             </span>
@@ -665,6 +675,7 @@ export function Catalogue({
                             </span>
                             <span className="cat-name">{name}</span>
                             {g && <span className="cat-store">{g.store}</span>}
+                            {by && <span className="cat-added">added to scene by {by}</span>}
                           </div>
                         </li>
                       );

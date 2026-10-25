@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { isLocked } from "./placements";
 
 /**
  * Pick up anything in the room and put it somewhere else.
@@ -203,6 +204,8 @@ export function Draggable() {
         if (!(node instanceof HTMLImageElement)) continue;
         const el = node.closest<HTMLElement>("[data-prop]");
         if (!el || !stage.contains(el)) continue;
+        // Molly's things are hers to move, and signed out nothing moves (placements.ts)
+        if (el.closest(".palais-layer") && isLocked(el.dataset.prop ?? "")) continue;
         if (seenOpacity(node, el) < 0.3) continue;
         if (alphaAt(node, x, y) < 40) continue;
         return { el, img: node };

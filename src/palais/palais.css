@@ -7777,6 +7777,10 @@
 }
 @media (prefers-reduced-motion: reduce) { .palais .sb-leaf { display: none; } }
 
+/* who put a thing in the room, under its name in the catalogue (placements.ts) */
+.palais .cat-added { display: block; margin-top: 0.15rem; font-size: 0.72em; font-style: italic; opacity: 0.7; }
+.palais .cat-heart--card:disabled { cursor: not-allowed; opacity: 0.6; }
+
 /* ---- Brat Academy's sticker maker (StickerMaker.tsx) -------------------- */
 /* the machine on the teacher's desk: it lifts when you point at it, with a
    pill on its lid so you know it opens */

@@ -6,7 +6,7 @@ import { Catalogue } from "./Catalogue";
 import { WorldMap } from "./WorldMap";
 import { CharacterCatalog } from "./CharacterCatalog";
 import { LayoutNow, PhoneLayoutNow, settle, type SeasonLayout } from "./arrangement";
-import { defaultLook, hiddenFor } from "./roomLayouts";
+import { ALL_STICKERS, defaultLook, hiddenFor } from "./roomLayouts";
 import { usePortrait } from "./PortraitTerrace";
 import { useCollection } from "./useCollection";
 import { usePlace } from "./place";
@@ -20,6 +20,7 @@ import { capture } from "./arrangement";
 import { saveSeasonDefault } from "./layoutsDb";
 import { AccountPill } from "./AccountPill";
 import { madeIds, useMadeStickers } from "./madeStickers";
+import { keepChanges, placementsFor, setRoomNow, usePlacements, withPlacements, withoutOthers } from "./placements";
 
 const EMPTY: string[] = [];
 
@@ -161,16 +162,21 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
      layouts in the code; any other room starts empty. A look can also be
      tried on from the catalogue; it's worn until the season or room changes
      or the default changes. */
-  const desktopDefault = defaultLook(collection.saved, place, season, "desktop");
-  const phoneDefault = defaultLook(collection.saved, place, season, "phone");
+  const mollysDesktop = defaultLook(collection.saved, place, season, "desktop");
+  const mollysPhone = defaultLook(collection.saved, place, season, "phone");
+  const mollys = { desktop: mollysDesktop, phone: mollysPhone };
+  /* and laid over Molly's look, what other people have put in (placements.ts) */
+  const placedVersion = usePlacements(place);
+  const desktopDefault = { ...mollysDesktop, layout: withPlacements(mollysDesktop.layout, placementsFor(place, season, "desktop")) };
+  const phoneDefault = { ...mollysPhone, layout: withPlacements(mollysPhone.layout, placementsFor(place, season, "phone")) };
   // changes when a different look becomes a default, or a default is saved
-  // over — not when one is only renamed
+  // over — not when one is only renamed — and when what's been put in arrives
   const defaultKey = useMemo(
     () =>
-      [desktopDefault, phoneDefault]
+      [mollysDesktop, mollysPhone]
         .map((d) => (d.saved ? `${d.saved.id}:${JSON.stringify(d.saved.props)}` : d.source))
-        .join("|") + `|${place}|${season}`,
-    [desktopDefault, phoneDefault, place, season],
+        .join("|") + `|${place}|${season}|${placedVersion}`,
+    [mollysDesktop, mollysPhone, place, season, placedVersion],
   );
 
   // what's been taken out of the room
@@ -430,7 +436,7 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
         setKeeping("kept");
         return;
       }
-      const { stage: size, props } = capture(scope as HTMLElement, hidden);
+      const { stage: size, props } = withoutOthers(capture(scope as HTMLElement, hidden));
       await saveSeasonDefault(collection.saved, {
         place,
         season,
@@ -476,12 +482,46 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     window.addEventListener("palais:arranged", holdForEditing);
     return () => window.removeEventListener("palais:arranged", holdForEditing);
   }, [holdForEditing]);
+
+  /* who may change what in this room (placements.ts): what's in Molly's own
+     look is hers and locked to everyone else; signed out, nothing changes */
+  const signedIn = Boolean(collection.editor);
+  const mollysHere = portrait ? mollys.phone.layout : mollys.desktop.layout;
+  useEffect(() => {
+    const out = new Set(hiddenFor(mollysHere, place));
+    const mine = new Set([...ALL_STICKERS, ...madeIds()].filter((id) => !out.has(id)));
+    setRoomNow({ place, season, device, mine, owner, signedIn });
+  }, [mollysHere, place, season, device, owner, signedIn, made.version]);
+
+  /* and what anyone signed in changes is kept straight away: putting a thing
+     in or taking it out, moving it or sizing it. A moment after the last
+     change, the room is measured and the difference written (keepChanges) */
+  const keepSoon = useRef<ReturnType<typeof setTimeout>>();
+  const hiddenNow = useRef(hidden);
+  hiddenNow.current = hidden;
+  const changedByHand = useCallback(() => {
+    if (!signedIn) return;
+    clearTimeout(keepSoon.current);
+    keepSoon.current = setTimeout(() => {
+      const scope = switches.current?.closest<HTMLElement>(".palais-stage");
+      if (scope) keepChanges(capture(scope, hiddenNow.current));
+    }, 700);
+  }, [signedIn]);
+  useEffect(() => {
+    window.addEventListener("palais:arranged", changedByHand);
+    return () => {
+      window.removeEventListener("palais:arranged", changedByHand);
+      clearTimeout(keepSoon.current);
+    };
+  }, [changedByHand]);
+
   const setHiddenHeld = useCallback(
     (next: Set<string>) => {
       holdForEditing();
       setHidden(next);
+      changedByHand();
     },
-    [holdForEditing],
+    [holdForEditing, changedByHand],
   );
 
   // keep the label, and the season the room is dressed for, in step with the
