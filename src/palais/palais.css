@@ -8010,6 +8010,8 @@
 }
 .palais .sm-field input:focus,
 .palais .sm-field select:focus { outline: none; box-shadow: 0 0 0 4px rgba(159, 216, 242, 0.7); }
+/* the shelf not picked yet: it has to be, so it says so */
+.palais .sm-field select.is-unpicked { color: #9a8888; border-style: dashed; }
 .palais .sm-newshelf { display: flex; gap: 0.7rem; }
 .palais .sm-field--emoji { flex: 0 0 5.5rem; }
 .palais .sm-field--emoji input { text-align: center; font-size: 1.2rem; }

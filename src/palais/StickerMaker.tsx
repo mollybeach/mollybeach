@@ -161,7 +161,10 @@ function Machine({ onClose }: { onClose: () => void }) {
   const [stage, setStage] = useState<Stage>({ at: "tray" });
   const [trouble, setTrouble] = useState<string | null>(null);
   const [caption, setCaption] = useState("");
+  // the shelf it goes on: picked by hand every time (or a new one started),
+  // with Claude's guess offered first rather than chosen for them
   const [shelf, setShelf] = useState("");
+  const [suggested, setSuggested] = useState<string | null>(null);
   const [newShelf, setNewShelf] = useState({ name: "", emoji: "✨" });
   const [dragging, setDragging] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -195,7 +198,8 @@ function Machine({ onClose }: { onClose: () => void }) {
       setStage({ at: "making", step: 3 });
       const done = await finishSticker(got.png, got.sticker.glass);
       setCaption(got.sticker.label.charAt(0).toUpperCase() + got.sticker.label.slice(1));
-      setShelf(got.sticker.shelf ?? shelves[0]?.key ?? NEW_SHELF);
+      setShelf("");
+      setSuggested(got.sticker.shelf);
       setStage({ at: "made", draft: got.sticker, done });
       noteDoing("sticker-made", got.sticker.label);
     } catch (e) {
@@ -210,6 +214,7 @@ function Machine({ onClose }: { onClose: () => void }) {
     if (stage.at !== "made") return;
     const label = caption.trim();
     if (!label) return setTrouble("It wants a caption.");
+    if (!shelf) return setTrouble("Pick a shelf for it, or start a new one.");
     const isNew = shelf === NEW_SHELF;
     if (isNew && !newShelf.name.trim()) return setTrouble("Give the new shelf a name.");
     setTrouble(null);
@@ -232,6 +237,8 @@ function Machine({ onClose }: { onClose: () => void }) {
     setStage({ at: "tray" });
     setTrouble(null);
     setNewShelf({ name: "", emoji: "✨" });
+    setShelf("");
+    setSuggested(null);
   };
 
   const working = stage.at === "making" || stage.at === "filing";
@@ -291,6 +298,7 @@ function Machine({ onClose }: { onClose: () => void }) {
             ) : out ? (
               <form
                 className="sm-form"
+                noValidate
                 onSubmit={(e) => {
                   e.preventDefault();
                   file();
@@ -302,7 +310,15 @@ function Machine({ onClose }: { onClose: () => void }) {
                 </label>
                 <label className="sm-field">
                   <span>Shelf</span>
-                  <select value={shelf} onChange={(e) => setShelf(e.target.value)} disabled={working}>
+                  <select value={shelf} onChange={(e) => setShelf(e.target.value)} disabled={working} required className={shelf ? undefined : "is-unpicked"}>
+                    <option value="" disabled>
+                      Pick a shelf for it…
+                    </option>
+                    {suggested && (
+                      <option value={suggested}>
+                        ✨ Suggested: {shelves.find((s) => s.key === suggested)?.name ?? suggested}
+                      </option>
+                    )}
                     {shelves.map((s) => (
                       <option key={s.key} value={s.key}>
                         {s.emoji} {s.name}
