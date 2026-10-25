@@ -706,7 +706,7 @@ export function BoudoirPictures() {
         title="The portraits"
         onClick={() => setOpen(true)}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/boudoir-bunny.webp`} alt="" decoding="async" />
+        <img src={`${process.env.PUBLIC_URL}/palais/ui/boudoir-bunny.webp`} alt="" decoding="async" />
       </button>
 
       {open && (
@@ -803,7 +803,7 @@ export function BoudoirPictures() {
               /* the default look: the "reviewing" card everyone meets first */
               <div className="bd-hello bd-hello--wait">
                 <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                  <img src={`${process.env.PUBLIC_URL}/palais/ui/boudoir-crest.webp`} alt="" decoding="async" />
                 </span>
                 <h3 className="bd-hello-name">Reviewing…</h3>
                 <p className="bd-hello-line">Reviewing your credentials…</p>
@@ -838,7 +838,7 @@ export function BoudoirPictures() {
               /* just signed in: the board looks you over before anything shows */
               <div className="bd-hello bd-hello--wait">
                 <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                  <img src={`${process.env.PUBLIC_URL}/palais/ui/boudoir-crest.webp`} alt="" decoding="async" />
                 </span>
                 <h3 className="bd-hello-name">Reviewing…</h3>
                 <p className="bd-hello-line">Reviewing your credentials…</p>
@@ -847,7 +847,7 @@ export function BoudoirPictures() {
               /* signed in, but not yet let in */
               <div className="bd-hello bd-hello--wait">
                 <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais/boudoir-crest.webp`} alt="" decoding="async" />
+                  <img src={`${process.env.PUBLIC_URL}/palais/ui/boudoir-crest.webp`} alt="" decoding="async" />
                 </span>
                 <h3 className="bd-hello-name">Under review</h3>
                 <p className="bd-hello-line">

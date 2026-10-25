@@ -43,8 +43,8 @@ const SCREEN_ALONE = { x: 0.152, y: 0.132, w: 0.694, h: 0.602 };
     the close-up is the one facing you, as if you had sat down at it */
 const ON_DESK = "computer_imac_g3_lime_green_keyboard_mouse_sticker" as const;
 const UP_CLOSE = "computer_imac_g3_lime_green_front_facing_sticker" as const;
-const MONITOR = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_green_monitor.webp`;
-const KEYBOARD = `${process.env.PUBLIC_URL}/palais/props/computer_imac_g3_lime_green_keyboard_mouse.webp`;
+const MONITOR = `${process.env.PUBLIC_URL}/palais/stickers/not-in-the-catalogue/computer_imac_g3_lime_green_monitor.webp`;
+const KEYBOARD = `${process.env.PUBLIC_URL}/palais/stickers/not-in-the-catalogue/computer_imac_g3_lime_green_keyboard_mouse.webp`;
 
 /* mollybeach.app/mac (and #library/mac, or #school/mac) sits you straight down at it */
 const AT_THE_MAC = () => /^mac/.test(hashExtra());
@@ -111,12 +111,12 @@ const FOLDER_NAME: Record<Folder, string> = {
 };
 const UP: Partial<Record<Folder, Folder>> = { favs: "home", avatar: "home", backgrounds: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", previews: "project-icons", "job-icons": "icons" };
 /** the Palais's own icon, for its folder of rooms */
-const PALAIS_ICON = `${process.env.PUBLIC_URL}/palais-icon.svg`;
+const PALAIS_ICON = `${process.env.PUBLIC_URL}/icons/palais-icon.svg`;
 /** rooms with an icon of their own in the Palais folder, in place of their
     island: the Boudoir's black rabbit, and Brat Academy's own logo */
 const ROOM_ICON: Partial<Record<Place, string>> = {
-  boudoir: `${process.env.PUBLIC_URL}/palais/boudoir-bunny.webp`,
-  school: `${process.env.PUBLIC_URL}/bratcode.webp`,
+  boudoir: `${process.env.PUBLIC_URL}/palais/ui/boudoir-bunny.webp`,
+  school: `${process.env.PUBLIC_URL}/loading-screen/bratcode.webp`,
 };
 /** a file's name to save it under: the name, in lower case, with its own ending */
 const fileName = (name: string, src: string) =>

@@ -430,7 +430,7 @@ const INSIDE = new Set(["kitchen", "bathroom", "garden", "closet", "madeleine", 
 
 const FRAME = 44;
 /** where each room is on the globe. The globe is a flat world map wrapped
-    round the ball (public/palais/map/globe-world4.webp, 2:1), with every room
+    round the ball (public/palais/map/globe/globe-world4.webp, 2:1), with every room
     painted on it as its own island: each sits on its island, worked out from
     where that island is in the map (1500 × 750) */
 const GLOBE_PAINTED = new Set(["palace", "caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "bathroom", "domes", "kitchen", "library", "garden", "rainwood", "madeleine", "gorge", "shore", "lanterns", "reef"]);
@@ -523,7 +523,7 @@ const labelWidth = (s: Stop) => labelOf(s).length * 8.6 + 30;
 
 const picture = (s: Stop, season: Season, tall = false) => {
   const which = s.seasons ? `${tall ? "-portrait" : ""}-${season}` : "";
-  return `${process.env.PUBLIC_URL}/palais/map/${s.room ?? s.id}${which}.webp`;
+  return `${process.env.PUBLIC_URL}/palais/map/room-pictures/${s.room ?? s.id}${which}.webp`;
 };
 
 /** a cluster of apple blossom and leaves, for the corners of the frame */
@@ -971,11 +971,11 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             {/* the first island is painted (below), so its drawn coast, grass,
                 rocks and trees are left out: they peeped out round the
                 painting's edges as a white line of beach */}
-            {/* the second island is a painting too (public/palais/map/island-two.webp),
+            {/* the second island is a painting too (public/palais/map/worlds/island-two.webp),
                 built from its rooms: the glasshouse, the Rainwood's falls, the
                 amphitheatre stage, the Shore's loggia, the lantern island, the
                 Crystal Ballroom on its rocks and the reef pavilion under the sea */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-two.webp?v=2`} x={25} y={25 + ISLE_DROP} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/worlds/island-two.webp?v=2`} x={25} y={25 + ISLE_DROP} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
             <g clipPath="url(#wm-island2)" display="none">
               {STOPS.map((s, i) => (s.islet || s.isle !== 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
               {art.flowers2.map((f, i) => (
@@ -1031,10 +1031,10 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               <path d="M0,-24 L3,-3 L24,0 L3,3 L0,24 L-3,3 L-24,0 L-3,-3 Z" fill="#d9b25a" transform="rotate(45)" opacity={0.85} />
             </g>
 
-            {/* the first island is a painting (public/palais/map/island-one.webp),
+            {/* the first island is a painting (public/palais/map/worlds/island-one.webp),
                 with every room's frame and name already painted in; the stops
                 on it are just the places to press */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-one.webp?v=117`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+            <image href={`${process.env.PUBLIC_URL}/palais/map/worlds/island-one.webp?v=117`} x={25} y={25} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
 
             {/* the Boudoir's white dresser and black rabbit (the room's own
                 stickers), standing up behind its circle, over the ones painted
@@ -1043,21 +1043,21 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               const [bx, by] = spot(STOPS.find((st) => st.id === "boudoir")!);
               return (
                 <g aria-hidden pointerEvents="none">
-                  <image href={`${process.env.PUBLIC_URL}/palais/props/dresser.webp`} x={bx - 22} y={by - 110} width={52} height={70.8} />
-                  <image href={`${process.env.PUBLIC_URL}/palais/boudoir-bunny.webp`} x={bx - 18} y={by - 100} width={34} height={59.3} />
+                  <image href={`${process.env.PUBLIC_URL}/palais/stickers/beds-and-dressers/dresser.webp`} x={bx - 22} y={by - 110} width={52} height={70.8} />
+                  <image href={`${process.env.PUBLIC_URL}/palais/ui/boudoir-bunny.webp`} x={bx - 18} y={by - 100} width={34} height={59.3} />
                 </g>
               );
             })()}
 
             {/* the Closet's mannequin, standing in the flower beds below its
                 pavilion */}
-            <image href={`${process.env.PUBLIC_URL}/palais/mannequin.webp`} x={657} y={266} width={29.8} height={100} aria-hidden pointerEvents="none" />
+            <image href={`${process.env.PUBLIC_URL}/palais/ui/mannequin.webp`} x={657} y={266} width={29.8} height={100} aria-hidden pointerEvents="none" />
 
             {/* two big saguaro stickers in the desert below the train, between
                 the Train and Lagoon circles */}
             <g aria-hidden pointerEvents="none">
-              <image href={`${process.env.PUBLIC_URL}/palais/props/cactus_saguaro_cholla_desert_cluster_sticker.webp`} x={180} y={344} width={44} height={56.3} />
-              <image href={`${process.env.PUBLIC_URL}/palais/props/cactus_saguaro_cholla_desert_cluster_sticker.webp`} x={-246} y={408} width={38} height={48.6} transform="scale(-1 1)" />
+              <image href={`${process.env.PUBLIC_URL}/palais/stickers/desert/cactus_saguaro_cholla_desert_cluster_sticker.webp`} x={180} y={344} width={44} height={56.3} />
+              <image href={`${process.env.PUBLIC_URL}/palais/stickers/desert/cactus_saguaro_cholla_desert_cluster_sticker.webp`} x={-246} y={408} width={38} height={48.6} transform="scale(-1 1)" />
             </g>
 
             {/* the stops: a round gilt frame with the place inside */}

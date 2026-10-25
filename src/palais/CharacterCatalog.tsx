@@ -16,7 +16,7 @@ import { floralSrc, paletteOf, useFloral } from "./florals";
  * dragged about like anything else, and take them out again.
  *
  * Each one is a cut-out in /public/palais/characters, with the same picture as
- * a sticker in /public/palais/props. Adding someone is one more entry below,
+ * a sticker in /public/palais/stickers. Adding someone is one more entry below,
  * plus the sticker.
  */
 

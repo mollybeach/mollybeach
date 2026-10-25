@@ -356,7 +356,7 @@ export function SchoolSyllabus() {
         title="Professor Beach Babe"
         onClick={() => setOpen(true)}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/professor.webp`} alt="" draggable={false} />
+        <img src={`${process.env.PUBLIC_URL}/palais/ui/professor.webp`} alt="" draggable={false} />
       </button>
       <span ref={sig} aria-hidden className="palais-chalk-sig">
         – Professor Beach Babe
@@ -429,7 +429,7 @@ export function SchoolSyllabus() {
                           style={{ left: d.left, top: d.top, width: d.size, animationDelay: `${d.delay}s` }}
                         />
                       ))}
-                      <img className="sc-hero-logo" src={`${process.env.PUBLIC_URL}/bratcode.webp`} alt="Brat Code" />
+                      <img className="sc-hero-logo" src={`${process.env.PUBLIC_URL}/loading-screen/bratcode.webp`} alt="Brat Code" />
                       <div className="sc-hero-bar" aria-hidden>
                         <i />
                       </div>

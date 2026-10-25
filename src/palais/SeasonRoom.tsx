@@ -1,6 +1,7 @@
 import type { Place } from "./place";
 import { usePortrait } from "./PortraitTerrace";
 import { LivingPhoto } from "./LivingPhoto";
+import { roomPhoto } from "./roomPhotos";
 import { CrystalLasers } from "./CrystalLasers";
 
 /* every room turns through the same four seasons as the terrace */
@@ -82,7 +83,7 @@ export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
             to one season never joins the shared timeline. */}
         {room.fixed || room.seasons === false || (tall && !tallSeasons) ? (
           <img
-            src={`${process.env.PUBLIC_URL}/palais/${still}${room.fixed ? "" : tall ? "-portrait" : ""}.webp`}
+            src={roomPhoto(`${still}${room.fixed ? "" : tall ? "-portrait" : ""}`)}
             alt=""
             decoding="async"
             style={{ position: "absolute", inset: 0, objectPosition: tall ? "50% 100%" : room.focus }}
@@ -91,7 +92,7 @@ export function SeasonRoom({ place }: { place: Exclude<Place, "palace"> }) {
           SEASONS.map((season) => (
           <img
             key={season}
-            src={`${process.env.PUBLIC_URL}/palais/${room.file}${tallSeasons ? "-portrait" : ""}-${season}.webp`}
+            src={roomPhoto(`${room.file}${tallSeasons ? "-portrait" : ""}-${season}`)}
             alt=""
             decoding="async"
             className={`palais-season palais-season--${season}`}

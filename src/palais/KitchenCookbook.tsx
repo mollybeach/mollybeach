@@ -227,7 +227,7 @@ export function KitchenCookbook() {
           noteDoing("recipes");       // Molly hears that someone opened it (visits.ts)
         }}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/props/cookbook_recipes_red_gilt_closed_sticker.webp`} alt="" decoding="async" />
+        <img src={`${process.env.PUBLIC_URL}/palais/stickers/books/cookbook_recipes_red_gilt_closed_sticker.webp`} alt="" decoding="async" />
       </button>
 
       {open && (
@@ -258,7 +258,7 @@ export function KitchenCookbook() {
             </button>
 
             <div className="ck-book">
-              <img className="ck-spread" src={`${process.env.PUBLIC_URL}/palais/cookbook-open.webp`} alt="" decoding="async" />
+              <img className="ck-spread" src={`${process.env.PUBLIC_URL}/palais/ui/cookbook-open.webp`} alt="" decoding="async" />
 
               <button
                 type="button"

@@ -244,7 +244,7 @@ function Machine({ onClose }: { onClose: () => void }) {
         <Doodles />
         <div className="sm-lid">
           <h2 id="sm-title">
-            <img src={`${process.env.PUBLIC_URL}/palais/sticker-maker-title.webp`} alt="Create-A-Sticker Mini" />
+            <img src={`${process.env.PUBLIC_URL}/palais/ui/sticker-maker-title.webp`} alt="Create-A-Sticker Mini" />
           </h2>
           <small>at Brat Academy ✂</small>
         </div>

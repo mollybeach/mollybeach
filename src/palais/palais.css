@@ -6448,7 +6448,7 @@
    over it — a slow connection should look like waiting, not like broken. */
 .palais .bd-frame img.is-coming {
   /* while a picture is on its way, the frame shows the brat-code loading circle
-     instead of a dark pane (public/brat-loading.webp, on black) */
+     instead of a dark pane (src/palais/brat-loading.webp, on black) */
   background: #000 url("./brat-loading.webp") center / contain no-repeat;
 }
 

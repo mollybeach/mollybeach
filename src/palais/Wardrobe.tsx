@@ -243,7 +243,7 @@ export function Wardrobe() {
           aria-label="Dress the dress form"
           title="Dress the dress form"
         >
-          <img src={`${process.env.PUBLIC_URL}/palais/mannequin.webp`} alt="" draggable={false} />
+          <img src={`${process.env.PUBLIC_URL}/palais/ui/mannequin.webp`} alt="" draggable={false} />
         </button>
       </div>
       {jewels && stage && <JewelryBox stage={stage} onClose={() => setJewels(false)} />}

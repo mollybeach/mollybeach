@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { roomPhoto } from "./roomPhotos";
 import { LivingPhoto } from "./LivingPhoto";
 
 /* The terrace through the year, in order. Spring is the room as it loads; the
@@ -61,7 +62,7 @@ export function Room({ portrait = false }: { portrait?: boolean }) {
     SEASONS.map((season) => (
       <img
         key={`${set}-${season}`}
-        src={`${process.env.PUBLIC_URL}/palais/room-${portrait ? "portrait-" : set === "wide" ? "wide-" : ""}${season}.webp`}
+        src={roomPhoto(`room-${portrait ? "portrait-" : set === "wide" ? "wide-" : ""}${season}`)}
         alt=""
         decoding="async"
         className={`palais-season palais-season--${season}`}

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { maskFor } from "./roomPhotos";
 import { usePlace, type Place } from "./place";
 
 /**
@@ -10,7 +11,7 @@ import { usePlace, type Place } from "./place";
  * photographs underneath show through untouched.
  *
  * Where the sky and water are comes from a small mask per photograph
- * (public/palais/masks/<name>.webp: red is sky, green is water), made by
+ * (public/palais/rooms/<room>/sky-water-masks/<name>.webp: red is sky, green is water), made by
  * running a scene-segmentation model over each picture.
  *
  * - The clouds drift sideways with a "flow map": the sky is sampled a little
@@ -127,10 +128,9 @@ void main() {
 }
 `;
 
-const maskFor = (src: string) => src.replace(/\/palais\/([^/]+)\.webp$/, "/palais/masks/$1.webp");
 
 /** photographs with nothing to animate (no sky or water in the picture) */
-const STILL = /\/palais\/(rainwood|kitchen(?:-\w+)?|bathroom(?:-\w+)?|garden-\w+|madeleine(?:-portrait)?|library(?:-\w+)?|boudoir(?:-\w+)*|crystal-\w+)\.webp$/;
+const STILL = /\/palais\/rooms\/[^/]+\/(?:desktop|mobile)\/(rainwood|kitchen(?:-\w+)?|bathroom(?:-\w+)?|garden-\w+|madeleine(?:-portrait)?|library(?:-\w+)?|boudoir(?:-\w+)*|crystal-\w+)\.webp$/;
 
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const sh = gl.createShader(type)!;

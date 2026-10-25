@@ -299,7 +299,7 @@ export function CrystalSpellbook() {
           noteDoing("spellbook");       // Molly hears that someone opened it (visits.ts)
         }}
       >
-        <img src={`${process.env.PUBLIC_URL}/palais/props/book_witchy_moon_phases_purple_galaxy_clasp_sticker.webp`} alt="" decoding="async" />
+        <img src={`${process.env.PUBLIC_URL}/palais/stickers/books/book_witchy_moon_phases_purple_galaxy_clasp_sticker.webp`} alt="" decoding="async" />
         <span className="palais-spellbook-hint" aria-hidden>
           <span>☾ <span>Read me</span></span>
           <small>{TITLE}</small>

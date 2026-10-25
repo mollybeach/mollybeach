@@ -1,9 +1,10 @@
 /**
  * The furnishings.
  *
- * Every entry is a transparent WebP in /public/props, imported from Molly's
- * sticker set (see import_props.py). `label` is the alt text and the caption
- * shown on hover.
+ * Every entry is a transparent WebP in /public/palais/stickers, in a folder
+ * for its catalogue shelf, imported from Molly's sticker set. A new one goes
+ * in a shelf's folder and gets a line in stickerFolders.json saying which.
+ * `label` is the alt text and the caption shown on hover.
  *
  * `plane` is where the object stands in the room, and it drives the whole
  * look — scale, haze, saturation, and how hard the shadow falls:
@@ -16,6 +17,7 @@
  */
 
 import { madeSpec, madeSrc } from "./madeStickers";
+import STICKER_FOLDERS from "./stickerFolders.json";
 
 export type Plane = "haze" | "far" | "mid" | "near" | "fore";
 
@@ -491,5 +493,8 @@ export const PROPS = catalogue({
 export type PropId = keyof typeof PROPS;
 
 /* a sticker made at Brat Academy (madeStickers.ts) lives in Supabase, not here */
-export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais/props/${id}.webp`;
+/* each sticker's picture is kept in the folder for the catalogue shelf it was
+   on when the stickers were sorted (stickerFolders.json; public/palais/stickers) */
+const folderOf = (id: string) => (STICKER_FOLDERS as Record<string, string>)[id] ?? "trinkets";
+export const propSrc = (id: PropId) => madeSrc(id) ?? `${process.env.PUBLIC_URL}/palais/stickers/${folderOf(id)}/${id}.webp`;
 export const propSpec = (id: PropId): PropSpec => PROPS[id] ?? madeSpec(id) ?? { label: String(id).replace(/_sticker.*$/, "").replace(/[-_]+/g, " ") };

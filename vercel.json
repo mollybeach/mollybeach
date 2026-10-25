@@ -1,17 +1,91 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
-    { "source": "/x", "destination": "/?from=x", "permanent": false },
-    { "source": "/ig", "destination": "/?from=instagram", "permanent": false },
-    { "source": "/fb", "destination": "/?from=facebook", "permanent": false },
-    { "source": "/li", "destination": "/?from=linkedin", "permanent": false },
-    { "source": "/tt", "destination": "/?from=tiktok", "permanent": false },
-    { "source": "/dc", "destination": "/?from=discord", "permanent": false },
-    { "source": "/im", "destination": "/?from=im", "permanent": false },
-    { "source": "/gh", "destination": "/?from=githubreadme", "permanent": false },
-    { "source": "/gm", "destination": "/?from=gmail-signature", "permanent": false },
-    { "source": "/gm/resume", "destination": "/resume?from=gmail-signature", "permanent": false },
-    { "source": "/mac", "destination": "/#library/mac", "permanent": false },
-    { "source": "/go/:tag", "destination": "/?from=:tag", "permanent": false }
+    {
+      "source": "/x",
+      "destination": "/?from=x",
+      "permanent": false
+    },
+    {
+      "source": "/ig",
+      "destination": "/?from=instagram",
+      "permanent": false
+    },
+    {
+      "source": "/fb",
+      "destination": "/?from=facebook",
+      "permanent": false
+    },
+    {
+      "source": "/li",
+      "destination": "/?from=linkedin",
+      "permanent": false
+    },
+    {
+      "source": "/tt",
+      "destination": "/?from=tiktok",
+      "permanent": false
+    },
+    {
+      "source": "/dc",
+      "destination": "/?from=discord",
+      "permanent": false
+    },
+    {
+      "source": "/im",
+      "destination": "/?from=im",
+      "permanent": false
+    },
+    {
+      "source": "/gh",
+      "destination": "/?from=githubreadme",
+      "permanent": false
+    },
+    {
+      "source": "/gm",
+      "destination": "/?from=gmail-signature",
+      "permanent": false
+    },
+    {
+      "source": "/gm/resume",
+      "destination": "/resume?from=gmail-signature",
+      "permanent": false
+    },
+    {
+      "source": "/mac",
+      "destination": "/#library/mac",
+      "permanent": false
+    },
+    {
+      "source": "/go/:tag",
+      "destination": "/?from=:tag",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/boudoir/portraits",
+      "destination": "/share-links/boudoir/portraits/index.html"
+    },
+    {
+      "source": "/boudoir/portraits/",
+      "destination": "/share-links/boudoir/portraits/index.html"
+    },
+    {
+      "source": "/closet/dress",
+      "destination": "/share-links/closet/dress/index.html"
+    },
+    {
+      "source": "/closet/dress/",
+      "destination": "/share-links/closet/dress/index.html"
+    },
+    {
+      "source": "/:page(ballroom|bathroom|boudoir|brat|bratz|bunny|caves|closet|crystal|crystalballroom|domes|dressform|garden|gorge|jacaranda|kitchen|lagoon|lakehouse|lanterns|library|madeleine|rabbit|rainwood|reef|review|reviewdemo|riviera|school|shore|signin|signindemo|sunliner)",
+      "destination": "/share-links/:page/index.html"
+    },
+    {
+      "source": "/:page(ballroom|bathroom|boudoir|brat|bratz|bunny|caves|closet|crystal|crystalballroom|domes|dressform|garden|gorge|jacaranda|kitchen|lagoon|lakehouse|lanterns|library|madeleine|rabbit|rainwood|reef|review|reviewdemo|riviera|school|shore|signin|signindemo|sunliner)/",
+      "destination": "/share-links/:page/index.html"
+    }
   ]
 }

@@ -124,6 +124,30 @@ Rooms keep their place in the address (`mollybeach.app/#lagoon`), so a refresh o
 ### Saved Looks
 Signed in, I can save the room as a named look, file it under a season, make it that season's default, and keep older looks to go back to. Everyone can read looks, but only editors can change them, and row-level security enforces that in the database, not in the UI.
 
+### Where the pictures are
+
+```
+public/
+├── palais/
+│   ├── rooms/<room>/            one folder per room, named as on the map
+│   │   ├── desktop/             the computer's wide photographs, by season
+│   │   ├── mobile/              the phone's tall ones
+│   │   ├── sky-water-masks/     where the clouds drift and the water ripples
+│   │   └── social-preview/      the picture a shared link shows
+│   ├── stickers/<shelf>/        the catalogue, a folder per shelf
+│   │                            (stickerFolders.json says which)
+│   ├── wardrobe/<kind>/         the clothes, a folder per kind of thing
+│   │                            (wardrobeFolders.json says which)
+│   ├── map/                     room-pictures, islands, worlds, globe, scenery
+│   ├── characters/ jewelry/ florals/ blooms/ imac/ billiards/
+│   └── ui/                      buttons, modal art, the professor
+├── share-links/<room>/          the pages behind mollybeach.app/<room>
+│                                (vercel.json points the short links here)
+├── icons/                       the tab, home-screen and app icons
+├── loading-screen/              the Brat Code loading screen
+└── images/                      the résumé side's pictures
+```
+
 ---
 
 ## 📄 The résumé side

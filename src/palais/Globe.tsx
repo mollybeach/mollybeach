@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 /**
  * The world map, as a world.
  *
- * The world is all ocean (public/palais/map/globe-sea.webp), and every room
+ * The world is all ocean (public/palais/map/globe/globe-sea.webp), and every room
  * stands on it as a little 3-D island of its own (public/palais/map/islands),
  * where the room is on the flat map: the first island's rooms over the
  * western half of the world, the second's over the eastern. The sphere is painted
@@ -52,7 +52,7 @@ const R0 = 230;
 
 /* ---- the wrapped world ------------------------------------------------------ */
 
-const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe-world4.webp?v=4`;
+const WORLD_SRC = `${process.env.PUBLIC_URL}/palais/map/globe/globe-world4.webp?v=4`;
 /** where each island's painting lies on the world, in degrees: between them
     they cover it all, the first over the western half and the second over the
     eastern, blending at the two seams; `side` is how much of each map image is

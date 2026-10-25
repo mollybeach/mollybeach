@@ -1,3 +1,5 @@
+import WARDROBE_FOLDERS from "./wardrobeFolders.json";
+
 /**
  * The Wardrobe Wing's clothes.
  *
@@ -5,7 +7,7 @@
  * and Reformation), cut out of the shop's own product photo into a sticker:
  * flat product shots just lose their background, and clothes photographed on
  * a model are cut down to the garment alone. The stickers live in
- * /public/palais/closet.
+ * /public/palais/wardrobe, a folder for each kind of thing (wardrobeFolders.json).
  *
  * They're hung along the closet's brass rails and set out on its shelves, its
  * window seat and its floor. Each rail or shelf is a straight line in the
@@ -340,7 +342,13 @@ const IMAGE: Partial<Record<string, string>> = {
   "shein-fur-snow-boots": "shoe_snow_boots_tan_fur_cuff_sticker",
 };
 
-export const closetSrc = (id: string) => `${process.env.PUBLIC_URL}/palais/closet/${IMAGE[id] ?? id}.webp`;
+/* each garment's picture is kept in a folder for its kind of thing
+   (wardrobeFolders.json; public/palais/wardrobe) */
+const kindFolder = (file: string) => (WARDROBE_FOLDERS as Record<string, string>)[file] ?? "not-in-the-closet";
+export const closetSrc = (id: string) => {
+  const file = IMAGE[id] ?? id;
+  return `${process.env.PUBLIC_URL}/palais/wardrobe/${kindFolder(file)}/${file}.webp`;
+};
 
 /** the catalogue's shelves in the closet, one per kind of thing */
 export const WARDROBE_SHELVES: { key: ClothesKind; name: string; emoji: string }[] = [

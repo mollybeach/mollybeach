@@ -213,7 +213,7 @@ export function CrystalPool() {
           noteDoing("billiards");       // Molly hears that someone racked up (visits.ts)
         }}
       >
-        {!painted && <img src={`${process.env.PUBLIC_URL}/palais/props/pool_table_retro_walnut_green_felt_sticker.webp`} alt="" decoding="async" />}
+        {!painted && <img src={`${process.env.PUBLIC_URL}/palais/stickers/games/pool_table_retro_walnut_green_felt_sticker.webp`} alt="" decoding="async" />}
         <span className="palais-pooltable-hint" aria-hidden>
           🎱 <span>Rack 'em up</span>
         </span>
