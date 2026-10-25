@@ -23,6 +23,10 @@ import { madeIds, useMadeStickers } from "./madeStickers";
 
 const EMPTY: string[] = [];
 
+/** how big a sticker comes in from the catalogue: its longest side at least
+    this share of the room's shorter side, so it's found at once */
+const PUT_IN_SIZE = 0.3;
+
 /** the solid jewel a chosen thing wears — the sidebar's selected link, exactly
     (Sidebar.tsx), so these switches turn colour with the patterns */
 const jewelled = (palette: { jewel: string; ink: string }) => ({
@@ -292,8 +296,21 @@ export function StickerToggle({ children, seasons = false }: { children: ReactNo
     let moved = false;
     justPlaced.forEach((turn, id) => {
       const el = scope.querySelector<HTMLElement>(`.palais-layer [data-prop="${CSS.escape(id)}"]`);
-      const box = el?.getBoundingClientRect();
-      if (!el || !box?.width) return;
+      const first = el?.getBoundingClientRect();
+      if (!el || !first?.width) return;
+      // and big enough to see: its longest side at least PUT_IN_SIZE of the
+      // room's shorter side, grown from its feet (a resize, like the
+      // catalogue's +, so the look keeps it). Anything already that big stays.
+      const longest = Math.max(first.width, first.height);
+      const wanted = Math.min(room.width, room.height) * PUT_IN_SIZE;
+      if (longest < wanted) {
+        const was = parseFloat(getComputedStyle(el).scale) || 1;
+        const s = Math.min(4, was * (wanted / longest));
+        el.style.transformOrigin = el.style.transformOrigin || "50% 100%";
+        el.style.scale = s.toFixed(3);
+        el.dataset.scale = String(s);
+      }
+      const box = el.getBoundingClientRect();
       const zoom = zoomOf(el) || 1;
       const step = (turn % 6) * 28;
       const now = getComputedStyle(el).translate;
