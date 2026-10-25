@@ -7,8 +7,9 @@
  * (palais_i_am_accepted: accepted by Molly, or on the board), one step at a
  * time, so no one request has to wait for more than one picture:
  *
- * - { plan: { name, description, photos: [{ image, type }] } } — Claude looks
- *   at the photos and the words and writes the room's plan (Spec): what's
+ * - { plan: { name, description, story, photos: [{ image, type }] } } — Claude
+ *   looks at the photos and the words (and the story told of the room, which
+ *   becomes the blurb on its card on the World Map) and writes its plan (Spec): what's
  *   permanent in it, its colours, what must stay and what mustn't come in,
  *   the view outside, what each season does to it, and what its island looks
  *   like. The photos are kept in the private "room-photos" bucket, and the
@@ -17,17 +18,33 @@
  *
  * - { draw: { room, what } } — the image model paints one picture of the room
  *   and it's kept in the public "rooms" bucket:
- *     "master": the room itself, on the Palais's own floor and ceiling (the
- *       empty room templates), from the photos and the plan. Painting it again
- *       throws away everything painted from the old one.
+ *     "master": the room itself in spring on a computer (which it also is),
+ *       on the Palais's own floor and ceiling (the empty room templates), from
+ *       the photos and the plan. It's looked over and painted again until it's
+ *       right, with `changes` to say what to change of the last one; painting
+ *       it again throws away everything painted from the old one.
  *     "island": the room's own exterior as a little island for the map,
- *       painted from the approved master (so it can be painted again without
- *       touching the room).
+ *       designed once the room is done: painted on the island template from
+ *       the master and everything the room was made from, with what the
+ *       visitor says of the island (`island.notes`), any more photos for it
+ *       (`island.photos`) and the pieces of scenery they picked to be on it
+ *       (`island.scenery`), all kept for painting it again. Painting it
+ *       again doesn't touch the room.
  *     "<season>-<desktop|mobile>": the master in a season, wide for a computer
  *       or recomposed tall for a phone.
- *   Once the master, the island and all eight seasons are there, the room is
- *   "ready", and anyone can walk into it. Each room may be painted
+ *   Each is kept as painted, but the room stays a draft only its maker sees
+ *   until it's put on the map (place), when it's "ready" and anyone can walk
+ *   into it. Each room may be painted
  *   DRAWS_A_ROOM times in all.
+ *
+ * - { place: { room, plot } } — put a finished room's island on a plot of the
+ *   open island map (palais_island_maps), move it to another, or take it off
+ *   (plot null). When the last plot's taken the map is full, and the next one
+ *   opens on a fresh copy of the empty island.
+ *
+ * - { dress: { map, decor } } — the open map's scenery, as it now stands:
+ *   trees, flowers, falls, bridges, skies (islandScenery.ts). Any member can
+ *   dress the open map; a full one stays as it was finished.
  *
  * The keys for Claude and OpenAI are the function's own secrets
  * (ANTHROPIC_API_KEY, OPENAI_API_KEY), and the service key that writes is
@@ -117,13 +134,14 @@ interface Spec {
   masterSeason: Season;
   seasons: Record<Season, string>;
   island: string;
+  blurb: string;
 }
 
 const strings = { type: "array", items: { type: "string" } };
 const SPEC_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["ok", "why", "name", "summary", "architecture", "permanentFeatures", "colors", "mustKeep", "mustExclude", "viewOutside", "focalPoint", "lighting", "masterSeason", "seasons", "island"],
+  required: ["ok", "why", "name", "summary", "architecture", "permanentFeatures", "colors", "mustKeep", "mustExclude", "viewOutside", "focalPoint", "lighting", "masterSeason", "seasons", "island", "blurb"],
   properties: {
     ok: { type: "boolean" },
     why: { type: "string" },
@@ -145,15 +163,22 @@ const SPEC_SCHEMA = {
       properties: Object.fromEntries(SEASONS.map((s) => [s, { type: "string" }])),
     },
     island: { type: "string" },
+    blurb: { type: "string" },
   },
 };
 
-const planPrompt = (name: string, description: string, photos: number) => `You are the room designer for Palais, a whimsical interactive world of luxurious palace rooms. A visitor wants a room of their own. They've sent ${photos} reference photo${photos === 1 ? "" : "s"} and this description:
+const planPrompt = (name: string, description: string, photos: number, story: string) => `You are the room designer for Palais, a whimsical interactive world of luxurious palace rooms. A visitor wants a room of their own. They've sent ${photos} reference photo${photos === 1 ? "" : "s"} and this description:
 
 Name they gave it: ${name || "(none)"}
 """
 ${description || "(no description: go by the photos)"}
 """
+${story ? `
+And the story they tell of it:
+"""
+${story}
+"""
+` : ""}
 
 Study every photo. Work out what they're actually referencing: architecture, furniture shapes, cabinetry, wall treatments, doors and windows, textiles, colours, light fittings, decorative details, a landscape or view, meaningful personal objects. Their written description wins wherever it disagrees with a photo. Ignore what's incidental: people, clutter, screenshots, camera or browser UI, text, logos, photographic artifacts.
 
@@ -172,11 +197,12 @@ Write the plan an image model will paint from, in every field:
 - viewOutside: what's seen through the windows or openings.
 - focalPoint: what the eye lands on.
 - lighting: the light, warm and cinematic.
-- masterSeason: the season that shows the room off best, before the others are painted.
+- masterSeason: always "spring": the room is painted in spring first, and the others from it.
 - seasons: for each season, one or two sentences on what changes in this room (the view, plants, light, a little seasonal dressing), never the architecture. Summer is mostly green, with fewer flowers than spring. No snow indoors unless the room is open to the air.
+- blurb: two or three sentences for the room's card on the Palais's world map, in a warm storybook voice, saying what the room is and what's special about it${story ? ", told from the story they gave (keep its names and details; never invent people)" : ""}. No more than 320 characters.
 - island: what the room looks like as a little floating island on the Palais's map, like the others there: the building or room set on a craggy island of rock, greenery and flowers, with water round it. Say what's on the island and what its ground and water are like, to suit the room.`;
 
-async function planRoom(name: string, description: string, photos: { image: string; type: string }[]): Promise<Spec> {
+async function planRoom(name: string, description: string, photos: { image: string; type: string }[], story: string): Promise<Spec> {
   const client = new Anthropic({ apiKey: Deno.env.get("ANTHROPIC_API_KEY") });
   const response = await client.beta.messages.create({
     model: CLAUDE,
@@ -189,7 +215,7 @@ async function planRoom(name: string, description: string, photos: { image: stri
         role: "user",
         content: [
           ...photos.map((p) => ({ type: "image" as const, source: { type: "base64" as const, media_type: p.type as "image/jpeg", data: p.image } })),
-          { type: "text", text: planPrompt(name, description, photos.length) },
+          { type: "text", text: planPrompt(name, description, photos.length, story) },
         ],
       },
     ],
@@ -223,7 +249,7 @@ const PALAIS = `CORE PALAIS ARCHITECTURE (constant in every room)
 - The signature cream mosaic floor with the dark botanical inlay, and the signature ornate cream-and-gold ceiling with painted sky and gilded ornament, exactly as in the template.
 - No text, UI, buttons, borders, labels, people or interface elements of any kind.`;
 
-const masterPrompt = (s: Spec, description: string, photos: number) => `Paint the MASTER design of a new room in Palais, a whimsical interactive world. It becomes the one source of truth that every seasonal and phone version is later painted from.
+const masterPrompt = (s: Spec, description: string, photos: number, changes: string) => `Paint the MASTER design of a new room in Palais, a whimsical interactive world. It becomes the one source of truth that every seasonal and phone version is later painted from.
 
 THE ATTACHED IMAGES
 - The FIRST image is the Palais room template: an empty palace room. Keep its floor and its ceiling exactly as they are (pattern, colour, ornament, perspective) and keep its camera position and height. Design the room between them: replace the empty walls, windows and openings with this room.
@@ -239,9 +265,19 @@ COMPOSITION
 - Leave open floor and wall: characters, stickers and controls are added on top later. Little foreground furniture.
 - Large permanent furniture belongs in the painting; small movable objects don't (they're added later as stickers).
 - Make every decision clearly (architecture, proportions, furniture, windows and doors, fixtures, focal point), because every later picture must reproduce this exact room.
-- Paint it in ${s.masterSeason}, without seasonal decorations unless the room itself calls for them.
+- Paint it in spring, the room's first and default season: fresh spring light, a little blossom where it belongs, never smothering the architecture.
 
-It should look like a finished environment from a luxurious fantasy life-simulation game: real enough to live in, magical enough to belong in Palais.`;
+It should look like a finished environment from a luxurious fantasy life-simulation game: real enough to live in, magical enough to belong in Palais.${
+  changes
+    ? `
+
+CHANGES
+The SECOND attached image is the master as it was last painted. Keep everything about it, and change only this, in the visitor's words:
+"""
+${changes}
+"""`
+    : ""
+}`;
 
 const SEASON_LOOK: Record<Season, string> = {
   spring: `SPRING: fresh. Flowering trees outside, blossom, delicate new greenery, soft pink, lavender and white botanical accents, fresh spring sunlight, a few petals where they'd fall. The most floral season, but never smothering the architecture.`,
@@ -280,15 +316,18 @@ ${PALAIS}
 
 One picture, never a collage or contact sheet. No people, text, UI or labels.`;
 
-const islandPrompt = (s: Spec, description: string, photos: number) => `You are the architectural world-building artist for Palais, a whimsical, luxurious interactive fantasy world. Design the miniature exterior island of one room: it goes on the Palais world map as the way into that room.
+const islandPrompt = (s: Spec, description: string, photos: number, islandPhotos: number, notes: string, scenery: string[]) => `You are the architectural world-building artist for Palais, a whimsical, luxurious interactive fantasy world. Design the miniature exterior island of one room: it goes on the Palais world map as the way into that room.
 
 THE ATTACHED IMAGES
 - The FIRST image is the approved MASTER design of the room's interior: with the spec below, the primary source of truth.
 - The SECOND image is the Palais ISLAND TEMPLATE, the standard every room's island is painted to. Keep its canvas and framing, its camera angle and height, its scale, its light, its painterly finish, and the way its island sits: craggy pale rock, falls and turquoise water lapping round a wavy edge, the whole thing floating on transparency. Replace its architecture, gardens and planting with this room's own exterior, and reshape its ground as this room needs.${photos ? `
-- The rest are the visitor's own references.` : ""}
+- The next ${photos} are the visitor's references for the room.` : ""}${islandPhotos ? `
+- The next ${islandPhotos} are the visitor's references for the island itself, its outside: where they show the building, garden or landscape they want, follow them.` : ""}${scenery.length ? `
+- The last ${scenery.length} are pieces of the Palais's own scenery the visitor picked to be on this island (${scenery.map((id) => id.replace(/_/g, " ")).join("; ")}): include every one of them, in exactly their style, at the island's scale, set where they'd naturally grow or stand.` : ""}
 
 ${specText(s, description)}
-- The island, as planned: ${s.island}
+- The island, as planned: ${s.island}${notes ? `
+- What the visitor wants of the island, in their words (these win wherever they differ from the plan): ${notes}` : ""}
 
 PRIMARY OBJECTIVE
 A complete, beautiful, highly detailed miniature fantasy island that feels like the natural exterior home of this room, recognisable as belonging to it before anyone clicks it. Do NOT paste the interior onto a piece of land: imagine the building, estate, garden or landscape that would hold this interior.
@@ -344,8 +383,12 @@ interface RoomRow {
   id: string;
   name: string;
   description: string;
+  story: string;
   spec: Spec;
   photos: string[];
+  island_notes: string;
+  island_photos: string[];
+  island_scenery: string[];
   pictures: Record<string, string>;
   status: "planned" | "ready";
   made_by: string | null;
@@ -353,9 +396,14 @@ interface RoomRow {
   created_at: string;
   ready_at: string | null;
 }
-const COLUMNS = "id, name, description, spec, photos, pictures, status, made_by, made_by_name, created_at, ready_at";
-/** what goes back to the browser: everything but where the photos are kept */
-const shown = ({ photos: _photos, ...r }: RoomRow) => r;
+const COLUMNS = "id, name, description, story, spec, photos, island_notes, island_photos, island_scenery, pictures, status, made_by, made_by_name, created_at, ready_at";
+/** what goes back to the browser: everything but where the photos are kept
+    (though how many there are) */
+const shown = ({ photos, island_photos, ...r }: RoomRow) => ({ ...r, photo_count: photos.length, island_photo_count: island_photos.length });
+const MOST_ISLAND_PHOTOS = 3;
+/** pieces of the scenery picked to be on a room's island (islandScenery.ts) */
+const MOST_ISLAND_SCENERY = 6;
+const sceneryPicture = (id: string) => `${SITE()}/palais_assets/modal_content/island_maker/landscape_building_assets/${id}.webp`;
 
 const slug = (s: string) =>
   s
@@ -366,9 +414,10 @@ const slug = (s: string) =>
     .replace(/^-+|-+$/g, "")
     .slice(0, 38);
 
-async function plan(sb: SupabaseClient, who: Member, body: { name?: string; description?: string; photos?: { image: string; type: string }[] }) {
+async function plan(sb: SupabaseClient, who: Member, body: { name?: string; description?: string; story?: string; photos?: { image: string; type: string }[] }) {
   const name = String(body.name ?? "").trim().replace(/\s+/g, " ").slice(0, 60);
   const description = String(body.description ?? "").trim().slice(0, 2000);
+  const story = String(body.story ?? "").trim().slice(0, 2000);
   const photos = (Array.isArray(body.photos) ? body.photos : []).slice(0, MOST_PHOTOS);
   if (!photos.length) return reply({ error: "Send at least one photo of what you'd like the room to be." }, 400);
   for (const p of photos) {
@@ -381,7 +430,7 @@ async function plan(sb: SupabaseClient, who: Member, body: { name?: string; desc
   if ((count ?? 0) >= ROOMS_A_DAY) return reply({ error: `That's ${ROOMS_A_DAY} rooms today. The machine needs a rest: come back tomorrow.` }, 429);
   await sb.from("palais_room_draws").insert({ made_by: who.id, what: "plan" });
 
-  const spec = await planRoom(name, description, photos);
+  const spec = await planRoom(name, description, photos, story);
   if (!spec.ok) return reply({ ok: false, why: spec.why || "Those photos can't be made into a room." });
 
   const title = (spec.name || name || "A New Room").slice(0, 60);
@@ -396,14 +445,14 @@ async function plan(sb: SupabaseClient, who: Member, body: { name?: string; desc
   }
   const { data, error } = await sb
     .from("palais_made_rooms")
-    .insert({ id, name: title, description, spec, photos: kept, made_by: who.id, made_by_name: who.name })
+    .insert({ id, name: title, description, story, spec, photos: kept, made_by: who.id, made_by_name: who.name })
     .select(COLUMNS)
     .single();
   if (error) return reply({ error: error.message }, 500);
   return reply({ ok: true, room: shown(data as RoomRow) });
 }
 
-async function draw(sb: SupabaseClient, who: Member, body: { room?: string; what?: string }) {
+async function draw(sb: SupabaseClient, who: Member, body: { room?: string; what?: string; changes?: string; island?: { notes?: string; photos?: { image: string; type: string }[]; scenery?: string[] } }) {
   const what = String(body.what ?? "");
   if (!ALL.includes(what)) return reply({ error: "Paint the master, the island, or a season." }, 400);
   const { data: row } = await sb.from("palais_made_rooms").select(COLUMNS).eq("id", String(body.room ?? "")).maybeSingle();
@@ -414,23 +463,59 @@ async function draw(sb: SupabaseClient, who: Member, body: { room?: string; what
 
   const { count } = await sb.from("palais_room_draws").select("id", { count: "exact", head: true }).eq("room", room.id);
   if ((count ?? 0) >= DRAWS_A_ROOM) return reply({ error: `That room's been painted ${DRAWS_A_ROOM} times, which is all it gets.` }, 429);
+
+  // designing the island: what the visitor says of it, and any more photos
+  // for it, kept for the next time it's painted too
+  if (what === "island" && body.island) {
+    const add = (Array.isArray(body.island.photos) ? body.island.photos : []).slice(0, MOST_ISLAND_PHOTOS);
+    for (const p of add) {
+      if (!p?.image || !/^image\/(jpeg|png|webp)$/.test(p.type)) return reply({ error: "Send JPEG, PNG or WebP photos." }, 400);
+      if (p.image.length > MOST_IN * 1.37) return reply({ error: "One of those photos is too big. Try a smaller one." }, 413);
+    }
+    const islandPhotos = [...room.island_photos];
+    for (const p of add) {
+      const path = `${room.id}/island-${Date.now().toString(36)}-${islandPhotos.length + 1}.${p.type.split("/")[1].replace("jpeg", "jpg")}`;
+      const up = await sb.storage.from(PHOTOS).upload(path, Uint8Array.from(atob(p.image), (c) => c.charCodeAt(0)), { contentType: p.type, upsert: true });
+      if (up.error) return reply({ error: up.error.message }, 500);
+      islandPhotos.push(path);
+    }
+    room.island_photos = islandPhotos.slice(-MOST_ISLAND_PHOTOS);
+    if (typeof body.island.notes === "string") room.island_notes = body.island.notes.trim().slice(0, 1200);
+    if (Array.isArray(body.island.scenery)) room.island_scenery = body.island.scenery.map(String).filter((id) => /^[a-z0-9_]{1,60}$/.test(id)).slice(0, MOST_ISLAND_SCENERY);
+    const { error } = await sb.from("palais_made_rooms").update({ island_notes: room.island_notes, island_photos: room.island_photos, island_scenery: room.island_scenery }).eq("id", room.id);
+    if (error) return reply({ error: error.message }, 500);
+  }
+
   await sb.from("palais_room_draws").insert({ made_by: who.id, room: room.id, what });
 
-  const photos = await Promise.all(
-    room.photos.map(async (path) => {
-      const { data, error } = await sb.storage.from(PHOTOS).download(path);
-      if (error || !data) throw new Error(`Couldn't read the photo ${path}`);
-      return data;
-    }),
-  );
+  const read = (paths: string[]) =>
+    Promise.all(
+      paths.map(async (path) => {
+        const { data, error } = await sb.storage.from(PHOTOS).download(path);
+        if (error || !data) throw new Error(`Couldn't read the photo ${path}`);
+        return data;
+      }),
+    );
+  const photos = await read(room.photos);
   const master = () => fetchBlob(room.pictures.master);
 
   let bytes: Uint8Array;
   if (what === "master") {
-    bytes = await paint([await fetchBlob(template("desktop", room.spec.masterSeason ?? "spring")), ...photos], masterPrompt(room.spec, room.description, photos.length), "1536x1024", false);
+    // painted again with changes: from the last one, with only those changed
+    const changes = room.pictures.master ? String(body.changes ?? "").trim().slice(0, 1200) : "";
+    const last = changes ? [await master()] : [];
+    bytes = await paint([await fetchBlob(template("desktop", "spring")), ...last, ...photos], masterPrompt(room.spec, room.description, photos.length, changes), "1536x1024", false);
   } else if (what === "island") {
     const refs = photos.slice(0, 3);
-    bytes = await paint([await master(), await fetchBlob(ISLAND_TEMPLATE()), ...refs], islandPrompt(room.spec, room.description, refs.length), "1024x1024", true);
+    const islandRefs = await read(room.island_photos ?? []);
+    const scenery = room.island_scenery ?? [];
+    const sceneryRefs = (await Promise.all(scenery.map((id) => fetchBlob(sceneryPicture(id)).catch(() => null)))).filter((b): b is Blob => !!b);
+    bytes = await paint(
+      [await master(), await fetchBlob(ISLAND_TEMPLATE()), ...refs, ...islandRefs, ...sceneryRefs],
+      islandPrompt(room.spec, room.description, refs.length, islandRefs.length, room.island_notes ?? "", sceneryRefs.length === scenery.length ? scenery : []),
+      "1024x1024",
+      true,
+    );
   } else {
     const [season, device] = what.split("-") as [Season, Device];
     const refs = photos.slice(0, 2);
@@ -444,12 +529,15 @@ async function draw(sb: SupabaseClient, who: Member, body: { room?: string; what
   const src = sb.storage.from(PICTURES).getPublicUrl(path).data.publicUrl;
 
   // a new master: what was painted from the old one no longer matches it
-  const old = what === "master" ? Object.values(room.pictures) : room.pictures[what] ? [room.pictures[what]] : [];
-  const pictures = what === "master" ? { master: src } : { ...room.pictures, [what]: src };
-  const ready = ALL.every((k) => pictures[k]);
+  // the master is the room in spring on a computer: its first picture
+  const old = what === "master" ? Array.from(new Set(Object.values(room.pictures))) : room.pictures[what] ? [room.pictures[what]] : [];
+  const pictures: Record<string, string> = what === "master" ? { master: src, "spring-desktop": src } : { ...room.pictures, [what]: src };
+  // a draft until Create puts it on the map (place); once it's out, painting
+  // a picture again keeps it out, unless the master's painted again
+  const stillReady = room.status === "ready" && what !== "master" && ALL.every((k) => pictures[k]);
   const { data, error } = await sb
     .from("palais_made_rooms")
-    .update({ pictures, status: ready ? "ready" : "planned", ready_at: ready ? room.ready_at ?? new Date().toISOString() : null })
+    .update({ pictures, status: stillReady ? "ready" : "planned", ready_at: stillReady ? room.ready_at : null })
     .eq("id", room.id)
     .select(COLUMNS)
     .single();
@@ -457,6 +545,89 @@ async function draw(sb: SupabaseClient, who: Member, body: { room?: string; what
   const gone = old.map((u) => u.split(`/${PICTURES}/`)[1]).filter(Boolean);
   if (gone.length) await sb.storage.from(PICTURES).remove(gone);
   return reply({ room: shown(data as RoomRow) });
+}
+
+/* ---- the island maps ----------------------------------------------------- */
+
+/** how many plots each empty island has (IslandMaker.tsx's MAPS) */
+const PLOTS: Record<string, number> = { sunset: 8 };
+const MAPS_TEMPLATE = "sunset";
+const MOST_DECOR = 120;
+
+interface MapRow {
+  n: number;
+  template: string;
+  plots: Record<string, string>;
+  decor: unknown[];
+  full: boolean;
+}
+
+/** the open map: the newest, unless it's full (then a fresh one is opened) */
+async function openMap(sb: SupabaseClient): Promise<MapRow> {
+  const { data } = await sb.from("palais_island_maps").select("n, template, plots, decor, full").order("n", { ascending: false }).limit(1).maybeSingle();
+  const last = data as MapRow | null;
+  if (last && !last.full) return last;
+  const n = (last?.n ?? 0) + 1;
+  const { data: made, error } = await sb.from("palais_island_maps").insert({ n, template: MAPS_TEMPLATE }).select("n, template, plots, decor, full").single();
+  if (error) throw new Error(error.message);
+  return made as MapRow;
+}
+
+/** put a room's island on a plot of the open map (or move it, if it's
+    already there), or take it off with plot null */
+async function place(sb: SupabaseClient, who: Member, body: { room?: string; plot?: number | null }) {
+  const { data: row } = await sb.from("palais_made_rooms").select(COLUMNS).eq("id", String(body.room ?? "")).maybeSingle();
+  const room = row as RoomRow | null;
+  if (!room) return reply({ error: "There's no such room." }, 404);
+  if (room.made_by !== who.id) return reply({ error: "Only the room's maker can put its island on the map." }, 403);
+  if (!ALL.every((k) => room.pictures[k])) return reply({ error: "Finish the room and its island first." }, 409);
+
+  // already on a full map: that one's finished, and it stays where it is
+  const { data: full } = await sb.from("palais_island_maps").select("n").eq("full", true).contains("plots", {});
+  for (const m of (full ?? []) as { n: number }[]) {
+    const { data: on } = await sb.from("palais_island_maps").select("plots").eq("n", m.n).single();
+    if (Object.values((on as { plots: Record<string, string> }).plots).includes(room.id)) return reply({ error: "That room's island is on a finished map already." }, 409);
+  }
+
+  const map = await openMap(sb);
+  const count = PLOTS[map.template] ?? 8;
+  const plots = Object.fromEntries(Object.entries(map.plots).filter(([, id]) => id !== room.id));
+  if (body.plot !== null && body.plot !== undefined) {
+    const at = Number(body.plot);
+    if (!Number.isInteger(at) || at < 0 || at >= count) return reply({ error: "That isn't a plot." }, 400);
+    if (plots[at]) return reply({ error: "Someone's island is on that plot already." }, 409);
+    plots[at] = room.id;
+  }
+  const isFull = Object.keys(plots).length >= count;
+  const { data, error } = await sb
+    .from("palais_island_maps")
+    .update({ plots, full: isFull, filled_at: isFull ? new Date().toISOString() : null })
+    .eq("n", map.n)
+    .eq("full", false)
+    .select("n, template, plots, decor, full")
+    .single();
+  if (error) return reply({ error: error.message }, 500);
+  // on the map, it's made: anyone can walk into it now
+  if (room.status !== "ready") await sb.from("palais_made_rooms").update({ status: "ready", ready_at: new Date().toISOString() }).eq("id", room.id);
+  // that was the last plot: the next map opens, empty, ready for the next rooms
+  const next = isFull ? await openMap(sb) : null;
+  return reply({ map: data, next });
+}
+
+/** dress the open map: its scenery, all of it, as it now stands */
+async function dress(sb: SupabaseClient, body: { map?: number; decor?: unknown[] }) {
+  const map = await openMap(sb);
+  if (Number(body.map) !== map.n) return reply({ error: "That map's finished: only the open one can be changed." }, 409);
+  const clamp = (v: unknown, lo: number, hi: number) => Math.min(hi, Math.max(lo, Number(v) || 0));
+  const decor = (Array.isArray(body.decor) ? body.decor : []).slice(0, MOST_DECOR).flatMap((d) => {
+    const x = d as Record<string, unknown>;
+    const id = String(x?.id ?? "");
+    if (!/^[a-z0-9_]{1,60}$/.test(id)) return [];
+    return [{ n: clamp(x.n, 0, 1e6) | 0, id, x: clamp(x.x, 0, 1), y: clamp(x.y, 0, 1), s: clamp(x.s, 0.3, 3), ...(x.flip ? { flip: true } : {}) }];
+  });
+  const { data, error } = await sb.from("palais_island_maps").update({ decor }).eq("n", map.n).eq("full", false).select("n, template, plots, decor, full").single();
+  if (error) return reply({ error: error.message }, 500);
+  return reply({ map: data });
 }
 
 /* ---- the door ------------------------------------------------------------ */
@@ -468,7 +639,7 @@ Deno.serve(async (req) => {
   const who = await memberOf(req);
   if (!who) return reply({ error: "The island maker is for members: sign in, and once you're accepted it's yours." }, 401);
 
-  let body: { plan?: Parameters<typeof plan>[2]; draw?: Parameters<typeof draw>[2] };
+  let body: { plan?: Parameters<typeof plan>[2]; draw?: Parameters<typeof draw>[2]; place?: Parameters<typeof place>[2]; dress?: Parameters<typeof dress>[1] };
   try {
     body = await req.json();
   } catch {
@@ -478,6 +649,8 @@ Deno.serve(async (req) => {
   try {
     if (body.plan) return await plan(sb, who, body.plan);
     if (body.draw) return await draw(sb, who, body.draw);
+    if (body.place) return await place(sb, who, body.place);
+    if (body.dress) return await dress(sb, body.dress);
   } catch (e) {
     if (e instanceof Anthropic.APIError) return reply({ error: `Claude couldn't look at it (${e.status}). Try again in a moment.` }, 502);
     return reply({ error: e instanceof Error ? e.message : String(e) }, 502);

@@ -7342,8 +7342,13 @@
   box-shadow: 0 3px 0 rgba(122, 90, 30, 0.35), 0 6px 16px rgba(10, 30, 70, 0.3);
   animation: wm-isle-bob 2.4s ease-in-out infinite;
 }
-.palais .wm-isle-arrow--down { bottom: 0.7rem; }
-.palais .wm-isle-arrow--up { bottom: 0.7rem; }
+/* the arrows sit side by side in the corner, back on the left of next */
+.palais .wm-isle-arrows { position: absolute; right: 0.7rem; bottom: 0.7rem; z-index: 3; display: flex; gap: 0.5rem; }
+.palais .wm-isle-arrows .wm-isle-arrow { position: static; }
+/* the made islands' column, over the map, sliding in from below */
+.palais .wm-made-column { position: absolute; inset: 0; z-index: 2; transition: transform 750ms cubic-bezier(0.65, 0, 0.25, 1); }
+.palais .wm-made-column .wm-made-isle { height: 100%; aspect-ratio: auto; max-height: none; }
+@media (prefers-reduced-motion: reduce) { .palais .wm-made-column { transition: none; } }
 .palais .wm-isle-arrow:hover { background: #fbe3ea; }
 @keyframes wm-isle-bob { 50% { transform: translateY(3px); } }
 .palais .wm-isle-arrow--up { animation-name: wm-isle-bob-up; }
@@ -8091,44 +8096,118 @@
 .palais .palais-islandmaker:hover,
 .palais .palais-islandmaker:focus-visible { filter: drop-shadow(0 12px 14px rgba(30, 40, 70, 0.4)) drop-shadow(0 0 14px rgba(110, 200, 255, 0.75)); }
 
-/* the machine, opened: the sky round the globe, its gold rim and pink ring,
-   and the cream stand with the discs on it */
+/* the machine, opened, drawn like the sticker of it: a pastel sky with puffy
+   clouds and glowing gold stars round the globe, a cream tiled terrace for it
+   to stand on, and turquoise water with white foam lapping at a wavy edge
+   along the bottom; a white die-cut edge round the whole thing */
 .palais .im-panel {
   --im-sky: #bfe6fb;
   --im-sea: #3aa6d8;
+  --im-sea-bright: #4fd6f0;
   --im-gold: #f2c45a;
   --im-gold-deep: #c8912c;
-  width: min(1080px, 100%);
-  border: 3px solid var(--im-gold);
-  border-radius: 28px;
+  --im-pink: #ff8fc8;
+  --im-pink-deep: #ec4f9f;
+  --im-cream: #fff7ea;
+  --im-tile: #f6e7d2;
+  --im-plum: #6b4a6b;
+  width: min(1240px, 100%);
+  padding-bottom: 2.6rem;
+  border: 5px solid #fff;
+  border-radius: 34px;
   background:
-    radial-gradient(60% 50% at 12% 8%, rgba(255, 255, 255, 0.95), transparent 70%),
-    radial-gradient(50% 40% at 92% 14%, rgba(255, 214, 236, 0.9), transparent 70%),
-    linear-gradient(180deg, #e7f6ff 0%, #fdeef6 62%, #fff8ee 100%);
-  box-shadow: inset 0 0 0 2px #fff, 0 0 0 3px rgba(242, 196, 90, 0.35), 0 18px 50px rgba(30, 40, 80, 0.32);
+    /* little sparkles in the sky */
+    radial-gradient(circle at 18% 12%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 74% 7%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 88% 30%, #fff 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 8% 40%, #fff 0 1.2px, transparent 2.2px),
+    /* a glow behind the title, like the orb inside the globe */
+    radial-gradient(38% 22% at 50% 9%, rgba(255, 236, 190, 0.85), transparent 70%),
+    /* the sky, then the terrace's cream tiles further down */
+    linear-gradient(180deg, #cdeefe 0%, #f3e6fb 22%, #ffe9f3 34%, transparent 46%),
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(214, 186, 150, 0.28) 46px 48px),
+    repeating-linear-gradient(0deg, transparent 0 46px, rgba(214, 186, 150, 0.28) 46px 48px),
+    linear-gradient(180deg, var(--im-cream), var(--im-tile));
+  box-shadow:
+    0 0 0 3px var(--im-sea-bright),
+    0 0 0 7px rgba(255, 255, 255, 0.9),
+    0 0 26px 8px rgba(255, 143, 200, 0.45),
+    0 22px 60px rgba(30, 40, 80, 0.35);
 }
-.palais .im-spark { position: absolute; z-index: 3; pointer-events: none; color: var(--im-gold); text-shadow: 0 0 10px rgba(255, 220, 120, 0.9), 0 2px 0 var(--im-gold-deep); animation: sm-bob 4.5s ease-in-out infinite; }
-.palais .im-spark--a { top: -18px; left: 6%; font-size: 2.4rem; }
-.palais .im-spark--b { top: 38%; right: -16px; font-size: 1.9rem; animation-delay: -1.5s; }
-.palais .im-spark--c { bottom: -14px; left: 40%; font-size: 1.6rem; animation-delay: -3s; }
+/* the water along the bottom: turquoise, with a scalloped edge of foam */
+.palais .im-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.6rem;
+  border-radius: 0 0 29px 29px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 0, #fff 0 9px, transparent 10px) 0 -3px / 26px 14px repeat-x,
+    radial-gradient(circle at 30% 60%, rgba(255, 255, 255, 0.7) 0 2px, transparent 3px) 0 0 / 38px 22px,
+    linear-gradient(180deg, var(--im-sea-bright), var(--im-sea) 70%, #2b86c4);
+}
 
-.palais .im-lid { position: relative; z-index: 2; padding: 1rem 1.6rem 0.5rem; text-align: center; }
-.palais .im-lid h2 {
-  display: inline-block;
-  margin: 0;
-  padding: 0.35em 1.1em 0.4em;
-  border: 3px solid #fff;
+/* the stars round the panel, glowing gold, and the clouds round the globe */
+.palais .im-twinkles { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.palais .im-star { position: absolute; width: 34px; fill: #ffe27a; filter: drop-shadow(0 0 6px rgba(255, 214, 90, 0.95)) drop-shadow(0 0 2px #fff); animation: im-twinkle 3.2s ease-in-out infinite; }
+.palais .im-star--a { top: -16px; left: 5%; width: 46px; }
+.palais .im-star--b { top: 6%; left: 23%; width: 22px; animation-delay: -0.8s; }
+.palais .im-star--c { top: 3%; right: 22%; width: 28px; animation-delay: -1.6s; }
+.palais .im-star--d { top: 34%; right: -18px; width: 40px; animation-delay: -2.2s; }
+.palais .im-star--e { top: 46%; left: -14px; width: 30px; animation-delay: -1.1s; }
+.palais .im-star--f { bottom: 1.4rem; right: 9%; width: 26px; animation-delay: -2.7s; }
+@keyframes im-twinkle { 50% { scale: 0.78; rotate: 12deg; opacity: 0.75; } }
+.palais .im-cloud {
+  position: absolute;
+  width: 96px;
+  height: 40px;
   border-radius: 999px;
-  background: linear-gradient(180deg, #8edaf8, var(--im-sea));
-  box-shadow: 0 0 0 3px var(--im-gold), 0 5px 0 3px var(--im-gold-deep), 0 10px 22px rgba(30, 80, 130, 0.3);
-  font: 700 clamp(1.25rem, 3vw, 2rem)/1 var(--sm-round);
-  letter-spacing: 0.03em;
-  color: #fff;
-  text-shadow: 0 2px 0 rgba(20, 70, 110, 0.45);
-  rotate: -1deg;
+  background: radial-gradient(circle at 30% 30%, #fff, #f7eefa 70%);
+  box-shadow: inset 0 -4px 0 rgba(222, 200, 230, 0.55), 0 4px 10px rgba(150, 120, 170, 0.18);
+  animation: sm-bob 6s ease-in-out infinite;
 }
-.palais .im-lid h2 span { color: #ffe9a8; }
-.palais .im-lid small { display: block; margin-top: 0.75rem; font: 600 0.95rem/1 var(--sm-round); color: #7a6a7a; letter-spacing: 0.04em; }
+.palais .im-cloud::before,
+.palais .im-cloud::after { content: ""; position: absolute; border-radius: 50%; background: inherit; }
+.palais .im-cloud::before { width: 48px; height: 48px; left: 14px; top: -24px; }
+.palais .im-cloud::after { width: 36px; height: 36px; right: 14px; top: -16px; }
+.palais .im-cloud--a { top: 34px; left: 7%; }
+.palais .im-cloud--b { top: 22px; right: 6%; scale: 1.15; animation-delay: -2s; }
+.palais .im-cloud--c { top: 112px; right: 18%; scale: 0.7; animation-delay: -4s; opacity: 0.9; }
+
+.palais .im-lid { position: relative; z-index: 5; padding: 1.1rem 1.6rem 0.6rem; text-align: center; }
+/* the pink ring that circles the globe, behind the title */
+.palais .im-ring {
+  position: absolute;
+  left: 50%;
+  top: 0.6rem;
+  width: min(640px, 92%);
+  height: 6.4rem;
+  translate: -50% 0;
+  rotate: -4deg;
+  border-radius: 50%;
+  border: 7px solid rgba(255, 143, 200, 0.55);
+  box-shadow: 0 0 16px rgba(255, 143, 200, 0.6), inset 0 0 12px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+.palais .im-lid h2 { position: relative; margin: 0 auto; max-width: min(520px, 88%); line-height: 0; }
+.palais .im-lid h2 img { display: block; width: 100%; height: auto; filter: drop-shadow(0 5px 0 rgba(107, 74, 107, 0.18)) drop-shadow(0 8px 14px rgba(236, 79, 159, 0.25)); animation: im-float 4.5s ease-in-out infinite; }
+@keyframes im-float { 50% { translate: 0 -4px; rotate: -1deg; } }
+.palais .im-lid small {
+  position: relative;
+  display: table;
+  margin: 0.55rem auto 0;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 2px rgba(255, 143, 200, 0.35);
+  font: 600 0.85rem/1 var(--sm-round);
+  color: var(--im-plum);
+  letter-spacing: 0.04em;
+}
 .palais .im-close { background: #ff7fc0; }
 
 .palais .im-body {
@@ -8145,7 +8224,7 @@
 
 /* the open globe: the island in a gold band, with the pink ring behind */
 .palais .im-globe {
-  --im-size: min(calc(100cqh - 11rem), 600px, 58cqw);
+  --im-size: min(calc(100cqh - 22.5rem), 600px, 58cqw);
   position: relative;
   width: var(--im-size);
   padding: 10px;
@@ -8224,7 +8303,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(4.6rem, 1fr));
   gap: 0.7rem 0.5rem;
-  max-height: min(19rem, calc(100cqh - 30rem));
+  max-height: min(19rem, calc(100cqh - 37rem));
   min-height: 9rem;
   overflow-y: auto;
   padding: 0.5rem 0.3rem;
@@ -8254,12 +8333,112 @@
 .palais .im-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .palais .im-buttons .sm-btn { flex: 1 1 auto; padding: 0.65rem 0.9rem; font-size: 0.92rem; }
 
-/* the machine's two sides, as two pills under the title */
-.palais .im-sides { display: inline-flex; gap: 0.4rem; margin-top: 0.85rem; padding: 0.3rem; border-radius: 999px; background: rgba(255, 255, 255, 0.75); box-shadow: inset 0 0 0 2px rgba(58, 166, 216, 0.25); }
-.palais .im-sides button { padding: 0.5rem 1.1rem; border: none; border-radius: 999px; background: none; font: 700 0.95rem/1 var(--sm-round); color: #5b6b7a; cursor: pointer; }
-.palais .im-sides button.is-on { background: linear-gradient(180deg, #8edaf8, var(--im-sea)); color: #fff; box-shadow: 0 3px 0 #1f7aa8; }
-.palais .im-sides button:focus-visible { outline: 3px dashed var(--im-sea); outline-offset: 2px; }
+/* the machine's two sides, as the round buttons on its cream stand: each a
+   little picture disc, and the one you're on glossy pink, like jelly */
+/* each side scrolls on its own, above the water along the bottom */
+.palais .im-pane { position: relative; z-index: 2; min-height: 0; overflow-y: auto; }
+.palais .im-pane[hidden] { display: none; }
+.palais .im-pane > .im-build,
+.palais .im-pane > .im-body { max-height: none; overflow: visible; }
+.palais .im-sides button { white-space: nowrap; }
+.palais .im-panel { min-width: 0; max-width: 100%; }
+/* every tab the same size, the biggest one's: the panel as tall as the
+   window lets it be, and each tab scrolling inside it */
+/* as tall as fits under the title (which sticks up into the backdrop's
+   top padding), and never off the page */
+.palais .im-panel { height: min(calc(100cqh - 5rem), 1000px); max-height: calc(100cqh - 5rem); margin-top: 0.5rem; }
+/* the title sits half on the panel and half off it, like a sticker on its
+   lid, and everything under it moves up to make more room */
+.palais .im-lid { padding-top: 0; }
+.palais .im-lid h2 { margin-top: clamp(-3.4rem, -8cqw, -1.2rem); max-width: min(480px, 84%); }
+.palais .im-ring { top: clamp(-3.2rem, -7.5cqw, -1.1rem); }
+.palais .im-lid small { position: relative; z-index: 1; margin-top: -0.55rem; }
+.palais .im-sides { margin-top: 0.5rem; }
+.palais .im-pane { flex: 1 1 auto; }
+.palais .im-sides { max-width: 100%; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 560px) {
+  .palais .im-lid small span { display: none; }
+  .palais .im-sides { gap: 0.2rem; border-radius: 24px; }
+  .palais .im-sides button { padding: 0.3rem 0.75rem 0.3rem 0.3rem; font-size: 0.86rem; gap: 0.35rem; }
+  .palais .im-side-dot { width: 1.6rem; height: 1.6rem; font-size: 0.8rem; }
+  .palais .im-ring { height: 4.4rem; border-width: 5px; }
+  .palais .im-cloud { scale: 0.6; }
+  .palais .im-cloud--c { display: none; }
+}
+.palais .im-sides { display: inline-flex; gap: 0.5rem; margin-top: 0.8rem; padding: 0.35rem; border-radius: 999px; background: #fffdf8; box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(79, 214, 240, 0.45), 0 5px 0 5px #eadccb; }
+.palais .im-sides button { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1.05rem 0.35rem 0.35rem; border: none; border-radius: 999px; background: none; font: 700 0.98rem/1 var(--sm-round); color: var(--im-plum); cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
+.palais .im-sides button:hover { transform: translateY(-1px); }
+.palais .im-sides button.is-on {
+  background: linear-gradient(180deg, #ffb3d9, var(--im-pink) 45%, var(--im-pink-deep));
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(150, 30, 90, 0.4);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.55), 0 3px 0 #c0307c;
+}
+.palais .im-side-dot { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; font-style: normal; font-size: 1rem; box-shadow: 0 0 0 2.5px #fff, 0 2px 4px rgba(60, 40, 60, 0.25); }
+.palais .im-side-dot--island { background: linear-gradient(180deg, #ffd1a1 0%, #ff9db8 48%, #6fd3ee 52%, #3aa6d8); }
+.palais .im-sides button:focus-visible { outline: 3px dashed var(--im-pink-deep); outline-offset: 2px; }
 .palais .im-door { padding-bottom: 1.6rem; }
+
+/* inside the island maker the sticker maker's ink-and-paper parts go soft:
+   plum outlines, cream fields, and jelly buttons like the title's letters */
+.palais .im-panel { --sm-ink: #6b4a6b; }
+.palais .im-panel .sm-field > span { color: var(--im-plum); letter-spacing: 0.08em; }
+/* every field: rounded, with a pastel border running pink into sky blue
+   like the title's letters, glowing pink while it's written in */
+.palais .im-panel .sm-field input,
+.palais .im-panel .sm-field textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 3px solid transparent;
+  border-radius: 22px;
+  background:
+    linear-gradient(#fffdfb, #fffdfb) padding-box,
+    linear-gradient(120deg, #ff9ccf, #ffd36e 35%, #8fe3c6 65%, #7fd3f5) border-box;
+  box-shadow: 0 3px 0 rgba(236, 79, 159, 0.15), 0 6px 14px rgba(107, 74, 107, 0.08);
+  font: 500 1rem/1.4 var(--sm-round);
+  color: var(--im-plum);
+  resize: vertical;
+}
+.palais .im-panel .sm-field input::placeholder,
+.palais .im-panel .sm-field textarea::placeholder { color: #b9a3b6; }
+.palais .im-panel .sm-field input:focus,
+.palais .im-panel .sm-field textarea:focus {
+  outline: none;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(120deg, #ff7fc0, #ffb347 35%, #4fd6a0 65%, #3aa6d8) border-box;
+  box-shadow: 0 0 0 4px rgba(255, 143, 200, 0.28), 0 6px 14px rgba(107, 74, 107, 0.1);
+}
+.palais .im-panel .sm-btn { border: 2.5px solid #fff; background: linear-gradient(180deg, #fff, #fbeff6); color: var(--im-plum); box-shadow: 0 0 0 2px #ecd3e4, 0 4px 0 2px #e2c3d8; }
+.palais .im-panel .sm-btn:hover:not(:disabled) { box-shadow: 0 0 0 2px #ecd3e4, 0 5px 0 2px #e2c3d8; }
+.palais .im-panel .sm-btn:active:not(:disabled) { box-shadow: 0 0 0 2px #ecd3e4, 0 0 0 2px #e2c3d8; }
+.palais .im-panel .sm-btn--go {
+  background: linear-gradient(180deg, #ffb8dc, var(--im-pink) 48%, var(--im-pink-deep));
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(150, 30, 90, 0.45);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.55), 0 0 0 2px #f7b3d6, 0 4px 0 2px #c0307c, 0 8px 16px rgba(236, 79, 159, 0.3);
+}
+.palais .im-panel .sm-btn--go:hover:not(:disabled) { box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.55), 0 0 0 2px #f7b3d6, 0 5px 0 2px #c0307c, 0 10px 18px rgba(236, 79, 159, 0.35); }
+.palais .im-panel .sm-btn--go:active:not(:disabled) { box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.55), 0 0 0 2px #f7b3d6, 0 0 0 2px #c0307c; }
+.palais .im-panel .sm-door p { border: 2.5px dashed #ecc6de; border-radius: 24px; background: rgba(255, 255, 255, 0.9); color: var(--im-plum); }
+.palais .im-panel .sm-trouble { border: 2.5px solid #f7b3d6; border-radius: 20px; background: #fff0f6; color: var(--im-plum); }
+.palais .im-panel .sm-small { color: #8a6f86; }
+/* the photo tray glows warm, like the orb inside the open globe */
+.palais .im-panel .im-tray {
+  border: 3px dashed rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 64% 76%, rgba(255, 255, 255, 0.8) 0 1.5px, transparent 2.5px),
+    radial-gradient(60% 80% at 50% 50%, #fff3c4, #ffc7a1 55%, #ff9fbf 100%);
+  box-shadow: 0 0 0 3px #f2c45a, 0 0 0 6px #fff, 0 0 24px rgba(255, 190, 110, 0.65), inset 0 0 26px rgba(255, 255, 255, 0.55);
+}
+.palais .im-panel .im-tray:hover,
+.palais .im-panel .im-tray.is-over { background-color: transparent; filter: brightness(1.04) saturate(1.1); transform: scale(1.01); }
+.palais .im-panel .im-tray.has-photo { border-style: solid; }
+.palais .im-panel .sm-tray-say { color: #6b3f5a; }
+.palais .im-panel .sm-upload { color: #d6337f; }
 
 /* building a room: the photos, the words, then the pictures as they're painted */
 .palais .im-build { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 0.9rem; width: min(820px, 100%); margin: 0 auto; max-height: calc(100cqh - 13rem); overflow-y: auto; padding: 0.3rem 1.4rem 1.6rem; }
@@ -8270,8 +8449,7 @@
 .palais .im-photo img { width: 100%; height: 100%; object-fit: cover; max-height: none; border: none; border-radius: 0; }
 .palais .im-photo button { position: absolute; top: 4px; right: 4px; width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 2px solid var(--sm-ink); background: var(--sm-hot); color: #fff; font: 700 1rem/1 var(--sm-round); cursor: pointer; }
 .palais .im-photo--more { border-style: dashed; font: 700 2rem/1 var(--sm-round); color: var(--sm-ink); background: rgba(255, 255, 255, 0.6); }
-.palais .im-form textarea { padding: 0.6rem 0.85rem; border: 2.5px solid var(--sm-ink); border-radius: 14px; background: #fff; font: 500 1rem/1.35 var(--sm-round); color: var(--sm-ink); resize: vertical; }
-.palais .im-form textarea:focus { outline: none; box-shadow: 0 0 0 4px rgba(159, 216, 242, 0.7); }
+
 .palais .im-form .sm-doing { align-items: center; }
 .palais .im-form .sm-doing .sm-small { flex: 1 1 14rem; text-align: left; }
 .palais .im-unfinished { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.7rem 0.9rem; border: 2px dashed rgba(61, 48, 48, 0.3); border-radius: 18px; font: 600 0.9rem/1 var(--sm-round); }
@@ -8300,6 +8478,379 @@
 .palais .im-pictures small { font: 600 0.72rem/1.15 var(--sm-round); text-align: center; color: #6b5b6b; }
 .palais .im-progress .sm-doing { justify-content: center; }
 
+/* the empty room every made room is painted in, as a computer screen and a
+   phone side by side, with the seasons to flip through */
+.palais .im-templates { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 1.1rem; align-items: center; padding: 1rem; border-radius: 26px; background: radial-gradient(90% 120% at 20% 0%, #ffffff, #fdf0f7 60%, #eaf8ff); box-shadow: 0 0 0 3px #fff, 0 0 0 6px rgba(255, 143, 200, 0.35), 0 10px 22px rgba(60, 40, 80, 0.14); }
+/* the computer and the phone lined up along their tops */
+.palais .im-templates-frames { display: flex; align-items: flex-start; justify-content: center; gap: 0.9rem; }
+.palais .im-screen { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+.palais .im-screen figcaption { font: 700 0.72rem/1 var(--sm-round); letter-spacing: 0.1em; text-transform: uppercase; color: #a58ca1; }
+.palais .im-screen-glass { display: block; overflow: hidden; background: #2b2133; }
+.palais .im-screen-glass img { display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity 300ms ease; }
+/* a pink computer screen, with a little stand */
+.palais .im-screen--desktop { flex: 0 1 74%; }
+.palais .im-screen--desktop .im-screen-glass { width: 100%; aspect-ratio: 16 / 9; border: 7px solid #fff; border-radius: 16px; box-shadow: 0 0 0 2.5px #f2b8d6, 0 8px 0 -2px #f7cfe3, 0 14px 20px rgba(80, 40, 70, 0.22); position: relative; }
+.palais .im-screen--desktop .im-screen-glass::after { content: ""; position: absolute; left: 50%; bottom: -26px; width: 22%; height: 16px; translate: -50% 0; border-radius: 0 0 10px 10px; background: linear-gradient(180deg, #ffe0ef, #f7b8d6); }
+.palais .im-screen--desktop figcaption { margin-top: 1rem; }
+/* and a phone, rounded, with a notch */
+.palais .im-screen--mobile { flex: 0 0 20%; }
+.palais .im-screen--mobile .im-screen-glass { position: relative; width: 100%; aspect-ratio: 9 / 16; border: 6px solid #fff; border-radius: 22px; box-shadow: 0 0 0 2.5px #9fdcf2, 0 10px 18px rgba(40, 70, 110, 0.22); }
+.palais .im-screen--mobile .im-screen-glass::before { content: ""; position: absolute; z-index: 1; left: 50%; top: 5px; width: 34%; height: 7px; translate: -50% 0; border-radius: 999px; background: #fff; }
+.palais .im-templates-say { display: flex; flex-direction: column; gap: 0.75rem; }
+.palais .im-templates-say p { margin: 0; font: 500 0.95rem/1.45 var(--sm-round); color: var(--im-plum); }
+.palais .im-seasons { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.palais .im-seasons button { padding: 0.4rem 0.75rem; border: none; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 2px #f0dbe9; font: 700 0.82rem/1 var(--sm-round); color: var(--im-plum); cursor: pointer; }
+.palais .im-seasons button.is-on { background: linear-gradient(180deg, #ffb8dc, var(--im-pink) 48%, var(--im-pink-deep)); color: #fff; box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5), 0 3px 0 #c0307c; text-shadow: 0 1px 0 rgba(150, 30, 90, 0.4); }
+@media (max-width: 760px) {
+  .palais .im-templates { grid-template-columns: minmax(0, 1fr); }
+  .palais .im-templates-say { align-items: center; text-align: center; }
+  .palais .im-seasons { justify-content: center; }
+}
+
+/* back and next in the bottom corners, just above the water */
+.palais .im-foot { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; padding: 0.7rem 1.4rem 0.2rem; border-top: 2px dashed rgba(236, 79, 159, 0.25); }
+.palais .im-foot-say { flex: 1; text-align: center; font: 500 0.82rem/1.3 var(--sm-round); color: #8a6f86; }
+.palais .im-foot .sm-btn { white-space: nowrap; }
+.palais .im-foot .im-create-btn { padding: 0.8rem 1.6rem; font-size: 1.05rem; }
+@media (max-width: 560px) {
+  .palais .im-foot { padding: 0.6rem 0.8rem 0.1rem; flex-wrap: wrap; }
+  .palais .im-foot-say { order: -1; flex-basis: 100%; }
+}
+
+/* every card wears a coloured border: the same pastel rainbow as the fields,
+   round its own background (--im-card) */
+.palais .im-templates,
+.palais .im-stand,
+.palais .im-island-stage,
+.palais .im-pick-scenery,
+.palais .im-door-note,
+.palais .im-none,
+.palais .im-unfinished,
+.palais .im-scenery,
+.palais .im-discs,
+.palais .im-decor-tools,
+.palais .im-photo:not(.im-photo--more) {
+  border: 3px solid transparent;
+  background:
+    var(--im-card, linear-gradient(#fffdfb, #fffdfb)) padding-box,
+    linear-gradient(120deg, #ff9ccf, #ffd36e 35%, #8fe3c6 65%, #7fd3f5) border-box;
+}
+.palais .im-templates { --im-card: radial-gradient(90% 120% at 20% 0%, #ffffff, #fdf0f7 60%, #eaf8ff); box-shadow: 0 10px 22px rgba(60, 40, 80, 0.12); }
+.palais .im-stand { --im-card: linear-gradient(180deg, #fffdf8, #f6eee6); box-shadow: 0 8px 0 #e8dccf, 0 14px 24px rgba(60, 40, 60, 0.16); }
+.palais .im-island-stage { --im-card: radial-gradient(70% 60% at 50% 45%, #fff, #e3f6ff 60%, #fbe4f1); box-shadow: 0 10px 22px rgba(40, 40, 80, 0.14); }
+.palais .im-scenery,
+.palais .im-discs { --im-card: linear-gradient(#f4fbfe, #f4fbfe); box-shadow: none; }
+.palais .im-decor-tools { --im-card: linear-gradient(#fff0f7, #fff0f7); box-shadow: none; }
+.palais .im-door-note,
+.palais .im-none,
+.palais .im-unfinished { border-style: solid; }
+.palais .im-scenery-tile,
+.palais .im-plots button { border: 2px solid transparent; background: linear-gradient(#fff, #fff) padding-box, linear-gradient(120deg, #ffc2e0, #ffe6a3 35%, #bdeedc 65%, #b5e4f7) border-box; box-shadow: 0 3px 0 #ead6e4; }
+.palais .im-scenery-tile.is-on,
+.palais .im-plots button.is-on { background: linear-gradient(#fff0f7, #fff0f7) padding-box, linear-gradient(120deg, #ff7fc0, #ec4f9f) border-box; }
+
+/* Create map: the map as tall as the space under the tabs, square, and the
+   stand beside it the same height, scrolling inside if it must, so the page
+   never does */
+.palais .im-pane > .im-body { height: 100%; box-sizing: border-box; grid-template-rows: minmax(0, 1fr); width: min(1180px, 100%); margin: 0 auto; align-items: stretch; padding-bottom: 0.6rem; overflow: hidden; }
+.palais .im-pane > .im-body .im-globe { --im-size: auto; width: auto; height: 100%; aspect-ratio: 1; max-width: 56cqw; box-sizing: border-box; display: flex; }
+.palais .im-pane > .im-body .im-globe .im-board { height: 100%; width: auto; aspect-ratio: 1; max-width: 100%; }
+.palais .im-pane > .im-body .im-stand { min-height: 0; overflow-y: auto; }
+.palais .im-pane > .im-body .im-stand .im-scenery,
+.palais .im-pane > .im-body .im-stand .im-discs { max-height: none; min-height: 6rem; }
+@media (max-width: 820px) {
+  .palais .im-pane > .im-body { height: auto; grid-template-rows: none; overflow: visible; }
+  .palais .im-pane > .im-body .im-globe { width: 100%; height: auto; max-width: none; }
+  .palais .im-pane > .im-body .im-globe .im-board { width: 100%; height: auto; }
+  .palais .im-pane > .im-body .im-stand { overflow: visible; }
+}
+
+/* the map's stand: the plots grow to fill it, and its buttons sit at the bottom */
+.palais .im-pane > .im-body .im-stand { display: flex; flex-direction: column; }
+.palais .im-pane > .im-body .im-stand .im-plots { flex: 1 1 auto; min-height: 0; grid-auto-rows: 1fr; }
+.palais .im-pane > .im-body .im-stand .im-scenery { flex: 1 1 auto; min-height: 0; }
+.palais .im-pane > .im-body .im-stand .im-buttons { margin-top: auto; }
+.palais .im-plots button { height: 100%; padding: 0.5rem 0.7rem; }
+.palais .im-plots button i { width: 1.9rem; height: 1.9rem; font-size: 0.85rem; }
+.palais .im-plots button span { display: flex; align-items: center; gap: 0.35rem; font-size: 0.95rem; }
+.palais .im-plot-icon { font-size: 1.15rem; line-height: 1; }
+
+/* what to change about the room, in its card */
+.palais .im-changes { width: 100%; max-width: 30rem; }
+.palais .im-changes input { padding: 0.5rem 0.9rem; font-size: 0.9rem; }
+/* a tab's own Generate, beside Next */
+.palais .im-foot-right { display: flex; gap: 0.6rem; }
+.palais .im-foot-gen { border-color: #f7b3d6; }
+
+/* the scenery picked for the island, set out on the template to drag about */
+.palais .im-island-canvas { position: relative; flex: 1 1 auto; min-height: 0; width: 100%; display: grid; place-items: center; }
+.palais .im-island-canvas > img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
+.palais .im-island-piece { position: absolute; translate: -50% -88%; cursor: grab; touch-action: none; filter: drop-shadow(0 3px 3px rgba(30, 20, 40, 0.3)); }
+.palais .im-island-piece:active { cursor: grabbing; }
+.palais .im-island-piece img { display: block; width: 100%; height: auto; pointer-events: none; }
+.palais .im-island-stage.is-painting .im-island-canvas > img { filter: saturate(0.5); opacity: 0.6; }
+.palais .im-screen.is-painting img { filter: saturate(0.5) blur(1px); opacity: 0.6; }
+
+/* the map's scenery shelf shows three rows of tiles (with a shelf's heading)
+   sized to fit, and scrolls for the rest */
+.palais .im-pane > .im-body .im-stand .im-scenery { container-type: size; }
+.palais .im-pane > .im-body .im-scenery .im-scenery-row { grid-auto-rows: calc((100cqh - 3.4rem) / 3); }
+.palais .im-pane > .im-body .im-scenery .im-scenery-tile { min-height: 0; overflow: hidden; justify-content: center; }
+.palais .im-pane > .im-body .im-scenery .im-scenery-tile img { flex: 1 1 auto; min-height: 0; height: auto; max-height: 100%; }
+.palais .im-pane > .im-body .im-scenery .im-scenery-tile span { flex: none; font-size: 0.68rem; line-height: 1.1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* the scenery lists keep their scroll bar showing, so it's plain there's more */
+.palais .im-scenery,
+.palais .im-pick-scenery .im-scenery-row { overflow-y: scroll; scrollbar-gutter: stable; scrollbar-width: auto; scrollbar-color: #f29ac6 #fbe8f2; }
+.palais .im-scenery::-webkit-scrollbar,
+.palais .im-pick-scenery .im-scenery-row::-webkit-scrollbar { width: 10px; }
+.palais .im-scenery::-webkit-scrollbar-track,
+.palais .im-pick-scenery .im-scenery-row::-webkit-scrollbar-track { background: #fbe8f2; border-radius: 999px; }
+.palais .im-scenery::-webkit-scrollbar-thumb,
+.palais .im-pick-scenery .im-scenery-row::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffb3d9, #ec6fae); border-radius: 999px; border: 2px solid #fbe8f2; }
+
+/* the island sticker tab, in two even columns: the template and the scenery
+   for it, then the photos and words */
+.palais .im-island-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.palais .im-island-left { display: flex; flex-direction: column; gap: 0.8rem; min-width: 0; }
+.palais .im-island-left .im-island-stage img { max-height: 15rem; }
+.palais .im-island-left .im-tray { min-height: 150px; }
+/* the scenery fills the top of the right column, as tall as the island beside it */
+.palais .im-island-form .im-pick-scenery .im-scenery-row { max-height: 19rem; }
+
+/* a tab that fills the modal: as wide as looks right, and as tall as the
+   pane, its last box growing to take up what's left so Next is in reach
+   without scrolling */
+.palais .im-pane > .im-build { width: min(1180px, 100%); }
+.palais .im-pane > .im-build--fill { height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+.palais .im-build--fill .im-room-cols { min-height: 0; }
+@media (max-width: 760px) { .palais .im-pane > .im-build--fill { height: auto; } }
+.palais .im-build--fill .im-room-cols { flex: 1 1 auto; align-items: stretch; }
+/* the long photo tray under the room and its words, the whole way across */
+.palais .im-room-photos { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.1rem; }
+/* the room tab runs right down to the buttons: less padding under the tray,
+   so the cards above take the room */
+.palais .im-pane > .im-build--fill { padding-bottom: 0.5rem; }
+.palais .im-room-photos .im-tray { min-height: 96px; padding: 0.6rem 1rem; }
+/* the screens kept to a size that leaves room for everything else */
+.palais .im-room-cols .im-templates { padding: 0.8rem; gap: 0.6rem; }
+.palais .im-room-cols .im-templates-frames { max-width: 28rem; margin: 0 auto; width: 100%; }
+.palais .im-room-cols .im-screen--desktop figcaption { margin-top: 0.8rem; }
+.palais .im-room-cols .im-templates-say { gap: 0.5rem; }
+.palais .im-room-cols .im-templates-say p { font-size: 0.86rem; line-height: 1.4; }
+
+.palais .im-room-photos .sm-tray-say { flex-direction: row; max-width: none; gap: 0.9rem; text-align: left; }
+.palais .im-room-photos .sm-tray-icon { flex: none; }
+/* the island tab, trimmed so it fits without scrolling */
+.palais .im-island-left .im-island-stage img { max-height: 12.5rem; }
+.palais .im-island-left .im-tray { min-height: 120px; }
+.palais .im-island-form .im-pick-scenery .im-scenery-row { max-height: 15.5rem; }
+.palais .im-col { display: flex; flex-direction: column; gap: 0.85rem; min-width: 0; }
+.palais .im-grow { flex: 1 1 auto; display: flex; flex-direction: column; }
+.palais .im-grow textarea { flex: 1 1 auto; min-height: 4.6rem; }
+/* only the big boxes grow; the name stays its own height */
+.palais .im-col > .sm-field:not(.im-grow) { flex: none; }
+.palais .im-field-note { margin-left: 0.4rem; font-weight: 600; letter-spacing: 0; text-transform: none; color: #a58ca1; }
+.palais .im-build--fill .im-island-step { flex: 1 1 auto; }
+.palais .im-build--fill .im-island-cols { height: 100%; align-items: stretch; }
+.palais .im-build--fill .im-island-form { height: 100%; }
+
+/* the island sticker tab, two by two, filling the tab: the island and its
+   scenery a little taller, then the photos and the words */
+.palais .im-island-grid { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1.55fr) minmax(0, 1fr); gap: 0.9rem 1.1rem; }
+.palais .im-island-grid > * { min-height: 0; }
+.palais .im-island-grid .im-island-stage { justify-content: center; }
+.palais .im-island-grid .im-island-stage img { flex: 1 1 auto; min-height: 0; max-height: none; width: 100%; object-fit: contain; }
+.palais .im-island-grid .im-pick-scenery { display: flex; flex-direction: column; }
+.palais .im-island-grid .im-pick-scenery .im-scenery-row { flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto; }
+.palais .im-island-cell { display: flex; flex-direction: column; gap: 0.4rem; }
+.palais .im-island-cell .im-tray { flex: 1 1 auto; min-height: 0; }
+/* the rows as far apart as they look on the right, where the label sits
+   between them (the cards' rings eat into the gap otherwise) */
+.palais .im-island-grid { row-gap: 1.6rem; }
+/* the scenery card wears the rainbow border too, and shows exactly three rows
+   of tiles, sized to fit, scrolling for the rest */
+.palais .im-island-grid .im-pick-scenery {
+  border: 3px solid transparent;
+  background: linear-gradient(#fffdfb, #fffdfb) padding-box, linear-gradient(120deg, #ff9ccf, #ffd36e 35%, #8fe3c6 65%, #7fd3f5) border-box;
+  box-shadow: 0 8px 18px rgba(60, 40, 80, 0.1);
+}
+.palais .im-island-grid .im-pick-scenery .im-scenery-row {
+  --gap: 0.45rem;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fill, minmax(5.2rem, 1fr));
+  grid-auto-rows: calc((100% - 2 * var(--gap)) / 3);
+  align-content: start;
+}
+.palais .im-island-grid .im-scenery-tile { min-height: 0; overflow: hidden; justify-content: center; }
+.palais .im-island-grid .im-scenery-tile img { flex: 1 1 auto; min-height: 0; height: auto; max-height: 100%; }
+.palais .im-island-grid .im-scenery-tile span { flex: none; font-size: 0.68rem; line-height: 1.1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.palais .im-island-grid > .im-grow textarea { min-height: 0; }
+@media (max-width: 760px) {
+  .palais .im-island-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .palais .im-island-grid .im-island-stage img { max-height: 16rem; }
+  .palais .im-island-grid .im-pick-scenery .im-scenery-row { max-height: 16rem; }
+  .palais .im-island-cell .im-tray { min-height: 130px; }
+  .palais .im-island-grid > .im-grow textarea { min-height: 6rem; }
+}
+
+/* Create room, in two columns: the empty room, and what goes in it */
+.palais .im-room-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.1rem; align-items: start; }
+.palais .im-room-cols .im-templates { grid-template-columns: minmax(0, 1fr); gap: 0.8rem; }
+.palais .im-room-cols .im-templates-frames { justify-content: center; }
+.palais .im-room-cols .im-tray { min-height: 150px; }
+@media (max-width: 760px) {
+  .palais .im-room-cols { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* the templates card, stacked and centred: the screens, the words, then the
+   seasons as four round tiles, two by two, each in its own season's colour */
+.palais .im-room-cols .im-templates { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem; }
+.palais .im-room-cols .im-templates-say { align-items: center; text-align: center; max-width: 30rem; }
+.palais .im-room-cols .im-templates-say p { margin: 0; }
+.palais .im-room-cols .im-seasons { display: grid; grid-template-columns: repeat(2, minmax(0, 8.5rem)); gap: 0.55rem; justify-content: center; flex-wrap: initial; }
+.palais .im-seasons .im-season {
+  --tint: #fdeef5;
+  --ink: #9a5a7e;
+  --edge: #f1d3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border: 2px solid var(--edge);
+  border-radius: 999px;
+  background: var(--tint);
+  font: 600 0.92rem/1 var(--sm-round);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.palais .im-seasons .im-season i { font-style: normal; font-size: 1.05rem; }
+.palais .im-seasons .im-season--summer { --tint: #fdf7e4; --ink: #94702c; --edge: #efe0b4; }
+.palais .im-seasons .im-season--autumn { --tint: #fcf0e7; --ink: #9a5e3c; --edge: #efd3be; }
+.palais .im-seasons .im-season--winter { --tint: #eef7fb; --ink: #4f7f99; --edge: #cfe5ef; }
+.palais .im-seasons .im-season:hover { border-color: color-mix(in srgb, var(--edge) 50%, var(--ink)); }
+.palais .im-seasons .im-season.is-on { border-color: #ec8fbd; background: color-mix(in srgb, var(--tint) 70%, #f6c6dd); color: #8a3e66; }
+
+/* the scenery picked for a room's island: a row of tiles, the picked ones pink */
+.palais .im-pick-scenery { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.7rem 0.8rem; border-radius: 20px; background: rgba(255, 255, 255, 0.85); box-shadow: inset 0 0 0 2px #efd9e8; }
+.palais .im-pick-scenery .im-carried-label small { margin-left: 0.4rem; font-weight: 600; letter-spacing: 0; text-transform: none; color: #a58ca1; }
+.palais .im-pick-scenery .im-scenery-row { max-height: 13rem; overflow-y: auto; padding: 0.3rem; }
+.palais .im-scenery-tile.is-on { box-shadow: 0 0 0 3px var(--im-pink), 0 3px 0 3px #c0307c; background: #fff0f7; }
+.palais .im-scenery-tile.is-on span::after { content: " ✓"; color: var(--im-pink-deep); }
+.palais .im-scenery-tile:disabled { opacity: 0.45; cursor: default; transform: none; }
+/* the plots, listed on the map's stand */
+.palais .im-plots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.palais .im-plots button { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 0.45rem; align-items: center; width: 100%; padding: 0.4rem 0.6rem; border: none; border-radius: 16px; background: #fff; box-shadow: 0 0 0 2px #f2e4ee; text-align: left; cursor: pointer; font-family: var(--sm-round); color: var(--im-plum); }
+.palais .im-plots button i { grid-row: span 2; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: #ff8fc8; color: #fff; font: 700 0.8rem/1 var(--sm-round); font-style: normal; }
+.palais .im-plots button span { font-weight: 700; font-size: 0.85rem; }
+.palais .im-plots button small { font-size: 0.72rem; color: #a58ca1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.palais .im-plots button.is-on { box-shadow: 0 0 0 3px var(--im-pink), 0 3px 0 3px #c0307c; background: #fff0f7; }
+.palais .im-plots button.is-taken { cursor: default; opacity: 0.7; background: #f6f1f5; }
+.palais .im-plots button.is-taken i { background: var(--im-sea); }
+/* the island that isn't made yet, on its plot: the template, glowing */
+.palais .im-placed--ghost img { opacity: 0.75; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px var(--im-pink)); animation: im-breathe 2.6s ease-in-out infinite; }
+.palais .im-ghost-tag { position: absolute; left: 50%; bottom: 10%; translate: -50% 0; padding: 0.2em 0.6em; border-radius: 999px; background: var(--im-pink); color: #fff; font: 700 clamp(0.5rem, 1cqw, 0.75rem)/1.2 var(--sm-round); white-space: nowrap; box-shadow: 0 0 0 2px #fff; }
+.palais .im-map-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; font-family: var(--sm-round); color: var(--im-plum); }
+.palais .im-map-head b { font-size: 1.1rem; }
+.palais .im-map-head span { font-size: 0.8rem; color: #8a6f86; }
+/* the one button that makes it all */
+.palais .im-create { display: flex; flex-direction: column; align-items: stretch; gap: 0.35rem; padding-top: 0.4rem; border-top: 2px dashed #efd9e8; }
+.palais .im-create-btn { padding: 0.95rem 1rem; font-size: 1.1rem; }
+.palais .im-create small { font: 500 0.8rem/1.35 var(--sm-round); color: #8a6f86; text-align: center; }
+.palais .im-door-note { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.7rem 1rem; border-radius: 20px; border: 2.5px dashed #ecc6de; background: rgba(255, 255, 255, 0.9); text-align: center; }
+.palais .im-door-note p { margin: 0; flex: 1 1 18rem; font: 600 0.92rem/1.4 var(--sm-round); color: var(--im-plum); }
+.palais .im-link { padding: 0; border: none; background: none; font: inherit; color: var(--im-pink-deep); text-decoration: underline; cursor: pointer; }
+/* making it: the room and its island side by side, then the seasons */
+.palais .im-made { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 0.8rem; align-items: center; }
+.palais .im-island-stage--small { padding: 0.5rem; }
+.palais .im-side-n { opacity: 0.75; }
+.palais .im-side-short { display: none; }
+@media (max-width: 640px) {
+  .palais .im-side-long { display: none; }
+  .palais .im-side-short { display: inline; }
+  .palais .im-sides { flex-wrap: wrap; justify-content: center; border-radius: 22px; }
+  .palais .im-sides button { padding-right: 0.55rem; font-size: 0.8rem; }
+  .palais .im-side-n { display: none; }
+}
+.palais .im-side-dot--room { background: radial-gradient(circle at 35% 30%, #4b5fa8, #1e2a66); color: #ffd860; }
+.palais .im-side-dot--map { background: linear-gradient(160deg, #a6e6fa, #3aa6d8 60%, #6ccf8a); }
+@media (max-width: 700px) {
+  .palais .im-made { grid-template-columns: minmax(0, 1fr); }
+  .palais .im-plots { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* a made island on the World Map (WorldMap.tsx): the square painting,
+   centred in the map's frame, its rooms' islands to pick */
+.palais .wm-made-isle { --im-pink: #ff8fc8; --im-pink-deep: #ec4f9f; --sm-round: "Fredoka", ui-rounded, system-ui, sans-serif; position: relative; width: 100%; aspect-ratio: 960 / 640; max-height: calc(100cqh - 9rem); display: grid; place-items: center; background: radial-gradient(circle, #2d6fd0, #174ba8); overflow: hidden; }
+.palais .wm-made-isle .im-board { height: 100%; width: auto; max-width: 100%; aspect-ratio: 1; border-radius: 0; box-shadow: none; }
+.palais .wm-made-isle .im-placed { cursor: pointer; }
+
+/* the three steps: the room, its island, then the map */
+.palais .im-steps { display: flex; justify-content: center; gap: 0.4rem; margin: 0 0 0.2rem; padding: 0; list-style: none; counter-reset: none; }
+.palais .im-steps li { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem 0.3rem 0.3rem; border-radius: 999px; background: rgba(255, 255, 255, 0.7); box-shadow: inset 0 0 0 2px #efd9e8; font: 700 0.85rem/1 var(--sm-round); color: #a58ca1; white-space: nowrap; }
+.palais .im-steps li i { display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: #f3e4ee; font-style: normal; font-size: 0.8rem; color: #a58ca1; }
+.palais .im-steps li.is-now { background: #fff; color: var(--im-plum); box-shadow: 0 0 0 2px var(--im-pink), 0 3px 0 2px #e9bfd8; }
+.palais .im-steps li.is-now i { background: linear-gradient(180deg, #ffb8dc, var(--im-pink-deep)); color: #fff; }
+.palais .im-steps li.is-done { color: var(--im-plum); }
+.palais .im-steps li.is-done i { background: var(--im-sea-bright); color: #fff; }
+
+/* designing the island: the template (or the island) on the left, and what
+   comes over from the room, with anything more, on the right */
+.palais .im-island-step { display: flex; flex-direction: column; gap: 0.8rem; }
+.palais .im-island-step h3 { margin: 0; text-align: center; font: 700 1.35rem/1.1 var(--sm-round); color: var(--sm-ink); }
+.palais .im-island-cols { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 1rem; align-items: start; }
+.palais .im-island-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; padding: 0.8rem; border-radius: 26px; background: radial-gradient(70% 60% at 50% 45%, #fff, #e3f6ff 60%, #fbe4f1); box-shadow: 0 0 0 3px #fff, 0 0 0 6px rgba(79, 214, 240, 0.45), 0 10px 22px rgba(40, 40, 80, 0.18); }
+.palais .im-island-stage img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(40, 60, 90, 0.22)); animation: im-float 5s ease-in-out infinite; }
+.palais .im-island-stage.is-painting img { filter: saturate(0.4) blur(1px); opacity: 0.6; animation: none; }
+.palais .im-island-stage small { font: 600 0.75rem/1.3 var(--sm-round); color: #8a6f86; text-align: center; }
+.palais .im-island-form { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.palais .im-island-form .im-tray { min-height: 120px; }
+.palais .im-carried { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.7rem 0.8rem; border-radius: 20px; background: rgba(255, 255, 255, 0.85); box-shadow: inset 0 0 0 2px #efd9e8; }
+.palais .im-carried-label { font: 700 0.76rem/1 var(--sm-round); letter-spacing: 0.1em; text-transform: uppercase; color: var(--im-plum); }
+.palais .im-carried-row { display: flex; gap: 0.4rem; }
+.palais .im-carried-row img { width: 4.2rem; aspect-ratio: 1; object-fit: cover; border-radius: 12px; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #f2c45a; }
+.palais .im-carried-row img:first-child { width: 6.3rem; aspect-ratio: 3 / 2; }
+.palais .im-carried small { font: 500 0.82rem/1.35 var(--sm-round); color: #8a6f86; }
+.palais .im-island-doing { flex-direction: column; align-items: stretch; }
+.palais .im-another { align-self: center; }
+@media (max-width: 700px) {
+  .palais .im-island-cols { grid-template-columns: minmax(0, 1fr); }
+  .palais .im-island-stage { max-width: 22rem; margin: 0 auto; }
+  .palais .im-steps li { padding-right: 0.55rem; font-size: 0.76rem; }
+}
+@media (prefers-reduced-motion: reduce) { .palais .im-island-stage img { animation: none; } }
+
+/* the scenery on the island: dragged about, picked to size or flip */
+.palais .im-decor { position: absolute; padding: 0; border: none; background: none; cursor: grab; touch-action: none; transform-origin: 50% 92%; }
+.palais .im-decor:active { cursor: grabbing; }
+.palais .im-decor img { display: block; width: 100%; height: auto; pointer-events: none; user-select: none; -webkit-user-drag: none; filter: drop-shadow(0 2px 2px rgba(30, 20, 40, 0.3)); }
+.palais .im-decor--sky img { filter: none; }
+.palais .im-decor.is-picked img { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px var(--im-pink)); }
+.palais .im-decor:focus-visible { outline: 3px dashed #fff; outline-offset: 2px; }
+.palais .im-decor-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.6rem 0.7rem; border-radius: 18px; background: #fff0f7; box-shadow: inset 0 0 0 2px #f7c7e0; }
+.palais .im-decor-tools .sm-btn { padding: 0.45rem 0.8rem; font-size: 0.85rem; }
+.palais .im-size { display: flex; align-items: center; gap: 0.4rem; flex: 1 1 9rem; font: 700 0.78rem/1 var(--sm-round); color: var(--im-plum); text-transform: uppercase; letter-spacing: 0.08em; }
+.palais .im-size input { flex: 1; accent-color: var(--im-pink-deep); }
+
+/* the stand's two shelves */
+.palais .im-shelves { display: flex; gap: 0.4rem; }
+.palais .im-shelves button { flex: 1; padding: 0.5rem 0.7rem; border: none; border-radius: 999px; background: rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 0 2px #efd9e8; font: 700 0.9rem/1 var(--sm-round); color: var(--im-plum); cursor: pointer; }
+.palais .im-shelves button.is-on { background: #e6f5fb; color: #3f7895; box-shadow: inset 0 0 0 2px #9fd3ea; }
+.palais .im-scenery { display: flex; flex-direction: column; gap: 0.7rem; max-height: min(19rem, calc(100cqh - 37rem)); min-height: 9rem; overflow-y: auto; padding: 0.5rem; border-radius: 18px; background: rgba(79, 214, 240, 0.08); box-shadow: inset 0 0 0 2px rgba(79, 214, 240, 0.2); }
+.palais .im-scenery h4 { margin: 0 0 0.35rem; font: 700 0.76rem/1 var(--sm-round); letter-spacing: 0.1em; text-transform: uppercase; color: var(--im-plum); }
+.palais .im-scenery-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.6rem, 1fr)); gap: 0.45rem; }
+.palais .im-scenery-tile { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.35rem 0.25rem; border: none; border-radius: 14px; background: #fff; box-shadow: 0 0 0 2px #f2e4ee, 0 3px 0 2px #ead6e4; cursor: grab; transition: transform 140ms ease; }
+.palais .im-scenery-tile:hover,
+.palais .im-scenery-tile:focus-visible { outline: none; transform: translateY(-2px) rotate(-2deg); box-shadow: 0 0 0 2px var(--im-pink), 0 4px 0 2px #ead6e4; }
+.palais .im-scenery-tile img { width: 100%; height: 3rem; object-fit: contain; pointer-events: none; }
+.palais .im-scenery-tile span { font: 600 0.66rem/1.1 var(--sm-round); color: var(--im-plum); text-align: center; }
+/* no rooms built yet */
+.palais .im-none { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; padding: 1.1rem 1rem; border-radius: 18px; border: 2.5px dashed #ecc6de; background: rgba(255, 255, 255, 0.85); text-align: center; }
+.palais .im-none p { margin: 0; font: 600 0.95rem/1.4 var(--sm-round); color: var(--im-plum); }
+
 /* walking in, from the island */
 .palais .im-say { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .palais .im-say > span { flex: 1 1 12rem; }
@@ -8319,7 +8870,9 @@
 @media (prefers-reduced-motion: reduce) {
   .palais .im-easel,
   .palais .im-plot,
-  .palais .im-spark { animation: none; }
+  .palais .im-star,
+  .palais .im-cloud,
+  .palais .im-lid h2 img { animation: none; }
 }
 
 /* the game: green felt inside a frame of Ringlers' purple star cloth */

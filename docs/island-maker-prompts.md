@@ -1,16 +1,27 @@
 # The island maker's prompts
 
-The island maker at Brat Academy (`src/palais/IslandMaker.tsx`) builds a room
+The island maker at Brat Academy (`src/palais/IslandMaker.tsx`) has three tabs,
+visited in any order: Create room, Create island sticker, Create map. Nothing
+is made until Create, on the last one, which makes it all in this order. It
+builds a room
 from a visitor's photos and words, and that room's island for the map. A room
 and its island are one destination: one row in `palais_made_rooms`, its
 pictures listed by what they are.
 
 ```
-photos + description
-  → plan (Claude: the room spec)
-  → master room (the Palais's empty room template + the photos)   ← looked at, painted again until it's right
-  → its island (the master + the island template + the photos)
-  → 4 seasons × desktop and mobile (each season's template + the master + the photos)
+1. The room
+   photos + description
+     → plan (Claude: the room spec)
+     → master room (the Palais's empty room template + the photos)   ← painted again until it's right
+     → 4 seasons × desktop and mobile (each season's template + the master + the photos)
+2. Its island sticker
+   everything from the room + what's said of its outside + up to 3 more photos
+   + up to 6 pieces of scenery picked to be on it
+     → its island (the island template + the master + the photos + the scenery's pictures)
+3. On the map
+   the island goes on the plot picked on the open island map (palais_island_maps),
+   with the scenery set out on it; the World Map shows it after its own two
+   islands, and when its 8 plots are full the next map opens
 ```
 
 The prompts themselves live in `supabase/functions/palais-rooms/index.ts`
@@ -38,6 +49,14 @@ says what each one is for rather than repeating them:
   scale, rock and water every made island shares, so they sit together on the
   map. It can be painted again without touching the room.
 
+## The scenery
+
+`landscape_building_assets/` holds the stickers cut from the Dreamy
+Mediterranean asset sheet: sky (mountains, clouds, the sun), trees and palms,
+flowers, water and rocks, bridges and paths, and little buildings. They're
+listed, with their shelf and size, in `src/palais/islandScenery.ts`, and set
+out on the island from the stand's Scenery shelf.
+
 ## Later: an empty island to build on
 
 The island the rooms are set out on (`island_map_template.webp`) was painted
@@ -56,6 +75,13 @@ by hand. To let people paint their own, the prompt to start from:
 > apart, that read as natural open ground: no grey circles, numbers or
 > identical platforms. (Follow the placement guide if one is attached.) Build
 > nothing on it: no rooms, castles, houses or ruins, no labels, pins or UI.
+>
+> The attached scenery stickers (from `landscape_building_assets/`) are this
+> world's own trees, flowers, falls, rocks, bridges and skies: paint the
+> island's planting, coast and sky in exactly their style and species
+> (jacarandas, cherry blossom, umbrella pines, cypresses, palms,
+> bougainvillea, wisteria, hydrangeas, pale craggy rock, turquoise falls and
+> pools), so stickers set on the finished map belong to it.
 
 Its eight regions are then found by eye and written into `MAPS` in
 IslandMaker.tsx, as Sunset Isle's are. After people arrange their islands, a

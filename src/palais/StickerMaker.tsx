@@ -39,8 +39,8 @@ const ON_THE_DESK: Record<string, { x: number; base: number; w: number }> = {
   "portrait-autumn": { x: 0.31, base: 0.655, w: 0.11 },
   "portrait-winter": { x: 0.23, base: 0.655, w: 0.1 },
 };
-/** never closer to the left of the screen than this, in pixels: a narrow
-    window crops the left of the wide photograph, and the machine slides along
+/** on the wide photograph, never closer to the left of the screen than this,
+    in pixels: a narrow window crops the left of it, and the machine slides along
     the same row of desks under the windows until it's in view, and clear of
     the record player in the corner (RoomRadio.tsx) */
 const EDGE = 110;
@@ -49,7 +49,7 @@ const EDGE = 110;
 const NUDGE = 75;
 const deskOf = (img: HTMLImageElement) => {
   const tall = /school-portrait-(\w+)\.webp$/.exec(img.src);
-  return ON_THE_DESK[tall ? `portrait-${tall[1]}` : "wide"] ?? ON_THE_DESK.wide;
+  return { tall: !!tall, ...(ON_THE_DESK[tall ? `portrait-${tall[1]}` : "wide"] ?? ON_THE_DESK.wide) };
 };
 
 const NEW_SHELF = "+new";
@@ -85,7 +85,12 @@ export function StickerMaker() {
       const h = w * SHAPE;
       // its pill is wider than it is, and has to fit on screen too
       const pill = el.querySelector<HTMLElement>(".palais-stickermaker-hint")?.offsetWidth ?? 0;
-      const cx = Math.max(box.left + box.w * on.x, EDGE + Math.max(w, pill) / 2) + NUDGE;
+      // a tall photograph for a phone is the whole room, painted for it, so
+      // the machine keeps its own spot on the desk there (its pill kept on
+      // screen); only the wide one, cropped by a narrow window, slides along
+      const cx = on.tall
+        ? Math.max(box.left + box.w * on.x, Math.max(w, pill) / 2 + 8)
+        : Math.max(box.left + box.w * on.x, EDGE + Math.max(w, pill) / 2) + NUDGE;
       const base = box.top + box.h * on.base;
       el.style.width = `${w}px`;
       el.style.height = `${h}px`;

@@ -20,20 +20,30 @@ export type RoomDevice = (typeof DEVICES)[number];
 export const SEASON_ORDER: Season[] = ["spring", "summer", "autumn", "winter"];
 /** every picture a ready room has, in the order they're painted */
 export const ALL_PICTURES = ["master", "island", ...SEASON_ORDER.flatMap((s) => DEVICES.map((d) => `${s}-${d}`))];
+/** the room's seasons, painted from the master before its island is designed */
+export const SEASON_PICTURES = SEASON_ORDER.flatMap((s) => DEVICES.map((d) => `${s}-${d}`));
 
 export interface MadeRoom {
   id: string;
   name: string;
   description: string;
-  spec: { summary?: string; [k: string]: unknown };
+  /** the story its maker told of it */
+  story?: string;
+  spec: { summary?: string; blurb?: string; [k: string]: unknown };
   pictures: Record<string, string>;
+  /** what the maker said of its island */
+  island_notes?: string;
+  /** how many photos it was made from, and how many more its island had
+      (only the function says) */
+  photo_count?: number;
+  island_photo_count?: number;
   status: "planned" | "ready";
   made_by: string | null;
   made_by_name: string | null;
   created_at: string;
 }
 
-const COLUMNS = "id, name, description, spec, pictures, status, made_by, made_by_name, created_at";
+const COLUMNS = "id, name, description, story, spec, pictures, status, made_by, made_by_name, created_at";
 
 let rooms: MadeRoom[] = [];
 let version = 0;
@@ -83,6 +93,23 @@ export function useMadeRooms() {
 export const readyRooms = () => rooms.filter((r) => r.status === "ready");
 export const roomById = (id: string) => rooms.find((r) => r.id === id);
 
+/** the signed-in member's own id, to tell their rooms from everyone else's */
+export function useMyId(signedIn: boolean) {
+  const [id, setId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!signedIn || !dbConfigured) return setId(null);
+    let gone = false;
+    db()
+      .then((sb) => sb.auth.getSession())
+      .then(({ data }) => !gone && setId(data.session?.user.id ?? null))
+      .catch(() => {});
+    return () => {
+      gone = true;
+    };
+  }, [signedIn]);
+  return id;
+}
+
 /** walk into a made room */
 export function goMade(id: string) {
   window.location.hash = `made/${id}`;
@@ -108,15 +135,17 @@ async function call<T>(body: Record<string, unknown>): Promise<T> {
 }
 
 /** send the photos and words to be planned into a room, or hear why not */
-export async function planRoom(name: string, description: string, photos: { image: string; type: string }[]) {
-  const got = await call<{ ok: true; room: MadeRoom } | { ok: false; why: string }>({ plan: { name, description, photos } });
+export async function planRoom(name: string, description: string, photos: { image: string; type: string }[], story = "") {
+  const got = await call<{ ok: true; room: MadeRoom } | { ok: false; why: string }>({ plan: { name, description, story, photos } });
   if (got.ok) put(got.room);
   return got;
 }
 
-/** paint one picture of a room: "master", "island", or "<season>-<desktop|mobile>" */
-export async function paintRoom(id: string, what: string) {
-  const got = await call<{ room: MadeRoom }>({ draw: { room: id, what } });
+/** paint one picture of a room: "master", "island", or "<season>-<desktop|mobile>";
+    the island with what's said of it, any more photos for it, and the
+    scenery picked to be on it */
+export async function paintRoom(id: string, what: string, island?: { notes: string; photos: { image: string; type: string }[]; scenery: string[] }, changes?: string) {
+  const got = await call<{ room: MadeRoom }>({ draw: { room: id, what, ...(island ? { island } : {}), ...(changes ? { changes } : {}) } });
   put(got.room);
   return got.room;
 }

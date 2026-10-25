@@ -8,6 +8,9 @@ import { Globe, onWorld } from "./Globe";
 import { currentSeason, type Season } from "./seasons";
 import { usePortrait } from "./PortraitTerrace";
 import { SCENERY, Scenery, sceneMiddle, sceneReach } from "./MapScenery";
+import { MapPainting } from "./IslandMaker";
+import { templateOf, useIslandMaps } from "./islandMaps";
+import { goMade, useMadeRooms } from "./madeRooms";
 
 /**
  * The map, like the level select in a storybook game: an
@@ -19,6 +22,10 @@ import { SCENERY, Scenery, sceneMiddle, sceneReach } from "./MapScenery";
  * along it to whichever stop is picked. The path starts at
  * home, the Palais, then the Lakehouse, and loops once round the island, so
  * the arrow keys walk it.
+ *
+ * Past the second island come the islands everyone builds at Brat Academy's
+ * island maker (IslandMaker.tsx, islandMaps.ts): each an empty painted island
+ * with the made rooms' own islands on its plots, to pick and walk into.
  */
 
 interface Stop {
@@ -606,6 +613,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
     if (!open) return;
     const at = STOPS.findIndex((s) => s.room === place);
     setHere(at >= 0 ? at : 0);
+    setMadeIsle(null);
   }, [open, place]);
   /* the year the room is having, so a stop painted four times shows the right
      one. It is read from the season animations themselves, the same way the
@@ -629,7 +637,23 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   // which island is in view: the map slides down to the second one when
   // Honeysuckle hops there, or when the arrow is pressed
   const isle = isleOf(STOPS[here] ?? STOPS[0]);
-  const crossTo = (to: 0 | 1) => setHere(STOPS.findIndex((s) => isleOf(s) === to));
+  const crossTo = (to: 0 | 1) => {
+    setMadeIsle(null);
+    setHere(STOPS.findIndex((s) => isleOf(s) === to));
+  };
+  /* the made islands, past the second: which one's in view (null: one of
+     the two painted ones), and which room's island is picked on it */
+  const madeMaps = useIslandMaps();
+  const madeRooms = useMadeRooms();
+  const madeById = useMemo(() => new Map(madeRooms.map((r) => [r.id, r])), [madeRooms]);
+  const [madeIsle, setMadeIsle] = useState<number | null>(null);
+  const [madePick, setMadePick] = useState<string | null>(null);
+  const madeMap = madeIsle !== null ? madeMaps[Math.min(madeIsle, madeMaps.length - 1)] : null;
+  const madeRoom = madePick ? madeById.get(madePick) : undefined;
+  const toMade = (i: number | null) => {
+    setMadeIsle(i);
+    setMadePick(null);
+  };
   const spots = useMemo(
     () =>
       STOPS.map((s) => ({
@@ -681,6 +705,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
   /** click anywhere: Honeysuckle hops to the nearest place; click the place
       she's already at to go there */
   const pick = (i: number) => {
+    setMadeIsle(null);
     const st = STOPS[i];
     if (i === here && st.room && st.room !== place) {
       go(st.room);
@@ -876,6 +901,21 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           {globe ? (
             <Globe spots={spots} here={here} onPick={setHere} />
           ) : (
+          <>
+          {/* the made islands, one under another below the painted two: the
+              column slides up over them the way the map slides from the first
+              island to the second */}
+          <div
+            className="wm-made-column"
+            style={{ transform: `translateY(${madeIsle === null ? 100 : -madeIsle * 100}%)` }}
+            aria-hidden={madeIsle === null}
+          >
+            {madeMaps.map((m, i) => (
+              <div key={m.n} className="wm-made-isle" aria-hidden={madeIsle !== i}>
+                <MapPainting map={m} rooms={madeById} pickedPlot={madeIsle === i && madeRoom ? Number(Object.keys(m.plots).find((k) => m.plots[k] === madeRoom.id)) : null} onIsland={(_, r) => setMadePick(r.id)} />
+              </div>
+            ))}
+          </div>
           <svg
             ref={mapSvg}
             className="wm-map"
@@ -1157,9 +1197,33 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             </g>
             </g>
           </svg>
+          </>
           )}
-          {/* the way to the other island */}
-          {!globe &&
+          {/* the way to the other islands, side by side in the corner: back,
+              then on down past the second to the made ones */}
+          <div className="wm-isle-arrows">
+          {!globe && madeMap ? (
+            <>
+              <button type="button" className="wm-isle-arrow wm-isle-arrow--up" onClick={() => (madeIsle! > 0 ? toMade(madeIsle! - 1) : crossTo(1))}>
+                <span aria-hidden>▲</span> Back 🌴
+              </button>
+              {madeIsle! < madeMaps.length - 1 && (
+                <button type="button" className="wm-isle-arrow wm-isle-arrow--down" onClick={() => toMade(madeIsle! + 1)} aria-label="To the next island">
+                  <span aria-hidden>▼</span> Next 🏝
+                </button>
+              )}
+            </>
+          ) : !globe && isle === 1 ? (
+            <>
+              <button type="button" className="wm-isle-arrow wm-isle-arrow--up" onClick={() => crossTo(0)}>
+                <span aria-hidden>▲</span> <span className="wm-isle-long">Back home 🏠</span><span className="wm-isle-short">Back 🏠</span>
+              </button>
+              <button type="button" className="wm-isle-arrow wm-isle-arrow--down" onClick={() => toMade(0)} aria-label="To the islands built at Brat Academy">
+                <span aria-hidden>▼</span> Next 🏝
+              </button>
+            </>
+          ) : (
+            !globe &&
             (isle === 0 ? (
               <button type="button" className="wm-isle-arrow wm-isle-arrow--down" onClick={() => crossTo(1)} aria-label="To the next island">
                 <span aria-hidden>▼</span> Next 🌴
@@ -1168,7 +1232,9 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
               <button type="button" className="wm-isle-arrow wm-isle-arrow--up" onClick={() => crossTo(0)}>
                 <span aria-hidden>▲</span> <span className="wm-isle-long">Back home 🏠</span><span className="wm-isle-short">Back 🏠</span>
               </button>
-            ))}
+            ))
+          )}
+          </div>
         </div>
 
         <div
@@ -1176,6 +1242,48 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           aria-live="polite"
           style={{ backgroundImage: `linear-gradient(rgba(255, 252, 244, 0.93), rgba(251, 243, 232, 0.95)), url("${floralSrc(cardPaper.now)}")` }}
         >
+          {madeMap ? (
+            <>
+              <div className="wm-card-body">
+                <figure className="wm-peek">
+                  <img key={madeRoom?.id ?? `isle-${madeMap.n}`} src={madeRoom?.pictures["spring-desktop"] ?? madeRoom?.pictures.master ?? templateOf(madeMap).src} alt={madeRoom ? `A look inside ${madeRoom.name}` : ""} decoding="async" />
+                </figure>
+                <div className="wm-card-head">
+                  <h3>{madeRoom ? madeRoom.name : `Island ${madeMap.n + 2}`}</h3>
+                  <p className="wm-tag">
+                    {madeRoom
+                      ? `Made by ${madeRoom.made_by_name?.split(" ")[0] ?? "a member"} at Brat Academy`
+                      : `${Object.keys(madeMap.plots).length} of ${templateOf(madeMap).plots.length} plots built${madeMap.full ? "" : " · still filling"}`}
+                  </p>
+                </div>
+                <p className="wm-blurb">
+                  {madeRoom
+                    ? madeRoom.spec?.blurb || madeRoom.story || madeRoom.spec?.summary || madeRoom.description
+                    : "An island built by the members of the Palais, one room at a time, at Brat Academy's island maker. Pick a room's island to look inside."}
+                </p>
+                <div className="wm-flourish" aria-hidden>
+                  ✦
+                </div>
+              </div>
+              <div className="wm-actions">
+                {madeRoom ? (
+                  <button
+                    type="button"
+                    className="wm-btn wm-btn--visit"
+                    onClick={() => {
+                      onClose();
+                      goMade(madeRoom.id);
+                    }}
+                  >
+                    Visit {madeRoom.name} ✿
+                  </button>
+                ) : (
+                  <p className="wm-soon">{Object.keys(madeMap.plots).length ? "Pick an island to visit it" : "Build a room at Brat Academy to put it here"}</p>
+                )}
+              </div>
+            </>
+          ) : (
+          <>
           {/* the words scroll if they must; the buttons below always stay in view */}
           <div className="wm-card-body">
           <figure className={`wm-peek${portrait && stop.seasons ? " wm-peek--tall" : ""}`}>
@@ -1230,6 +1338,8 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
             </button>
           </div>
           </div>
+          </>
+          )}
         </div>
       </div>
     </div>
