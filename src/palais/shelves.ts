@@ -243,6 +243,7 @@ export const SHELVES: Shelf[] = [
       "book_madeleine_ludwig_bemelmans_hardcover_sticker",
       "book_no_one_belongs_here_more_than_you_miranda_july_sticker",
       "book_no_one_belongs_here_more_than_you_miranda_july_lying_down_sticker",
+      "book_witchy_moon_phases_purple_galaxy_clasp_sticker",
     ],
   },
   {

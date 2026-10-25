@@ -185,6 +185,11 @@ export const PROPS = catalogue({
     plane: "near",
     metres: 0.24,
   },
+  book_witchy_moon_phases_purple_galaxy_clasp_sticker: {
+    label: "a spellbook of moon phases, purple galaxy cover and a brass clasp",
+    plane: "near",
+    metres: 0.26,
+  },
   book_everybodys_story_loyal_rue_hardcover_sticker: {
     label: "Everybody's Story, in its dust jacket",
     plane: "near",
