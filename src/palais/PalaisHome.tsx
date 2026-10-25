@@ -18,6 +18,7 @@ import { LOOSE } from "./decor";
 import { useMadeStickers } from "./madeStickers";
 import { StickerMaker } from "./StickerMaker";
 import { IslandMaker } from "./IslandMaker";
+import { DollyMaker } from "./DollyMaker";
 import type { PropId } from "./props";
 import { ArrangedRoom } from "./arrangement";
 import { ArrangedBox } from "./ArrangedBox";
@@ -387,6 +388,8 @@ export default function PalaisHome() {
           <StickerMaker />
           {/* and the island maker beside it, a globe that opens on its stand */}
           <IslandMaker />
+          {/* and the Dolly Maker on the desks above the two, a dress-up studio */}
+          <DollyMaker />
           {/* the pool table in the Crystal Ballroom, a drum machine in billiard balls */}
           <CrystalPool />
           {/* and the spellbook on its stage, with a story in it */}

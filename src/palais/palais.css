@@ -8609,6 +8609,127 @@
 .palais .im-scenery::-webkit-scrollbar-thumb,
 .palais .im-pick-scenery .im-scenery-row::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffb3d9, #ec6fae); border-radius: 999px; border: 2px solid #fbe8f2; }
 
+/* ---- Brat Academy's Dolly Maker (DollyMaker.tsx) ------------------------- */
+/* the studio above the other two machines, lifting the same way, its pill
+   in the title's gold */
+/* its longer second line wraps onto two, rather than running off the desk */
+.palais .palais-dollymaker .palais-stickermaker-hint small { white-space: normal; max-width: 15em; text-align: center; }
+.palais .palais-dollymaker .palais-stickermaker-hint { background: linear-gradient(180deg, #ffe58a, #f5bf2f); box-shadow: 0 3px 0 #c08a12, 0 8px 16px rgba(120, 80, 10, 0.3); color: #7a3e10; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); animation-delay: -1.5s; }
+.palais .palais-dollymaker .palais-stickermaker-hint small { color: #8a5418; }
+.palais .palais-dollymaker:hover,
+.palais .palais-dollymaker:focus-visible { filter: drop-shadow(0 12px 14px rgba(60, 30, 40, 0.4)) drop-shadow(0 0 14px rgba(255, 190, 220, 0.85)); }
+/* the studio, opened: the island maker's panel in the Dolly Maker's colours,
+   pink and mint and gold over a candy-striped floor */
+.palais .dm-panel {
+  --im-sea-bright: #f7a8cf;
+  --im-gold: #f2c45a;
+  background:
+    radial-gradient(circle at 18% 12%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 74% 7%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(38% 22% at 50% 9%, rgba(255, 236, 190, 0.85), transparent 70%),
+    linear-gradient(180deg, #fde7f3 0%, #e8f7f1 26%, transparent 46%),
+    repeating-linear-gradient(90deg, rgba(255, 214, 232, 0.35) 0 22px, transparent 22px 44px),
+    linear-gradient(180deg, #fff8fb, #fdeff5);
+  box-shadow: 0 0 0 3px #f7a8cf, 0 0 0 7px rgba(255, 255, 255, 0.9), 0 0 26px 8px rgba(255, 190, 220, 0.5), 0 22px 60px rgba(60, 30, 50, 0.35);
+}
+.palais .dm-panel::after { background: radial-gradient(circle at 50% 0, #fff 0 9px, transparent 10px) 0 -3px / 26px 14px repeat-x, linear-gradient(180deg, #b6ead8, #7fd3c0 70%, #5cbfa8); }
+.palais .dm-panel .im-lid h2 { max-width: min(460px, 80%); }
+.palais .dm-side-dot--design { background: radial-gradient(circle at 35% 30%, #fff3f9, #ffc6e0); }
+.palais .dm-side-dot--style { background: radial-gradient(circle at 35% 30%, #fff, #c9f0e2); }
+.palais .dm-side-dot--shelf { background: radial-gradient(circle at 35% 30%, #fff8e1, #ffd98a); }
+.palais .im-sides button:disabled { opacity: 0.45; cursor: default; }
+
+/* design: the photos and their roles; the words */
+.palais .dm-design { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.1rem; align-items: stretch; }
+/* the six photo boxes: the person's big on the left, the rest two by two */
+.palais .dm-slots { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
+.palais .dm-slot { display: flex; flex-direction: column; gap: 0.3rem; min-height: 0; }
+.palais .dm-slot--main { grid-row: span 3; }
+.palais .dm-slot-box {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 4.5rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 2.5px dashed #f2b8d6;
+  background: radial-gradient(70% 80% at 50% 45%, #fff6d9, #ffd9e9);
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+.palais .dm-slot--main .dm-slot-box { border-color: #ec8fbd; background: radial-gradient(70% 70% at 50% 40%, #fff3c4, #ffc7a1 55%, #ff9fbf); box-shadow: 0 0 0 3px #f2c45a, 0 0 0 6px #fff, 0 0 18px rgba(255, 190, 110, 0.5); }
+.palais .dm-slot-box:hover,
+.palais .dm-slot.is-over .dm-slot-box { transform: scale(1.02); border-color: #ec6fae; }
+.palais .dm-slot.has-photo .dm-slot-box { border-style: solid; background: #fff; }
+.palais .dm-slot-box img { width: 100%; height: 100%; object-fit: cover; }
+.palais .dm-slot-empty { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; padding: 0.4rem; text-align: center; color: var(--im-plum); }
+.palais .dm-slot-empty i { font-style: normal; font-size: 1.5rem; }
+.palais .dm-slot--main .dm-slot-empty i { font-size: 2.6rem; }
+.palais .dm-slot-empty b { font: 700 0.82rem/1.15 var(--sm-round); }
+.palais .dm-slot--main .dm-slot-empty b { font-size: 1.05rem; }
+.palais .dm-slot-empty small { font: 500 0.72rem/1.2 var(--sm-round); color: #8a6f86; }
+.palais .dm-slot-plus { color: #d6337f !important; font-weight: 700 !important; }
+.palais .dm-slot-x { position: absolute; top: 5px; right: 5px; width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 2px solid #fff; background: var(--sm-hot); color: #fff; font: 700 1rem/1 var(--sm-round); cursor: pointer; box-shadow: 0 2px 4px rgba(60, 30, 50, 0.3); }
+.palais .dm-slot select { padding: 0.25rem 0.4rem; border: 2px solid #f1d3e3; border-radius: 10px; background: #fff9fc; font: 600 0.72rem/1.2 var(--sm-round); color: var(--im-plum); }
+.palais .dm-slots-say { margin: 0; align-self: center; padding: 0.6rem; border-radius: 16px; background: rgba(255, 255, 255, 0.7); font: 600 0.75rem/1.35 var(--sm-round); color: #8a6f86; text-align: center; }
+@media (max-width: 760px) {
+  .palais .dm-slots { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+  .palais .dm-slot--main { grid-row: auto; grid-column: span 2; }
+  .palais .dm-slot--main .dm-slot-box { min-height: 12rem; }
+  .palais .dm-slot-box { min-height: 6rem; }
+}
+.palais .dm-roles { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: 0.5rem; }
+.palais .dm-role { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.4rem; border-radius: 16px; background: linear-gradient(#fff, #fff) padding-box, linear-gradient(120deg, #ffc2e0, #ffe6a3 35%, #bdeedc 65%, #b5e4f7) border-box; border: 2px solid transparent; }
+.palais .dm-role img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 11px; }
+.palais .dm-role select { padding: 0.3rem 0.4rem; border: 2px solid #f1d3e3; border-radius: 10px; background: #fff9fc; font: 600 0.75rem/1.2 var(--sm-round); color: var(--im-plum); }
+
+/* style: the doll on its stage, its plan, and what to change */
+.palais .dm-style { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 1.1rem; align-items: stretch; }
+.palais .dm-stage { position: relative; min-height: 0; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 0.8rem; border-radius: 26px; border: 3px solid transparent; background: radial-gradient(70% 60% at 50% 45%, #fff, #fde3f0 60%, #e2f6ef) padding-box, linear-gradient(120deg, #ff9ccf, #ffd36e 35%, #8fe3c6 65%, #7fd3f5) border-box; box-shadow: 0 10px 22px rgba(60, 30, 50, 0.14); }
+.palais .dm-stage > img { flex: 1 1 auto; min-height: 0; width: 100%; object-fit: contain; filter: drop-shadow(0 10px 12px rgba(60, 30, 50, 0.25)); }
+.palais .dm-stage.is-painting > img { filter: saturate(0.5) blur(1px); opacity: 0.6; }
+.palais .dm-versions { display: flex; gap: 0.4rem; margin: 0; padding: 0; list-style: none; overflow-x: auto; max-width: 100%; }
+.palais .dm-versions button { width: 2.8rem; height: 3.8rem; padding: 0.15rem; border: 2px solid #f1d3e3; border-radius: 10px; background: #fff; cursor: pointer; }
+.palais .dm-versions button.is-on { border-color: #ec6fae; box-shadow: 0 0 0 2px #fbd1e6; }
+.palais .dm-versions img { width: 100%; height: 100%; object-fit: contain; }
+.palais .dm-plan { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0.8rem 1rem; border-radius: 22px; border: 3px solid transparent; background: linear-gradient(#fffdfb, #fffdfb) padding-box, linear-gradient(120deg, #ff9ccf, #ffd36e 35%, #8fe3c6 65%, #7fd3f5) border-box; }
+.palais .dm-plan h3 { margin: 0 0 0.5rem; font: 700 1.25rem/1.1 var(--sm-round); color: var(--im-plum); }
+.palais .dm-plan dl { margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.palais .dm-plan dl div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.5rem; }
+.palais .dm-plan dt { font: 700 0.78rem/1.3 var(--sm-round); color: var(--im-plum); }
+.palais .dm-plan dd { margin: 0; font: 500 0.82rem/1.35 var(--sm-round); color: #6b5b6b; }
+.palais .dm-asks { margin: 0.6rem 0 0; font: 600 0.82rem/1.35 var(--sm-round); color: #b23a78; }
+/* the locks, two rows of four under their label */
+.palais .dm-locks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.35rem; font: 700 0.78rem/1 var(--sm-round); color: var(--im-plum); }
+.palais .dm-locks > span { grid-column: 1 / -1; }
+.palais .dm-locks button { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.palais .dm-locks button { padding: 0.35rem 0.6rem; border: 2px solid #f1d3e3; border-radius: 999px; background: #fff; font: 600 0.78rem/1 var(--sm-round); color: #8a6f86; cursor: pointer; }
+.palais .dm-locks button.is-on { border-color: #ec8fbd; background: #fdeef5; color: #8a3e66; }
+/* the right columns run the full height, beside the stage */
+.palais .dm-style > .im-col { min-height: 0; }
+.palais .dm-shelf { justify-content: stretch; }
+.palais .dm-shelf > .im-none { flex: 1 1 auto; justify-content: center; }
+.palais .dm-shelf-card { display: flex; flex-direction: column; gap: 0.8rem; justify-content: center; }
+.palais .dm-shelf-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.45rem; font: 600 0.88rem/1.35 var(--sm-round); color: #6b5b6b; }
+/* a tab's controls, there before its turn, greyed out */
+.palais .dm-waiting { opacity: 0.55; }
+.palais .dm-waiting :is(input, textarea, button, label) { cursor: not-allowed; }
+.palais .dm-stage-say { font: 600 0.8rem/1.3 var(--sm-round); color: #8a6f86; text-align: center; }
+.palais .dm-faded { opacity: 0.45; filter: saturate(0.6); }
+.palais .dm-edit { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 0.7rem; align-items: stretch; }
+.palais .dm-edit .im-tray { min-height: 0; height: 100%; padding: 0.5rem; }
+.palais .dm-edit .sm-tray-say { font-size: 0.82rem; gap: 0.4rem; }
+.palais .dm-edit .sm-tray-icon { width: 34px; height: 28px; }
+.palais .dm-plan { flex: 1 1 auto; }
+.palais .dm-ghost { flex: 1; display: grid; place-items: center; font-size: 6rem; opacity: 0.35; filter: grayscale(0.3); }
+.palais .dm-note { margin: 0; font: 600 0.9rem/1.4 var(--sm-round); color: var(--im-plum); }
+@media (max-width: 760px) {
+  .palais .dm-design,
+  .palais .dm-style { grid-template-columns: minmax(0, 1fr); }
+  .palais .dm-stage > img { max-height: 22rem; }
+}
+
 /* the island sticker tab, in two even columns: the template and the scenery
    for it, then the photos and words */
 .palais .im-island-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }

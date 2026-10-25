@@ -71,7 +71,7 @@ export interface Finished {
  * The model's PNG, made into a finished sticker, or an error saying why it
  * couldn't be (no clean cutout, or nothing left).
  */
-export async function finishSticker(png: string, glass: boolean): Promise<Finished> {
+export async function finishSticker(png: string, glass: boolean, longest = LONGEST): Promise<Finished> {
   const img = await loadImage(`data:image/png;base64,${png}`);
   const W = img.naturalWidth;
   const H = img.naturalHeight;
@@ -171,8 +171,9 @@ export async function finishSticker(png: string, glass: boolean): Promise<Finish
   const bh = y1 - y0 + 1;
   const pad = Math.round(Math.max(bw, bh) * MARGIN);
 
-  /* 5. sized so the longest side is LONGEST, never scaled up */
-  const k = Math.min(1, LONGEST / (Math.max(bw, bh) + pad * 2));
+  /* 5. sized so the longest side is `longest` (LONGEST, or the cast's own
+        height for a made doll), never scaled up */
+  const k = Math.min(1, longest / (Math.max(bw, bh) + pad * 2));
   const out = document.createElement("canvas");
   out.width = Math.round((bw + pad * 2) * k);
   out.height = Math.round((bh + pad * 2) * k);

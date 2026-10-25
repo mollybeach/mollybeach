@@ -187,7 +187,7 @@ export function IslandMaker() {
     const stage = el?.closest<HTMLElement>(".palais-stage");
     if (!el || !stage || !here) return;
     const fit = () => {
-      const other = stage.querySelector<HTMLElement>(".palais-stickermaker:not(.palais-islandmaker)");
+      const other = stage.querySelector<HTMLElement>(".palais-stickermaker:not(.palais-islandmaker):not(.palais-dollymaker)");
       if (!other || other.style.visibility !== "visible") return;
       const w = other.offsetWidth * SIZE;
       const h = w * SHAPE;
@@ -260,7 +260,7 @@ const AT_ONCE = 2;
 const ROOM_PICTURES = ["master", ...SEASON_PICTURES];
 const pictureName = (w: string) => w.replace(/^(\w+)-(\w+)$/, (_, s: string, d: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)} · ${d === "desktop" ? "computer" : "phone"}`);
 
-type Photo = { b64: string; type: string; preview: string };
+export type Photo = { b64: string; type: string; preview: string };
 
 /** everything put in across the three tabs, before Create makes it */
 interface Draft {
@@ -594,12 +594,12 @@ function Machine({ onClose }: { onClose: () => void }) {
 }
 
 /** who may make things: anyone may look; members make */
-function Door({ member }: { member: boolean | null }) {
+export function Door({ member, say = "Creating rooms is for members of the Palais. Sign in, and once you're accepted your photos can become a room anyone can walk into, with its own island on the map." }: { member: boolean | null; say?: string }) {
   const { me, busy, signIn } = useAccount();
   if (!me)
     return (
       <div className="im-door-note">
-        <p>Creating rooms is for members of the Palais. Sign in, and once you're accepted your photos can become a room anyone can walk into, with its own island on the map.</p>
+        <p>{say}</p>
         <button type="button" className="sm-btn sm-btn--go" onClick={signIn} disabled={busy}>
           {busy ? "Signing in…" : "Sign in with Google"}
         </button>
@@ -620,7 +620,7 @@ function Door({ member }: { member: boolean | null }) {
   return null;
 }
 
-function useTaker(set: (f: (p: Photo[]) => Photo[]) => void, have: number, most: number) {
+export function useTaker(set: (f: (p: Photo[]) => Photo[]) => void, have: number, most: number) {
   const [trouble, setTrouble] = useState<string | null>(null);
   const take = async (files: FileList | null | undefined) => {
     if (!files?.length) return;
@@ -1318,7 +1318,7 @@ function Creating({ run, room, onAgain, onBack, onVisit, onNew }: { run: Run; ro
 
 /** the stars and clouds round the panel, drawn like the machine's: puffy
     white clouds and soft four-pointed stars that glow gold */
-function Twinkles() {
+export function Twinkles() {
   const star = "M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z";
   return (
     <div className="im-twinkles" aria-hidden>
@@ -1334,9 +1334,27 @@ function Twinkles() {
   );
 }
 
+/** photos pasted anywhere while the tray's showing go in it (as long as a
+    picture's what was pasted: pasting words into a box is left alone) */
+export function usePastedPhotos(take: (files: FileList) => void) {
+  const latest = useRef(take);
+  latest.current = take;
+  useEffect(() => {
+    const onPaste = (e: ClipboardEvent) => {
+      const files = e.clipboardData?.files;
+      if (!files?.length || !Array.from(files).some((f) => /^image\//.test(f.type))) return;
+      e.preventDefault();
+      latest.current(files);
+    };
+    document.addEventListener("paste", onPaste);
+    return () => document.removeEventListener("paste", onPaste);
+  }, []);
+}
+
 /** a tray to drop photos in, glowing like the orb inside the globe */
-function PhotoTray({ photos, most, onTake, onDrop, disabled, say }: { photos: Photo[]; most: number; onTake: (files: FileList | null | undefined) => void; onDrop: (n: number) => void; disabled: boolean; say: string }) {
+export function PhotoTray({ photos, most, onTake, onDrop, disabled, say }: { photos: Photo[]; most: number; onTake: (files: FileList | null | undefined) => void; onDrop: (n: number) => void; disabled: boolean; say: string }) {
   const [over, setOver] = useState(false);
+  usePastedPhotos((files) => !disabled && onTake(files));
   return (
     <label
       className={`sm-tray im-tray${over ? " is-over" : ""}${photos.length ? " has-photo" : ""}`}
@@ -1377,7 +1395,7 @@ function PhotoTray({ photos, most, onTake, onDrop, disabled, say }: { photos: Ph
         <span className="sm-tray-say">
           <span className="sm-tray-icon" aria-hidden />
           <span>
-            {say}, or press to <span className="sm-upload">upload them</span>
+            {say}, paste them in, or press to <span className="sm-upload">upload them</span>
           </span>
         </span>
       )}

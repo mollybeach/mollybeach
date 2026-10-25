@@ -7,6 +7,7 @@ import { fileSticker, makeSticker, useMadeStickers, type Draft } from "./madeSti
 import { finishSticker, shrinkPhoto, type Finished } from "./stickerCut";
 import { useAccount } from "../components/AccountCard";
 import { amIAccepted, askForReview, noteDoing } from "./visits";
+import { usePastedPhotos } from "./IslandMaker";
 
 /**
  * The sticker maker at Brat Academy: a lime and pink Create-A-Sticker Mini on a
@@ -185,6 +186,8 @@ function Machine({ onClose }: { onClose: () => void }) {
       setTrouble(e instanceof Error ? e.message : String(e));
     }
   }, []);
+  // a photo pasted while the machine's open goes in the tray
+  usePastedPhotos((files) => stage.at === "tray" && take(Array.from(files).find((f) => /^image\//.test(f.type))));
 
   /* turn the knob */
   const make = useCallback(async () => {
@@ -376,7 +379,7 @@ function Machine({ onClose }: { onClose: () => void }) {
                     <span className="sm-tray-say">
                       <span className="sm-tray-icon" aria-hidden />
                       <span>
-                        Drop a photo in the tray, or press to{" "}
+                        Drop or paste a photo in the tray, or press to{" "}
                         <span className="sm-upload">
                           Upload one
                           <svg viewBox="0 0 24 24" aria-hidden>
