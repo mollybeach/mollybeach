@@ -38,10 +38,38 @@ export interface SavedLayout extends SeasonLayout {
 let client: Promise<SupabaseClient> | undefined;
 export function db(): Promise<SupabaseClient> {
   if (!dbConfigured) return Promise.reject(new Error("Supabase isn't set up"));
-  client ??= import("@supabase/supabase-js").then(({ createClient }) =>
-    createClient(URL!, KEY!, { auth: { persistSession: true, storageKey: "palais-auth" } }),
-  );
+  client ??= import("@supabase/supabase-js").then(({ createClient }) => {
+    const sb = createClient(URL!, KEY!, { auth: { persistSession: true, storageKey: "palais-auth" } });
+    // back from signing in: once the session has been read off the address,
+    // put the room back in it (signInWith)
+    sb.auth.getSession().finally(backInTheRoom);
+    return sb;
+  });
   return client;
+}
+
+/* ---- staying in the room through a sign-in ------------------------------ */
+
+/* The provider sends the browser back with the session in the address's
+   #fragment, which is where the room is kept too (#school, #boudoir…), so the
+   room is lost and the sign-in lands on the terrace. So the room is put aside
+   before leaving, the provider is asked to come back to the page itself, and
+   the room goes back in the address once the session has been read. */
+const BACK_TO = "palais-back-to";
+
+function backInTheRoom() {
+  let room: string | null = null;
+  try {
+    room = sessionStorage.getItem(BACK_TO);
+    sessionStorage.removeItem(BACK_TO);
+  } catch {
+    return;
+  }
+  if (!room) return;
+  const now = window.location.hash;
+  if (now && !/access_token|error=|code=/.test(now)) return;   // they've moved on since
+  window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}${room}`);
+  window.dispatchEvent(new HashChangeEvent("hashchange"));
 }
 
 const TABLE = "palais_layouts";
@@ -179,7 +207,8 @@ export async function signOut(): Promise<void> {
  * Sign in through a provider (Google, Apple). The password never touches this
  * site: the browser is handed off to the provider's own page and comes back
  * with a session, which onAuthStateChange picks up. `back` is where to return
- * to — the dresser's own address, so the sign-in lands where it started.
+ * to — the dresser's own address, so the sign-in lands where it started (its
+ * room put aside and put back, as backInTheRoom does).
  *
  * This needs the provider turned on in the Supabase dashboard (Auth →
  * Providers) with its client id and secret, and this site's address in the
@@ -190,11 +219,18 @@ export type Provider = "google" | "apple";
 
 export async function signInWith(provider: Provider, back?: string): Promise<void> {
   const sb = await db();
+  // the room you're in goes aside for the trip, and comes back with you
+  const to = new window.URL(back ?? window.location.href);
+  try {
+    if (to.hash) sessionStorage.setItem(BACK_TO, to.hash);
+    else sessionStorage.removeItem(BACK_TO);
+  } catch {
+    /* no storage: you'll come back to the terrace */
+  }
+  to.hash = "";
   const { error } = await sb.auth.signInWithOAuth({
     provider,
-    options: {
-      redirectTo: back ?? (typeof window !== "undefined" ? window.location.href : undefined),
-    },
+    options: { redirectTo: to.toString() },
   });
   if (error) throw new Error(error.message);
 }
