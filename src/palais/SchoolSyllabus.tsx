@@ -430,7 +430,7 @@ export function SchoolSyllabus() {
                           style={{ left: d.left, top: d.top, width: d.size, animationDelay: `${d.delay}s` }}
                         />
                       ))}
-                      <img className="sc-hero-logo" src={`${process.env.PUBLIC_URL}/loading-screen/bratcode.webp`} alt="Brat Code" />
+                      <img className="sc-hero-logo" src={`${process.env.PUBLIC_URL}/palais/loading-screen/bratcode.webp`} alt="Brat Code" />
                       <div className="sc-hero-bar" aria-hidden>
                         <i />
                       </div>

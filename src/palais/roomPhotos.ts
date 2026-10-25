@@ -55,14 +55,14 @@ const PLACE_FOLDER: Record<string, string> = {
 /** the picture on a room's card on the world map, kept with the room
     (`stop_card/stop_card_school.webp`, or by season, `stop_card_garden-spring`) */
 export function stopCardPicture(place: string, which = "") {
-  return `${process.env.PUBLIC_URL}/palais/room_backgrounds/${PLACE_FOLDER[place] ?? place}/stop_card/stop_card_${place}${which}.webp`;
+  return `${process.env.PUBLIC_URL}/palais/room_backgrounds_and_social_previews/${PLACE_FOLDER[place] ?? place}/stop_card/stop_card_${place}${which}.webp`;
 }
 
 /** a room photograph's address, from its name (`school-portrait-spring`) */
 export function roomPhoto(name: string) {
   const folder = ROOM_FOLDER[name.split("-")[0]] ?? name.split("-")[0];
   const device = name.includes("-portrait") ? "mobile" : "desktop";
-  return `${process.env.PUBLIC_URL}/palais/room_backgrounds/${folder}/${device}/${name}.webp`;
+  return `${process.env.PUBLIC_URL}/palais/room_backgrounds_and_social_previews/${folder}/${device}/${name}.webp`;
 }
 
 /** the sky-and-water mask for a room photograph, by the photograph's address */

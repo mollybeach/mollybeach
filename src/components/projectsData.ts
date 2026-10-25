@@ -54,7 +54,7 @@ export const projects: Project[] = [
     date: "Sep 2026-Present",
     description: "🍐 EthGlobal NYC 2026 🗽 iMessage Apple Pay extension for Web3 peer-to-peer messaging payments. Turn conversations into transactions: Pear Pay is the universal payment layer for messaging, social apps, and AI agents. Type \"Send Molly $20\" in iMessage, Telegram, WhatsApp, Discord, Slack, or X and Pear Pay resolves the recipient, creates wallets, routes across chains, and settles privately in USDC. No addresses, no chains, no gas.",
     technologies: ["Next.js", "TypeScript", "Solidity", "Foundry", "Dynamic", "Arc", "Circle Gateway", "x402", "Unlink", "Twilio", "USDC", "Base Sepolia"],
-    microlink: `${process.env.PUBLIC_URL}/portfolio/images/pearpay_preview.webp`,
+    microlink: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/pearpay_preview.webp`,
     link: "https://pearpay.app/",
     previewType: "image",
     overview: "Conversational, chain-abstracted, private USDC payments anywhere people message, for humans and AI agents",
@@ -101,7 +101,7 @@ export const projects: Project[] = [
       ],
     },
     screenshots: [
-      { url: `${process.env.PUBLIC_URL}/portfolio/images/pearpay_preview.webp`, alt: "Pear Pay iMessage simulator" }
+      { url: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/pearpay_preview.webp`, alt: "Pear Pay iMessage simulator" }
     ],
     demoUrl: "https://pearpay.app/",
     status: "In Development",
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     date: "Jul 2026",
     description: "📍 Built at ETHGlobal Lisbon 2026 🇵🇹 Find My Friends meets a social event concierge. wyd is a native SwiftUI iOS app that helps you find your friends, discover the best events, and make the plan without giving up your privacy. Ask \"wyd tonight?\" or \"find an event everyone can make\", see friends and events on a live map, and choose exactly what each circle of friends can see, with privacy enforced on the server.",
     technologies: ["Swift", "SwiftUI", "MapKit", "EventKit", "CoreLocation", "Postgres", "iCalendar (ICS)", "XCTest", "GitHub Pages"],
-    microlink: `${process.env.PUBLIC_URL}/portfolio/images/wyd_preview.webp`,
+    microlink: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/wyd_preview.webp`,
     link: "https://mollybeach.github.io/wyd/",
     previewType: "image",
     overview: "A privacy-first iOS app for finding your friends and the best plans at big events",
@@ -160,7 +160,7 @@ export const projects: Project[] = [
       ],
     },
     screenshots: [
-      { url: `${process.env.PUBLIC_URL}/portfolio/images/wyd_preview.webp`, alt: "wyd? landing page with the chat concierge" }
+      { url: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/wyd_preview.webp`, alt: "wyd? landing page with the chat concierge" }
     ],
     demoUrl: "https://mollybeach.github.io/wyd/",
     githubUrl: "https://github.com/mollybeach/wyd",
@@ -177,7 +177,7 @@ export const projects: Project[] = [
     date: "Apr 2026-Jul 2026",
     description: "🎬 AI-powered demo recorder for developers. Point it at a repo, list what to cover, record 30 seconds of your voice, and InstaDemo generates a narrated screen-recording video, hands-free. Claude reads the repo and writes a timed script, the app drives VS Code or Cursor through files, scrolling and terminal commands, and plays the narration in your cloned voice while ScreenCaptureKit records the session to a .mov.",
     technologies: ["Swift", "SwiftUI", "ScreenCaptureKit", "Claude API", "ElevenLabs", "VS Code", "Stripe", "LingCode Cloud", "React", "Vite", "Vercel"],
-    microlink: `${process.env.PUBLIC_URL}/portfolio/images/instademo_preview.webp`,
+    microlink: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/instademo_preview.webp`,
     link: "https://instademo.me",
     previewType: "image",
     overview: "A macOS app that turns a Git repo into a narrated, hands-free demo video",
@@ -211,7 +211,7 @@ export const projects: Project[] = [
       ],
     },
     screenshots: [
-      { url: `${process.env.PUBLIC_URL}/portfolio/images/instademo_preview.webp`, alt: "InstaDemo: narrated repo demos, hands-free" }
+      { url: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/instademo_preview.webp`, alt: "InstaDemo: narrated repo demos, hands-free" }
     ],
     demoUrl: "https://instademo.me",
     githubUrl: "https://github.com/mollybeach/instademo",
@@ -830,7 +830,7 @@ export const projects: Project[] = [
     date: "Mar 2020 - Dec 2020",
     description: "DApp/Web3JS app converting DNA data from Ancestry.com into NFTs.",
     technologies: ["React", "Web3.js", "Solidity", "GLSL", "Firebase"],
-    microlink: `${process.env.PUBLIC_URL}/portfolio/images/cryptogene-app-preview.png`,
+    microlink: `${process.env.PUBLIC_URL}/portfolio/images/project_previews/cryptogene-app-preview.png`,
     link: "https://chromagenetic.firebaseapp.com",
     previewType: "image",
     overview: "A decentralized application",

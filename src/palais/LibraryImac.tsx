@@ -111,12 +111,12 @@ const FOLDER_NAME: Record<Folder, string> = {
 };
 const UP: Partial<Record<Folder, Folder>> = { favs: "home", avatar: "home", backgrounds: "home", school: "home", rooms: "home", icons: "home", "project-icons": "icons", previews: "project-icons", "job-icons": "icons" };
 /** the Palais's own icon, for its folder of rooms */
-const PALAIS_ICON = `${process.env.PUBLIC_URL}/icons/palais-icon.svg`;
+const PALAIS_ICON = `${process.env.PUBLIC_URL}/favicons/palais-icon.svg`;
 /** rooms with an icon of their own in the Palais folder, in place of their
     island: the Boudoir's black rabbit, and Brat Academy's own logo */
 const ROOM_ICON: Partial<Record<Place, string>> = {
   boudoir: modalButton("boudoir-bunny"),
-  school: `${process.env.PUBLIC_URL}/loading-screen/bratcode.webp`,
+  school: `${process.env.PUBLIC_URL}/palais/loading-screen/bratcode.webp`,
 };
 /** a file's name to save it under: the name, in lower case, with its own ending */
 const fileName = (name: string, src: string) =>
@@ -146,7 +146,7 @@ const JOB_ICONS = experiences
     src: e.logo,
   }))
   // hackathons, alongside the jobs
-  .concat([{ name: "ETHGlobal Buenos Aires", src: `${process.env.PUBLIC_URL}/portfolio/images/ethglobal_world_coin_hackathon_buenos_aires.png` }]);
+  .concat([{ name: "ETHGlobal Buenos Aires", src: `${process.env.PUBLIC_URL}/portfolio/images/icons/ethglobal_world_coin_hackathon_buenos_aires.png` }]);
 
 /** the README on the desktop: its own file (public/palais/modal_content/imac_desktop/readme.html),
     the GitHub README laid out to fit this screen, fetched once a visit */

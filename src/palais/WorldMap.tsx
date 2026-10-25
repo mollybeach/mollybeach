@@ -531,11 +531,11 @@ const picture = (s: Stop, season: Season, tall = false) => {
 /** a cluster of apple blossom and leaves, for the corners of the frame */
 /**
  * The painted flowers around the map's frame, cut from Molly's own sheet
- * (public/palais/flower_decorations). Each corner gets its own posy: a big flower, a
+ * (public/palais/modal_content/flower_decorations). Each corner gets its own posy: a big flower, a
  * smaller one and a leaf or two, laid over each other and turned a little, so
  * no two corners are alike.
  */
-const BLOOM = (name: string) => `${process.env.PUBLIC_URL}/palais/flower_decorations/${name}.webp`;
+const BLOOM = (name: string) => `${process.env.PUBLIC_URL}/palais/modal_content/flower_decorations/${name}.webp`;
 
 type Petal = { name: string; x: number; y: number; w: number; rot?: number };
 
@@ -891,7 +891,7 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
           >
             <defs>
               {/* the sea is the blue of the cornflowers round the frame, the
-                  grass the green of their leaves (public/palais/flower_decorations) */}
+                  grass the green of their leaves (public/palais/modal_content/flower_decorations) */}
               <radialGradient id="wm-sea" cx="0.5" cy="0.5" r="0.75">
                 <stop offset="0" stopColor="#3b6ccd" />
                 <stop offset="0.7" stopColor="#245ac0" />

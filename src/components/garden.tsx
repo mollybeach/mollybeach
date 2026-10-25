@@ -7,7 +7,7 @@ import { paletteOf, useFloral } from '../palais/florals';
  * flower and a colour for each section, a rule that fades out across the page,
  * a count at the end, and tags tinted to match.
  *
- * The flowers are Molly's own, cut from her sheet (public/palais/flower_decorations).
+ * The flowers are Molly's own, cut from her sheet (public/palais/modal_content/flower_decorations).
  * Sections take their colour by position, so a page of eight reads as a border
  * of eight different plants rather than eight of the same.
  */
@@ -36,7 +36,7 @@ export const SHELVES: Shelf[] = [
 
 export const shelfAt = (i: number) => SHELVES[i % SHELVES.length];
 
-export const bloomSrc = (name: string) => `${process.env.PUBLIC_URL}/palais/flower_decorations/${name}.webp`;
+export const bloomSrc = (name: string) => `${process.env.PUBLIC_URL}/palais/modal_content/flower_decorations/${name}.webp`;
 
 /** a section heading: the flower, the name, a rule that fades, and a count */
 export function GardenHeading({

@@ -11,7 +11,7 @@ import { usePlace, type Place } from "./place";
  * photographs underneath show through untouched.
  *
  * Where the sky and water are comes from a small mask per photograph
- * (public/palais/room_backgrounds/<room>/sky-water-masks/<name>.webp: red is sky, green is water), made by
+ * (public/palais/room_backgrounds_and_social_previews/<room>/sky-water-masks/<name>.webp: red is sky, green is water), made by
  * running a scene-segmentation model over each picture.
  *
  * - The clouds drift sideways with a "flow map": the sky is sampled a little
@@ -130,7 +130,7 @@ void main() {
 
 
 /** photographs with nothing to animate (no sky or water in the picture) */
-const STILL = /\/palais\/room_backgrounds\/[^/]+\/(?:desktop|mobile)\/(rainwood|kitchen(?:-\w+)?|bathroom(?:-\w+)?|garden-\w+|madeleine(?:-portrait)?|library(?:-\w+)?|boudoir(?:-\w+)*|crystal-\w+)\.webp$/;
+const STILL = /\/palais\/room_backgrounds_and_social_previews\/[^/]+\/(?:desktop|mobile)\/(rainwood|kitchen(?:-\w+)?|bathroom(?:-\w+)?|garden-\w+|madeleine(?:-portrait)?|library(?:-\w+)?|boudoir(?:-\w+)*|crystal-\w+)\.webp$/;
 
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const sh = gl.createShader(type)!;

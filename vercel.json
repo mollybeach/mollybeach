@@ -3,7 +3,12 @@
   "redirects": [
     {
       "source": "/Beach_Molly_Resume.pdf",
-      "destination": "/portfolio/Beach_Molly_Resume.pdf",
+      "destination": "/portfolio/resumes/Beach_Molly_Resume.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio/Beach_Molly_Resume.pdf",
+      "destination": "/portfolio/resumes/Beach_Molly_Resume.pdf",
       "permanent": true
     },
     {
@@ -70,27 +75,27 @@
   "rewrites": [
     {
       "source": "/boudoir/portraits",
-      "destination": "/share-links/boudoir/portraits/index.html"
+      "destination": "/palais/share-links/boudoir/portraits/index.html"
     },
     {
       "source": "/boudoir/portraits/",
-      "destination": "/share-links/boudoir/portraits/index.html"
+      "destination": "/palais/share-links/boudoir/portraits/index.html"
     },
     {
       "source": "/closet/dress",
-      "destination": "/share-links/closet/dress/index.html"
+      "destination": "/palais/share-links/closet/dress/index.html"
     },
     {
       "source": "/closet/dress/",
-      "destination": "/share-links/closet/dress/index.html"
+      "destination": "/palais/share-links/closet/dress/index.html"
     },
     {
       "source": "/:page(ballroom|bathroom|boudoir|brat|bratz|bunny|caves|closet|crystal|crystalballroom|domes|dressform|garden|gorge|jacaranda|kitchen|lagoon|lakehouse|lanterns|library|madeleine|rabbit|rainwood|reef|review|reviewdemo|riviera|school|shore|signin|signindemo|sunliner)",
-      "destination": "/share-links/:page/index.html"
+      "destination": "/palais/share-links/:page/index.html"
     },
     {
       "source": "/:page(ballroom|bathroom|boudoir|brat|bratz|bunny|caves|closet|crystal|crystalballroom|domes|dressform|garden|gorge|jacaranda|kitchen|lagoon|lakehouse|lanterns|library|madeleine|rabbit|rainwood|reef|review|reviewdemo|riviera|school|shore|signin|signindemo|sunliner)/",
-      "destination": "/share-links/:page/index.html"
+      "destination": "/palais/share-links/:page/index.html"
     }
   ]
 }

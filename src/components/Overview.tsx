@@ -11,22 +11,22 @@ import {
 const Overview: React.FC = () => {
 
   const shaderGifs = [
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/mandelbrot.gif`, title: 'Mandelbrot Set' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/mandelbrot.gif`, title: 'Mandelbrot Set' },
     { src: "https://res.cloudinary.com/storagemanagementcontainer/image/upload/v1731722339/portfolio/owl_ppb6ih.gif", title: 'Owl' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/fidgetToy.gif`, title: 'Fidget Toy' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/milkers.gif`, title: 'Milkers' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/gene.gif`, title: 'Gene Expression' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/butterfree.gif`, title: 'Butterfree' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/binaryTree.gif`, title: 'Binary Tree' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/rattata.gif`, title: 'Rattata' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/poke.gif`, title: 'Poke' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/purugly.gif`, title: 'Purugly' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/growlithe.gif`, title: 'Growlithe' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/chikorita.gif`, title: 'Chikorita' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/grimLeaper.gif`, title: 'Grim Leaper' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/zap.gif`, title: 'Zap' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/horseSea.gif`, title: 'Horse Sea' },
-    { src: `${process.env.PUBLIC_URL}/portfolio/images/flowerGarden.gif`, title: 'Flower Garden' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/fidgetToy.gif`, title: 'Fidget Toy' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/milkers.gif`, title: 'Milkers' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/gene.gif`, title: 'Gene Expression' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/butterfree.gif`, title: 'Butterfree' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/binaryTree.gif`, title: 'Binary Tree' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/rattata.gif`, title: 'Rattata' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/poke.gif`, title: 'Poke' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/purugly.gif`, title: 'Purugly' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/growlithe.gif`, title: 'Growlithe' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/chikorita.gif`, title: 'Chikorita' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/grimLeaper.gif`, title: 'Grim Leaper' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/zap.gif`, title: 'Zap' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/horseSea.gif`, title: 'Horse Sea' },
+    { src: `${process.env.PUBLIC_URL}/portfolio/images/gifs/flowerGarden.gif`, title: 'Flower Garden' },
   ];
   
   return (
@@ -62,7 +62,7 @@ const Overview: React.FC = () => {
               className="transition-transform hover:scale-110"
             >
               <img 
-                src={`${process.env.PUBLIC_URL}/portfolio/images/github-mark.png`}
+                src={`${process.env.PUBLIC_URL}/portfolio/images/icons/github-mark.png`}
                 alt="GitHub"
                 className="w-8 h-8 rounded shadow-sm hover:shadow-md"
               />
@@ -74,7 +74,7 @@ const Overview: React.FC = () => {
               className="transition-transform hover:scale-110"
             >
             <img 
-              src={`${process.env.PUBLIC_URL}/portfolio/images/linkedin-icon.png`}
+              src={`${process.env.PUBLIC_URL}/portfolio/images/icons/linkedin-icon.png`}
               alt="LinkedIn"
               className="w-8 h-8 rounded shadow-sm hover:shadow-md"
             />
