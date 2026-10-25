@@ -52,6 +52,11 @@ const ROOMS: Record<Exclude<Place, "palace">, { file: string; focus: string; sea
   // Brat Academy: the classroom where Molly tutors girls to code, four times
   // over, with a tall one of each for a phone
   school: { file: "school", focus: "50% 55%", portrait: "seasons" },
+  // the Crystal Ballroom at night, lit up for a show: star-cloth drapes and
+  // chandeliers over a mosaic marble floor, the band's gear on the stage and
+  // the bar down the right, four times over (roses, summer flowers, autumn
+  // leaves, then frost and icicles), with a tall one of each for a phone
+  crystal: { file: "crystal", focus: "50% 60%", portrait: "seasons" },
 };
 
 /**

@@ -12,16 +12,17 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
  * opens the same room.
  */
 
-export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner", "school"] as const;
+export const PLACES = ["palace", "kitchen", "bathroom", "garden", "closet", "lakehouse", "lagoon", "rainwood", "gorge", "domes", "jacaranda", "reef", "lanterns", "shore", "caves", "madeleine", "library", "boudoir", "sunliner", "school", "crystal"] as const;
 export type Place = (typeof PLACES)[number];
 
 /** what comes after the room in the address: #closet/dress opens the dress
     form in the Wardrobe Wing. Rooms that have nothing to open ignore it. */
 export const hashExtra = () => window.location.hash.replace("#", "").split("/")[1] ?? "";
 
-/** other names a room answers to in the address: #bratz is Brat Academy, and
-    the Riviera still answers to the #domes it used to be called */
-const ALSO: Record<string, Place> = { bratz: "school", riviera: "domes" };
+/** other names a room answers to in the address: #bratz is Brat Academy,
+    the Riviera still answers to the #domes it used to be called, and the
+    Crystal Ballroom is #crystal, #ballroom or #crystalballroom */
+const ALSO: Record<string, Place> = { bratz: "school", riviera: "domes", ballroom: "crystal", crystalballroom: "crystal" };
 
 /** the address a room shows, where it isn't the room's own name: the Riviera
     is still "domes" inside (its saved layouts are kept under that), but its
@@ -84,4 +85,5 @@ export const PLACE_NAMES: Record<Place, string> = {
   boudoir: "The Boudoir",
   sunliner: "Sunliner Train",
   school: "Brat Academy",
+  crystal: "The Crystal Ballroom",
 };

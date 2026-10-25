@@ -133,6 +133,11 @@ export const PROPS = catalogue({
     plane: "near",
     metres: 0.2,
   },
+  pool_table_retro_walnut_green_felt_sticker: {
+    label: "a retro pool table, walnut and green felt, racked up",
+    plane: "near",
+    metres: 2.3,
+  },
   cookbook_recipes_red_gilt_closed_sticker: {
     label: "the red cookbook, shut",
     plane: "near",

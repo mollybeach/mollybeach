@@ -302,7 +302,9 @@ const STOPS: Stop[] = [
     blurb: "A seashell pavilion of white marble and gold, half under the sea: a palm island above the waterline, and a coral reef with sea turtles below.",
     finds: ["A sea turtle gliding past the glass", "A palm island floating on the waterline", "Sunlight rippling across the floor"],
     color: "#6fd3e6",
-    at: [655, 507],
+    // a little right of where it was, over the reef, so it clears the
+    // Crystal Ballroom's sign next door
+    at: [720, 507],
     patch: [70, 36],
     seed: 67,
     room: "reef",
@@ -321,6 +323,20 @@ const STOPS: Stop[] = [
     patch: [80, 100],
     seed: 53,
     room: "shore",
+    isle: 2,
+  },
+  {
+    id: "crystal",
+    earth: [45.52, -122.69],
+    name: "Crystal Ballroom",
+    tag: "upstairs from the bar",
+    blurb: "A ballroom from 1914 lit up for a show: purple star-cloth swagged across the ceiling and round the stage, crystal chandeliers over a mosaic marble floor, the bar glowing down one wall, and a pool table to rack up on.",
+    finds: ["Star curtains round the stage, like the awnings outside", "Chandeliers dripping crystal over the dance floor", "A pool table that plays a beat: press it"],
+    color: "#b58cff",
+    at: [410, 564],
+    patch: [64, 46],
+    seed: 191,
+    room: "crystal",
     isle: 2,
   },
 ];
@@ -441,7 +457,7 @@ const GLOBE_AT: Record<string, [number, number]> = {
   reef: [-66.0, 0.0],
 };
 /** the rooms with a little 3-D island of their own, for the globe */
-const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef", "library", "garden", "shore"]);
+const ISLANDS = new Set(["caves", "school", "lakehouse", "boudoir", "closet", "jacaranda", "sunliner", "lagoon", "palace", "bathroom", "domes", "kitchen", "gorge", "lanterns", "madeleine", "rainwood", "reef", "library", "garden", "shore", "crystal"]);
 /** on the painted first island, each room's frame is drawn over the one in
     the painting: how big that one is, and where its name sits from its middle */
 /** the first island's circles on the flat map are drawn this much smaller
@@ -453,6 +469,23 @@ const TINT: Record<string, { ring: string; ink: string; edge?: string; edgeW?: n
   boudoir: { ring: "#141014", ink: "#fffaf0" },
   jacaranda: { ring: "#7b4fc4", ink: "#fffaf0" },
   school: { ring: "#8ace00", ink: "#000000" },
+  // Ringlers' purple awning, with its gold stars
+  crystal: { ring: "#3b2a9e", ink: "#f6cc4f", edge: "#f6cc4f", edgeW: 3 },
+  // the rest of the second island, each in two of its own colours
+  // the Glasshouse: leaf green under wisteria
+  garden: { ring: "#5f9e5a", ink: "#fffaf0", edge: "#c9a7e8", edgeW: 3 },
+  // the Rainwood: moss, and the mist off the river
+  rainwood: { ring: "#3f6b34", ink: "#fffaf0", edge: "#9fd8c8", edgeW: 3 },
+  // Madeleine: her pink room, and the sea through the arch
+  madeleine: { ring: "#f2a7b8", ink: "#6b2f45", edge: "#6fa8dc", edgeW: 3 },
+  // the Lantern Isles: red lacquer and lantern gold
+  lanterns: { ring: "#c0392b", ink: "#fffaf0", edge: "#f5c242", edgeW: 3 },
+  // the Amphitheatre: the sunset behind the stage, on sandstone
+  gorge: { ring: "#e8833a", ink: "#fffaf0", edge: "#f3d9a4", edgeW: 3 },
+  // the Glass Reef: turquoise water and coral
+  reef: { ring: "#1fb5c9", ink: "#fffaf0", edge: "#ff8a7a", edgeW: 3 },
+  // the Shore: blue domes on white walls
+  shore: { ring: "#1f5fbf", ink: "#fffaf0", edge: "#ffffff", edgeW: 3 },
   caves: { ring: "#1565d8", ink: "#fffaf0" },
   lagoon: { ring: "url(#wm-aurora)", ink: "#fffaf0" },
   sunliner: { ring: "#d9772b", ink: "#fffaf0" },
@@ -940,9 +973,9 @@ export function WorldMap({ open, onClose }: { open: boolean; onClose: () => void
                 painting's edges as a white line of beach */}
             {/* the second island is a painting too (public/palais/map/island-two.webp),
                 built from its rooms: the glasshouse, the Rainwood's falls, the
-                amphitheatre stage, the Shore's loggia, the lantern island and
-                the reef pavilion under the sea */}
-            <image href={`${process.env.PUBLIC_URL}/palais/map/island-two.webp?v=1`} x={25} y={25 + ISLE_DROP} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
+                amphitheatre stage, the Shore's loggia, the lantern island, the
+                Crystal Ballroom on its rocks and the reef pavilion under the sea */}
+            <image href={`${process.env.PUBLIC_URL}/palais/map/island-two.webp?v=2`} x={25} y={25 + ISLE_DROP} width={960} height={640} preserveAspectRatio="xMidYMid meet" />
             <g clipPath="url(#wm-island2)" display="none">
               {STOPS.map((s, i) => (s.islet || s.isle !== 2 ? null : <path key={s.id} d={art.meadows[i]} fill={s.color} opacity={0.34} />))}
               {art.flowers2.map((f, i) => (

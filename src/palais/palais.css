@@ -176,7 +176,8 @@
 .palais [data-place="library"] .palais-room--library,
 .palais [data-place="boudoir"] .palais-room--boudoir,
 .palais [data-place="sunliner"] .palais-room--sunliner,
-.palais [data-place="school"] .palais-room--school { opacity: 1; content-visibility: visible; }
+.palais [data-place="school"] .palais-room--school,
+.palais [data-place="crystal"] .palais-room--crystal { opacity: 1; content-visibility: visible; }
 /* the stickers follow you into every room, each room with its own layout
    (roomLayouts.ts), as do the weather and the flyers; the terrace's pollen
    stays on the terrace */
@@ -7353,3 +7354,208 @@
   overflow: visible;
 }
 .palais.imac-showcase .imac-close-up { filter: drop-shadow(0 10px 22px rgba(30, 40, 20, 0.3)); }
+
+/* ---- the Crystal Ballroom's pool table (CrystalPool.tsx) ---------------- */
+/* the table on the maple floor: it lifts and catches the stage light when you
+   point at it, with a pill on its rail so you know it opens */
+.palais .palais-pooltable {
+  position: absolute;
+  z-index: 29;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: 50% 100%;
+  transition: transform 240ms ease, filter 240ms ease;
+  filter: drop-shadow(0 10px 14px rgba(10, 4, 24, 0.55));
+}
+.palais .palais-pooltable img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.palais .palais-pooltable:hover,
+.palais .palais-pooltable:focus-visible {
+  outline: none;
+  transform: translateY(-4px) scale(1.03);
+  filter: drop-shadow(0 16px 20px rgba(10, 4, 24, 0.6)) drop-shadow(0 0 18px rgba(255, 110, 210, 0.6));
+}
+.palais .palais-pooltable:active { transform: translateY(-1px) scale(0.99); transition-duration: 90ms; }
+/* on a phone the table is painted into the picture: the button is just a
+   place to press over it, glowing a little when pressed, with its pill over
+   the felt */
+.palais .palais-pooltable--painted { filter: none; border-radius: 10px; }
+.palais .palais-pooltable--painted:hover,
+.palais .palais-pooltable--painted:focus-visible { transform: none; filter: none; background: rgba(255, 140, 210, 0.08); box-shadow: 0 0 24px 6px rgba(255, 120, 200, 0.35); }
+/* the phone crops the picture's right edge, and the table with it: the pill
+   sits over the end of the felt that stays on screen */
+.palais .palais-pooltable--painted .palais-pooltable-hint { top: 2%; left: 12%; }
+.palais .palais-pooltable-hint {
+  position: absolute;
+  left: 50%;
+  top: 2%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  white-space: nowrap;
+  padding: 0.4em 0.95em;
+  border-radius: 999px;
+  border: 2px solid #f6cc4f;
+  background: linear-gradient(135deg, #4b38c4, #30238f);
+  color: #f6cc4f;
+  font: 700 clamp(0.7rem, 1.1cqw, 0.98rem) / 1.1 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 3px 0 #1c1460, 0 8px 18px rgba(10, 4, 40, 0.45), 0 0 16px rgba(160, 120, 255, 0.55);
+  transform: translateX(-50%) rotate(-3deg);
+  animation: bl-hint 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+.palais .palais-pooltable-hint span { color: #fff3c8; }
+@keyframes bl-hint {
+  0%, 70%, 100% { transform: translateX(-50%) rotate(-3deg) translateY(0); }
+  77% { transform: translateX(-50%) rotate(-7deg) translateY(-6px); }
+  84% { transform: translateX(-50%) rotate(1deg) translateY(-3px); }
+  90% { transform: translateX(-50%) rotate(-4deg) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .palais .palais-pooltable-hint { animation: none; } }
+
+/* the game: green felt inside a frame of Ringlers' purple star cloth */
+.palais .bl-panel {
+  --bl-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='%2330238f'/%3E%3Cg fill='%23f6cc4f'%3E%3Cpath d='M14 6l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.8 2.7 1-5.3-4-3.7 5.4-.6z'/%3E%3Cpath d='M52 4l1.6 3.3 3.6.4-2.7 2.5.8 3.6-3.3-1.8-3.2 1.8.7-3.6-2.7-2.5 3.6-.4z'/%3E%3Cpath d='M68 34l2 4.2 4.6.5-3.4 3.1.9 4.5-4.1-2.3-4 2.3.9-4.5-3.4-3.1 4.6-.5z'/%3E%3Cpath d='M32 38l2.8 5.8 6.3.7-4.7 4.3 1.3 6.2-5.7-3.2-5.6 3.2 1.3-6.2-4.7-4.3 6.3-.7z'/%3E%3Cpath d='M10 58l1.6 3.3 3.6.4-2.7 2.5.8 3.6-3.3-1.8-3.2 1.8.7-3.6-2.7-2.5 3.6-.4z'/%3E%3Cpath d='M56 62l2.2 4.5 5 .5-3.7 3.4 1 4.9-4.5-2.5-4.4 2.5 1-4.9-3.7-3.4 5-.5z'/%3E%3C/g%3E%3C/svg%3E");
+  width: min(980px, 100%);
+  max-height: calc(100cqh - 1.5rem);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  padding: 1.1rem;
+  border: 3px solid #f6cc4f;
+  background: var(--bl-stars) 0 0 / 80px 80px, #30238f;
+  box-shadow: inset 0 0 0 2px #1c1460, 0 0 0 3px #1c1460, 0 0 40px rgba(150, 110, 255, 0.45), 0 24px 60px rgba(10, 4, 30, 0.55);
+  color: #fff;
+}
+.palais .bl-title h2 {
+  border-color: #f6cc4f;
+  background: linear-gradient(180deg, #4f7a1f, #38761d 55%, #2d5c16);
+  box-shadow: inset 0 0 0 3px rgba(255, 245, 200, 0.35), 0 0 0 4px #30238f, 0 0 0 5.5px #f6cc4f, 0 8px 16px rgba(10, 4, 30, 0.45);
+  font-size: clamp(1.1rem, 2.6vw, 1.9rem);
+  color: #fffbe6;
+  text-shadow: 0 2px 0 rgba(20, 50, 10, 0.55);
+}
+.palais .bl-title h2 span { color: #f6cc4f; }
+.palais .bl-panel .wm-close { border-color: #f6cc4f; }
+.palais .bl-table {
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.4rem 1rem 1rem;
+  border-radius: 18px;
+  border: 10px solid #6a3317;
+  background: radial-gradient(120% 90% at 50% 30%, #3f9a33, #38761d 55%, #2b5d16);
+  box-shadow: inset 0 0 0 2px #2a1206, inset 0 0 30px rgba(0, 0, 0, 0.35), 0 0 0 2px #d98a4a;
+  font-family: "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* the balls, in their pool colours */
+.palais .bl-ball {
+  --c: #fff;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid #333;
+  background: var(--c);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  color: #000;
+  font-weight: 700;
+}
+.palais .bl-ball b { position: relative; z-index: 1; display: grid; place-items: center; width: 52%; height: 52%; border-radius: 50%; background: #fff; font-size: 0.68em; line-height: 1; }
+.palais .bl-ball--stripe { background: linear-gradient(to top, #fff 25%, var(--c) 25%, var(--c) 75%, #fff 75%); }
+.palais .bl-ball--1, .palais .bl-ball--9 { --c: #ffcc00; }
+.palais .bl-ball--2, .palais .bl-ball--10 { --c: #0033ff; }
+.palais .bl-ball--3, .palais .bl-ball--11 { --c: #ff0000; }
+.palais .bl-ball--4, .palais .bl-ball--12 { --c: #660099; }
+.palais .bl-ball--5, .palais .bl-ball--13 { --c: #ff6600; }
+.palais .bl-ball--6, .palais .bl-ball--14 { --c: #006600; }
+.palais .bl-ball--7, .palais .bl-ball--15 { --c: #990000; }
+.palais .bl-ball--8 { --c: #000; }
+.palais .bl-ball--cue { --c: #fff; background: #fff; border: 3px solid #333; }
+.palais .bl-ball.is-now { box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7); border: 3px solid #fff; }
+
+/* the rack, with the cue ball above it, counting the beat */
+.palais .bl-rack { position: relative; flex: none; width: 200px; height: 180px; margin-top: 40px; }
+.palais .bl-rack .bl-ball { position: absolute; width: 40px; height: 40px; font-size: 1rem; }
+
+.palais .bl-play {
+  position: relative;
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-top: 0.4rem;
+  border-radius: 50%;
+  border: 1px solid #333;
+  background: #dc2626;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+.palais .bl-play::before { content: ""; position: absolute; inset: 22%; border-radius: 50%; background: #fff; }
+.palais .bl-play::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 6px solid transparent;
+  border-left: 9px solid #000;
+  border-right: 0;
+  transform: translate(-35%, -50%);
+}
+.palais .bl-play.is-on::after { width: 10px; height: 10px; border: 0; background: #000; transform: translate(-50%, -50%); }
+
+.palais .bl-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.6rem 2rem; margin-top: 1rem; font-size: 0.75rem; font-weight: 700; }
+.palais .bl-engine { position: relative; display: flex; align-items: center; gap: 0.7rem; cursor: pointer; }
+.palais .bl-engine input { position: absolute; opacity: 0; width: 0; height: 0; }
+.palais .bl-engine i { position: relative; width: 40px; height: 20px; border-radius: 999px; border: 1px solid #fff; background: #333; transition: background 0.3s; }
+.palais .bl-engine i::before { content: ""; position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 0.3s; }
+.palais .bl-engine input:checked + i { background: #ffcc00; }
+.palais .bl-engine input:checked + i::before { transform: translateX(20px); }
+.palais .bl-engine input:focus-visible + i { outline: 2px solid #fff; outline-offset: 2px; }
+.palais .bl-tempo { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.palais .bl-panel input[type="range"] { accent-color: #ffcc00; }
+
+.palais .bl-tracks { width: 100%; max-width: 950px; margin-top: 0.4rem; }
+.palais .bl-track { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.6rem; min-width: 0; }
+.palais .bl-track-head { display: flex; flex-direction: column; align-items: flex-end; width: 4.6rem; flex: none; font-size: 0.7rem; font-weight: 700; }
+.palais .bl-track-head input { width: 60px; }
+.palais .bl-steps { display: flex; justify-content: space-between; gap: 0.25rem; flex: 1; min-width: 0; padding: 0.25rem 0.1rem; overflow-x: auto; scrollbar-width: none; }
+.palais .bl-step { flex: none; width: 2rem; height: 2rem; padding: 0; font-size: 0.85rem; cursor: pointer; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); }
+.palais .bl-step.is-armed { border: 2px solid gold; box-shadow: 0 0 8px gold; }
+.palais .bl-step.is-now { box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7); border: 3px solid #fff; }
+.palais .bl-clear {
+  position: relative;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #f44336;
+  cursor: pointer;
+}
+.palais .bl-clear::before,
+.palais .bl-clear::after { content: ""; position: absolute; left: 50%; top: 50%; width: 60%; height: 2px; background: #fff; transform: translate(-50%, -50%) rotate(45deg); }
+.palais .bl-clear::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.palais .bl-system { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 1.4rem; }
+.palais .bl-btn { padding: 0.6rem 1.2rem; border: none; border-radius: 20px; font: 700 0.95rem/1 inherit; font-family: inherit; cursor: pointer; transition: transform 150ms ease; }
+.palais .bl-btn:hover { transform: translateY(-2px); }
+.palais .bl-btn--beats { background: #ffcc00; color: #333; }
+.palais .bl-btn--save { background: #fff; color: #38761d; }
+.palais .bl-btn--load { background: #333; color: #fff; }
+.palais .bl-credit { margin: 1.2rem 0 0; font-size: 0.85rem; text-align: center; }
+.palais .bl-credit a { color: #fff; }
+.palais .bl-credit a:hover { color: #ffcc00; }
+@media (max-width: 640px) {
+  .palais .bl-table { padding: 1rem 0.4rem 0.8rem; border-width: 6px; }
+  .palais .bl-track { gap: 0.35rem; }
+  .palais .bl-track-head { width: 2.8rem; font-size: 0.6rem; }
+  .palais .bl-track-head input { width: 40px; }
+  .palais .bl-steps { gap: 0.15rem; }
+  .palais .bl-step, .palais .bl-clear { width: 1.5rem; height: 1.5rem; font-size: 0.6rem; }
+}
