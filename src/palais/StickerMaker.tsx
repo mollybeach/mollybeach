@@ -33,16 +33,17 @@ const SHAPE = 918 / 1000;
     of it, its feet, and how wide. The four wide photographs share one; each
     tall one for a phone was painted on its own (as schoolSpots.ts has it) */
 const ON_THE_DESK: Record<string, { x: number; base: number; w: number }> = {
-  wide: { x: 0.14, base: 0.668, w: 0.0825 },
-  "portrait-spring": { x: 0.21, base: 0.635, w: 0.11 },
-  "portrait-summer": { x: 0.2, base: 0.655, w: 0.1 },
-  "portrait-autumn": { x: 0.29, base: 0.655, w: 0.11 },
-  "portrait-winter": { x: 0.2, base: 0.655, w: 0.1 },
+  wide: { x: 0.19, base: 0.668, w: 0.0825 },
+  "portrait-spring": { x: 0.24, base: 0.635, w: 0.11 },
+  "portrait-summer": { x: 0.23, base: 0.655, w: 0.1 },
+  "portrait-autumn": { x: 0.31, base: 0.655, w: 0.11 },
+  "portrait-winter": { x: 0.23, base: 0.655, w: 0.1 },
 };
-/** never closer to the edge of the screen than this, in pixels: a narrow
+/** never closer to the left of the screen than this, in pixels: a narrow
     window crops the left of the wide photograph, and the machine slides along
-    the same row of desks under the windows until it's in view */
-const EDGE = 14;
+    the same row of desks under the windows until it's in view, and clear of
+    the record player in the corner (RoomRadio.tsx) */
+const EDGE = 110;
 const deskOf = (img: HTMLImageElement) => {
   const tall = /school-portrait-(\w+)\.webp$/.exec(img.src);
   return ON_THE_DESK[tall ? `portrait-${tall[1]}` : "wide"] ?? ON_THE_DESK.wide;
@@ -124,7 +125,8 @@ export function StickerMaker() {
       >
         <img src={propSrc(MACHINE)} alt="" decoding="async" />
         <span className="palais-stickermaker-hint" aria-hidden>
-          ✂ <span>Make a sticker</span>
+          <span>✂ Make a sticker</span>
+          <small>to add to the catalogue</small>
         </span>
       </button>
       {open && <Machine onClose={() => setOpen(false)} />}

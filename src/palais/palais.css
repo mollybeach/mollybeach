@@ -7816,6 +7816,14 @@
   animation-delay: -0.9s;
   pointer-events: none;
 }
+/* and under it, smaller, what it's for */
+.palais .palais-stickermaker-hint { flex-direction: column; gap: 0.15em; border-radius: 1.1em; padding: 0.4em 0.95em 0.45em; }
+.palais .palais-stickermaker-hint small {
+  font: 500 0.78em/1.1 "Fredoka", ui-rounded, "Avenir Next", system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #fff0f7;
+}
 @media (prefers-reduced-motion: reduce) { .palais .palais-stickermaker-hint { animation: none; } }
 
 /* the machine, opened: a sheet of graph paper with stickers already on it,
