@@ -1404,6 +1404,8 @@ export function useFitZoom() {
     const el = ref.current;
     const stage = el?.parentElement;
     if (!el || !stage) return;
+    // the page may have been scrolled (a phone): bring the room fully into view, so the modal is too
+    if (Math.abs(stage.getBoundingClientRect().top) > 1) stage.scrollIntoView({ block: "start", behavior: "auto" });
     const fit = () => {
       const W = stage.clientWidth;
       const H = stage.clientHeight;

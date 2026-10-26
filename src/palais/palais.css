@@ -8652,8 +8652,9 @@
 /* the room tab's previews a little smaller, so the tab fits */
 /* the screens grow to fill the card, as big as its height allows, the words
    and seasons spaced evenly under them */
-.palais .imf-panel .im-room-cols .im-templates { padding: 0.8rem; gap: 0.6rem; justify-content: space-evenly; container-type: size; }
-.palais .imf-panel .im-room-cols .im-templates-frames { max-width: min(100%, 34rem, calc((100cqh - 8.6rem) * 1.9)); }
+.palais .imf-panel .im-room-cols .im-templates { padding: 0.8rem; gap: 0.6rem; justify-content: space-evenly; }
+@media (min-width: 761px) { .palais .imf-panel .im-room-cols .im-templates { container-type: size; } }
+@media (min-width: 761px) { .palais .imf-panel .im-room-cols .im-templates-frames { max-width: min(100%, 34rem, calc((100cqh - 8.6rem) * 1.9)); } }
 .palais .imf-panel .im-room-cols .im-templates-say { gap: 0.5rem; }
 .palais .imf-panel .im-room-cols .im-templates-say p { font-size: 0.92rem; }
 /* the seasons in one row under the screens */
@@ -8693,7 +8694,14 @@
   .palais .imp--rail-right { right: 0; background-image: var(--imp-rail-right); }
   .palais .imf-fill { left: -14px; right: -14px; top: -48px; bottom: -24px; --u: calc(100cqw / 941); }
   .palais .imf-fill .imf--inside { left: calc(110 * var(--u)); right: calc(110 * var(--u)); top: calc(220 * var(--u)); bottom: calc(230 * var(--u)); }
-  .palais .imf-panel { padding: 0 1.8rem 2.6rem; }
+  .palais .imf-panel { padding: 0 1.8rem 2.6rem; margin-top: 1.2rem; height: calc(100cqh - 5.6rem); max-height: calc(100cqh - 5.6rem); }
+  /* the footer's photo tray, one slim strip across the top of the footer */
+  .palais .imf-panel .im-foot { flex-wrap: wrap; gap: 0.4rem; }
+  .palais .imf-panel .im-foot-slot { flex: 1 1 100%; order: -1; }
+  .palais .im-room-photos--foot { margin: 0; }
+  .palais .imf-panel .im-room-photos--foot .im-tray { height: 2.8rem; min-height: 0; padding: 0.2rem 0.6rem; }
+  .palais .im-room-photos--foot .sm-tray-say { font-size: 0.72rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .palais .im-room-photos--foot .sm-tray-say .sm-tray-icon { display: none; }
   .palais .imf-panel .im-lid h2 { margin-top: -1.2rem; }
 }
 
