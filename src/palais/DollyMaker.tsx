@@ -31,6 +31,8 @@ import { Door, PhotoTray, Twinkles, usePastedPhotos, useTaker, type Photo } from
 
 const ART = `${process.env.PUBLIC_URL}/palais_assets/modal_content/dolly_maker`;
 const MACHINE = `${ART}/dolly_maker_machine_sticker.webp`;
+/** the studio's decorations, cut from its parts sheet */
+const PARTS = `${ART}/modal_parts`;
 /** the studio's own shape (1223 × 1244) */
 const SHAPE = 1244 / 1223;
 /** as wide as the sticker maker, times this */
@@ -357,8 +359,73 @@ function Studio({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="wm-backdrop sm-backdrop im-backdrop" onPointerDown={(e) => e.target === e.currentTarget && close()}>
-      <div className="wm-panel sm-panel im-panel dm-panel" role="dialog" aria-modal="true" aria-labelledby="dm-title">
+      <div
+        className="wm-panel sm-panel im-panel dm-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dm-title"
+        /* the parts the stylesheet draws with (hearts, clouds), by their address */
+        style={{
+          ["--dm-heart-big" as string]: `url("${PARTS}/heart_big.webp")`,
+          ["--dm-heart" as string]: `url("${PARTS}/heart.webp")`,
+          ["--dm-cloud-hearts" as string]: `url("${PARTS}/cloud_hearts_left.webp")`,
+          ["--dm-cloud-flowers" as string]: `url("${PARTS}/cloud_flowers_right.webp")`,
+          ...Object.fromEntries(
+            ["top_left", "top_right", "crown", "bottom_left", "bottom_right", "bottom_middle", "rail_left", "rail_right", "rail_bottom", "rail_top", "side_left", "side_right", "join_left", "join_right"].map((k) => [`--dm-fr-${k.replace("_", "-")}`, `url("${PARTS}/frame_${k}.webp")`]),
+          ),
+          ...Object.fromEntries(
+            ["top", "bottom", "rail_left", "rail_right", "side_left", "side_right"].map((k) => [`--dm-fp-${k.replace("_", "-")}`, `url("${PARTS}/phone_${k}.webp")`]),
+          ),
+          ...Object.fromEntries(["left", "right", "middle", "tile"].map((k) => [`--dm-band-${k}`, `url("${PARTS}/band_${k}.webp")`]),
+          ),
+        }}
+      >
         <Twinkles />
+        {/* the studio's own pieces round the panel: its two glass towers at the
+            top corners, clouds of hearts and flowers by the title, and garlands
+            of lilies and daisies on the bottom corners */}
+        {/* the very back: the studio's pink stripes, under the band, the frame and everything */}
+        <div className="dm-frame-box dm-fill-box" aria-hidden>
+          <span className="dm-fr dm-fr--inside" />
+        </div>
+        <div className="dm-decor" aria-hidden>
+          {/* the studio's frame, gold and pink, with its towers, lanterns,
+              clouds, flowers and hearts: in pieces, so it fits any size, the
+              corners and crown keeping their shape and the plain rails
+              between them repeating as far as the panel needs */}
+          <div className="dm-frame-box">
+            {/* the plain rails first, repeated as long as the panel needs,
+                then the pieces that keep their shape over them */}
+            <span className="dm-fr dm-fr--rail-top" />
+            <span className="dm-fr dm-fr--rail-left" />
+            <span className="dm-fr dm-fr--rail-right" />
+            <span className="dm-fr dm-fr--rail-bottom" />
+            <span className="dm-fr dm-fr--side-left" />
+            <span className="dm-fr dm-fr--side-right" />
+            {/* sparkles and flowers where each side rail meets the band */}
+            <span className="dm-fr dm-fr--join-left" />
+            <span className="dm-fr dm-fr--join-right" />
+            <span className="dm-fr dm-fr--top-left" />
+            <span className="dm-fr dm-fr--top-right" />
+            <span className="dm-fr dm-fr--bottom-left" />
+            <span className="dm-fr dm-fr--bottom-right" />
+            <span className="dm-fr dm-fr--bottom-middle" />
+            <span className="dm-fr dm-fr--crown" />
+          </div>
+          {/* and its tall one, for a phone: the crown and the bottom garland
+              as wide as the screen, the plain side rails repeating between */}
+          <div className="dm-frame-phone">
+            <span className="dm-fp dm-fp--inside" />
+            <span className="dm-fp dm-fp--rail-left" />
+            <span className="dm-fp dm-fp--rail-right" />
+            <span className="dm-fp dm-fp--side-left" />
+            <span className="dm-fp dm-fp--side-right" />
+            <span className="dm-fp dm-fp--top" />
+            <span className="dm-fp dm-fp--bottom" />
+          </div>
+          <img className="dm-bit dm-bit--c" src={`${PARTS}/sparkle.webp`} alt="" />
+          <img className="dm-bit dm-bit--d" src={`${PARTS}/sparkle_double.webp`} alt="" />
+        </div>
         <div className="im-lid">
           <span className="im-ring" aria-hidden />
           <h2 id="dm-title">
@@ -386,8 +453,8 @@ function Studio({ onClose }: { onClose: () => void }) {
             ))}
           </div>
         </div>
-        <button type="button" className="wm-close sm-close im-close" onClick={close} aria-label="Close the Dolly Maker">
-          ×
+        <button type="button" className="wm-close sm-close im-close dm-close" onClick={close} aria-label="Close the Dolly Maker">
+          <img src={`${PARTS}/close_button.webp`} alt="" />
         </button>
 
         <div className="im-pane">
@@ -446,6 +513,7 @@ function Studio({ onClose }: { onClose: () => void }) {
               <div className="dm-style">
                 {/* the doll, on a soft pink stage, with every version under it */}
                 <div className={`dm-stage${busy ? " is-painting" : ""}${current ? "" : " dm-stage--empty"}`}>
+                  <span className="dm-stage-clouds" aria-hidden />
                   {current && d ? <img src={`data:image/png;base64,${current.png}`} alt={d.name} /> : <span className="dm-ghost" aria-hidden>👗</span>}
                   {!current && !busy && <small className="dm-stage-say">Your doll appears here once it's generated</small>}
                   {busy && <span className="im-wait">{busy}</span>}
@@ -519,6 +587,7 @@ function Studio({ onClose }: { onClose: () => void }) {
             <div className="im-build im-build--fill">
               <div className="dm-style">
                 <div className={`dm-stage dm-stage--done${finished ? "" : " dm-stage--empty"}`}>
+                  <span className="dm-stage-clouds" aria-hidden />
                   {finished ? <img src={finished.url} alt={name || d?.name || "Your doll"} /> : current ? <img src={`data:image/png;base64,${current.png}`} alt="" className="dm-faded" /> : <span className="dm-ghost" aria-hidden>💖</span>}
                   {!finished && <small className="dm-stage-say">{current ? "Approve it on Style & edit, and it's cut out here" : "Your approved doll, cut out, appears here"}</small>}
                 </div>
@@ -534,7 +603,7 @@ function Studio({ onClose }: { onClose: () => void }) {
                     </div>
                   ) : (
                     <div className="dm-plan dm-shelf-card">
-                      <h3>💖 {name.trim() || d?.name || "Your doll"}</h3>
+                      <h3>{name.trim() || d?.name || "Your doll"}</h3>
                       <p className="dm-note">{finished ? `Cut out and ready: ${finished.width} × ${finished.height}, the same height as the rest of the cast.` : "Cut out, sized to stand as tall as the rest of the cast, and added to the character catalogue for every room."}</p>
                       <label className="sm-field">
                         <span>Their name in the catalogue</span>
@@ -615,16 +684,16 @@ function Studio({ onClose }: { onClose: () => void }) {
             )}
             {step === "shelf" && !filed && (
               finished ? (
-                <button type="button" className="sm-btn sm-btn--go im-foot-next" onClick={file} disabled={!!busy || member !== true}>
-                  💖 Put on the Characters shelf
+                <button type="button" className="dm-shelf-btn" onClick={file} disabled={!!busy || member !== true}>
+                  <img src={`${PARTS}/button_shelf.webp`} alt="Put on the Characters shelf" />
                 </button>
               ) : current ? (
                 <button type="button" className="sm-btn sm-btn--go im-foot-next" onClick={approve} disabled={!!busy}>
                   Approve 💖
                 </button>
               ) : (
-                <button type="button" className="sm-btn sm-btn--go im-foot-next" disabled>
-                  💖 Put on the Characters shelf
+                <button type="button" className="dm-shelf-btn" disabled>
+                  <img src={`${PARTS}/button_shelf.webp`} alt="Put on the Characters shelf" />
                 </button>
               )
             )}

@@ -8639,6 +8639,338 @@
 .palais .dm-side-dot--shelf { background: radial-gradient(circle at 35% 30%, #fff8e1, #ffd98a); }
 .palais .im-sides button:disabled { opacity: 0.45; cursor: default; }
 
+/* ---- the studio redesigned from its own parts sheet: a gold-framed cream
+   panel, glass towers at the top corners, clouds of hearts and flowers by the
+   title, lily garlands on the bottom corners, heart-linked tabs, heart labels
+   and a mint band along the bottom ---- */
+.palais .dm-panel {
+  overflow: visible;
+  padding-bottom: 0;
+  border: 4px solid transparent;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 18% 12%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 74% 7%, #fff 0 1.5px, transparent 2.5px),
+    linear-gradient(180deg, #fde9f3 0%, #fff6ef 30%, #fff7fa 100%) padding-box,
+    linear-gradient(135deg, #fff2c2, #e8b84a 25%, #fbe7a0 50%, #d9a33c 75%, #fff2c2) border-box;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px #f6b7d3, 0 0 30px 8px rgba(255, 205, 225, 0.6), 0 24px 60px rgba(70, 30, 50, 0.35);
+}
+.palais .dm-panel::after { display: none; }
+.palais .dm-panel .im-cloud { display: none; }
+
+/* the frame, stretched round the whole panel behind what's in it: its
+   cartouche under the title, half off the top, its towers and clouds on the
+   top corners, its gold rails down the sides and along the bottom, under
+   the mint band; the panel's cream fills only its inside */
+/* the frame in pieces (cut from the one picture, 1473 × 1068): u is one of
+   the picture's pixels, as big as fits the panel (0.86 px at most). The
+   corners, crown and hearts keep their shape; the plain rails between them
+   repeat as far as the panel needs */
+.palais .dm-frame-box { position: absolute; left: -30px; right: -30px; top: -112px; bottom: -6px; container-type: size; --u: min(0.86px, calc(100cqw / 1473), calc(100cqh / 1068)); }
+.palais .dm-frame-box--front { display: none; }
+/* the stripes' own layer, at the back of everything */
+.palais .dm-panel > .dm-fill-box { z-index: 0; filter: none; }
+/* the mint band inside the frame: above its bottom rail and between its
+   corner flowers, so every button sits clear of the frame */
+@media (min-width: 761px) {
+  /* the band low, its buttons on the frame's bottom rail, in front of it,
+     and the card above taller for it */
+  .palais .dm-panel.im-panel { padding-bottom: 3.4rem; }
+  /* the band's mint lies behind the frame, running under its rail and corner
+     flowers; only its words and buttons come in front */
+  .palais .dm-panel.im-panel .im-foot { z-index: auto; margin: -0.8rem 0 0; padding-left: 7rem; padding-right: 7rem; background: none; box-shadow: none; border-radius: 0; }
+  /* the band itself, from its own picture (2075 × 388 drawn): its flower
+     corners and middle heart keep their shape, its plain mint and rail
+     repeat between, the whole width of the frame, behind the words and buttons */
+  .palais .dm-panel.im-panel .im-foot { --bh: 9rem; --bk: calc(var(--bh) / 388); }
+  .palais .dm-panel.im-panel .im-foot::after,
+  .palais .dm-panel.im-panel .im-foot::before { content: ""; display: block; position: absolute; z-index: 0; top: -0.9rem; height: var(--bh); pointer-events: none; background-repeat: no-repeat; border-radius: 0; box-shadow: none; }
+  .palais .dm-panel.im-panel .im-foot::before { left: calc(-2.4rem - 30px + 600 * var(--bk)); right: calc(-2.4rem - 30px + 600 * var(--bk)); background: var(--dm-band-tile) 0 0 / calc(188 * var(--bk)) 100% repeat-x; }
+  .palais .dm-panel.im-panel .im-foot::after {
+    left: calc(-2.4rem - 30px);
+    right: calc(-2.4rem - 30px);
+    background:
+      var(--dm-band-left) left top / calc(620 * var(--bk)) 100% no-repeat,
+      var(--dm-band-right) right top / calc(620 * var(--bk)) 100% no-repeat,
+      var(--dm-band-middle) center top / calc(435 * var(--bk)) 100% no-repeat;
+  }
+  /* where each side rail meets the band, the frame's own sparkles and flowers */
+  .palais .dm-fr--join-left,
+  .palais .dm-fr--join-right { bottom: calc(3.4rem + 4.3rem + 0.9rem - 26px); width: calc(140 * var(--u)); height: calc(135 * var(--u)); }
+  .palais .dm-fr--join-left { left: 0; background-image: var(--dm-fr-join-left); }
+  .palais .dm-fr--join-right { right: 0; background-image: var(--dm-fr-join-right); }
+  /* the frame's own bottom gives way to the band */
+  .palais .dm-fr--bottom-left,
+  .palais .dm-fr--bottom-right,
+  .palais .dm-fr--bottom-middle,
+  .palais .dm-fr--rail-bottom { display: none; }
+  .palais .dm-frame-box .dm-fr--rail-left,
+  .palais .dm-frame-box .dm-fr--rail-right { bottom: calc(120 * var(--u)); }
+  .palais .dm-panel.im-panel .im-foot > * { position: relative; z-index: 2; }
+  .palais .dm-panel.im-panel > .dm-decor { z-index: 1; }
+  /* the cream inside ends where the band begins, so the mint shows below it */
+  /* the background runs on down behind the band, so there's no gap above it */
+  .palais .dm-frame-box .dm-fr--inside { bottom: calc(60 * var(--u)); }
+  /* the subtitle and the tabs nudged down into the space above the card,
+     the title and the card staying where they are */
+  .palais .dm-panel .im-lid small,
+  .palais .dm-panel .im-lid .im-sides { translate: 0 24px; }
+  /* the footer's words a little lower on the band */
+  .palais .dm-panel.im-panel .im-foot .im-foot-say { translate: 0 10px; }
+  /* the title over the frame's cartouche */
+  /* as big as the frame's own cartouche (593 frame pixels wide), and over it */
+  .palais .dm-panel .im-lid h2 { margin-top: calc(clamp(-3.4rem, -8cqw, -1.2rem) - 1.4rem); width: min(552px, 43.6cqw + 26px, 90%); max-width: none; margin-bottom: -15px; }
+}
+/* the studio's background: soft pink stripes, like a lingerie-shop box */
+.palais .dm-panel { --dm-stripes: repeating-linear-gradient(90deg, #fde4ee 0 26px, #f9cfdf 26px 52px); }
+/* the shelf button, the drawing of it: a little lift when pointed at */
+.palais .dm-shelf-btn { padding: 0; border: none; background: none; cursor: pointer; height: 3.4rem; transition: transform 140ms ease, filter 140ms ease; }
+.palais .dm-shelf-btn img { display: block; height: 100%; width: auto; filter: drop-shadow(0 4px 6px rgba(150, 30, 90, 0.3)); }
+.palais .dm-shelf-btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.02); }
+.palais .dm-shelf-btn:disabled { cursor: default; filter: saturate(0.6) opacity(0.7); }
+.palais .dm-shelf-btn:focus-visible { outline: 3px dashed #ec6fae; outline-offset: 4px; border-radius: 999px; }
+.palais .dm-fr { position: absolute; background-repeat: no-repeat; background-size: 100% 100%; }
+.palais .dm-fr--join-left,
+.palais .dm-fr--join-right { display: none; }
+@media (min-width: 761px) { .palais .dm-frame-box .dm-fr--join-left, .palais .dm-frame-box .dm-fr--join-right { display: block; } }
+.palais .dm-fr--top-left { left: 0; top: 0; width: calc(440 * var(--u)); height: calc(420 * var(--u)); background-image: var(--dm-fr-top-left); }
+.palais .dm-fr--top-right { right: 0; top: 0; width: calc(440 * var(--u)); height: calc(420 * var(--u)); background-image: var(--dm-fr-top-right); }
+.palais .dm-fr--crown { left: 50%; top: 0; translate: -50% 0; width: calc(593 * var(--u)); height: calc(300 * var(--u)); background-image: var(--dm-fr-crown); }
+.palais .dm-fr--bottom-left { left: 0; bottom: 0; width: calc(440 * var(--u)); height: calc(268 * var(--u)); background-image: var(--dm-fr-bottom-left); }
+.palais .dm-fr--bottom-right { right: 0; bottom: 0; width: calc(440 * var(--u)); height: calc(268 * var(--u)); background-image: var(--dm-fr-bottom-right); }
+.palais .dm-fr--bottom-middle { left: 50%; bottom: 0; translate: -50% 0; width: calc(233 * var(--u)); height: calc(128 * var(--u)); background-image: var(--dm-fr-bottom-middle); }
+.palais .dm-fr--rail-top { left: calc(430 * var(--u)); right: calc(430 * var(--u)); top: calc(225 * var(--u)); height: calc(35 * var(--u)); background: var(--dm-fr-rail-top) 0 0 / calc(115 * var(--u)) 100% repeat-x; }
+.palais .dm-fr--rail-bottom { left: calc(430 * var(--u)); right: calc(430 * var(--u)); bottom: 0; height: calc(128 * var(--u)); background: var(--dm-fr-rail-bottom) 0 0 / calc(160 * var(--u)) 100% repeat-x; }
+.palais .dm-fr--rail-left { left: 0; top: calc(410 * var(--u)); bottom: calc(258 * var(--u)); width: calc(110 * var(--u)); background: var(--dm-fr-rail-left) 0 0 / 100% calc(80 * var(--u)) repeat-y; }
+.palais .dm-fr--rail-right { right: 0; top: calc(410 * var(--u)); bottom: calc(258 * var(--u)); width: calc(110 * var(--u)); background: var(--dm-fr-rail-right) 0 0 / 100% calc(80 * var(--u)) repeat-y; }
+.palais .dm-fr--side-left,
+.palais .dm-fr--side-right { top: calc(50% + 60 * var(--u)); translate: 0 -50%; width: calc(110 * var(--u)); height: calc(95 * var(--u)); }
+.palais .dm-fr--side-left { left: 0; background-image: var(--dm-fr-side-left); }
+.palais .dm-fr--side-right { right: 0; background-image: var(--dm-fr-side-right); }
+/* the panel's cream, inside the rails */
+.palais .dm-fr--inside { left: calc(55 * var(--u)); right: calc(55 * var(--u)); top: calc(150 * var(--u)); bottom: calc(60 * var(--u)); border-radius: 18px; background: var(--dm-stripes); box-shadow: 0 24px 60px rgba(70, 30, 50, 0.3); }
+.palais .dm-panel { margin-top: 3.2rem; height: min(calc(100cqh - 6.5rem), 1000px); max-height: calc(100cqh - 6.5rem); border: none; background: none; box-shadow: none; padding: 0 2.4rem 4.2%; }
+.palais .dm-panel > .dm-decor { z-index: 0; }
+.palais .dm-panel .im-twinkles { z-index: 1; }
+.palais .dm-panel .im-lid,
+.palais .dm-panel .im-pane,
+.palais .dm-panel .im-foot { position: relative; z-index: 3; }
+.palais .dm-panel .im-ring { display: none; }
+.palais .dm-panel .dm-close { z-index: 9; top: 6%; right: 0.4rem; }
+.palais .dm-panel .im-foot { border-radius: 16px; margin-left: 0; margin-right: 0; }
+.palais .dm-panel .im-pane > .im-build { margin: 0; }
+/* the decorations, behind and round the panel's edges */
+.palais .dm-decor { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.palais .dm-decor img { position: absolute; height: auto; filter: drop-shadow(0 6px 10px rgba(80, 30, 60, 0.25)); }
+/* the towers stand in the top corners, rising a little above the panel */
+.palais .dm-tower { width: clamp(56px, 6.2cqw, 96px); top: -34px; }
+.palais .dm-tower--left { left: 14px; }
+.palais .dm-tower--right { right: 3.4rem; }
+.palais .dm-cloud { width: clamp(100px, 12cqw, 180px); top: -30px; }
+.palais .dm-cloud--left { left: 15%; }
+.palais .dm-cloud--right { right: 15%; }
+.palais .dm-corner { width: clamp(130px, 14cqw, 210px); bottom: -34px; z-index: 6; }
+.palais .dm-corner--left { left: -60px; }
+.palais .dm-corner--right { right: -60px; }
+.palais .dm-bit { animation: im-twinkle 3.4s ease-in-out infinite; }
+.palais .dm-bit--a { width: 34px; top: 30%; left: -16px; }
+.palais .dm-bit--b { width: 28px; top: 48%; right: -14px; animation-delay: -1.2s; }
+.palais .dm-bit--c { width: 30px; top: 14%; right: 24%; animation-delay: -2s; }
+.palais .dm-bit--d { width: 18px; top: 40%; right: -10px; animation-delay: -0.6s; }
+.palais .dm-panel .im-twinkles { z-index: 3; }
+/* the close button, the ornate one from the sheet */
+.palais .dm-close { padding: 0; border: none; background: none; box-shadow: none; width: 3.4rem; height: 3.4rem; top: -1.3rem; right: -1.3rem; z-index: 8; }
+.palais .dm-close img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 4px 8px rgba(80, 30, 60, 0.3)); transition: transform 160ms ease; }
+.palais .dm-close:hover img { transform: rotate(8deg) scale(1.06); }
+
+/* the tabs: one cream ribbon, a heart between each, the one you're on pink */
+.palais .dm-panel .im-sides { gap: 0; padding: 0.35rem 0.5rem; border: 3px solid #f2c45a; background: #fffaf2; box-shadow: 0 0 0 3px #fff, 0 6px 0 3px #ecd2a8; }
+.palais .dm-panel .im-sides button { position: relative; padding: 0.4rem 1.2rem 0.4rem 0.4rem; color: #7a3e5c; }
+.palais .dm-panel .im-sides button + button::before { content: "♥"; position: absolute; left: -0.4rem; top: 50%; translate: 0 -50%; font-size: 1.05rem; color: #f472b6; text-shadow: 0 0 0 #fff, 0 1px 2px rgba(180, 60, 120, 0.4); }
+.palais .dm-panel .im-sides button.is-on { background: linear-gradient(180deg, #ff9fcd, #ef5fa5 60%, #e04893); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.45), 0 0 0 2px #f2c45a, 0 3px 0 2px #c0307c; }
+.palais .dm-panel .im-side-dot { box-shadow: 0 0 0 2.5px #fff, 0 0 0 4.5px #f2c45a; }
+
+/* each step's content sits on one cream card in a gold frame */
+.palais .dm-panel .im-pane > .im-build { margin: 0 1.2rem; padding: 0.9rem 1rem; border-radius: 26px; border: 3px solid transparent; background: linear-gradient(#fffaf6, #fffaf6) padding-box, linear-gradient(135deg, #fbe7a0, #e8b84a, #fbe7a0) border-box; box-shadow: inset 0 0 0 3px #ffe3ef, 0 8px 18px rgba(80, 40, 60, 0.12); width: auto; overflow-y: auto; }
+/* the card scrolls inside its frame, if it must, rather than the frame scrolling away */
+.palais .dm-panel .im-pane { overflow: hidden; display: flex; flex-direction: column; padding-top: 0.3rem; }
+.palais .dm-panel .im-pane > .im-build { flex: 1 1 auto; min-height: 0; height: auto; }
+/* the labels, with a heart before them */
+.palais .dm-panel .sm-field > span { display: flex; align-items: center; gap: 0.45rem; font: 700 0.98rem/1.1 var(--sm-round); letter-spacing: 0; text-transform: none; color: #6a2f4f; }
+.palais .dm-panel .sm-field > span::before { content: "💗"; font-size: 1.1rem; }
+.palais .dm-panel .dm-locks > span,
+.palais .dm-panel .dm-plan h3 { color: #6a2f4f; }
+/* the photo boxes in gold, a heart on each */
+.palais .dm-slot-box { border: 3px solid transparent; border-radius: 18px; background: radial-gradient(70% 80% at 50% 45%, #fff6e6, #ffe0ec) padding-box, linear-gradient(135deg, #fbe7a0, #e8b84a, #fbe7a0) border-box; overflow: visible; }
+.palais .dm-slot-box::before { content: "♥"; position: absolute; top: -0.75rem; left: 50%; translate: -50% 0; z-index: 2; font-size: 1.1rem; line-height: 1; color: #f472b6; text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 3px #f2c45a; }
+.palais .dm-slot-box img { border-radius: 15px; }
+.palais .dm-slot--main .dm-slot-box { background: radial-gradient(70% 70% at 50% 40%, #fff3c4, #ffc7a1 55%, #ff9fbf) padding-box, linear-gradient(135deg, #fff2c2, #e8b84a, #fff2c2) border-box; box-shadow: 0 0 0 3px #fff, 0 0 16px rgba(255, 190, 110, 0.5); }
+.palais .dm-slot.has-photo .dm-slot-box { background: #fff padding-box, linear-gradient(135deg, #fbe7a0, #e8b84a, #fbe7a0) border-box; }
+
+/* the mint band along the bottom, Back, the words and the buttons on it */
+.palais .dm-panel .im-foot { margin-top: 0.8rem; padding: 0.75rem clamp(1.4rem, 7cqw, 7.5rem) 0.8rem; border-top: none; border-radius: 0 0 26px 26px; background: linear-gradient(180deg, #c5efe2, #9fe0cc); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.6); }
+.palais .dm-panel .im-foot-say { color: #3f6f62; font-weight: 600; }
+.palais .dm-panel .im-foot .sm-btn--go { border: 3px solid #f2c45a; background: linear-gradient(180deg, #ff9fcd, #ef5fa5 60%, #e04893); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.45), 0 0 0 2px #fff, 0 4px 0 2px #c0307c; }
+.palais .dm-panel .im-foot .im-foot-gen { border: 3px solid #f2c45a; background: linear-gradient(180deg, #fff, #ffeaf4); color: #c0307c; box-shadow: 0 0 0 2px #fff, 0 4px 0 2px #ecc0d6; }
+.palais .dm-panel .im-foot .im-foot-back { border: 3px solid #f2c45a; background: #fffaf2; color: #7a3e5c; }
+@media (max-width: 760px) {
+  .palais .dm-tower { display: none; }
+  .palais .dm-corner { width: 120px; bottom: -18px; }
+  .palais .dm-panel .im-pane > .im-build { margin: 0 0.5rem; padding: 0.6rem; }
+}
+@media (prefers-reduced-motion: reduce) { .palais .dm-bit { animation: none; } }
+
+/* ---- Style & edit and Put on the shelf, as the mockups draw them ---- */
+/* the doll's stage: a gold frame with a pink beaded inner edge, glowing
+   hearts top, bottom and halfway down each side, clouds on its corners */
+.palais .dm-panel .dm-stage {
+  overflow: visible;
+  border: 7px solid transparent;
+  border-radius: 24px;
+  background:
+    radial-gradient(60% 55% at 50% 45%, #fff8e2, #ffd9e6 70%, #ffc6dc) padding-box,
+    linear-gradient(135deg, #fff2c2, #e8b84a 30%, #fbe7a0 55%, #d9a33c 80%, #fff2c2) border-box;
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 6px #f7a8cf, 0 8px 18px rgba(80, 40, 60, 0.18);
+}
+.palais .dm-panel .dm-stage::before,
+.palais .dm-panel .dm-stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 52px;
+  height: 48px;
+  translate: -50% 0;
+  background: var(--dm-heart-big) center / contain no-repeat;
+  filter: drop-shadow(0 2px 3px rgba(150, 40, 90, 0.35));
+  pointer-events: none;
+  z-index: 2;
+}
+.palais .dm-panel .dm-stage::before { top: -28px; }
+.palais .dm-panel .dm-stage::after { bottom: -28px; }
+.palais .dm-panel .dm-stage .dm-stage-say {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding: 0.45rem 1.2rem;
+  border: 2px solid #f2c45a;
+  border-radius: 999px;
+  background: rgba(255, 250, 244, 0.92);
+  color: #7a3e5c;
+  font-weight: 600;
+}
+.palais .dm-panel .dm-stage--empty { justify-content: center; }
+.palais .dm-panel .dm-ghost { opacity: 0.85; filter: none; font-size: 5.5rem; }
+/* clouds on the stage's corners */
+.palais .dm-stage-clouds { position: absolute; inset: -14px; pointer-events: none; z-index: 1; }
+.palais .dm-stage-clouds::before,
+.palais .dm-stage-clouds::after {
+  content: "";
+  position: absolute;
+  width: 34%;
+  max-width: 150px;
+  aspect-ratio: 293 / 217;
+  background: var(--dm-cloud-hearts) center / contain no-repeat;
+}
+.palais .dm-stage-clouds::before { top: -14px; left: -18px; }
+.palais .dm-stage-clouds::after { bottom: -18px; right: -18px; transform: scaleX(-1); }
+
+/* the plan and shelf cards: cream with a gold edge and a heart by the name */
+.palais .dm-panel .dm-plan {
+  position: relative;
+  border: 3px solid transparent;
+  border-radius: 22px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 222, 236, 0.35) 0 18px, transparent 18px 36px) padding-box,
+    linear-gradient(#fffaf6, #fff5f9) padding-box,
+    linear-gradient(135deg, #fbe7a0, #e8b84a, #fbe7a0) border-box;
+  box-shadow: inset 0 0 0 2px #fff, 0 6px 16px rgba(80, 40, 60, 0.1);
+}
+.palais .dm-panel .dm-plan h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem; }
+.palais .dm-panel .dm-plan h3::before { content: ""; flex: none; width: 34px; height: 31px; background: var(--dm-heart-big) center / contain no-repeat; filter: drop-shadow(0 2px 2px rgba(150, 40, 90, 0.3)); }
+.palais .dm-panel .dm-plan::after { content: ""; position: absolute; top: -12px; right: -10px; width: 26px; height: 24px; background: var(--dm-heart) center / contain no-repeat; }
+.palais .dm-panel .dm-plan .sm-field > span { font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.palais .dm-panel .dm-plan .sm-field > span::before { content: none; }
+
+/* the fields and the change box: a cream pill in gold, a heart on each end */
+.palais .dm-panel .sm-field { position: relative; }
+.palais .dm-panel .sm-field input,
+.palais .dm-panel .sm-field textarea {
+  border: 3px solid transparent;
+  background: linear-gradient(#fffdfb, #fffdfb) padding-box, linear-gradient(120deg, #f7a8cf, #f2c45a 45%, #f2c45a 55%, #f7a8cf) border-box;
+}
+.palais .dm-panel .dm-plan .sm-field input { padding-left: 1.6rem; padding-right: 1.6rem; }
+.palais .dm-panel .dm-plan .sm-field::before,
+.palais .dm-panel .dm-plan .sm-field::after {
+  content: "";
+  position: absolute;
+  bottom: 1.15rem;
+  width: 24px;
+  height: 22px;
+  background: var(--dm-heart) center / contain no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+.palais .dm-panel .dm-plan .sm-field::before { left: -10px; }
+.palais .dm-panel .dm-plan .sm-field::after { right: -10px; top: 1.1rem; bottom: auto; }
+
+/* the photos for a change: a pink tray in a gold edge, flowers on its corners */
+.palais .dm-panel .dm-edit .im-tray { position: relative; border: 3px dashed #f7a8cf; box-shadow: 0 0 0 3px #f2c45a, 0 0 0 5px #fff; }
+.palais .dm-panel .dm-edit .im-tray::after { content: ""; position: absolute; right: -16px; bottom: -14px; width: 54px; height: 42px; background: var(--dm-cloud-flowers) center / contain no-repeat; pointer-events: none; }
+
+/* the locks: cream pills in gold, the locked ones pink */
+.palais .dm-panel .dm-locks > span { display: flex; align-items: center; gap: 0.45rem; font-size: 0.95rem; }
+.palais .dm-panel .dm-locks > span::before { content: ""; width: 24px; height: 22px; background: var(--dm-heart) center / contain no-repeat; }
+.palais .dm-panel .dm-locks button { border: 2px solid #f2c45a; background: #fffaf2; color: #7a3e5c; font-weight: 600; }
+.palais .dm-panel .dm-locks button.is-on { border-color: #ec6fae; background: #ffe6f1; color: #b02d6e; }
+
+/* the shelf list, with its icons */
+.palais .dm-panel .dm-shelf-list li { display: flex; gap: 0.5rem; }
+
+/* the mint band's scalloped top edge */
+.palais .dm-panel .im-foot { position: relative; overflow: visible; }
+.palais .dm-panel .im-foot::before { content: ""; position: absolute; left: 0; right: 0; top: -9px; height: 12px; background: radial-gradient(circle at 50% 100%, #c5efe2 0 8px, transparent 9px) 0 0 / 22px 12px repeat-x; pointer-events: none; }
+
+/* a phone, or a narrow window: no room for the frame, so a plain cream panel
+   in a gold edge, the tabs in one row */
+@media (max-width: 760px), (max-height: 620px) {
+  .palais .dm-frame-box,
+  .palais .dm-frame-box--front,
+  .palais .dm-decor .dm-bit { display: none; }
+  .palais .dm-panel { margin-top: 2rem; height: calc(100cqh - 3rem); max-height: calc(100cqh - 3rem); padding: 0 0.6rem 0.6rem; border: 3px solid #f2c45a; border-radius: 22px; background: linear-gradient(180deg, #fde9f3, #fff7fa); box-shadow: 0 0 0 3px #fff, 0 12px 30px rgba(70, 30, 50, 0.3); }
+  .palais .dm-panel > .dm-decor::before { display: none; }
+  .palais .dm-panel .dm-close { top: -1.2rem; right: -0.6rem; width: 2.8rem; height: 2.8rem; }
+  .palais .dm-panel .im-sides { flex-wrap: nowrap; }
+  .palais .dm-panel .im-sides button + button::before { display: none; }
+  .palais .dm-panel .im-lid h2 { max-width: min(300px, 78%); }
+}
+
+/* the tall frame, on a phone (cut from its own picture, 1024 × 1536): v is
+   one of its pixels, as wide as the screen allows */
+.palais .dm-frame-phone { display: none; }
+@media (max-width: 760px) {
+  .palais .dm-frame-phone { display: block; position: absolute; left: -12px; right: -12px; top: -46px; bottom: -14px; container-type: size; --v: calc(100cqw / 1024); filter: drop-shadow(0 6px 10px rgba(80, 30, 60, 0.25)); }
+  .palais .dm-fp { position: absolute; background-repeat: no-repeat; background-size: 100% 100%; }
+  .palais .dm-fp--top { left: 0; right: 0; top: 0; height: calc(440 * var(--v)); background-image: var(--dm-fp-top); }
+  .palais .dm-fp--bottom { left: 0; right: 0; bottom: 0; height: calc(346 * var(--v)); background-image: var(--dm-fp-bottom); }
+  .palais .dm-fp--rail-left,
+  .palais .dm-fp--rail-right { top: calc(430 * var(--v)); bottom: calc(336 * var(--v)); width: calc(130 * var(--v)); background-size: 100% calc(75 * var(--v)); background-repeat: repeat-y; }
+  .palais .dm-fp--rail-left { left: 0; background-image: var(--dm-fp-rail-left); }
+  .palais .dm-fp--rail-right { right: 0; background-image: var(--dm-fp-rail-right); }
+  .palais .dm-fp--side-left,
+  .palais .dm-fp--side-right { top: 50%; translate: 0 -50%; width: calc(130 * var(--v)); height: calc(220 * var(--v)); }
+  .palais .dm-fp--side-left { left: 0; background-image: var(--dm-fp-side-left); }
+  .palais .dm-fp--side-right { right: 0; background-image: var(--dm-fp-side-right); }
+  .palais .dm-fp--inside { left: calc(70 * var(--v)); right: calc(70 * var(--v)); top: calc(190 * var(--v)); bottom: calc(60 * var(--v)); border-radius: 14px; background: var(--dm-stripes); }
+  /* the panel itself goes clear: the frame and its cream are its look */
+  .palais .dm-panel { border: none; background: none; box-shadow: none; padding: 0 calc(1.8rem) 1.4rem; margin-top: 2.6rem; height: calc(100cqh - 3.6rem); max-height: calc(100cqh - 3.6rem); }
+  .palais .dm-panel .dm-close { top: 0.4rem; right: 0.2rem; }
+  /* the footer's buttons wrap under its words, side by side, to fit */
+  .palais .dm-panel .im-foot { flex-wrap: wrap; justify-content: center; padding: 0.6rem 0.6rem 0.7rem; }
+  .palais .dm-panel .im-foot-right { flex: 1 1 100%; justify-content: center; gap: 0.4rem; }
+  .palais .dm-panel .im-foot .sm-btn { padding: 0.55rem 0.8rem; font-size: 0.85rem; }
+  .palais .dm-shelf-btn { height: 2.7rem; }
+}
+
 /* design: the photos and their roles; the words */
 .palais .dm-design { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.1rem; align-items: stretch; }
 /* the six photo boxes: the person's big on the left, the rest two by two */
