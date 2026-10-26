@@ -8650,8 +8650,15 @@
 .palais .im-foot-slot:empty { flex: 1 1 0; }
 .palais .im-room-photos--foot { flex: 1 1 auto; margin: 0 0.6rem 0 0; }
 /* the room tab's previews a little smaller, so the tab fits */
-.palais .imf-panel .im-room-cols .im-templates-frames { max-width: 19rem; }
-.palais .imf-panel .im-room-cols .im-templates { padding: 0.6rem; gap: 0.45rem; }
+/* the screens grow to fill the card, as big as its height allows, the words
+   and seasons spaced evenly under them */
+.palais .imf-panel .im-room-cols .im-templates { padding: 0.8rem; gap: 0.6rem; justify-content: space-evenly; container-type: size; }
+.palais .imf-panel .im-room-cols .im-templates-frames { max-width: min(100%, 34rem, calc((100cqh - 8.6rem) * 1.9)); }
+.palais .imf-panel .im-room-cols .im-templates-say { gap: 0.5rem; }
+.palais .imf-panel .im-room-cols .im-templates-say p { font-size: 0.92rem; }
+/* the seasons in one row under the screens */
+.palais .imf-panel .im-room-cols .im-seasons { grid-template-columns: repeat(4, minmax(0, 7.2rem)); }
+.palais .imf-panel .im-room-cols .im-seasons .im-season { padding: 0.42rem 0.5rem; font-size: 0.85rem; }
 .palais .im-room-photos--foot .im-tray { min-height: 0; height: 2.9rem; padding: 0.3rem 0.8rem; border-radius: 18px; }
 .palais .im-room-photos--foot .sm-tray-say { font-size: 0.82rem; line-height: 1.25; gap: 0.6rem; }
 .palais .im-room-photos--foot .sm-tray-icon { width: 30px; height: 26px; }

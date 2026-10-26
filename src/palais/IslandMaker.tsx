@@ -727,7 +727,7 @@ function RoomTemplates({ room, painting, changes }: { room?: MadeRoom; painting:
             </>
           ) : (
             <>
-              <b>Your room is painted in here:</b> the Palais's own mosaic floor and painted ceiling, with your room built between them, on a computer and a phone, in all four seasons.
+              <b>Your room is painted in here,</b> on the Palais's own floor and ceiling, in all four seasons.
             </>
           )}
         </p>
