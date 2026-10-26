@@ -75,7 +75,8 @@ export function DollyMaker() {
       const sticker = stage.querySelector<HTMLElement>(".palais-stickermaker:not(.palais-islandmaker):not(.palais-dollymaker)");
       const island = stage.querySelector<HTMLElement>(".palais-islandmaker");
       if (!sticker || !island || sticker.style.visibility !== "visible" || island.style.visibility !== "visible") return;
-      const w = sticker.offsetWidth * SIZE;
+      // on a phone the two machines below grew a size more than it did
+      const w = sticker.offsetWidth * SIZE / (stage.clientWidth <= 760 ? 1.1 : 1);
       const h = w * SHAPE;
       // clear of the two machines and the pills over them
       const pillTop = (m: HTMLElement) => m.offsetTop - (m.querySelector<HTMLElement>(".palais-stickermaker-hint")?.offsetHeight ?? 0);
@@ -92,7 +93,7 @@ export function DollyMaker() {
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(stage);
-    const id = setInterval(fit, 1200);
+    const id = setInterval(fit, 3000);
     return () => {
       watch.disconnect();
       clearInterval(id);
@@ -117,7 +118,7 @@ export function DollyMaker() {
       >
         <img src={MACHINE} alt="" decoding="async" />
         <span className="palais-stickermaker-hint" aria-hidden>
-          <span>💖 Make a doll</span>
+          <span><span className="pill-ico">💖</span><span className="pill-ico-phone">🪆</span> Make <span className="pill-long">a doll</span><span className="pill-short">Doll</span></span>
           <small>dress up a character &amp; add them to the character catalogue</small>
         </span>
       </button>
@@ -642,9 +643,7 @@ function Studio({ onClose }: { onClose: () => void }) {
             <small className="im-foot-say" aria-live="polite">
               {trouble ?? busy}
             </small>
-          ) : (
-            <span />
-          )}
+          ) : null}
           <span
             className="im-foot-right"
             title={
@@ -664,7 +663,7 @@ function Studio({ onClose }: { onClose: () => void }) {
             {/* on each tab, as on the island maker: its own make-it button, then Next */}
             {step === "design" && (
               <button type="button" className="sm-btn im-foot-gen" onClick={generate} disabled={!canMake}>
-                {busy ? "Painting…" : versions.length ? "✦ Generate a new one" : "✦ Generate my doll"}
+                {busy ? "Painting…" : versions.length ? <>✦ Gen<span className="gen-long">erate a</span> new<span className="gen-long"> one</span></> : <>✦ Gen<span className="gen-long">erate my</span> <span className="gen-short">D</span><span className="gen-long">d</span>oll</>}
               </button>
             )}
             {step === "style" &&
@@ -679,23 +678,24 @@ function Studio({ onClose }: { onClose: () => void }) {
                 </>
               ) : (
                 <button type="button" className="sm-btn im-foot-gen" onClick={generate} disabled={!canMake}>
-                  {busy ? "Painting…" : "✦ Generate my doll"}
+                  {busy ? "Painting…" : <>✦ Gen<span className="gen-long">erate my</span> <span className="gen-short">D</span><span className="gen-long">d</span>oll</>}
                 </button>
               ))}
             {step === "design" && (
               <button type="button" className="sm-btn sm-btn--go im-foot-next" onClick={() => setStep("style")}>
-                Next: style →
+                Next<span className="gen-long">: style</span> →
               </button>
             )}
             {step === "style" && !current && (
               <button type="button" className="sm-btn sm-btn--go im-foot-next" onClick={() => setStep("shelf")}>
-                Next: shelf →
+                Next<span className="gen-long">: shelf</span> →
               </button>
             )}
             {step === "shelf" && !filed && (
               finished ? (
                 <button type="button" className="dm-shelf-btn" onClick={file} disabled={!!busy || member !== true}>
                   <img src={`${PARTS}/button_shelf.webp`} alt="Put on the Characters shelf" />
+                  <span className="dm-shelf-say">💖 Put on Shelf</span>
                 </button>
               ) : current ? (
                 <button type="button" className="sm-btn sm-btn--go im-foot-next" onClick={approve} disabled={!!busy}>
@@ -704,6 +704,7 @@ function Studio({ onClose }: { onClose: () => void }) {
               ) : (
                 <button type="button" className="dm-shelf-btn" disabled>
                   <img src={`${PARTS}/button_shelf.webp`} alt="Put on the Characters shelf" />
+                  <span className="dm-shelf-say">💖 Put on Shelf</span>
                 </button>
               )
             )}

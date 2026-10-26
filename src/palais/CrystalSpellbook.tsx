@@ -210,7 +210,7 @@ export function CrystalSpellbook() {
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(stage);
-    const id = setInterval(fit, 1200);
+    const id = setInterval(fit, 3000);
     return () => {
       watch.disconnect();
       clearInterval(id);

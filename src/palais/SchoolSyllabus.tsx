@@ -317,7 +317,7 @@ export function SchoolSyllabus() {
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(stage);
-    const id = setInterval(fit, 1200); // the photographs fade in as the seasons turn
+    const id = setInterval(fit, 3000); // the photographs fade in as the seasons turn
     return () => {
       watch.disconnect();
       clearInterval(id);
@@ -370,13 +370,13 @@ export function SchoolSyllabus() {
         title="The syllabus"
         onClick={() => setOpen(true)}
       />
-      {/* and a badge on the front of her desk saying so: just "Syllabus" on a phone */}
+      {/* and a badge on the front of her desk saying so: just "Syllabi", without its hearts, on a phone */}
       <button ref={badge} type="button" className="palais-syllabus-badge" aria-label="Open the syllabus" onClick={() => setOpen(true)}>
         <span className="palais-chalkboard-hint">
-          <span aria-hidden>♡</span>
+          <span aria-hidden className="palais-badge-heart">♡</span>
           <span className="palais-badge-long">Open the syllabus</span>
-          <span className="palais-badge-short">Syllabus</span>
-          <span aria-hidden>♡</span>
+          <span className="palais-badge-short">Syllabi</span>
+          <span aria-hidden className="palais-badge-heart">♡</span>
         </span>
       </button>
       {open && (

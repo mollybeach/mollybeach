@@ -48,6 +48,11 @@ const EDGE = 110;
 /** and a little further right than its spot on the desk, in pixels, clear of
     the turntable's open sleeve */
 const NUDGE = 75;
+/** and this much lower on a phone, in pixels, and a touch bigger (the other
+    two machines size themselves from it) */
+const PHONE_DROP = 87;
+const PHONE_GROW = 1.529;
+const PHONE_LEFT = 5;
 const deskOf = (img: HTMLImageElement) => {
   const tall = /school-portrait-(\w+)\.webp$/.exec(img.src);
   return { tall: !!tall, ...(ON_THE_DESK[tall ? `portrait-${tall[1]}` : "wide"] ?? ON_THE_DESK.wide) };
@@ -82,7 +87,8 @@ export function StickerMaker() {
       if (!img) return;
       const box = coverBox(img, stage);
       const on = deskOf(img);
-      const w = box.w * on.w;
+      const phone = stage.clientWidth <= 760;
+      const w = box.w * on.w * (phone ? PHONE_GROW : 1);
       const h = w * SHAPE;
       // its pill is wider than it is, and has to fit on screen too
       const pill = el.querySelector<HTMLElement>(".palais-stickermaker-hint")?.offsetWidth ?? 0;
@@ -95,14 +101,15 @@ export function StickerMaker() {
       const base = box.top + box.h * on.base;
       el.style.width = `${w}px`;
       el.style.height = `${h}px`;
-      el.style.left = `${cx - w / 2}px`;
-      el.style.top = `${base - h}px`;
+      el.style.left = `${cx - w / 2 - (phone ? PHONE_LEFT : 0)}px`;
+      // on a phone it sits a little lower on its desk (the other two machines follow it)
+      el.style.top = `${base - h + (phone ? PHONE_DROP : 0)}px`;
       el.style.visibility = "visible";
     };
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(stage);
-    const id = setInterval(fit, 1200);
+    const id = setInterval(fit, 3000);
     return () => {
       watch.disconnect();
       clearInterval(id);
@@ -134,7 +141,7 @@ export function StickerMaker() {
       >
         <img src={modalButton(MACHINE)} alt="" decoding="async" />
         <span className="palais-stickermaker-hint" aria-hidden>
-          <span>✂ Make a sticker</span>
+          <span>✂ Make <span className="pill-long">a sticker</span><span className="pill-short">Sticker</span></span>
           <small>to add to the catalogue</small>
         </span>
       </button>

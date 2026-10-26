@@ -489,7 +489,7 @@ export function LibraryImac({ room = "library" }: { room?: "library" | "school" 
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(stage);
-    const id = setInterval(fit, 1200); // the photographs fade in as the seasons turn
+    const id = setInterval(fit, 3000); // the photographs fade in as the seasons turn
     return () => {
       watch.disconnect();
       clearInterval(id);

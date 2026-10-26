@@ -210,7 +210,7 @@ export function IslandMaker() {
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(stage);
-    const id = setInterval(fit, 1200);
+    const id = setInterval(fit, 3000);
     return () => {
       watch.disconnect();
       clearInterval(id);
@@ -235,7 +235,7 @@ export function IslandMaker() {
       >
         <img src={MACHINE} alt="" decoding="async" />
         <span className="palais-stickermaker-hint" aria-hidden>
-          <span>🏝 Make an island</span>
+          <span>🏝 Make <span className="pill-long">an island</span><span className="pill-short">Island</span></span>
           <small>add room to the map</small>
         </span>
       </button>
@@ -249,7 +249,7 @@ export function IslandMaker() {
 type Tab = "room" | "island" | "map";
 const TABS: { tab: Tab; label: string; short: string; dot: string }[] = [
   { tab: "room", label: "Create room", short: "Room", dot: "★" },
-  { tab: "island", label: "Create island sticker", short: "Island sticker", dot: "🌴" },
+  { tab: "island", label: "Create island sticker", short: "Island", dot: "🌴" },
   { tab: "map", label: "Create map", short: "Map", dot: "🗺" },
 ];
 
@@ -573,7 +573,7 @@ function Machine({ onClose }: { onClose: () => void }) {
           <div className="im-foot">
             {tab !== "room" ? (
               <button type="button" className="sm-btn im-foot-back" onClick={() => setTab(tab === "map" ? "island" : "room")}>
-                ← {tab === "map" ? "Island sticker" : "Room"}
+                ← {tab === "map" ? <>Island<span className="gen-long"> sticker</span></> : "Room"}
               </button>
             ) : (
               <span />
@@ -588,11 +588,13 @@ function Machine({ onClose }: { onClose: () => void }) {
             {/* a tab can put its photo tray here, beside the buttons */}
             <div id="im-foot-slot" className="im-foot-slot" />
             <span className="im-foot-right" title={footSay}>
+              {/* the make-it buttons in the middle, Next in the corner */}
+              <span className="im-foot-mid">
               {/* the room, once its master's painted and looked over: all its
                   other pictures, from it */}
               {member === true && tab === "room" && draftRoom?.pictures.master && !seasonsDone && (
                 <button type="button" className="sm-btn im-foot-gen" disabled={jobBusy} onClick={() => create("seasons")}>
-                  {jobBusy && job?.scope === "seasons" ? "Painting…" : `✦ ${Object.keys(draftRoom.pictures).length > 2 ? "Finish" : "Generate"} all 8 pictures`}
+                  {jobBusy && job?.scope === "seasons" ? "Painting…" : <>✦ {Object.keys(draftRoom.pictures).length > 2 ? "Finish" : "Generate"} all 8<span className="gen-long"> pictures</span></>}
                 </button>
               )}
               {member === true && (
@@ -610,23 +612,24 @@ function Machine({ onClose }: { onClose: () => void }) {
                     : tab === "room"
                       ? draftRoom?.pictures.master
                         ? "✦ Paint it again"
-                        : "✦ Generate room"
+                        : <>✦ Gen<span className="gen-long">erate</span> room</>
                       : tab === "island"
                         ? draftRoom?.pictures.island
                           ? "✦ Paint it again"
-                          : "✦ Generate island"
+                          : <>✦ Gen<span className="gen-long">erate</span> island</>
                         : draftRoom?.pictures.island
                           ? "✦ Paint its island again"
                           : "✦ Preview my island"}
                 </button>
               )}
+              </span>
               {tab !== "map" ? (
                 <button type="button" className="sm-btn sm-btn--go im-foot-next" onClick={() => setTab(tab === "room" ? "island" : "map")}>
-                  Next: {tab === "room" ? "island sticker" : "map"} →
+                  Next<span className="gen-long">: {tab === "room" ? "island sticker" : "map"}</span> →
                 </button>
               ) : (
                 <button type="button" className="sm-btn sm-btn--go im-foot-next im-create-btn" onClick={() => create("all")} disabled={member !== true || !!wanting || jobBusy}>
-                  🏝 Add my island to the map ♡
+                  <span className="gen-long">🏝 Add my island to the map ♡</span><span className="gen-short">Add island 🗺</span>
                 </button>
               )}
             </span>
@@ -643,7 +646,10 @@ export function Door({ member, say = "Creating rooms is for members of the Palai
   if (!me)
     return (
       <div className="im-door-note">
-        <p>{say}</p>
+        <p>
+          <span className="door-long">{say}</span>
+          <span className="door-short">Members only: sign in to start.</span>
+        </p>
         <button type="button" className="sm-btn sm-btn--go" onClick={signIn} disabled={busy}>
           {busy ? "Signing in…" : "Sign in with Google"}
         </button>
@@ -815,6 +821,7 @@ function RoomTab({ draft, change, member, unfinished, room, job, onCarryOn }: { 
           onDrop={(n) => change({ photos: draft.photos.filter((_, i) => i !== n) })}
           disabled={false}
           say={`Drop up to ${MOST_PHOTOS} photos of anything you love for it (a room, furniture, colours, a view out of the window)`}
+          short="Upload photos for your room"
         />
         {photos.trouble && <p className="sm-trouble">{photos.trouble}</p>}
       </div>
@@ -1410,7 +1417,8 @@ export function useFitZoom() {
       const W = stage.clientWidth;
       const H = stage.clientHeight;
       const k = Math.min(1, W / FIT_W, H / FIT_H);
-      setStyle(W <= 760 || k >= 0.999 ? undefined : { zoom: k, inset: "auto", left: 0, top: 0, width: W / k, height: H / k, containerType: "size" });
+      // even at full size it's measured against the room in view, never the whole page
+      setStyle(W <= 760 ? undefined : { zoom: k, inset: "auto", left: 0, top: 0, width: W / k, height: H / k, containerType: "size" });
     };
     fit();
     const watch = new ResizeObserver(fit);
@@ -1438,7 +1446,7 @@ export function usePastedPhotos(take: (files: FileList) => void) {
 }
 
 /** a tray to drop photos in, glowing like the orb inside the globe */
-export function PhotoTray({ photos, most, onTake, onDrop, disabled, say }: { photos: Photo[]; most: number; onTake: (files: FileList | null | undefined) => void; onDrop: (n: number) => void; disabled: boolean; say: string }) {
+export function PhotoTray({ photos, most, onTake, onDrop, disabled, say, short }: { photos: Photo[]; most: number; onTake: (files: FileList | null | undefined) => void; onDrop: (n: number) => void; disabled: boolean; say: string; short?: string }) {
   const [over, setOver] = useState(false);
   usePastedPhotos((files) => !disabled && onTake(files));
   return (
@@ -1481,7 +1489,14 @@ export function PhotoTray({ photos, most, onTake, onDrop, disabled, say }: { pho
         <span className="sm-tray-say">
           <span className="sm-tray-icon" aria-hidden />
           <span>
-            {say}, paste them in, or press to <span className="sm-upload">upload them</span>
+            <span className="tray-long">
+              {say}, paste them in, or press to <span className="sm-upload">upload them</span>
+            </span>
+            {short && (
+              <span className="tray-short">
+                <span className="sm-upload">{short}</span> ✨
+              </span>
+            )}
           </span>
         </span>
       )}
