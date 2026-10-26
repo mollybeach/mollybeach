@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePlace } from "./place";
 import { amIAccepted, askForReview, noteDoing } from "./visits";
 import { useAccount } from "../components/AccountCard";
@@ -438,10 +439,67 @@ function Machine({ onClose }: { onClose: () => void }) {
   const JOB_SAY: Record<Run["at"], string> = { plan: "Claude is planning the room…", room: "Painting the room… a minute or two each", island: "Painting its island…", map: "", done: "" };
   // rooms left part-made (the only unfinished ones anyone's sent are their own)
   const unfinished = me ? rooms.filter((r) => r.status !== "ready") : [];
+  const footSay =
+    job?.trouble
+                ? `${job.trouble} What's painted is kept.`
+                : jobBusy
+                  ? JOB_SAY[job!.at]
+                  : member !== true
+                    ? "For members of the Palais: sign in on Create room."
+                    : tab === "map"
+                      ? wanting
+                        ? `Still wanting ${wanting}.`
+                        : draftRoom?.pictures.island
+                          ? "That's your island on its plot. Add it, and it's on the map for everyone."
+                          : "Preview your island on its plot, or add it straight away: it paints whatever's still to paint."
+                      : tab === "room"
+                        ? seasonsDone
+                          ? "All 8 pictures are painted: it's kept as a draft until you add it to the map."
+                          : draftRoom?.pictures.master
+                            ? "That's your room in spring. Paint it again with changes until it's right, then generate the other seasons."
+                            : "Generate it in spring first, to look it over, or carry on: nothing's out until it's on the map."
+                        : draftRoom?.pictures.island
+                          ? "Its island's painted: kept as a draft until you Create it on the map."
+                          : "Generate its island to see it now, or carry on to the map.";
+  const { ref: fitRef, style: fitStyle } = useFitZoom();
 
   return (
-    <div className="wm-backdrop sm-backdrop im-backdrop" onPointerDown={(e) => e.target === e.currentTarget && close()}>
-      <div className="wm-panel sm-panel im-panel" role="dialog" aria-modal="true" aria-labelledby="im-title">
+    <div ref={fitRef} style={fitStyle} className="wm-backdrop sm-backdrop im-backdrop" onPointerDown={(e) => e.target === e.currentTarget && close()}>
+      <div
+        className="wm-panel sm-panel im-panel imf-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="im-title"
+        /* the frame's pieces, by their address, for the stylesheet */
+        style={Object.fromEntries([
+          ...["top_left", "top_right", "crown", "rail_top", "rail_left", "rail_right", "bottom_left", "bottom_right", "rail_bottom"].map((k) => [`--imf-${k.replace("_", "-")}`, `url("${ART}/modal_parts/f_${k}.webp")`]),
+          ...["top", "bottom", "rail_left", "rail_right"].map((k) => [`--imp-${k.replace("_", "-")}`, `url("${ART}/modal_parts/p_${k}.webp")`]),
+        ])}
+      >
+        {/* from the back: the sky, then the island frame (palms, falls,
+            clouds and the globe at its top, the sea along the bottom), in
+            pieces so it fits any size, then everything in the machine */}
+        <div className="imf-box imf-fill" aria-hidden>
+          <span className="imf imf--inside" />
+        </div>
+        <div className="imf-box" aria-hidden>
+          <span className="imf imf--rail-top imf--rail-top-l" />
+          <span className="imf imf--rail-top imf--rail-top-r" />
+          <span className="imf imf--rail-left" />
+          <span className="imf imf--rail-right" />
+          <span className="imf imf--rail-bottom" />
+          <span className="imf imf--top-left" />
+          <span className="imf imf--top-right" />
+          <span className="imf imf--bottom-left" />
+          <span className="imf imf--bottom-right" />
+          <span className="imf imf--crown" />
+        </div>
+        <div className="imf-phone" aria-hidden>
+          <span className="imp imp--rail-left" />
+          <span className="imp imp--rail-right" />
+          <span className="imp imp--top" />
+          <span className="imp imp--bottom" />
+        </div>
         {/* the machine's own things round the edges: its glowing stars, the
             clouds round the globe, and the pink ring that circles it */}
         <Twinkles />
@@ -520,30 +578,16 @@ function Machine({ onClose }: { onClose: () => void }) {
             ) : (
               <span />
             )}
-            <small className="im-foot-say" aria-live="polite">
-              {job?.trouble
-                ? `${job.trouble} What's painted is kept.`
-                : jobBusy
-                  ? JOB_SAY[job!.at]
-                  : member !== true
-                    ? "For members of the Palais: sign in on Create room."
-                    : tab === "map"
-                      ? wanting
-                        ? `Still wanting ${wanting}.`
-                        : draftRoom?.pictures.island
-                          ? "That's your island on its plot. Add it, and it's on the map for everyone."
-                          : "Preview your island on its plot, or add it straight away: it paints whatever's still to paint."
-                      : tab === "room"
-                        ? seasonsDone
-                          ? "All 8 pictures are painted: it's kept as a draft until you add it to the map."
-                          : draftRoom?.pictures.master
-                            ? "That's your room in spring. Paint it again with changes until it's right, then generate the other seasons."
-                            : "Generate it in spring first, to look it over, or carry on: nothing's out until it's on the map."
-                        : draftRoom?.pictures.island
-                          ? "Its island's painted: kept as a draft until you Create it on the map."
-                          : "Generate its island to see it now, or carry on to the map."}
-            </small>
-            <span className="im-foot-right">
+            {/* what each step does shows when the buttons are pointed at; only
+                what's happening, or what went wrong, stays in view */}
+            {job?.trouble || jobBusy ? (
+              <small className="im-foot-say" aria-live="polite">
+                {footSay}
+              </small>
+            ) : null}
+            {/* a tab can put its photo tray here, beside the buttons */}
+            <div id="im-foot-slot" className="im-foot-slot" />
+            <span className="im-foot-right" title={footSay}>
               {/* the room, once its master's painted and looked over: all its
                   other pictures, from it */}
               {member === true && tab === "room" && draftRoom?.pictures.master && !seasonsDone && (
@@ -636,6 +680,13 @@ export function useTaker(set: (f: (p: Photo[]) => Photo[]) => void, have: number
     }
   };
   return { take, trouble };
+}
+
+/** what a tab puts on the footer, beside its buttons (the slot the machine leaves there) */
+function FootSlot({ children }: { children: React.ReactNode }) {
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  useLayoutEffect(() => setSlot(document.getElementById("im-foot-slot")), []);
+  return slot ? createPortal(children, slot) : null;
 }
 
 /* ---- 1. the room ---- */
@@ -754,7 +805,9 @@ function RoomTab({ draft, change, member, unfinished, room, job, onCarryOn }: { 
           )}
         </div>
       </div>
-      <div className="im-room-photos">
+      {/* the photo tray, down on the footer beside the buttons */}
+      <FootSlot>
+      <div className="im-room-photos im-room-photos--foot">
         <PhotoTray
           photos={draft.photos}
           most={MOST_PHOTOS}
@@ -765,6 +818,7 @@ function RoomTab({ draft, change, member, unfinished, room, job, onCarryOn }: { 
         />
         {photos.trouble && <p className="sm-trouble">{photos.trouble}</p>}
       </div>
+      </FootSlot>
     </div>
   );
 }
@@ -1332,6 +1386,36 @@ export function Twinkles() {
       <span className="im-cloud im-cloud--c" />
     </div>
   );
+}
+
+/**
+ * A framed maker's modal laid out as on a big window and shrunk, whole, to
+ * fit a smaller one, so nothing has to scroll or run off the page. The
+ * backdrop is made the size of that big window (a container, so the modal's
+ * own measures go by it) and zoomed down to fill the real one. Phones keep
+ * their own tall layout.
+ */
+const FIT_W = 1300;
+const FIT_H = 1000;
+export function useFitZoom() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<React.CSSProperties | undefined>();
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const stage = el?.parentElement;
+    if (!el || !stage) return;
+    const fit = () => {
+      const W = stage.clientWidth;
+      const H = stage.clientHeight;
+      const k = Math.min(1, W / FIT_W, H / FIT_H);
+      setStyle(W <= 760 || k >= 0.999 ? undefined : { zoom: k, inset: "auto", left: 0, top: 0, width: W / k, height: H / k, containerType: "size" });
+    };
+    fit();
+    const watch = new ResizeObserver(fit);
+    watch.observe(stage);
+    return () => watch.disconnect();
+  }, []);
+  return { ref, style };
 }
 
 /** photos pasted anywhere while the tray's showing go in it (as long as a

@@ -8609,6 +8609,87 @@
 .palais .im-scenery::-webkit-scrollbar-thumb,
 .palais .im-pick-scenery .im-scenery-row::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffb3d9, #ec6fae); border-radius: 999px; border: 2px solid #fbe8f2; }
 
+/* ---- the island maker's island frame (IslandMaker.tsx) --------------------
+   Cut from its own picture (1506 × 1044; the phone's 941 × 1672): the corners,
+   the globe crown and the sea's ends keep their shape, the plain rails and sea
+   repeat between. From the back: the sky, the frame, the machine's tabs and
+   cards, then its buttons. */
+.palais .imf-panel { overflow: visible; border: none; background: none; box-shadow: none; padding-bottom: 3.6rem; margin-top: 4.4rem; height: min(calc(100cqh - 6.6rem), 1000px); max-height: calc(100cqh - 6.6rem); }
+.palais .imf-panel::after { display: none; }
+.palais .imf-panel .im-cloud,
+.palais .imf-panel .im-ring { display: none; }
+.palais .imf-box,
+.palais .imf-phone { position: absolute; left: -34px; right: -34px; top: -96px; bottom: -40px; container-type: size; pointer-events: none; z-index: 1; --u: min(0.84px, calc(100cqw / 1506), calc(100cqh / 1044)); }
+.palais .imf-box.imf-fill { z-index: 0; }
+.palais .imf,
+.palais .imp { position: absolute; background-repeat: no-repeat; background-size: 100% 100%; }
+.palais .imf--inside { left: calc(70 * var(--u)); right: calc(70 * var(--u)); top: calc(130 * var(--u)); bottom: calc(110 * var(--u)); border-radius: 20px; background: radial-gradient(60% 50% at 12% 8%, rgba(255, 255, 255, 0.9), transparent 70%), linear-gradient(180deg, #e3f6ff 0%, #fdeef6 55%, #fff6ec 100%); box-shadow: 0 24px 60px rgba(30, 40, 80, 0.3); }
+.palais .imf--top-left { left: 0; top: 0; width: calc(560 * var(--u)); height: calc(360 * var(--u)); background-image: var(--imf-top-left); }
+.palais .imf--top-right { right: 0; top: 0; width: calc(560 * var(--u)); height: calc(360 * var(--u)); background-image: var(--imf-top-right); }
+.palais .imf--crown { left: 50%; top: 0; translate: -50% 0; width: calc(510 * var(--u)); height: calc(175 * var(--u)); background-image: var(--imf-crown); }
+.palais .imf--rail-top { top: calc(100 * var(--u)); height: calc(75 * var(--u)); background: var(--imf-rail-top) 0 0 / calc(30 * var(--u)) 100% repeat-x; }
+.palais .imf--rail-top-l { left: calc(540 * var(--u)); right: calc(50% + 240 * var(--u)); }
+.palais .imf--rail-top-r { right: calc(540 * var(--u)); left: calc(50% + 240 * var(--u)); }
+.palais .imf--rail-left { left: 0; top: calc(350 * var(--u)); bottom: calc(395 * var(--u)); width: calc(120 * var(--u)); background: var(--imf-rail-left) 0 0 / 100% calc(90 * var(--u)) repeat-y; }
+.palais .imf--rail-right { right: 0; top: calc(350 * var(--u)); bottom: calc(395 * var(--u)); width: calc(120 * var(--u)); background: var(--imf-rail-right) 0 0 / 100% calc(90 * var(--u)) repeat-y; }
+.palais .imf--bottom-left { left: 0; bottom: 0; width: calc(560 * var(--u)); height: calc(404 * var(--u)); background-image: var(--imf-bottom-left); }
+.palais .imf--bottom-right { right: 0; bottom: 0; width: calc(560 * var(--u)); height: calc(404 * var(--u)); background-image: var(--imf-bottom-right); }
+.palais .imf--rail-bottom { left: calc(540 * var(--u)); right: calc(540 * var(--u)); bottom: 0; height: calc(164 * var(--u)); background: var(--imf-rail-bottom) 0 0 / calc(160 * var(--u)) 100% repeat-x; }
+.palais .imf-phone { display: none; }
+.palais .imf-panel .im-lid,
+.palais .imf-panel .im-pane,
+.palais .imf-panel .im-foot { position: relative; z-index: 3; }
+.palais .imf-panel .im-twinkles { z-index: 2; }
+.palais .imf-panel .im-close { z-index: 9; top: -0.6rem; right: 0.6rem; }
+/* the title rides the globe at the frame's top */
+.palais .imf-panel .im-lid h2 { margin-top: -2.2rem; }
+.palais .imf-panel .im-foot { border-top: none; background: none; }
+/* the footer's slot, between Back and the buttons: a tab's photo tray goes
+   there, a short strip beside the buttons */
+.palais .im-foot-slot { flex: 1 1 auto; min-width: 0; display: flex; }
+.palais .im-foot-slot:empty { flex: 1 1 0; }
+.palais .im-room-photos--foot { flex: 1 1 auto; margin: 0 0.6rem 0 0; }
+/* the room tab's previews a little smaller, so the tab fits */
+.palais .imf-panel .im-room-cols .im-templates-frames { max-width: 19rem; }
+.palais .imf-panel .im-room-cols .im-templates { padding: 0.6rem; gap: 0.45rem; }
+.palais .im-room-photos--foot .im-tray { min-height: 0; height: 2.9rem; padding: 0.3rem 0.8rem; border-radius: 18px; }
+.palais .im-room-photos--foot .sm-tray-say { font-size: 0.82rem; line-height: 1.25; gap: 0.6rem; }
+.palais .im-room-photos--foot .sm-tray-icon { width: 30px; height: 26px; }
+.palais .im-room-photos--foot .im-photo { width: 2.6rem; }
+.palais .im-room-photos--foot .im-photos { flex-wrap: nowrap; gap: 0.35rem; }
+.palais .im-room-photos--foot .sm-trouble { display: none; }
+/* loose words (field labels, notes, the footer line) wear a little frosted
+   pill, so they read even where they sit over the frame */
+.palais :is(.imf-panel, .dm-panel) :is(.sm-field > span, .im-foot-say, .sm-small, .im-pick-scenery .im-carried-label, .dm-locks > span, .dm-slots-say, .im-map-head) {
+  width: fit-content;
+  padding: 0.25em 0.75em;
+  border-radius: 999px;
+  background: rgba(255, 250, 252, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 4px rgba(90, 40, 70, 0.12);
+}
+.palais :is(.imf-panel, .dm-panel) .dm-slots-say { border-radius: 16px; }
+.palais :is(.imf-panel, .dm-panel) .im-foot-say { flex: 0 1 auto; margin: 0 auto; padding: 0.45em 1em; border-radius: 12px; background: rgba(255, 250, 252, 0.86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: #5a3a52; }
+/* the footer's words a touch higher and to the right */
+.palais .imf-panel .im-foot .im-foot-say { translate: 4px -12px; }
+@media (min-width: 761px) { .palais .imf-panel .im-foot .im-foot-say { translate: 4px -22px; } }
+@media (max-width: 760px) {
+  .palais .imf-box { display: none; }
+  .palais .imf-box.imf-fill { display: block; }
+  .palais .imf-phone { display: block; left: -14px; right: -14px; top: -48px; bottom: -24px; --v: calc(100cqw / 941); }
+  .palais .imp--top { left: 0; right: 0; top: 0; height: calc(520 * var(--v)); background-image: var(--imp-top); }
+  .palais .imp--bottom { left: 0; right: 0; bottom: 0; height: calc(422 * var(--v)); background-image: var(--imp-bottom); }
+  .palais .imp--rail-left,
+  .palais .imp--rail-right { top: calc(510 * var(--v)); bottom: calc(412 * var(--v)); width: calc(170 * var(--v)); background-size: 100% calc(150 * var(--v)); background-repeat: repeat-y; }
+  .palais .imp--rail-left { left: 0; background-image: var(--imp-rail-left); }
+  .palais .imp--rail-right { right: 0; background-image: var(--imp-rail-right); }
+  .palais .imf-fill { left: -14px; right: -14px; top: -48px; bottom: -24px; --u: calc(100cqw / 941); }
+  .palais .imf-fill .imf--inside { left: calc(110 * var(--u)); right: calc(110 * var(--u)); top: calc(220 * var(--u)); bottom: calc(230 * var(--u)); }
+  .palais .imf-panel { padding: 0 1.8rem 2.6rem; }
+  .palais .imf-panel .im-lid h2 { margin-top: -1.2rem; }
+}
+
 /* ---- Brat Academy's Dolly Maker (DollyMaker.tsx) ------------------------- */
 /* the studio above the other two machines, lifting the same way, its pill
    in the title's gold */
@@ -8714,9 +8795,14 @@
   /* the subtitle and the tabs nudged down into the space above the card,
      the title and the card staying where they are */
   .palais .dm-panel .im-lid small,
-  .palais .dm-panel .im-lid .im-sides { translate: 0 24px; }
+  .palais .dm-panel .im-lid .im-sides { translate: 0 4px; }
   /* the footer's words a little lower on the band */
   .palais .dm-panel.im-panel .im-foot .im-foot-say { translate: 0 10px; }
+  /* the subtitle and the tabs kept compact, so the card below gets the room */
+  .palais .dm-panel .im-lid small { padding: 0.25rem 0.8rem; font-size: 0.78rem; }
+  .palais .dm-panel .im-sides { padding: 0.22rem 0.4rem; }
+  .palais .dm-panel .im-sides button { padding: 0.28rem 1rem 0.28rem 0.28rem; font-size: 0.9rem; }
+  .palais .dm-panel .im-side-dot { width: 1.75rem; height: 1.75rem; font-size: 0.9rem; }
   /* the title over the frame's cartouche */
   /* as big as the frame's own cartouche (593 frame pixels wide), and over it */
   .palais .dm-panel .im-lid h2 { margin-top: calc(clamp(-3.4rem, -8cqw, -1.2rem) - 1.4rem); width: min(552px, 43.6cqw + 26px, 90%); max-width: none; margin-bottom: -15px; }

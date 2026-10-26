@@ -6,7 +6,7 @@ import { finishSticker, type Finished } from "./stickerCut";
 import { fileSticker } from "./madeStickers";
 import { DOLL_ROLES, editDoll, makeDoll, type Doll, type DollRole } from "./dolls";
 import { shrinkPhoto } from "./stickerCut";
-import { Door, PhotoTray, Twinkles, usePastedPhotos, useTaker, type Photo } from "./IslandMaker";
+import { Door, PhotoTray, Twinkles, useFitZoom, usePastedPhotos, useTaker, type Photo } from "./IslandMaker";
 
 /**
  * The Dolly Maker at Brat Academy: a pink and mint dress-up studio standing on
@@ -354,11 +354,12 @@ function Studio({ onClose }: { onClose: () => void }) {
     setStep("design");
   };
 
+  const { ref: fitRef, style: fitStyle } = useFitZoom();
   const canMake = member === true && !busy;
   const d = current?.doll;
 
   return (
-    <div className="wm-backdrop sm-backdrop im-backdrop" onPointerDown={(e) => e.target === e.currentTarget && close()}>
+    <div ref={fitRef} style={fitStyle} className="wm-backdrop sm-backdrop im-backdrop" onPointerDown={(e) => e.target === e.currentTarget && close()}>
       <div
         className="wm-panel sm-panel im-panel dm-panel"
         role="dialog"
@@ -635,22 +636,31 @@ function Studio({ onClose }: { onClose: () => void }) {
           ) : (
             <span />
           )}
-          <small className="im-foot-say" aria-live="polite">
-            {trouble ??
-              busy ??
-              (member !== true
+          {/* what each step does shows when the buttons are pointed at; only
+              what's happening, or what went wrong, stays in view */}
+          {trouble || busy ? (
+            <small className="im-foot-say" aria-live="polite">
+              {trouble ?? busy}
+            </small>
+          ) : (
+            <span />
+          )}
+          <span
+            className="im-foot-right"
+            title={
+              member !== true
                 ? "For members of the Palais: sign in to make a doll."
                 : step === "design"
                   ? "Generate paints your doll full length, ready to style."
                   : !current
                     ? "Fill in Design, then Generate paints your doll: from here or there."
                     : step === "style"
-                    ? "Change only what you ask; lock what mustn't. Every version's kept above."
-                    : filed
-                      ? ""
-                      : "Onto the Characters shelf, for every room.")}
-          </small>
-          <span className="im-foot-right">
+                      ? "Change only what you ask; lock what mustn't. Every version's kept above."
+                      : filed
+                        ? undefined
+                        : "Onto the Characters shelf, for every room."
+            }
+          >
             {/* on each tab, as on the island maker: its own make-it button, then Next */}
             {step === "design" && (
               <button type="button" className="sm-btn im-foot-gen" onClick={generate} disabled={!canMake}>
