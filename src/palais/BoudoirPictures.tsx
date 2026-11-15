@@ -24,7 +24,7 @@ import {
   type Portrait,
   type PortraitNote,
 } from "./portraits";
-import { askBoudoirAdmit, boudoirAccepted, noteDoing } from "./visits";
+import { noteDoing } from "./visits";
 
 /**
  * The pictures kept in the Boudoir's white dresser.
@@ -162,9 +162,6 @@ export function BoudoirPictures() {
      (a provider, the password, or continuing as who you already are) and is
      cleared again when the dresser shuts. */
   const [passed, setPassed] = useState(false);
-  /* the board's verdict on this account: null while we ask, false = still under
-     review, true = in. Editors always come back true (palais_members.sql). */
-  const [accepted, setAccepted] = useState<boolean | null>(null);
   const arrived = useRef<string | undefined>(CAME_IN_BY);
   const [tried, setTried] = useState("");
   const [trouble, setTrouble] = useState<string | null>(null);
@@ -467,36 +464,12 @@ export function BoudoirPictures() {
     if (!open) setPassed(false);
   }, [open]);
   /* with no sign-in, the right word is the whole greeting: once the dresser is
-     unlocked, move straight on to the board's verdict */
+     unlocked, it is open. There is no board to wait on any more: anyone who
+     knows the word is let straight in. */
   useEffect(() => {
     if (inside) setPassed(true);
   }, [inside]);
 
-  /* the board's verdict on this visitor, by their IP-tied code (not an account
-     any more). Editors always come back true. Re-asked whenever the dresser
-     opens or Molly's own sign-in changes. */
-  useEffect(() => {
-    if (!open || !inside) {
-      setAccepted(null);
-      return;
-    }
-    let live = true;
-    setAccepted(null);
-    const since = Date.now();
-    boudoirAccepted().then((ok) => {
-      // always show the "reviewing" card for a beat, so it never just blinks
-      const wait = Math.max(0, 1300 - (Date.now() - since));
-      setTimeout(() => {
-        if (!live) return;
-        setAccepted(ok);
-        // not let in yet: buzz Molly with their code so she can admit them
-        if (!ok) void askBoudoirAdmit();
-      }, wait);
-    });
-    return () => {
-      live = false;
-    };
-  }, [open, inside, editor]);
   /* the address says whether the dresser is open and which drawer, so the page
      can be sent to somebody and open where it left off */
   useEffect(() => {
@@ -742,7 +715,7 @@ export function BoudoirPictures() {
               ×
             </button>
             {/* opposite the ×: the way to put one in, once they're inside */}
-            {inside && passed && accepted && tab === "portraits" && (
+            {inside && passed && tab === "portraits" && (
               <>
                 <input
                   ref={picker}
@@ -784,7 +757,7 @@ export function BoudoirPictures() {
               </>
             )}
 
-            {inside && passed && accepted && (
+            {inside && passed && (
               <nav className="cat-tabs bd-tabs" aria-label="The dresser's drawers">
                 {([["portraits", "Portraits"], ["live", "Livestream"]] as const).map(([which, name]) => (
                   <button
@@ -835,26 +808,6 @@ export function BoudoirPictures() {
                 {busy && <Waiting say="Trying the word…" />}
                 {trouble && <p className="lt-trouble">{trouble}</p>}
               </form>
-            ) : accepted === null ? (
-              /* just signed in: the board looks you over before anything shows */
-              <div className="bd-hello bd-hello--wait">
-                <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais_assets/modal_content/boudoir_pictures_art/boudoir-crest.webp`} alt="" decoding="async" />
-                </span>
-                <h3 className="bd-hello-name">Reviewing…</h3>
-                <p className="bd-hello-line">Reviewing your credentials…</p>
-              </div>
-            ) : !accepted ? (
-              /* signed in, but not yet let in */
-              <div className="bd-hello bd-hello--wait">
-                <span className="bd-hello-crest" aria-hidden>
-                  <img src={`${process.env.PUBLIC_URL}/palais_assets/modal_content/boudoir_pictures_art/boudoir-crest.webp`} alt="" decoding="async" />
-                </span>
-                <h3 className="bd-hello-name">Under review</h3>
-                <p className="bd-hello-line">
-                  Please wait while your account is under review by the board. May take up to 24 hours.
-                </p>
-              </div>
             ) : tab === "live" ? (
               /* her camera, while she is in front of it */
               <div className="bd-look bd-look--live">
