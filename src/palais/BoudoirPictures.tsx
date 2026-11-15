@@ -135,6 +135,11 @@ const SHORT = 3;
 const howLong = (secs: number) =>
   secs < 60 ? `${secs}s` : `${Math.floor(secs / 60)}m${secs % 60 ? ` ${secs % 60}s` : ""}`;
 
+/* The dresser is shut to everyone: the passphrase no longer opens it. Only Molly,
+   signed in with an account that can save, still gets in. Set this back to
+   false to let anyone with the passphrase in again. */
+const SHUT_TO_ALL = true;
+
 export function BoudoirPictures() {
   const { place } = usePlace();
   const here = place === "boudoir";
@@ -153,6 +158,8 @@ export function BoudoirPictures() {
   );
   /* anyone past the word may watch; only Molly, signed in, may be watched */
   const [editor, setEditor] = useState<Editor | null>(null);
+  /* nobody but Molly gets past the dresser while it is shut to all */
+  const barred = SHUT_TO_ALL && !editor?.canSave;
   /* once the word is right, the dresser asks you to sign in before it shows
      anything — no way past but a real provider (layoutsDb.ts). onEditorChange
      sets `editor` when the session lands, and the pictures follow. */
@@ -322,8 +329,8 @@ export function BoudoirPictures() {
 
   /* a browser that already knows the word (from the letters) walks in */
   useEffect(() => {
-    if (open && key && !inside && !busy) tryWord(key);
-  }, [open, key, inside, busy, tryWord]);
+    if (open && key && !inside && !busy && !barred) tryWord(key);
+  }, [open, key, inside, busy, barred, tryWord]);
 
   /* putting one in: straight from here to the bucket, on a link signed for
      this one file (portraits.ts). Then the drawer is read again, and the new
@@ -715,7 +722,7 @@ export function BoudoirPictures() {
               ×
             </button>
             {/* opposite the ×: the way to put one in, once they're inside */}
-            {inside && passed && tab === "portraits" && (
+            {inside && passed && !barred && tab === "portraits" && (
               <>
                 <input
                   ref={picker}
@@ -757,7 +764,7 @@ export function BoudoirPictures() {
               </>
             )}
 
-            {inside && passed && (
+            {inside && passed && !barred && (
               <nav className="cat-tabs bd-tabs" aria-label="The dresser's drawers">
                 {([["portraits", "Portraits"], ["live", "Livestream"]] as const).map(([which, name]) => (
                   <button
@@ -781,6 +788,15 @@ export function BoudoirPictures() {
                 </span>
                 <h3 className="bd-hello-name">Reviewing…</h3>
                 <p className="bd-hello-line">Reviewing your credentials…</p>
+              </div>
+            ) : barred ? (
+              /* shut to everyone: no passphrase, nothing to try */
+              <div className="bd-hello bd-hello--wait">
+                <span className="bd-hello-crest" aria-hidden>
+                  <img src={`${process.env.PUBLIC_URL}/palais_assets/modal_content/boudoir_pictures_art/boudoir-crest.webp`} alt="" decoding="async" />
+                </span>
+                <h3 className="bd-hello-name">The dresser is locked</h3>
+                <p className="bd-hello-line">The Boudoir is closed to visitors.</p>
               </div>
             ) : !inside ? (
               /* the dresser is locked: the same word as the letters */
